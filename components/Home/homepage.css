@@ -1,0 +1,35 @@
+.brands {
+  background-image: url("/BrandsectionBG.svg");
+  min-height: 350px;
+  padding-top: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brands svg {
+  display: block;
+}
+
+.numbers {
+  /* display: inline; */
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 0 0 0;
+}
+
+.numcard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0099ff14;
+}
+
+.nichetech {
+  /* background: linear-gradient(98.12deg, #034275 -3.27%, #02a9f7 93.69%); */
+  background-image: url("/NicheSectionBG.svg");
+  color: white;
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

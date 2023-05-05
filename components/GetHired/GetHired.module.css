@@ -1,0 +1,206 @@
+#getHiredMain {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.noSelect {
+  -webkit-user-select: none;
+  -html-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.getHiredImage {
+  top: -91px !important;
+  position: relative !important;
+}
+
+.card-carousel {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.hiredCard {
+  border-radius: 25px;
+  background-color: #1097cd;
+  display: flex;
+  transition: box-shadow 9s;
+  cursor: pointer;
+}
+
+.hiredCard:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2);
+}
+
+.hiredRight {
+  position: relative;
+  z-index: 0;
+}
+
+.hiredMiddle {
+  position: relative;
+}
+
+.hiredCardActive {
+  top: -70px;
+  z-index: 30 !important;
+  width: 400px;
+  height: 280px;
+  transform: scale(0.9);
+  transition: filter 0.5s ease 0s, transform 0.5s ease-out 0s;
+}
+
+.hiredCardActive button {
+  width: 185px;
+  height: 50px;
+  font-size: 22px;
+  font-family: Inter;
+}
+
+.noHiredCard {
+  opacity: 0.4;
+  width: 360px;
+  height: 260px;
+}
+
+.noHiredCard image {
+  height: 200px !important;
+}
+
+.noHiredCard button {
+  width: 140px;
+  font-size: 15px !important;
+  height: 32px;
+  font-family: Inter;
+}
+
+.hiredLeft {
+  position: relative;
+  z-index: 0;
+  /* left: 118px; */
+}
+
+@media (max-width: 1560px) {
+  .hiredRight {
+    position: relative;
+    z-index: 0;
+    /* left: -190px; */
+  }
+}
+
+.noHiredCardGetHiredBody {
+  font-size: 15px;
+}
+
+.activeBody {
+  font-size: 18px !important;
+  font-weight: 400;
+  color: white;
+}
+
+.nonActiveBody {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+}
+.activeHeader {
+  font-size: 30px;
+  color: white;
+  font-weight: 700;
+}
+.nonActiveHeader {
+  font-size: 25px;
+  color: white;
+  font-weight: 700;
+}
+
+.swipImages {
+  height: 100px !important;
+}
+.swiper_container {
+  height: 32rem;
+  padding: 2rem 0 0 0;
+  position: relative;
+}
+
+.swiper-slide {
+  width: 25rem;
+  position: relative;
+  opacity: 0.3;
+  padding-top: 40px;
+}
+
+@media (max-width: 500px) {
+  .swiper_container {
+    height: 47rem;
+  }
+  .swiper-slide {
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
+.slider-controler {
+  position: relative;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 690px) {
+  .hiredCardActive {
+    width: 100%;
+  }
+  .swiper-slide-next {
+    opacity: 0;
+  }
+  .swiper-slide-prev {
+    opacity: 0;
+  }
+}
+
+.swiper-pagination {
+  position: relative;
+  width: 15rem !important;
+  bottom: 1rem;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
+
+.swiper-slide-prev {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-next {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}
+
+.swiper-slide-prev .hiredCardActive {
+  opacity: 0.8 !important;
+}

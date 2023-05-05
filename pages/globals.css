@@ -1,0 +1,479 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.categoryImage {
+  height: 530px !important;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./asset/Inter-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("./asset/Inter-Bold.ttf");
+}
+
+.loginImages {
+  height: 183px;
+}
+
+.loginLogo {
+  height: 33px;
+}
+
+.linkedinButton {
+  display: flex;
+  position: relative;
+  background: #fff;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  height: 40px;
+  border: 1px solid #c2c8d0;
+  color: #202124;
+  cursor: pointer;
+  outline: 0;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 4px;
+  height: 60px;
+  border-radius: 8px;
+  width: 95%;
+  font-size: 18px;
+  font-weight: 400;
+  color: #949494;
+}
+
+.MuiContainer-maxWidthLg {
+  max-width: 1232px;
+}
+
+.userDetailsImages {
+  top: -124px !important;
+  position: relative !important;
+}
+
+.userDetailCard {
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  box-shadow: "inset 0px 0px 10px rgba(0,0,0,0.5)";
+  cursor: pointer;
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+
+.userDetailCard2 {
+  transform: translatey(0px);
+  animation: float 7s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+
+.aboutImage {
+  height: 400px !important;
+}
+
+/* Tab queries */
+@media only screen and (max-width: 1006px) {
+  .categoryImage {
+    height: 618px !important;
+  }
+}
+
+.categoryBox {
+  width: 352px;
+  height: 107px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  padding: 10px;
+}
+
+.categoryBox:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2);
+}
+
+.nicheMinHight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 430px;
+}
+
+.numcard {
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+}
+
+.brandsBackgroundImage {
+  height: 250px;
+}
+
+/* Tab queries */
+@media only screen and (max-width: 974px) {
+  .categoryBox {
+    width: 409px !important;
+    height: 130px;
+  }
+
+  .nicheMinHight {
+    min-height: 473px;
+  }
+
+  .numcard {
+    width: 217px;
+  }
+
+  .brandsBackgroundImage {
+    height: 200px;
+  }
+}
+
+.rec-dot_active {
+  background-color: #1097cd !important;
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.rec-dot:focus,
+.rec-dot:hover {
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.rec-dot_active:focus,
+.rec-dot_active:hover {
+  background-color: #1097cd !important;
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+
+.rec-arrow {
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+  font-size: 1.1rem !important;
+  color: black !important;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
+  min-width: 1.7rem !important;
+  line-height: 1.7rem !important;
+  box-shadow: none !important;
+}
+
+.rec-arrow:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.categoryImageMiddled {
+  height: 623px !important;
+}
+
+.signUpContainer {
+  min-height: 735px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.searchFormHome {
+  width: 90%;
+}
+
+/* Tablet queries */
+@media only screen and (max-width: 1106px) {
+  .signUpContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Mobile queries */
+@media only screen and (max-width: 896px) {
+  .signUpContainer {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    padding: 30px;
+  }
+  .signHomeImage {
+    height: 406px;
+  }
+
+  .searchHomeImage {
+    display: none;
+  }
+  .searchFormHome {
+    width: 100%;
+    justify-content: center;
+    height: 379px;
+  }
+}
+#getHiredMain {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.noSelect {
+  -webkit-user-select: none;
+  -html-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.getHiredImage {
+  top: -91px !important;
+  position: relative !important;
+}
+
+.card-carousel {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.hiredCard {
+  border-radius: 25px;
+  background-color: #1097cd;
+  display: flex;
+  transition: box-shadow 9s;
+  cursor: pointer;
+}
+
+.hiredCard:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2);
+}
+
+.hiredRight {
+  position: relative;
+  z-index: 0;
+}
+
+.hiredMiddle {
+  position: relative;
+}
+
+.hiredCardActive {
+  top: -70px;
+  z-index: 30 !important;
+  width: 400px;
+  height: 280px;
+  transform: scale(0.9);
+  transition: filter 0.5s ease 0s, transform 0.5s ease-out 0s;
+}
+
+.hiredCardActive button {
+  width: 185px;
+  height: 50px;
+  font-size: 22px;
+  font-family: Inter;
+}
+
+.noHiredCard {
+  opacity: 0.4;
+  width: 360px;
+  height: 260px;
+}
+
+.noHiredCard image {
+  height: 200px !important;
+}
+
+.noHiredCard button {
+  width: 140px;
+  font-size: 15px !important;
+  height: 32px;
+  font-family: Inter;
+}
+
+.hiredLeft {
+  position: relative;
+  z-index: 0;
+  /* left: 118px; */
+}
+
+@media (max-width: 1560px) {
+  .hiredRight {
+    position: relative;
+    z-index: 0;
+    /* left: -190px; */
+  }
+}
+
+.noHiredCardGetHiredBody {
+  font-size: 15px;
+}
+
+.activeBody {
+  font-size: 18px !important;
+  font-weight: 400;
+  color: white;
+}
+
+.nonActiveBody {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+}
+.activeHeader {
+  font-size: 30px;
+  color: white;
+  font-weight: 700;
+}
+.nonActiveHeader {
+  font-size: 25px;
+  color: white;
+  font-weight: 700;
+}
+
+.swipImages {
+  height: 100px !important;
+}
+.swiper_container {
+  height: 32rem;
+  padding: 2rem 0 0 0;
+  position: relative;
+}
+
+.swiper-slide {
+  width: 25rem;
+  position: relative;
+  opacity: 0.3;
+  padding-top: 40px;
+}
+
+@media (max-width: 500px) {
+  .swiper_container {
+    height: 47rem;
+  }
+  .swiper-slide {
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
+.slider-controler {
+  position: relative;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 690px) {
+  .hiredCardActive {
+    width: 100%;
+  }
+  .swiper-slide-next {
+    opacity: 0;
+  }
+  .swiper-slide-prev {
+    opacity: 0;
+  }
+}
+
+.swiper-pagination {
+  position: relative;
+  width: 15rem !important;
+  bottom: 1rem;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
+
+.swiper-slide-prev {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-next {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}
+
+.swiper-slide-prev .hiredCardActive {
+  opacity: 0.8 !important;
+}
+
+.brands {
+  background-image: url("/BrandsectionBG.svg");
+  min-height: 350px;
+  padding-top: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brands svg {
+  display: block;
+}
+
+.numbers {
+  /* display: inline; */
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 0 0 0;
+}
+
+.numcard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0099ff14;
+}
+
+.nichetech {
+  /* background: linear-gradient(98.12deg, #034275 -3.27%, #02a9f7 93.69%); */
+  background-image: url("/NicheSectionBG.svg");
+  color: white;
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

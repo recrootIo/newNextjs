@@ -1,0 +1,96 @@
+.detailCard {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.similarCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+}
+
+.similarAvatar {
+  object-fit: contain;
+  border: 1px solid #2699ff;
+}
+
+.similarCard {
+  padding-top: 0;
+}
+
+.similarBulletText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 13px;
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 14px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 13px;
+  width: 65%;
+}
+
+.similarTopic {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 27px;
+}
+
+.similarTypoBox {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 5px;
+  /* margin-bottom: 10px; */
+}
+
+.similarTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.skillChip {
+  border-radius: 8px;
+  size: small;
+  background-color: #edf8fd;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: #01313f;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobileLogo {
+    display: none;
+  }
+}
