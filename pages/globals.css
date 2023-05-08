@@ -224,6 +224,7 @@
   }
   .signHomeImage {
     height: 406px;
+    width: auto;
   }
 
   .searchHomeImage {
@@ -476,4 +477,15 @@
   min-height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.signUpButton {
+  background: #f3fcff;
+  border-radius: 5px;
+  height: 49px;
+  width: 185px;
+
+  font-weight: 700;
+  font-size: 20px;
+  font-family: "Inter";
 }

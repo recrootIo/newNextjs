@@ -1,21 +1,12 @@
 "use client";
 import React from "react";
 import Container from "@mui/material/Container";
-import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { Box, Button, Grid, Stack, styled } from "@mui/material";
-import { NEUTRAL } from "../../theme/colors";
-import { MAX } from "../../theme/spacings";
+import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Link from "next/link";
-const StyledButton = styled("button")({
-  background: "#F3FCFF",
-  borderRadius: "5px",
-  height: "49px",
-  width: "185px",
-  fontFamily: "Inter",
-  fontWeight: 700,
-  fontSize: "20px",
-});
+import Image from "next/image";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { NEUTRAL } from "@/theme/colors";
+import { MAX } from "@/theme/spacings";
 
 const SignUpHome = () => {
   const tablet = useMediaQuery("(max-width:1106px)");
@@ -56,6 +47,7 @@ const SignUpHome = () => {
               fontSize: MAX,
               color: NEUTRAL,
               fontFamily: "Inter-Bold",
+              textAlign: { md: "left", xs: "center", sm: "center" },
             }}
           >
             Connecting talent with opportunity - Your trusted career partner
@@ -69,19 +61,18 @@ const SignUpHome = () => {
             with us.
           </CustomTypography>
           <Stack direction={"row"} sx={{ gap: "10px" }}>
-            <Link href={'/signin'}>
-            <StyledButton >SIGN IN</StyledButton>
-            </Link>
-            <Link href={'/signup'}>
-            <StyledButton >SIGN UP</StyledButton>
-            </Link>
+            <button className="signUpButton">SIGN IN</button>
+            <button className="signUpButton">SIGN UP</button>
           </Stack>
         </Stack>
         {tablet && (
-          <img
+          <Image
             src="/sector.png"
-            style={{ height: "524px" }}
             className="signHomeImage"
+            alt=""
+            width="0"
+            height="0"
+            sizes="100vw"
           />
         )}
       </Container>

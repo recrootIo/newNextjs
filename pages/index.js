@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
-       <Navbar /> 
+      <Navbar />
       <SignUpHome />
       <SearchHome />
       <AboutHome />
@@ -38,9 +38,9 @@ export default function Home() {
       <NicheTechHome />
       {/* <OurNumHome /> */}
       <BrandsHome />
-      <TestimonialHome /> 
+      <TestimonialHome />
       <SubscribHome />
-      <FooterHome /> 
+      <FooterHome />
     </Box>
   );
 }

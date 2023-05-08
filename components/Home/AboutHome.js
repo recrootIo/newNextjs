@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import { NEUTRAL } from "../../theme/colors";
-import { MAX } from "../../theme/spacings";
+import { NEUTRAL } from "@/theme/colors";
+import { MAX } from "@/theme/spacings";
 import { Container, Grid, Stack, styled } from "@mui/material";
+import Image from "next/image";
 import React from "react";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 
@@ -78,11 +78,14 @@ const AboutHome = () => {
               alignItems: "center",
             }}
           >
-            <img
+            <Image
               src="/aboutUsImage.png"
               className="aboutImage"
-              data-aos="fade-up"
+              // data-aos="fade-up"
               alt=""
+              width="0"
+              height="0"
+              sizes="100vw"
             />
           </Grid>
         </Grid>
