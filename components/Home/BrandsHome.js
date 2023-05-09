@@ -104,7 +104,14 @@ const BrandsHome = () => {
               }}
             >
               <Box className="brandsLogos">
-                <Image src="/logo1.png" width={168} height={163} alt="" />
+                <Image
+                  src="/logo1.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
               </Box>
             </Box>
             <Box
@@ -120,7 +127,14 @@ const BrandsHome = () => {
               }}
             >
               <Box className="brandsLogos">
-                <Image src="/logo2.png" width={168} height={163} alt="" />
+                <Image
+                  src="/logo2.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
               </Box>
             </Box>
             <Box
@@ -136,7 +150,14 @@ const BrandsHome = () => {
               }}
             >
               <Box className="brandsLogos">
-                <Image src="/logo1.png" width={168} height={163} alt="" />
+                <Image
+                  src="/logo1.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
               </Box>
             </Box>
             <Box
@@ -152,7 +173,14 @@ const BrandsHome = () => {
               }}
             >
               <Box className="brandsLogos">
-                <Image src="/logo4.png" width={168} height={163} alt="" />
+                <Image
+                  src="/logo4.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
               </Box>
             </Box>
           </Carousel>
