@@ -57,7 +57,12 @@ const SubscribHome = () => {
           >
             <Grid container>
               <Grid item xs={12} sx={{ textAlign: "center" }}>
-                <Stack direction={"row"} gap={"10px"} justifyContent="center">
+                <Stack
+                  direction={"row"}
+                  gap={"10px"}
+                  justifyContent="center"
+                  sx={{ flexWrap: "wrap" }}
+                >
                   <CustomTypography
                     sx={{
                       fontWeight: "800",
@@ -86,6 +91,8 @@ const SubscribHome = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                  padding: { md: "10px", sm: "20px", xs: "20px" },
                 }}
               >
                 <CssTextField
@@ -94,7 +101,7 @@ const SubscribHome = () => {
                   variant="outlined"
                   size="small"
                   sx={{
-                    width: "60%",
+                    width: { md: "60%", sm: "100%", xs: "100%" },
                     backgroundColor: "white",
                     borderRadius: "10px",
                   }}
@@ -105,7 +112,7 @@ const SubscribHome = () => {
                   sx={{
                     m: "10px",
                     height: "40px",
-                    width: "20%",
+                    width: { md: "20%", sm: "100%", xs: "100%" },
                     bgcolor: "#034275 !important",
                   }}
                 >

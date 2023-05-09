@@ -9,7 +9,7 @@ import GetHiredHome from "../components/GetHired/GetHiredHome";
 import BrandsHome from "../components/Home/BrandsHome";
 import FooterHome from "../components/Home/FooterHome";
 import SubscribHome from "../components/Home/SubscribHome";
-// import OurNumHome from "../components/Home/OurNumHome";
+import OurNumHome from "../components/Home/OurNumHome";
 import NicheTechHome from "../components/Home/NicheTechHome";
 import TestimonialHome from "../components/Home/TestimonialHome";
 import Navbar from "../components/Navbar/Navbar";
@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
-       <Navbar /> 
+      <Navbar />
       <SignUpHome />
       <SearchHome />
       <AboutHome />
@@ -36,11 +36,11 @@ export default function Home() {
       <CategoryHome />
       <GetHiredHome />
       <NicheTechHome />
-      {/* <OurNumHome /> */}
+      <OurNumHome />
       <BrandsHome />
-      <TestimonialHome /> 
+      <TestimonialHome />
       <SubscribHome />
-      <FooterHome /> 
+      <FooterHome />
     </Box>
   );
 }

@@ -100,6 +100,7 @@
 
 .aboutImage {
   height: 400px !important;
+  width: auto;
 }
 
 /* Tab queries */
@@ -224,6 +225,7 @@
   }
   .signHomeImage {
     height: 406px;
+    width: auto;
   }
 
   .searchHomeImage {
@@ -256,6 +258,8 @@
 .getHiredImage {
   top: -91px !important;
   position: relative !important;
+  height: 213px;
+  width: 204px;
 }
 
 .card-carousel {
@@ -291,7 +295,7 @@
 .hiredCardActive {
   top: -70px;
   z-index: 30 !important;
-  width: 400px;
+  width: 432px;
   height: 280px;
   transform: scale(0.9);
   transition: filter 0.5s ease 0s, transform 0.5s ease-out 0s;
@@ -374,7 +378,7 @@
   width: 25rem;
   position: relative;
   opacity: 0.3;
-  padding-top: 40px;
+  padding-top: 67px;
 }
 
 @media (max-width: 500px) {
@@ -382,7 +386,6 @@
     height: 47rem;
   }
   .swiper-slide {
-    width: 28rem !important;
     height: 36rem !important;
   }
 }
@@ -413,7 +416,7 @@
 }
 
 .swiper-pagination {
-  position: relative;
+  position: relative !important;
   width: 15rem !important;
   bottom: 1rem;
 }
@@ -476,4 +479,63 @@
   min-height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.signUpButton {
+  background: #f3fcff;
+  border-radius: 5px;
+  height: 49px;
+  width: 185px;
+
+  font-weight: 700;
+  font-size: 20px;
+  font-family: "Inter";
+}
+
+@media only screen and (max-width: 528px) {
+  .categoryBox {
+    width: 100% !important;
+    height: 130px;
+  }
+}
+
+@media only screen and (max-width: 896px) {
+  .aboutImage {
+    height: 200px !important;
+  }
+}
+
+.pointers {
+  width: auto;
+}
+
+.brandsLogos {
+  /* clip-path: path(var(--badge));
+  height: 300px; */
+  clip-path: polygon(52% 3%, 97% 26%, 97% 75%, 53% 99%, 5% 75%, 5% 27%);
+  width: 149px;
+  height: 165px;
+}
+
+.testimonialContainer {
+  background-image: url("/union.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: 150px;
+  border-color: #034275;
+  border-style: solid;
+}
+
+@media only screen and (max-width: 588px) {
+  .testimonialContainer {
+    background-image: none;
+    background-color: rgba(3, 195, 227, 0.1);
+    border-style: solid;
+    opacity: 0.9;
+  }
+}
+
+.brandsImages {
+  height: 161px;
+  width: 160px;
 }

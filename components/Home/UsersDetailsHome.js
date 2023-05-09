@@ -12,13 +12,14 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React from "react";
+import Image from "next/image";
 
 const UsersDetailsHome = () => {
   const mobile = useMediaQuery("(max-width:900px)");
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         backgroundImage: "url(/UserDetailBackground.svg)",
         height: "100%",
         backgroundPosition: "center",
@@ -40,193 +41,138 @@ const UsersDetailsHome = () => {
           minHeight: "615px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: mobile ? "center" : "flex-end",
+          justifyContent: { sm: "center", md: "flex-end", xs: "center" },
           alignItems: "flex-end",
+          padding: "10px",
         }}
       >
-        {mobile ? (
-          <>
-            <Stack sx={{ gap: "10px" }}>
-              <CustomTypography
-                sx={{
-                  padding: "0 0 50px 0",
-                  fontSize: MAX,
-                  color: NEUTRAL,
-                  fontFamily: "Inter-bold",
-                  textAlign: "center",
-                }}
-              >
-                Ready to level up?
-              </CustomTypography>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
-                <Card
-                  sx={{ width: "50%", backgroundColor: "transparent" }}
-                  variant="outlined"
-                >
-                  <CardContent
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img alt=""  src="/candidateMan.png" style={{ height: "170px" }} />
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{ width: "50%", backgroundColor: "transparent" }}
-                  variant="outlined"
-                >
-                  <CardContent
-                    sx={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      display: "flex",
-                    }}
-                  >
-                    <img alt="" src="/businessMan.png" style={{ height: "165px" }} />
-                  </CardContent>
-                </Card>
-              </Stack>
+        <Stack sx={{ alignItems: "center" }}>
+          <CustomTypography
+            sx={{
+              padding: "0 0 50px 0",
+              fontSize: MAX,
+              color: NEUTRAL,
+              fontFamily: "Inter-bold",
+              marginBottom: "50px",
+              textAlign: "center",
+            }}
+          >
+            Ready to level up?
+          </CustomTypography>
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "20px",
+              mt: { md: "0", sm: "40px", xs: "40px" },
+            }}
+          >
+            <Grid
+              item
+              md={5.6}
+              xs={12}
+              sm={12}
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: "#E9F8FF",
+                width: "46%",
+                height: "377px",
+                boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
+              }}
+              className="userDetailCard"
+            >
               <Box
                 sx={{
-                  backgroundColor: "#E9F8FF",
-                  borderRadius: "10px",
-                  boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
-                  height: "150px",
-                  padding: "20px",
-                  marginTop: "10px",
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                <Stack sx={{ gap: "10px" }}>
+                <Image
+                  src="/Frame87.png"
+                  className="userDetailsImages"
+                  height={290}
+                  width={330}
+                  alt=""
+                />
+                <Stack
+                  sx={{
+                    top: "-100px",
+                    position: "relative",
+                    alignItems: "center",
+                    padding: "0 40px 40px 40px",
+                  }}
+                >
                   <CustomTypography
                     sx={{ fontFamily: "Inter-Bold", fontSize: "30px" }}
                   >
                     Candidate
                   </CustomTypography>
-                  <CustomTypography>
+                  <CustomTypography sx={{ fontSize: "18px" }}>
                     Join our community of job seekers and gain access to
                     thousands of job opportunities to achieve your career goals.
                   </CustomTypography>
                 </Stack>
               </Box>
-            </Stack>
-          </>
-        ) : (
-          <Stack sx={{ alignItems: "center" }}>
-            <CustomTypography
-              sx={{
-                padding: "0 0 50px 0",
-                fontSize: MAX,
-                color: NEUTRAL,
-                fontFamily: "Inter-bold",
-                marginBottom: "50px",
-              }}
-            >
-              Ready to level up?
-            </CustomTypography>
-            <Grid
-              container
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Grid
-                item
-                md={5.6}
-                sx={{
-                  borderRadius: "10px",
-                  backgroundColor: "#E9F8FF",
-                  width: "46%",
-                  height: "377px",
-                  boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
-                }}
-                className="userDetailCard"
-              >
-                <Box
-                  sx={{
-                    alignItems: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img alt=""
-                    src="/Frame87.png"
-                    className="userDetailsImages"
-                    style={{ height: "290px", width: "330px" }}
-                  />
-                  <Stack
-                    sx={{
-                      top: "-100px",
-                      position: "relative",
-                      alignItems: "center",
-                      padding: "0 40px 40px 40px",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{ fontFamily: "Inter-Bold", fontSize: "30px" }}
-                    >
-                      Candidate
-                    </CustomTypography>
-                    <CustomTypography>
-                      Join our community of job seekers and gain access to
-                      thousands of job opportunities to achieve your career
-                      goals.
-                    </CustomTypography>
-                  </Stack>
-                </Box>
-              </Grid>
-
-              <Grid
-                item
-                md={5.6}
-                sx={{
-                  borderRadius: "10px",
-                  backgroundColor: "#E9F8FF",
-                  width: "46%",
-                  height: "377px",
-                  boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
-                }}
-                className="userDetailCard"
-              >
-                <Box
-                  sx={{
-                    alignItems: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img alt=""
-                    src="/Frame109.png"
-                    className="userDetailsImages"
-                    style={{ height: "290px", width: "330px" }}
-                  />
-                  <Stack
-                    sx={{
-                      top: "-100px",
-                      position: "relative",
-                      alignItems: "center",
-                      padding: "0 40px 40px 40px",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{ fontFamily: "Inter-Bold", fontSize: "30px" }}
-                    >
-                      Employer
-                    </CustomTypography>
-                    <CustomTypography>
-                      Join our community of employers and take your hiring
-                      process to the next level with our powerful job posting
-                      and candidate management tools.
-                    </CustomTypography>
-                  </Stack>
-                </Box>
-              </Grid>
             </Grid>
-          </Stack>
-        )}
+
+            <Grid
+              item
+              md={5.6}
+              xs={12}
+              sm={12}
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: "#E9F8FF",
+                width: "46%",
+                height: "377px",
+                boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
+                mt: { md: 0, xs: "105px", sm: "105px" },
+              }}
+              className="userDetailCard"
+            >
+              <Box
+                sx={{
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  src="/Frame109.png"
+                  className="userDetailsImages"
+                  height={290}
+                  width={330}
+                  alt=""
+                />
+                <Stack
+                  sx={{
+                    top: "-100px",
+                    position: "relative",
+                    alignItems: "center",
+                    padding: "0 40px 40px 40px",
+                  }}
+                >
+                  <CustomTypography
+                    sx={{ fontFamily: "Inter-Bold", fontSize: "30px" }}
+                  >
+                    Employer
+                  </CustomTypography>
+                  <CustomTypography sx={{ fontSize: "18px" }}>
+                    Join our community of employers and take your hiring process
+                    to the next level with our powerful job posting and
+                    candidate management tools.
+                  </CustomTypography>
+                </Stack>
+              </Box>
+            </Grid>
+          </Grid>
+        </Stack>
       </Container>
-    </div>
+    </Box>
   );
 };
 

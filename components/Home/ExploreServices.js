@@ -4,6 +4,7 @@ import { Grid, Stack } from "@mui/material";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { PRIMARY } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
+import Image from "next/image";
 
 const ExploreServices = () => {
   return (
@@ -16,7 +17,10 @@ const ExploreServices = () => {
             alignItems: "center",
           }}
         >
-          <Stack direction={"row"} sx={{ gap: "10px" }}>
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", flexWrap: "wrap", justifyContent: "center" }}
+          >
             <CustomTypography
               sx={{
                 fontSize: MAX,
@@ -48,11 +52,7 @@ const ExploreServices = () => {
                   width: "100%",
                 }}
               >
-                <img
-                  src="/service1.png"
-                  alt=""
-                  style={{ width: "200px", height: "200px" }}
-                />
+                <Image src="/service1.png" alt="" width={200} height={200} />
 
                 <CustomTypography
                   sx={{
@@ -79,11 +79,7 @@ const ExploreServices = () => {
             </Grid>
             <Grid item md={3} sm={6} xs={12}>
               <Stack sx={{ alignItems: "center", gap: "10px" }}>
-                <img
-                  src="/service2.png"
-                  alt=""
-                  style={{ width: "200px", height: "200px" }}
-                />
+                <Image src="/service2.png" alt="" width={200} height={200} />
                 <CustomTypography
                   sx={{
                     fontWeight: "600",
@@ -109,11 +105,7 @@ const ExploreServices = () => {
             </Grid>
             <Grid item md={3} sm={6} xs={12}>
               <Stack sx={{ alignItems: "center", gap: "10px" }}>
-                <img
-                  src="/service3.png"
-                  alt=""
-                  style={{ width: "200px", height: "200px" }}
-                />
+                <Image src="/service3.png" alt="" width={200} height={200} />
                 <CustomTypography
                   sx={{
                     fontWeight: "600",
@@ -139,11 +131,7 @@ const ExploreServices = () => {
             </Grid>
             <Grid item md={3} sm={6} xs={12}>
               <Stack sx={{ alignItems: "center", gap: "10px" }}>
-                <img
-                  src="/service4.png"
-                  alt=""
-                  style={{ width: "200px", height: "200px" }}
-                />
+                <Image src="/service4.png" alt="" width={200} height={200} />
                 <CustomTypography
                   sx={{
                     fontWeight: "600",

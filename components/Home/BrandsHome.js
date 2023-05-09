@@ -6,14 +6,19 @@ import { Grid, Typography, Box, Stack, Container } from "@mui/material";
 import { createElement, useContext, useRef, Fragment } from "react";
 // import "./homepage.css";
 import Carousel from "react-elastic-carousel";
+import Image from "next/image";
 
 const BrandsHome = () => {
   const breakPoints = [
     // { width: 451, itemsToShow: 1 },
-    { width: 687, itemsToShow: 2 },
+    { width: 687, itemsToShow: 1 },
     { width: 873, itemsToShow: 3 },
     { width: 974, itemsToShow: 4 },
   ];
+
+  const carouselRef = useRef(null);
+  const totalPages = 4;
+  let resetTimeout;
 
   return (
     <div>
@@ -70,11 +75,114 @@ const BrandsHome = () => {
             zIndex: "2",
           }}
         >
-          <Carousel breakPoints={breakPoints}>
-            <img src="/Polygon1.png" alt="" className="brandsBackgroundImage" />
-            <img src="/Polygon1.png" alt="" className="brandsBackgroundImage" />
-            <img src="/Polygon1.png" alt="" className="brandsBackgroundImage" />
-            <img src="/Polygon1.png" alt="" className="brandsBackgroundImage" />
+          <Carousel
+            breakPoints={breakPoints}
+            enableAutoPlay
+            ref={carouselRef}
+            onNextEnd={({ index }) => {
+              console.log(index, "index");
+              clearTimeout(resetTimeout);
+              if (index + 1 === totalPages) {
+                resetTimeout = setTimeout(() => {
+                  carouselRef.current.goTo(0);
+                  console.log("i was called");
+                }, 1500); // same time
+              }
+            }}
+            itemsToShow={3}
+          >
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/logo1.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/logo2.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/logo1.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/logo4.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
           </Carousel>
         </Stack>
       </Container>

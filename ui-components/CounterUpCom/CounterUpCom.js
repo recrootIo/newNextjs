@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CountUp from "react-countup";
+// import CountUp from "react-countup";
 
 const CounterUpCom = ({ endValue = 0, sectionSelect, position }) => {
   const [showCount, setShowCountValue] = useState(false);
@@ -18,9 +18,7 @@ const CounterUpCom = ({ endValue = 0, sectionSelect, position }) => {
       });
     }
   }, [sectionSelect, showCount, poss]);
-  return (
-    <>{showCount ? <CountUp delay={0} duration={3} end={endValue} /> : 0}</>
-  );
+  return <>{showCount ? endValue : 0}</>;
 };
 
 export default CounterUpCom;
