@@ -25,7 +25,10 @@ const TestimonialHome = () => {
 
   return (
     <Container>
-      <Stack direction={"row"} sx={{ gap: "10px", justifyContent: "center" }}>
+      <Stack
+        direction={"row"}
+        sx={{ gap: "10px", justifyContent: "center", flexWrap: "wrap" }}
+      >
         <CustomTypography
           sx={{
             fontSize: MAX,
@@ -60,16 +63,7 @@ const TestimonialHome = () => {
           }
         }}
       >
-        <Box
-          sx={{
-            backgroundImage: "url(/union.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "100% 100%",
-            marginTop: "150px",
-            borderColor: "#034275",
-            borderStyle: "solid",
-          }}
-        >
+        <Box className="testimonialContainer">
           <Grid container>
             <Grid
               item
@@ -126,16 +120,7 @@ const TestimonialHome = () => {
           </Grid>
         </Box>
 
-        <Box
-          sx={{
-            backgroundImage: "url(/union.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "100% 100%",
-            marginTop: "150px",
-            borderColor: "#034275",
-            borderStyle: "solid",
-          }}
-        >
+        <Box className="testimonialContainer">
           <Grid container>
             <Grid
               item
@@ -154,7 +139,7 @@ const TestimonialHome = () => {
               }}
             >
               <Box>
-                <Avatar sx={{ width: 130, height: 130 }} />
+                <Avatar sx={{ width: 130, height: 130 }} src="Group 85.png" />
               </Box>
               <CustomTypography sx={{ fontSize: "28px", fontWeight: "600" }}>
                 Lorem ipsum
@@ -191,16 +176,8 @@ const TestimonialHome = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box
-          sx={{
-            backgroundImage: "url(/union.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "100% 100%",
-            marginTop: "150px",
-            borderColor: "#034275",
-            borderStyle: "solid",
-          }}
-        >
+
+        <Box className="testimonialContainer">
           <Grid container>
             <Grid
               item

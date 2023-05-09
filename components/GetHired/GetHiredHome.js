@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { NEUTRAL, PRIMARY } from "../../theme/colors";
 import { Box, Container, Grid, Stack, useMediaQuery } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -16,6 +15,7 @@ import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper";
 
 import "./GetHired.module.css";
 import { MAX } from "../../theme/spacings";
+import Image from "next/image";
 
 const GetHiredHome = () => {
   const [active, setActive] = useState(2);
@@ -56,7 +56,7 @@ const GetHiredHome = () => {
             flexDirection: "column",
           }}
         >
-          <Stack direction={"row"} sx={{ gap: "20px" }}>
+          <Stack direction={"row"} sx={{ gap: "20px", flexWrap: "wrap" }}>
             <CustomTypography
               sx={{
                 fontSize: MAX,
@@ -96,6 +96,7 @@ const GetHiredHome = () => {
             </div>
           </Stack>
         </Box>
+
         <Swiper
           effect={"coverflow"}
           grabCursor={true}
@@ -124,7 +125,7 @@ const GetHiredHome = () => {
           <SwiperSlide>
             <Box className={`hiredCard hiredCardActive`}>
               <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
+                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
                   <Stack
                     sx={{
                       gap: "30px",
@@ -157,8 +158,21 @@ const GetHiredHome = () => {
                     </button>
                   </Stack>
                 </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img src="/hired1.png" alt="" className="getHiredImage" />
+                <Grid
+                  item
+                  md={4.8}
+                  sm={6}
+                  xs={0}
+                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+                >
+                  <Image
+                    src="/hired1.png"
+                    className="getHiredImage"
+                    alt=""
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                  />
                 </Grid>
               </Grid>
             </Box>
@@ -166,7 +180,7 @@ const GetHiredHome = () => {
           <SwiperSlide>
             <Box className={`hiredCard hiredCardActive`}>
               <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
+                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
                   <Stack
                     sx={{
                       gap: "30px",
@@ -182,7 +196,7 @@ const GetHiredHome = () => {
                         fontWeight: 700,
                       }}
                     >
-                      Featured Job2
+                      Featured Job 1
                     </CustomTypography>
                     <CustomTypography className={`${getActiveBody(3)}`}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -199,8 +213,21 @@ const GetHiredHome = () => {
                     </button>
                   </Stack>
                 </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img src="/hired1.png" alt="" className="getHiredImage" />
+                <Grid
+                  item
+                  md={4.8}
+                  sm={6}
+                  xs={0}
+                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+                >
+                  <Image
+                    src="/hired1.png"
+                    className="getHiredImage"
+                    alt=""
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                  />
                 </Grid>
               </Grid>
             </Box>
@@ -208,7 +235,7 @@ const GetHiredHome = () => {
           <SwiperSlide>
             <Box className={`hiredCard hiredCardActive`}>
               <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
+                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
                   <Stack
                     sx={{
                       gap: "30px",
@@ -224,7 +251,7 @@ const GetHiredHome = () => {
                         fontWeight: 700,
                       }}
                     >
-                      Featured Job 3
+                      Featured Job 1
                     </CustomTypography>
                     <CustomTypography className={`${getActiveBody(3)}`}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -241,8 +268,21 @@ const GetHiredHome = () => {
                     </button>
                   </Stack>
                 </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img src="/hired1.png" alt="" className="getHiredImage" />
+                <Grid
+                  item
+                  md={4.8}
+                  sm={6}
+                  xs={0}
+                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+                >
+                  <Image
+                    src="/hired1.png"
+                    className="getHiredImage"
+                    alt=""
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                  />
                 </Grid>
               </Grid>
             </Box>
@@ -250,7 +290,7 @@ const GetHiredHome = () => {
           <SwiperSlide>
             <Box className={`hiredCard hiredCardActive`}>
               <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
+                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
                   <Stack
                     sx={{
                       gap: "30px",
@@ -266,7 +306,7 @@ const GetHiredHome = () => {
                         fontWeight: 700,
                       }}
                     >
-                      Featured Job 4
+                      Featured Job 1
                     </CustomTypography>
                     <CustomTypography className={`${getActiveBody(3)}`}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -283,8 +323,21 @@ const GetHiredHome = () => {
                     </button>
                   </Stack>
                 </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img alt="" src="/hired1.png" className="getHiredImage" />
+                <Grid
+                  item
+                  md={4.8}
+                  sm={6}
+                  xs={0}
+                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+                >
+                  <Image
+                    src="/hired1.png"
+                    className="getHiredImage"
+                    alt=""
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                  />
                 </Grid>
               </Grid>
             </Box>
@@ -292,7 +345,7 @@ const GetHiredHome = () => {
           <SwiperSlide>
             <Box className={`hiredCard hiredCardActive`}>
               <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
+                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
                   <Stack
                     sx={{
                       gap: "30px",
@@ -308,8 +361,7 @@ const GetHiredHome = () => {
                         fontWeight: 700,
                       }}
                     >
-                      {" "}
-                      Featured Job 5
+                      Featured Job 1
                     </CustomTypography>
                     <CustomTypography className={`${getActiveBody(3)}`}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -326,50 +378,21 @@ const GetHiredHome = () => {
                     </button>
                   </Stack>
                 </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img alt="" src="/hired1.png" className="getHiredImage" />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7.5} sm={6} xs={6} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Featured Job 6
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
-                </Grid>
-                <Grid item md={4.5} sm={6} xs={6}>
-                  <img alt="" src="/hired1.png" className="getHiredImage" />
+                <Grid
+                  item
+                  md={4.8}
+                  sm={6}
+                  xs={0}
+                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
+                >
+                  <Image
+                    src="/hired1.png"
+                    className="getHiredImage"
+                    alt=""
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                  />
                 </Grid>
               </Grid>
             </Box>

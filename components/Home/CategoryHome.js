@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import Carousel from "react-elastic-carousel";
+import Image from "next/image";
 
 const StyledCarousel = styled(Carousel)({
   "& .rec .rec-carousel": {
@@ -26,10 +27,9 @@ const CategoryHome = () => {
 
   const breakPoints = [
     { width: 550, itemsToShow: 1 },
-    { width: 768, itemsToShow: 3 },
+    { width: 768, itemsToShow: 1 },
     { width: 974, itemsToShow: 4 },
   ];
-
 
   return (
     <div
@@ -46,7 +46,32 @@ const CategoryHome = () => {
         {tablet ? (
           <Grid container>
             <Grid item md={8} sm={12} xs={12}>
-              <StyledCarousel breakPoints={breakPoints}>
+              <Stack
+                direction={"row"}
+                sx={{ gap: "10px", justifyContent: "center", flexWrap: "wrap" }}
+              >
+                <CustomTypography
+                  sx={{
+                    fontSize: MAX,
+                    fontWeight: "700",
+                    fontFamily: "Inter-Bold",
+                  }}
+                >
+                  Browse
+                </CustomTypography>
+                <CustomTypography
+                  sx={{
+                    fontSize: MAX,
+                    fontWeight: "700",
+                    color: PRIMARY,
+                    fontFamily: "Inter-Bold",
+                  }}
+                >
+                  Category
+                </CustomTypography>
+              </Stack>
+
+              <StyledCarousel breakPoints={breakPoints} showArrows={false}>
                 <Stack
                   sx={{
                     width: "100%",
@@ -70,7 +95,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img   alt=""src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
 
                       <Grid
@@ -123,7 +155,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -174,7 +213,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -225,7 +271,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -285,7 +338,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -336,7 +396,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -387,7 +454,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -438,7 +512,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -498,7 +579,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -549,7 +637,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -600,7 +695,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -651,7 +753,14 @@ const CategoryHome = () => {
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        <img alt="" src="/pointer.svg" />
+                        <Image
+                          src="/pointer.svg"
+                          alt=""
+                          width="0"
+                          height="0"
+                          sizes="100vw"
+                          className="pointers"
+                        />
                       </Grid>
                       <Grid
                         item
@@ -757,7 +866,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -808,7 +924,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -859,7 +982,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -910,7 +1040,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -988,7 +1125,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -1039,7 +1183,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -1090,7 +1241,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item
@@ -1141,7 +1299,14 @@ const CategoryHome = () => {
                     >
                       <Grid container>
                         <Grid item md={3}>
-                          <img alt="" src="/pointer.svg" />
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
                         </Grid>
                         <Grid
                           item

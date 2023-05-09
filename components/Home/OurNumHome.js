@@ -44,12 +44,7 @@ const OurNumHome = () => {
               justifyContent: { md: "flex-start", xs: "center", sm: "center" },
             }}
           >
-            <img
-              src="/numbers.png"
-              alt=""
-              style={{ height: "600px" }}
-              data-aos="fade-up"
-            />
+            <img src="/numbers.png" alt="" data-aos="fade-up" />
           </Grid>
           <Grid
             item
