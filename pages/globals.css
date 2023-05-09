@@ -617,3 +617,18 @@
     width: 100%;
   }
 }
+
+.styledRows {
+  height: 50px;
+}
+
+.styledRows .startingTd {
+  padding-left: 30px;
+}
+.styledRows .endTd {
+  padding-right: 30px;
+}
+
+.styledRows:nth-child(even) {
+  background-color: #5ca9e814;
+}
