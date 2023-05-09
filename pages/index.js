@@ -36,7 +36,7 @@ export default function Home() {
       <CategoryHome />
       <GetHiredHome />
       <NicheTechHome />
-      {/* <OurNumHome /> */}
+      <OurNumHome />
       <BrandsHome />
       <TestimonialHome />
       <SubscribHome />
