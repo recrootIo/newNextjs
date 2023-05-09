@@ -15,11 +15,6 @@ import {
   Step,
   StepLabel,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
-import { red } from "@mui/material/colors";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
 
