@@ -539,3 +539,81 @@
   height: 161px;
   width: 160px;
 }
+
+.topbar {
+  height: 103px;
+  background-image: url("/Group 86.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.logoImage {
+  margin-top: 63px;
+  width: 190px;
+  height: 43px;
+  max-width: 400px;
+  max-height: 70px;
+}
+
+.resumeUploadTitle {
+  text-align: center;
+  color: #034275;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 48px;
+}
+
+.resumeUploadText {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+
+  color: #01313f;
+}
+
+.salaryForm {
+  display: flex;
+  justify-content: center;
+  width: 793px;
+  height: 64px;
+}
+
+.searchJobsBtn {
+  background-color: #015fb1 !important;
+  height: 50px;
+  width: 40%;
+  text-align: center;
+  margin-bottom: 50px;
+  text-transform: capitalize;
+  font-size: medium;
+}
+
+.nextBtn {
+  background-color: #015fb1 !important;
+  height: 50px;
+  width: 30%;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 50px;
+}
+
+.stepperContainer {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .searchJobsBtn {
+    width: 100%;
+  }
+}
