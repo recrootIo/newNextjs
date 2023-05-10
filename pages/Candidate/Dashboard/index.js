@@ -66,6 +66,7 @@ const Index = () => {
                   width: "100%",
                   backgroundColor: "#5CA9E814",
                   borderRadius: "10px 10px 0px 0px",
+                  padding: "15px",
                 }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"

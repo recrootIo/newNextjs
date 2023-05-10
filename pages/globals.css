@@ -20,10 +20,6 @@
   src: url("./asset/Inter-Thin.ttf");
 }
 
-.loginImages {
-  height: 183px;
-}
-
 .loginLogo {
   height: 33px;
 }
@@ -640,4 +636,64 @@
 
 .iconPointers {
   cursor: pointer;
+}
+
+.loginLogo {
+  width: auto;
+}
+
+.loginImages {
+  height: 183px;
+  width: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .loginImages {
+    height: 120px;
+  }
+}
+
+.signInSideImage1 {
+  position: absolute;
+  right: -250px;
+  width: auto;
+}
+
+.signInSideImage2 {
+  position: absolute;
+  left: -250px;
+  height: 600px;
+  width: auto;
+}
+
+.signInMain {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("/SignUpBG.svg");
+  overflow: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px;
+}
+
+.signInContent {
+  width: 700px;
+  gap: 20px;
+  position: fixed;
+}
+
+@media only screen and (max-width: 1137px) {
+  .signInSideImage1 {
+    display: none;
+  }
+  .signInSideImage2 {
+    display: none;
+  }
+  .signInMain {
+    height: 120vh;
+  }
+  .signInContent {
+    width: 100%;
+    position: initial;
+  }
 }
