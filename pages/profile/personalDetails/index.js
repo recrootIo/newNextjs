@@ -10,14 +10,23 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Chip,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  IconButton,
 } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import "./personalDetails.module.css";
+import { useState } from "react";
+import { Theme, useTheme } from "@mui/material/styles";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -29,135 +38,284 @@ const top100Films = [
   { label: "Pulp Fiction", year: 1994 },
 ];
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  "Oliver Hansen",
+  "Van Henry",
+  "April Tucker",
+  "Ralph Hubbard",
+  "Omar Alexander",
+  "Carlos Abbott",
+  "Miriam Wagner",
+  "Bradley Wilkerson",
+  "Virginia Andrews",
+  "Kelly Snyder",
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 const PersonalDetails = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleSelectedOptionsChange = (event, newValue) => {
+    setSelectedOptions(newValue);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  //Experience
+  const [age, setAge] = React.useState("");
+
+  const handleExperienceChange = (event) => {
+    setAge(event.target.value);
   };
 
   return (
-    <box>
-      <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Open form dialog
-        </Button>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogContent>
-            <Container>
-              <CustomTypography
-                className="personalDetailTitle"
-                variant="h4"
+    <div style={{ paddingBottom: "100px" }}>
+      <Container>
+        <CustomTypography
+          className="personalDetailTitle"
+          variant="h4"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            fontWeight: 600,
+            mt: "100px",
+          }}
+          gutterBottom
+        >
+          Edit Personal Details
+        </CustomTypography>
+        <Stack spacing={2} sx={{ mt: "40px" }}>
+          <TextField
+            id="outlined-basic"
+            label="Full Name *"
+            variant="outlined"
+            sx={{ width: "100%%" }}
+          />
+          <Autocomplete
+            freeSolo
+            disablePortal
+            id="combo-box-demo"
+            options={top100Films}
+            sx={{ display: "flex", justifyContent: "center" }}
+            renderInput={(params) => (
+              <TextField
+                fullWidth
+                {...params}
+                label="Job Title *"
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 600,
+                  background: "#FFFFFF",
+                  borderColor: "#949494",
+                  borderRadius: "8px",
                 }}
-                gutterBottom
+              />
+            )}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Email Id *"
+            variant="outlined"
+            sx={{ width: "100%" }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Mobile No *"
+            variant="outlined"
+            sx={{ width: "100%" }}
+          />
+          <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
+            <Autocomplete
+              freeSolo
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+              renderInput={(params) => (
+                <TextField
+                  fullWidth
+                  {...params}
+                  label="Enter your Location *"
+                  sx={{
+                    background: "#FFFFFF",
+                    borderColor: "#949494",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
+                />
+              )}
+            />
+            <Autocomplete
+              freeSolo
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+              renderInput={(params) => (
+                <TextField
+                  fullWidth
+                  {...params}
+                  label="Region *"
+                  sx={{
+                    background: "#FFFFFF",
+                    borderColor: "#949494",
+                    borderRadius: "8px",
+                    width: "100%",
+                  }}
+                />
+              )}
+            />
+          </Stack>
+
+          <Stack gap={1}>
+            <Box sx={{ display: "flex" }}>
+              {/* code copied from job preferences of job positions at current site */}
+              <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                fullWidth
+                disablePortal={true}
+                name="language"
+                //value={title}
+                //options={titleDesc.map((option) => option.rol.role)}
+                renderInput={(params) => (
+                  <TextField
+                    variant="outlined"
+                    {...params}
+                    label="Language"
+                    name="language"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+              <IconButton>
+                <AddIcon sx={{ color: "#1976d2" }} />
+              </IconButton>
+            </Box>
+            <Stack direction={"row"} gap={1}></Stack>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              <Chip
+                label="sinhala"
+                //onDelete={() => removeTitle(t)}
+                deleteIcon={<CloseIcon />}
+                sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+              />
+            </Box>
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Experience(Years)
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Age"
+                onChange={handleExperienceChange}
               >
-                Edit Personal Details
-              </CustomTypography>
-              <Stack spacing={2} sx={{ mt: "40px" }}>
-                <TextField
-                  id="outlined-basic"
-                  label="Full Name *"
-                  variant="outlined"
-                  sx={{ width: "50%" }}
-                />
-                <Autocomplete
-                  freeSolo
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                  renderInput={(params) => (
-                    <TextField
-                      fullWidth
-                      {...params}
-                      label="Job Title *"
-                      sx={{
-                        background: "#FFFFFF",
-                        borderColor: "#949494",
-                        borderRadius: "8px",
-                      }}
-                    />
-                  )}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Email Id *"
-                  variant="outlined"
-                  sx={{ width: "500px" }}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Mobile No *"
-                  variant="outlined"
-                  sx={{ width: "500px" }}
-                />
-                <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
-                  <Autocomplete
-                    freeSolo
-                    disablePortal
-                    id="combo-box-demo"
-                    options={top100Films}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        label="Enter your Location *"
-                        sx={{
-                          background: "#FFFFFF",
-                          borderColor: "#949494",
-                          borderRadius: "8px",
-                          width: "100%",
-                        }}
-                      />
-                    )}
-                  />
-                  <Autocomplete
-                    freeSolo
-                    disablePortal
-                    id="combo-box-demo"
-                    options={top100Films}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        label="Region *"
-                        sx={{
-                          background: "#FFFFFF",
-                          borderColor: "#949494",
-                          borderRadius: "8px",
-                          width: "100%",
-                        }}
-                      />
-                    )}
-                  />
-                </Stack>
-              </Stack>
-            </Container>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Subscribe</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    </box>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Current Salary(Per Annum)
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Age"
+                onChange={handleExperienceChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              Do you already have an offer?*
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              sx={{ gap: "100px", mt: "12px" }}
+            >
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+            </RadioGroup>
+          </FormControl>
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#015FB1 !important",
+                width: "50%",
+                borderRadius: "8px",
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+            >
+              Save
+            </Button>
+          </Stack>
+        </Stack>
+      </Container>
+    </div>
   );
 };
 

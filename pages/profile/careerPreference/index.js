@@ -13,6 +13,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  IconButton,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
@@ -24,6 +25,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -70,13 +74,13 @@ function getStyles(name, personName, theme) {
 
 const AddCareerPreference = () => {
   const [availability, setAvailability] = React.useState("");
+  const [address, setaddress] = useState("");
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
 
   const handleAvailabilityChange = (event) => {
     setAvailability(event.target.value);
   };
-
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
 
   const handleWorkPreferenceChange = (event) => {
     const {
@@ -86,6 +90,22 @@ const AddCareerPreference = () => {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  const handleSelect = async (selected) => {
+    if (selected?.label) {
+      setjobLocations((state) => [...state, selected?.label]);
+      try {
+        const res = await userService.insertNewLocation(
+          users?._id,
+          selected?.label
+        );
+        NotifySuccess(res.data);
+      } catch (err) {
+        NotifyFailed();
+      }
+      setaddress("");
+    }
   };
 
   return (
@@ -137,113 +157,123 @@ const AddCareerPreference = () => {
               />
             )}
           />
-          <FormControl sx={{ m: 1, width: "100%" }}>
-            <InputLabel id="demo-multiple-chip-label">
-              Work Preference
-            </InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={personName}
-              onChange={handleWorkPreferenceChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 0.5,
-                  }}
-                >
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, width: "100%" }}>
-            <InputLabel id="demo-multiple-chip-label">Location</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={personName}
-              onChange={handleWorkPreferenceChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 0.5,
-                  }}
-                >
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, width: "100%" }}>
-            <InputLabel id="demo-multiple-chip-label">Job Type</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={personName}
-              onChange={handleWorkPreferenceChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 0.5,
-                  }}
-                >
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Stack gap={1}>
+            <Box sx={{ display: "flex" }}>
+              {/* code copied from job preferences of job positions at current site */}
+              <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                fullWidth
+                disablePortal={true}
+                name="workPreference"
+                //value={title}
+                //options={titleDesc.map((option) => option.rol.role)}
+                renderInput={(params) => (
+                  <TextField
+                    variant="outlined"
+                    {...params}
+                    label="Work Preference"
+                    name="workPreference"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+              <IconButton>
+                <AddIcon sx={{ color: "#1976d2" }} />
+              </IconButton>
+            </Box>
+            <Stack direction={"row"} gap={1}></Stack>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              <Chip
+                label="On-Site"
+                //onDelete={() => removeTitle(t)}
+                deleteIcon={<CloseIcon />}
+                sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+              />
+            </Box>
+          </Stack>
+          <Box sx={{ width: "100%" }}>
+            <GooglePlacesAutocomplete
+              apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+              selectProps={{
+                isClearable: true,
+                placeholder: "Enter Your Location",
+                value: address,
+                onChange: (val) => {
+                  setaddress(val);
+                  handleSelect(val);
+                },
+                styles: {
+                  textInputContainer: (provided) => ({
+                    ...provided,
+                    backgroundColor: "red",
+                  }),
+                  input: (provided) => ({
+                    ...provided,
+                    boxShadow: 0,
+                    height: "40px",
+                    "&:hover": {
+                      border: "1px solid purple",
+                    },
+                  }),
+                  singleValue: (provided) => ({
+                    ...provided,
+                    boxShadow: 0,
+                    // "&:hover": {
+                    //   border: "1px solid purple",
+                    // },
+                  }),
+                  // textInputContainer: {
+                  //   backgroundColor: "grey",
+                  // },
+                },
+              }}
+              // styles={}
+            />
+          </Box>
+          <Stack gap={1}>
+            <Box sx={{ display: "flex" }}>
+              {/* code copied from job preferences of job positions at current site */}
+              <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                fullWidth
+                disablePortal={true}
+                name="jobtype"
+                //value={title}
+                //options={titleDesc.map((option) => option.rol.role)}
+                renderInput={(params) => (
+                  <TextField
+                    variant="outlined"
+                    {...params}
+                    label="Job Type"
+                    name="jobtype"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                  />
+                )}
+              />
+              <IconButton>
+                <AddIcon sx={{ color: "#1976d2" }} />
+              </IconButton>
+            </Box>
+            <Stack direction={"row"} gap={1}></Stack>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              <Chip
+                label="Full time"
+                //onDelete={() => removeTitle(t)}
+                deleteIcon={<CloseIcon />}
+                sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+              />
+            </Box>
+          </Stack>
           <Stack direction="row" spacing={2}>
             <Button
               variant="contained"
@@ -257,7 +287,11 @@ const AddCareerPreference = () => {
             </Button>
             <Button
               variant="contained"
-              sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+              sx={{
+                bgcolor: "#015FB1 !important",
+                width: "50%",
+                borderRadius: "8px",
+              }}
             >
               Save
             </Button>
