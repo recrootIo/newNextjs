@@ -15,6 +15,11 @@
   src: url("./asset/Inter-Bold.ttf");
 }
 
+@font-face {
+  font-family: "Inter-Thin";
+  src: url("./asset/Inter-Thin.ttf");
+}
+
 .loginImages {
   height: 183px;
 }
@@ -616,4 +621,23 @@
   .searchJobsBtn {
     width: 100%;
   }
+}
+
+.styledRows {
+  height: 50px;
+}
+
+.styledRows .startingTd {
+  padding-left: 30px;
+}
+.styledRows .endTd {
+  padding-right: 30px;
+}
+
+.styledRows:nth-child(even) {
+  background-color: #5ca9e814;
+}
+
+.iconPointers {
+  cursor: pointer;
 }
