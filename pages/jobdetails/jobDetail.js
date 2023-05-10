@@ -22,8 +22,8 @@ import AdsClickIcon from "@mui/icons-material/AdsClick";
 import CallIcon from "@mui/icons-material/Call";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Chip from "@mui/material/Chip";
-import "./jobDetail.module.css";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const bull = (
   <Box
@@ -47,6 +47,7 @@ const JobDetail = () => {
             <Card
               variant="outlined"
               sx={{
+                height: "100%",
                 width: "100%",
                 borderRadius: "7px",
                 borderColor: "#d3eaff",
@@ -55,7 +56,7 @@ const JobDetail = () => {
               <CardHeader
                 title="Job Description"
                 titleTypographyProps={{
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#01313F",
                 }}
@@ -65,8 +66,8 @@ const JobDetail = () => {
                 <CustomTypography
                   variant="body2"
                   color="text.secondary"
-                  lineHeight="20px"
-                  fontSize="14px"
+                  lineHeight="27px"
+                  fontSize="16px"
                   sx={{ color: "rgba(1, 49, 63, 0.8)" }}
                   gutterBottom
                 >
@@ -83,7 +84,7 @@ const JobDetail = () => {
                   sx={{
                     mt: "20px",
                     color: "#034275",
-                    fontSize: "15px",
+                    fontSize: "17px",
                     fontWeight: "600",
                   }}
                 >
@@ -92,8 +93,8 @@ const JobDetail = () => {
                 <CustomTypography
                   variant="body2"
                   color="text.secondary"
-                  lineHeight="20px"
-                  fontSize="14px"
+                  lineHeight="27px"
+                  fontSize="16px"
                   sx={{ mt: "15px", color: "rgba(1, 49, 63, 0.8)" }}
                   gutterBottom
                 >
@@ -116,7 +117,7 @@ const JobDetail = () => {
                   sx={{
                     mt: "20px",
                     color: "#034275",
-                    fontSize: "15px",
+                    fontSize: "17px",
                     fontWeight: "600",
                   }}
                 >
@@ -125,8 +126,8 @@ const JobDetail = () => {
                 <CustomTypography
                   variant="body2"
                   color="rgba(1, 49, 63, 0.8)"
-                  lineHeight="20px"
-                  fontSize="14px"
+                  lineHeight="27px"
+                  fontSize="16px"
                   sx={{ mt: "15px", color: "rgba(1, 49, 63, 0.8)" }}
                   gutterBottom
                 >
@@ -160,7 +161,7 @@ const JobDetail = () => {
                   sx={{
                     ml: "8px",
                     bgcolor: "#02A9F7 !important",
-                    fontSize: "14px",
+                    fontSize: "15px",
                   }}
                 >
                   Apply now
@@ -197,7 +198,7 @@ const JobDetail = () => {
                 <CardHeader
                   title="Job Overview"
                   titleTypographyProps={{
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: "bold",
                     color: "#01313F",
                   }}
@@ -208,18 +209,18 @@ const JobDetail = () => {
                     <CustomTypography
                       variant="body2"
                       sx={{
-                        fontSize: 14,
+                        fontSize: 16,
                         color: "rgba(1, 49, 63, 0.8)",
                         mt: "10px",
                       }}
                       gutterBottom
                     >
-                      <CurrencyRupeeIcon fontSize="16px" /> Posted 5 Days Ago
+                      <CalendarMonthIcon fontSize="16px" /> Posted 5 Days Ago
                     </CustomTypography>
                     <CustomTypography
                       variant="body2"
                       sx={{
-                        fontSize: 14,
+                        fontSize: 16,
                         color: "rgba(1, 49, 63, 0.8)",
                       }}
                       gutterBottom
@@ -230,7 +231,7 @@ const JobDetail = () => {
                     <CustomTypography
                       variant="body2"
                       sx={{
-                        fontSize: 14,
+                        fontSize: 16,
                         color: "rgba(1, 49, 63, 0.8)",
                       }}
                       gutterBottom
@@ -240,7 +241,7 @@ const JobDetail = () => {
                     <CustomTypography
                       variant="body2"
                       sx={{
-                        fontSize: 14,
+                        fontSize: 16,
                         color: "rgba(1, 49, 63, 0.8)",
                       }}
                       gutterBottom
@@ -261,13 +262,13 @@ const JobDetail = () => {
                 <CardHeader
                   title="Key Skills"
                   titleTypographyProps={{
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: "bold",
                     color: "#01313F",
                   }}
                   sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
                 />
-                <CardContent sx={{ rowGap: "20px" }}>
+                <CardContent sx={{ rowGap: "30px" }}>
                   <Chip
                     label="Visual Design"
                     size="small"
@@ -302,7 +303,7 @@ const JobDetail = () => {
                 <CardHeader
                   title="Company Profile"
                   titleTypographyProps={{
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: "bold",
                     color: "#01313F",
                   }}
@@ -323,11 +324,11 @@ const JobDetail = () => {
                           size={100}
                           sx={{
                             "& .MuiAvatar-img": {
-                              height: "30px",
-                              width: "30px",
+                              height: "35px",
+                              width: "35px",
                             },
-                            height: "60px",
-                            width: "60px",
+                            height: "65px",
+                            width: "65px",
                           }}
                         />
                       </Grid>
@@ -342,7 +343,7 @@ const JobDetail = () => {
                       >
                         <CustomTypography
                           variant="body2"
-                          fontSize="16px"
+                          fontSize="18px"
                           fontWeight="700"
                           color="#034275"
                         >
@@ -350,14 +351,14 @@ const JobDetail = () => {
                         </CustomTypography>
                         <CustomTypography
                           variant="body2"
-                          fontSize="15px"
+                          fontSize="17px"
                           color="#034275"
                         >
                           Location
                         </CustomTypography>
                         <CustomTypography
                           variant="body2"
-                          fontSize="14px"
+                          fontSize="16px"
                           color="#034275"
                           gutterBottom
                         >
@@ -369,8 +370,8 @@ const JobDetail = () => {
                   <CustomTypography
                     variant="body2"
                     // color="text.secondary"
-                    lineHeight="20px"
-                    fontSize="14px"
+                    lineHeight="27px"
+                    fontSize="16px"
                     color="rgba(1, 49, 63, 0.8)"
                     sx={{ mt: "15px" }}
                     gutterBottom
@@ -383,41 +384,41 @@ const JobDetail = () => {
                   <Stack spacing={1} sx={{ mt: "25px" }}>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <CallIcon
-                        fontSize="12px"
+                        fontSize="14px"
                         sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                       />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"
-                        fontSize="14px"
+                        fontSize="16px"
                         sx={{ marginBottom: 0 }}
                       >
-                        &nbsp;+00 0000000000
+                        &nbsp;&nbsp;+00 0000000000
                       </CustomTypography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <MailOutlineIcon
-                        fontSize="12px"
+                        fontSize="14px"
                         sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                       />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"
-                        fontSize="14px"
+                        fontSize="16px"
                         sx={{ marginBottom: 0 }}
                       >
-                        &nbsp;lorem@recroot.io
+                        &nbsp;&nbsp;lorem@recroot.io
                       </CustomTypography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <img alt='' src="/url.png" width="16px" />
+                      <img src="/url.png" alt="" width="16px" />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"
-                        fontSize="14px"
+                        fontSize="16px"
                         sx={{ marginBottom: 0 }}
                       >
-                        &nbsp;lorem@recroot.io
+                        &nbsp;&nbsp;lorem@recroot.io
                       </CustomTypography>
                     </Box>
                   </Stack>

@@ -16,6 +16,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Carousel from "react-elastic-carousel";
 import "./jobDetail.module.css";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { useRef } from "react";
 
 const bull = (
   <Box
@@ -33,6 +34,16 @@ const breakPoints = [
 ];
 
 const SimilarJobs = () => {
+  const carouselRef = useRef(null);
+
+  const handleSlideChange = (currentItem, newIndex) => {
+    const totalItems = carouselRef.current.items.length;
+    if (newIndex === totalItems - 1) {
+      // if current slide is the last slide, go to the first slide
+      carouselRef.current.goTo(0);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -50,7 +61,14 @@ const SimilarJobs = () => {
         </CustomTypography>
 
         <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-          <Carousel breakPoints={breakPoints}>
+          <Carousel
+            ref={carouselRef}
+            onSlideChange={handleSlideChange}
+            enableAutoPlay
+            autoPlaySpeed={1500}
+            breakPoints={breakPoints}
+            pagination={true}
+          >
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -69,12 +87,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 17,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 14,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer1"
@@ -99,7 +117,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -125,6 +143,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -143,12 +162,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer2"
@@ -173,7 +192,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -199,6 +218,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -217,12 +237,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer"
@@ -247,7 +267,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -273,6 +293,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -291,12 +312,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer 3"
@@ -321,7 +342,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -347,6 +368,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -365,12 +387,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer 4"
@@ -395,7 +417,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -421,6 +443,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -440,12 +463,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer 5"
@@ -469,7 +492,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
@@ -495,6 +518,7 @@ const SimilarJobs = () => {
                 </Box>
               </CardContent>
             </Card>
+
             <Card className="similarCard">
               <CardHeader
                 avatar={
@@ -514,12 +538,12 @@ const SimilarJobs = () => {
                   />
                 }
                 titleTypographyProps={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: "bold",
                   color: "#034275",
                 }}
                 subheaderTypographyProps={{
-                  fontSize: 12,
+                  fontSize: 16,
                   color: "#034275",
                 }}
                 title="Graphic Designer 6"
@@ -544,7 +568,7 @@ const SimilarJobs = () => {
                   <Box className="btnBox">
                     <Button
                       className="bookmarkBtn"
-                      size="small"
+                      size="medium"
                       variant="outlined"
                       bgcolor="#02A9F7 !important"
                     >
