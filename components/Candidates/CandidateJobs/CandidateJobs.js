@@ -1,6 +1,6 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Box, CardContent, Collapse, Divider, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { StyledCard } from "../ProfileStyles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
