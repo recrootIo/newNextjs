@@ -31,7 +31,7 @@ import Profile from "@/components/Candidates/Profile/Profile";
 import Certifications from "@/components/Candidates/Certifications/Certifications";
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 import CandidateProfileHeader from "@/pages/candiProfileHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { retrievePersonal } from "@/redux/slices/personal";
 
 const StyledListItemText = styled(ListItemText)`
@@ -45,6 +45,8 @@ const Index = () => {
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
+
+  const { data = {} } = useSelector((state) => state?.personal);
 
   const dispatch = useDispatch();
 
@@ -61,20 +63,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    console.log("this was called");
-    dispatch(retrievePersonal())
-      .then((res) => {
-        if (res.error.message === "Request failed with status code 401") {
-          // dispatch(logout()).then(() => {
-          //   navigate("/signin", { state: true });
-          // });
-        }
-      })
-      .catch((error) => {
-        // if (error.message === "Request failed with status code 401") {
-        //   navigate("/signin", { state: true });
-        // }
-      });
+    dispatch(retrievePersonal());
   }, [dispatch]);
 
   return (
@@ -165,7 +154,7 @@ const Index = () => {
           </Grid>
           <Grid item md={8}>
             <Stack sx={{ gap: "30px" }}>
-              <Profile />
+              <Profile {...data} />
               <Certifications />
               <CandidateJobs />
             </Stack>

@@ -10,8 +10,11 @@ import { LAZY, MID } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
 
 const PersonalDetail = ({ ...data }) => {
-  console.log(data, " personal: personalReducer,");
-  const { email, firstName, jobTitle, lastName, mobile } = data;
+  const { email, firstName, jobTitle, lastName, mobile, resume } = data;
+  const location = resume?.location;
+  const locationDetails = `${location?.country} , ${location?.state}  , ${location?.city}`;
+  const fullName = `${firstName} ${lastName}`;
+
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -52,7 +55,7 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Name:
                 </CustomTypography>
-                <CustomTypography>{firstName}</CustomTypography>
+                <CustomTypography>{fullName}</CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
@@ -73,14 +76,16 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Experience:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>
+                  {resume?.totalWorkExperience}
+                </CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Offer Letter:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>{resume?.currentOffer}</CustomTypography>
               </Stack>
             </Stack>
           </Grid>
@@ -88,35 +93,39 @@ const PersonalDetail = ({ ...data }) => {
             <Stack sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
-                  Name:
+                  Job Title:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>{jobTitle}</CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
-                  Email:
+                  Location:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>{locationDetails}</CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
-                  Contact Details:
+                  Language:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>
+                  {resume?.languages.join(", ")}
+                </CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
-                  Experience:
+                  Current Salary:
                 </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
+                <CustomTypography>
+                  {resume?.currentSalary?.salary}
+                </CustomTypography>
               </Stack>
 
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
-                  Offer Letter:
+                  Region:
                 </CustomTypography>
                 <CustomTypography>Name</CustomTypography>
               </Stack>

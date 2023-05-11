@@ -23,10 +23,12 @@ import CreateIcon from "@mui/icons-material/Create";
 import { LAZY, MID } from "@/theme/spacings";
 import { useSelector } from "react-redux";
 import PersonalDetail from "./PersonalDetails/PersonalDetail";
+import Education from "./Education/Education";
 
-const Profile = () => {
+const Profile = ({ ...data }) => {
   const [open, setOpen] = useState(true);
-  const { data = {} } = useSelector((state) => state.personal);
+
+  const education = data?.resume;
 
   const openProfile = () => {
     setOpen(!open);
@@ -137,100 +139,7 @@ const Profile = () => {
           <PersonalDetail {...data} />
 
           {/* Education */}
-          <StyledCard variant="outlined">
-            <Stack
-              direction={"row"}
-              sx={{
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "10px 30px",
-                backgroundColor: "#5CA9E814",
-              }}
-            >
-              <CustomTypography
-                sx={{
-                  fontFamily: BOLD,
-                  color: "#00339B",
-                  fontSize: "20px",
-                }}
-              >
-                Education
-              </CustomTypography>
-              <AddIcon />
-            </Stack>
-            <CardContent sx={{ padding: "30px 30px" }}>
-              <Stack
-                sx={{
-                  backgroundColor: "#F6FCFF",
-                  borderRadius: "10px",
-                  padding: "20px 30px",
-                  border: "1px solid #D3EAFF",
-                }}
-              >
-                <Stack
-                  direction={"row"}
-                  sx={{
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                  <DeleteIcon sx={{ color: DANGER }} />
-                </Stack>
-                <Grid container>
-                  <Grid item md={6}>
-                    <Stack sx={{ gap: LAZY }}>
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-                    </Stack>
-                  </Grid>
-                  <Grid item md={6}>
-                    <Stack sx={{ gap: LAZY }}>
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>Degree</CustomTypography>
-                      </Stack>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </Stack>
-            </CardContent>
-          </StyledCard>
+          <Education {...education} />
 
           {/* Experience */}
           <StyledCard variant="outlined">
