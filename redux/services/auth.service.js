@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const API_URL = " http://localhost:3000/";
+const API_URL = "http://localhost:3000/";
+
 const register = (
   email,
   password,
@@ -24,6 +25,7 @@ const register = (
     immediate,
   });
 };
+
 const reRegister = (
   email,
   password,
@@ -50,7 +52,7 @@ const login = (email, password) => {
     })
     .then((response) => {
       if (response.data.token) {
-       Cookies.set('user', JSON.stringify(response.data), { expires: 1 })
+        Cookies.set("user", JSON.stringify(response.data), { expires: 1 });
         localStorage.setItem("User", JSON.stringify(response.data));
       }
       return response;
@@ -60,6 +62,7 @@ const login = (email, password) => {
 const logout = () => {
   localStorage.removeItem("User");
 };
+
 const authService = {
   register,
   reRegister,
