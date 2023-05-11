@@ -86,7 +86,10 @@ const NoticePeriod = () => {
           </CustomTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Stack width="70%" spacing={3}>
+          <Stack
+            sx={{ width: { md: "70%", sm: "100%", xs: "100%" } }}
+            spacing={3}
+          >
             <FormControl>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Notice Period *

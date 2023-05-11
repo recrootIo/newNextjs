@@ -1,22 +1,23 @@
 import React from "react";
 import { Typography, Box, Grid, Container } from "@mui/material";
 import Image from "next/image";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 
 const DreamJob = () => {
   return (
     <Box className="dreamjob">
       <Container>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid item className="dreamJobTypoGrid" xs={12} md={6}>
             <Box className="dreamjobTypoBox" xs={12}>
-              <Typography
+              <CustomTypography
                 className="dreamjobTypo"
                 variant="h4"
                 fontWeight={700}
                 gutterBottom
               >
                 Find your Dream Job
-              </Typography>
+              </CustomTypography>
             </Box>
           </Grid>
           <Grid className="dreamjobGrid" item xs={12} md={6}>

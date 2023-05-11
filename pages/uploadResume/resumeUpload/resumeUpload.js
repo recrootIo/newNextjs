@@ -156,7 +156,10 @@ const AddResume = () => {
               marginTop: "30px",
             }}
           >
-            <Stack width="70%" spacing={3}>
+            <Stack
+              sx={{ width: { md: "70%", sm: "100%", xs: "100%" } }}
+              spacing={3}
+            >
               <div className="container">
                 <div {...getRootProps({ style })}>
                   <input {...getInputProps()} />

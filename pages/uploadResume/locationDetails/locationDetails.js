@@ -76,7 +76,10 @@ const Location = () => {
         </Box>
         <Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Stack spacing={3}>
+            <Stack
+              sx={{ width: { md: "70%", sm: "100%", xs: "100%" } }}
+              spacing={3}
+            >
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"

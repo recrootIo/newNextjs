@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
   Box,
@@ -6,20 +5,13 @@ import {
   Stack,
   Button,
   Card,
-  CardHeader,
   CardContent,
   IconButton,
   Container,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
-import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import ShareIcon from "@mui/icons-material/Share";
-import "./jobDetail.module.css";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-
+import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 const JobDetailCard = () => {
   return (
     <Box
@@ -30,7 +22,14 @@ const JobDetailCard = () => {
       <Container>
         <Card
           variant="outlined"
-          sx={{ minWidth: 275, borderRadius: "7px", borderColor: "#d3eaff" }}
+          sx={{
+            minWidth: 275,
+            border: 0,
+            backgroundImage: `url("/Job detail page Background.svg")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            padding: "8px 16px",
+          }}
         >
           <CardContent>
             <Grid container spacing={2}>
@@ -44,20 +43,18 @@ const JobDetailCard = () => {
                       src="/logo 8.png"
                       alt=""
                       style={{
-                        width: "100px",
-                        height: "30px",
+                        width: "120px",
+                        height: "35px",
                         maxWidth: "160px",
                         maxHeight: "40px",
                       }}
                     />
-
-                    {/* <p>gsgdywg</p> */}
                   </Box>
                   <Box>
                     <CustomTypography
                       variant="h6"
                       sx={{
-                        fontSize: 24,
+                        fontSize: 30,
                         fontWeight: "bold",
                         color: "#034275",
                       }}
@@ -67,57 +64,128 @@ const JobDetailCard = () => {
                     <CustomTypography
                       variant="body1"
                       sx={{
-                        fontSize: 18,
-                        color: "#034275",
+                        fontSize: 23,
+                        color: "#02A9F7",
+                        fontWeight: "500",
                       }}
                       gutterBottom
                     >
                       Recroot
                     </CustomTypography>
                   </Box>
-                  <Stack direction="row" spacing={4}>
-                    <CustomTypography
-                      variant="body2"
-                      sx={{
-                        fontSize: 14,
-                        color: "#034275",
-                      }}
-                      gutterBottom
-                    >
-                      <CurrencyRupeeIcon fontSize="16px" /> 5 - 6 LPA
-                    </CustomTypography>
-                    <CustomTypography
-                      variant="body2"
-                      sx={{
-                        fontSize: 14,
-                        color: "#034275",
-                      }}
-                      gutterBottom
-                    >
-                      <BusinessCenterIcon fontSize="16px" /> On Site
-                    </CustomTypography>
-                    <CustomTypography
-                      variant="body2"
-                      sx={{
-                        fontSize: 14,
-                        color: "#034275",
-                      }}
-                      gutterBottom
-                    >
-                      <HourglassTopIcon fontSize="16px" /> 2+ Years
-                    </CustomTypography>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginRight: { xs: "10px", md: "0px" },
+                      flexWrap: "wrap",
+                    }}
+                    spacing={1}
+                  >
+                    <Box className="imgTypo" sx={{ alignItems: "center" }}>
+                      <img
+                        className="firsticonImg"
+                        src="/currency.png"
+                        alt=""
+                      />
+                      <CustomTypography
+                        variant="body2"
+                        sx={{
+                          fontSize: 17,
+                          color: "#034275",
+                          marginTop: "8px",
+                        }}
+                        gutterBottom
+                      >
+                        5 -6 LPA
+                      </CustomTypography>
+                    </Box>
+                    <Box className="imgTypo">
+                      <img className="iconImg" src="/bag.png" alt="" />
+                      <CustomTypography
+                        variant="body2"
+                        sx={{
+                          fontSize: 17,
+                          color: "#034275",
+                        }}
+                        gutterBottom
+                      >
+                        On Site
+                      </CustomTypography>
+                    </Box>
+                    <Box className="imgTypo">
+                      <img className="iconImg" src="/hourglass.png" alt="" />
+                      <CustomTypography
+                        variant="body2"
+                        sx={{
+                          fontSize: 17,
+                          color: "#034275",
+                        }}
+                        gutterBottom
+                      >
+                        2+ Years
+                      </CustomTypography>
+                    </Box>
                   </Stack>
                   <Box>
-                    <CustomTypography
-                      variant="body2"
+                    <Stack
                       sx={{
-                        fontSize: 14,
-                        color: "#034275",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: { xs: "0px", md: "0px" },
+                        flexWrap: "wrap",
                       }}
-                      gutterBottom
+                      spacing={1}
                     >
-                      <LocationOnIcon fontSize="16px" /> Mumbai
-                    </CustomTypography>
+                      <Box className="imgTypo" sx={{ alignItems: "center" }}>
+                        <img className="iconImg" src="/location.png" alt="" />
+                        <CustomTypography
+                          variant="body2"
+                          sx={{
+                            fontSize: 17,
+                            color: "#034275",
+                            marginTop: "8px",
+                          }}
+                          gutterBottom
+                        >
+                          Mumbai
+                        </CustomTypography>
+                      </Box>
+                      <Box className="imgTypo">
+                        <img
+                          className="iconImg"
+                          src="/professional.png"
+                          alt=""
+                        />
+                        <CustomTypography
+                          variant="body2"
+                          sx={{
+                            fontSize: 17,
+                            color: "#034275",
+                          }}
+                          gutterBottom
+                        >
+                          Junior Professional
+                        </CustomTypography>
+                      </Box>
+                      <Box className="imgTypo">
+                        <img className="iconImg" src="/degree.png" alt="" />
+                        <CustomTypography
+                          variant="body2"
+                          sx={{
+                            fontSize: 17,
+                            color: "#034275",
+                          }}
+                          gutterBottom
+                        >
+                          Bachelor’s Degree
+                        </CustomTypography>
+                      </Box>
+                    </Stack>
                   </Box>
                 </Stack>
               </Grid>
@@ -129,7 +197,7 @@ const JobDetailCard = () => {
                   <img
                     src="/logo 8.png"
                     alt=""
-                    style={{ width: "160px", height: "40px" }}
+                    style={{ width: "180px", height: "50px", marginTop: "5px" }}
                   />
                 </Box>
                 <Box
@@ -142,11 +210,19 @@ const JobDetailCard = () => {
                   <Stack direction="row" spacing={1}>
                     <IconButton
                       aria-label="share"
-                      sx={{ color: "#02a9f7", fontSize: "9px" }}
+                      size="large"
+                      sx={{
+                        color: "#02a9f7",
+                        fontSize: "14px",
+                        padding: 0,
+                      }}
                     >
                       <BookmarkBorderIcon />
                     </IconButton>
-                    <IconButton aria-label="share" sx={{ color: "#02a9f7" }}>
+                    <IconButton
+                      aria-label="share"
+                      sx={{ color: "#02a9f7", fontSize: "14px" }}
+                    >
                       <ShareIcon />
                     </IconButton>
                     <Button
@@ -155,7 +231,7 @@ const JobDetailCard = () => {
                       sx={{
                         ml: "8px",
                         bgcolor: "#02A9F7 !important",
-                        fontSize: "14px",
+                        fontSize: "15px",
                       }}
                     >
                       Apply now

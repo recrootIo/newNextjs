@@ -26,12 +26,25 @@ const CandidateProfileHeader = () => {
         backgroundImage: 'url("/CandiHeaderImg.svg")',
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "325px",
-        paddingTop: "20px",
-        paddingBottom: "20px",
+        height: "330px",
+        pb: "40px",
       }}
     >
       <Container>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <IconButton
+            aria-label="notifications"
+            size="large"
+            sx={{ color: "white", width: "20px", p: 0 }}
+          >
+            <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
+          </IconButton>
+        </Box>
         <Grid container spacing={2}>
           <Grid
             item
@@ -46,7 +59,6 @@ const CandidateProfileHeader = () => {
               src="/candiImgBg.png"
               alt=""
               style={{ position: "absolute" }}
-              //style={{ width: "160px", height: "40px" }}
             />
             <Avatar
               alt="Remy Sharp"
@@ -115,49 +127,39 @@ const CandidateProfileHeader = () => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "flex-end",
-                position: "absolute",
-                right: "200px",
-                top: "10px",
-              }}
-            >
-              <IconButton
-                aria-label="notifications"
-                size="large"
-                sx={{ color: "white", width: "20px" }}
-              >
-                <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
-              </IconButton>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",
                 alignItems: "flex-end",
+                position: "absolute",
+                top: "100px",
+                backgroundImage: 'url("/profileprecentageborder.png")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                height: "200px",
               }}
             >
-              <img
-                src="/profileprecentageborder.png"
-                alt=""
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              />
               <CustomTypography
                 variant="h6"
                 sx={{
                   position: "absolute",
-                  bottom: "660px",
                   fontFamily: "Inter-bold",
-                  right: "280px",
                   zIndex: "1",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
                 }}
               >
                 100%
               </CustomTypography>
-              <CustomTypography variant="subtitle1" sx={{ mt: "5px" }}>
+              <CustomTypography
+                variant="subtitle1"
+                sx={{
+                  mt: "25px",
+                  fontSize: "14px",
+                  position: "relative",
+                  top: "20px",
+                }}
+              >
                 Profile completed (Excellent)
               </CustomTypography>
             </Box>

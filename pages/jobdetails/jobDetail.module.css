@@ -3,6 +3,19 @@
   border-radius: 10px;
 }
 
+.viewmoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.similarjobsViewmorebtn {
+  background-color: #00339b !important;
+  border-radius: 8px;
+  height: 50px;
+  width: 160px;
+}
+
 .bookmarkBtn {
   min-width: 5px !important;
   min-height: 5px !important;
@@ -13,28 +26,32 @@
 }
 
 .similarCard {
-  width: 100%;
-  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  width: 340px;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
+  padding-top: 0;
 }
 
 .similarAvatar {
   object-fit: contain;
-  border: 1px solid #2699ff;
-}
-
-.similarCard {
-  padding-top: 0;
-}
-
-.similarBulletText {
-  color: rgba(1, 49, 63, 0.8);
-  font-size: 13px;
+  border: 1px solid rgba(3, 66, 117, 0.15);
 }
 
 .similarText {
   color: rgba(1, 49, 63, 0.8);
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+
+.similarInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
 }
 
 .btnBox {
@@ -55,28 +72,29 @@
 .viewDetailBtn {
   margin-left: 8px;
   background-color: #02a9f7 !important;
-  font-size: 13px;
+  font-size: 14px;
   width: 65%;
 }
 
 .similarTopic {
   padding-top: 50px;
   text-align: center;
-  font-size: 27px;
+  font-size: 30px;
 }
 
 .similarTypoBox {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
-  margin-top: 5px;
-  /* margin-bottom: 10px; */
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .similarTypo {
   text-align: right;
   font-style: italic;
-  font-size: 13px;
+  font-size: 14px;
+  color: #c4c4c4;
 }
 
 .skillChip {
@@ -85,12 +103,67 @@
   background-color: #edf8fd;
   margin-right: 5px;
   margin-bottom: 10px;
-  font-size: 11px;
+  font-size: 14px;
   color: #01313f;
+}
+
+.mobileSimilarJobs {
+  padding-bottom: 0;
 }
 
 @media only screen and (min-width: 600px) {
   .mobileLogo {
     display: none;
   }
+  .rec-arrow {
+    display: none;
+  }
+  .mobileSimilarJobs {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .similarCard {
+    width: 100%;
+  }
+  .carouselstack {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+.imgTypo {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0;
+  margin-right: 30px !important;
+  min-width: 25%;
+}
+
+.iconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.firsticonImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.similariconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
 }
