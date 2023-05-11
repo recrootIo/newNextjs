@@ -328,104 +328,127 @@ function Signin() {
               }}
             >
               <CardContent>
-                <Stack sx={{ alignItems: "center", gap: "20px" }}>
-                  <Stack sx={{ alignItems: "center" }}>
-                    <CustomTypography
-                      sx={{ fontSize: "30px", fontWeight: "900" }}
+                <form
+                  onSubmit={(e) => {
+                    handleLogin(e);
+                  }}
+                >
+                  <Stack sx={{ alignItems: "center", gap: "20px" }}>
+                    <Stack sx={{ alignItems: "center" }}>
+                      <CustomTypography
+                        sx={{ fontSize: "30px", fontWeight: "900" }}
+                      >
+                        Log in
+                      </CustomTypography>
+                      <Stack
+                        direction={"row"}
+                        sx={{ gap: "5px", flexWrap: "wrap" }}
+                      >
+                        <CustomTypography>
+                          Log in Don’t have an account?
+                        </CustomTypography>
+                        <CustomTypography
+                          sx={{ color: "#034275", textDecoration: "underline" }}
+                        >
+                          Sign up
+                        </CustomTypography>
+                      </Stack>
+                    </Stack>
+                    <Stack
+                      sx={{ alignItems: "center", gap: "20px", width: "100%" }}
                     >
-                      Log in
-                    </CustomTypography>
+                      <button className="linkedinButton">
+                        <span>
+                          <img
+                            src={"/linkedInLogo.png"}
+                            alt=""
+                            height={"30px"}
+                          />
+                        </span>
+                        <span style={{ marginTop: "6px" }}>
+                          Log in with LinkedIn
+                        </span>
+                      </button>
+                      <button className="linkedinButton">
+                        <span>
+                          <img src={"/googleLogo.png"} alt="" height={"30px"} />
+                        </span>
+                        <span style={{ marginTop: "1px" }}>
+                          Log in with Google
+                        </span>
+                      </button>
+                    </Stack>
+                    <img
+                      src="/signIn.png"
+                      className="signInSideImage1"
+                      alt=""
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                    />
+                    <img
+                      src="/signIn2.png"
+                      className="signInSideImage2"
+                      alt=""
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                    />
+                    <Divider>OR</Divider>
+                    <StyledInput
+                      autoComplete="given-name"
+                      name="email"
+                      required
+                      fullWidth
+                      id="email"
+                      placeholder="Enter Email ID"
+                      onChange={handleChange}
+                    />
+                    <StyledInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      value={values.password}
+                      placeholder="Password"
+                      name="password"
+                      onChange={handleChange}
+                    />
                     <Stack
                       direction={"row"}
-                      sx={{ gap: "5px", flexWrap: "wrap" }}
+                      sx={{
+                        justifyContent: "space-between",
+                        width: "95%",
+                        flexDirection: { md: "row", xs: "column", sm: "row" },
+                      }}
                     >
-                      <CustomTypography>
-                        Log in Don’t have an account?
-                      </CustomTypography>
-                      <CustomTypography
-                        sx={{ color: "#034275", textDecoration: "underline" }}
-                      >
-                        Sign up
-                      </CustomTypography>
+                      <FormControl>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              // value={values.checked}
+                              color="primary"
+                              // checked={values.checked}
+                            />
+                          }
+                          label={<p>Remember Me</p>}
+                        />
+                      </FormControl>
+                      <CustomTypography>Forget Your Password</CustomTypography>
                     </Stack>
-                  </Stack>
-                  <Stack
-                    sx={{ alignItems: "center", gap: "20px", width: "100%" }}
-                  >
-                    <button className="linkedinButton">
-                      <span>
-                        <img src={"/linkedInLogo.png"} alt="" height={"30px"} />
-                      </span>
-                      <span style={{ marginTop: "6px" }}>
-                        Log in with LinkedIn
-                      </span>
-                    </button>
-                    <button className="linkedinButton">
-                      <span>
-                        <img src={"/googleLogo.png"} alt="" height={"30px"} />
-                      </span>
-                      <span style={{ marginTop: "1px" }}>
-                        Log in with Google
-                      </span>
+                    <button
+                      style={{
+                        height: "60px",
+                        backgroundColor: "#015FB1",
+                        borderRadius: "8px",
+                        width: "95%",
+                        fontSize: "18px",
+                        fontWeight: "400",
+                        color: "white",
+                      }}
+                    >
+                      Log in
                     </button>
                   </Stack>
-                  <img
-                    src="/signIn.png"
-                    className="signInSideImage1"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                  <img
-                    src="/signIn2.png"
-                    className="signInSideImage2"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-
-                  <Divider>OR</Divider>
-                  <StyledInput placeholder="Enter Email ID" />
-                  <StyledInput placeholder="Password" />
-                  <Stack
-                    direction={"row"}
-                    sx={{
-                      justifyContent: "space-between",
-                      width: "95%",
-                      flexDirection: { md: "row", xs: "column", sm: "row" },
-                    }}
-                  >
-                    <FormControl>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            // value={values.checked}
-                            color="primary"
-                            // checked={values.checked}
-                          />
-                        }
-                        label={<p>Remember Me</p>}
-                      />
-                    </FormControl>
-                    <CustomTypography>Forget Your Password</CustomTypography>
-                  </Stack>
-
-                  <button
-                    style={{
-                      height: "60px",
-                      backgroundColor: "#015FB1",
-                      borderRadius: "8px",
-                      width: "95%",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                      color: "white",
-                    }}
-                  >
-                    Log in
-                  </button>
-                </Stack>
+                </form>
               </CardContent>
             </Card>
           </Stack>
