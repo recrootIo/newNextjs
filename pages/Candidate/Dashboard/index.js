@@ -14,7 +14,7 @@ import {
   Stack,
   styled,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -32,6 +32,7 @@ import Certifications from "@/components/Candidates/Certifications/Certification
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 import CandidateProfileHeader from "@/pages/candiProfileHeader";
 import { useDispatch } from "react-redux";
+import { retrievePersonal } from "@/redux/slices/personal";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -60,18 +61,19 @@ const Index = () => {
   };
 
   useEffect(() => {
+    console.log("this was called");
     dispatch(retrievePersonal())
       .then((res) => {
         if (res.error.message === "Request failed with status code 401") {
-          dispatch(logout()).then(() => {
-            navigate("/signin", { state: true });
-          });
+          // dispatch(logout()).then(() => {
+          //   navigate("/signin", { state: true });
+          // });
         }
       })
       .catch((error) => {
-        if (error.message === "Request failed with status code 401") {
-          navigate("/signin", { state: true });
-        }
+        // if (error.message === "Request failed with status code 401") {
+        //   navigate("/signin", { state: true });
+        // }
       });
   }, [dispatch]);
 

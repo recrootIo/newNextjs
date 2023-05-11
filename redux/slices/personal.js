@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { notifySuccess } from "../helpers/Toast";
+// import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
-import resumeService from "../services/resume.services";
+import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
 
 const initialState = {
@@ -625,14 +625,14 @@ const personalSlice = createSlice({
     },
     [addResume.fulfilled]: (state, action) => {
       state.resLoad = false;
-      notifySuccess("Resume Was Added Succesfully");
+      // notifySuccess("Resume Was Added Succesfully");
     },
     [addCover.pending]: (state) => {
       state.covLoad = true;
     },
     [addCover.fulfilled]: (state) => {
       state.covLoad = false;
-      notifySuccess("Cover Letter Was Added Succesfully");
+      // notifySuccess("Cover Letter Was Added Succesfully");
     },
     [deleteResume.fulfilled]: (state, action) => {
       console.warn(state.data, "datsaaaa");
