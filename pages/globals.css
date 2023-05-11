@@ -906,6 +906,12 @@
   align-items: center;
   padding: 40px;
   height: 350px;
+  width: 80%;
+}
+
+.dreamJobTypoGrid {
+  display: flex;
+  justify-content: center;
 }
 
 .dreamjobImgBox {

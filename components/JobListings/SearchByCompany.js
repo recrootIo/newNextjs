@@ -4,7 +4,6 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import Carousel from "react-elastic-carousel";
-// import Slider from "react-slick";
 import { useRef } from "react";
 
 const SearchByCompany = () => {
