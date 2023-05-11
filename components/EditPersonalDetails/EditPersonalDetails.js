@@ -7,6 +7,9 @@ import {
   TextField,
   Container,
   Autocomplete,
+  Stepper,
+  Step,
+  StepLabel,
   Chip,
   FormControl,
   FormControlLabel,
@@ -22,15 +25,11 @@ import { useState } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import MenuItem from "@mui/material/MenuItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -75,17 +74,17 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const AddCareerPreference = () => {
-  const [availability, setAvailability] = React.useState("");
-  const [address, setaddress] = useState("");
+const EditPersonalDetails = () => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleSelectedOptionsChange = (event, newValue) => {
+    setSelectedOptions(newValue);
+  };
+
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
-  const handleAvailabilityChange = (event) => {
-    setAvailability(event.target.value);
-  };
-
-  const handleWorkPreferenceChange = (event) => {
+  const handleChange = (event) => {
     const {
       target: { value },
     } = event;
@@ -95,20 +94,11 @@ const AddCareerPreference = () => {
     );
   };
 
-  const handleSelect = async (selected) => {
-    if (selected?.label) {
-      setjobLocations((state) => [...state, selected?.label]);
-      try {
-        const res = await userService.insertNewLocation(
-          users?._id,
-          selected?.label
-        );
-        NotifySuccess(res.data);
-      } catch (err) {
-        NotifyFailed();
-      }
-      setaddress("");
-    }
+  //Experience
+  const [age, setAge] = React.useState("");
+
+  const handleExperienceChange = (event) => {
+    setAge(event.target.value);
   };
 
   return (
@@ -142,26 +132,17 @@ const AddCareerPreference = () => {
               }}
               gutterBottom
             >
-              Add Career Preference
+              Edit Personal Details
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Availability
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={availability}
-                  label="Availability"
-                  onChange={handleAvailabilityChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                id="outlined-basic"
+                label="Full Name *"
+                variant="outlined"
+                sx={{ width: "100%%" }}
+              />
               <Autocomplete
+                freeSolo
                 disablePortal
                 id="combo-box-demo"
                 options={top100Films}
@@ -170,7 +151,7 @@ const AddCareerPreference = () => {
                   <TextField
                     fullWidth
                     {...params}
-                    label="Job Position"
+                    label="Job Title *"
                     sx={{
                       background: "#FFFFFF",
                       borderColor: "#949494",
@@ -179,84 +160,69 @@ const AddCareerPreference = () => {
                   />
                 )}
               />
-              <Stack gap={1}>
-                <Box sx={{ display: "flex" }}>
-                  {/* code copied from job preferences of job positions at current site */}
-                  <Autocomplete
-                    freeSolo
-                    id="free-solo-2-demo"
-                    disableClearable
-                    fullWidth
-                    disablePortal={true}
-                    name="workPreference"
-                    //value={title}
-                    //options={titleDesc.map((option) => option.rol.role)}
-                    renderInput={(params) => (
-                      <TextField
-                        variant="outlined"
-                        {...params}
-                        label="Work Preference"
-                        name="workPreference"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: "search",
-                        }}
-                      />
-                    )}
-                  />
-                  <IconButton>
-                    <AddIcon sx={{ color: "#1976d2" }} />
-                  </IconButton>
-                </Box>
-                <Stack direction={"row"} gap={1}></Stack>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  <Chip
-                    label="On-Site"
-                    //onDelete={() => removeTitle(t)}
-                    deleteIcon={<CloseIcon />}
-                    sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
-                  />
-                </Box>
-              </Stack>
-              <Box sx={{ width: "100%" }}>
-                <GooglePlacesAutocomplete
-                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                  selectProps={{
-                    isClearable: true,
-                    placeholder: "Enter Your Location",
-                    value: address,
-                    onChange: (val) => {
-                      setaddress(val);
-                      handleSelect(val);
-                    },
-                    styles: {
-                      textInputContainer: (provided) => ({
-                        ...provided,
-                        backgroundColor: "red",
-                      }),
-                      input: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        height: "40px",
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        // "&:hover": {
-                        //   border: "1px solid purple",
-                        // },
-                      }),
-                      // textInputContainer: {
-                      //   backgroundColor: "grey",
-                      // },
-                    },
+              <TextField
+                id="outlined-basic"
+                label="Email Id *"
+                variant="outlined"
+                sx={{ width: "100%" }}
+              />
+              <TextField
+                id="outlined-basic"
+                label="Mobile No *"
+                variant="outlined"
+                sx={{ width: "100%" }}
+              />
+              <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
+                <Autocomplete
+                  freeSolo
+                  disablePortal
+                  id="combo-box-demo"
+                  options={top100Films}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
                   }}
-                  // styles={}
+                  renderInput={(params) => (
+                    <TextField
+                      fullWidth
+                      {...params}
+                      label="Enter your Location *"
+                      sx={{
+                        background: "#FFFFFF",
+                        borderColor: "#949494",
+                        borderRadius: "8px",
+                        width: "100%",
+                      }}
+                    />
+                  )}
                 />
-              </Box>
+                <Autocomplete
+                  freeSolo
+                  disablePortal
+                  id="combo-box-demo"
+                  options={top100Films}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      fullWidth
+                      {...params}
+                      label="Region *"
+                      sx={{
+                        background: "#FFFFFF",
+                        borderColor: "#949494",
+                        borderRadius: "8px",
+                        width: "100%",
+                      }}
+                    />
+                  )}
+                />
+              </Stack>
+
               <Stack gap={1}>
                 <Box sx={{ display: "flex" }}>
                   {/* code copied from job preferences of job positions at current site */}
@@ -266,15 +232,15 @@ const AddCareerPreference = () => {
                     disableClearable
                     fullWidth
                     disablePortal={true}
-                    name="jobtype"
+                    name="language"
                     //value={title}
                     //options={titleDesc.map((option) => option.rol.role)}
                     renderInput={(params) => (
                       <TextField
                         variant="outlined"
                         {...params}
-                        label="Job Type"
-                        name="jobtype"
+                        label="Language"
+                        name="language"
                         InputProps={{
                           ...params.InputProps,
                           type: "search",
@@ -289,13 +255,70 @@ const AddCareerPreference = () => {
                 <Stack direction={"row"} gap={1}></Stack>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
                   <Chip
-                    label="Full time"
+                    label="sinhala"
                     //onDelete={() => removeTitle(t)}
                     deleteIcon={<CloseIcon />}
                     sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
                   />
                 </Box>
               </Stack>
+
+              <Stack direction="row" spacing={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Experience(Years)
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="Age"
+                    onChange={handleExperienceChange}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Current Salary(Per Annum)
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="Age"
+                    onChange={handleExperienceChange}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </Stack>
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  Do you already have an offer?*
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  sx={{ gap: "100px", mt: "12px" }}
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>
               <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
@@ -309,11 +332,7 @@ const AddCareerPreference = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
+                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                 >
                   Save
                 </Button>
@@ -326,4 +345,4 @@ const AddCareerPreference = () => {
   );
 };
 
-export default AddCareerPreference;
+export default PersonalDetails;

@@ -6,84 +6,90 @@ import {
   Button,
   TextField,
   Container,
-  Autocomplete,
-  Chip,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { useState } from "react";
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const AddProjects = () => {
   return (
-    <div style={{ paddingBottom: "100px" }}>
+    <div>
       <Container>
-        <CustomTypography
-          className="personalDetailTitle"
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            fontWeight: 600,
-            mt: "100px",
-          }}
-          gutterBottom
-        >
-          Add Projects
-        </CustomTypography>
-        <Stack spacing={2} sx={{ mt: "40px" }}>
-          <TextField
-            id="outlined-basic"
-            label="Enter Portfolio Link"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Enter Project Name"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            label="Organization"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-multiline-static"
-            label="Description"
-            multiline
-            rows={4}
-          />
-
-          <Stack direction="row" spacing={2}>
+        <Card>
+          <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
-              variant="contained"
+              variant="text"
+              startIcon={<ArrowBackIcon />}
               sx={{
-                bgcolor: "#015FB1 !important",
-                width: "50%",
-                borderRadius: "8px",
+                color: "white",
+                textTransform: "capitalize",
+                fontSize: "18px",
               }}
             >
-              Cancel
+              Back
             </Button>
-            <Button
-              variant="contained"
-              sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+          </Box>
+
+          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+            <CustomTypography
+              className="personalDetailTitle"
+              variant="h4"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                fontWeight: 600,
+                fontFamily: "Inter-bold",
+                mt: "60px",
+              }}
+              gutterBottom
             >
-              Add
-            </Button>
-          </Stack>
-        </Stack>
+              Add Projects
+            </CustomTypography>
+            <Stack spacing={2} sx={{ mt: "100px" }}>
+              <TextField
+                id="outlined-basic"
+                label="Enter Portfolio Link"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Enter Project Name"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Organization"
+                variant="outlined"
+              />
+              <TextField
+                id="outlined-multiline-static"
+                label="Description"
+                multiline
+                rows={4}
+              />
+
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#015FB1 !important",
+                    width: "50%",
+                    borderRadius: "8px",
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                >
+                  Add
+                </Button>
+              </Stack>
+            </Stack>
+          </CardContent>
+        </Card>
       </Container>
     </div>
   );
