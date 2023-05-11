@@ -30,6 +30,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
 import Certifications from "@/components/Candidates/Certifications/Certifications";
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
+import CandidateProfileHeader from "@/pages/candiProfileHeader";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -57,8 +58,9 @@ const Index = () => {
 
   return (
     <div>
+      <CandidateProfileHeader />
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ padding: "20px" }}>
           <Grid item md={4}>
             <Box>
               <List
