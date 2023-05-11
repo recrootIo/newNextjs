@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
   Box,
@@ -10,20 +9,18 @@ import {
   CardContent,
   Avatar,
   Container,
-  IconButton,
 } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AdsClickIcon from "@mui/icons-material/AdsClick";
 import CallIcon from "@mui/icons-material/Call";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import Chip from "@mui/material/Chip";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Chip from "@mui/material/Chip";
+import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 
 const bull = (
   <Box
@@ -60,9 +57,13 @@ const JobDetail = () => {
                   fontWeight: "bold",
                   color: "#01313F",
                 }}
-                sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
+                sx={{
+                  bgcolor: "#EDF8FD",
+                  padding: "8px 16px",
+                  paddingLeft: "24px",
+                }}
               />
-              <CardContent>
+              <CardContent sx={{ paddingLeft: "24px" }}>
                 <CustomTypography
                   variant="body2"
                   color="text.secondary"
@@ -268,7 +269,7 @@ const JobDetail = () => {
                   }}
                   sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
                 />
-                <CardContent sx={{ rowGap: "30px" }}>
+                <CardContent sx={{ rowGap: "70px" }}>
                   <Chip
                     label="Visual Design"
                     size="small"

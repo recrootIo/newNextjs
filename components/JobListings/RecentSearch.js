@@ -8,6 +8,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { BOLD } from "@/theme/fonts";
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   "& .MuiAvatar-img": {
@@ -31,7 +32,7 @@ const RecentSearch = () => {
           <Box>
             <CustomTypography
               variant="h4"
-              fontWeight={700}
+              fontFamily={BOLD}
               pt="50px"
               textAlign="center"
               gutterBottom

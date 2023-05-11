@@ -6,6 +6,7 @@ import { CardActionArea } from "@mui/material";
 import Carousel from "react-elastic-carousel";
 import { useRef } from "react";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { BOLD } from "@/theme/fonts";
 
 const SearchByCategory = () => {
   const breakPoints = [
@@ -27,7 +28,7 @@ const SearchByCategory = () => {
         <Box>
           <CustomTypography
             variant="h4"
-            fontWeight={700}
+            fontFamily={BOLD}
             pt="50px"
             textAlign="center"
             gutterBottom

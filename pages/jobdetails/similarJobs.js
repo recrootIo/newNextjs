@@ -1,31 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import {
-  Box,
-  Grid,
-  Stack,
-  Button,
-  Card,
-  CardHeader,
-  CardContent,
-  Avatar,
-  IconButton,
-  Container,
-} from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { Box, Stack, Button, Container } from "@mui/material";
 import Carousel from "react-elastic-carousel";
-import "./jobDetail.module.css";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { useRef } from "react";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
+import React, { useRef } from "react";
+import { useState } from "react";
+import SimilarJobCard from "./similarCard";
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -35,13 +14,13 @@ const breakPoints = [
 
 const SimilarJobs = () => {
   const carouselRef = useRef(null);
+  const totalPages = 4;
+  let resetTimeout;
 
-  const handleSlideChange = (currentItem, newIndex) => {
-    const totalItems = carouselRef.current.items.length;
-    if (newIndex === totalItems - 1) {
-      // if current slide is the last slide, go to the first slide
-      carouselRef.current.goTo(0);
-    }
+  const [isShown, setIsShown] = useState(false);
+
+  const handleClick = (event) => {
+    setIsShown((current) => !current);
   };
 
   return (
@@ -60,542 +39,72 @@ const SimilarJobs = () => {
           <span style={{ color: "#02A9F7" }}>Jobs</span>
         </CustomTypography>
 
-        <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+        <Stack
+          className="carouselstack"
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+        >
           <Carousel
-            ref={carouselRef}
-            onSlideChange={handleSlideChange}
-            enableAutoPlay
-            autoPlaySpeed={1500}
             breakPoints={breakPoints}
-            pagination={true}
+            enableAutoPlay
+            ref={carouselRef}
+            showArrows={false}
+            onNextEnd={({ index }) => {
+              clearTimeout(resetTimeout);
+              if (index + 1 === totalPages) {
+                resetTimeout = setTimeout(() => {
+                  carouselRef.current.goTo(0);
+                }, 1500); // same time
+              }
+            }}
           >
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer1"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer2"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer 3"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer 4"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    size={100}
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer 5"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;{bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
-
-            <Card className="similarCard">
-              <CardHeader
-                avatar={
-                  <Avatar
-                    className="similarAvatar"
-                    alt="logo"
-                    src="/logo 2.png"
-                    size={100}
-                    sx={{
-                      "& .MuiAvatar-img": {
-                        height: "25px",
-                        width: "25px",
-                      },
-                      height: "50px",
-                      width: "50px",
-                    }}
-                  />
-                }
-                titleTypographyProps={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "#034275",
-                }}
-                subheaderTypographyProps={{
-                  fontSize: 16,
-                  color: "#034275",
-                }}
-                title="Graphic Designer 6"
-                subheader="Recroot"
-              />
-              <CardContent className="similarCard" style={{ pb: 0 }}>
-                <CustomTypography
-                  className="similarBulletText"
-                  variant="body2"
-                  mb={1}
-                >
-                  Remote&nbsp;{bull}&nbsp;3-6 Years&nbsp;
-                  {bull}&nbsp;3-6 LPA
-                </CustomTypography>
-                <CustomTypography variant="body2" className="similarText">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                  natoque penatibus et magnis dis parturient montes, nascetur
-                  ridiculus mus.
-                </CustomTypography>
-                <Box>
-                  <Box className="btnBox">
-                    <Button
-                      className="bookmarkBtn"
-                      size="medium"
-                      variant="outlined"
-                      bgcolor="#02A9F7 !important"
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                    </Button>
-                    <Button
-                      className="viewDetailBtn"
-                      variant="contained"
-                      size="medium"
-                    >
-                      View Details
-                    </Button>
-                  </Box>
-                  <Box className="similarTypoBox">
-                    <CustomTypography
-                      className="similarTypo"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      10 days ago
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </CardContent>
-            </Card>
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
           </Carousel>
         </Stack>
+
+        <Box className="mobileSimilarJobs">
+          <Stack spacing={2}>
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+            <SimilarJobCard />
+          </Stack>
+          {!isShown && (
+            <Box className="viewmoreContainer">
+              <Button
+                className="similarjobsViewmorebtn"
+                onClick={handleClick}
+                variant="contained"
+              >
+                View more
+              </Button>
+            </Box>
+          )}
+          {isShown && (
+            <div>
+              <SimilarJobCard />
+              <SimilarJobCard />
+              <SimilarJobCard />
+              <SimilarJobCard />
+              <Box className="viewmoreContainer">
+                <Button
+                  className="similarjobsViewmorebtn"
+                  onClick={handleClick}
+                  variant="contained"
+                >
+                  View less
+                </Button>
+              </Box>
+            </div>
+          )}
+        </Box>
 
         <Box
           sx={{

@@ -171,6 +171,176 @@
 .rec-dot:hover {
   box-shadow: 0 0 1px 3px var(--blue) !important;
 }
+.detailCard {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.viewmoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.similarjobsViewmorebtn {
+  background-color: #00339b !important;
+  border-radius: 8px;
+  height: 50px;
+  width: 160px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.similarCard {
+  width: 340px;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
+  border-radius: 10px;
+  padding-top: 0;
+}
+
+.similarAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+
+.similarInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 14px;
+  width: 65%;
+}
+
+.similarTopic {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 30px;
+}
+
+.similarTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.similarTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+.skillChip {
+  border-radius: 8px;
+  size: small;
+  background-color: #edf8fd;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #01313f;
+}
+
+.mobileSimilarJobs {
+  padding-bottom: 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobileLogo {
+    display: none;
+  }
+  .rec-arrow {
+    display: none;
+  }
+  .mobileSimilarJobs {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .similarCard {
+    width: 100%;
+  }
+  .carouselstack {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+.imgTypo {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0;
+  margin-right: 30px !important;
+  min-width: 25%;
+}
+
+.iconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.firsticonImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.similariconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
 .rec-dot_active:focus,
 .rec-dot_active:hover {
   background-color: #1097cd !important;
@@ -567,7 +737,7 @@
 .resumeUploadTitle {
   text-align: center;
   color: #034275;
-  font-weight: 700;
+  font-family: "Inter-Bold";
   font-size: 40px;
   line-height: 48px;
 }
@@ -1211,6 +1381,7 @@ a {
   padding-top: 50px;
   text-align: center;
   font-size: 27px;
+  font-family: "Inter-Bold";
 }
 
 .similarTypoBox {
