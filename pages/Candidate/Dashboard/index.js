@@ -31,6 +31,7 @@ import Profile from "@/components/Candidates/Profile/Profile";
 import Certifications from "@/components/Candidates/Certifications/Certifications";
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 import CandidateProfileHeader from "@/pages/candiProfileHeader";
+import { useDispatch } from "react-redux";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -44,6 +45,8 @@ const Index = () => {
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
 
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     setProfile(!profile);
   };
@@ -55,6 +58,22 @@ const Index = () => {
   const handleJobs = () => {
     setJobs(!jobs);
   };
+
+  useEffect(() => {
+    dispatch(retrievePersonal())
+      .then((res) => {
+        if (res.error.message === "Request failed with status code 401") {
+          dispatch(logout()).then(() => {
+            navigate("/signin", { state: true });
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.message === "Request failed with status code 401") {
+          navigate("/signin", { state: true });
+        }
+      });
+  }, [dispatch]);
 
   return (
     <div>
