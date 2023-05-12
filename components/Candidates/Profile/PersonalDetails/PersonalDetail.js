@@ -8,6 +8,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import { LAZY, MID } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
+import { useSelector } from "react-redux";
 
 const PersonalDetail = ({ ...data }) => {
   const { email, firstName, jobTitle, lastName, mobile, resume } = data;
@@ -137,4 +138,4 @@ const PersonalDetail = ({ ...data }) => {
   );
 };
 
-export default PersonalDetail;
+export default React.memo(PersonalDetail);

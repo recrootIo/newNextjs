@@ -29,6 +29,7 @@ const initialState = {
   applying: false,
   userCountry: "",
   cards: [],
+  appliedJobs: [],
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -542,6 +543,14 @@ export const homeCard = createAsyncThunk("set/homeCard", async (data) => {
   return data;
 });
 
+export const fetchAppliedJobs = createAsyncThunk(
+  "set/appliedJobs",
+  async (data) => {
+    const res = await personalService.getAppliedJobs(data);
+    return res.data;
+  }
+);
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -672,6 +681,9 @@ const personalSlice = createSlice({
     },
     [firstJobToApply.fulfilled]: (state, action) => {
       state.applying = action.payload;
+    },
+    [fetchAppliedJobs.fulfilled]: (state, action) => {
+      state.appliedJobs = action.payload;
     },
   },
 });

@@ -120,4 +120,4 @@ Education.defaultProps = {
   education: [],
 };
 
-export default Education;
+export default React.memo(Education);

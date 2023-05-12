@@ -14,17 +14,7 @@ import {
   Stack,
   styled,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AddIcon from "@mui/icons-material/Add";
-import UploadIcon from "@mui/icons-material/Upload";
-import CreateIcon from "@mui/icons-material/Create";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { DANGER, NEUTRAL } from "@/theme/colors";
-import { LAZY, MID } from "@/theme/spacings";
-import DeleteIcon from "@mui/icons-material/Delete";
-import LinearProgress from "@mui/material/LinearProgress";
-import CustomizedSteppers from "@/ui-components/CustomStpper/CustomStepper";
+import React, { useEffect, useRef, useState } from "react";
 import List from "@mui/material/List";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
@@ -33,6 +23,7 @@ import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 import CandidateProfileHeader from "@/pages/candiProfileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { retrievePersonal } from "@/redux/slices/personal";
+import AddResume from "@/pages/profile/addResume";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -45,8 +36,8 @@ const Index = () => {
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
-
   const { data = {} } = useSelector((state) => state?.personal);
+  const { currentScreen } = useSelector((state) => state?.candidate);
 
   const dispatch = useDispatch();
 
@@ -66,9 +57,23 @@ const Index = () => {
     dispatch(retrievePersonal());
   }, [dispatch]);
 
+  const getPages = () => {
+    if (currentScreen === "resume") {
+      return <AddResume />;
+    } else {
+      return (
+        <Stack sx={{ gap: "30px" }}>
+          <Profile {...data} />
+          <Certifications />
+          <CandidateJobs {...data} />
+        </Stack>
+      );
+    }
+  };
+
   return (
     <div>
-      <CandidateProfileHeader />
+      <CandidateProfileHeader {...data} />
       <Container>
         <Grid container spacing={2} sx={{ padding: "20px" }}>
           <Grid item md={4}>
@@ -153,11 +158,7 @@ const Index = () => {
             </Box>
           </Grid>
           <Grid item md={8}>
-            <Stack sx={{ gap: "30px" }}>
-              <Profile {...data} />
-              <Certifications />
-              <CandidateJobs />
-            </Stack>
+            {getPages()}
           </Grid>
         </Grid>
       </Container>
@@ -165,4 +166,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default React.memo(Index);
