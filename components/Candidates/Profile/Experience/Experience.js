@@ -8,8 +8,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { BOLD } from "@/theme/fonts";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const Experience = ({ ...experience }) => {
+  const dispatch = useDispatch();
+
+  const gotToAddExperience = () => {
+    dispatch(updateCurrentScreen("resume"));
+  };
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -30,7 +37,10 @@ const Experience = ({ ...experience }) => {
         >
           Experience
         </CustomTypography>
-        <AddIcon />
+        <AddIcon
+          className="iconPointers"
+          onClick={() => gotToAddExperience()}
+        />
       </Stack>
       <CardContent sx={{ padding: "30px 30px" }}>
         <Stack sx={{ justifyContent: "space-between", gap: "20px" }}>

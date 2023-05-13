@@ -76,7 +76,13 @@ const Resume = ({ ...resume }) => {
               }}
             >
               <UploadIcon sx={{ color: "#00339B" }} className="iconPointers" />
-              <DeleteIcon sx={{ color: DANGER }} className="iconPointers" />
+              {/* <DeleteIcon
+                sx={{ color: DANGER }}
+                className="iconPointers"
+                onClick={() => {
+                  handleClickOpena(data._id);
+                }}
+              /> */}
             </Stack>
           </Stack>
         ))}

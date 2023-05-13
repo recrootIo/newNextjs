@@ -8,8 +8,14 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const Education = ({ ...resume }) => {
+  const dispatch = useDispatch();
+  const gotToAddEducation = () => {
+    dispatch(updateCurrentScreen("resume"));
+  };
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -30,7 +36,7 @@ const Education = ({ ...resume }) => {
         >
           Education
         </CustomTypography>
-        <AddIcon />
+        <AddIcon className="iconPointers" onClick={() => gotToAddEducation()} />
       </Stack>
       <CardContent sx={{ padding: "30px 30px" }}>
         <Stack sx={{ justifyContent: "space-between", gap: "20px" }}>

@@ -7,12 +7,20 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BOLD } from "@/theme/fonts";
 import { DANGER } from "@/theme/colors";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const Skills = ({ skills }) => {
   const competencyLevels = (level) => {
     if (level === "expert") return 100;
     if (level === "expert") return 75;
     else return 25;
+  };
+
+  const dispatch = useDispatch();
+
+  const gotToAddSkills = () => {
+    dispatch(updateCurrentScreen("resume"));
   };
 
   return (
@@ -35,7 +43,7 @@ const Skills = ({ skills }) => {
         >
           Skills
         </CustomTypography>
-        <AddIcon />
+        <AddIcon className="iconPointers" onClick={() => gotToAddSkills()} />
       </Stack>
       <CardContent sx={{ padding: "30px 30px" }}>
         <table>
