@@ -17,7 +17,7 @@ const Experience = ({ ...experience }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -32,7 +32,9 @@ const Experience = ({ ...experience }) => {
         </CustomTypography>
         <AddIcon />
       </Stack>
-      <CardContent sx={{ padding: "30px 30px" }}>
+      <CardContent
+        sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
+      >
         <Stack sx={{ justifyContent: "space-between", gap: "20px" }}>
           {experience?.workExperience.map((ex, index) => (
             <Stack
@@ -40,7 +42,7 @@ const Experience = ({ ...experience }) => {
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: "20px 30px",
+                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                 border: "1px solid #D3EAFF",
               }}
             >
@@ -55,7 +57,7 @@ const Experience = ({ ...experience }) => {
                 <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
                 <DeleteIcon sx={{ color: DANGER }} />
               </Stack>
-              <Grid container sx={{ rowGap: "10px" }}>
+              <Grid container spacing={2}>
                 <Grid item md={6}>
                   <Stack sx={{ gap: LAZY }}>
                     <Stack direction={"row"} sx={{ gap: "10px" }}>

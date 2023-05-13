@@ -796,6 +796,7 @@
 .styledRows .startingTd {
   padding-left: 30px;
 }
+
 .styledRows .endTd {
   padding-right: 30px;
 }
@@ -820,6 +821,14 @@
 @media only screen and (max-width: 600px) {
   .loginImages {
     height: 120px;
+  }
+
+  .styledRows .startingTd {
+    padding-left: 10px;
+  }
+
+  .styledRows .endTd {
+    padding-right: 10px;
   }
 }
 

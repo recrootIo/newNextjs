@@ -22,7 +22,7 @@ const Skills = ({ skills }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -37,8 +37,17 @@ const Skills = ({ skills }) => {
         </CustomTypography>
         <AddIcon />
       </Stack>
-      <CardContent sx={{ padding: "30px 30px" }}>
-        <table>
+      <CardContent
+        sx={{
+          padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+        }}
+      >
+        <table
+          style={{
+            // minWidth: "600px",
+            overflowX: "auto",
+          }}
+        >
           <tbody>
             {skills.map((skill, index) => (
               <tr className="styledRows" key={index}>

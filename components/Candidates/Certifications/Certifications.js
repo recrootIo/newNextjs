@@ -58,7 +58,7 @@ const Certifications = () => {
             sx={{
               justifyContent: "space-between",
               alignItems: "center",
-              padding: "10px 30px",
+              padding: { md: "10px 30px", xs: "10px", sm: "10px" },
               backgroundColor: "#5CA9E814",
             }}
           >
@@ -73,12 +73,16 @@ const Certifications = () => {
             </CustomTypography>
             <AddIcon />
           </Stack>
-          <CardContent sx={{ padding: "30px 30px" }}>
+          <CardContent
+            sx={{
+              padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+            }}
+          >
             <Stack
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: "20px 30px",
+                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                 border: "1px solid #D3EAFF",
               }}
             >
@@ -136,7 +140,7 @@ const Certifications = () => {
             sx={{
               justifyContent: "space-between",
               alignItems: "center",
-              padding: "10px 30px",
+              padding: { md: "10px 30px", xs: "10px", sm: "10px" },
               backgroundColor: "#5CA9E814",
             }}
           >
@@ -151,12 +155,16 @@ const Certifications = () => {
             </CustomTypography>
             <AddIcon />
           </Stack>
-          <CardContent sx={{ padding: "30px 30px" }}>
+          <CardContent
+            sx={{
+              padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+            }}
+          >
             <Stack
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: "20px 30px",
+                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                 border: "1px solid #D3EAFF",
               }}
             >
@@ -217,7 +225,7 @@ const Certifications = () => {
             sx={{
               justifyContent: "space-between",
               alignItems: "center",
-              padding: "10px 30px",
+              padding: { md: "10px 30px", xs: "10px", sm: "10px" },
               backgroundColor: "#5CA9E814",
             }}
           >
@@ -232,12 +240,16 @@ const Certifications = () => {
             </CustomTypography>
             <AddIcon />
           </Stack>
-          <CardContent sx={{ padding: "30px 30px" }}>
+          <CardContent
+            sx={{
+              padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+            }}
+          >
             <Stack
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: "20px 30px",
+                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                 border: "1px solid #D3EAFF",
               }}
             >
@@ -253,7 +265,7 @@ const Certifications = () => {
                 <DeleteIcon sx={{ color: DANGER }} />
               </Stack>
               <Grid container spacing={2}>
-                <Grid item md={6}>
+                <Grid item md={6} xs={12} sm={12}>
                   <Stack sx={{ gap: LAZY }}>
                     <Stack direction={"row"} sx={{ gap: "10px" }}>
                       <CustomTypography sx={{ fontWeight: "700" }}>
@@ -269,7 +281,7 @@ const Certifications = () => {
                     </Stack>
                   </Stack>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} xs={12} sm={12}>
                   <Stack sx={{ gap: LAZY }}>
                     <Stack direction={"row"} sx={{ gap: "10px" }}>
                       <CustomTypography sx={{ fontWeight: "700" }}>
@@ -293,6 +305,7 @@ const Certifications = () => {
                       justifyContent: "space-between",
                       alignContent: "center",
                       padding: "15px",
+                      width: "100%",
                     }}
                     direction="row"
                   >

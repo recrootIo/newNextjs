@@ -17,7 +17,7 @@ const Education = ({ ...resume }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -32,83 +32,84 @@ const Education = ({ ...resume }) => {
         </CustomTypography>
         <AddIcon />
       </Stack>
-      <CardContent sx={{ padding: "30px 30px" }}>
+      <CardContent
+        sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
+      >
         <Stack sx={{ justifyContent: "space-between", gap: "20px" }}>
           {resume?.education?.map((edi, index) => (
-            <div key={index}>
+            <Stack
+              key={index}
+              sx={{
+                backgroundColor: "#F6FCFF",
+                borderRadius: "10px",
+                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                border: "1px solid #D3EAFF",
+              }}
+            >
               <Stack
+                direction={"row"}
                 sx={{
-                  backgroundColor: "#F6FCFF",
-                  borderRadius: "10px",
-                  padding: "20px 30px",
-                  border: "1px solid #D3EAFF",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  gap: "10px",
                 }}
               >
-                <Stack
-                  direction={"row"}
-                  sx={{
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                >
-                  <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                  <DeleteIcon sx={{ color: DANGER }} />
-                </Stack>
-                <Grid container>
-                  <Grid item md={6}>
-                    <Stack sx={{ gap: LAZY }}>
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Degree:
-                        </CustomTypography>
-                        <CustomTypography>{edi?.degreeName}</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Institute:
-                        </CustomTypography>
-                        <CustomTypography>{edi?.collegeName}</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          From:
-                        </CustomTypography>
-                        <CustomTypography>{edi?.fromDate}</CustomTypography>
-                      </Stack>
-                    </Stack>
-                  </Grid>
-                  <Grid item md={6}>
-                    <Stack sx={{ gap: LAZY }}>
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Specialization:
-                        </CustomTypography>
-                        <CustomTypography>{edi?.graduate}</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Location:
-                        </CustomTypography>
-                        <CustomTypography>
-                          {edi?.country} , {edi?.state} , {edi?.city}
-                        </CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          To:
-                        </CustomTypography>
-                        <CustomTypography>{edi?.toDate}</CustomTypography>
-                      </Stack>
-                    </Stack>
-                  </Grid>
-                </Grid>
+                <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+                <DeleteIcon sx={{ color: DANGER }} />
               </Stack>
-            </div>
+              <Grid container spacing={2}>
+                <Grid item md={6}>
+                  <Stack sx={{ gap: LAZY }}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Degree:
+                      </CustomTypography>
+                      <CustomTypography>{edi?.degreeName}</CustomTypography>
+                    </Stack>
+
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Institute:
+                      </CustomTypography>
+                      <CustomTypography>{edi?.collegeName}</CustomTypography>
+                    </Stack>
+
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        From:
+                      </CustomTypography>
+                      <CustomTypography>{edi?.fromDate}</CustomTypography>
+                    </Stack>
+                  </Stack>
+                </Grid>
+                <Grid item md={6}>
+                  <Stack sx={{ gap: LAZY }}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Specialization:
+                      </CustomTypography>
+                      <CustomTypography>{edi?.graduate}</CustomTypography>
+                    </Stack>
+
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Location:
+                      </CustomTypography>
+                      <CustomTypography>
+                        {edi?.country} , {edi?.state} , {edi?.city}
+                      </CustomTypography>
+                    </Stack>
+
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        To:
+                      </CustomTypography>
+                      <CustomTypography>{edi?.toDate}</CustomTypography>
+                    </Stack>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </Stack>
           ))}
         </Stack>
       </CardContent>
