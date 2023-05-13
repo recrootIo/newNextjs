@@ -1,21 +1,53 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, CardContent, Collapse, Grid, Stack } from "@mui/material";
+import {
+  Box,
+  CardContent,
+  Collapse,
+  Grid,
+  Stack,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Slide,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { StyledCard } from "../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
 import moment from "moment";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CreateIcon from "@mui/icons-material/Create";
+import download from "downloadjs";
 import DeleteIcon from "@mui/icons-material/Delete";
-import UploadIcon from "@mui/icons-material/Upload";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { DANGER, NEUTRAL } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCertifiAndGet,
+  deleteProjectAndGet,
+  deleteTrainAndGet,
+} from "@/redux/slices/personal";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
 
 const Certifications = () => {
+  let dispatch = useDispatch();
   const [open, setOpen] = useState(true);
+  const [openDeleteProject, setOpenDeleteProject] = React.useState(false);
+  const [delProject, setDelProject] = useState("");
+  const [openDelTraining, setOpenDelTraining] = React.useState(false);
+  const [delTraining, setDelTraining] = useState("");
+  const [openDelCert, setOpenDelCert] = React.useState(false);
+  const [delCert, setDelCert] = useState("");
 
   const { data = {} } = useSelector((state) => state?.personal);
   console.log(data, "test");
@@ -34,6 +66,70 @@ const Certifications = () => {
   const openProfile = () => {
     setOpen(!open);
   };
+
+  const handleClickOpenDeleteProject = (id) => {
+    setDelProject(id);
+    setOpenDeleteProject(true);
+  };
+
+  const handleClickOpenDelTraining = (id) => {
+    setDelTraining(id);
+    setOpenDelTraining(true);
+  };
+
+  const handleClickOpenDelCert = (id) => {
+    setDelCert(id);
+    setOpenDelCert(true);
+  };
+
+  const handleDeleteProject = () => {
+    dispatch(deleteProjectAndGet(delProject));
+  };
+
+  const handleDelTraining = () => {
+    dispatch(deleteTrainAndGet(delTraining));
+  };
+
+  const handleDelCert = () => {
+    dispatch(deleteCertifiAndGet(delCert));
+  };
+
+  const handleCloseDeleteProject = () => {
+    setOpenDeleteProject(false);
+  };
+
+  const handleCloseDelTraining = () => {
+    setOpenDelTraining(false);
+  };
+
+  const handleCloseDelCert = () => {
+    setOpenDelCert(false);
+  };
+
+  const notify3 = (del) =>
+    toast.error(del, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  const notify3T = () =>
+    toast.error(
+      "Your training information has been deleted from your profile ",
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
 
   return (
     <>
@@ -109,8 +205,24 @@ const Certifications = () => {
                         gap: "10px",
                       }}
                     >
-                      <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                      <DeleteIcon sx={{ color: DANGER }} />
+                      <IconButton
+                      // onClick={() => {
+                      //   handleClickOpen();
+                      //   handleGetSingle(data._id);
+                      // }}
+                      >
+                        <CreateIcon
+                          sx={{ color: "#00339B" }}
+                          fontSize="small"
+                        />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          handleClickOpenDeleteProject(prj._id);
+                        }}
+                      >
+                        <DeleteIcon sx={{ color: DANGER }} />
+                      </IconButton>
                     </Stack>
                     <Grid container spacing={2}>
                       <Grid item md={6}>
@@ -155,6 +267,36 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
+          <Dialog
+            open={openDeleteProject}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleCloseDeleteProject}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>
+              {
+                "Are you sure you want to proceed with deleting your project information ?"
+              }
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  handleCloseDeleteProject();
+                  handleDeleteProject();
+                  notify3(
+                    "Your project information has been deleted from your profile"
+                  );
+                }}
+              >
+                Yes
+              </Button>
+              <Button onClick={handleCloseDeleteProject}>No</Button>
+            </DialogActions>
+          </Dialog>
 
           {/* Training */}
           <StyledCard variant="outlined">
@@ -197,8 +339,24 @@ const Certifications = () => {
                         gap: "10px",
                       }}
                     >
-                      <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                      <DeleteIcon sx={{ color: DANGER }} />
+                      <IconButton
+                      // onClick={() => {
+                      //   handleClickOpen2();
+                      //   handleGetSingleT(data._id);
+                      // }}
+                      >
+                        <CreateIcon
+                          sx={{ color: "#00339B" }}
+                          fontSize="small"
+                        />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          handleClickOpenDelTraining(tra._id);
+                        }}
+                      >
+                        <DeleteIcon sx={{ color: DANGER }} />
+                      </IconButton>
                     </Stack>
                     <Grid container spacing={2}>
                       <Grid item md={6}>
@@ -242,6 +400,34 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
+          <Dialog
+            open={openDelTraining}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleCloseDelTraining}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>
+              {
+                "Are you sure you want to proceed with deleting your training information ?"
+              }
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  handleCloseDelTraining();
+                  handleDelTraining();
+                  notify3T();
+                }}
+              >
+                Yes
+              </Button>
+              <Button onClick={handleCloseDelTraining}>No</Button>
+            </DialogActions>
+          </Dialog>
 
           {/* Certificate */}
           <StyledCard variant="outlined">
@@ -285,7 +471,13 @@ const Certifications = () => {
                       }}
                     >
                       <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                      <DeleteIcon sx={{ color: DANGER }} />
+                      <IconButton
+                        onClick={() => {
+                          handleClickOpenDelCert(cet._id);
+                        }}
+                      >
+                        <DeleteIcon sx={{ color: DANGER }} />
+                      </IconButton>
                     </Stack>
                     <Grid container spacing={2}>
                       <Grid item md={6}>
@@ -302,7 +494,6 @@ const Certifications = () => {
                             </CustomTypography>
                             <CustomTypography>
                               {moment(cet?.issueDate).format("MM/DD/YYYY")}
-                              {/* {cet?.issueDate} */}
                             </CustomTypography>
                           </Stack>
                         </Stack>
@@ -342,8 +533,20 @@ const Certifications = () => {
                             {cet?.certificateName}
                           </CustomTypography>
                           <Stack direction={"row"} sx={{ gap: "10px" }}>
-                            <UploadIcon sx={{ color: "#00339B" }} />
-                            <DeleteIcon sx={{ color: DANGER }} />
+                            <IconButton
+                              onClick={async () => {
+                                const res = await fetch(
+                                  `  http://localhost:3000/api/downloadCertificate?certificate=${cet.certificatepath.replace(
+                                    /\\/g,
+                                    "/"
+                                  )}`
+                                );
+                                const blob = await res.blob();
+                                download(blob, `${cet.certificateName}`);
+                              }}
+                            >
+                              <CloudDownloadIcon sx={{ color: "#00339B" }} />
+                            </IconButton>
                           </Stack>
                         </Stack>
                       </Grid>
@@ -353,6 +556,36 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
+          <Dialog
+            open={openDelCert}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleCloseDelCert}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>
+              {
+                "Are you sure you want to proceed with deleting your certificate information ?"
+              }
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  handleCloseDelCert();
+                  handleDelCert();
+                  notify3(
+                    "Your certificate information has been deleted from your profile"
+                  );
+                }}
+              >
+                Yes
+              </Button>
+              <Button onClick={handleCloseDelCert}>No</Button>
+            </DialogActions>
+          </Dialog>
         </Stack>
       </Collapse>
     </>
@@ -363,4 +596,4 @@ Certifications.defaultProps = {
   projects: [],
 };
 
-export default Certifications;
+export default React.memo(Certifications);

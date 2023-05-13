@@ -113,4 +113,4 @@ const AddTraining = () => {
   );
 };
 
-export default AddTraining;
+export default React.memo(AddTraining);
