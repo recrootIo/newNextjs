@@ -1,4 +1,3 @@
-import axios from "axios";
 import http from "../http-common";
 
 const getAll = () => {
@@ -147,7 +146,7 @@ const editVerify = (value) => {
   return http.put(`verifyEmail`, value);
 };
 const resendCode = (value) => {
-  return axios.put(`https://api.arinnovate.io/resendCode`, value);
+  return http.put(`resendCode`, value);
 };
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);

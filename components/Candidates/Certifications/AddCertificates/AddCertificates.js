@@ -10,26 +10,93 @@ import {
   CardContent,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { AddCertificateAndThenGet } from "@/redux/slices/personal";
+import moment from "moment";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
-const AddCertificates = () => {
+const AddCertificates = ({}) => {
+  const certOne = useSelector((state) => state.personal.certone);
+
+  console.log(moment(certOne?.expireDate).format("YYYY/MM/DD"));
+
   const dispatch = useDispatch();
 
   const gotToCertificates = () => {
     dispatch(updateCurrentScreen(""));
   };
-  const [fromDateValue, setFromDateValue] = React.useState();
-  const [toDateValue, setToDateValue] = React.useState();
+
+  const [inputCertificate, setInputCertificate] = React.useState({
+    title: "",
+    organization: "",
+    certificate: "",
+    certificateLink: "",
+    issueDate: "",
+    expireDate: "",
+  });
+
+  React.useEffect(() => {
+    setInputCertificate({
+      title: certOne && certOne.title,
+      organization: certOne && certOne.organization,
+      certificate: null,
+      certificateName: certOne && certOne.certificateName,
+      certificatepath: certOne && certOne.certificatepath,
+      certificateLink: certOne && certOne.certificateLink,
+      expireDate: certOne?.expireDate,
+      issueDate: certOne?.issueDate,
+      // expireDate: certOne && ,
+      id: certOne && certOne._id,
+    });
+  }, [certOne]);
+
+  const handleChange = (e, time) => {
+    if (time === "issueDate") {
+      setInputCertificate({
+        ...inputCertificate,
+        issueDate: e,
+      });
+      return null;
+    }
+
+    if (time === "expireDate") {
+      setInputCertificate({
+        ...inputCertificate,
+        expireDate: e,
+      });
+      return null;
+    }
+
+    console.log(e, time);
+
+    if (e.target.files !== null) {
+      setInputCertificate({
+        ...inputCertificate,
+        certificate: e.target.files[0],
+      });
+    } else {
+      let { name, value } = e.target;
+      setInputCertificate({ ...inputCertificate, [name]: value });
+    }
+  };
+
+  const saveCertificates = () => {
+    if (certOne) {
+      dispatch(AddCertificateAndThenGet(inputCertificate));
+    } else {
+      dispatch(addEditCertificates(inputCertificate));
+    }
+  };
 
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -61,30 +128,48 @@ const AddCertificates = () => {
               Add Certificates
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <TextField id="outlined-basic" label="Title" variant="outlined" />
+              <TextField
+                id="outlined-basic"
+                label="Title"
+                variant="outlined"
+                value={inputCertificate?.title}
+                name="title"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
               <TextField
                 id="outlined-basic"
                 label="Project Name"
                 variant="outlined"
+                name="organization"
+                value={inputCertificate.organization}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
               />
               <Stack direction="row" spacing={2}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="From"
-                    value={fromDateValue}
-                    onChange={(newFromDateValue) =>
-                      setFromDateValue(newFromDateValue)
-                    }
+                    value={inputCertificate?.issueDate}
+                    inputFormat="MM/dd/yyyy"
+                    name="issueDate"
+                    onChange={(e) => {
+                      handleChange(e, "issueDate");
+                    }}
                     sx={{ width: "50%" }}
                   />
                 </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="From"
-                    value={toDateValue}
-                    onChange={(newToDateValue) =>
-                      setToDateValue(newToDateValue)
-                    }
+                    name="expireDate"
+                    inputFormat="MM/dd/yyyy"
+                    value={dayjs(inputCertificate?.expireDate)}
+                    onChange={(e) => {
+                      handleChange(e, "expireDate");
+                    }}
                     sx={{ width: "50%" }}
                   />
                 </LocalizationProvider>
@@ -95,6 +180,11 @@ const AddCertificates = () => {
                   label="Certificate link"
                   variant="outlined"
                   sx={{ width: "95%" }}
+                  value={inputCertificate?.certificateLink}
+                  name="certificateLink"
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
                 />
                 <Button
                   variant="outlined"
@@ -111,9 +201,9 @@ const AddCertificates = () => {
                     accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.jpg,.jpeg,.png"
                     hidden
                     name="certificate"
-                    // onChange={(e) => {
-                    //   handleChange(e);
-                    // }}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                   />
                 </Button>
               </Stack>
@@ -131,6 +221,7 @@ const AddCertificates = () => {
                 <Button
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                  onClick={() => saveCertificates()}
                 >
                   Add
                 </Button>

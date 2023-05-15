@@ -34,6 +34,8 @@ import {
   deleteCertifiAndGet,
   deleteProjectAndGet,
   deleteTrainAndGet,
+  retrieveGetSinCertificate,
+  retrieveGetSinProject,
 } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -115,6 +117,16 @@ const Certifications = () => {
 
   const handleCloseDelCert = () => {
     setOpenDelCert(false);
+  };
+
+  const handleGetSingleCer = (id) => {
+    dispatch(retrieveGetSinCertificate(id));
+    gotToAddCertifications();
+  };
+
+  const handleGetSingle = (id) => {
+    dispatch(retrieveGetSinProject(id));
+    gotToAddProject();
   };
 
   const notify3 = (del) =>
@@ -223,10 +235,9 @@ const Certifications = () => {
                       }}
                     >
                       <IconButton
-                      // onClick={() => {
-                      //   handleClickOpen();
-                      //   handleGetSingle(data._id);
-                      // }}
+                        onClick={() => {
+                          handleGetSingle(prj._id);
+                        }}
                       >
                         <CreateIcon
                           sx={{ color: "#00339B" }}
@@ -444,7 +455,11 @@ const Certifications = () => {
                         gap: "10px",
                       }}
                     >
-                      <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+                      <CreateIcon
+                        sx={{ color: "#00339B" }}
+                        fontSize="small"
+                        onClick={() => handleGetSingleCer(cet._id)}
+                      />
                       <IconButton
                         onClick={() => {
                           handleClickOpenDelCert(cet._id);

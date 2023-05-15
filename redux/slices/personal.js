@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
+import { updateCurrentScreen } from "./candidate";
 
 const initialState = {
   data: [],
@@ -92,6 +93,7 @@ export const retrieveGetSinTrain = createAsyncThunk(
 export const retrieveGetSinCertificate = createAsyncThunk(
   "cert/retrive",
   async (id) => {
+    console.log(id, "retrieveGetSinCertificate");
     const res = await personalService.getOneCert(id);
     return res.data.resume.certificateFileLocation[0];
   }
@@ -232,6 +234,7 @@ export const addEducations = createAsyncThunk(
 
 export const AddProAndThenGet = (value) => async (dispatch) => {
   await dispatch(addProjects(value));
+  dispatch(updateCurrentScreen());
   return await dispatch(retrievePersonal());
 };
 
@@ -308,6 +311,7 @@ export const editEducations = createAsyncThunk(
 );
 export const EditProjectAndGet = (value, id) => async (dispatch) => {
   await dispatch(editProjects({ value, id }));
+  dispatch(updateCurrentScreen());
   return await dispatch(retrievePersonal());
 };
 
@@ -684,6 +688,12 @@ const personalSlice = createSlice({
     },
     [fetchAppliedJobs.fulfilled]: (state, action) => {
       state.appliedJobs = action.payload;
+    },
+    [editProjects.fulfilled]: (state, action) => {
+      state.project = {};
+    },
+    [addProjects.fulfilled]: (state, action) => {
+      state.project = {};
     },
   },
 });
