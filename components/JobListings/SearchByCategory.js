@@ -43,7 +43,6 @@ const SearchByCategory = () => {
             enableAutoPlay
             ref={carouselRef}
             onNextEnd={({ index }) => {
-              console.log(index, "index");
               clearTimeout(resetTimeout);
               if (index + 1 === totalPages) {
                 resetTimeout = setTimeout(() => {

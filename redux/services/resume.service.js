@@ -139,9 +139,8 @@ const certificatesEdit = (value) => {
 };
 const validResume = (uplodedFiles) => {
   const formData = new FormData();
-  console.log(uplodedFiles, "service");
+
   uplodedFiles.forEach((file) => {
-    console.log(file, "fromdata");
     formData.append("uplodedFiles", file);
   });
   return axios

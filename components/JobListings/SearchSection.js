@@ -264,9 +264,7 @@ const SearchSection = (props) => {
 
   const classes = useStyles();
 
-  const handleCategoryChipClick = () => {
-    console.info("You clicked the Chip.");
-  };
+  const handleCategoryChipClick = () => {};
 
   const [isShown, setIsShown] = useState(false);
 

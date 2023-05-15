@@ -80,12 +80,10 @@ const BrandsHome = () => {
             enableAutoPlay
             ref={carouselRef}
             onNextEnd={({ index }) => {
-              console.log(index, "index");
               clearTimeout(resetTimeout);
               if (index + 1 === totalPages) {
                 resetTimeout = setTimeout(() => {
                   carouselRef.current.goTo(0);
-                  console.log("i was called");
                 }, 1500); // same time
               }
             }}

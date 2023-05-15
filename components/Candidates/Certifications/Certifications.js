@@ -50,7 +50,6 @@ const Certifications = () => {
   const [delCert, setDelCert] = useState("");
 
   const { data = {} } = useSelector((state) => state?.personal);
-  console.log(data, "test");
 
   const projects =
     data.resume && data.resume.projects ? data.resume.projects : [];
