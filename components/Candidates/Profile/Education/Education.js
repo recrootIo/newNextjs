@@ -1,7 +1,18 @@
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { CardContent, Grid, Stack } from "@mui/material";
-import React from "react";
+import {
+  CardContent,
+  Grid,
+  Stack,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
+  Button,
+  Slide,
+} from "@mui/material";
+import React, { useState } from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from "@mui/icons-material/Create";
@@ -9,13 +20,60 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { deleteEducaAndGet } from "@/redux/slices/personal";
+// import { logout } from "@/redux/slices/auth";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
 
 const Education = ({ ...resume }) => {
+  const [openDel, setOpenDel] = React.useState(false);
   const dispatch = useDispatch();
   const gotToAddEducation = () => {
-    dispatch(updateCurrentScreen("resume"));
+    dispatch(updateCurrentScreen("education"));
   };
+  const [delEdu, setDelEdu] = useState("");
+
+  const handleClickOpenDel = (id) => {
+    setDelEdu(id);
+    setOpenDel(true);
+  };
+
+  const handleCloseDel = () => {
+    setOpenDel(false);
+  };
+
+  // const navigate = useNavigate();
+  const handleDelete = () => {
+    dispatch(deleteEducaAndGet(delEdu));
+    // .then((res) => {
+    //   if (res.error !== undefined) {
+    //     res.error.message === "Request failed with status code 401" ||
+    //     "Request failed with status code 403"
+    //       ? dispatch(logout()).then(() => {
+    //           navigate("/signin", { state: true });
+    //         })
+    //       : navigate(1);
+    //   } else {
+    //     notify3();
+    //   }
+    // })
+    // .catch((error) => {
+    //   if (
+    //     error.message === "Request failed with status code 401" ||
+    //     "Request failed with status code 403"
+    //   ) {
+    //     dispatch(logout()).then(() => {
+    //       navigate("/signin", { state: true });
+    //     });
+    //   }
+    // });
+    // };
+  };
+
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -59,7 +117,12 @@ const Education = ({ ...resume }) => {
                   }}
                 >
                   <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                  <DeleteIcon sx={{ color: DANGER }} />
+                  <DeleteIcon
+                    sx={{ color: DANGER }}
+                    onClick={() => {
+                      handleClickOpenDel(resume._id);
+                    }}
+                  />
                 </Stack>
                 <Grid container>
                   <Grid item md={6}>
@@ -117,6 +180,33 @@ const Education = ({ ...resume }) => {
             </div>
           ))}
         </Stack>
+        <Dialog
+          open={openDel}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseDel}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>
+            {
+              "Are you sure you want to proceed with deleting your educational information ?"
+            }
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                handleCloseDel();
+                handleDelete(resume._id);
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseDel}>No</Button>
+          </DialogActions>
+        </Dialog>
       </CardContent>
     </StyledCard>
   );

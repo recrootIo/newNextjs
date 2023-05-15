@@ -7,9 +7,6 @@ import {
   TextField,
   Container,
   Autocomplete,
-  Stepper,
-  Step,
-  StepLabel,
   Chip,
   FormControl,
   FormControlLabel,
@@ -23,13 +20,16 @@ import {
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import ReactPhoneInput from "react-phone-input-2";
+// import { debounce } from "@/utils/HelperFunctions";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -75,6 +75,13 @@ function getStyles(name, personName, theme) {
 }
 
 const EditPersonalDetails = () => {
+  const { data = {} } = useSelector((state) => state?.personal);
+  const dispatch = useDispatch();
+
+  const gotToPersonalDetails = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleSelectedOptionsChange = (event, newValue) => {
@@ -101,6 +108,46 @@ const EditPersonalDetails = () => {
     setAge(event.target.value);
   };
 
+  const { email, firstName, jobTitle, lastName, mobile, resume } = data;
+  const location = resume?.location;
+  const locationDetails = `${location?.country} , ${location?.state}  , ${location?.city}`;
+  const fullName = `${firstName} ${lastName}`;
+
+  const [type, setType] = useState([]);
+  const [titleLoading, setTitleLoading] = useState(false);
+  const [personal, setPersonal] = useState({
+    fullName: fullName,
+    jobTitle: jobTitle,
+    languages: [],
+    currentOffer: "",
+    notice: "",
+    salaryCurrency: "",
+    expectedSalary: null,
+    currentSalary: null,
+    workPrefence: "",
+    mobile: "",
+  });
+
+  const handleChangeName = (e) => {
+    let { name, value } = e.target;
+    setPersonal({
+      ...personal,
+      [name]: value,
+    });
+  };
+
+  const handleTitle = (e) => {
+    setPersonal({
+      ...personal,
+      jobTitle: e,
+    });
+  };
+
+  const [timetoLoad, setTimeTLoad] = useState(null);
+
+  // const getJobTitles = (e) => {
+  //   debounce(requestTitles, null, timetoLoad, setTimeTLoad, e);
+  // };
   return (
     <div>
       <Container>
@@ -114,6 +161,7 @@ const EditPersonalDetails = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToPersonalDetails()}
             >
               Back
             </Button>
@@ -136,22 +184,49 @@ const EditPersonalDetails = () => {
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
               <TextField
+                required
                 id="outlined-basic"
                 label="Full Name *"
+                name="fullName"
                 variant="outlined"
+                value={fullName}
+                autoComplete="user-name"
+                onChange={(e) => {
+                  handleChangeName(e);
+                }}
+                error={fullName === "" ? true : false}
                 sx={{ width: "100%%" }}
               />
               <Autocomplete
                 freeSolo
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
+                id="free-solo-2-demo"
+                disableClearable
+                fullWidth
+                name="jobTitle"
+                value={jobTitle}
+                disablePortal={true}
+                options={type.map((option) => option)}
+                onChange={(e, a) => {
+                  handleTitle(a);
+                }}
+                required
+                loading={titleLoading}
                 sx={{ display: "flex", justifyContent: "center" }}
                 renderInput={(params) => (
                   <TextField
                     fullWidth
                     {...params}
-                    label="Job Title *"
+                    label="Job Title"
+                    name="jobTitle"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                    }}
+                    // onChange={(e) => {
+                    //   getJobTitles(e.target.value);
+                    // }}
+                    loading={titleLoading}
+                    required
                     sx={{
                       background: "#FFFFFF",
                       borderColor: "#949494",
@@ -162,16 +237,36 @@ const EditPersonalDetails = () => {
               />
               <TextField
                 id="outlined-basic"
-                label="Email Id *"
+                label="Email Id"
                 variant="outlined"
+                required
+                name="email"
+                value={email}
+                autoComplete="email"
+                InputProps={{
+                  readOnly: true,
+                }}
+                error={email === "" ? true : false}
                 sx={{ width: "100%" }}
               />
-              <TextField
-                id="outlined-basic"
-                label="Mobile No *"
-                variant="outlined"
-                sx={{ width: "100%" }}
-              />
+              {/* <ReactPhoneInput
+                inputExtraProps={{
+                  name: "phoneNumber",
+                  required: true,
+                  autoFocus: true,
+                }}
+                id="phoneNumber"
+                name="phoneNumber"
+                specialLabel="Mobile Number"
+                defaultCountry={"au"}
+                value={mobile}
+                //onChange={handlePhoneNumber}
+                inputStyle={{
+                  width: "100%",
+                  height: "3.7375em",
+                  fontSize: "16px",
+                }}
+              /> */}
               <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
                 <Autocomplete
                   freeSolo
@@ -345,4 +440,4 @@ const EditPersonalDetails = () => {
   );
 };
 
-export default PersonalDetails;
+export default EditPersonalDetails;

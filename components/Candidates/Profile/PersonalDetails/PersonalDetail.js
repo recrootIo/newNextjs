@@ -19,7 +19,7 @@ const PersonalDetail = ({ ...data }) => {
 
   const dispatch = useDispatch();
   const gotToEditPersonalDetails = () => {
-    dispatch(updateCurrentScreen("resume"));
+    dispatch(updateCurrentScreen("personalDetails"));
   };
 
   return (

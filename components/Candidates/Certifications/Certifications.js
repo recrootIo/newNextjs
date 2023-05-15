@@ -11,8 +11,21 @@ import { DANGER, NEUTRAL } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const Certifications = () => {
+  const dispatch = useDispatch();
+
+  const gotToAddProject = () => {
+    dispatch(updateCurrentScreen("projects"));
+  };
+  const gotToAddTraining = () => {
+    dispatch(updateCurrentScreen("training"));
+  };
+  const gotToAddCertifications = () => {
+    dispatch(updateCurrentScreen("certificates"));
+  };
   const [open, setOpen] = useState(true);
 
   const openProfile = () => {
@@ -71,7 +84,10 @@ const Certifications = () => {
             >
               Project
             </CustomTypography>
-            <AddIcon />
+            <AddIcon
+              className="iconPointers"
+              onClick={() => gotToAddProject()}
+            />
           </Stack>
           <CardContent sx={{ padding: "30px 30px" }}>
             <Stack
@@ -149,7 +165,10 @@ const Certifications = () => {
             >
               Training
             </CustomTypography>
-            <AddIcon />
+            <AddIcon
+              className="iconPointers"
+              onClick={() => gotToAddTraining()}
+            />
           </Stack>
           <CardContent sx={{ padding: "30px 30px" }}>
             <Stack
@@ -230,7 +249,10 @@ const Certifications = () => {
             >
               Certificate
             </CustomTypography>
-            <AddIcon />
+            <AddIcon
+              className="iconPointers"
+              onClick={() => gotToAddCertifications()}
+            />
           </Stack>
           <CardContent sx={{ padding: "30px 30px" }}>
             <Stack

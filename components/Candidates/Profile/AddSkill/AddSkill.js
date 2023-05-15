@@ -16,6 +16,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -28,6 +30,11 @@ const top100Films = [
 ];
 
 const AddSkill = () => {
+  const dispatch = useDispatch();
+
+  const gotToSkills = () => {
+    dispatch(updateCurrentScreen(""));
+  };
   const [level, setLevel] = React.useState("");
 
   const handleLevelChange = (event) => {
@@ -47,6 +54,7 @@ const AddSkill = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToSkills()}
             >
               Back
             </Button>
