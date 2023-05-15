@@ -326,4 +326,4 @@ const AddCareerPreference = () => {
   );
 };
 
-export default AddCareerPreference;
+export default React.memo(AddCareerPreference);

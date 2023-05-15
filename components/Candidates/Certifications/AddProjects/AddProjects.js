@@ -103,4 +103,4 @@ const AddProjects = () => {
   );
 };
 
-export default AddProjects;
+export default React.memo(AddProjects);

@@ -143,4 +143,4 @@ const AddCertificates = () => {
   );
 };
 
-export default AddCertificates;
+export default React.memo(AddCertificates);

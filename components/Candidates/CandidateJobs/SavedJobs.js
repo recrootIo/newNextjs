@@ -15,7 +15,7 @@ const SavedJobs = () => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -31,12 +31,14 @@ const SavedJobs = () => {
         <AddIcon />
       </Stack>
 
-      <CardContent sx={{ padding: "30px 30px" }}>
+      <CardContent
+        sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
+      >
         <Stack
           sx={{
             backgroundColor: "#F6FCFF",
             borderRadius: "10px",
-            padding: "20px 30px",
+            padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
             border: "1px solid #D3EAFF",
             gap: "5px",
           }}
@@ -82,10 +84,12 @@ const SavedJobs = () => {
             </CustomTypography>
           </Stack>
           <Stack
-            direction={"row"}
             sx={{
               justifyContent: "space-between",
               alignItems: "center",
+              flexDirection: { md: "row", sm: "column", xs: "column" },
+              gap: "20px",
+              mt: "20px",
             }}
           >
             <CustomTypography

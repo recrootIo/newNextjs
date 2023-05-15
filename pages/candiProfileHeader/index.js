@@ -8,6 +8,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import index from "../uploadResume/jobTitle";
 import Image from "next/image";
+import { NEUTRAL } from "@/theme/colors";
 
 const bull = (
   <Box
@@ -19,8 +20,15 @@ const bull = (
 );
 
 const CandidateProfileHeader = ({ ...data }) => {
-  const { firstName, jobTitle, email, lastName, mobileNumber, resume } = data;
-  // console.log(totalWorkExperience, "data");
+  const {
+    firstName,
+    jobTitle,
+    email,
+    lastName,
+    mobileNumber,
+    resume,
+    profilePercentage,
+  } = data;
 
   const fullName = `${firstName} ${lastName}`;
 
@@ -32,7 +40,7 @@ const CandidateProfileHeader = ({ ...data }) => {
         backgroundImage: 'url("/CandiHeaderImg.svg")',
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "330px",
+        height: { md: "330px", xs: "100%", sm: "100%" },
         pb: "40px",
       }}
     >
@@ -54,7 +62,9 @@ const CandidateProfileHeader = ({ ...data }) => {
         <Grid container spacing={2}>
           <Grid
             item
-            xs={3}
+            md={3}
+            xs={12}
+            sm={12}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -72,7 +82,13 @@ const CandidateProfileHeader = ({ ...data }) => {
               sx={{ width: "200px", height: "200px" }}
             />
           </Grid>
-          <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            sx={{ display: "flex", alignItems: "center" }}
+          >
             <Box sx={{ width: "100%" }}>
               <CustomTypography
                 variant="h4"
@@ -85,7 +101,15 @@ const CandidateProfileHeader = ({ ...data }) => {
               <CustomTypography variant="subtitle1" color="white" gutterBottom>
                 {jobTitle} {bull} {resume?.totalWorkExperience} years
               </CustomTypography>
-              <Box sx={{ display: "flex", gap: "20px", mt: "25px" }}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: { md: "20px", xs: "10px", sm: "10px" },
+                  mt: "25px",
+                  flexDirection: { md: "row", xs: "column", sm: "column" },
+                }}
+              >
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
@@ -102,7 +126,14 @@ const CandidateProfileHeader = ({ ...data }) => {
                   <PhoneOutlinedIcon /> {mobileNumber}
                 </CustomTypography>
               </Box>
-              <Box sx={{ display: "flex", gap: "20px" }}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: { md: "20px", xs: "10px", sm: "10px" },
+                  flexDirection: { md: "row", xs: "column", sm: "column" },
+                }}
+              >
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
@@ -123,52 +154,57 @@ const CandidateProfileHeader = ({ ...data }) => {
           </Grid>
           <Grid
             item
-            xs={3}
+            md={3}
+            xs={12}
+            sm={12}
             sx={{
               display: "flex",
               alignItems: "flex-end",
               justifyContent: "flex-end",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-                position: "absolute",
-                top: "100px",
-                backgroundImage: 'url("/profileprecentageborder.png")',
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                height: "200px",
-              }}
-            >
-              <CustomTypography
-                variant="h6"
+            {profilePercentage < 70 && (
+              <Box
                 sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
                   position: "absolute",
-                  fontFamily: "Inter-bold",
-                  zIndex: "1",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
+                  top: "100px",
+                  backgroundImage: 'url("/profileprecentageborder.png")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  height: "200px",
                 }}
               >
-                100%
-              </CustomTypography>
-              <CustomTypography
-                variant="subtitle1"
-                sx={{
-                  mt: "25px",
-                  fontSize: "14px",
-                  position: "relative",
-                  top: "20px",
-                }}
-              >
-                Profile completed (Excellent)
-              </CustomTypography>
-            </Box>
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    position: "absolute",
+                    fontFamily: "Inter-bold",
+                    zIndex: "1",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  {profilePercentage}%
+                </CustomTypography>
+                <CustomTypography
+                  variant="subtitle1"
+                  sx={{
+                    mt: "25px",
+                    fontSize: "14px",
+                    position: "relative",
+                    top: "20px",
+                    color: NEUTRAL,
+                  }}
+                >
+                  Profile completed (Excellent)
+                </CustomTypography>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Container>

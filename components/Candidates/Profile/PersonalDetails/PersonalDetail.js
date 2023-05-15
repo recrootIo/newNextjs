@@ -29,7 +29,7 @@ const PersonalDetail = ({ ...data }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -60,7 +60,11 @@ const PersonalDetail = ({ ...data }) => {
         <AddIcon />
       </Stack>
       <CardContent>
-        <Grid container sx={{ padding: "10px 15px" }}>
+        <Grid
+          container
+          sx={{ padding: { md: "10px 15px", sm: "10px" } }}
+          spacing={2}
+        >
           <Grid item md={6} xs={12}>
             <Stack sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>

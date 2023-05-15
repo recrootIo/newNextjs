@@ -58,15 +58,16 @@ const Experience = ({ ...experience }) => {
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "10px 30px",
+            padding: { md: "10px 30px", xs: "10px", sm: "10px" },
             backgroundColor: "#5CA9E814",
           }}
         >
           <CustomTypography
             sx={{
-              fontFamily: BOLD,
-              color: "#00339B",
-              fontSize: "20px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "10px 30px",
+              backgroundColor: "#5CA9E814",
             }}
           >
             Experience
@@ -76,7 +77,11 @@ const Experience = ({ ...experience }) => {
             onClick={() => gotToAddExperience()}
           />
         </Stack>
-        <CardContent sx={{ padding: "30px 30px" }}>
+        <CardContent
+          sx={{
+            padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+          }}
+        >
           <Stack sx={{ justifyContent: "space-between", gap: "20px" }}>
             {experience?.workExperience.map((ex, index) => (
               <Stack
@@ -84,28 +89,114 @@ const Experience = ({ ...experience }) => {
                 sx={{
                   backgroundColor: "#F6FCFF",
                   borderRadius: "10px",
-                  padding: "20px 30px",
+                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                   border: "1px solid #D3EAFF",
                 }}
               >
                 <Stack
-                  direction={"row"}
+                  key={index}
                   sx={{
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: "10px",
+                    backgroundColor: "#F6FCFF",
+                    borderRadius: "10px",
+                    padding: "20px 30px",
+                    border: "1px solid #D3EAFF",
                   }}
                 >
-                  <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                  <DeleteIcon
-                    sx={{ color: DANGER }}
-                    className="iconPointers"
-                    onClick={() => {
-                      handleClickOpenDeleteExp(experience._id);
+                  <Stack
+                    direction={"row"}
+                    sx={{
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      gap: "10px",
                     }}
-                  />
+                  >
+                    <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+                    <DeleteIcon
+                      sx={{ color: DANGER }}
+                      className="iconPointers"
+                      onClick={() => {
+                        handleClickOpenDeleteExp(experience._id);
+                      }}
+                    />
+                  </Stack>
+                  <Grid container sx={{ rowGap: "10px" }}>
+                    <Grid item md={6}>
+                      <Stack sx={{ gap: LAZY }}>
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Role:
+                          </CustomTypography>
+                          <CustomTypography>{ex?.role}</CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Location:
+                          </CustomTypography>
+                          <CustomTypography>
+                            {ex?.country} , {ex?.state} , {ex?.city}
+                          </CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Total Experience:
+                          </CustomTypography>
+                          <CustomTypography>{ex?.experience}</CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            From:
+                          </CustomTypography>
+                          <CustomTypography>{ex?.fromDate}</CustomTypography>
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                    <Grid item md={6}>
+                      <Stack sx={{ gap: LAZY }}>
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Company:
+                          </CustomTypography>
+                          <CustomTypography>{ex?.companyName}</CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Employement:
+                          </CustomTypography>
+                          <CustomTypography></CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Salary:
+                          </CustomTypography>
+                          <CustomTypography></CustomTypography>
+                        </Stack>
+
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            To:
+                          </CustomTypography>
+                          <CustomTypography>{ex?.toDate}</CustomTypography>
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                    <Grid item md={12}>
+                      <Stack sx={{ gap: LAZY }}>
+                        <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <CustomTypography sx={{ fontWeight: "700" }}>
+                            Job Profile:
+                          </CustomTypography>
+                          <CustomTypography></CustomTypography>
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                  </Grid>
                 </Stack>
-                <Grid container sx={{ rowGap: "10px" }}>
+                <Grid container spacing={2}>
                   <Grid item md={6}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>

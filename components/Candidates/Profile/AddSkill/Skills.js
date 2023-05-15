@@ -63,23 +63,33 @@ const Skills = ({ skills }) => {
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "10px 30px",
+            padding: { md: "10px 30px", xs: "10px", sm: "10px" },
             backgroundColor: "#5CA9E814",
           }}
         >
           <CustomTypography
             sx={{
-              fontFamily: BOLD,
-              color: "#00339B",
-              fontSize: "20px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "10px 30px",
+              backgroundColor: "#5CA9E814",
             }}
           >
             Skills
           </CustomTypography>
           <AddIcon className="iconPointers" onClick={() => gotToAddSkills()} />
         </Stack>
-        <CardContent sx={{ padding: "30px 30px" }}>
-          <table>
+        <CardContent
+          sx={{
+            padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+          }}
+        >
+          <table
+            style={{
+              // minWidth: "600px",
+              overflowX: "auto",
+            }}
+          >
             <tbody>
               {skills.map((skill, index) => (
                 <tr className="styledRows" key={index}>
@@ -111,19 +121,29 @@ const Skills = ({ skills }) => {
                         alignItems: "center",
                         gap: "10px",
                       }}
+                      className="endTd"
                     >
-                      <CreateIcon
-                        sx={{ color: "#00339B" }}
-                        fontSize="small"
-                        className="iconPointers"
-                      />
-                      <DeleteIcon
-                        sx={{ color: DANGER }}
-                        className="iconPointers"
-                        onClick={() => {
-                          handleClickOpenDeleteSkill(skills._id);
+                      <Stack
+                        direction={"row"}
+                        sx={{
+                          justifyContent: "flex-end",
+                          alignItems: "center",
+                          gap: "10px",
                         }}
-                      />
+                      >
+                        <CreateIcon
+                          sx={{ color: "#00339B" }}
+                          fontSize="small"
+                          className="iconPointers"
+                        />
+                        <DeleteIcon
+                          sx={{ color: DANGER }}
+                          className="iconPointers"
+                          onClick={() => {
+                            handleClickOpenDeleteSkill(skills._id);
+                          }}
+                        />
+                      </Stack>
                     </Stack>
                   </td>
                 </tr>
