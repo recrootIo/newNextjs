@@ -170,4 +170,4 @@ const CandidateProfileHeader = () => {
   );
 };
 
-export default CandidateProfileHeader;
+export default React.memo(CandidateProfileHeader);

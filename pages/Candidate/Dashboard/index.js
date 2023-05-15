@@ -45,6 +45,8 @@ const Index = () => {
   const { data = {} } = useSelector((state) => state?.personal);
   const { currentScreen } = useSelector((state) => state?.candidate);
 
+  // const { data = {} } = useSelector((state) => state?.personal);
+
   const dispatch = useDispatch();
 
   const handleClick = () => {
