@@ -11,8 +11,15 @@ import {
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { useDispatch } from "react-redux";
 
 const AddProjects = () => {
+  const dispatch = useDispatch();
+
+  const gotToProjects = () => {
+    dispatch(updateCurrentScreen(""));
+  };
   return (
     <div>
       <Container>
@@ -26,6 +33,7 @@ const AddProjects = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToProjects()}
             >
               Back
             </Button>
