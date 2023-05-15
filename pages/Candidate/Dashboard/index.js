@@ -98,7 +98,7 @@ const Index = () => {
       return <AddCertificates />;
     } else {
       return (
-        <Stack sx={{ gap: "30px" }}>
+        <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
           <Profile {...data} />
           <Certifications />
           <CandidateJobs {...data} />
