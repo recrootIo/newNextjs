@@ -152,6 +152,10 @@ const resendCode = (value) => {
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);
 };
+const getAppliedJobs = (value = "unview") => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return http.get(`fetchAppliedJobs/${user.User._id}?status=${value}&page=10`);
+};
 
 const personalService = {
   getAll,
@@ -200,6 +204,7 @@ const personalService = {
   editVerify,
   resendCode,
   getRetrenchedCandidates,
+  getAppliedJobs,
 };
 
 export default personalService;

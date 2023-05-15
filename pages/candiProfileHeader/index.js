@@ -7,6 +7,7 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import index from "../uploadResume/jobTitle";
+import Image from "next/image";
 
 const bull = (
   <Box
@@ -17,7 +18,12 @@ const bull = (
   </Box>
 );
 
-const CandidateProfileHeader = () => {
+const CandidateProfileHeader = ({ ...data }) => {
+  const { firstName, jobTitle, email, lastName, mobileNumber, resume } = data;
+  // console.log(totalWorkExperience, "data");
+
+  const fullName = `${firstName} ${lastName}`;
+
   return (
     <Box
       sx={{
@@ -55,11 +61,11 @@ const CandidateProfileHeader = () => {
               alignItems: "center",
             }}
           >
-            <img
+            {/* <Image
               src="/candiImgBg.png"
               alt=""
               style={{ position: "absolute" }}
-            />
+            /> */}
             <Avatar
               alt="Remy Sharp"
               src="/static/images/avatar/1.jpg"
@@ -74,10 +80,10 @@ const CandidateProfileHeader = () => {
                 fontFamily="Inter-bold"
                 gutterBottom
               >
-                Candidate Name
+                {fullName}
               </CustomTypography>
               <CustomTypography variant="subtitle1" color="white" gutterBottom>
-                Graphic Designer {bull} 3 Years, 5 Months
+                {jobTitle} {bull} {resume?.totalWorkExperience} years
               </CustomTypography>
               <Box sx={{ display: "flex", gap: "20px", mt: "25px" }}>
                 <CustomTypography
@@ -93,7 +99,7 @@ const CandidateProfileHeader = () => {
                   color="white"
                   gutterBottom
                 >
-                  <PhoneOutlinedIcon /> + 91 7424300000
+                  <PhoneOutlinedIcon /> {mobileNumber}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex", gap: "20px" }}>
@@ -103,14 +109,14 @@ const CandidateProfileHeader = () => {
                   minWidth="30%"
                   gutterBottom
                 >
-                  <EmailOutlinedIcon /> abc@gmail.com
+                  <EmailOutlinedIcon /> {email}
                 </CustomTypography>
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
                   gutterBottom
                 >
-                  <LocalAtmOutlinedIcon /> 5,00,000
+                  <LocalAtmOutlinedIcon /> {resume?.currentSalary?.salary}
                 </CustomTypography>
               </Box>
             </Box>

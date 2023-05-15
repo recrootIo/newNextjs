@@ -1,6 +1,7 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slices/auth";
+import candidateReducer from "../slices/candidate";
 // import messageReducer from "./slices/message";
 // import jobReducer from "./slices/job";
 // import applyReducer from "./slices/applyJobs";
@@ -19,6 +20,7 @@ const reducer = {
   //   apply: applyReducer,
   //   jobs: jobReducer,
   personal: personalReducer,
+  candidate: candidateReducer,
   //   searchJobs: searchReducer,
   //   resume: resumeReducer,
   //   company: cmpReducer,
