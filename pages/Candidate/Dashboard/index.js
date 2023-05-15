@@ -91,7 +91,13 @@ const Index = () => {
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
-            <Stack alignItems={"flex-end"} sx={{ margin: "15px 0" }}>
+            <Stack
+              alignItems={"flex-end"}
+              sx={{
+                margin: "15px 0",
+                display: { md: "none", lg: "node", sm: "flex", xs: "flex" },
+              }}
+            >
               <CloseIcon onClick={() => handleDrawerToggle()} />
             </Stack>
 

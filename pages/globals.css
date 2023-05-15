@@ -385,6 +385,10 @@
     flex-direction: row;
     justify-content: space-between;
   }
+  .signHomeImage {
+    height: 499px;
+    width: auto;
+  }
 }
 
 /* Mobile queries */
@@ -554,7 +558,7 @@
 
 @media (max-width: 500px) {
   .swiper_container {
-    height: 47rem;
+    height: 30rem;
   }
   .swiper-slide {
     height: 36rem !important;
