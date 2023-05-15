@@ -1,6 +1,7 @@
 import moment from "moment";
-import { BILLION, CORE, LAKH, MILLION, YYYY_MM_DD } from "../constants";
+// import { BILLION, CORE, LAKH, MILLION, YYYY_MM_DD } from "../constants";
 import { getCurrencyCode } from "./currency";
+import { YYYY_MM_DD } from "./constants";
 
 export const getToken = () => {
   return localStorage.getItem("token");

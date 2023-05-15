@@ -11,18 +11,23 @@ import {
   CardContent,
   Radio,
   RadioGroup,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
 import { Theme, useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+// import { EDUCATION_LEVELS } from "./../constants";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -35,6 +40,12 @@ const top100Films = [
 ];
 
 const AddEducation = () => {
+  const dispatch = useDispatch();
+
+  const gotToEducation = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
   const [fromDateValue, setFromDateValue] = React.useState();
   const [toDateValue, setToDateValue] = React.useState();
 
@@ -51,6 +62,7 @@ const AddEducation = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToEducation()}
             >
               Back
             </Button>
@@ -72,24 +84,23 @@ const AddEducation = () => {
               Add Education
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Degree*"
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Graduation
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={name.graduate}
+                  label="Graduation"
+                  name="graduate"
+                  // onChange={props.handleChangesChild}
+                >
+                  {/* {EDUCATION_LEVELS.map((educate) => (
+                    <MenuItem value={educate}>{educate}</MenuItem>
+                  ))} */}
+                </Select>
+              </FormControl>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"

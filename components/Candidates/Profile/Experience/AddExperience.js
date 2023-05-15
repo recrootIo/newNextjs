@@ -19,6 +19,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -31,6 +33,11 @@ const top100Films = [
 ];
 
 const AddExperience = () => {
+  const dispatch = useDispatch();
+
+  const gotToExperience = () => {
+    dispatch(updateCurrentScreen(""));
+  };
   const [empType, setEmpType] = React.useState("");
   const [fromDateValue, setFromDateValue] = React.useState();
   const [toDateValue, setToDateValue] = React.useState();
@@ -52,6 +59,7 @@ const AddExperience = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToExperience()}
             >
               Back
             </Button>
