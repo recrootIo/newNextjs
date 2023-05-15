@@ -345,4 +345,4 @@ const EditPersonalDetails = () => {
   );
 };
 
-export default PersonalDetails;
+export default EditPersonalDetails;
