@@ -8,7 +8,6 @@ import { BOLD } from "@/theme/fonts";
 import { DANGER, NEUTRAL } from "@/theme/colors";
 
 const AppliedJobs = ({ appliedJobs }) => {
-  console.log(appliedJobs, "appliedJobs");
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -16,7 +15,7 @@ const AppliedJobs = ({ appliedJobs }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -31,7 +30,9 @@ const AppliedJobs = ({ appliedJobs }) => {
         </CustomTypography>
         <AddIcon />
       </Stack>
-      <CardContent sx={{ padding: "30px 30px" }}>
+      <CardContent
+        sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
+      >
         <Stack sx={{ gap: "20px" }}>
           {appliedJobs.map((applied, index) => (
             <Stack
@@ -39,7 +40,7 @@ const AppliedJobs = ({ appliedJobs }) => {
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: "20px 30px",
+                padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
                 border: "1px solid #D3EAFF",
                 gap: "5px",
               }}
@@ -100,7 +101,12 @@ const AppliedJobs = ({ appliedJobs }) => {
               </Stack>
               <Stack
                 direction={"row"}
-                sx={{ justifyContent: "space-between", mb: "20px" }}
+                sx={{
+                  mb: "20px",
+                  justifyContent: { md: "space-between" },
+                  alignItems: { md: "center", xs: "center" },
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                }}
               >
                 <CustomTypography
                   sx={{
@@ -122,17 +128,21 @@ const AppliedJobs = ({ appliedJobs }) => {
                 </CustomTypography>
               </Stack>
               <Divider />
-
               <Stack sx={{ gap: "50px", mt: "20px" }}>
                 <CustomTypography sx={{ fontFamily: BOLD }}>
                   Application Status
                 </CustomTypography>
                 <CustomizedSteppers />
                 <Stack
-                  direction={"row"}
                   sx={{
                     justifyContent: "space-between",
                     alignItems: "center",
+                    flexDirection: {
+                      md: "row",
+                      sm: "column-reverse",
+                      xs: "column-reverse",
+                    },
+                    gap: "20px",
                   }}
                 >
                   <button

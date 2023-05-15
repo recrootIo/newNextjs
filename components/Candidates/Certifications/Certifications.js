@@ -171,7 +171,7 @@ const Certifications = () => {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "10px 30px",
+                padding: { md: "10px 30px", xs: "10px", sm: "10px" },
                 backgroundColor: "#5CA9E814",
               }}
             >
@@ -186,12 +186,16 @@ const Certifications = () => {
               </CustomTypography>
               <AddIcon />
             </Stack>
-            <CardContent sx={{ padding: "30px 30px" }}>
+            <CardContent
+              sx={{
+                padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+              }}
+            >
               <Stack
                 sx={{
                   backgroundColor: "#F6FCFF",
                   borderRadius: "10px",
-                  padding: "20px 30px",
+                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                   border: "1px solid #D3EAFF",
                 }}
               >
@@ -202,7 +206,6 @@ const Certifications = () => {
                       sx={{
                         justifyContent: "flex-end",
                         alignItems: "center",
-                        gap: "10px",
                       }}
                     >
                       <IconButton
@@ -216,6 +219,7 @@ const Certifications = () => {
                           fontSize="small"
                         />
                       </IconButton>
+
                       <IconButton
                         onClick={() => {
                           handleClickOpenDeleteProject(prj._id);
@@ -267,36 +271,6 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
-          <Dialog
-            open={openDeleteProject}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleCloseDeleteProject}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>
-              {
-                "Are you sure you want to proceed with deleting your project information ?"
-              }
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  handleCloseDeleteProject();
-                  handleDeleteProject();
-                  notify3(
-                    "Your project information has been deleted from your profile"
-                  );
-                }}
-              >
-                Yes
-              </Button>
-              <Button onClick={handleCloseDeleteProject}>No</Button>
-            </DialogActions>
-          </Dialog>
 
           {/* Training */}
           <StyledCard variant="outlined">
@@ -305,7 +279,7 @@ const Certifications = () => {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "10px 30px",
+                padding: { md: "10px 30px", xs: "10px", sm: "10px" },
                 backgroundColor: "#5CA9E814",
               }}
             >
@@ -320,12 +294,16 @@ const Certifications = () => {
               </CustomTypography>
               <AddIcon />
             </Stack>
-            <CardContent sx={{ padding: "30px 30px" }}>
+            <CardContent
+              sx={{
+                padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+              }}
+            >
               <Stack
                 sx={{
                   backgroundColor: "#F6FCFF",
                   borderRadius: "10px",
-                  padding: "20px 30px",
+                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                   border: "1px solid #D3EAFF",
                 }}
               >
@@ -400,34 +378,6 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
-          <Dialog
-            open={openDelTraining}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleCloseDelTraining}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>
-              {
-                "Are you sure you want to proceed with deleting your training information ?"
-              }
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  handleCloseDelTraining();
-                  handleDelTraining();
-                  notify3T();
-                }}
-              >
-                Yes
-              </Button>
-              <Button onClick={handleCloseDelTraining}>No</Button>
-            </DialogActions>
-          </Dialog>
 
           {/* Certificate */}
           <StyledCard variant="outlined">
@@ -451,12 +401,16 @@ const Certifications = () => {
               </CustomTypography>
               <AddIcon />
             </Stack>
-            <CardContent sx={{ padding: "30px 30px" }}>
+            <CardContent
+              sx={{
+                padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+              }}
+            >
               <Stack
                 sx={{
                   backgroundColor: "#F6FCFF",
                   borderRadius: "10px",
-                  padding: "20px 30px",
+                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
                   border: "1px solid #D3EAFF",
                 }}
               >
@@ -480,7 +434,7 @@ const Certifications = () => {
                       </IconButton>
                     </Stack>
                     <Grid container spacing={2}>
-                      <Grid item md={6}>
+                      <Grid item md={6} xs={12} sm={12}>
                         <Stack sx={{ gap: LAZY }}>
                           <Stack direction={"row"} sx={{ gap: "10px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
@@ -498,7 +452,7 @@ const Certifications = () => {
                           </Stack>
                         </Stack>
                       </Grid>
-                      <Grid item md={6}>
+                      <Grid item md={6} xs={12} sm={12}>
                         <Stack sx={{ gap: LAZY }}>
                           <Stack direction={"row"} sx={{ gap: "10px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
@@ -519,13 +473,14 @@ const Certifications = () => {
                           </Stack>
                         </Stack>
                       </Grid>
-                      <Grid item md={12}>
+                      <Grid item md={12} xs={12} sm={12}>
                         <Stack
                           sx={{
                             border: "1px solid #DADADA",
                             justifyContent: "space-between",
-                            alignContent: "center",
-                            padding: "15px",
+                            alignItems: "center",
+                            padding: "3px 15px",
+                            width: "100%",
                           }}
                           direction="row"
                         >
@@ -556,38 +511,99 @@ const Certifications = () => {
               </Stack>
             </CardContent>
           </StyledCard>
-          <Dialog
-            open={openDelCert}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleCloseDelCert}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>
-              {
-                "Are you sure you want to proceed with deleting your certificate information ?"
-              }
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  handleCloseDelCert();
-                  handleDelCert();
-                  notify3(
-                    "Your certificate information has been deleted from your profile"
-                  );
-                }}
-              >
-                Yes
-              </Button>
-              <Button onClick={handleCloseDelCert}>No</Button>
-            </DialogActions>
-          </Dialog>
         </Stack>
       </Collapse>
+
+      <Dialog
+        open={openDeleteProject}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseDeleteProject}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>
+          {
+            "Are you sure you want to proceed with deleting your project information ?"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleCloseDeleteProject();
+              handleDeleteProject();
+              notify3(
+                "Your project information has been deleted from your profile"
+              );
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={handleCloseDeleteProject}>No</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openDelTraining}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseDelTraining}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>
+          {
+            "Are you sure you want to proceed with deleting your training information ?"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleCloseDelTraining();
+              handleDelTraining();
+              notify3T();
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={handleCloseDelTraining}>No</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openDelCert}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseDelCert}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>
+          {
+            "Are you sure you want to proceed with deleting your certificate information ?"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleCloseDelCert();
+              handleDelCert();
+              notify3(
+                "Your certificate information has been deleted from your profile"
+              );
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={handleCloseDelCert}>No</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

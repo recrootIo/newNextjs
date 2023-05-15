@@ -2,14 +2,18 @@ import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
   Collapse,
   Container,
   Divider,
+  Drawer,
   Grid,
+  ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Stack,
   styled,
@@ -24,6 +28,8 @@ import CandidateProfileHeader from "@/pages/candiProfileHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { retrievePersonal } from "@/redux/slices/personal";
 import AddResume from "@/pages/profile/addResume";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -73,93 +79,151 @@ const Index = () => {
     }
   };
 
+  const menuList = () => {
+    return (
+      <>
+        <Box sx={{ width: "100%" }}>
+          <List
+            sx={{
+              width: "100%",
+              backgroundColor: "#5CA9E814",
+              borderRadius: "10px 10px 0px 0px",
+              padding: "15px",
+            }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <Stack
+              alignItems={"flex-end"}
+              sx={{
+                margin: "15px 0",
+                display: { md: "none", lg: "node", sm: "flex", xs: "flex" },
+              }}
+            >
+              <CloseIcon onClick={() => handleDrawerToggle()} />
+            </Stack>
+
+            <ListItemButton onClick={handleClick}>
+              <StyledListItemText primary="My Profile" />
+              {profile ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={profile} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Resume" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Personal details" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Education" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Experience" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Skills" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton onClick={handleCertification}>
+              <StyledListItemText primary="Other Certification" />
+              {certification ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={certification} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Projects" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Trainings" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Certification" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton onClick={handleJobs}>
+              <StyledListItemText primary="Jobs" />
+              {certification ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={jobs} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Applied Jobs" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemText primary="Saved Jobs" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+            <ListItemButton>
+              <StyledListItemText primary="Career Preference" />
+            </ListItemButton>
+            <ListItemButton>
+              <StyledListItemText primary="Update Password" />
+            </ListItemButton>
+            <ListItemButton>
+              <StyledListItemText primary="Log Out" />
+            </ListItemButton>
+          </List>
+        </Box>
+      </>
+    );
+  };
+
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <div>
       <CandidateProfileHeader {...data} />
       <Container>
-        <Grid container spacing={2} sx={{ padding: "20px" }}>
-          <Grid item md={4}>
-            <Box>
-              <List
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#5CA9E814",
-                  borderRadius: "10px 10px 0px 0px",
-                  padding: "15px",
-                }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-              >
-                <ListItemButton onClick={handleClick}>
-                  <StyledListItemText primary="My Profile" />
-                  {profile ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={profile} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Resume" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Personal details" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Education" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Experience" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Skills" />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-
-                <ListItemButton onClick={handleCertification}>
-                  <StyledListItemText primary="Other Certification" />
-                  {certification ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={certification} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Projects" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Trainings" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Certification" />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-
-                <ListItemButton onClick={handleJobs}>
-                  <StyledListItemText primary="Jobs" />
-                  {certification ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={jobs} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Applied Jobs" />
-                    </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="Saved Jobs" />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-
-                <ListItemButton>
-                  <StyledListItemText primary="Career Preference" />
-                </ListItemButton>
-                <ListItemButton>
-                  <StyledListItemText primary="Update Password" />
-                </ListItemButton>
-                <ListItemButton>
-                  <StyledListItemText primary="Log Out" />
-                </ListItemButton>
-              </List>
-            </Box>
+        <Grid
+          container
+          spacing={2}
+          sx={{ padding: { md: "20px", xs: "20px 3px" } }}
+        >
+          <Grid
+            item
+            md={4}
+            sx={{ display: { md: "flex", xs: "none", sm: "none" } }}
+          >
+            {menuList()}
           </Grid>
-          <Grid item md={8}>
+          <Grid
+            item
+            md={8}
+            xs={12}
+            sm={12}
+            sx={{ height: "100vh", overflowY: "auto" }}
+          >
+            <MenuIcon
+              fontSize="large"
+              onClick={() => handleDrawerToggle()}
+              sx={{
+                margin: "10px 0",
+                display: { md: "none", sm: "flex", xs: "flex" },
+              }}
+            />
+
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {menuList()}
+            </Drawer>
+
             {getPages()}
           </Grid>
         </Grid>

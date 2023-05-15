@@ -25,7 +25,7 @@ const Resume = ({ ...resume }) => {
         sx={{
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "10px 30px",
+          padding: { md: "10px 30px", xs: "10px", sm: "10px" },
           backgroundColor: "#5CA9E814",
         }}
       >
@@ -40,7 +40,7 @@ const Resume = ({ ...resume }) => {
         </CustomTypography>
         <AddIcon className="iconPointers" onClick={() => gotToResume()} />
       </Stack>
-      <CardContent>
+      <CardContent sx={{ p: { md: "16px", xs: "16px 0", sm: "16px 0" } }}>
         {resume.resumeFileLocation.map((cv, index) => (
           <Stack
             key={index}
@@ -49,7 +49,7 @@ const Resume = ({ ...resume }) => {
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-              padding: "10px 15px",
+              padding: { md: "10px 15px", xs: "10px", sm: "10px" },
             }}
           >
             <CustomTypography

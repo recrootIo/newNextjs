@@ -65,6 +65,7 @@ const SignUpHome = () => {
             <button className="signUpButton">SIGN UP</button>
           </Stack>
         </Stack>
+
         {tablet && (
           <Image
             src="/sector.png"

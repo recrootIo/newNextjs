@@ -385,6 +385,10 @@
     flex-direction: row;
     justify-content: space-between;
   }
+  .signHomeImage {
+    height: 499px;
+    width: auto;
+  }
 }
 
 /* Mobile queries */
@@ -554,7 +558,7 @@
 
 @media (max-width: 500px) {
   .swiper_container {
-    height: 47rem;
+    height: 30rem;
   }
   .swiper-slide {
     height: 36rem !important;
@@ -796,6 +800,7 @@
 .styledRows .startingTd {
   padding-left: 30px;
 }
+
 .styledRows .endTd {
   padding-right: 30px;
 }
@@ -820,6 +825,14 @@
 @media only screen and (max-width: 600px) {
   .loginImages {
     height: 120px;
+  }
+
+  .styledRows .startingTd {
+    padding-left: 10px;
+  }
+
+  .styledRows .endTd {
+    padding-right: 10px;
   }
 }
 
