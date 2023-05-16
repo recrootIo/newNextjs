@@ -193,6 +193,7 @@ export const addProfphoto = createAsyncThunk("add/Profpic", async (photo) => {
 
 export const AddExperinceAndThenGet = (value) => async (dispatch) => {
   await dispatch(addExperinces(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -266,6 +267,7 @@ export const addSocials = createAsyncThunk("add/Education", async (value) => {
 
 export const EditExperinceAndGet = (value, id) => async (dispatch) => {
   await dispatch(editExperinces({ value, id }));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 

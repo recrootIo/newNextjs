@@ -8,8 +8,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { BOLD } from "@/theme/fonts";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { retrieveGetSinExperience } from "@/redux/slices/personal";
 
 const Experience = ({ ...experience }) => {
+  const dispatch = useDispatch();
+
+  const gotToExperience = () => {
+    dispatch(updateCurrentScreen("experience"));
+  };
+
+  const handleGetSingle = (id) => {
+    dispatch(retrieveGetSinExperience(id));
+    gotToExperience();
+  };
+
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -30,7 +44,7 @@ const Experience = ({ ...experience }) => {
         >
           Experience
         </CustomTypography>
-        <AddIcon />
+        <AddIcon onClick={() => gotToExperience()} sx={{ cursor: "pointer" }} />
       </Stack>
       <CardContent
         sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
@@ -54,7 +68,11 @@ const Experience = ({ ...experience }) => {
                   gap: "10px",
                 }}
               >
-                <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+                <CreateIcon
+                  sx={{ color: "#00339B", cursor: "pointer" }}
+                  fontSize="small"
+                  onClick={() => handleGetSingle(ex?._id)}
+                />
                 <DeleteIcon sx={{ color: DANGER }} />
               </Stack>
               <Grid container spacing={2}>

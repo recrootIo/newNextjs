@@ -1,5 +1,5 @@
 import moment from "moment";
-import { BILLION, CORE, LAKH, MILLION, YYYY_MM_DD } from "../constants";
+// import { BILLION, CORE, LAKH, MILLION, YYYY_MM_DD } from "../constants";
 import { getCurrencyCode } from "./currency";
 
 export const getToken = () => {
@@ -81,4 +81,18 @@ export const getZerosCurrencies = (value, denominator) => {
   //   default:
   //     return `${value}000`;
   // }
+};
+
+/**
+ *
+ * @param {*} date
+ * @returns
+ */
+export const convertDate = (date) => {
+  const dateObj = new Date(date);
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const year = String(dateObj.getFullYear());
+
+  return `${month}/${day}/${year}`;
 };

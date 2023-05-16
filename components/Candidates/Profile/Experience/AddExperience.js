@@ -19,6 +19,18 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch, useSelector } from "react-redux";
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+} from "react-google-places-autocomplete";
+import { convertDate } from "@/utils/HelperFunctions";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { MobileDatePicker } from "@mui/x-date-pickers";
+import {
+  AddExperinceAndThenGet,
+  EditExperinceAndGet,
+} from "@/redux/slices/personal";
+import dayjs from "dayjs";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -31,12 +43,96 @@ const top100Films = [
 ];
 
 const AddExperience = () => {
+  const resume = useSelector((state) => state.personal.exper);
+  const dispatch = useDispatch();
+
+  const [experienceFields, setExperienceFields] = React.useState({
+    companyName: "",
+    role: "",
+    country: "",
+    state: "",
+    city: "",
+    experience: "",
+    fromDate: "",
+    toDate: "",
+  });
+
+  React.useEffect(() => {
+    setExperienceFields(() => ({
+      companyName: resume?.companyName,
+      role: resume?.role,
+      country: resume?.country,
+      state: resume?.state,
+      city: resume?.city,
+      experience: resume?.experience,
+      fromDate: resume?.fromDate,
+      toDate: resume?.toDate,
+      _id: resume?._id,
+    }));
+    setValue(() => dayjs(resume?.fromDate));
+    setValue2(() => dayjs(resume?.toDate));
+  }, [resume]);
+
+  const [value, setValue] = React.useState("");
+  const [value2, setValue2] = React.useState("");
   const [empType, setEmpType] = React.useState("");
-  const [fromDateValue, setFromDateValue] = React.useState();
-  const [toDateValue, setToDateValue] = React.useState();
 
   const handleEmpTypeChange = (event) => {
     setEmpType(event.target.value);
+  };
+
+  const onChange = (e) => {
+    let { name, value } = e.target;
+    setExperienceFields({
+      ...experienceFields,
+      [name]: value,
+    });
+  };
+
+  const handleSelect = async (selected) => {
+    const results = await geocodeByAddress(selected.label);
+    setExperienceFields({
+      ...experienceFields,
+      country: results[0].address_components.find((c) =>
+        c.types.includes("country")
+      )?.long_name,
+      state: results[0].address_components.find((c) =>
+        c.types.includes("administrative_area_level_1")
+      )?.long_name,
+      city: results[0].address_components.find((c) =>
+        c.types.includes("locality")
+      )?.long_name,
+    });
+  };
+
+  const handleChange = (newValue) => {
+    let val = convertDate(newValue);
+    setValue(() => newValue);
+    setExperienceFields((state) => ({
+      ...state,
+      fromDate: val,
+    }));
+  };
+
+  const handleChangeto = (newValue2) => {
+    let val = convertDate(newValue2);
+    setValue2(() => newValue2);
+    setExperienceFields((state) => ({
+      ...state,
+      toDate: val,
+    }));
+  };
+
+  const gotoHome = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
+  const addExperience = () => {
+    if (resume?._id) {
+      dispatch(EditExperinceAndGet(experienceFields, resume?._id));
+    } else {
+      dispatch(AddExperinceAndThenGet(experienceFields));
+    }
   };
 
   return (
@@ -52,6 +148,7 @@ const AddExperience = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotoHome()}
             >
               Back
             </Button>
@@ -72,43 +169,116 @@ const AddExperience = () => {
             >
               Add Experience
             </CustomTypography>
+
             <Stack spacing={2} sx={{ mt: "100px" }}>
               <TextField
+                autoComplete="given-name"
+                name="role"
                 required
-                id="outlined-basic"
+                fullWidth
+                id="companyRole"
                 label="Role"
-                variant="outlined"
+                autoFocus
+                value={experienceFields?.role}
+                onChange={onChange}
               />
+
               <TextField
+                autoComplete="given-name"
+                name="companyName"
                 required
-                id="outlined-basic"
+                fullWidth
+                id="cmopanyName"
                 label="Company Name"
-                variant="outlined"
+                autoFocus
+                value={experienceFields?.companyName}
+                onChange={onChange}
               />
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Location"
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-              />
+
+              <Box sx={{ width: "100%" }}>
+                <GooglePlacesAutocomplete
+                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                  selectProps={{
+                    isClearable: true,
+                    placeholder: "Enter Your Location",
+                    value: experienceFields?.country,
+                    onChange: (val) => {
+                      handleSelect(val);
+                    },
+                    styles: {
+                      input: (provided) => ({
+                        ...provided,
+                        boxShadow: 0,
+                        height: "40px",
+                        "&:hover": {
+                          border: "1px solid purple",
+                        },
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        boxShadow: 0,
+                        "&:hover": {
+                          border: "1px solid purple",
+                        },
+                      }),
+                    },
+                  }}
+                />
+              </Box>
+
+              {experienceFields?.country === "" ? (
+                ""
+              ) : (
+                <Stack direction="row" spacing={2} marginTop={2}>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">Country</CustomTypography>
+                    <TextField
+                      autoComplete="given-name"
+                      name="country"
+                      fullWidth
+                      id="about"
+                      placeholder="Country"
+                      value={experienceFields?.country}
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">State</CustomTypography>
+                    <TextField
+                      autoComplete="given-name"
+                      name="state"
+                      fullWidth
+                      id="about"
+                      placeholder="State"
+                      value={experienceFields?.state}
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">City</CustomTypography>
+                    <TextField
+                      autoComplete="given-name"
+                      name="city"
+                      fullWidth
+                      id="about"
+                      placeholder="City"
+                      value={experienceFields?.city}
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                </Stack>
+              )}
+
               <TextField
                 id="outlined-basic"
                 label="Total Experience(Years)"
                 type="number"
                 variant="outlined"
+                onChange={onChange}
+                name="experience"
+                value={experienceFields?.experience}
               />
+
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Employement Type
@@ -120,45 +290,59 @@ const AddExperience = () => {
                   label="Employement Type"
                   onChange={handleEmpTypeChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={"Permanent"}>Permanent</MenuItem>
+                  <MenuItem value={"Contract"}>Contract</MenuItem>
+                  <MenuItem value={"Contract"}>Freelancing</MenuItem>
                 </Select>
               </FormControl>
-              <Stack direction="row" spacing={2}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "20px",
+                  width: "100%",
+                }}
+              >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
+                  <MobileDatePicker
                     label="From"
-                    value={fromDateValue}
-                    onChange={(newFromDateValue) =>
-                      setFromDateValue(newFromDateValue)
-                    }
-                    sx={{ width: "50%" }}
+                    // inputFormat="MM/dd/YYYY"
+                    name="fromDate"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
+                  />
+
+                  <MobileDatePicker
+                    label="To"
+                    // inputFormat="MM/dd/YYYY"
+                    name="toDate"
+                    value={value2}
+                    onChange={handleChangeto}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
                   />
                 </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="From"
-                    value={toDateValue}
-                    onChange={(newToDateValue) =>
-                      setToDateValue(newToDateValue)
-                    }
-                    sx={{ width: "50%" }}
-                  />
-                </LocalizationProvider>
-              </Stack>
+              </Box>
+
               <TextField
                 required
                 id="outlined-basic"
                 label="Salary"
                 variant="outlined"
               />
+
               <TextField
                 id="outlined-multiline-static"
                 label="Job Profile"
                 multiline
                 rows={4}
               />
+
               <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
@@ -173,6 +357,7 @@ const AddExperience = () => {
                 <Button
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                  onClick={() => addExperience()}
                 >
                   Add
                 </Button>
