@@ -49,29 +49,6 @@ const Education = ({ ...resume }) => {
   // const navigate = useNavigate();
   const handleDelete = () => {
     dispatch(deleteEducaAndGet(delEdu));
-    // .then((res) => {
-    //   if (res.error !== undefined) {
-    //     res.error.message === "Request failed with status code 401" ||
-    //     "Request failed with status code 403"
-    //       ? dispatch(logout()).then(() => {
-    //           navigate("/signin", { state: true });
-    //         })
-    //       : navigate(1);
-    //   } else {
-    //     notify3();
-    //   }
-    // })
-    // .catch((error) => {
-    //   if (
-    //     error.message === "Request failed with status code 401" ||
-    //     "Request failed with status code 403"
-    //   ) {
-    //     dispatch(logout()).then(() => {
-    //       navigate("/signin", { state: true });
-    //     });
-    //   }
-    // });
-    // };
   };
 
   return (

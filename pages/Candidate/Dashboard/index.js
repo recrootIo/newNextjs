@@ -37,6 +37,9 @@ import AddProjects from "@/components/Candidates/Certifications/AddProjects/AddP
 import EditPersonalDetails from "@/components/Candidates/Profile/PersonalDetails/EditPersonalDetails";
 import AddTraining from "@/components/Candidates/Certifications/AddTraining/AddTraining";
 import AddCertificates from "@/components/Candidates/Certifications/AddCertificates/AddCertificates";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePassword";
+import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -55,6 +58,14 @@ const Index = () => {
   // const { data = {} } = useSelector((state) => state?.personal);
 
   const dispatch = useDispatch();
+
+  const gotToUpdatePassword = () => {
+    dispatch(updateCurrentScreen("dashboardup"));
+  };
+
+  const gotToCareerPreference = () => {
+    dispatch(updateCurrentScreen("dashboardcp"));
+  };
 
   const handleClick = () => {
     setProfile(!profile);
@@ -96,6 +107,12 @@ const Index = () => {
     }
     if (currentScreen === "certificates") {
       return <AddCertificates />;
+    }
+    if (currentScreen === "dashboardup") {
+      return <UpdatePassword />;
+    }
+    if (currentScreen === "dashboardcp") {
+      return <AddCareerPreference />;
     } else {
       return (
         <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
@@ -189,10 +206,16 @@ const Index = () => {
             </Collapse>
 
             <ListItemButton>
-              <StyledListItemText primary="Career Preference" />
+              <StyledListItemText
+                primary="Career Preference"
+                onClick={() => gotToCareerPreference()}
+              />
             </ListItemButton>
             <ListItemButton>
-              <StyledListItemText primary="Update Password" />
+              <StyledListItemText
+                primary="Update Password"
+                onClick={() => gotToUpdatePassword()}
+              />
             </ListItemButton>
             <ListItemButton>
               <StyledListItemText primary="Log Out" />

@@ -11,8 +11,25 @@ import {
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const UpdatePassword = () => {
+  const dispatch = useDispatch();
+  const gotToDashboard = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
+  // const [user, setUser] = useState({
+  //   _id: cand?._id,
+  //   email: cand?.email,
+  //   password: "",
+  //   newPassword: "",
+  //   mobile: "",
+  //   otp: "",
+  //   method: "",
+  // });
+
   return (
     <div>
       <Container>
@@ -26,6 +43,7 @@ const UpdatePassword = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToDashboard()}
             >
               Back
             </Button>
@@ -47,12 +65,29 @@ const UpdatePassword = () => {
               UPDATE PASSWORD
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <TextField
-                required
-                id="outlined-basic"
-                label="Old Passwords"
-                variant="outlined"
-              />
+              <FormControl variant="outlined" sx={{ width: "100%" }}>
+                <InputLabel htmlFor="password">Old Password</InputLabel>
+                {/* <OutlinedInput
+                  required
+                  id="password"
+                  label="Old Password"
+                  value={user.password}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {passhow ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  type={passhow ? "text" : "password"}
+                  onChange={onChange}
+                /> */}
+              </FormControl>
               <TextField
                 required
                 id="outlined-basic"

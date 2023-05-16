@@ -31,6 +31,8 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -76,14 +78,15 @@ function getStyles(name, personName, theme) {
 }
 
 const AddCareerPreference = () => {
+  const dispatch = useDispatch();
+  const gotToDashboard = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
   const [availability, setAvailability] = React.useState("");
   const [address, setaddress] = useState("");
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
-
-  const handleAvailabilityChange = (event) => {
-    setAvailability(event.target.value);
-  };
 
   const handleWorkPreferenceChange = (event) => {
     const {
@@ -124,6 +127,7 @@ const AddCareerPreference = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToDashboard()}
             >
               Back
             </Button>
@@ -145,20 +149,25 @@ const AddCareerPreference = () => {
               Add Career Preference
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <FormControl fullWidth>
+              <FormControl>
                 <InputLabel id="demo-simple-select-label">
                   Availability
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={availability}
+                  // value={newSkill.Compitance}
                   label="Availability"
-                  onChange={handleAvailabilityChange}
+                  name="Availability"
+                  required
+                  // onChange={handleChangesChild}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={"intermediate"}>
+                    Immediately, I’m actively applying
+                  </MenuItem>
+                  <MenuItem value={"expert"}>
+                    Flexible, I’m casually browsing
+                  </MenuItem>
                 </Select>
               </FormControl>
               <Autocomplete
