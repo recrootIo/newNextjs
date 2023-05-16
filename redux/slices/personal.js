@@ -163,6 +163,13 @@ export const addCover = createAsyncThunk("add/Cover", async (pdf) => {
 
 export const AddCertificateAndThenGet = (pdf) => async (dispatch) => {
   await dispatch(addCertificates(pdf));
+  dispatch(updateCurrentScreen(""));
+  return await dispatch(retrievePersonal());
+};
+
+export const AddEditCertificates = (pdf) => async (dispatch) => {
+  await dispatch(addEditCertificates(pdf));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -698,6 +705,9 @@ const personalSlice = createSlice({
     },
     [addProjects.fulfilled]: (state, action) => {
       state.project = {};
+    },
+    [addEditCertificates.fulfilled]: () => {
+      state.certone = {};
     },
   },
 });

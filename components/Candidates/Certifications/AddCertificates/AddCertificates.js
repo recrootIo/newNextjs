@@ -10,21 +10,27 @@ import {
   CardContent,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  LocalizationProvider,
+  MobileDatePicker,
+} from "@mui/x-date-pickers";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { AddCertificateAndThenGet } from "@/redux/slices/personal";
+import {
+  AddCertificateAndThenGet,
+  AddEditCertificates,
+  addEditCertificates,
+} from "@/redux/slices/personal";
 import moment from "moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { convertDate } from "@/utils/HelperFunctions";
 
 const AddCertificates = ({}) => {
   const certOne = useSelector((state) => state.personal.certone);
-
-  console.log(moment(certOne?.expireDate).format("YYYY/MM/DD"));
-
   const dispatch = useDispatch();
 
   const gotToCertificates = () => {
@@ -40,6 +46,9 @@ const AddCertificates = ({}) => {
     expireDate: "",
   });
 
+  const [value, setValue] = React.useState("");
+  const [value2, setValue2] = React.useState("");
+
   React.useEffect(() => {
     setInputCertificate({
       title: certOne && certOne.title,
@@ -50,47 +59,52 @@ const AddCertificates = ({}) => {
       certificateLink: certOne && certOne.certificateLink,
       expireDate: certOne?.expireDate,
       issueDate: certOne?.issueDate,
-      // expireDate: certOne && ,
       id: certOne && certOne._id,
     });
+    setValue(() => dayjs(certOne?.issueDate));
+    setValue2(() => dayjs(certOne?.expireDate));
   }, [certOne]);
 
-  const handleChange = (e, time) => {
-    if (time === "issueDate") {
-      setInputCertificate({
-        ...inputCertificate,
-        issueDate: e,
-      });
-      return null;
-    }
+  const onChange = (e, n) => {
+    let { name, value } = e.target;
 
-    if (time === "expireDate") {
-      setInputCertificate({
-        ...inputCertificate,
-        expireDate: e,
-      });
-      return null;
-    }
+    setInputCertificate({
+      ...inputCertificate,
+      [name]: value,
+    });
+  };
 
-    console.log(e, time);
-
-    if (e.target.files !== null) {
-      setInputCertificate({
-        ...inputCertificate,
-        certificate: e.target.files[0],
-      });
-    } else {
-      let { name, value } = e.target;
-      setInputCertificate({ ...inputCertificate, [name]: value });
-    }
+  const fileChange = (e) => {
+    setInputCertificate({
+      ...inputCertificate,
+      certificate: e.target.files[0],
+    });
   };
 
   const saveCertificates = () => {
-    if (certOne) {
-      dispatch(AddCertificateAndThenGet(inputCertificate));
+    if (certOne?._id) {
+      dispatch(AddEditCertificates(inputCertificate));
     } else {
-      dispatch(addEditCertificates(inputCertificate));
+      dispatch(AddCertificateAndThenGet(inputCertificate));
     }
+  };
+
+  const handleChangeForm = (newValue) => {
+    let val = convertDate(newValue);
+    setValue(() => newValue);
+    setInputCertificate((state) => ({
+      ...state,
+      issueDate: val,
+    }));
+  };
+
+  const handleChangeto = (newValue2) => {
+    let val = convertDate(newValue2);
+    setValue2(() => newValue2);
+    setInputCertificate((state) => ({
+      ...state,
+      expireDate: val,
+    }));
   };
 
   return (
@@ -134,43 +148,38 @@ const AddCertificates = ({}) => {
                 variant="outlined"
                 value={inputCertificate?.title}
                 name="title"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={onChange}
               />
               <TextField
                 id="outlined-basic"
-                label="Project Name"
+                label="Organization"
                 variant="outlined"
                 name="organization"
                 value={inputCertificate.organization}
-                onChange={(e) => {
-                  handleChange(e);
-                }}
+                onChange={onChange}
               />
               <Stack direction="row" spacing={2}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="From"
-                    value={inputCertificate?.issueDate}
-                    inputFormat="MM/dd/yyyy"
-                    name="issueDate"
-                    onChange={(e) => {
-                      handleChange(e, "issueDate");
-                    }}
-                    sx={{ width: "50%" }}
-                  />
-                </LocalizationProvider>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
+                  <MobileDatePicker
                     label="From"
-                    name="expireDate"
-                    inputFormat="MM/dd/yyyy"
-                    value={dayjs(inputCertificate?.expireDate)}
-                    onChange={(e) => {
-                      handleChange(e, "expireDate");
-                    }}
-                    sx={{ width: "50%" }}
+                    // inputFormat="MM/dd/YYYY"
+                    name="fromDate"
+                    value={value}
+                    onChange={handleChangeForm}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
+                  />
+
+                  <MobileDatePicker
+                    label="To"
+                    // inputFormat="MM/dd/YYYY"
+                    name="toDate"
+                    value={value2}
+                    onChange={handleChangeto}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
                   />
                 </LocalizationProvider>
               </Stack>
@@ -182,9 +191,7 @@ const AddCertificates = ({}) => {
                   sx={{ width: "95%" }}
                   value={inputCertificate?.certificateLink}
                   name="certificateLink"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
+                  onChange={onChange}
                 />
                 <Button
                   variant="outlined"
@@ -201,9 +208,7 @@ const AddCertificates = ({}) => {
                     accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.jpg,.jpeg,.png"
                     hidden
                     name="certificate"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
+                    onChange={fileChange}
                   />
                 </Button>
               </Stack>

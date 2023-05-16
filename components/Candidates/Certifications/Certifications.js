@@ -437,16 +437,17 @@ const Certifications = () => {
                 padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
               }}
             >
-              <Stack
-                sx={{
-                  backgroundColor: "#F6FCFF",
-                  borderRadius: "10px",
-                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
-                  border: "1px solid #D3EAFF",
-                }}
-              >
+              <Stack sx={{ gap: "20px" }}>
                 {certification?.map((cet, index) => (
-                  <div key={index}>
+                  <Stack
+                    sx={{
+                      backgroundColor: "#F6FCFF",
+                      borderRadius: "10px",
+                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      border: "1px solid #D3EAFF",
+                    }}
+                    key={index}
+                  >
                     <Stack
                       direction={"row"}
                       sx={{
@@ -541,7 +542,7 @@ const Certifications = () => {
                         </Stack>
                       </Grid>
                     </Grid>
-                  </div>
+                  </Stack>
                 ))}
               </Stack>
             </CardContent>

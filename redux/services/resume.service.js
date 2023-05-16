@@ -95,12 +95,12 @@ const certificatesAdd = (value) => {
   const userId = user.User._id;
   const formData = new FormData();
   formData.append("userId", userId);
-  formData.append("certificates", value?.certificate);
+  formData.append("certificates", value.certificate);
   formData.append("title", value?.title);
-  formData.append("organization", value?.organization);
-  formData.append("issueDate", value?.issueDate);
-  formData.append("expireDate", value?.expireDate);
-  formData.append("certificateLink", value?.certificateLink);
+  formData.append("organization", value.organization);
+  formData.append("issueDate", value.issueDate);
+  formData.append("expireDate", value.expireDate);
+  formData.append("certificateLink", value.certificateLink);
   return http
     .post(`addCertificate`, formData, {
       headers: {
@@ -115,18 +115,22 @@ const certificatesAdd = (value) => {
 const certificatesEdit = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   const formData = new FormData();
-  formData.append("Id", value.id);
-  formData.append("certificates", value.certificate);
-  formData.append("title", value.title);
-  formData.append("organization", value.organization);
-  formData.append("name", value.certificateName);
-  formData.append("path", value.certificatepath);
-  formData.append("issueDate", value.issueDate);
-  formData.append("expireDate", value.expireDate);
-  formData.append("certificateLink", value.certificateLink);
+
+  if (value?.certificate) {
+    formData.append("certificates", value?.certificate);
+  }
+
+  formData.append("certificateLink", value?.certificateLink);
+  formData.append("name", value?.certificateName);
+  formData.append("path", value?.certificatepath);
+  formData.append("expireDate", value?.expireDate);
+  formData.append("Id", value?.id);
+  formData.append("issueDate", value?.issueDate);
+  formData.append("organization", value?.organization);
+  formData.append("title", value?.title);
 
   return http
-    .put(API_URL + `editCertficates`, formData, {
+    .put(`editCertficates`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "x-access-token": `${user.token}`,
