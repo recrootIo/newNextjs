@@ -168,7 +168,7 @@ const Skills = ({ skills }) => {
           <Button
             onClick={() => {
               handleCloseDeleteSkill();
-              handleDeleteSkill();
+              handleDeleteSkill(skills._id);
             }}
           >
             Yes

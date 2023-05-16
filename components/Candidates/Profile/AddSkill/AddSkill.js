@@ -16,29 +16,49 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
+import { AddSkillAndThenGet, EditSkillAndGet } from "@/redux/slices/personal";
 
 const AddSkill = () => {
+  const { data = {} } = useSelector((state) => state?.personal);
+  const skills = data.resume && data.resume.skills ? data.resume.skills : [];
   const dispatch = useDispatch();
+
+  const [newSkill, setNewSkill] = React.useState({
+    skillName: "",
+    Experience: "",
+    Compitance: "",
+  });
+
+  const buttonText = skills?._id ? "Update" : "Add";
+  const handleAdd = () => {
+    if (skills?._id) {
+      dispatch(EditSkillAndGet(newSkill, skills?._id));
+    } else {
+      dispatch(AddSkillAndThenGet(newSkill));
+    }
+  };
 
   const gotToSkills = () => {
     dispatch(updateCurrentScreen(""));
   };
-  const [level, setLevel] = React.useState("");
 
-  const handleLevelChange = (event) => {
-    setLevel(event.target.value);
+  React.useEffect(() => {
+    setNewSkill({
+      Compitance: skills?.Compitance,
+      Experience: skills?.Experience,
+      skillName: skills?.skillName,
+      _id: skills?._id,
+    });
+  }, [skills]);
+
+  const handleChangesChild = (e) => {
+    let { name, value } = e.target;
+    setNewSkill({
+      ...newSkill,
+      [name]: value,
+    });
   };
 
   return (
@@ -76,42 +96,44 @@ const AddSkill = () => {
               Add Skill
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Select Skill"
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
+              <TextField
+                autoComplete="given-name"
+                required
+                id="outlined-basic"
+                label="Skill"
+                variant="outlined"
+                name="skillName"
+                value={newSkill.skillName}
+                onChange={handleChangesChild}
               />
               <TextField
-                id="outlined-basic"
+                autoComplete="given-name"
+                name="Experience"
+                required
+                id="experience"
                 label="Experience(Years)"
                 type="number"
                 variant="outlined"
+                value={newSkill.Experience}
+                onChange={handleChangesChild}
+                autoFocus
               />
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Level</InputLabel>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Competency
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={level}
-                  label="Level"
-                  onChange={handleLevelChange}
+                  value={newSkill.Compitance}
+                  label="Competency"
+                  name="Compitance"
+                  required
+                  onChange={handleChangesChild}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={"intermediate"}>Intermediate</MenuItem>
+                  <MenuItem value={"expert"}>Expert</MenuItem>
+                  <MenuItem value={"beginner"}>Beginner</MenuItem>
                 </Select>
               </FormControl>
               <Stack direction="row" spacing={2}>
@@ -126,10 +148,11 @@ const AddSkill = () => {
                   Cancel
                 </Button>
                 <Button
+                  onClick={() => handleAdd()}
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                 >
-                  Add
+                  {buttonText}
                 </Button>
               </Stack>
             </Stack>
