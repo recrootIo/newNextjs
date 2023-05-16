@@ -1153,10 +1153,10 @@ a {
   font-size: 14px;
 }
 
-.Mui-selected {
+/* .Mui-selected {
   background-color: #034275 !important;
   color: white !important;
-}
+} */
 
 .MuiTab-root.Mui-selected {
   background-color: #d3eaff !important;

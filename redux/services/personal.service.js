@@ -197,7 +197,6 @@ const personalService = {
   editTrain,
   editSocial,
   editPersonal,
-  editPersonal,
   editPersonalName,
   editPersonalNotice,
   editVerify,

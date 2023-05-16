@@ -37,6 +37,9 @@ import AddProjects from "@/components/Candidates/Certifications/AddProjects/AddP
 import EditPersonalDetails from "@/components/Candidates/Profile/PersonalDetails/EditPersonalDetails";
 import AddTraining from "@/components/Candidates/Certifications/AddTraining/AddTraining";
 import AddCertificates from "@/components/Candidates/Certifications/AddCertificates/AddCertificates";
+import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePassword";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -68,6 +71,10 @@ const Index = () => {
     setJobs(!jobs);
   };
 
+  const gotToScreens = (screen) => {
+    dispatch(updateCurrentScreen(screen));
+  };
+
   useEffect(() => {
     dispatch(retrievePersonal());
   }, [dispatch]);
@@ -96,15 +103,21 @@ const Index = () => {
     }
     if (currentScreen === "certificates") {
       return <AddCertificates />;
-    } else {
-      return (
-        <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
-          <Profile {...data} />
-          <Certifications />
-          <CandidateJobs {...data} />
-        </Stack>
-      );
     }
+    if (currentScreen === "updatePassword") {
+      return <UpdatePassword />;
+    }
+    if (currentScreen === "careerPreference") {
+      return <AddCareerPreference />;
+    }
+
+    return (
+      <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
+        <Profile {...data} />
+        <Certifications />
+        <CandidateJobs {...data} />
+      </Stack>
+    );
   };
 
   const menuList = () => {
@@ -186,10 +199,10 @@ const Index = () => {
                 </ListItemButton>
               </List>
             </Collapse>
-            <ListItemButton>
+            <ListItemButton onClick={() => gotToScreens("careerPreference")}>
               <StyledListItemText primary="Career Preference" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => gotToScreens("updatePassword")}>
               <StyledListItemText primary="Update Password" />
             </ListItemButton>
             <ListItemButton>

@@ -31,6 +31,7 @@ const initialState = {
   userCountry: "",
   cards: [],
   appliedJobs: [],
+  myPreferenceInfo: {},
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -371,10 +372,13 @@ export const editPersonals = createAsyncThunk(
     return res.data;
   }
 );
+
 export const editPersonalsName = (value) => async (dispatch) => {
   await dispatch(editPersonalsNameDet(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
+
 export const editPersonalsNameDet = createAsyncThunk(
   "edit/PersonalName",
   async (value) => {

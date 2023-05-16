@@ -32,71 +32,46 @@ import axios from "axios";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { debounce } from "@/utils/HelperFunctions";
-import { LANGUAGES } from "@/utils/constants";
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+} from "react-google-places-autocomplete";
+import { DENOMINATIONS, LANGUAGES } from "@/utils/constants";
+import { CURRENCY, currency } from "@/utils/currency";
+import { NEUTRAL } from "@/theme/colors";
+import { EditPersonalandGet, editPersonalsName } from "@/redux/slices/personal";
 
 const EditPersonalDetails = () => {
   const { data = {} } = useSelector((state) => state?.personal);
+  const { firstName, jobTitle, lastName, mobile, about, resume } = data;
+  const user = JSON.parse(localStorage.getItem("User"));
+
   const dispatch = useDispatch();
+
+  const [titleLoading, setTitleLoading] = useState(false);
+  const [personal, setPersonal] = useState({
+    firstName: firstName,
+    lastName: lastName,
+    jobTitle: jobTitle,
+    languages: resume?.languages,
+    currentOffer: resume.currentOffer,
+    notice: resume.notice,
+    salaryCurrency: resume.salaryCurrency,
+    currentSalary: resume?.currentSalary,
+    workPrefence: resume?.resume,
+    mobile: mobile,
+    country: resume.location.country,
+    state: resume.location.state,
+    city: resume.location.city,
+    totalWorkExperience: resume?.totalWorkExperience,
+  });
+
+  const [type, setType] = useState([]);
+  const [timetoLoad, setTimeTLoad] = useState(null);
+  const [language, setLanguage] = useState("");
 
   const gotToPersonalDetails = () => {
     dispatch(updateCurrentScreen(""));
   };
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const handleSelectedOptionsChange = (event, newValue) => {
-    setSelectedOptions(newValue);
-  };
-
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
-  //Experience
-  const [age, setAge] = React.useState("");
-
-  const handleExperienceChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const { email, firstName, jobTitle, lastName, mobile, about, resume } = data;
-  console.log(data);
-  const location = resume?.location;
-  const locationDetails = `${location?.country} , ${location?.state}  , ${location?.city}`;
-  const fullName = `${firstName} ${lastName}`;
-
-  const [type, setType] = useState([]);
-  const user = JSON.parse(localStorage.getItem("User"));
-  const [titleLoading, setTitleLoading] = useState(false);
-  const [personal, setPersonal] = useState({
-    fullName: fullName,
-    jobTitle: jobTitle,
-    languages: [],
-    currentOffer: "",
-    notice: "",
-    salaryCurrency: "",
-    expectedSalary: null,
-    currentSalary: null,
-    workPrefence: "",
-    mobile: "",
-  });
 
   const handleChangeName = (e) => {
     let { name, value } = e.target;
@@ -112,8 +87,6 @@ const EditPersonalDetails = () => {
       jobTitle: e,
     });
   };
-
-  const [timetoLoad, setTimeTLoad] = useState(null);
 
   const requestTitles = (e) => {
     setTitleLoading(true);
@@ -140,24 +113,78 @@ const EditPersonalDetails = () => {
       ...personal,
       mobile: parseInt(e),
     });
-    //  setcountryCode(count)
   };
 
-  const addTitle = async () => {
-    // if (jobTitles.includes(title)) {
-    //   setTitle("");
-    //   return;
-    // }
-    // if (title) {
-    //   setJobTitles((state) => [...state, title]);
-    //   try {
-    //     const res = await userService.insertNewTitle(users?._id, title);
-    //     NotifySuccess(res.data);
-    //   } catch (err) {
-    //     NotifyFailed();
-    //   }
-    //   setTitle("");
-    // }
+  const addTitle = () => {
+    if (language) {
+      setPersonal((state) => ({
+        ...state,
+        languages: [...state.languages, language],
+      }));
+      setLanguage("");
+    }
+  };
+
+  const handleSelect = async (selected) => {
+    const results = await geocodeByAddress(selected.label);
+    setPersonal({
+      ...personal,
+      country: results[0].address_components.find((c) =>
+        c.types.includes("country")
+      )?.long_name,
+      state: results[0].address_components.find((c) =>
+        c.types.includes("administrative_area_level_1")
+      )?.long_name,
+      city: results[0].address_components.find((c) =>
+        c.types.includes("locality")
+      )?.long_name,
+    });
+  };
+
+  const changeLanguages = (e) => {
+    setLanguage(e);
+  };
+
+  const handleDelete = (e) => {
+    let array = personal.languages.filter((l) => l != e);
+    setPersonal((state) => ({
+      ...state,
+      languages: [...array],
+    }));
+  };
+
+  const changeOffers = (e, a) => {
+    setPersonal((state) => ({
+      ...state,
+      currentOffer: a,
+    }));
+  };
+
+  const handleEdit = () => {
+    dispatch(editPersonalsName(personal));
+    dispatch(EditPersonalandGet(personal));
+  };
+
+  const changeSalaries = (e, a) => {
+    const { name, value } = e.target;
+    const salary = personal.currentSalary.salary;
+    const denomination = personal.currentSalary.denomination;
+
+    let currentSalary = {
+      salary,
+      denomination,
+    };
+
+    if (name === "salary") {
+      currentSalary.salary = value;
+    } else {
+      currentSalary.denomination = value;
+    }
+
+    setPersonal((state) => ({
+      ...state,
+      currentSalary: currentSalary,
+    }));
   };
 
   return (
@@ -195,20 +222,31 @@ const EditPersonalDetails = () => {
               Edit Personal Details
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "100px" }}>
-              <TextField
-                required
-                id="outlined-basic"
-                label="Full Name"
-                name="fullName"
-                variant="outlined"
-                value={fullName}
-                autoComplete="user-name"
-                onChange={(e) => {
-                  handleChangeName(e);
-                }}
-                error={fullName === "" ? true : false}
-                sx={{ width: "100%%" }}
-              />
+              <Stack direction={"row"} sx={{ gap: "10px" }}>
+                <TextField
+                  required
+                  id="outlined-basic"
+                  label="First Name"
+                  name="firstName"
+                  variant="outlined"
+                  value={personal.firstName}
+                  autoComplete="user-name"
+                  onChange={handleChangeName}
+                  sx={{ width: "100%" }}
+                />
+
+                <TextField
+                  required
+                  id="outlined-basic"
+                  label="Last Name"
+                  name="lastName"
+                  variant="outlined"
+                  value={personal.lastName}
+                  autoComplete="user-name"
+                  onChange={handleChangeName}
+                  sx={{ width: "100%" }}
+                />
+              </Stack>
 
               <Autocomplete
                 freeSolo
@@ -260,9 +298,7 @@ const EditPersonalDetails = () => {
                 rows={4}
                 required
                 value={about}
-                onChange={(e) => {
-                  handleChangeName(e);
-                }}
+                onChange={handleChangeName}
               />
 
               <ReactPhoneInput
@@ -284,102 +320,100 @@ const EditPersonalDetails = () => {
                 }}
               />
 
-              <Stack direction="row" sx={{ width: "100%" }} spacing={2}>
-                <Autocomplete
-                  freeSolo
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
+              <Box sx={{ width: "100%" }}>
+                <GooglePlacesAutocomplete
+                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                  selectProps={{
+                    isClearable: true,
+                    placeholder: "Enter Your Location",
+                    value: personal.country,
+                    onChange: (val) => {
+                      handleSelect(val);
+                    },
+                    styles: {
+                      input: (provided) => ({
+                        ...provided,
+                        boxShadow: 0,
+                        height: "40px",
+                        "&:hover": {
+                          border: "1px solid purple",
+                        },
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        boxShadow: 0,
+                        "&:hover": {
+                          border: "1px solid purple",
+                        },
+                      }),
+                    },
                   }}
-                  renderInput={(params) => (
-                    <TextField
-                      fullWidth
-                      {...params}
-                      label="Enter your Location *"
-                      sx={{
-                        background: "#FFFFFF",
-                        borderColor: "#949494",
-                        borderRadius: "8px",
-                        width: "100%",
-                      }}
-                    />
-                  )}
                 />
-                <Autocomplete
-                  freeSolo
-                  disablePortal
-                  id="combo-box-demo"
-                  options={top100Films}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                  }}
-                  renderInput={(params) => (
+              </Box>
+
+              {personal?.country === "" ? (
+                ""
+              ) : (
+                <Stack direction="row" spacing={2} marginTop={2}>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">Country</CustomTypography>
                     <TextField
+                      autoComplete="given-name"
+                      name="country"
                       fullWidth
-                      {...params}
-                      label="Region *"
-                      sx={{
-                        background: "#FFFFFF",
-                        borderColor: "#949494",
-                        borderRadius: "8px",
-                        width: "100%",
-                      }}
+                      id="about"
+                      placeholder="Country"
+                      value={personal?.country}
+                      onChange={handleChangeName}
                     />
-                  )}
-                />
-              </Stack>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">State</CustomTypography>
+                    <TextField
+                      autoComplete="given-name"
+                      name="state"
+                      fullWidth
+                      id="about"
+                      placeholder="State"
+                      value={personal?.state}
+                      onChange={handleChangeName}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <CustomTypography variant="body2">City</CustomTypography>
+                    <TextField
+                      autoComplete="given-name"
+                      name="city"
+                      fullWidth
+                      id="about"
+                      placeholder="City"
+                      value={personal?.city}
+                      onChange={handleChangeName}
+                    />
+                  </FormControl>
+                </Stack>
+              )}
 
               <Stack gap={1}>
-                <Box sx={{ display: "flex" }}>
-                  {/* code copied from job preferences of job positions at current site */}
-                  {/* <Autocomplete
-                    multiple
-                    id="fixed-tags-demo"
-                    value={namen.languages}
-                    onChange={(event, newValue) => {
-                      handleChangeChip(newValue);
-                    }}
-                    options={LANGUAGES}
-                    getOptionLabel={(option) => option}
-                    renderTags={(tagValue, getTagProps) =>
-                      tagValue.map((option, index) => (
-                        <Chip label={option} {...getTagProps({ index })} />
-                      ))
-                    }
-                    required
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Languages"
-                        placeholder="Languages"
-                      />
-                    )}
-                  /> */}
+                <Stack
+                  sx={{
+                    flexDirection: "row",
+                    gap: "10px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <Autocomplete
-                    freeSolo
-                    multiple
                     id="free-solo-2-demo"
-                    disableClearable
                     fullWidth
                     disablePortal={true}
                     name="language"
-                    value={resume.languages}
                     onChange={(event, newValue) => {
-                      handleChangeChip(newValue);
+                      changeLanguages(newValue);
                     }}
+                    value={language}
                     options={LANGUAGES}
                     getOptionLabel={(option) => option}
-                    renderTags={(tagValue, getTagProps) =>
-                      tagValue.map((option, index) => (
-                        <Chip label={option} {...getTagProps({ index })} />
-                      ))
-                    }
                     required
                     renderInput={(params) => (
                       <TextField
@@ -394,52 +428,92 @@ const EditPersonalDetails = () => {
                       />
                     )}
                   />
+
                   <IconButton onClick={() => addTitle()}>
                     <AddIcon sx={{ color: "#1976d2" }} />
                   </IconButton>
-                </Box>
-                <Stack direction={"row"} gap={1}></Stack>
+                </Stack>
+
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  <Chip
-                    label="sinhala"
-                    //onDelete={() => removeTitle(t)}
-                    deleteIcon={<CloseIcon />}
-                    sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
-                  />
+                  {personal.languages.map((l, index) => (
+                    <Chip
+                      key={index}
+                      label={l}
+                      deleteIcon={<CloseIcon />}
+                      onDelete={() => handleDelete(l)}
+                      sx={{
+                        fontSize: "17px",
+                        bgcolor: "#D4F0FC",
+                        padding: "3px",
+                      }}
+                    />
+                  ))}
                 </Box>
               </Stack>
 
+              <TextField
+                autoComplete="given-name"
+                name="totalWorkExperience"
+                fullWidth
+                label="Experience"
+                required
+                value={personal.totalWorkExperience}
+                onChange={handleChangeName}
+              />
+
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-simple-select-label">
+                  Salary Currency
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={personal.salaryCurrency}
+                  name="salaryCurrency"
+                  label="Salary Currency"
+                  onChange={handleChangeName}
+                  required
+                >
+                  {CURRENCY.map((data, ind) => (
+                    <MenuItem key={ind} value={data.country}>
+                      {data.country} {data.symbol}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
               <Stack direction="row" spacing={2}>
-                <FormControl fullWidth>
+                <TextField
+                  variant="outlined"
+                  value={personal?.currentSalary?.salary}
+                  name="salary"
+                  label="Current Salary(Per Annum)"
+                  type="number"
+                  onChange={changeSalaries}
+                  sx={{ width: "100%" }}
+                  required
+                />
+
+                {/* DENOMINATIONS */}
+                <FormControl sx={{ width: "100%" }}>
                   <InputLabel id="demo-simple-select-label">
-                    Experience(Years)
+                    Denomination *
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
-                    label="Age"
-                    onChange={handleExperienceChange}
+                    value={personal?.currentSalary?.denomination}
+                    name="denomination"
+                    label="Denomination *"
+                    sx={{ backgroundColor: NEUTRAL, width: "100%" }}
+                    onChange={changeSalaries}
+                    required
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Current Salary(Per Annum)
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Age"
-                    onChange={handleExperienceChange}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    {DENOMINATIONS.map((data, ind) => (
+                      <MenuItem key={ind} value={data}>
+                        {data}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Stack>
@@ -453,17 +527,16 @@ const EditPersonalDetails = () => {
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
                   sx={{ gap: "100px", mt: "12px" }}
+                  value={personal?.currentOffer}
+                  onChange={changeOffers}
+                  required
                 >
                   <FormControlLabel
-                    value="female"
+                    value="yes"
                     control={<Radio />}
-                    label="Female"
+                    label="Yes"
                   />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                  />
+                  <FormControlLabel value="no" control={<Radio />} label="No" />
                 </RadioGroup>
               </FormControl>
 
@@ -481,6 +554,7 @@ const EditPersonalDetails = () => {
                 <Button
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                  onClick={() => handleEdit()}
                 >
                   Save
                 </Button>

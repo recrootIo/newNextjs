@@ -156,9 +156,12 @@ const AddCareerPreference = () => {
                   label="Availability"
                   onChange={handleAvailabilityChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={"yes"}>
+                    Immediately, I’m actively applying
+                  </MenuItem>
+                  <MenuItem value={"no"}>
+                    Flexible, I’m casually browsing
+                  </MenuItem>
                 </Select>
               </FormControl>
               <Autocomplete
