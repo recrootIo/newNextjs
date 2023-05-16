@@ -13,6 +13,8 @@ import { useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const baseStyle = {
   flex: 1,
@@ -45,6 +47,12 @@ const rejectStyle = {
 };
 
 const AddResume = () => {
+  const dispatch = useDispatch();
+
+  const gotToResume = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
   const {
     acceptedFiles,
     fileRejections,
@@ -101,6 +109,7 @@ const AddResume = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => gotToResume()}
             >
               Back
             </Button>

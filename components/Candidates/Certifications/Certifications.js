@@ -253,7 +253,6 @@ const Certifications = () => {
                           fontSize="small"
                         />
                       </IconButton>
-
                       <IconButton
                         onClick={() => {
                           handleClickOpenDeleteProject(prj._id);

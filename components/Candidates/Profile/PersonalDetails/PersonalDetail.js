@@ -8,13 +8,19 @@ import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import { LAZY, MID } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const PersonalDetail = ({ ...data }) => {
   const { email, firstName, jobTitle, lastName, mobile, resume } = data;
   const location = resume?.location;
   const locationDetails = `${location?.country} , ${location?.state}  , ${location?.city}`;
   const fullName = `${firstName} ${lastName}`;
+
+  const dispatch = useDispatch();
+  const gotToEditPersonalDetails = () => {
+    dispatch(updateCurrentScreen("personalDetails"));
+  };
 
   return (
     <StyledCard variant="outlined">
@@ -44,7 +50,12 @@ const PersonalDetail = ({ ...data }) => {
           >
             Personal Details
           </CustomTypography>
-          <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+          <CreateIcon
+            sx={{ color: "#00339B" }}
+            className="iconPointers"
+            fontSize="small"
+            onClick={() => gotToEditPersonalDetails()}
+          />
         </Stack>
         <AddIcon />
       </Stack>
