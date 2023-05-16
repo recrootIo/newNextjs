@@ -12,19 +12,74 @@ import {
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { MobileDatePicker } from "@mui/x-date-pickers";
+import { convertDate } from "@/utils/HelperFunctions";
+import { AddTrainAndThenGet, EditTrainAndGet } from "@/redux/slices/personal";
+import dayjs from "dayjs";
 
 const AddTraining = () => {
   const dispatch = useDispatch();
+  const training = useSelector((state) => state?.personal?.training);
+  const [value, setValue] = React.useState("");
+  const [value2, setValue2] = React.useState("");
+  const [newTrainings, setNewTrainings] = React.useState({
+    title: "",
+    instituete: "",
+    fromDate: "",
+    toDate: "",
+  });
+
+  React.useEffect(() => {
+    setNewTrainings(() => ({
+      title: training?.title,
+      instituete: training?.instituete,
+      fromDate: training?.fromDate,
+      toDate: training?.toDate,
+    }));
+    setValue(() => dayjs(training?.fromDate));
+    setValue2(() => dayjs(training?.toDate));
+  }, [training]);
 
   const gotToTraining = () => {
     dispatch(updateCurrentScreen(""));
   };
-  const [fromDateValue, setFromDateValue] = React.useState();
-  const [toDateValue, setToDateValue] = React.useState();
+
+  const handleChange = (newValue) => {
+    let val = convertDate(newValue);
+    setValue(() => newValue);
+    setNewTrainings((state) => ({
+      ...state,
+      fromDate: val,
+    }));
+  };
+
+  const handleChangeto = (newValue2) => {
+    let val = convertDate(newValue2);
+    setValue2(() => newValue2);
+    setNewTrainings((state) => ({
+      ...state,
+      toDate: val,
+    }));
+  };
+
+  const saveTrainings = () => {
+    if (training?._id) {
+      dispatch(EditTrainAndGet(newTrainings, training?._id));
+    } else {
+      dispatch(AddTrainAndThenGet(newTrainings));
+    }
+  };
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setNewTrainings({
+      ...newTrainings,
+      [name]: value,
+    });
+  };
 
   return (
     <div>
@@ -66,35 +121,54 @@ const AddTraining = () => {
                 id="outlined-basic"
                 label="Title"
                 variant="outlined"
+                name="title"
+                value={newTrainings.title}
+                onChange={onChange}
               />
+
               <TextField
                 required
                 id="outlined-basic"
                 label="Institute"
                 variant="outlined"
+                name="instituete"
+                value={newTrainings.instituete}
+                onChange={onChange}
               />
-              <Stack direction="row" spacing={2}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "20px",
+                  width: "100%",
+                }}
+              >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
+                  <MobileDatePicker
                     label="From"
-                    value={fromDateValue}
-                    onChange={(newFromDateValue) =>
-                      setFromDateValue(newFromDateValue)
-                    }
-                    sx={{ width: "50%" }}
+                    // inputFormat="MM/dd/YYYY"
+                    name="fromDate"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
+                  />
+
+                  <MobileDatePicker
+                    label="To"
+                    // inputFormat="MM/dd/YYYY"
+                    name="toDate"
+                    value={value2}
+                    onChange={handleChangeto}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={{ width: "100%" }} />
+                    )}
                   />
                 </LocalizationProvider>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="From"
-                    value={toDateValue}
-                    onChange={(newToDateValue) =>
-                      setToDateValue(newToDateValue)
-                    }
-                    sx={{ width: "50%" }}
-                  />
-                </LocalizationProvider>
-              </Stack>
+              </Box>
+
               <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
@@ -109,6 +183,7 @@ const AddTraining = () => {
                 <Button
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                  onClick={() => saveTrainings()}
                 >
                   Add
                 </Button>

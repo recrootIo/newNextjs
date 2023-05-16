@@ -44,7 +44,9 @@ const Education = ({ ...resume }) => {
         >
           Education
         </CustomTypography>
-        <AddIcon onClick={() => gotToEducation()} sx={{ cursor: "pointer" }} />
+        <IconButton onClick={() => gotToEducation()}>
+          <AddIcon sx={{ cursor: "pointer" }} />
+        </IconButton>
       </Stack>
       <CardContent
         sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
@@ -65,7 +67,6 @@ const Education = ({ ...resume }) => {
                 sx={{
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  gap: "10px",
                 }}
               >
                 <IconButton onClick={() => handleGetSingle(edi?._id)}>
@@ -74,8 +75,9 @@ const Education = ({ ...resume }) => {
                     fontSize="small"
                   />
                 </IconButton>
-
-                <DeleteIcon sx={{ color: DANGER }} />
+                <IconButton>
+                  <DeleteIcon sx={{ color: DANGER }} />
+                </IconButton>
               </Stack>
               <Grid container spacing={2}>
                 <Grid item md={6}>

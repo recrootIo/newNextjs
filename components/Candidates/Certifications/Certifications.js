@@ -36,6 +36,7 @@ import {
   deleteTrainAndGet,
   retrieveGetSinCertificate,
   retrieveGetSinProject,
+  retrieveGetSinTrain,
 } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -48,12 +49,15 @@ const Certifications = () => {
   const gotToAddProject = () => {
     dispatch(updateCurrentScreen("projects"));
   };
+
   const gotToAddTraining = () => {
     dispatch(updateCurrentScreen("training"));
   };
+
   const gotToAddCertifications = () => {
     dispatch(updateCurrentScreen("certificates"));
   };
+
   const [open, setOpen] = useState(true);
   const [openDeleteProject, setOpenDeleteProject] = React.useState(false);
   const [delProject, setDelProject] = useState("");
@@ -127,6 +131,11 @@ const Certifications = () => {
   const handleGetSingle = (id) => {
     dispatch(retrieveGetSinProject(id));
     gotToAddProject();
+  };
+
+  const openEditTraining = (id) => {
+    dispatch(retrieveGetSinTrain(id));
+    gotToAddTraining();
   };
 
   const notify3 = (del) =>
@@ -207,26 +216,26 @@ const Certifications = () => {
               >
                 Project
               </CustomTypography>
-              <AddIcon
-                className="iconPointers"
-                onClick={() => gotToAddProject()}
-              />
+              <IconButton onClick={() => gotToAddProject()}>
+                <AddIcon className="iconPointers" />
+              </IconButton>
             </Stack>
             <CardContent
               sx={{
                 padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
               }}
             >
-              <Stack
-                sx={{
-                  backgroundColor: "#F6FCFF",
-                  borderRadius: "10px",
-                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
-                  border: "1px solid #D3EAFF",
-                }}
-              >
+              <Stack sx={{ gap: "20px" }}>
                 {projects?.map((prj, index) => (
-                  <div key={index}>
+                  <Stack
+                    sx={{
+                      backgroundColor: "#F6FCFF",
+                      borderRadius: "10px",
+                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      border: "1px solid #D3EAFF",
+                    }}
+                    key={index}
+                  >
                     <Stack
                       direction={"row"}
                       sx={{
@@ -291,7 +300,7 @@ const Certifications = () => {
                         </Stack>
                       </Grid>
                     </Grid>
-                  </div>
+                  </Stack>
                 ))}
               </Stack>
             </CardContent>
@@ -317,39 +326,37 @@ const Certifications = () => {
               >
                 Training
               </CustomTypography>
-              <AddIcon
-                className="iconPointers"
-                onClick={() => gotToAddTraining()}
-              />
+              <IconButton onClick={() => gotToAddTraining()}>
+                <AddIcon className="iconPointers" />
+              </IconButton>
             </Stack>
             <CardContent
               sx={{
                 padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
               }}
             >
-              <Stack
-                sx={{
-                  backgroundColor: "#F6FCFF",
-                  borderRadius: "10px",
-                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
-                  border: "1px solid #D3EAFF",
-                }}
-              >
+              <Stack sx={{ gap: "20px" }}>
                 {training?.map((tra, index) => (
-                  <div key={index}>
+                  <Stack
+                    sx={{
+                      backgroundColor: "#F6FCFF",
+                      borderRadius: "10px",
+                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      border: "1px solid #D3EAFF",
+                    }}
+                    key={index}
+                  >
                     <Stack
                       direction={"row"}
                       sx={{
                         justifyContent: "flex-end",
                         alignItems: "center",
-                        gap: "10px",
                       }}
                     >
                       <IconButton
-                      // onClick={() => {
-                      //   handleClickOpen2();
-                      //   handleGetSingleT(data._id);
-                      // }}
+                        onClick={() => {
+                          openEditTraining(tra?._id);
+                        }}
                       >
                         <CreateIcon
                           sx={{ color: "#00339B" }}
@@ -401,7 +408,7 @@ const Certifications = () => {
                         </Stack>
                       </Grid>
                     </Grid>
-                  </div>
+                  </Stack>
                 ))}
               </Stack>
             </CardContent>
@@ -427,10 +434,9 @@ const Certifications = () => {
               >
                 Certificate
               </CustomTypography>
-              <AddIcon
-                className="iconPointers"
-                onClick={() => gotToAddCertifications()}
-              />
+              <IconButton onClick={() => gotToAddCertifications()}>
+                <AddIcon className="iconPointers" />
+              </IconButton>
             </Stack>
             <CardContent
               sx={{
@@ -453,14 +459,14 @@ const Certifications = () => {
                       sx={{
                         justifyContent: "flex-end",
                         alignItems: "center",
-                        gap: "10px",
                       }}
                     >
-                      <CreateIcon
-                        sx={{ color: "#00339B" }}
-                        fontSize="small"
-                        onClick={() => handleGetSingleCer(cet._id)}
-                      />
+                      <IconButton onClick={() => handleGetSingleCer(cet._id)}>
+                        <CreateIcon
+                          sx={{ color: "#00339B" }}
+                          fontSize="small"
+                        />
+                      </IconButton>
                       <IconButton
                         onClick={() => {
                           handleClickOpenDelCert(cet._id);

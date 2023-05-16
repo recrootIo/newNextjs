@@ -1,5 +1,5 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { CardContent, Grid, Stack } from "@mui/material";
+import { CardContent, Grid, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
@@ -44,7 +44,9 @@ const Experience = ({ ...experience }) => {
         >
           Experience
         </CustomTypography>
-        <AddIcon onClick={() => gotToExperience()} sx={{ cursor: "pointer" }} />
+        <IconButton onClick={() => gotToExperience()}>
+          <AddIcon sx={{ cursor: "pointer" }} />
+        </IconButton>
       </Stack>
       <CardContent
         sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
@@ -65,15 +67,17 @@ const Experience = ({ ...experience }) => {
                 sx={{
                   justifyContent: "flex-end",
                   alignItems: "center",
-                  gap: "10px",
                 }}
               >
-                <CreateIcon
-                  sx={{ color: "#00339B", cursor: "pointer" }}
-                  fontSize="small"
-                  onClick={() => handleGetSingle(ex?._id)}
-                />
-                <DeleteIcon sx={{ color: DANGER }} />
+                <IconButton onClick={() => handleGetSingle(ex?._id)}>
+                  <CreateIcon
+                    sx={{ color: "#00339B", cursor: "pointer" }}
+                    fontSize="small"
+                  />
+                </IconButton>
+                <IconButton>
+                  <DeleteIcon sx={{ color: DANGER }} />
+                </IconButton>
               </Stack>
               <Grid container spacing={2}>
                 <Grid item md={6}>

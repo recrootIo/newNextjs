@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
-import { CardContent } from "@mui/material";
+import { CardContent, IconButton } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BOLD } from "@/theme/fonts";
@@ -38,7 +38,9 @@ const Resume = ({ ...resume }) => {
         >
           Resume
         </CustomTypography>
-        <AddIcon className="iconPointers" onClick={() => gotToResume()} />
+        <IconButton onClick={() => gotToResume()}>
+          <AddIcon className="iconPointers" />
+        </IconButton>
       </Stack>
       <CardContent sx={{ p: { md: "16px", xs: "16px 0", sm: "16px 0" } }}>
         {resume.resumeFileLocation.map((cv, index) => (

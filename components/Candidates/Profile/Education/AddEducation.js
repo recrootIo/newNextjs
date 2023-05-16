@@ -34,10 +34,10 @@ import dayjs from "dayjs";
 import { AddEducaAndThenGet, EditEducaAndGet } from "@/redux/slices/personal";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { geocodeByAddress } from "react-google-places-autocomplete";
+import { convertDate } from "@/utils/HelperFunctions";
 
 const AddEducation = () => {
   const education = useSelector((state) => state.personal.education);
-
   const dispatch = useDispatch();
 
   const [value, setValue] = React.useState("");
@@ -71,15 +71,6 @@ const AddEducation = () => {
     setValue(() => dayjs(education?.fromDate));
     setValue2(() => dayjs(education?.toDate));
   }, [education]);
-
-  const convertDate = (date) => {
-    const dateObj = new Date(date);
-    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    const day = String(dateObj.getDate()).padStart(2, "0");
-    const year = String(dateObj.getFullYear());
-
-    return `${month}/${day}/${year}`;
-  };
 
   const handleChange = (newValue) => {
     let val = convertDate(newValue);
