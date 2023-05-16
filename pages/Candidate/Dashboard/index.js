@@ -172,7 +172,6 @@ const Index = () => {
                 </ListItemButton>
               </List>
             </Collapse>
-
             <ListItemButton onClick={handleJobs}>
               <StyledListItemText primary="Jobs" />
               {certification ? <ExpandLess /> : <ExpandMore />}
@@ -187,7 +186,6 @@ const Index = () => {
                 </ListItemButton>
               </List>
             </Collapse>
-
             <ListItemButton>
               <StyledListItemText primary="Career Preference" />
             </ListItemButton>

@@ -221,6 +221,7 @@ export const addSkills = createAsyncThunk("add/Experince", async (value) => {
 
 export const AddEducaAndThenGet = (value) => async (dispatch) => {
   await dispatch(addEducations(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -234,7 +235,7 @@ export const addEducations = createAsyncThunk(
 
 export const AddProAndThenGet = (value) => async (dispatch) => {
   await dispatch(addProjects(value));
-  dispatch(updateCurrentScreen());
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -299,6 +300,7 @@ export const editSkills = createAsyncThunk(
 );
 export const EditEducaAndGet = (value, id) => async (dispatch) => {
   await dispatch(editEducations({ value, id }));
+  dispatch(updateCurrentScreen());
   return await dispatch(retrievePersonal());
 };
 

@@ -1,6 +1,6 @@
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { CardContent, Grid, Stack } from "@mui/material";
+import { CardContent, Grid, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,8 +8,22 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
+import { useDispatch } from "react-redux";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { retrieveGetSinEduca } from "@/redux/slices/personal";
 
 const Education = ({ ...resume }) => {
+  const dispatch = useDispatch();
+
+  const gotToEducation = () => {
+    dispatch(updateCurrentScreen("education"));
+  };
+
+  const handleGetSingle = (id) => {
+    dispatch(retrieveGetSinEduca(id));
+    gotToEducation();
+  };
+
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -30,7 +44,7 @@ const Education = ({ ...resume }) => {
         >
           Education
         </CustomTypography>
-        <AddIcon />
+        <AddIcon onClick={() => gotToEducation()} sx={{ cursor: "pointer" }} />
       </Stack>
       <CardContent
         sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}
@@ -54,7 +68,13 @@ const Education = ({ ...resume }) => {
                   gap: "10px",
                 }}
               >
-                <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
+                <IconButton onClick={() => handleGetSingle(edi?._id)}>
+                  <CreateIcon
+                    sx={{ color: "#00339B", cursor: "pointer" }}
+                    fontSize="small"
+                  />
+                </IconButton>
+
                 <DeleteIcon sx={{ color: DANGER }} />
               </Stack>
               <Grid container spacing={2}>
