@@ -29,8 +29,12 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import {
   AddExperinceAndThenGet,
   EditExperinceAndGet,
+  GetCandsPrefInfo,
 } from "@/redux/slices/personal";
 import dayjs from "dayjs";
+import candidateServices from "@/redux/services/candidate.services";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -67,6 +71,7 @@ const AddExperience = () => {
       experience: resume?.experience,
       fromDate: resume?.fromDate,
       toDate: resume?.toDate,
+      jobProfile: resume?.jobProfile,
       _id: resume?._id,
     }));
     setValue(() => dayjs(resume?.fromDate));
@@ -129,16 +134,62 @@ const AddExperience = () => {
 
   const addExperience = () => {
     if (resume?._id) {
-      dispatch(EditExperinceAndGet(experienceFields, resume?._id));
+      editMyExperience();
     } else {
-      dispatch(AddExperinceAndThenGet(experienceFields));
+      addMyExperience(AddExperinceAndThenGet(experienceFields));
     }
+  };
+
+  const editMyExperience = () => {
+    candidateServices
+      .editExperience(experienceFields, resume?._id)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const addMyExperience = () => {
+    candidateServices
+      .addExperience(experienceFields)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
   };
 
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -154,23 +205,20 @@ const AddExperience = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Experience
             </CustomTypography>
 
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <TextField
                 autoComplete="given-name"
                 name="role"
@@ -229,7 +277,14 @@ const AddExperience = () => {
               {experienceFields?.country === "" ? (
                 ""
               ) : (
-                <Stack direction="row" spacing={2} marginTop={2}>
+                <Stack
+                  sx={{
+                    flexDirection: { md: "row", sm: "column", xs: "column" },
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                  marginTop={2}
+                >
                   <FormControl fullWidth>
                     <CustomTypography variant="body2">Country</CustomTypography>
                     <TextField
@@ -299,7 +354,7 @@ const AddExperience = () => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
                   gap: "20px",
                   width: "100%",
                 }}
@@ -340,7 +395,10 @@ const AddExperience = () => {
                 id="outlined-multiline-static"
                 label="Job Profile"
                 multiline
+                name="jobProfile"
                 rows={4}
+                value={experienceFields.jobProfile}
+                onChange={onChange}
               />
 
               <Stack direction="row" spacing={2}>
@@ -351,6 +409,7 @@ const AddExperience = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => gotoHome()}
                 >
                   Cancel
                 </Button>

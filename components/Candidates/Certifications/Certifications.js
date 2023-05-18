@@ -67,7 +67,6 @@ const Certifications = () => {
   const [delCert, setDelCert] = useState("");
 
   const { data = {} } = useSelector((state) => state?.personal);
-  console.log(data, "test");
 
   const projects =
     data.resume && data.resume.projects ? data.resume.projects : [];
@@ -138,17 +137,6 @@ const Certifications = () => {
     gotToAddTraining();
   };
 
-  const notify3 = (del) =>
-    toast.error(del, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
   const notify3T = () =>
     toast.error(
       "Your training information has been deleted from your profile ",
@@ -164,7 +152,7 @@ const Certifications = () => {
     );
 
   return (
-    <>
+    <Stack sx={{ gap: "10px", mt: "10px" }}>
       <Box
         sx={{
           backgroundColor: "#2699FF",
@@ -645,7 +633,7 @@ const Certifications = () => {
           <Button onClick={handleCloseDelCert}>No</Button>
         </DialogActions>
       </Dialog>
-    </>
+    </Stack>
   );
 };
 

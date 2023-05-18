@@ -99,7 +99,7 @@ const AddResume = () => {
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -115,22 +115,20 @@ const AddResume = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
               variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Resume
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <div className="container">
                 <div {...getRootProps({ style })}>
                   <input {...getInputProps()} />

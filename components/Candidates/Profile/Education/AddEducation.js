@@ -26,7 +26,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
-import { EDUCATION_LEVELS } from "@/utils/constants";
+import { EDUCATION_LEVELS, ERROR, SUCCESS } from "@/utils/constants";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -36,6 +36,9 @@ import { AddEducaAndThenGet, EditEducaAndGet } from "@/redux/slices/personal";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { convertDate } from "@/utils/HelperFunctions";
+import personalService from "@/redux/services/personal.service";
+import { openAlert } from "@/redux/slices/alert";
+import candidateServices from "@/redux/services/candidate.services";
 
 const AddEducation = () => {
   const education = useSelector((state) => state.personal.education);
@@ -100,14 +103,6 @@ const AddEducation = () => {
     });
   };
 
-  const handleAdd = () => {
-    if (educationDetails?._id) {
-      dispatch(EditEducaAndGet(educationDetails, educationDetails?._id));
-    } else {
-      dispatch(AddEducaAndThenGet(educationDetails));
-    }
-  };
-
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
   };
@@ -128,10 +123,64 @@ const AddEducation = () => {
     });
   };
 
+  const handleAdd = () => {
+    if (educationDetails?._id) {
+      editEducation();
+    } else {
+      addEducation();
+    }
+  };
+
+  const addEducation = () => {
+    candidateServices
+      .addPersonalEducation(educationDetails)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(GetCandsPrefInfo());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const editEducation = () => {
+    candidateServices
+      .editPersonalEducation(educationDetails, educationDetails?._id)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(GetCandsPrefInfo());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -146,22 +195,19 @@ const AddEducation = () => {
               Back
             </Button>
           </Box>
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Education
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -233,7 +279,13 @@ const AddEducation = () => {
               {educationDetails?.country === "" ? (
                 ""
               ) : (
-                <Stack direction="row" spacing={2} marginTop={2}>
+                <Stack
+                  sx={{
+                    flexDirection: { md: "row", sm: "column", xs: "column" },
+                  }}
+                  spacing={2}
+                  marginTop={2}
+                >
                   <FormControl fullWidth>
                     <CustomTypography variant="body2">Country</CustomTypography>
                     <TextField
@@ -335,6 +387,7 @@ const AddEducation = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => gotoHome()}
                 >
                   Cancel
                 </Button>

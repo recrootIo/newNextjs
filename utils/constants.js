@@ -175,3 +175,15 @@ export const JOB_NATURE = [
   "Internship",
   "Temporary",
 ];
+
+/**
+ * Constants for alerts
+ */
+export const SUCCESS = "success";
+export const ERROR = "error";
+
+export const INTERMEDIATE = "intermediate";
+export const EXPERT = "expert";
+export const BEGINNER = "beginner";
+
+export const LEVELS = [INTERMEDIATE, EXPERT, BEGINNER];

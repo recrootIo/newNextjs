@@ -1,3 +1,4 @@
+import { getUserId } from "@/utils/HelperFunctions";
 import http from "../http-common";
 
 const getAll = () => {
@@ -63,8 +64,7 @@ const addSkill = (value) => {
   return http.post(`postSkill/${user.User._id}`, value);
 };
 const addEducation = (value) => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`postEdu/${user.User._id}`, value);
+  return http.post(`postEdu/${getUserId()}`, value);
 };
 const addProject = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -134,10 +134,12 @@ const editPersonal = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editPersonal/${user.User._id}`, value);
 };
+
 const editPersonalName = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editPersonalName/${user.User._id}`, value);
 };
+
 const editPersonalNotice = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editNotice/${user.User._id}`, { notice: value });

@@ -34,7 +34,7 @@ const Profile = ({ ...data }) => {
   };
 
   return (
-    <>
+    <Stack sx={{ gap: "10px" }}>
       <Box
         sx={{
           backgroundColor: "#2699FF",
@@ -63,6 +63,7 @@ const Profile = ({ ...data }) => {
           </Box>
         </Stack>
       </Box>
+
       <Collapse in={open} timeout="auto">
         <Stack sx={{ gap: "30px" }}>
           {/* Resume */}
@@ -82,7 +83,7 @@ const Profile = ({ ...data }) => {
           <Skills {...resume} />
         </Stack>
       </Collapse>
-    </>
+    </Stack>
   );
 };
 

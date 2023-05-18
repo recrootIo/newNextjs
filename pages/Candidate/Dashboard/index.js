@@ -26,7 +26,7 @@ import Certifications from "@/components/Candidates/Certifications/Certification
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 import CandidateProfileHeader from "@/pages/candiProfileHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { retrievePersonal } from "@/redux/slices/personal";
+import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import AddResume from "@/components/Candidates/Profile/AddResume/AddResume";
@@ -40,6 +40,9 @@ import AddCertificates from "@/components/Candidates/Certifications/AddCertifica
 import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePassword";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
+import authService from "@/redux/services/auth.service";
+import alert from "@/redux/slices/alert";
+import Navbar from "@/components/Navbar/Navbar";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -77,7 +80,20 @@ const Index = () => {
 
   useEffect(() => {
     dispatch(retrievePersonal());
+    dispatch(GetCandsPrefInfo());
   }, [dispatch]);
+
+  const logout = () => {
+    authService.logout().then(() => {
+      navigate("/signin", { state: true });
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Successfully Logged out",
+        })
+      );
+    });
+  };
 
   const getPages = () => {
     if (currentScreen === "resume") {
@@ -205,7 +221,7 @@ const Index = () => {
             <ListItemButton onClick={() => gotToScreens("updatePassword")}>
               <StyledListItemText primary="Update Password" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => logout()}>
               <StyledListItemText primary="Log Out" />
             </ListItemButton>
           </List>
@@ -222,6 +238,7 @@ const Index = () => {
 
   return (
     <div>
+      <Navbar />
       <CandidateProfileHeader {...data} />
       <Container>
         <Grid
@@ -247,7 +264,7 @@ const Index = () => {
               fontSize="large"
               onClick={() => handleDrawerToggle()}
               sx={{
-                margin: "10px 0",
+                margin: "20px 0 20px 11px",
                 display: { md: "none", sm: "flex", xs: "flex" },
               }}
             />

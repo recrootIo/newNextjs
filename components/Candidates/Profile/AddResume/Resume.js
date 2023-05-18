@@ -31,23 +31,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Resume = ({ ...resume }) => {
   const dispatch = useDispatch();
 
+  const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState("");
+
   const gotToResume = () => {
     dispatch(updateCurrentScreen("resume"));
   };
 
-  const [openDel, setOpenDel] = React.useState(false);
-  const [delResume, setDelResume] = useState("");
-  const handleClickOpenDeleteResume = (id) => {
-    setDelResume(id);
-    setOpenDel(true);
-  };
-
-  const handleCloseDel = () => {
-    setOpenDel(false);
-  };
-
   const handleDelete = () => {
-    dispatch(updateAndThenGet(delResume));
+    dispatch(updateAndThenGet(selectedId));
+  };
+
+  const closeMessage = () => {
+    setOpenDeleteScreen(false);
   };
 
   return (
@@ -129,7 +125,8 @@ const Resume = ({ ...resume }) => {
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    handleClickOpenDeleteResume(cv?.id);
+                    setOpenDeleteScreen(() => true);
+                    setSelectedId(cv?._id);
                   }}
                 >
                   <DeleteIcon sx={{ color: DANGER }} className="iconPointers" />
@@ -141,10 +138,10 @@ const Resume = ({ ...resume }) => {
       </StyledCard>
 
       <Dialog
-        open={openDel}
+        open={openDeleteScreen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleCloseDel}
+        onClose={closeMessage}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
@@ -156,13 +153,13 @@ const Resume = ({ ...resume }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              handleCloseDel();
+              closeMessage();
               handleDelete();
             }}
           >
             Yes
           </Button>
-          <Button onClick={handleCloseDel}>No</Button>
+          <Button onClick={() => closeMessage()}>No</Button>
         </DialogActions>
       </Dialog>
     </>

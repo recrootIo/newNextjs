@@ -31,90 +31,158 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+import { useDispatch, useSelector } from "react-redux";
+import { debounce } from "@/utils/HelperFunctions";
+import http from "@/redux/http-common";
+import { ERROR, JOB_NATURE, SUCCESS, WORK_PREFERENCE } from "@/utils/constants";
+import {
+  GetCandsPrefInfo,
+  insertNewJobTitles,
+  insertNewJobType,
+  insertNewLocation,
+  insertNewPlace,
+  updateAvailablity,
+} from "@/redux/slices/personal";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
+import userService from "@/redux/services/user.service";
+import alert, { openAlert } from "@/redux/slices/alert";
 
 const AddCareerPreference = () => {
-  const [availability, setAvailability] = React.useState("");
+  const user = JSON.parse(localStorage.getItem("User"));
+  const { myPreferenceInfo } = useSelector(
+    (state) => state?.personal?.myPreferenceInfo
+  );
+
+  const [careerPre, setCareerPre] = useState({
+    immediateJoiner: myPreferenceInfo?.immediateJoiner,
+    jobLocations: myPreferenceInfo?.jobLocations,
+    jobTitles: myPreferenceInfo?.jobTitles,
+    jobTypes: myPreferenceInfo?.jobTypes,
+    workPlaces: myPreferenceInfo?.workPlaces,
+  });
+
   const [address, setaddress] = useState("");
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [type, setType] = useState([]);
+  const [timetoLoad, setTimeTLoad] = useState(null);
+  const [titleLoading, setTitleLoading] = useState(false);
+  const [preference, setPreference] = useState("");
+  const [jobTypes, setJobTypes] = useState("");
+  const dispatch = useDispatch();
 
   const handleAvailabilityChange = (event) => {
-    setAvailability(event.target.value);
+    setCareerPre((state) => ({
+      ...state,
+      immediateJoiner: event.target.value,
+    }));
   };
 
-  const handleWorkPreferenceChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+  const requestTitles = (e) => {
+    setTitleLoading(true);
+    http
+      .get(`getTitles?searchTitle=${e}`, {
+        headers: { "x-access-token": `${user.token}` },
+      })
+      .then((response) => {
+        const titleArray = response.data.map((e) => e.jobTitle);
+        setType(titleArray);
+        setTitleLoading(false);
+      })
+      .catch(() => {
+        setTitleLoading(false);
+      });
   };
 
-  const handleSelect = async (selected) => {
+  const getJobTitles = (e) => {
+    debounce(requestTitles, null, timetoLoad, setTimeTLoad, e);
+  };
+
+  const handleTitle = (e) => {
+    let jobTitleList = careerPre.jobTitles;
+    jobTitleList = [...jobTitleList, e];
+    setCareerPre((state) => ({ ...state, jobTitles: jobTitleList }));
+  };
+
+  const handleSelect = (selected) => {
     if (selected?.label) {
-      setjobLocations((state) => [...state, selected?.label]);
-      try {
-        const res = await userService.insertNewLocation(
-          users?._id,
-          selected?.label
-        );
-        NotifySuccess(res.data);
-      } catch (err) {
-        NotifyFailed();
-      }
+      let located = selected?.label;
+      setCareerPre((state) => ({
+        ...state,
+        jobLocations: [located, ...state.jobLocations],
+      }));
       setaddress("");
     }
+  };
+
+  const removeTitle = (e) => {
+    let newTitles = careerPre.jobTitles.filter((j) => e != j);
+    setCareerPre((state) => ({ ...state, jobTitles: newTitles }));
+  };
+
+  const handlePreference = (e, val) => {
+    setPreference(() => val);
+  };
+
+  const addPreference = () => {
+    let preferences = careerPre.workPlaces;
+    preferences = [...preferences, preference];
+    setCareerPre((state) => ({ ...state, workPlaces: preferences }));
+    setPreference("");
+  };
+
+  const removePreferences = (e) => {
+    let newPreferences = careerPre.workPlaces.filter((j) => e != j);
+    setCareerPre((state) => ({ ...state, workPlaces: newPreferences }));
+  };
+
+  const addWork = (e, val) => {
+    setJobTypes(() => val);
+  };
+
+  const addWordType = () => {
+    let work = careerPre.jobTypes;
+    work = [...work, jobTypes];
+    setCareerPre((state) => ({ ...state, jobTypes: work }));
+    setJobTypes(() => "");
+  };
+
+  const removeJobs = (e) => {
+    let newJobs = careerPre.jobTypes.filter((j) => e != j);
+    setCareerPre((state) => ({ ...state, jobTypes: newJobs }));
+  };
+
+  const removeTheLocation = (e) => {
+    let newLocation = careerPre.jobLocations.filter((j) => e != j);
+    setCareerPre((state) => ({ ...state, jobLocations: newLocation }));
+  };
+
+  const updateData = () => {
+    userService
+      .updateMyPreference(careerPre)
+      .then((res) => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(GetCandsPrefInfo());
+      })
+      .catch((errpr) => {
+        console.log(errpr);
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Something went wrong",
+          })
+        );
+      });
   };
 
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -124,27 +192,26 @@ const AddCareerPreference = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
+              onClick={() => dispatch(updateCurrentScreen(""))}
             >
               Back
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Career Preference
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+
+            <Stack sx={{ mt: "50px", gap: "30px" }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Availability
@@ -152,7 +219,7 @@ const AddCareerPreference = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={availability}
+                  value={careerPre.immediateJoiner}
                   label="Availability"
                   onChange={handleAvailabilityChange}
                 >
@@ -164,27 +231,72 @@ const AddCareerPreference = () => {
                   </MenuItem>
                 </Select>
               </FormControl>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Job Position"
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-              />
+
+              <Stack sx={{ gap: "10px" }}>
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  fullWidth
+                  name="jobTitle"
+                  value={""}
+                  disablePortal={true}
+                  options={type.map((option) => option)}
+                  onChange={(e, a) => {
+                    handleTitle(a);
+                  }}
+                  required
+                  loading={titleLoading}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                  renderInput={(params) => (
+                    <TextField
+                      fullWidth
+                      {...params}
+                      label="Job Title"
+                      name="jobTitle"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: "search",
+                      }}
+                      onChange={(e) => {
+                        getJobTitles(e.target.value);
+                      }}
+                      loading={titleLoading}
+                      required
+                      sx={{
+                        background: "#FFFFFF",
+                        borderColor: "#949494",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  )}
+                />
+
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+                  {careerPre.jobTitles.map((ne, index) => (
+                    <Chip
+                      key={index}
+                      label={ne}
+                      onDelete={() => removeTitle(ne)}
+                      deleteIcon={<CloseIcon />}
+                      sx={{
+                        fontSize: "17px",
+                        bgcolor: "#D4F0FC",
+                        padding: "10px",
+                      }}
+                    />
+                  ))}
+                </Box>
+              </Stack>
+
               <Stack gap={1}>
-                <Box sx={{ display: "flex" }}>
-                  {/* code copied from job preferences of job positions at current site */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
                   <Autocomplete
                     freeSolo
                     id="free-solo-2-demo"
@@ -192,8 +304,9 @@ const AddCareerPreference = () => {
                     fullWidth
                     disablePortal={true}
                     name="workPreference"
-                    //value={title}
-                    //options={titleDesc.map((option) => option.rol.role)}
+                    value={preference}
+                    onChange={handlePreference}
+                    options={WORK_PREFERENCE}
                     renderInput={(params) => (
                       <TextField
                         variant="outlined"
@@ -207,62 +320,84 @@ const AddCareerPreference = () => {
                       />
                     )}
                   />
-                  <IconButton>
+                  <IconButton onClick={() => addPreference()}>
                     <AddIcon sx={{ color: "#1976d2" }} />
                   </IconButton>
                 </Box>
-                <Stack direction={"row"} gap={1}></Stack>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  <Chip
-                    label="On-Site"
-                    //onDelete={() => removeTitle(t)}
-                    deleteIcon={<CloseIcon />}
-                    sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
-                  />
+                  {careerPre.workPlaces.map((ne, index) => (
+                    <Chip
+                      key={index}
+                      label={ne}
+                      onDelete={() => removePreferences(ne)}
+                      deleteIcon={<CloseIcon />}
+                      sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+                    />
+                  ))}
                 </Box>
               </Stack>
-              <Box sx={{ width: "100%" }}>
-                <GooglePlacesAutocomplete
-                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                  selectProps={{
-                    isClearable: true,
-                    placeholder: "Enter Your Location",
-                    value: address,
-                    onChange: (val) => {
-                      setaddress(val);
-                      handleSelect(val);
-                    },
-                    styles: {
-                      textInputContainer: (provided) => ({
-                        ...provided,
-                        backgroundColor: "red",
-                      }),
-                      input: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        height: "40px",
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        // "&:hover": {
-                        //   border: "1px solid purple",
-                        // },
-                      }),
-                      // textInputContainer: {
-                      //   backgroundColor: "grey",
-                      // },
-                    },
-                  }}
-                  // styles={}
-                />
-              </Box>
+
               <Stack gap={1}>
-                <Box sx={{ display: "flex" }}>
-                  {/* code copied from job preferences of job positions at current site */}
+                <CustomTypography sx={{ fontSize: "1.2rem" }}>
+                  Locations
+                </CustomTypography>
+                <Box sx={{ width: "100%" }}>
+                  <GooglePlacesAutocomplete
+                    apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                    selectProps={{
+                      isClearable: true,
+                      placeholder: "Enter Your Location",
+                      value: address,
+                      onChange: (val) => {
+                        setaddress(val);
+                        handleSelect(val);
+                      },
+                      styles: {
+                        textInputContainer: (provided) => ({
+                          ...provided,
+                          backgroundColor: "red",
+                        }),
+                        input: (provided) => ({
+                          ...provided,
+                          boxShadow: 0,
+                          height: "40px",
+                          "&:hover": {
+                            border: "1px solid purple",
+                          },
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          boxShadow: 0,
+                          "&:hover": {
+                            border: "1px solid purple",
+                          },
+                        }),
+                      },
+                    }}
+                  />
+                </Box>
+
+                <Box sx={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
+                  {careerPre.jobLocations.map((t, index) => (
+                    <Chip
+                      key={index}
+                      label={t}
+                      onDelete={() => removeTheLocation(t)}
+                      deleteIcon={<CloseIcon />}
+                      sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+                    />
+                  ))}
+                </Box>
+              </Stack>
+
+              <Stack gap={1}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
                   <Autocomplete
                     freeSolo
                     id="free-solo-2-demo"
@@ -270,8 +405,9 @@ const AddCareerPreference = () => {
                     fullWidth
                     disablePortal={true}
                     name="jobtype"
-                    //value={title}
-                    //options={titleDesc.map((option) => option.rol.role)}
+                    value={jobTypes}
+                    options={JOB_NATURE}
+                    onChange={addWork}
                     renderInput={(params) => (
                       <TextField
                         variant="outlined"
@@ -285,20 +421,24 @@ const AddCareerPreference = () => {
                       />
                     )}
                   />
-                  <IconButton>
+
+                  <IconButton onClick={() => addWordType()}>
                     <AddIcon sx={{ color: "#1976d2" }} />
                   </IconButton>
-                </Box>
-                <Stack direction={"row"} gap={1}></Stack>
+                </Box>{" "}
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  <Chip
-                    label="Full time"
-                    //onDelete={() => removeTitle(t)}
-                    deleteIcon={<CloseIcon />}
-                    sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
-                  />
+                  {careerPre.jobTypes.map((j, index) => (
+                    <Chip
+                      key={index}
+                      label={j}
+                      onDelete={() => removeJobs(j)}
+                      deleteIcon={<CloseIcon />}
+                      sx={{ fontSize: "17px", bgcolor: "#D4F0FC" }}
+                    />
+                  ))}
                 </Box>
               </Stack>
+
               <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
@@ -307,6 +447,7 @@ const AddCareerPreference = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => dispatch(updateCurrentScreen(""))}
                 >
                   Cancel
                 </Button>
@@ -317,6 +458,7 @@ const AddCareerPreference = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => updateData()}
                 >
                   Save
                 </Button>

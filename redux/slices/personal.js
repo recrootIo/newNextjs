@@ -1,8 +1,12 @@
+import { DANGER } from "@/theme/colors";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { getUserId } from "@/utils/HelperFunctions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
+import { openAlert } from "./alert";
 import { updateCurrentScreen } from "./candidate";
 
 const initialState = {
@@ -137,6 +141,16 @@ export const retrieveGetSinCover = createAsyncThunk(
     return res.data.resume.coverLetterFileLocation[0];
   }
 );
+
+export const getCandsPrefInfo = createAsyncThunk("Cover/pref", async (id) => {
+  const res = await userService.getCandsPrefInfo(id);
+  return res.data;
+});
+
+export const GetCandsPrefInfo = () => async (dispatch) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return dispatch(getCandsPrefInfo(user.User._id));
+};
 
 export const AddResumeAndThenGet = (pdf) => async (dispatch) => {
   await dispatch(addResume(pdf));
@@ -572,6 +586,57 @@ export const fetchAppliedJobs = createAsyncThunk(
   }
 );
 
+export const insertNewJobType = createAsyncThunk(
+  "set/newJobTypes",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewJobType(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewJobTitles = createAsyncThunk(
+  "set/newJobTitles",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewTitle(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewLocation = createAsyncThunk(
+  "set/newLocation",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewLocation(id, data);
+    return res.data;
+  }
+);
+
+export const updateAvailablity = createAsyncThunk(
+  "set/Availability",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.updateAvailablity(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewPlace = createAsyncThunk("set/Place", async (data) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const id = user.User._id;
+  const res = await userService.insertNewPlace(id, data);
+  return res.data;
+});
+
+export const updateUser = createAsyncThunk("set/Password", async (data) => {
+  return await userService.updateService(data);
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -712,8 +777,11 @@ const personalSlice = createSlice({
     [addProjects.fulfilled]: (state, action) => {
       state.project = {};
     },
-    [addEditCertificates.fulfilled]: () => {
+    [addEditCertificates.fulfilled]: (state, action) => {
       state.certone = {};
+    },
+    [getCandsPrefInfo.fulfilled]: (state, action) => {
+      state.myPreferenceInfo = action.payload;
     },
   },
 });

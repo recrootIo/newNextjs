@@ -1,55 +1,54 @@
-import axios from "axios";
 import authHeader from "./auth-header";
-
-const API_URL = "https://localhost:3000/api/";
+import http from "../http-common";
+import { getUserId } from "@/utils/HelperFunctions";
 
 const getPublicContent = () => {
-  return axios.get(API_URL + "all");
+  return http.get(API_URL + "all");
 };
 const getUserBoard = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
+  return http.get(API_URL + "user", { headers: authHeader() });
 };
 const getModeratorBoard = () => {
-  return axios.get(API_URL + "mod", { headers: authHeader() });
+  return http.get(API_URL + "mod", { headers: authHeader() });
 };
 const getAdminBoard = () => {
-  return axios.get(API_URL + "admin", { headers: authHeader() });
+  return http.get(API_URL + "admin", { headers: authHeader() });
 };
 const getLaidOffUsers = (page) => {
-  return axios.get(`${API_URL}getLaidOffs?page=${page}`, {
+  return http.get(`${API_URL}getLaidOffs?page=${page}`, {
     headers: authHeader(),
   });
 };
 const searchCandidates = async (data) => {
-  return await axios.get(`${API_URL}searchCandidates?search=${data}`, {
+  return await http.get(`${API_URL}searchCandidates?search=${data}`, {
     headers: authHeader(),
   });
 };
 const opentoWork = (user) => {
-  return axios.put(`${API_URL}opentowork`, user, {
+  return http.put(`opentowork`, user, {
     headers: authHeader(),
   });
 };
 
 const updateSettings = (settings) => {
-  return axios.put(`${API_URL}updateSettings`, settings, {
+  return http.put(`updateSettings`, settings, {
     headers: authHeader(),
   });
 };
 
 const updateOpenWork = (id, data) => {
-  return axios.put(`${API_URL}editOpenTo/${id}`, data, {
+  return http.put(`editOpenTo/${id}`, data, {
     headers: authHeader(),
   });
 };
 const getCandsPrefInfo = (id) => {
-  return axios.get(`${API_URL}getCandsPrefInfo/${id}`, {
+  return http.get(`getCandsPrefInfo/${id}`, {
     headers: authHeader(),
   });
 };
 const insertNewJobType = (id, type) => {
-  return axios.put(
-    `${API_URL}insertNewJobType/${id}`,
+  return http.put(
+    `insertNewJobType/${id}`,
     { JobType: type },
     {
       headers: authHeader(),
@@ -57,8 +56,8 @@ const insertNewJobType = (id, type) => {
   );
 };
 const reomvoeJobType = (id, type) => {
-  return axios.put(
-    `${API_URL}reomvoeJobType/${id}`,
+  return http.put(
+    `reomvoeJobType/${id}`,
     { JobType: type },
     {
       headers: authHeader(),
@@ -66,8 +65,8 @@ const reomvoeJobType = (id, type) => {
   );
 };
 const insertNewPlace = (id, place) => {
-  return axios.put(
-    `${API_URL}insertNewPlace/${id}`,
+  return http.put(
+    `insertNewPlace/${id}`,
     { newPlace: place },
     {
       headers: authHeader(),
@@ -76,8 +75,8 @@ const insertNewPlace = (id, place) => {
 };
 
 const removeThePlace = (id, place) => {
-  return axios.put(
-    `${API_URL}removeThePlace/${id}`,
+  return http.put(
+    `removeThePlace/${id}`,
     { place: place },
     {
       headers: authHeader(),
@@ -85,8 +84,8 @@ const removeThePlace = (id, place) => {
   );
 };
 const insertNewTitle = (id, Title) => {
-  return axios.post(
-    `${API_URL}insertNewTitle/${id}`,
+  return http.post(
+    `insertNewTitle/${id}`,
     { newTitle: Title },
     {
       headers: authHeader(),
@@ -94,8 +93,8 @@ const insertNewTitle = (id, Title) => {
   );
 };
 const removeTheTitle = (id, Title) => {
-  return axios.put(
-    `${API_URL}removeTheTitle/${id}`,
+  return http.put(
+    `removeTheTitle/${id}`,
     { title: Title },
     {
       headers: authHeader(),
@@ -103,8 +102,8 @@ const removeTheTitle = (id, Title) => {
   );
 };
 const insertNewLocation = (id, location) => {
-  return axios.post(
-    `${API_URL}insertNewLocation/${id}`,
+  return http.post(
+    `insertNewLocation/${id}`,
     { location: location },
     {
       headers: authHeader(),
@@ -112,8 +111,8 @@ const insertNewLocation = (id, location) => {
   );
 };
 const removeTheLocation = (id, Title) => {
-  return axios.put(
-    `${API_URL}removeTheLocation/${id}`,
+  return http.put(
+    `removeTheLocation/${id}`,
     { title: Title },
     {
       headers: authHeader(),
@@ -121,8 +120,8 @@ const removeTheLocation = (id, Title) => {
   );
 };
 const updateAvailablity = (id, val) => {
-  return axios.put(
-    `${API_URL}updateAvailablity/${id}`,
+  return http.put(
+    `updateAvailablity/${id}`,
     { availablity: val },
     {
       headers: authHeader(),
@@ -130,13 +129,13 @@ const updateAvailablity = (id, val) => {
   );
 };
 const getOpenWork = (id, token) => {
-  return axios.get(`${API_URL}getOpenTo/${id}`, {
+  return http.get(`getOpenTo/${id}`, {
     headers: { "x-access-token": `${token}` },
   });
 };
 const verifyMobile = (mobile, token) => {
-  return axios.post(
-    `${API_URL}verifyMobile`,
+  return http.post(
+    `verifyMobile`,
     { mobile },
     {
       headers: { "x-access-token": `${token}` },
@@ -145,14 +144,15 @@ const verifyMobile = (mobile, token) => {
 };
 
 const confirmMobile = (code, mobile, id, token) => {
-  return axios.post(
-    `${API_URL}confirmMobile`,
+  return http.post(
+    `confirmMobile`,
     { code, mobile, id },
     {
       headers: { "x-access-token": `${token}` },
     }
   );
 };
+
 const userService = {
   searchCandidates,
   getPublicContent,

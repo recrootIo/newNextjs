@@ -101,15 +101,11 @@ const certificatesAdd = (value) => {
   formData.append("issueDate", value.issueDate);
   formData.append("expireDate", value.expireDate);
   formData.append("certificateLink", value.certificateLink);
-  return http
-    .post(`addCertificate`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "x-access-token": `${user.token}`,
-      },
-    })
-    .then((res) => {})
-    .catch((err) => console.warn(err));
+  return http.post(`addCertificate`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 const certificatesEdit = (value) => {
@@ -129,15 +125,11 @@ const certificatesEdit = (value) => {
   formData.append("organization", value?.organization);
   formData.append("title", value?.title);
 
-  return http
-    .put(`editCertficates`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "x-access-token": `${user.token}`,
-      },
-    })
-    .then((res) => {})
-    .catch((err) => console.warn(err));
+  return http.put(`editCertficates`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 const validResume = (uplodedFiles) => {

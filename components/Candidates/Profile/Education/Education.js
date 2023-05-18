@@ -21,60 +21,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { retrieveGetSinEduca } from "@/redux/slices/personal";
+import {
+  deleteExperAndGet,
+  retrieveGetSinEduca,
+} from "@/redux/slices/personal";
 import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import { deleteEducaAndGet } from "@/redux/slices/personal";
-// import { logout } from "@/redux/slices/auth";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Education = ({ ...resume }) => {
-  const [openDel, setOpenDel] = React.useState(false);
   const dispatch = useDispatch();
-  const gotToAddEducation = () => {
-    dispatch(updateCurrentScreen("education"));
-  };
-  const [delEdu, setDelEdu] = React.useState("");
-
-  const handleClickOpenDel = (id) => {
-    setDelEdu(id);
-    setOpenDel(true);
-  };
-
-  const handleCloseDel = () => {
-    setOpenDel(false);
-  };
-
-  // const navigate = useNavigate();
-  const handleDelete = () => {
-    dispatch(deleteEducaAndGet(delEdu));
-    // .then((res) => {
-    //   if (res.error !== undefined) {
-    //     res.error.message === "Request failed with status code 401" ||
-    //     "Request failed with status code 403"
-    //       ? dispatch(logout()).then(() => {
-    //           navigate("/signin", { state: true });
-    //         })
-    //       : navigate(1);
-    //   } else {
-    //     notify3();
-    //   }
-    // })
-    // .catch((error) => {
-    //   if (
-    //     error.message === "Request failed with status code 401" ||
-    //     "Request failed with status code 403"
-    //   ) {
-    //     dispatch(logout()).then(() => {
-    //       navigate("/signin", { state: true });
-    //     });
-    //   }
-    // });
-    // };
-  };
+  const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState("");
 
   const gotToEducation = () => {
     dispatch(updateCurrentScreen("education"));
@@ -83,6 +44,14 @@ const Education = ({ ...resume }) => {
   const handleGetSingle = (id) => {
     dispatch(retrieveGetSinEduca(id));
     gotToEducation();
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteExperAndGet(selectedId));
+  };
+
+  const closeMessage = () => {
+    setOpenDeleteScreen(false);
   };
 
   return (
@@ -136,15 +105,22 @@ const Education = ({ ...resume }) => {
                     fontSize="small"
                   />
                 </IconButton>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpenDeleteScreen(() => true);
+                    setSelectedId(edi?._id);
+                  }}
+                >
                   <DeleteIcon sx={{ color: DANGER }} />
                 </IconButton>
               </Stack>
               <Grid container spacing={2}>
-                <Grid item md={6}>
+                <Grid item md={6} sm={12} xs={12}>
                   <Stack sx={{ gap: LAZY }}>
                     <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
+                      <CustomTypography
+                        sx={{ fontWeight: "700", flexWrap: "wrap" }}
+                      >
                         Degree:
                       </CustomTypography>
                       <CustomTypography>{edi?.degreeName}</CustomTypography>
@@ -165,7 +141,7 @@ const Education = ({ ...resume }) => {
                     </Stack>
                   </Stack>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} sm={12} xs={12}>
                   <Stack sx={{ gap: LAZY }}>
                     <Stack direction={"row"} sx={{ gap: "10px" }}>
                       <CustomTypography sx={{ fontWeight: "700" }}>
@@ -195,17 +171,17 @@ const Education = ({ ...resume }) => {
             </Stack>
           ))}
         </Stack>
+
         <Dialog
-          open={openDel}
+          open={openDeleteScreen}
           TransitionComponent={Transition}
           keepMounted
-          onClose={handleCloseDel}
+          onClose={closeMessage}
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle>
-            {
-              "Are you sure you want to proceed with deleting your educational information ?"
-            }
+            Are you sure you want to proceed with deleting your work experience
+            ?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
@@ -213,13 +189,13 @@ const Education = ({ ...resume }) => {
           <DialogActions>
             <Button
               onClick={() => {
-                handleCloseDel();
-                handleDelete(resume._id);
+                closeMessage();
+                handleDelete();
               }}
             >
               Yes
             </Button>
-            <Button onClick={handleCloseDel}>No</Button>
+            <Button onClick={() => closeMessage()}>No</Button>
           </DialogActions>
         </Dialog>
       </CardContent>

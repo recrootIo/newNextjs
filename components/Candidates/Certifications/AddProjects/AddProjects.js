@@ -13,9 +13,17 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { useDispatch, useSelector } from "react-redux";
-import { AddProAndThenGet, EditProjectAndGet } from "@/redux/slices/personal";
+import {
+  AddProAndThenGet,
+  EditProjectAndGet,
+  retrievePersonal,
+} from "@/redux/slices/personal";
+import candidateServices from "@/redux/services/candidate.services";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const AddProjects = () => {
+  const dispatch = useDispatch();
   const project = useSelector((state) => state.personal.project);
   const [newProject, setNewProject] = React.useState({
     Description: "",
@@ -23,21 +31,6 @@ const AddProjects = () => {
     ProjectName: "",
     portafolioLink: "",
   });
-
-  const dispatch = useDispatch();
-
-  const gotToProjects = () => {
-    dispatch(updateCurrentScreen(""));
-  };
-
-  const buttonText = project?._id ? "Update" : "Add";
-  const handleAdd = () => {
-    if (project?._id) {
-      dispatch(EditProjectAndGet(newProject, project?._id));
-    } else {
-      dispatch(AddProAndThenGet(newProject));
-    }
-  };
 
   React.useEffect(() => {
     setNewProject({
@@ -48,6 +41,65 @@ const AddProjects = () => {
       _id: project?._id,
     });
   }, [project]);
+
+  const gotToProjects = () => {
+    dispatch(updateCurrentScreen(""));
+  };
+
+  const addNewProject = () => {
+    candidateServices
+      .addProjects(newProject)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Project is Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const editNewProject = () => {
+    candidateServices
+      .editProjects(newProject, project?._id)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "New Project is added",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const buttonText = project?._id ? "Update" : "Add";
+  const handleAdd = () => {
+    if (project?._id) {
+      editNewProject();
+    } else {
+      addNewProject();
+    }
+  };
 
   const handleChangesChild = (e) => {
     let { name, value } = e.target;
@@ -76,22 +128,19 @@ const AddProjects = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Projects
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <TextField
                 id="outlined-basic"
                 label="Enter Portfolio Link"
@@ -134,6 +183,7 @@ const AddProjects = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={gotToProjects()}
                 >
                   Cancel
                 </Button>

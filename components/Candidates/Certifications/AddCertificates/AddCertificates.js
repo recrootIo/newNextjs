@@ -22,12 +22,17 @@ import {
   AddCertificateAndThenGet,
   AddEditCertificates,
   addEditCertificates,
+  retrievePersonal,
 } from "@/redux/slices/personal";
 import moment from "moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { convertDate } from "@/utils/HelperFunctions";
+import personalService from "@/redux/services/personal.service";
+import resumeService from "@/redux/services/resume.service";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const AddCertificates = ({}) => {
   const certOne = useSelector((state) => state.personal.certone);
@@ -81,14 +86,6 @@ const AddCertificates = ({}) => {
     });
   };
 
-  const saveCertificates = () => {
-    if (certOne?._id) {
-      dispatch(AddEditCertificates(inputCertificate));
-    } else {
-      dispatch(AddCertificateAndThenGet(inputCertificate));
-    }
-  };
-
   const handleChangeForm = (newValue) => {
     let val = convertDate(newValue);
     setValue(() => newValue);
@@ -105,6 +102,60 @@ const AddCertificates = ({}) => {
       ...state,
       expireDate: val,
     }));
+  };
+
+  const saveCertificates = () => {
+    if (certOne?._id) {
+      editNewCertification();
+    } else {
+      addNewCertificate();
+    }
+  };
+
+  const addNewCertificate = () => {
+    resumeService
+      .certificatesAdd(inputCertificate)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Certifications has been added",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const editNewCertification = () => {
+    resumeService
+      .certificatesEdit(inputCertificate)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Certifications has been updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
   };
 
   return (
@@ -126,22 +177,19 @@ const AddCertificates = ({}) => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Certificates
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <TextField
                 id="outlined-basic"
                 label="Title"

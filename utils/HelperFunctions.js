@@ -97,3 +97,12 @@ export const convertDate = (date) => {
 
   return `${month}/${day}/${year}`;
 };
+
+/**
+ *
+ * @returns id
+ */
+export const getUserId = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return user.User._id;
+};

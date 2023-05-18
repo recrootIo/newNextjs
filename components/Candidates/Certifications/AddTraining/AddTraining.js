@@ -17,8 +17,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { convertDate } from "@/utils/HelperFunctions";
-import { AddTrainAndThenGet, EditTrainAndGet } from "@/redux/slices/personal";
+import {
+  AddTrainAndThenGet,
+  EditTrainAndGet,
+  retrievePersonal,
+} from "@/redux/slices/personal";
 import dayjs from "dayjs";
+import candidateServices from "@/redux/services/candidate.services";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const AddTraining = () => {
   const dispatch = useDispatch();
@@ -67,9 +74,9 @@ const AddTraining = () => {
 
   const saveTrainings = () => {
     if (training?._id) {
-      dispatch(EditTrainAndGet(newTrainings, training?._id));
+      editTrainings();
     } else {
-      dispatch(AddTrainAndThenGet(newTrainings));
+      addNewTraining();
     }
   };
 
@@ -79,6 +86,52 @@ const AddTraining = () => {
       ...newTrainings,
       [name]: value,
     });
+  };
+
+  const addNewTraining = () => {
+    candidateServices
+      .addTrainings(newTrainings)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "New Training is added",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const editTrainings = () => {
+    candidateServices
+      .editTrainings(newTrainings, training?._id)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Edited Successfully",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
   };
 
   return (
@@ -100,22 +153,19 @@ const AddTraining = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Training
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
+            <Stack spacing={2} sx={{ mt: "50px" }}>
               <TextField
                 required
                 id="outlined-basic"

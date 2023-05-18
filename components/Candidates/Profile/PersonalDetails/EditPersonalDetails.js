@@ -35,10 +35,19 @@ import { debounce } from "@/utils/HelperFunctions";
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from "react-google-places-autocomplete";
-import { DENOMINATIONS, LANGUAGES } from "@/utils/constants";
+import { DENOMINATIONS, ERROR, LANGUAGES, SUCCESS } from "@/utils/constants";
 import { CURRENCY, currency } from "@/utils/currency";
 import { NEUTRAL } from "@/theme/colors";
-import { EditPersonalandGet, editPersonalsName } from "@/redux/slices/personal";
+import {
+  EditPersonalandGet,
+  editPersonalsName,
+  getCandsPrefInfo,
+} from "@/redux/slices/personal";
+import { BOLD } from "@/theme/fonts";
+import personalService from "@/redux/services/personal.service";
+import userService from "@/redux/services/user.service";
+import { openAlert } from "@/redux/slices/alert";
+import candidateServices from "@/redux/services/candidate.services";
 
 const EditPersonalDetails = () => {
   const { data = {} } = useSelector((state) => state?.personal);
@@ -63,6 +72,7 @@ const EditPersonalDetails = () => {
     state: resume.location.state,
     city: resume.location.city,
     totalWorkExperience: resume?.totalWorkExperience,
+    about: about,
   });
 
   const [type, setType] = useState([]);
@@ -161,8 +171,26 @@ const EditPersonalDetails = () => {
   };
 
   const handleEdit = () => {
-    dispatch(editPersonalsName(personal));
-    dispatch(EditPersonalandGet(personal));
+    candidateServices
+      .editMyPersonalDetails(personal)
+      .then((res) => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Personal details updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(getCandsPrefInfo());
+      })
+      .catch(() => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Something went wrong",
+          })
+        );
+      });
   };
 
   const changeSalaries = (e, a) => {
@@ -206,7 +234,7 @@ const EditPersonalDetails = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
               variant="h4"
@@ -214,15 +242,20 @@ const EditPersonalDetails = () => {
                 display: "flex",
                 justifyContent: "center",
                 fontWeight: 600,
-                fontFamily: "Inter-bold",
-                mt: "60px",
+                fontFamily: BOLD,
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Edit Personal Details
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
+
+            <Stack spacing={2} sx={{ mt: "50px" }}>
+              <Stack
+                sx={{
+                  gap: "10px",
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                }}
+              >
                 <TextField
                   required
                   id="outlined-basic"
@@ -254,7 +287,7 @@ const EditPersonalDetails = () => {
                 disableClearable
                 fullWidth
                 name="jobTitle"
-                value={jobTitle}
+                value={personal.jobTitle}
                 disablePortal={true}
                 options={type.map((option) => option)}
                 onChange={(e, a) => {
@@ -297,7 +330,7 @@ const EditPersonalDetails = () => {
                 multiline
                 rows={4}
                 required
-                value={about}
+                value={personal.about}
                 onChange={handleChangeName}
               />
 
@@ -311,7 +344,7 @@ const EditPersonalDetails = () => {
                 name="phoneNumber"
                 specialLabel="Mobile Number"
                 defaultCountry={"au"}
-                value={`+${mobile}`}
+                value={`+${personal.mobile}`}
                 onChange={handlePhoneNumber}
                 inputStyle={{
                   width: "100%",
@@ -354,7 +387,13 @@ const EditPersonalDetails = () => {
               {personal?.country === "" ? (
                 ""
               ) : (
-                <Stack direction="row" spacing={2} marginTop={2}>
+                <Stack
+                  sx={{
+                    flexDirection: { md: "row", sm: "column", xs: "column" },
+                  }}
+                  spacing={2}
+                  marginTop={2}
+                >
                   <FormControl fullWidth>
                     <CustomTypography variant="body2">Country</CustomTypography>
                     <TextField
@@ -482,7 +521,12 @@ const EditPersonalDetails = () => {
                 </Select>
               </FormControl>
 
-              <Stack direction="row" spacing={2}>
+              <Stack
+                sx={{
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                }}
+                spacing={2}
+              >
                 <TextField
                   variant="outlined"
                   value={personal?.currentSalary?.salary}
