@@ -83,3 +83,26 @@ export const getZerosCurrencies = (value, denominator) => {
   //     return `${value}000`;
   // }
 };
+
+/**
+ *
+ * @param {*} date
+ * @returns
+ */
+export const convertDate = (date) => {
+  const dateObj = new Date(date);
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const year = String(dateObj.getFullYear());
+
+  return `${month}/${day}/${year}`;
+};
+
+/**
+ *
+ * @returns id
+ */
+export const getUserId = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return user.User._id;
+};

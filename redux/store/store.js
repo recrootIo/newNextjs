@@ -1,5 +1,6 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
+import alert from "../slices/alert";
 import authReducer from "../slices/auth";
 import candidateReducer from "../slices/candidate";
 // import messageReducer from "./slices/message";
@@ -26,7 +27,7 @@ const reducer = {
   //   company: cmpReducer,
   //   sinterview: intReducer,
   //   subscription: SubscriptionSlice,
-  //   alertMessage: AlertSlice,
+  alertMessage: alert,
   //   retrenched: retrenchedReducer,
 };
 

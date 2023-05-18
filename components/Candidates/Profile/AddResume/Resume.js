@@ -15,7 +15,6 @@ import {
 import React, { useState } from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
-import CloudDownloadOutlinedIcon from "@mui/icons-material/Upload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BOLD } from "@/theme/fonts";
 import { DANGER } from "@/theme/colors";
@@ -23,6 +22,7 @@ import { useDispatch } from "react-redux";
 import download from "downloadjs";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { updateAndThenGet } from "@/redux/slices/personal";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -31,23 +31,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Resume = ({ ...resume }) => {
   const dispatch = useDispatch();
 
+  const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState("");
+
   const gotToResume = () => {
     dispatch(updateCurrentScreen("resume"));
   };
 
-  const [openDel, setOpenDel] = React.useState(false);
-  const [delResume, setDelResume] = useState("");
-  const handleClickOpenDeleteResume = (id) => {
-    setDelResume(id);
-    setOpenDel(true);
-  };
-
-  const handleCloseDel = () => {
-    setOpenDel(false);
-  };
-
   const handleDelete = () => {
-    dispatch(updateAndThenGet(delResume));
+    dispatch(updateAndThenGet(selectedId));
+  };
+
+  const closeMessage = () => {
+    setOpenDeleteScreen(false);
   };
 
   return (
@@ -71,7 +67,9 @@ const Resume = ({ ...resume }) => {
           >
             Resume
           </CustomTypography>
-          <AddIcon className="iconPointers" onClick={() => gotToResume()} />
+          <IconButton onClick={() => gotToResume()}>
+            <AddIcon className="iconPointers" />
+          </IconButton>
         </Stack>
         <CardContent sx={{ p: { md: "16px", xs: "16px 0", sm: "16px 0" } }}>
           {resume.resumeFileLocation.map((cv, index) => (
@@ -120,28 +118,30 @@ const Resume = ({ ...resume }) => {
                     download(blob, `${cv.resumeName}`);
                   }}
                 >
-                  <CloudDownloadOutlinedIcon
+                  <CloudDownloadIcon
                     className="iconPointers"
                     sx={{ color: "#00339B" }}
                   />
                 </IconButton>
-                <DeleteIcon
-                  sx={{ color: DANGER }}
-                  className="iconPointers"
+                <IconButton
                   onClick={() => {
-                    handleClickOpenDeleteResume(cv?.id);
+                    setOpenDeleteScreen(() => true);
+                    setSelectedId(cv?._id);
                   }}
-                />
+                >
+                  <DeleteIcon sx={{ color: DANGER }} className="iconPointers" />
+                </IconButton>
               </Stack>
             </Stack>
           ))}
         </CardContent>
       </StyledCard>
+
       <Dialog
-        open={openDel}
+        open={openDeleteScreen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleCloseDel}
+        onClose={closeMessage}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
@@ -153,13 +153,13 @@ const Resume = ({ ...resume }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              handleCloseDel();
+              closeMessage();
               handleDelete();
             }}
           >
             Yes
           </Button>
-          <Button onClick={handleCloseDel}>No</Button>
+          <Button onClick={() => closeMessage()}>No</Button>
         </DialogActions>
       </Dialog>
     </>

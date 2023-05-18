@@ -16,35 +16,101 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
+import { LEVELS, SUCCESS } from "@/utils/constants";
+import candidateServices from "@/redux/services/candidate.services";
+import { openAlert } from "@/redux/slices/alert";
+import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
 
 const AddSkill = () => {
   const dispatch = useDispatch();
+  const { skill } = useSelector((state) => state?.personal);
 
-  const gotToSkills = () => {
+  const [skillSet, setSkillSet] = React.useState({
+    skillName: skill?.skillName,
+    Experience: skill?.Experience,
+    Compitance: skill?.Compitance,
+  });
+
+  const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
   };
-  const [level, setLevel] = React.useState("");
 
-  const handleLevelChange = (event) => {
-    setLevel(event.target.value);
+  const handleLevelChange = (e) => {
+    const { value } = e.target;
+    setSkillSet((state) => ({
+      ...state,
+      Compitance: value,
+    }));
+  };
+
+  const submitSkill = () => {
+    if (skillSet?.id) {
+      editNewSkill();
+    } else {
+      addNewSkill();
+    }
+  };
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setSkillSet((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
+
+  const addNewSkill = () => {
+    candidateServices
+      .addSkill(skillSet)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch(() => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+  };
+
+  const editNewSkill = () => {
+    candidateServices
+      .editSkills(skillSet, skillSet?.id)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "User Preferences Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch(() => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
   };
 
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -54,64 +120,59 @@ const AddSkill = () => {
                 textTransform: "capitalize",
                 fontSize: "18px",
               }}
-              onClick={() => gotToSkills()}
+              onClick={() => gotoHome()}
             >
               Back
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "70px", paddingBottom: "100px !important" }}>
+          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
             <CustomTypography
               className="personalDetailTitle"
-              variant="h4"
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                fontWeight: 600,
                 fontFamily: "Inter-bold",
-                mt: "60px",
+                fontSize: "33px",
               }}
-              gutterBottom
             >
               Add Skill
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "100px" }}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Select Skill"
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
+
+            <Stack spacing={2} sx={{ mt: "50px" }}>
+              <TextField
+                id="outlined-basic"
+                label="skill"
+                variant="outlined"
+                value={skillSet.skillName}
+                name="skillName"
+                onChange={onChange}
               />
+
               <TextField
                 id="outlined-basic"
                 label="Experience(Years)"
                 type="number"
                 variant="outlined"
+                value={skillSet.Experience}
+                name="Experience"
+                onChange={onChange}
               />
+
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Level</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={level}
+                  value={skillSet.Compitance}
                   label="Level"
                   onChange={handleLevelChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {LEVELS.map((l, index) => (
+                    <MenuItem key={index} value={l}>
+                      {l}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <Stack direction="row" spacing={2}>
@@ -122,12 +183,14 @@ const AddSkill = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => gotoHome()}
                 >
                   Cancel
                 </Button>
                 <Button
                   variant="contained"
                   sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                  onClick={() => submitSkill()}
                 >
                   Add
                 </Button>

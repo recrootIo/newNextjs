@@ -9,6 +9,7 @@ import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import index from "../uploadResume/jobTitle";
 import Image from "next/image";
 import { NEUTRAL } from "@/theme/colors";
+import { EditRounded } from "@mui/icons-material";
 
 const bull = (
   <Box
@@ -82,6 +83,9 @@ const CandidateProfileHeader = ({ ...data }) => {
               sx={{ width: "200px", height: "200px" }}
             />
           </Grid>
+
+          {/* <EditRounded sx={{ color: "#ffff", top: "-36px", left: "34px" }} /> */}
+
           <Grid
             item
             xs={12}

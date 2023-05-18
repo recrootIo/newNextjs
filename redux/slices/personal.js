@@ -1,8 +1,13 @@
+import { DANGER } from "@/theme/colors";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { getUserId } from "@/utils/HelperFunctions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
+import { openAlert } from "./alert";
+import { updateCurrentScreen } from "./candidate";
 
 const initialState = {
   data: [],
@@ -30,6 +35,7 @@ const initialState = {
   userCountry: "",
   cards: [],
   appliedJobs: [],
+  myPreferenceInfo: {},
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -92,6 +98,7 @@ export const retrieveGetSinTrain = createAsyncThunk(
 export const retrieveGetSinCertificate = createAsyncThunk(
   "cert/retrive",
   async (id) => {
+    console.log(id, "retrieveGetSinCertificate");
     const res = await personalService.getOneCert(id);
     return res.data.resume.certificateFileLocation[0];
   }
@@ -135,6 +142,16 @@ export const retrieveGetSinCover = createAsyncThunk(
   }
 );
 
+export const getCandsPrefInfo = createAsyncThunk("Cover/pref", async (id) => {
+  const res = await userService.getCandsPrefInfo(id);
+  return res.data;
+});
+
+export const GetCandsPrefInfo = () => async (dispatch) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return dispatch(getCandsPrefInfo(user.User._id));
+};
+
 export const AddResumeAndThenGet = (pdf) => async (dispatch) => {
   await dispatch(addResume(pdf));
   return await dispatch(retrievePersonal());
@@ -161,6 +178,13 @@ export const addCover = createAsyncThunk("add/Cover", async (pdf) => {
 
 export const AddCertificateAndThenGet = (pdf) => async (dispatch) => {
   await dispatch(addCertificates(pdf));
+  dispatch(updateCurrentScreen(""));
+  return await dispatch(retrievePersonal());
+};
+
+export const AddEditCertificates = (pdf) => async (dispatch) => {
+  await dispatch(addEditCertificates(pdf));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -191,6 +215,7 @@ export const addProfphoto = createAsyncThunk("add/Profpic", async (photo) => {
 
 export const AddExperinceAndThenGet = (value) => async (dispatch) => {
   await dispatch(addExperinces(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -219,6 +244,7 @@ export const addSkills = createAsyncThunk("add/Experince", async (value) => {
 
 export const AddEducaAndThenGet = (value) => async (dispatch) => {
   await dispatch(addEducations(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -232,6 +258,7 @@ export const addEducations = createAsyncThunk(
 
 export const AddProAndThenGet = (value) => async (dispatch) => {
   await dispatch(addProjects(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -242,6 +269,7 @@ export const addProjects = createAsyncThunk("add/Education", async (value) => {
 
 export const AddTrainAndThenGet = (value) => async (dispatch) => {
   await dispatch(addTrains(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -262,6 +290,7 @@ export const addSocials = createAsyncThunk("add/Education", async (value) => {
 
 export const EditExperinceAndGet = (value, id) => async (dispatch) => {
   await dispatch(editExperinces({ value, id }));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -296,6 +325,7 @@ export const editSkills = createAsyncThunk(
 );
 export const EditEducaAndGet = (value, id) => async (dispatch) => {
   await dispatch(editEducations({ value, id }));
+  dispatch(updateCurrentScreen());
   return await dispatch(retrievePersonal());
 };
 
@@ -308,6 +338,7 @@ export const editEducations = createAsyncThunk(
 );
 export const EditProjectAndGet = (value, id) => async (dispatch) => {
   await dispatch(editProjects({ value, id }));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -320,6 +351,7 @@ export const editProjects = createAsyncThunk(
 );
 export const EditTrainAndGet = (value, id) => async (dispatch) => {
   await dispatch(editTrains({ value, id }));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
 
@@ -354,10 +386,13 @@ export const editPersonals = createAsyncThunk(
     return res.data;
   }
 );
+
 export const editPersonalsName = (value) => async (dispatch) => {
   await dispatch(editPersonalsNameDet(value));
+  dispatch(updateCurrentScreen(""));
   return await dispatch(retrievePersonal());
 };
+
 export const editPersonalsNameDet = createAsyncThunk(
   "edit/PersonalName",
   async (value) => {
@@ -551,6 +586,57 @@ export const fetchAppliedJobs = createAsyncThunk(
   }
 );
 
+export const insertNewJobType = createAsyncThunk(
+  "set/newJobTypes",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewJobType(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewJobTitles = createAsyncThunk(
+  "set/newJobTitles",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewTitle(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewLocation = createAsyncThunk(
+  "set/newLocation",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.insertNewLocation(id, data);
+    return res.data;
+  }
+);
+
+export const updateAvailablity = createAsyncThunk(
+  "set/Availability",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const id = user.User._id;
+    const res = await userService.updateAvailablity(id, data);
+    return res.data;
+  }
+);
+
+export const insertNewPlace = createAsyncThunk("set/Place", async (data) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const id = user.User._id;
+  const res = await userService.insertNewPlace(id, data);
+  return res.data;
+});
+
+export const updateUser = createAsyncThunk("set/Password", async (data) => {
+  return await userService.updateService(data);
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -684,6 +770,18 @@ const personalSlice = createSlice({
     },
     [fetchAppliedJobs.fulfilled]: (state, action) => {
       state.appliedJobs = action.payload;
+    },
+    [editProjects.fulfilled]: (state, action) => {
+      state.project = {};
+    },
+    [addProjects.fulfilled]: (state, action) => {
+      state.project = {};
+    },
+    [addEditCertificates.fulfilled]: (state, action) => {
+      state.certone = {};
+    },
+    [getCandsPrefInfo.fulfilled]: (state, action) => {
+      state.myPreferenceInfo = action.payload;
     },
   },
 });

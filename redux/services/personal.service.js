@@ -1,4 +1,4 @@
-import axios from "axios";
+import { getUserId } from "@/utils/HelperFunctions";
 import http from "../http-common";
 
 const getAll = () => {
@@ -44,8 +44,11 @@ const getOneCover = (id) => {
   return http.get(`getOneCover/${id}`);
 };
 const addResume = (formData) => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`addResume/${user.User._id}`, formData);
+  return http.post(`addResume/${getUserId()}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 const addCover = (formData) => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -64,8 +67,7 @@ const addSkill = (value) => {
   return http.post(`postSkill/${user.User._id}`, value);
 };
 const addEducation = (value) => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`postEdu/${user.User._id}`, value);
+  return http.post(`postEdu/${getUserId()}`, value);
 };
 const addProject = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -135,10 +137,12 @@ const editPersonal = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editPersonal/${user.User._id}`, value);
 };
+
 const editPersonalName = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editPersonalName/${user.User._id}`, value);
 };
+
 const editPersonalNotice = (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   return http.put(`editNotice/${user.User._id}`, { notice: value });
@@ -147,7 +151,7 @@ const editVerify = (value) => {
   return http.put(`verifyEmail`, value);
 };
 const resendCode = (value) => {
-  return axios.put(`https://api.arinnovate.io/resendCode`, value);
+  return http.put(`resendCode`, value);
 };
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);
@@ -197,7 +201,6 @@ const personalService = {
   editProject,
   editTrain,
   editSocial,
-  editPersonal,
   editPersonal,
   editPersonalName,
   editPersonalNotice,

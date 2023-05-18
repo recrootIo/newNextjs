@@ -10,6 +10,7 @@ import {
   DialogContentText,
   Button,
   Slide,
+  IconButton,
 } from "@mui/material";
 import React, { useState } from "react";
 import { StyledCard } from "../../ProfileStyles";
@@ -20,39 +21,41 @@ import { BOLD } from "@/theme/fonts";
 import { DANGER } from "@/theme/colors";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { deleteSkillAndGet } from "@/redux/slices/personal";
+import {
+  deleteSkillAndGet,
+  retrieveGetSinSkill,
+} from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Skills = ({ skills }) => {
+  const dispatch = useDispatch();
+  const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState("");
+
   const competencyLevels = (level) => {
     if (level === "expert") return 100;
     if (level === "expert") return 75;
     else return 25;
   };
 
-  const dispatch = useDispatch();
-
   const gotToAddSkills = () => {
     dispatch(updateCurrentScreen("skill"));
   };
 
-  const [openDel, setOpenDel] = React.useState(false);
-  const [delSkill, setDelSkill] = useState("");
-
-  const handleClickOpenDeleteSkill = (id) => {
-    setDelSkill(id);
-    setOpenDel(true);
+  const handleGetSingle = (id) => {
+    dispatch(retrieveGetSinSkill(id));
+    gotToAddSkills();
   };
 
-  const handleDeleteSkill = () => {
-    dispatch(deleteSkillAndGet(delSkill));
+  const handleDelete = () => {
+    dispatch(deleteSkillAndGet(selectedId));
   };
 
-  const handleCloseDeleteSkill = () => {
-    setOpenDel(false);
+  const closeMessage = () => {
+    setOpenDeleteScreen(false);
   };
 
   return (
@@ -130,18 +133,22 @@ const Skills = ({ skills }) => {
                           gap: "10px",
                         }}
                       >
-                        <CreateIcon
-                          sx={{ color: "#00339B" }}
-                          fontSize="small"
-                          className="iconPointers"
-                        />
-                        <DeleteIcon
-                          sx={{ color: DANGER }}
-                          className="iconPointers"
+                        <IconButton onClick={() => handleGetSingle(skill?._id)}>
+                          <CreateIcon
+                            sx={{ color: "#00339B" }}
+                            fontSize="small"
+                            className="iconPointers"
+                          />
+                        </IconButton>
+
+                        <IconButton
                           onClick={() => {
-                            handleClickOpenDeleteSkill(skill?.id);
+                            setOpenDeleteScreen(() => true);
+                            setSelectedId(skill?._id);
                           }}
-                        />
+                        >
+                          <DeleteIcon sx={{ color: DANGER }} />
+                        </IconButton>
                       </Stack>
                     </Stack>
                   </td>
@@ -152,14 +159,14 @@ const Skills = ({ skills }) => {
         </CardContent>
       </StyledCard>
       <Dialog
-        open={openDel}
+        open={openDeleteScreen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleCloseDeleteSkill}
+        onClose={closeMessage}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
-          {"Are you sure you want to proceed with deleting your skill ?"}
+          Are you sure you want to proceed with deleting your skill ?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
@@ -167,13 +174,13 @@ const Skills = ({ skills }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              handleCloseDeleteSkill();
-              handleDeleteSkill();
+              closeMessage();
+              handleDelete();
             }}
           >
             Yes
           </Button>
-          <Button onClick={handleCloseDeleteSkill}>No</Button>
+          <Button onClick={() => closeMessage()}>No</Button>
         </DialogActions>
       </Dialog>
     </>

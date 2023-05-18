@@ -1,5 +1,5 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { CardContent, Grid, Stack } from "@mui/material";
+import { CardContent, Grid, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -50,14 +50,14 @@ const PersonalDetail = ({ ...data }) => {
           >
             Personal Details
           </CustomTypography>
+        </Stack>
+        <IconButton onClick={() => gotToEditPersonalDetails()}>
           <CreateIcon
             sx={{ color: "#00339B" }}
             className="iconPointers"
             fontSize="small"
-            onClick={() => gotToEditPersonalDetails()}
           />
-        </Stack>
-        <AddIcon />
+        </IconButton>
       </Stack>
       <CardContent>
         <Grid
