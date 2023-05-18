@@ -27,7 +27,8 @@ const steps = [
   "Create an ad group",
 ];
 
-const NoticePeriod = () => {
+const NoticePeriod = ({ ...props }) => {
+  const { scroll, setCreateResume, setTotalExperience, position } = props;
   const [NoticePeriod, setNoticePeriod] = React.useState("Immediate");
   const [hasAnOffer, setHasAnOffer] = React.useState("Yes");
   const [checked, setChecked] = React.useState(false);
@@ -42,6 +43,12 @@ const NoticePeriod = () => {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+  };
+
+  const actionNext = () => {
+    // setCreateResume((state) => ({ ...state, jobTitle: tempTitles }));
+    // setTotalExperience(experience);
+    scroll(position + 1);
   };
 
   return (
@@ -186,7 +193,11 @@ const NoticePeriod = () => {
                 justifyContent: "flex-end",
               }}
             >
-              <Button className="nextBtn" variant="contained">
+              <Button
+                className="nextBtn"
+                variant="contained"
+                onClick={() => actionNext()}
+              >
                 Next
               </Button>
             </Box>

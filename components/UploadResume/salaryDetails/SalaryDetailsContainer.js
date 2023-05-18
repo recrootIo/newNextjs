@@ -1,20 +1,20 @@
 import { ParallaxLayer } from "@react-spring/parallax";
 import React from "react";
-import AddResume from "./resumeUpload";
+import Salary from "./salarydetails";
 
 export const metadata = {
-  title: "Resume Upload",
+  title: "Salary Details",
 };
 
-const ResumeUploadContainer = ({ ...props }) => {
+const SalaryDetailsContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
       <section>
-        <AddResume {...props} />
+        <Salary {...props} />
       </section>
     </ParallaxLayer>
   );
 };
 
-export default ResumeUploadContainer;
+export default SalaryDetailsContainer;

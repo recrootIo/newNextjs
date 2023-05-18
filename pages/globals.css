@@ -1531,3 +1531,44 @@ a {
 .reject {
   border-color: #d83b01 !important;
 }
+
+/* resume second */
+.animationcontainer {
+  /* overflow-y: scroll !important; */
+  overflow-x: hidden !important;
+  min-height: 1200px !important;
+  background-color: white;
+}
+
+.animationWithoutcontainer {
+  /* overflow-y: scroll !important; */
+  overflow-x: hidden !important;
+  background-color: white;
+  min-height: 1200px !important;
+}
+
+.skillcontainer {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  min-height: 2000px !important;
+  padding-top: 50px;
+  background-color: white;
+}
+
+@media only screen and (min-width: 900px) {
+  .newContainers {
+    background-repeat: no-repeat, no-repeat;
+    background-image: url(https://d8it4huxumps7.cloudfront.net/uploads/images/63d4b178b31d5_home_hero_before.svg),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63de43bdce283_multi_color_dot.png?d=76x188),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63de48d55dbba_yellow_dot.png),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63d4b178b31d5_home_hero_before.svg);
+    background-color: "white";
+    background-position: top left, top right, right center, left center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .animationWithoutcontainer {
+    min-height: 1200px !important;
+  }
+}

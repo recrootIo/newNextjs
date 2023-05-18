@@ -1,20 +1,16 @@
 import { ParallaxLayer } from "@react-spring/parallax";
 import React from "react";
-import AddResume from "./resumeUpload";
+import NoticePeriod from "./NoticePeriod";
 
-export const metadata = {
-  title: "Resume Upload",
-};
-
-const ResumeUploadContainer = ({ ...props }) => {
+const NoticePeriodContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
       <section>
-        <AddResume {...props} />
+        <NoticePeriod {...props} />
       </section>
     </ParallaxLayer>
   );
 };
 
-export default ResumeUploadContainer;
+export default NoticePeriodContainer;

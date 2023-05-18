@@ -63,7 +63,7 @@ const JobTitle = ({ ...props }) => {
 
   const actionNext = () => {
     setCreateResume((state) => ({ ...state, jobTitle: tempTitles }));
-    setTotalExperience(experience);
+    // setTotalExperience(experience);
     scroll(position + 1);
   };
 

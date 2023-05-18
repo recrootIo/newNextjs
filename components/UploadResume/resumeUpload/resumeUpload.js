@@ -59,7 +59,9 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-const AddResume = () => {
+const AddResume = ({ ...props }) => {
+  console.log(props, "props");
+  const { scroll, position } = props;
   const [uplodeResumeFile, setuplodeResumeFile] = React.useState([]);
   const [validationText, setValidationText] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -107,6 +109,10 @@ const AddResume = () => {
     </li>
   ));
 
+  const actionNext = () => {
+    scroll(position + 1);
+  };
+
   return (
     <div
       style={{
@@ -136,7 +142,7 @@ const AddResume = () => {
             ))}
           </Stepper>
         </Box>
-        <Box>
+        <Stack sx={{ gap: "10px" }}>
           <CustomTypography
             className="resumeUploadTitle"
             variant="h5"
@@ -144,9 +150,10 @@ const AddResume = () => {
           >
             Add Resume
           </CustomTypography>
+
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <CustomTypography
-              width="70%"
+              width="100%"
               className="resumeUploadText"
               gutterBottom
             >
@@ -154,14 +161,15 @@ const AddResume = () => {
               thousand of jobs without uploading resume each time
             </CustomTypography>
           </Box>
-        </Box>
+        </Stack>
 
         <Stack
           sx={{
             justifyContent: "flex-start",
             alignItems: "center",
-            gap: "70px",
-            width: { md: "100%", xs: "100%" },
+            gap: "30px",
+            width: "100%",
+            mt: "20px",
           }}
         >
           <Box
@@ -206,6 +214,23 @@ const AddResume = () => {
               </Backdrop>
             </Stack>
           </Box>
+
+          <Stack
+            direction={"row"}
+            sx={{
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              className="nextBtn"
+              variant="contained"
+              sx={{ width: "277px" }}
+              onClick={() => actionNext()}
+            >
+              Next
+            </Button>
+          </Stack>
         </Stack>
       </Container>
     </div>
