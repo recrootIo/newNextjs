@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { Upload } from "@/ui-components/Uploads/Uploads";
 import personalService from "@/redux/services/personal.service";
-import { retrievePersonal } from "@/redux/slices/personal";
+import { AddResumeAndThenGet, retrievePersonal } from "@/redux/slices/personal";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 
@@ -36,10 +36,12 @@ const AddResume = () => {
     setFileNames(file.name);
   };
 
-  const send = () => {
+  console.log(pdf, "pdf");
+
+  const send = (file) => {
     let formData = new FormData();
-    formData.append("resume", pdf);
-    console.log(formData, "formData");
+    formData.append("resume", file);
+    // console.log(formData, "formData");
 
     personalService
       .addResume(formData)
@@ -108,7 +110,7 @@ const AddResume = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
-                  onClick={() => send()}
+                  onClick={() => send(pdf)}
                 >
                   Add
                 </Button>

@@ -44,7 +44,11 @@ const getOneCover = (id) => {
   return http.get(`getOneCover/${id}`);
 };
 const addResume = (formData) => {
-  return http.post(`addResume/${getUserId()}`, formData);
+  return http.post(`addResume/${getUserId()}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 const addCover = (formData) => {
   const user = JSON.parse(localStorage.getItem("User"));
