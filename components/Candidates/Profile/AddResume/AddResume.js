@@ -15,86 +15,56 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-
-const baseStyle = {
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "20px",
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: "#1097CD",
-  borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
-  outline: "none",
-  height: "200px",
-  transition: "border .24s ease-in-out",
-};
-
-const focusedStyle = {
-  borderColor: "#2196f3",
-};
-
-const acceptStyle = {
-  borderColor: "#00e676",
-};
-
-const rejectStyle = {
-  borderColor: "#ff1744",
-};
+import { Upload } from "@/ui-components/Uploads/Uploads";
+import personalService from "@/redux/services/personal.service";
+import { retrievePersonal } from "@/redux/slices/personal";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const AddResume = () => {
+  const [pdf, setPdf] = React.useState();
+  const [fileNames, setFileNames] = React.useState("");
+
   const dispatch = useDispatch();
 
   const gotToResume = () => {
     dispatch(updateCurrentScreen(""));
   };
 
-  const {
-    acceptedFiles,
-    fileRejections,
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
-    accept: {
-      "/.pdf": [],
-      "/.docx": [],
-      "/.doc": [],
-    },
-  });
+  const handleChange = (file) => {
+    setPdf(file);
+    setFileNames(file.name);
+  };
 
-  const style = useMemo(
-    () => ({
-      ...baseStyle,
-      ...(isFocused ? focusedStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isFocused, isDragAccept, isDragReject]
-  );
+  const send = () => {
+    const formData = new FormData();
+    console.log(pdf, "pdf");
+    formData.append("resume", pdf);
 
-  const acceptedFileItems = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-      <ul>
-        {errors.map((e) => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    </li>
-  ));
+    personalService
+      .addResume(formData)
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Resume is Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.response.data.message || "Something went wrong",
+          })
+        );
+      });
+    setTimeout(() => {
+      dispatch(retrievePersonal());
+    }, 1500);
+  };
 
   return (
     <div>
@@ -129,19 +99,7 @@ const AddResume = () => {
               Add Resume
             </CustomTypography>
             <Stack spacing={2} sx={{ mt: "50px" }}>
-              <div className="container">
-                <div {...getRootProps({ style })}>
-                  <input {...getInputProps()} />
-                  <p>Drag and drop some files here, or click to select files</p>
-                  <em>(Only *.pdf, .docx and *.doc files will be accepted)</em>
-                </div>
-                <aside>
-                  <h4>Accepted files</h4>
-                  <ul>{acceptedFileItems}</ul>
-                  <h4>Rejected files</h4>
-                  <ul>{fileRejectionItems}</ul>
-                </aside>
-              </div>
+              <Upload handleChange={handleChange} pdf={pdf} />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"
@@ -150,6 +108,7 @@ const AddResume = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={() => send()}
                 >
                   Add
                 </Button>

@@ -44,8 +44,7 @@ const getOneCover = (id) => {
   return http.get(`getOneCover/${id}`);
 };
 const addResume = (formData) => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`addResume/${user.User._id}`, formData);
+  return http.post(`addResume/${getUserId()}`, formData);
 };
 const addCover = (formData) => {
   const user = JSON.parse(localStorage.getItem("User"));
