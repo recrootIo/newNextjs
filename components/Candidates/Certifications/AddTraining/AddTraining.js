@@ -137,7 +137,7 @@ const AddTraining = () => {
   return (
     <div>
       <Container>
-        <Card>
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -201,6 +201,7 @@ const AddTraining = () => {
                     name="fromDate"
                     value={value}
                     onChange={handleChange}
+                    sx={{ width: "100%" }}
                     renderInput={(params) => (
                       <TextField {...params} sx={{ width: "100%" }} />
                     )}
@@ -210,6 +211,7 @@ const AddTraining = () => {
                     label="To"
                     // inputFormat="MM/dd/YYYY"
                     name="toDate"
+                    sx={{ width: "100%" }}
                     value={value2}
                     onChange={handleChangeto}
                     renderInput={(params) => (

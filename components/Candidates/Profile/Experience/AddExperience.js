@@ -362,6 +362,7 @@ const AddExperience = () => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <MobileDatePicker
                     label="From"
+                    sx={{ width: "100%" }}
                     // inputFormat="MM/dd/YYYY"
                     name="fromDate"
                     value={value}
@@ -373,6 +374,7 @@ const AddExperience = () => {
 
                   <MobileDatePicker
                     label="To"
+                    sx={{ width: "100%" }}
                     // inputFormat="MM/dd/YYYY"
                     name="toDate"
                     value={value2}

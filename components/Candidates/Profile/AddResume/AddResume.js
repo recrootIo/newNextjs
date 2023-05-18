@@ -37,9 +37,9 @@ const AddResume = () => {
   };
 
   const send = () => {
-    const formData = new FormData();
-    console.log(pdf, "pdf");
+    let formData = new FormData();
     formData.append("resume", pdf);
+    console.log(formData, "formData");
 
     personalService
       .addResume(formData)

@@ -209,6 +209,7 @@ const AddCertificates = ({}) => {
               <Stack direction="row" spacing={2}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <MobileDatePicker
+                    sx={{ width: "100%" }}
                     label="From"
                     // inputFormat="MM/dd/YYYY"
                     name="fromDate"
@@ -221,6 +222,7 @@ const AddCertificates = ({}) => {
 
                   <MobileDatePicker
                     label="To"
+                    sx={{ width: "100%" }}
                     // inputFormat="MM/dd/YYYY"
                     name="toDate"
                     value={value2}

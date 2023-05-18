@@ -282,6 +282,8 @@ const AddEducation = () => {
                 <Stack
                   sx={{
                     flexDirection: { md: "row", sm: "column", xs: "column" },
+                    alignItems: "baseline",
+                    gap: "10px",
                   }}
                   spacing={2}
                   marginTop={2}
@@ -359,6 +361,7 @@ const AddEducation = () => {
                     label="From"
                     // inputFormat="MM/dd/YYYY"
                     name="fromDate"
+                    sx={{ width: "100%" }}
                     value={value}
                     onChange={handleChange}
                     renderInput={(params) => (
@@ -370,6 +373,7 @@ const AddEducation = () => {
                     label="To"
                     // inputFormat="MM/dd/YYYY"
                     name="toDate"
+                    sx={{ width: "100%" }}
                     value={value2}
                     onChange={handleChangeto}
                     renderInput={(params) => (
