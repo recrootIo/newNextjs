@@ -99,7 +99,7 @@ export const convertDate = (date) => {
 };
 
 /**
- *
+ * Returns Users Id
  * @returns id
  */
 export const getUserId = () => {

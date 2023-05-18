@@ -6,7 +6,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
-import index from "../uploadResume/jobTitle";
+import index from "../../components/UploadResume/jobTitle/JobTitleContainer";
 import Image from "next/image";
 import { NEUTRAL } from "@/theme/colors";
 import { EditRounded } from "@mui/icons-material";

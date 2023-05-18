@@ -217,7 +217,7 @@ const MainFilter = () => {
       </Box>
       <Collapse in={industryExpanded} timeout="auto" unmountOnExit>
         <CardContent
-          class="scrollbar"
+          className="scrollbar"
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
@@ -262,7 +262,7 @@ const MainFilter = () => {
       </Box>
       <Collapse in={roleExpanded} timeout="auto" unmountOnExit>
         <CardContent
-          class="scrollbar"
+          className="scrollbar"
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >

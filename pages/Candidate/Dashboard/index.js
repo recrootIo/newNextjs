@@ -128,7 +128,7 @@ const Index = () => {
     }
 
     return (
-      <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
+      <Stack className="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
         <Profile {...data} />
         <Certifications />
         <CandidateJobs {...data} />

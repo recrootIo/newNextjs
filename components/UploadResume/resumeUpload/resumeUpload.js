@@ -8,6 +8,8 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
@@ -15,6 +17,7 @@ import styled from "styled-components";
 import { useMemo } from "react";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { Upload } from "@/ui-components/Uploads/Uploads";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -57,6 +60,10 @@ const rejectStyle = {
 };
 
 const AddResume = () => {
+  const [uplodeResumeFile, setuplodeResumeFile] = React.useState([]);
+  const [validationText, setValidationText] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
   const {
     acceptedFiles,
     fileRejections,
@@ -148,44 +155,58 @@ const AddResume = () => {
             </CustomTypography>
           </Box>
         </Box>
-        <Box>
+
+        <Stack
+          sx={{
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: "70px",
+            width: { md: "100%", xs: "100%" },
+          }}
+        >
           <Box
             sx={{
+              width: "100%",
+              alignItems: "center",
               display: "flex",
               justifyContent: "center",
-              marginTop: "30px",
+              flexDirection: "column",
             }}
           >
-            <Stack
-              sx={{ width: { md: "70%", sm: "100%", xs: "100%" } }}
-              spacing={3}
-            >
-              <div className="container">
-                <div {...getRootProps({ style })}>
-                  <input {...getInputProps()} />
-                  <p>Drag and drop some files here, or click to select files</p>
-                  <em>(Only *.jpeg and *.png images will be accepted)</em>
-                </div>
-                <aside>
-                  <h4>Accepted files</h4>
-                  <ul>{acceptedFileItems}</ul>
-                  <h4>Rejected files</h4>
-                  <ul>{fileRejectionItems}</ul>
-                </aside>
-              </div>
-              <Box
+            <Stack sx={{ gap: "20px", width: "100%" }}>
+              <Upload />
+              <Backdrop
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
+                  color: "#fff",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
                 }}
+                open={open}
               >
-                <Button className="nextBtn" variant="contained">
-                  Next
-                </Button>
-              </Box>
+                <Box sx={{ display: "inline-flex", width: 50 }}>
+                  <CircularProgress color="inherit" />
+                  <Box
+                    sx={{
+                      top: 100,
+                      left: 10,
+                      bottom: 0,
+                      right: 10,
+                      position: "absolute",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CustomTypography component="div" variant="h6" gutterBottom>
+                      Hold tight while our AI extracts the information from your
+                      CV. This could take a while. Please wait for it to finish
+                      before closing this window.
+                    </CustomTypography>
+                  </Box>
+                </Box>
+              </Backdrop>
             </Stack>
           </Box>
-        </Box>
+        </Stack>
       </Container>
     </div>
   );
