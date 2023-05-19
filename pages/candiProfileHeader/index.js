@@ -49,13 +49,18 @@ const CandidateProfileHeader = ({ ...data }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: { xs: "flex-start", md: "flex-end" },
           }}
         >
           <IconButton
             aria-label="notifications"
             size="large"
-            sx={{ color: "white", width: "20px", p: 0 }}
+            sx={{
+              color: "white",
+              width: "20px",
+              p: 0,
+              mt: { xs: "12px", md: 0 },
+            }}
           >
             <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
           </IconButton>
@@ -80,7 +85,10 @@ const CandidateProfileHeader = ({ ...data }) => {
             <Avatar
               alt="Remy Sharp"
               src="/static/images/avatar/1.jpg"
-              sx={{ width: "200px", height: "200px" }}
+              sx={{
+                width: "200px",
+                height: "200px",
+              }}
             />
           </Grid>
 
@@ -117,7 +125,7 @@ const CandidateProfileHeader = ({ ...data }) => {
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
-                  minWidth="30%"
+                  minWidth="40%"
                   gutterBottom
                 >
                   <PlaceOutlinedIcon /> Bhopal, India
@@ -141,7 +149,7 @@ const CandidateProfileHeader = ({ ...data }) => {
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
-                  minWidth="30%"
+                  minWidth="40%"
                   gutterBottom
                 >
                   <EmailOutlinedIcon /> {email}
@@ -167,48 +175,86 @@ const CandidateProfileHeader = ({ ...data }) => {
               justifyContent: "flex-end",
             }}
           >
-            {profilePercentage < 70 && (
-              <Box
+            {/* {profilePercentage < 70 && ( */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                // alignItems: "center",
+                // textAlign: "center",
+                position: "absolute",
+                // top: "200px",
+                backgroundImage: 'url("/profileprecentageborder.png")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                height: { xs: "100px", md: "200px" },
+                border: "1px solid red",
+              }}
+            >
+              <CustomTypography
+                variant="h6"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                  position: "absolute",
-                  top: "100px",
-                  backgroundImage: 'url("/profileprecentageborder.png")',
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  height: "200px",
+                  position: "relative",
+                  fontFamily: "Inter-bold",
+                  zIndex: "1",
+                  margin: "auto",
+                  width: "100%",
+                  textAlign: "center",
+                  // marginTop: "50%",
+                  // left: "50%",
+                  transformY: "translate(-50%)",
+                  border: "1px solid red",
                 }}
               >
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    position: "absolute",
-                    fontFamily: "Inter-bold",
-                    zIndex: "1",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  {profilePercentage}%
-                </CustomTypography>
-                <CustomTypography
-                  variant="subtitle1"
-                  sx={{
-                    mt: "25px",
-                    fontSize: "14px",
-                    position: "relative",
-                    top: "20px",
-                    color: NEUTRAL,
-                  }}
-                >
-                  Profile completed (Excellent)
-                </CustomTypography>
-              </Box>
-            )}
+                {profilePercentage}%
+              </CustomTypography>
+              <CustomTypography
+                variant="subtitle1"
+                sx={{
+                  mt: "25px",
+                  fontSize: "14px",
+                  position: "relative",
+                  top: "20px",
+                  color: NEUTRAL,
+                }}
+              >
+                Profile completed (Excellent)
+              </CustomTypography>
+            </Box>
+            {/* <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <img
+                src="/profileprecentageborder.png"
+                alt=""
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              />
+              <CustomTypography
+                variant="h6"
+                sx={{
+                  position: "absolute",
+                  bottom: "660px",
+                  fontFamily: "Inter-bold",
+                  right: "280px",
+                  zIndex: "1",
+                }}
+              >
+                100%
+              </CustomTypography>
+              <CustomTypography variant="subtitle1" sx={{ mt: "5px" }}>
+                Profile completed (Excellent)
+              </CustomTypography>
+            </Box> */}
+            {/* )} */}
           </Grid>
         </Grid>
       </Container>
