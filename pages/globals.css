@@ -1572,3 +1572,7 @@ a {
     min-height: 1200px !important;
   }
 }
+
+.successImage {
+  height: 500px !important;
+}

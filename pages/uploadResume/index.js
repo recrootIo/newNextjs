@@ -11,15 +11,22 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { Backdrop, Box, CircularProgress, Stack } from "@mui/material";
 import { Parallax } from "@react-spring/parallax";
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { SUCCESS } from "@/utils/constants";
 
 const Index = () => {
+  const state = useSelector((state) => state);
+  console.log(state, "state");
+
   const [createResume, setCreateResume] = useState({});
   const [totalExperience, setTotalExperience] = useState("");
   const [inputPersonalDetailsCountry, setinputPersonalDetailsCountry] =
     useState({});
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const parallax = useRef();
   const getTheScreenCount = 5;
 
@@ -46,20 +53,23 @@ const Index = () => {
     )
       .unwrap()
       .then(() => {
-        setOpen(false);
         dispatch(
           openAlert({
             type: SUCCESS,
             message: "Your Information saved successfully",
           })
         );
+        setOpen(false);
+        router.push("/uploadResume/success");
       })
       .catch(() => {
         setOpen(false);
+
         openAlert({
           type: DANGER,
           message: "Information could not be saved saved successfully",
         });
+        return;
       });
   };
 
@@ -113,13 +123,16 @@ const Index = () => {
       ),
     },
   ];
+
   return (
     <Box>
-      <div
+      <Box
         style={{
           backgroundImage: `url("/bg.svg")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
+          height: "100vh",
+          width: "100vw",
         }}
       >
         <Box className="topbar"></Box>
@@ -133,7 +146,7 @@ const Index = () => {
             <div key={index}>{screen.content}</div>
           ))}
         </Parallax>
-      </div>
+      </Box>
       <Backdrop
         sx={{
           color: "#fff",
