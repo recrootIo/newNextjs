@@ -187,3 +187,12 @@ export const EXPERT = "expert";
 export const BEGINNER = "beginner";
 
 export const LEVELS = [INTERMEDIATE, EXPERT, BEGINNER];
+
+export const NOTICE_PERIODS = [
+  "Immediate Joiner",
+  "15 Days",
+  "30 days",
+  "45 Days",
+  "60 Days",
+  "90 Days",
+];

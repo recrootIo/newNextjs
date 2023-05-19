@@ -18,6 +18,11 @@ import { useMemo } from "react";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Upload } from "@/ui-components/Uploads/Uploads";
+import { isEmpty } from "lodash";
+import { useDispatch } from "react-redux";
+import { uplodeResumeFiles } from "@/redux/slices/uploadingResume";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR } from "@/utils/constants";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -27,213 +32,204 @@ const steps = [
   "Create an ad group",
 ];
 
-const options = { multi: true };
-
-const baseStyle = {
-  flex: 1,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "20px",
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: "#1097CD",
-  borderStyle: "dashed",
-  backgroundColor: "#fafafa",
-  color: "#bdbdbd",
-  outline: "none",
-  height: "200px",
-  transition: "border .24s ease-in-out",
-};
-
-const focusedStyle = {
-  borderColor: "#2196f3",
-};
-
-const acceptStyle = {
-  borderColor: "#00e676",
-};
-
-const rejectStyle = {
-  borderColor: "#ff1744",
-};
-
 const AddResume = ({ ...props }) => {
-  console.log(props, "props");
+  const dispatch = useDispatch();
   const { scroll, position } = props;
-  const [uplodeResumeFile, setuplodeResumeFile] = React.useState([]);
-  const [validationText, setValidationText] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [uplodeResumeFile, setuplodeResumeFile] = React.useState([]);
 
-  const {
-    acceptedFiles,
-    fileRejections,
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
-    accept: {
-      "/.pdf": [],
-      "/.docx": [],
-      "/.doc": [],
-    },
-  });
-
-  const style = useMemo(
-    () => ({
-      ...baseStyle,
-      ...(isFocused ? focusedStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isFocused, isDragAccept, isDragReject]
-  );
-
-  const acceptedFileItems = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
-
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-      <ul>
-        {errors.map((e) => (
-          <li key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    </li>
-  ));
+  const enableUpload = isEmpty(uplodeResumeFile);
 
   const actionNext = () => {
-    scroll(position + 1);
+    handleFirstresumeSubmit();
+  };
+
+  const handleChange = (file) => {
+    setuplodeResumeFile(file);
+    setFileNames(file.name);
+  };
+
+  const handleFirstresumeSubmit = async () => {
+    if (!enableUpload) {
+      setOpen(true);
+      dispatch(uplodeResumeFiles({ uplodeResumeFile }))
+        .unwrap()
+        .then(async (originalPromiseResult) => {
+          if (originalPromiseResult === undefined) {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message:
+                  "Please check file extension and size, and upload a compatible file from your local device that is not sourced from Google Drive",
+              })
+            );
+
+            setuplodeResumeFile([]);
+            setOpen(false);
+            return;
+          }
+          scroll(position + 1);
+          const userObject = {
+            userId: currentUser.User._id,
+            file: originalPromiseResult.Data[0].Location,
+          };
+          // await axios
+          //   .post("http://localhost:3000/api/updateResume", userObject)
+          //   .then(
+          //     (res) => {
+          //       setOpen(false);
+          //       dispatch(retrievePersonal());
+          //       scroll(position + 1);
+          //     },
+          //     (error) => {
+          //       console.warn(error, "error");
+          //       setOpen(false);
+          //     }
+          //   );
+
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setOpen(false);
+        });
+    }
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("/bg.svg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
-      <Box className="topbar"></Box>
-      <Container>
-        <Box className="logoContainer">
-          <Image
-            className="logoImage"
-            src="/logo 8.png"
-            alt=""
-            width="0"
-            height="0"
-            sizes="100vw"
-          />
-        </Box>
-        <Box className="stepperContainer">
-          <Stepper sx={{ width: "50%" }} activeStep={0} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel></StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Box>
-        <Stack sx={{ gap: "10px" }}>
-          <CustomTypography
-            className="resumeUploadTitle"
-            variant="h5"
-            gutterBottom
-          >
-            Add Resume
-          </CustomTypography>
-
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <CustomTypography
-              width="100%"
-              className="resumeUploadText"
-              gutterBottom
-            >
-              Use our uploader to save your resume and search and apply for
-              thousand of jobs without uploading resume each time
-            </CustomTypography>
-          </Box>
-        </Stack>
-
-        <Stack
+    <>
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Box
           sx={{
-            justifyContent: "flex-start",
-            alignItems: "center",
-            gap: "30px",
-            width: "100%",
-            mt: "20px",
+            width: { md: "70%", sm: "100%", xs: "100%" },
           }}
         >
-          <Box
-            sx={{
-              width: "100%",
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Stack sx={{ gap: "20px", width: "100%" }}>
-              <Upload />
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={open}
-              >
-                <Box sx={{ display: "inline-flex", width: 50 }}>
-                  <CircularProgress color="inherit" />
-                  <Box
-                    sx={{
-                      top: 100,
-                      left: 10,
-                      bottom: 0,
-                      right: 10,
-                      position: "absolute",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CustomTypography component="div" variant="h6" gutterBottom>
-                      Hold tight while our AI extracts the information from your
-                      CV. This could take a while. Please wait for it to finish
-                      before closing this window.
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Backdrop>
-            </Stack>
+          <Box className="logoContainer">
+            <Image
+              className="logoImage"
+              src="/logo 8.png"
+              alt=""
+              width="0"
+              height="0"
+              sizes="100vw"
+            />
           </Box>
+          <Box className="stepperContainer">
+            <Stepper sx={{ width: "50%" }} activeStep={0} alternativeLabel>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel></StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
+          <Stack sx={{ gap: "10px" }}>
+            <CustomTypography
+              className="resumeUploadTitle"
+              variant="h5"
+              gutterBottom
+            >
+              Add Resume
+            </CustomTypography>
 
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <CustomTypography
+                width="100%"
+                className="resumeUploadText"
+                gutterBottom
+              >
+                Use our uploader to save your resume and search and apply for
+                thousand of jobs without uploading resume each time
+              </CustomTypography>
+            </Box>
+          </Stack>
           <Stack
-            direction={"row"}
             sx={{
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "30px",
               width: "100%",
-              justifyContent: "flex-end",
+              mt: "20px",
             }}
           >
-            <Button
-              className="nextBtn"
-              variant="contained"
-              sx={{ width: "277px" }}
-              onClick={() => actionNext()}
+            <Box
+              sx={{
+                width: "100%",
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
             >
-              Next
-            </Button>
+              <Stack sx={{ gap: "20px", width: "100%" }}>
+                <Upload handleChange={handleChange} pdf={uplodeResumeFile} />
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={open}
+                >
+                  <Box sx={{ display: "inline-flex", width: 50 }}>
+                    <CircularProgress color="inherit" />
+                    <Box
+                      sx={{
+                        top: 100,
+                        left: 10,
+                        bottom: 0,
+                        right: 10,
+                        position: "absolute",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CustomTypography
+                        component="div"
+                        variant="h6"
+                        gutterBottom
+                      >
+                        Hold tight while our AI extracts the information from
+                        your CV. This could take a while. Please wait for it to
+                        finish before closing this window.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Backdrop>
+              </Stack>
+            </Box>
+
+            <Stack
+              direction={"row"}
+              sx={{
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                className="nextBtn"
+                variant="contained"
+                sx={{ width: "277px" }}
+                onClick={() => actionNext()}
+              >
+                Next
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
+        </Box>
       </Container>
-    </div>
+    </>
   );
 };
 

@@ -10,9 +10,7 @@ const SalaryDetailsContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <section>
-        <Salary {...props} />
-      </section>
+      <Salary {...props} />
     </ParallaxLayer>
   );
 };

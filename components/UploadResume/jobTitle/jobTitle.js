@@ -61,21 +61,15 @@ const JobTitle = ({ ...props }) => {
     debounce(requestTitles, null, timetoLoad, setTimeTLoad, e);
   };
 
+  const enableButton = experience && tempTitles;
   const actionNext = () => {
     setCreateResume((state) => ({ ...state, jobTitle: tempTitles }));
-    // setTotalExperience(experience);
+    setTotalExperience(experience);
     scroll(position + 1);
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("/Frame 300.svg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
-      <Box className="topbar"></Box>
+    <>
       <Container>
         <Box className="logoContainer">
           <Image
@@ -180,6 +174,7 @@ const JobTitle = ({ ...props }) => {
                   className="nextBtn"
                   variant="contained"
                   onClick={() => actionNext()}
+                  disabled={!enableButton}
                 >
                   Next
                 </Button>
@@ -188,7 +183,7 @@ const JobTitle = ({ ...props }) => {
           </Box>
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 

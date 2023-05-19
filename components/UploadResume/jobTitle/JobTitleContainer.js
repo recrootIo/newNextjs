@@ -11,13 +11,7 @@ const JobTitleContainer = ({ ...props }) => {
 
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <section
-        style={{
-          backgroundImage: "url(/Frame 300.svg)",
-        }}
-      >
-        <JobTitle {...props} />
-      </section>
+      <JobTitle {...props} />
     </ParallaxLayer>
   );
 };

@@ -6,9 +6,7 @@ const NoticePeriodContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <section>
-        <NoticePeriod {...props} />
-      </section>
+      <NoticePeriod {...props} />
     </ParallaxLayer>
   );
 };

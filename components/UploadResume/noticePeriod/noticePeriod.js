@@ -18,6 +18,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
+import { WORK_PREFERENCE } from "@/utils/constants";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -28,38 +29,52 @@ const steps = [
 ];
 
 const NoticePeriod = ({ ...props }) => {
-  const { scroll, setCreateResume, setTotalExperience, position } = props;
-  const [NoticePeriod, setNoticePeriod] = React.useState("Immediate");
-  const [hasAnOffer, setHasAnOffer] = React.useState("Yes");
-  const [checked, setChecked] = React.useState(false);
+  const { scroll, setCreateResume, position } = props;
+  const [notice, setNotice] = React.useState("Immediate Joiner");
+  const [hasAnOffer, setHasAnOffer] = React.useState("no");
+
+  const [state, setState] = React.useState({
+    Remote: false,
+    Onsite: false,
+    Hybrid: false,
+  });
+
+  const handleChange = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   const handleNoticePeriod = (event) => {
-    setNoticePeriod(event.target.value);
+    setNotice(event.target.value);
   };
 
   const handleHasAnOffer = (event) => {
     setHasAnOffer(event.target.value);
   };
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
   const actionNext = () => {
-    // setCreateResume((state) => ({ ...state, jobTitle: tempTitles }));
-    // setTotalExperience(experience);
+    let preferencesArray = [];
+    if (state.Remote) preferencesArray.push("Remote");
+    if (state.Onsite) preferencesArray.push("Onsite");
+    if (state.Hybrid) preferencesArray.push("Hybrid");
+
+    setCreateResume((state) => ({
+      ...state,
+      notice,
+      currentOffer: hasAnOffer,
+      workPrefence: preferencesArray,
+    }));
+
     scroll(position + 1);
   };
 
+  const hasPreference = state.Hybrid || state.Onsite || state.Remote;
+  const hasPeriodOffer = notice && hasPreference;
+
   return (
-    <div
-      style={{
-        backgroundImage: `url("/Frame 300.svg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
-      <Box className="topbar"></Box>
+    <>
       <Container>
         <Box className="logoContainer">
           <Image
@@ -105,7 +120,7 @@ const NoticePeriod = ({ ...props }) => {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
-                value={NoticePeriod}
+                value={notice}
                 onChange={handleNoticePeriod}
                 sx={{
                   display: "flex",
@@ -114,29 +129,34 @@ const NoticePeriod = ({ ...props }) => {
                 }}
               >
                 <FormControlLabel
-                  value="Immediate"
+                  value="Immediate Joiner"
                   control={<Radio />}
                   label="Immediate"
                 />
                 <FormControlLabel
-                  value="noticeOne"
+                  value="15 Days"
                   control={<Radio />}
                   label="15 Days"
                 />
                 <FormControlLabel
-                  value="noticeTwo"
+                  value="30 days"
                   control={<Radio />}
                   label="30 Days"
                 />
                 <FormControlLabel
-                  value="noticeThree"
+                  value="45 Days"
                   control={<Radio />}
                   label="45 Days"
                 />
                 <FormControlLabel
-                  value="noticeFour"
+                  value="60 Days"
                   control={<Radio />}
                   label="60 Days"
+                />
+                <FormControlLabel
+                  value="90 Days"
+                  control={<Radio />}
+                  label="90 Days"
                 />
               </RadioGroup>
             </FormControl>
@@ -153,8 +173,8 @@ const NoticePeriod = ({ ...props }) => {
                 onChange={handleHasAnOffer}
                 sx={{ columnGap: "14%", marginTop: "10px" }}
               >
-                <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="No" control={<Radio />} label="No" />
+                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                <FormControlLabel value="no" control={<Radio />} label="No" />
               </RadioGroup>
             </FormControl>
 
@@ -165,26 +185,21 @@ const NoticePeriod = ({ ...props }) => {
                 sx={{ columnGap: "10%", marginTop: "10px" }}
                 row
               >
-                <FormControlLabel
-                  value="top"
-                  control={
-                    <Checkbox checked={checked} onChange={handleChange} />
-                  }
-                  label="Remote"
-                  labelPlacement="end"
-                />
-                <FormControlLabel
-                  value="start"
-                  control={<Checkbox />}
-                  label="On-site"
-                  labelPlacement="end"
-                />
-                <FormControlLabel
-                  value="bottom"
-                  control={<Checkbox />}
-                  label="Hybrid"
-                  labelPlacement="end"
-                />
+                {WORK_PREFERENCE.map((prefer, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value="top"
+                    control={
+                      <Checkbox
+                        checked={state[prefer]}
+                        onChange={handleChange}
+                        name={prefer}
+                      />
+                    }
+                    label={prefer}
+                    labelPlacement="end"
+                  />
+                ))}
               </FormGroup>
             </FormControl>
             <Box
@@ -197,6 +212,7 @@ const NoticePeriod = ({ ...props }) => {
                 className="nextBtn"
                 variant="contained"
                 onClick={() => actionNext()}
+                disabled={!hasPeriodOffer}
               >
                 Next
               </Button>
@@ -204,7 +220,7 @@ const NoticePeriod = ({ ...props }) => {
           </Stack>
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 

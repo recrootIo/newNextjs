@@ -10,9 +10,7 @@ const LocationDetailsContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <section>
-        <LocationDetails {...props} />
-      </section>
+      <LocationDetails {...props} />
     </ParallaxLayer>
   );
 };

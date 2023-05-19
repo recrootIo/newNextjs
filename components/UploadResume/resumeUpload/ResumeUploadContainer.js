@@ -10,9 +10,7 @@ const ResumeUploadContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <section>
-        <AddResume {...props} />
-      </section>
+      <AddResume {...props} />
     </ParallaxLayer>
   );
 };

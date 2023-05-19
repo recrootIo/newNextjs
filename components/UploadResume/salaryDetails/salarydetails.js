@@ -14,14 +14,26 @@ import {
   Stepper,
   Step,
   StepLabel,
+  ListSubheader,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
 import { red } from "@mui/material/colors";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
+import {
+  BILLION,
+  CORE,
+  DENOMINATIONS,
+  LAKH,
+  MILLION,
+  THOUSAND,
+} from "@/utils/constants";
+import {
+  COMMON_CURRENCIES,
+  INDIAN_CURRENCY,
+  OTHER_CURRENCIES,
+} from "@/utils/currency";
+import { NEUTRAL } from "@/theme/colors";
+import { currencyConvert } from "@/utils/HelperFunctions";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -31,38 +43,77 @@ const steps = [
   "Create an ad group",
 ];
 
-const Salary = () => {
-  const top100Films = [
-    { label: "The Shawshank Redemption", year: 1994 },
-    { label: "The Godfather", year: 1972 },
-    { label: "The Godfather: Part II", year: 1974 },
-    { label: "The Dark Knight", year: 2008 },
-    { label: "12 Angry Men", year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: "Pulp Fiction", year: 1994 },
-  ];
+const Salary = ({ ...props }) => {
+  const { setCreateResume, saveAllData } = props;
+  const [currency, setCurrency] = React.useState(INDIAN_CURRENCY.country);
+  const [currentSalary, setCurrentSalary] = React.useState({
+    denomination: THOUSAND,
+    salary: "",
+  });
+  const [expectedSalary, setExpectedSalary] = React.useState({
+    denomination: THOUSAND,
+    salary: null,
+  });
 
-  const [currentDenomination, setCurrentDenomination] = React.useState("");
-  const [expectedDenomination, setExpectedDenomination] = React.useState("");
-
-  const handleCurrentDenomination = (event) => {
-    setCurrentDenomination(event.target.value);
+  const selectCurrency = (e) => {
+    setCurrency(e.target.value);
   };
 
-  const handleExpectedDenomination = (event) => {
-    setExpectedDenomination(event.target.value);
+  const selectCurrentDenomination = (e) => {
+    const value = e.target.value;
+    setCurrentSalary((state) => ({ ...state, denomination: value }));
+  };
+
+  const selectCurrentSalary = (e) => {
+    const value = e.target.value;
+    setCurrentSalary((state) => ({ ...state, salary: value }));
+  };
+
+  const selectExpectedSalary = (e) => {
+    const value = e.target.value;
+    setExpectedSalary((state) => ({ ...state, salary: value }));
+  };
+
+  const selectExpectedDenomination = (e) => {
+    const value = e.target.value;
+    setExpectedSalary((state) => ({ ...state, denomination: value }));
+  };
+
+  const enableNext =
+    currency && currentSalary.salary > 0 && expectedSalary.salary > 0;
+
+  const actionNext = () => {
+    setCreateResume((state) => ({
+      ...state,
+      salaryCurrency: currency,
+      expectedSalary,
+      currentSalary,
+    }));
+    // scroll(position + 1);
+    saveAllData();
+  };
+
+  const getSalary = (salary) => {
+    switch (salary.denomination) {
+      case LAKH: {
+        return currencyConvert(salary.salary * 100000, currency);
+      }
+      case MILLION: {
+        return currencyConvert(salary.salary * 1000000, currency);
+      }
+      case CORE: {
+        return currencyConvert(salary.salary * 10000000, currency);
+      }
+      case BILLION: {
+        return currencyConvert(salary.salary * 1000000000, currency);
+      }
+      default:
+        return currencyConvert(salary.salary * 1000, currency);
+    }
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("/Frame 300.svg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
-      <Box className="topbar"></Box>
-
+    <>
       <Container>
         <Box className="logoContainer">
           <Image
@@ -100,30 +151,35 @@ const Salary = () => {
             sx={{ width: { md: "70%", sm: "100%", xs: "100%" } }}
             spacing={3}
           >
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ display: "flex", justifyContent: "center" }}
-              renderInput={(params) => (
-                <TextField
-                  fullWidth
-                  {...params}
-                  label="Currency of your Salary"
-                  sx={{
-                    background: "#FFFFFF",
-                    borderColor: "#949494",
-                    borderRadius: "8px",
-                    marginTop: "30px",
-                  }}
-                />
-              )}
-            />
+            {/* Currency of your Salary */}
+            <Select
+              defaultValue=""
+              id="grouped-select"
+              label="Currency of your Salary"
+              onChange={selectCurrency}
+              sx={{ backgroundColor: NEUTRAL, width: "100%" }}
+              value={currency}
+            >
+              <ListSubheader>Common</ListSubheader>
+              {COMMON_CURRENCIES.map((o, id) => (
+                <MenuItem value={o.country} key={id}>
+                  {o.country} {o.symbol}
+                </MenuItem>
+              ))}
+              <ListSubheader>Other</ListSubheader>
+              {OTHER_CURRENCIES.map((o, id) => (
+                <MenuItem value={o.country} key={id}>
+                  {o.country} {o.symbol}
+                </MenuItem>
+              ))}
+            </Select>
+
             <div style={{ display: "flex" }}>
               <TextField
                 id="outlined-number"
                 label="Current Annual Salary"
                 type="number"
+                onChange={selectCurrentSalary}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -136,19 +192,26 @@ const Salary = () => {
                 <Select
                   labelId="demo-simple-select-required-label"
                   id="demo-simple-select-required"
-                  value={currentDenomination}
+                  value={currentSalary.denomination}
                   label="Denomination *"
-                  onChange={handleCurrentDenomination}
+                  onChange={selectCurrentDenomination}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {DENOMINATIONS.map((data, ind) => (
+                    <MenuItem key={ind} value={data}>
+                      {data}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
+            {currentSalary.salary && (
+              <Stack direction={"row"} sx={{ justifyContent: "flex-start" }}>
+                <CustomTypography>
+                  Current Salary will be : {getSalary(currentSalary)}
+                </CustomTypography>
+              </Stack>
+            )}
+
             <div style={{ display: "flex" }}>
               <TextField
                 id="outlined-number"
@@ -157,6 +220,7 @@ const Salary = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                onChange={selectExpectedSalary}
                 sx={{ width: "80%", mr: "5px" }}
               />
               <FormControl sx={{ width: "20%" }}>
@@ -166,30 +230,42 @@ const Salary = () => {
                 <Select
                   labelId="demo-simple-select-required-label"
                   id="demo-simple-select-required"
-                  value={expectedDenomination}
+                  value={expectedSalary.denomination}
                   label="Denomination *"
-                  onChange={handleExpectedDenomination}
+                  onChange={selectExpectedDenomination}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {DENOMINATIONS.map((data, ind) => (
+                    <MenuItem key={ind} value={data}>
+                      {data}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
+            {expectedSalary.salary && (
+              <Stack direction={"row"} sx={{ justifyContent: "flex-start" }}>
+                <CustomTypography>
+                  Expected Salary will be : {getSalary(expectedSalary)}
+                </CustomTypography>
+              </Stack>
+            )}
+
             <Box
               sx={{ display: "flex", justifyContent: "flex-end", mb: "120px" }}
             >
-              <Button className="searchJobsBtn" variant="contained">
+              <Button
+                onClick={() => actionNext()}
+                className="searchJobsBtn"
+                variant="contained"
+                disabled={!enableNext}
+              >
                 Search For Jobs
               </Button>
             </Box>
           </Stack>
         </Box>
       </Container>
-    </div>
+    </>
   );
 };
 
