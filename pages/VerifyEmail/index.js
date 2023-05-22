@@ -61,9 +61,10 @@ const VerifyEmail = () => {
               onChange={setOtp}
               value={otp}
               numInputs={4}
+              className="otpinput"
               inputStyle={{
-                width: "70px",
-                height: "70px",
+                width: "4rem",
+                height: "4rem",
                 backgroundColor: "#D4F0FC",
                 margin: "0 10px",
                 fontSize: "2rem",
@@ -77,7 +78,7 @@ const VerifyEmail = () => {
             <Button
               variant="contained"
               sx={{
-                width: "309px",
+                width: "259px",
                 height: "45px",
                 fontSize: "18px",
                 bgcolor: "#015FB1 !important",
@@ -89,7 +90,12 @@ const VerifyEmail = () => {
           </Box>
           <CustomTypography
             variant="h5"
-            sx={{ color: "#034275", fontSize: "18px", mt: "40px" }}
+            sx={{
+              color: "#034275",
+              fontSize: "18px",
+              mt: { xs: "40px", md: "100px" },
+              mb: { xs: "40px", md: "100px" },
+            }}
             gutterBottom
           >
             If you didn't receive the OTP, Click Here to Resend
