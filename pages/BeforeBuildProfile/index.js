@@ -12,7 +12,7 @@ const VerifyEmail = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("/verify-email-bg.svg")`,
+        backgroundImage: `url("/beforebuild-profile-bg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
@@ -43,6 +43,9 @@ const VerifyEmail = () => {
               justifyContent: "center",
               alignItems: "center",
               height: "320px",
+              backgroundImage: `url("/before-buildprofile-img-bg.svg")`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           >
             <Image

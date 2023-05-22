@@ -12,7 +12,7 @@ const VerifyEmail = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("/verify-email-bg.svg")`,
+        backgroundImage: `url("/verify-screen-bg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
@@ -93,7 +93,7 @@ const VerifyEmail = () => {
             sx={{
               color: "#034275",
               fontSize: "18px",
-              mt: { xs: "40px", md: "100px" },
+              mt: "40px",
               mb: { xs: "40px", md: "100px" },
             }}
             gutterBottom
