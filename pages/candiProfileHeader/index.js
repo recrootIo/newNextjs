@@ -6,6 +6,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
+import EditSharpIcon from "@mui/icons-material/EditSharp";
 import index from "../uploadResume/jobTitle";
 import Image from "next/image";
 import { NEUTRAL } from "@/theme/colors";
@@ -82,14 +83,31 @@ const CandidateProfileHeader = ({ ...data }) => {
               alt=""
               style={{ position: "absolute" }}
             /> */}
-            <Avatar
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
-              sx={{
-                width: "200px",
-                height: "200px",
-              }}
-            />
+            <Box>
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/1.jpg"
+                sx={{
+                  width: "200px",
+                  height: "200px",
+                }}
+              />
+              <IconButton
+                //onClick={handleClickOpen}
+                sx={{
+                  position: "relative",
+                  top: "-54px",
+                  left: "164px",
+                  background: "white",
+                  border: "3px solid rgba(3, 66, 117, 0.6)",
+                  height: "35px",
+                }}
+              >
+                <EditSharpIcon
+                  sx={{ color: "rgba(3, 66, 117, 0.6)", fontSize: "0.6em" }}
+                />
+              </IconButton>
+            </Box>
           </Grid>
 
           {/* <EditRounded sx={{ color: "#ffff", top: "-36px", left: "34px" }} /> */}
