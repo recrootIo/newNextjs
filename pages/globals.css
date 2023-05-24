@@ -1222,9 +1222,6 @@ a {
 }
 
 @media only screen and (max-width: 850px) {
-  .paginationcontainer {
-    display: none;
-  }
   .recentCard {
     width: 100%;
   }

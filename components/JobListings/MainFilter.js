@@ -34,6 +34,8 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SwipeableViews from "react-swipeable-views";
 import AppBar from "@mui/material/AppBar";
+import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 
 const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
   color: "#01313F",
@@ -90,7 +92,7 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-function BpCheckbox(props) {
+function BpCheckbox({ ...props }) {
   return (
     <Checkbox
       sx={{
@@ -117,7 +119,8 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const MainFilter = () => {
+const MainFilter = ({ ...props }) => {
+  const { setExper, exper, setNames, names, clearSearch, sectors } = props;
   const [profExpanded, setProfExpanded] = React.useState(false);
   const [industryExpanded, setIndustryExpanded] = React.useState(false);
   const [roleExpanded, setRoleExpanded] = React.useState(false);
@@ -144,6 +147,26 @@ const MainFilter = () => {
     setTypeExpanded(!typeExpanded);
   };
 
+  const handleName = (re) => {
+    const { name, checked } = re.target;
+    if (checked) {
+      setNames((state) => [...state, name]);
+    } else {
+      let newJobs = names.filter((arr) => name != arr);
+      setNames(() => [...newJobs]);
+    }
+  };
+
+  const handleExperience = (re) => {
+    const { name, checked } = re.target;
+    if (checked) {
+      setExper((state) => [...state, name]);
+    } else {
+      let newJobs = exper.filter((arr) => name != arr);
+      setExper(() => [...newJobs]);
+    }
+  };
+
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -160,8 +183,8 @@ const MainFilter = () => {
           Filter
           <TuneIcon sx={{ height: "16px" }} />
         </Typography>
-        <Button variant="text" size="small">
-          <Typography
+        <Button variant="text" size="small" onClick={() => clearSearch()}>
+          <CustomTypography
             sx={{
               fontSize: 16,
               textDecoration: "underline",
@@ -170,37 +193,9 @@ const MainFilter = () => {
             gutterBottom
           >
             Clear
-          </Typography>
+          </CustomTypography>
         </Button>
       </Box>
-      <Divider className="divider" variant="middle" />
-      <Box sx={{ display: "flex" }}>
-        <Typography className="filterTopic" color="#034275" gutterBottom>
-          Professional Level
-        </Typography>
-        <ExpandMore
-          expand={profExpanded}
-          onClick={handleProfExpandClick}
-          aria-expanded={profExpanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </Box>
-      <Collapse in={profExpanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{ pt: 0, pb: "0px !important" }}>
-          <FormGroup>
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Experienced"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Fresher"
-            />
-          </FormGroup>
-        </CardContent>
-      </Collapse>
       <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
         <Typography className="filterTopic" color="#034275" gutterBottom>
@@ -222,27 +217,13 @@ const MainFilter = () => {
           sx={{ pt: 0, pb: "0px !important" }}
         >
           <FormGroup sx={{ width: "315px" }}>
-            <StyledFormLabel control={<BpCheckbox size="small" />} label="IT" />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Management"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Finance"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="E-Commerce"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Market Research"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Pharmacy"
-            />
+            {sectors.map((ind, index) => (
+              <StyledFormLabel
+                key={index}
+                control={<BpCheckbox size="small" />}
+                label={ind}
+              />
+            ))}
           </FormGroup>
         </CardContent>
       </Collapse>
@@ -311,30 +292,20 @@ const MainFilter = () => {
       <Collapse in={expExpanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, pb: "0px !important" }}>
           <FormGroup>
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="2-4 Years"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="5-7 Years"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="8-12 Years"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="11-13 Years"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="13-15 Years"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="15-18 Years"
-            />
+            {USER_EXPERIENCES.map((ex, index) => (
+              <StyledFormLabel
+                key={index}
+                control={
+                  <BpCheckbox
+                    size="small"
+                    name={ex}
+                    checked={exper.includes(ex)}
+                    onChange={(e) => handleExperience(e)}
+                  />
+                }
+                label={ex}
+              />
+            ))}
           </FormGroup>
         </CardContent>
       </Collapse>
@@ -355,18 +326,20 @@ const MainFilter = () => {
       <Collapse in={typeExpanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, pb: "0px !important" }}>
           <FormGroup>
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Remote"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="On Site"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Hybrid"
-            />
+            {WORK_PREFERENCE.map((reference, index) => (
+              <StyledFormLabel
+                key={index}
+                control={
+                  <BpCheckbox
+                    size="small"
+                    name={reference}
+                    onChange={(e) => handleName(e)}
+                    checked={names.includes(reference)}
+                  />
+                }
+                label={reference}
+              />
+            ))}
           </FormGroup>
         </CardContent>
       </Collapse>
