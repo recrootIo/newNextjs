@@ -1,6 +1,5 @@
 "use client";
 import {
-  Typography,
   Box,
   Grid,
   Stack,
@@ -8,7 +7,6 @@ import {
   Divider,
   Button,
   Avatar,
-  Collapse,
   Pagination,
   PaginationItem,
   Container,
@@ -19,15 +17,17 @@ import {
   Chip,
   Tabs,
   Tab,
+  FormLabel,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import TuneIcon from "@mui/icons-material/Tune";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
@@ -37,7 +37,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
@@ -45,69 +45,67 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import SwipeableViews from "react-swipeable-views";
-import AppBar from "@mui/material/AppBar";
 import MainFilter from "./MainFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { keywordSearch, searchJobs, searchKeys } from "@/redux/slices/search";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import dynamic from "next/dynamic";
+import moment from "moment";
+import LoadingSearchCards from "./LoadingSearchCards";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
+import CompanyData from "@/redux/services/company.service";
 
-//Filter tab
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+export const getSalary = (salary) => {
+  if (salary?.salaryType !== "noprovide") {
+    return (
+      <CustomTypography
+        variant="body2"
+        color="text.secondary"
+        fontSize={15}
+        mb={1}
+      >
+        {salary.salaryCrrancy} {salary.minSalary} - {salary.maxSalary} /{" "}
+        {salary.salaryType === "monthly" ? "Per Month" : ""}
+        {salary.salaryType === "hourly" ? "Per Hour" : ""}
+        {salary.salaryType === "yearly" ? "Yearly" : ""}
+      </CustomTypography>
+    );
+  } else {
+    return (
+      <CustomTypography
+        sx={{
+          fontWeight: "400",
+          fontSize: "16px",
+          lineHeight: "24px",
+          color: "rgb(115, 115, 115)",
+        }}
+        variant="p"
+      >
+        Salary - Negotiable
+      </CustomTypography>
+    );
+  }
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
+export const getImageLogo = (url) => {
+  return `http://localhost:3000/api/getCompanyPhotos?compPhotos=${url}`;
+};
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  "& .MuiAvatar-img": {
-    width: "20px",
-    height: "20px",
+// dialog box for mobile filter
+export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
   },
-  height: "40px",
-  width: "40px",
-}));
-
-const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
-  color: "#01313F",
-  "& .MuiTypography-root": {
-    fontSize: "1rem",
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
   },
 }));
 
-const useStyles = makeStyles(() => ({
-  ul: {
-    "& .MuiPaginationItem-root": {
-      color: "#034275",
-    },
-  },
-}));
-
-const BpIcon = styled("span")(({ theme }) => ({
+export const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
   width: 16,
   height: 16,
@@ -136,7 +134,7 @@ const BpIcon = styled("span")(({ theme }) => ({
   },
 }));
 
-const BpCheckedIcon = styled(BpIcon)({
+export const BpCheckedIcon = styled(BpIcon)({
   backgroundColor: "#034275",
   backgroundImage:
     "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
@@ -155,7 +153,7 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-function BpCheckbox(props) {
+export const BpCheckbox = (props) => {
   return (
     <Checkbox
       sx={{
@@ -169,9 +167,25 @@ function BpCheckbox(props) {
       {...props}
     />
   );
-}
+};
 
-const bull = (
+export const BpRadio = (props) => {
+  return (
+    <Radio
+      sx={{
+        "&:hover": { bgcolor: "transparent" },
+      }}
+      disableRipple
+      color="default"
+      checkedIcon={<BpCheckedIcon />}
+      icon={<BpIcon />}
+      inputProps={{ "aria-label": "Checkbox demo" }}
+      {...props}
+    />
+  );
+};
+
+export const bull = (
   <Box
     component="span"
     sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
@@ -180,7 +194,7 @@ const bull = (
   </Box>
 );
 
-const ExpandMore = styled((props) => {
+export const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -191,17 +205,58 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-// dialog box for mobile filter
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
+export const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <CustomTypography>{children}</CustomTypography>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+export const a11yProps = (index) => {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+};
+
+export const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  "& .MuiAvatar-img": {
+    width: "20px",
+    height: "20px",
   },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
+  height: "40px",
+  width: "40px",
+}));
+
+export const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
+  color: "#01313F",
+  "& .MuiTypography-root": {
+    fontSize: "1rem",
   },
 }));
 
-function BootstrapDialogTitle(props) {
+export const useStyles = makeStyles(() => ({
+  ul: {
+    "& .MuiPaginationItem-root": {
+      color: "#034275",
+    },
+  },
+}));
+
+export const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
@@ -223,74 +278,71 @@ function BootstrapDialogTitle(props) {
       ) : null}
     </DialogTitle>
   );
-}
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
 };
 
-const SearchSection = (props) => {
+const SearchSection = ({ ...props }) => {
+  const { sectors } = props;
+  const search = useSelector((data) => data.searchJobs.jobslate);
+  const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
+  const totalPage = useSelector((state) => state.searchJobs.totalPage);
+  const loading = useSelector((state) => state.searchJobs.loading);
+
   const [keyword, setKeyword] = useState("");
   const [location, setLocation] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [isShown, setIsShown] = useState(false);
+  const [age, setAge] = useState("");
+  const [value, setValue] = useState(0);
+  const [type, setType] = useState(search.type);
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [names, setNames] = useState([]);
+  const [exper, setExper] = useState([]);
+  const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const loadingCount = [1, 2, 3, 4];
+  const classes = useStyles;
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
 
-  function searchJobs() {
-    dispatch(jobssSet([]));
-    dispatch(searchKeys({ keyword: keyword, location: location, type: type }));
-    dispatch(keywordSearch({ keyword, location, type }))
-      .then(() => {
-        navigate("/Jobs", { replace: false });
-      })
+  const getJobs = (page = 1) => {
+    dispatch(searchJobs({ value: page, names, exper, title, address }))
+      .then(() => {})
       .catch((error) => {
         console.warn(error);
       });
-  }
-
-  const [age, setAge] = React.useState("");
+  };
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
-  const classes = useStyles();
-
-  const handleCategoryChipClick = () => {
-    console.info("You clicked the Chip.");
-  };
-
-  const [isShown, setIsShown] = useState(false);
-
   const handleClick = (event) => {
     setIsShown((current) => !current);
   };
-
-  //filter tab view
-  const [value, setValue] = React.useState(0);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  //filter checkboxes
-  const [selectedValues, setSelectedValues] = useState([]);
-
-  const handleCheckBoxChange = (event) => {
-    const { value } = event.target;
-    setSelectedValues((selectedValues) =>
-      selectedValues.includes(value)
-        ? selectedValues.filter((val) => val !== value)
-        : [...selectedValues, value]
-    );
+  const handleName = (re) => {
+    const { name, checked } = re.target;
+    if (checked) {
+      setNames((state) => [...state, name]);
+    } else {
+      let newJobs = names.filter((arr) => name != arr);
+      setNames(() => [...newJobs]);
+    }
   };
 
   const handleDelete = (value) => {
@@ -298,6 +350,42 @@ const SearchSection = (props) => {
       selectedValues.filter((val) => val !== value)
     );
   };
+
+  const updateTitle = (e) => {
+    const newTitle = e.target.value;
+    setTitle(() => newTitle);
+  };
+
+  const updateAddress = (e) => {
+    const newAddress = e.target.value;
+    setAddress(() => newAddress);
+  };
+
+  const changePage = (e, page) => {
+    getJobs(page);
+  };
+
+  const handleNavigate = (jobTitle, jobRole, _id) => {
+    // Programmatically navigate to a different page
+    router.push(`/jobListings/${jobTitle}/${jobRole}/${_id}`);
+  };
+
+  const handleExperience = (re, a) => {
+    // const { name, checked } = re.target;
+    console.log(a);
+    setExper(() => [a]);
+  };
+
+  const handleCheckBoxChange = () => {};
+
+  const clearSearch = () => {
+    setExper(() => []);
+    setNames(() => []);
+  };
+
+  useEffect(() => {
+    getJobs();
+  }, []);
 
   return (
     <div>
@@ -316,6 +404,7 @@ const SearchSection = (props) => {
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Keyword or title"
                   inputProps={{ "aria-label": "Keyword or title" }}
+                  onChange={updateTitle}
                 />
               </Box>
               <Divider
@@ -329,9 +418,14 @@ const SearchSection = (props) => {
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Location"
                   inputProps={{ "aria-label": "Location" }}
+                  onChange={updateAddress}
                 />
               </Box>
-              <Button variant="contained" className="searchButton">
+              <Button
+                variant="contained"
+                className="searchButton"
+                onClick={() => getJobs()}
+              >
                 Search
               </Button>
             </Box>
@@ -343,10 +437,18 @@ const SearchSection = (props) => {
             <Grid className="filter" item xs={0} md={4}>
               <Card sx={{ width: "100%", height: "100%" }}>
                 <CardContent>
-                  <MainFilter />
+                  <MainFilter
+                    setNames={setNames}
+                    names={names}
+                    exper={exper}
+                    setExper={setExper}
+                    clearSearch={clearSearch}
+                    sectors={sectors}
+                  />
                 </CardContent>
               </Card>
             </Grid>
+
             <Grid item xs={12} md={8}>
               <Box sx={{ display: "flex", marginTop: "10px" }}>
                 <div className="filterBtn">
@@ -371,7 +473,7 @@ const SearchSection = (props) => {
                           marginTop: "10px",
                         }}
                       >
-                        <Typography
+                        <CustomTypography
                           sx={{
                             fontSize: 19,
                             fontStyle: "bold",
@@ -383,9 +485,13 @@ const SearchSection = (props) => {
                         >
                           Filter
                           <TuneIcon sx={{ height: "16px" }} />
-                        </Typography>
-                        <Button variant="text" size="small">
-                          <Typography
+                        </CustomTypography>
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => clearSearch()}
+                        >
+                          <CustomTypography
                             sx={{
                               fontSize: 16,
                               textDecoration: "underline",
@@ -394,7 +500,7 @@ const SearchSection = (props) => {
                             gutterBottom
                           >
                             Clear
-                          </Typography>
+                          </CustomTypography>
                         </Button>
                       </Box>
                       <Box>
@@ -448,63 +554,29 @@ const SearchSection = (props) => {
                               label="Experienced"
                               value="Experienced"
                               checked={selectedValues.includes("Experienced")}
-                              onChange={handleCheckBoxChange}
+                              // onChange={handleCheckBoxChange}
                             />
                             <StyledFormLabel
                               control={<BpCheckbox size="small" />}
                               label="Fresher"
                               value="Fresher"
                               checked={selectedValues.includes("Fresher")}
-                              onChange={handleCheckBoxChange}
+                              // onChange={handleCheckBoxChange}
                             />
                           </FormGroup>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                           <FormGroup sx={{ width: "150px" }}>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="IT"
-                              value="IT"
-                              checked={selectedValues.includes("IT")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Management"
-                              value="Management"
-                              checked={selectedValues.includes("Management")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Finance"
-                              value="Finance"
-                              checked={selectedValues.includes("Finance")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="E-Commerce"
-                              value="E-Commerce"
-                              checked={selectedValues.includes("E-Commerce")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Market Research"
-                              value="Market Research"
-                              checked={selectedValues.includes(
-                                "Market Research"
-                              )}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Pharmacy"
-                              value="Pharmacy"
-                              checked={selectedValues.includes("Pharmacy")}
-                              onChange={handleCheckBoxChange}
-                            />
+                            {sectors.map((sec, index) => (
+                              <StyledFormLabel
+                                key={index}
+                                control={<BpCheckbox size="small" />}
+                                label={sec}
+                                value={sec}
+                                checked={selectedValues.includes("IT")}
+                                onChange={handleCheckBoxChange}
+                              />
+                            ))}
                           </FormGroup>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
@@ -562,74 +634,56 @@ const SearchSection = (props) => {
                           </FormGroup>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                          <FormGroup sx={{ width: "130px" }}>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="2-4 Years"
-                              value="2-4 Years"
-                              checked={selectedValues.includes("2-4 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="5-7 Years"
-                              value="5-7 Years"
-                              checked={selectedValues.includes("5-7 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="8-12 Years"
-                              value="8-12 Years"
-                              checked={selectedValues.includes("8-12 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="11-13 Years"
-                              value="11-13 Years"
-                              checked={selectedValues.includes("11-13 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="13-15 Years"
-                              value="13-15 Years"
-                              checked={selectedValues.includes("13-15 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="15-18 Years"
-                              value="15-18 Years"
-                              checked={selectedValues.includes("15-18 Years")}
-                              onChange={handleCheckBoxChange}
-                            />
-                          </FormGroup>
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              defaultValue=""
+                              name="radio-buttons-group"
+                              onChange={handleExperience}
+                              value={exper[0] || null}
+                            >
+                              {USER_EXPERIENCES.map((ex, index) => (
+                                <FormControlLabel
+                                  key={index}
+                                  control={<BpRadio size="small" />}
+                                  label={ex}
+                                  value={ex}
+                                  name={ex}
+                                />
+                              ))}
+                            </RadioGroup>
+                          </FormControl>
+
+                          {/* <FormGroup sx={{ width: "130px" }}>
+                            {USER_EXPERIENCES.map((ex, index) => (
+                              <StyledFormLabel
+                                key={index}
+                                control={<BpCheckbox size="small" />}
+                                label={ex}
+                                value={ex}
+                                name={ex}
+                                checked={exper.includes(ex)}
+                                onChange={handleExperience}
+                              />
+                            ))}
+                          </FormGroup> */}
                         </TabPanel>
                         <TabPanel value={value} index={4}>
                           <FormGroup>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Remote"
-                              value="remote"
-                              checked={selectedValues.includes("remote")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="On Site"
-                              value="on-site"
-                              checked={selectedValues.includes("on-site")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Hybrid"
-                              value="hybrid"
-                              checked={selectedValues.includes("hybrid")}
-                              onChange={handleCheckBoxChange}
-                            />
+                            {WORK_PREFERENCE.map((work, index) => (
+                              <StyledFormLabel
+                                key={index}
+                                control={
+                                  <BpCheckbox
+                                    size="small"
+                                    checked={names.includes(work)}
+                                    name={work}
+                                    onChange={handleName}
+                                  />
+                                }
+                                label={work}
+                              />
+                            ))}
                           </FormGroup>
                         </TabPanel>
                       </Box>
@@ -645,6 +699,10 @@ const SearchSection = (props) => {
                         </Button>
                         <Button
                           variant="contained"
+                          onClick={() => {
+                            getJobs();
+                            handleClose();
+                          }}
                           sx={{
                             backgroundColor: "#00339B !important",
                             width: "50% !important",
@@ -661,7 +719,7 @@ const SearchSection = (props) => {
                   direction="row"
                   spacing={1}
                 >
-                  <Chip
+                  {/* <Chip
                     className="categoryChip"
                     label="Experienced"
                     size="medium"
@@ -672,19 +730,24 @@ const SearchSection = (props) => {
                     label="IT"
                     size="medium"
                     onClick={handleCategoryChipClick}
-                  />
-                  <Chip
-                    className="categoryChip"
-                    label="Role"
-                    size="medium"
-                    onClick={handleCategoryChipClick}
-                  />
-                  <Chip
-                    className="categoryChip"
-                    label="Experience"
-                    size="medium"
-                    onClick={handleCategoryChipClick}
-                  />
+                  /> */}
+                  {exper.map((na, index) => (
+                    <Chip
+                      key={index}
+                      className="categoryChip"
+                      label={na}
+                      size="medium"
+                    />
+                  ))}
+
+                  {names.map((na, index) => (
+                    <Chip
+                      key={index}
+                      className="categoryChip"
+                      label={na}
+                      size="medium"
+                    />
+                  ))}
                 </Stack>
               </Box>
               <Box
@@ -694,15 +757,15 @@ const SearchSection = (props) => {
                   mb: "10px",
                 }}
               >
-                <Typography
+                <CustomTypography
                   className="jobResult"
                   sx={{ alignItems: "flex-end" }}
                   variant="body2"
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  120 Jobs Result
-                </Typography>
+                  {totalPage * 10} Jobs Result
+                </CustomTypography>
                 <FormControl
                   className="sortBy"
                   variant="standard"
@@ -718,12 +781,12 @@ const SearchSection = (props) => {
                   }}
                 >
                   <Box sx={{ display: "flex" }}>
-                    <Typography
+                    <CustomTypography
                       variant="body2"
                       sx={{ fontSize: "14px", mr: "5px" }}
                     >
                       Sort by:
-                    </Typography>
+                    </CustomTypography>
                     <Select
                       labelId="demo-simple-select-standard-label"
                       id="demo-simple-select-standard"
@@ -743,414 +806,159 @@ const SearchSection = (props) => {
                   </Box>
                 </FormControl>
               </Box>
-              <Stack spacing={2}>
-                <Card className="jobCard">
-                  <CardHeader
-                    avatar={
-                      <StyledAvatar
-                        className="recentAvatar"
-                        alt="logo"
-                        src="/logo 2.png"
-                        size={100}
-                      />
-                    }
-                    titleTypographyProps={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: "#034275",
-                    }}
-                    subheaderTypographyProps={{
-                      fontSize: 15,
-                      color: "#034275",
-                    }}
-                    title="Graphic Designer"
-                    subheader="Recroot"
-                    action={
-                      <>
-                        <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                          <Button
-                            className="bookmarkBtn"
-                            size="small"
-                            variant="outlined"
-                            bgcolor="#02A9F7 !important"
+              <Stack>
+                {loading ? (
+                  <Stack spacing={2}>
+                    {loadingCount.map((a, index) => (
+                      <LoadingSearchCards key={index} />
+                    ))}
+                  </Stack>
+                ) : (
+                  <Stack spacing={2}>
+                    {latestJobs.map((lateJob, index) => (
+                      <Card className="jobCard" key={index}>
+                        <CardHeader
+                          avatar={
+                            <StyledAvatar
+                              className="recentAvatar"
+                              alt="logo"
+                              src={getImageLogo(
+                                lateJob?.company?.companyLogo?.logo
+                              )}
+                              size={100}
+                            />
+                          }
+                          titleTypographyProps={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: "#034275",
+                          }}
+                          subheaderTypographyProps={{
+                            fontSize: 15,
+                            color: "#034275",
+                          }}
+                          title={lateJob?.jobRole}
+                          subheader={lateJob?.company?.company_name}
+                          action={
+                            <>
+                              <Box className="searchRstBtn" sx={{ mb: "7px" }}>
+                                {/* <Button
+                                  className="bookmarkBtn"
+                                  size="small"
+                                  variant="outlined"
+                                  bgcolor="#02A9F7 !important"
+                                >
+                                  <BookmarkBorderIcon
+                                    sx={{ fontSize: "21px" }}
+                                  />
+                                </Button> */}
+                                <Button
+                                  variant="contained"
+                                  size="medium"
+                                  sx={{
+                                    ml: "8px",
+                                    bgcolor: "#02A9F7 !important",
+                                    fontSize: "14px",
+                                  }}
+                                  onClick={() =>
+                                    handleNavigate(
+                                      lateJob?.jobTitle,
+                                      lateJob?.jobRole,
+                                      lateJob?._id
+                                    )
+                                  }
+                                >
+                                  View Details
+                                </Button>
+                              </Box>
+                              <CustomTypography
+                                className="searchRstTypo"
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {moment(lateJob.createdAt).fromNow()}
+                              </CustomTypography>
+                            </>
+                          }
+                        />
+                        <CardContent sx={{ pt: 0 }} className="searchCard">
+                          <CustomTypography
+                            variant="body2"
+                            color="text.secondary"
+                            fontSize={15}
+                            mb={1}
                           >
-                            <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                          </Button>
-                          <Button
-                            variant="contained"
-                            size="medium"
-                            sx={{
-                              ml: "8px",
-                              bgcolor: "#02A9F7 !important",
-                              fontSize: "14px",
-                            }}
+                            {lateJob?.jobType}&nbsp;{bull}&nbsp;Part Time&nbsp;
+                            {bull}
+                            &nbsp;{lateJob?.essentialInformation?.experience}
+                            s&nbsp;
+                            {bull}
+                            &nbsp;{getSalary(lateJob?.salary)}
+                          </CustomTypography>
+                          <CustomTypography
+                            variant="body2"
+                            color="text.secondary"
+                            fontSize={15}
                           >
-                            View Details
-                          </Button>
-                        </Box>
-                        <Typography
-                          className="searchRstTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </>
-                    }
-                  />
-                  <CardContent sx={{ pt: 0 }} className="searchCard">
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                      mb={1}
-                    >
-                      Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                      Years&nbsp;{bull}&nbsp;3-6 LPA
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                    >
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus.
-                    </Typography>
-                    <Box className="mobileBtn">
-                      <Box className="btnBox">
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="viewDetailBtn"
-                          variant="contained"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Box className="recentTypoBox">
-                        <Typography
-                          className="recentTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-                <Card className="jobCard">
-                  <CardHeader
-                    avatar={
-                      <StyledAvatar
-                        className="recentAvatar"
-                        alt="logo"
-                        src="/logo 2.png"
-                        size={100}
-                      />
-                    }
-                    titleTypographyProps={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: "#034275",
-                    }}
-                    subheaderTypographyProps={{
-                      fontSize: 15,
-                      color: "#034275",
-                    }}
-                    title="Graphic Designer"
-                    subheader="Recroot"
-                    action={
-                      <>
-                        <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                          <Button
-                            className="bookmarkBtn"
-                            size="small"
-                            variant="outlined"
-                            bgcolor="#02A9F7 !important"
-                          >
-                            <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                          </Button>
-                          <Button
-                            className="ViewSecondBtn"
-                            variant="outlined"
-                            size="medium"
-                          >
-                            View Details
-                          </Button>
-                        </Box>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          className="searchRstTypo"
-                        >
-                          10 days ago
-                        </Typography>
-                      </>
-                    }
-                  />
-                  <CardContent className="searchCard">
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                      mb={1}
-                    >
-                      Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                      Years&nbsp;{bull}&nbsp;3-6 LPA
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                    >
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus.
-                    </Typography>
-                    <Box className="mobileBtn">
-                      <Box className="btnBox">
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="viewDetailBtn"
-                          variant="contained"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Box className="recentTypoBox">
-                        <Typography
-                          className="recentTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-                <Card className="jobCard">
-                  <CardHeader
-                    avatar={
-                      <StyledAvatar
-                        className="recentAvatar"
-                        alt="logo"
-                        src="/logo 2.png"
-                        size={80}
-                      />
-                    }
-                    titleTypographyProps={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: "#034275",
-                    }}
-                    subheaderTypographyProps={{
-                      fontSize: 15,
-                      color: "#034275",
-                    }}
-                    title="Graphic Designer"
-                    subheader="Recroot"
-                    action={
-                      <>
-                        <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                          <Button
-                            className="bookmarkBtn"
-                            size="small"
-                            variant="outlined"
-                            bgcolor="#02A9F7 !important"
-                          >
-                            <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                          </Button>
-                          <Button
-                            className="ViewSecondBtn"
-                            variant="outlined"
-                            size="medium"
-                          >
-                            View Details
-                          </Button>
-                        </Box>
-                        <Typography
-                          className="searchRstTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </>
-                    }
-                  />
-                  <CardContent className="searchCard">
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                      mb={1}
-                    >
-                      Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                      Years&nbsp;{bull}&nbsp;3-6 LPA
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                    >
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus.
-                    </Typography>
-                    <Box className="mobileBtn">
-                      <Box className="btnBox">
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="viewDetailBtn"
-                          variant="contained"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Box className="recentTypoBox">
-                        <Typography
-                          className="recentTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-                <Card className="jobCard">
-                  <CardHeader
-                    avatar={
-                      <StyledAvatar
-                        className="recentAvatar"
-                        alt="logo"
-                        src="/logo 2.png"
-                        size={100}
-                      />
-                    }
-                    titleTypographyProps={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: "#034275",
-                    }}
-                    subheaderTypographyProps={{
-                      fontSize: 15,
-                      color: "#034275",
-                    }}
-                    title="Graphic Designer"
-                    subheader="Recroot"
-                    action={
-                      <>
-                        <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                          <Button
-                            className="bookmarkBtn"
-                            size="small"
-                            variant="outlined"
-                            bgcolor="#02A9F7 !important"
-                          >
-                            <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                          </Button>
-                          <Button
-                            className="ViewSecondBtn"
-                            variant="outlined"
-                            size="medium"
-                          >
-                            View Details
-                          </Button>
-                        </Box>
-                        <Typography
-                          className="searchRstTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </>
-                    }
-                  />
-                  <CardContent className="searchCard">
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                      mb={1}
-                    >
-                      Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                      Years&nbsp;{bull}&nbsp;3-6 LPA
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      fontSize={15}
-                    >
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus.
-                    </Typography>
-                    <Box className="mobileBtn">
-                      <Box className="btnBox">
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="viewDetailBtn"
-                          variant="contained"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Box className="recentTypoBox">
-                        <Typography
-                          className="recentTypo"
-                          variant="body2"
-                          color="text.secondary"
-                        >
-                          10 days ago
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
+                            <div
+                              style={{
+                                overflow: "hidden",
+                                maxHeight: "100px",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              <ReactQuill
+                                value={lateJob?.jobDescription}
+                                readOnly={true}
+                                theme={"bubble"}
+                              />
+                            </div>
+                          </CustomTypography>
+                          <Box className="mobileBtn">
+                            <Box className="btnBox">
+                              <Button
+                                className="bookmarkBtn"
+                                size="small"
+                                variant="outlined"
+                                bgcolor="#02A9F7 !important"
+                              >
+                                <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
+                              </Button>
+                              <Button
+                                className="viewDetailBtn"
+                                variant="contained"
+                                size="medium"
+                                onClick={() =>
+                                  handleNavigate(
+                                    lateJob?.jobTitle,
+                                    lateJob?.jobRole,
+                                    lateJob?._id
+                                  )
+                                }
+                              >
+                                View Details
+                              </Button>
+                            </Box>
+                            <Box className="recentTypoBox">
+                              <CustomTypography
+                                className="recentTypo"
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {moment(lateJob.createdAt).fromNow()} days ago
+                              </CustomTypography>
+                            </Box>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </Stack>
+                )}
               </Stack>
             </Grid>
           </Grid>
+
           <Grid
             container
             className="paginationcontainer"
@@ -1168,7 +976,8 @@ const SearchSection = (props) => {
               >
                 <Pagination
                   classes={{ ul: classes.ul }}
-                  count={3}
+                  count={totalPage}
+                  onChange={changePage}
                   renderItem={(item) => (
                     <PaginationItem
                       slots={{
@@ -1194,230 +1003,6 @@ const SearchSection = (props) => {
               </Stack>
             </Grid>
           </Grid>
-          {!isShown && (
-            <Box className="viewmoreContainer">
-              <Button
-                className="searchcardsviewmorebtn"
-                onClick={handleClick}
-                variant="contained"
-              >
-                View more
-              </Button>
-            </Box>
-          )}
-          {isShown && (
-            <div>
-              <Card className="jobCard">
-                <CardHeader
-                  avatar={
-                    <StyledAvatar
-                      className="recentAvatar"
-                      alt="logo"
-                      src="/logo 2.png"
-                      size={100}
-                    />
-                  }
-                  titleTypographyProps={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    color: "#034275",
-                  }}
-                  subheaderTypographyProps={{
-                    fontSize: 15,
-                    color: "#034275",
-                  }}
-                  title="Graphic Designer"
-                  subheader="Recroot"
-                  action={
-                    <>
-                      <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="ViewSecondBtn"
-                          variant="outlined"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Typography
-                        className="searchRstTypo"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        10 days ago
-                      </Typography>
-                    </>
-                  }
-                />
-                <CardContent className="searchCard">
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    fontSize={15}
-                    mb={1}
-                  >
-                    Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                    Years&nbsp;{bull}&nbsp;3-6 LPA
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    fontSize={15}
-                  >
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                    natoque penatibus et magnis dis parturient montes, nascetur
-                    ridiculus mus.
-                  </Typography>
-                  <Box className="mobileBtn">
-                    <Box className="btnBox">
-                      <Button
-                        className="bookmarkBtn"
-                        size="small"
-                        variant="outlined"
-                        bgcolor="#02A9F7 !important"
-                      >
-                        <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                      </Button>
-                      <Button
-                        className="viewDetailBtn"
-                        variant="contained"
-                        size="medium"
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                    <Box className="recentTypoBox">
-                      <Typography
-                        className="recentTypo"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        10 days ago
-                      </Typography>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-              <Card className="jobCard">
-                <CardHeader
-                  avatar={
-                    <StyledAvatar
-                      className="recentAvatar"
-                      alt="logo"
-                      src="/logo 2.png"
-                      size={100}
-                    />
-                  }
-                  titleTypographyProps={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    color: "#034275",
-                  }}
-                  subheaderTypographyProps={{
-                    fontSize: 15,
-                    color: "#034275",
-                  }}
-                  title="Graphic Designer"
-                  subheader="Recroot"
-                  action={
-                    <>
-                      <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                        <Button
-                          className="bookmarkBtn"
-                          size="small"
-                          variant="outlined"
-                          bgcolor="#02A9F7 !important"
-                        >
-                          <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                        </Button>
-                        <Button
-                          className="ViewSecondBtn"
-                          variant="outlined"
-                          size="medium"
-                        >
-                          View Details
-                        </Button>
-                      </Box>
-                      <Typography
-                        className="searchRstTypo"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        10 days ago
-                      </Typography>
-                    </>
-                  }
-                />
-                <CardContent className="searchCard">
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    fontSize={15}
-                    mb={1}
-                  >
-                    Remote&nbsp;{bull}&nbsp;Part Time&nbsp;{bull}&nbsp;3-6
-                    Years&nbsp;{bull}&nbsp;3-6 LPA
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    fontSize={15}
-                  >
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                    natoque penatibus et magnis dis parturient montes, nascetur
-                    ridiculus mus.
-                  </Typography>
-                  <Box className="mobileBtn">
-                    <Box className="btnBox">
-                      <Button
-                        className="bookmarkBtn"
-                        size="small"
-                        variant="outlined"
-                        bgcolor="#02A9F7 !important"
-                      >
-                        <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                      </Button>
-                      <Button
-                        className="viewDetailBtn"
-                        variant="contained"
-                        size="medium"
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                    <Box className="recentTypoBox">
-                      <Typography
-                        className="recentTypo"
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        10 days ago
-                      </Typography>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-              <Box className="viewmoreContainer">
-                <Button
-                  className="searchcardsviewlessbtn"
-                  onClick={handleClick}
-                  variant="contained"
-                >
-                  View less
-                </Button>
-              </Box>
-            </div>
-          )}
         </Container>
       </Box>
     </div>

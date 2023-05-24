@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import {
+  Backdrop,
   Card,
   CardContent,
   Checkbox,
+  CircularProgress,
   Container,
   Divider,
   FormControl,
@@ -15,7 +17,7 @@ import {
   styled,
 } from "@mui/material";
 import React, { useState } from "react";
-import { PRIMARY } from "../theme/colors";
+import { DANGER, PRIMARY } from "../theme/colors";
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -25,6 +27,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -49,26 +53,47 @@ const StyledPasswordInput = styled("input")({
 });
 
 function Signin() {
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
   const [showPassword, setshowPassword] = useState(false);
-  const handleClickShowPassword = () => {
-    setshowPassword(!showPassword);
-  };
   const [values, setValues] = React.useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const { push } = useRouter();
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setshowPassword(!showPassword);
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
+    setLoading(true);
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Sign in successfully",
+          })
+        );
         console.log(originalPromiseResult);
+        setLoading(false);
         push("/");
+        console.log(originalPromiseResult, "originalPromiseResult");
+        const completedProfiles = originalPromiseResult.User.profilePercentage;
+        if (completedProfiles > 69) {
+          push("/");
+        } else {
+          push("/uploadResume");
+        }
+
         // if (originalPromiseResult.User.email_is_verified === false) {
         //   navigate("/Verifymobile");
         // } else if (originalPromiseResult.User.recrootUserType === "Member") {
@@ -101,7 +126,14 @@ function Signin() {
         // }
       })
       .catch((error) => {
-        console.warn(error);
+        console.log(error);
+        setLoading(false);
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error.message,
+          })
+        );
         // toastyErrorFunction("Please Check Your Email And Password");
       });
   };
@@ -434,6 +466,7 @@ function Signin() {
                       </FormControl>
                       <CustomTypography>Forget Your Password</CustomTypography>
                     </Stack>
+
                     <button
                       style={{
                         height: "60px",
@@ -447,6 +480,15 @@ function Signin() {
                     >
                       Log in
                     </button>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                      }}
+                      open={loading}
+                    >
+                      <CircularProgress color="inherit" />
+                    </Backdrop>
                   </Stack>
                 </form>
               </CardContent>

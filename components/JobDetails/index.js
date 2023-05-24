@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar/Navbar";
-import Backbar from "./backBar";
+import Backbar from "./BackBar";
 import JobDetailCard from "./jobDetailCard";
 import JobDetail from "./jobDetail";
 import SimilarJobs from "./similarJobs";

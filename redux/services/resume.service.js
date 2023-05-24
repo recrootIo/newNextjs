@@ -4,11 +4,11 @@ const updateResume = (uplodedFiles, userId) => {
   const formData = new FormData();
   formData.append("userId", userId);
   const user = JSON.parse(localStorage.getItem("User"));
-  uplodedFiles.forEach((file) => {
-    formData.append("uplodedFiles", file);
-  });
+
+  formData.append("uplodedFiles", uplodedFiles);
+
   return http
-    .post(API_URL + "updateResumeDetails", formData, {
+    .post("updateResumeDetails", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "x-access-token": `${user.token}`,

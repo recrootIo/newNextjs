@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 const http = axios.create({
   baseURL: "http://localhost:3000/api/",
@@ -7,9 +8,9 @@ const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-  const token = JSON.parse(localStorage.getItem("User")).token;
-  config.headers = config.headers || {};
-  config.headers["x-access-token"] = token;
+  // const token = JSON.parse(localStorage.getItem("User")).token;
+  // config.headers = config.headers || {};
+  // config.headers["x-access-token"] = token;
 
   return config;
 });
