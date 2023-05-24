@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Grid,
@@ -12,7 +13,21 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-const JobDetailCard = () => {
+import dynamic from "next/dynamic";
+import { getImageLogo, getSalary } from "../JobListings/SearchSection";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const JobDetailCard = ({ ...props }) => {
+  const {
+    essentialInformation,
+    jobTitle,
+    jobRole,
+    company,
+    salary,
+    jobType,
+    address,
+  } = props;
+
   return (
     <Box
       sx={{
@@ -59,7 +74,7 @@ const JobDetailCard = () => {
                         color: "#034275",
                       }}
                     >
-                      Graphic Designer
+                      {jobRole}
                     </CustomTypography>
                     <CustomTypography
                       variant="body1"
@@ -70,7 +85,7 @@ const JobDetailCard = () => {
                       }}
                       gutterBottom
                     >
-                      Recroot
+                      {company?.basicInformation?.cmpname}
                     </CustomTypography>
                   </Box>
                   <Stack
@@ -99,7 +114,7 @@ const JobDetailCard = () => {
                         }}
                         gutterBottom
                       >
-                        5 -6 LPA
+                        {getSalary(salary)}
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
@@ -112,7 +127,7 @@ const JobDetailCard = () => {
                         }}
                         gutterBottom
                       >
-                        On Site
+                        {jobType}
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
@@ -125,7 +140,7 @@ const JobDetailCard = () => {
                         }}
                         gutterBottom
                       >
-                        2+ Years
+                        {essentialInformation?.experience}
                       </CustomTypography>
                     </Box>
                   </Stack>
@@ -152,7 +167,7 @@ const JobDetailCard = () => {
                           }}
                           gutterBottom
                         >
-                          Mumbai
+                          {address[0]}
                         </CustomTypography>
                       </Box>
                       <Box className="imgTypo">
@@ -169,7 +184,7 @@ const JobDetailCard = () => {
                           }}
                           gutterBottom
                         >
-                          Junior Professional
+                          {essentialInformation?.careerlevel}
                         </CustomTypography>
                       </Box>
                       <Box className="imgTypo">
@@ -182,7 +197,7 @@ const JobDetailCard = () => {
                           }}
                           gutterBottom
                         >
-                          Bachelor’s Degree
+                          {essentialInformation?.qualification}
                         </CustomTypography>
                       </Box>
                     </Stack>
@@ -195,9 +210,13 @@ const JobDetailCard = () => {
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
                   <img
-                    src="/logo 8.png"
+                    src={`${getImageLogo(company?.companyLogo?.logo)}`}
                     alt=""
-                    style={{ width: "180px", height: "50px", marginTop: "5px" }}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      marginTop: "5px",
+                    }}
                   />
                 </Box>
                 <Box

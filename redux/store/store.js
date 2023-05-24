@@ -7,7 +7,7 @@ import candidateReducer from "../slices/candidate";
 // import jobReducer from "./slices/job";
 // import applyReducer from "./slices/applyJobs";
 import personalReducer from "../slices/personal";
-// import searchReducer from "./slices/search";
+import searchReducer from "../slices/search";
 // import resumeReducer from "./slices/UploadingResume";
 // import cmpReducer from "./slices/companyslice";
 // import intReducer from "./slices/interviewslice";
@@ -22,7 +22,7 @@ const reducer = {
   //   jobs: jobReducer,
   personal: personalReducer,
   candidate: candidateReducer,
-  //   searchJobs: searchReducer,
+  searchJobs: searchReducer,
   //   resume: resumeReducer,
   //   company: cmpReducer,
   //   sinterview: intReducer,

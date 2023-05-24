@@ -1,8 +1,14 @@
-"use client";
 import { Box, Button, Container } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useRouter } from "next/router";
 
-const Backbar = () => {
+const BackBar = () => {
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <Box
       sx={{
@@ -23,6 +29,7 @@ const Backbar = () => {
             fontSize: "20px",
             textTransform: "capitalize",
           }}
+          onClick={() => handleGoBack()}
           startIcon={<ArrowBackIcon />}
         >
           Back
@@ -32,4 +39,4 @@ const Backbar = () => {
   );
 };
 
-export default Backbar;
+export default BackBar;
