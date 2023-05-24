@@ -717,6 +717,7 @@
 
 .topbar {
   height: 103px;
+  width: 100%;
   background-image: url("/Group 86.png");
   background-repeat: no-repeat;
   background-size: cover;
