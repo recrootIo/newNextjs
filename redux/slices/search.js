@@ -5,14 +5,29 @@ import searchService from "../services/search.service";
 
 export const searchJobs = createAsyncThunk(
   "jobs/search",
-  async ({ value, names, exper, title, address }, thunkAPI) => {
+  async (
+    {
+      value,
+      names,
+      exper,
+      title,
+      address,
+      jobVariant,
+      selectedCompanies,
+      selectedSector,
+    },
+    thunkAPI
+  ) => {
     try {
       const response = await searchService.getLatestJObs(
         value,
         names,
         exper,
         title,
-        address
+        address,
+        jobVariant,
+        selectedCompanies,
+        selectedSector
       );
       return response.data;
     } catch (error) {

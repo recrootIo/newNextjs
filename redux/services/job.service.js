@@ -13,6 +13,9 @@ class jobsService {
   getSingleJob(id) {
     return http.get(`http://localhost:3000/api/getSingleJob/${id}`);
   }
+  updateViewCount(id) {
+    return http.get(`http://localhost:3000/api/updateViewCount/${id}`);
+  }
 }
 
 export default jobsService;

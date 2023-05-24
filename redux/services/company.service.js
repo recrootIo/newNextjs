@@ -56,6 +56,9 @@ class CompanyData {
   getAllInfoSectors() {
     return http.get(`/getAllInfoSectors`);
   }
+  getCompanies() {
+    return http.get(`/getCompanies`);
+  }
 }
 
 export default CompanyData;
