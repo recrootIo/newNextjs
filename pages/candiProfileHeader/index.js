@@ -1,5 +1,13 @@
-import * as React from "react";
-import { Box, Grid, Container, IconButton, Avatar } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Grid,
+  Container,
+  IconButton,
+  Avatar,
+  Dialog,
+  Button,
+} from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -7,10 +15,10 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
-import index from "../uploadResume/jobTitle";
-import Image from "next/image";
 import { NEUTRAL } from "@/theme/colors";
-import { EditRounded } from "@mui/icons-material";
+import { UploadPhoto } from "@/components/UploadPhoto/UploadPhoto";
+import { useDispatch, useSelector } from "react-redux";
+import { cmpLogo, updateFinalPhoto } from "@/redux/slices/company";
 
 const bull = (
   <Box
@@ -33,6 +41,60 @@ const CandidateProfileHeader = ({ ...data }) => {
   } = data;
 
   const fullName = `${firstName} ${lastName}`;
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState("sm");
+  const [open, setOpen] = React.useState(false);
+  const [first, setFirst] = useState("");
+  const [fileNames, setFileNames] = useState("");
+  const [srcsjjj, setSrcsjjj] = useState("");
+
+  const users = useSelector((state) => state.personal.data);
+  const photoss = useSelector(
+    (state) => state.personal.data.profpicFileLocation
+  );
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("User"));
+    loggedInUser.User.profpicFileLocation.photo = photoss && photoss.photo;
+    localStorage.setItem("User", JSON.stringify(loggedInUser));
+    if (photoss === undefined) {
+    } else {
+      setSrcsjjj(
+        `http://localhost:3000/api/openProfpic?photo=${photoss.photo}`
+      );
+    }
+  }, [photoss]);
+
+  function handleImageChange(file) {
+    setFirst(file);
+    setFileNames(file.name);
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    setFirst("");
+    setFileNames("");
+  };
+
+  const dispatch = useDispatch();
+  const handleClose = () => {
+    dispatch(cmpLogo(first));
+    // dispatch(updateFinalPhoto(first)).then(
+    //   notify("Your Company Logo Was Updated")
+    // );
+    dispatch(updateFinalPhoto(first));
+    setOpen(false);
+  };
+
+  const handleCloseP = () => {
+    setOpen(false);
+    setFullWidth(true);
+    setMaxWidth("sm");
+  };
+
+  const imageUrl = photoss?.photo
+    ? srcsjjj
+    : `data:image/jpeg;base64,${users?.headShot}`;
 
   return (
     <Box
@@ -50,21 +112,77 @@ const CandidateProfileHeader = ({ ...data }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: { xs: "flex-start", md: "flex-end" },
+            justifyContent: { xs: "space-between", md: "flex-end" },
           }}
         >
-          <IconButton
-            aria-label="notifications"
-            size="large"
+          <Box
             sx={{
-              color: "white",
-              width: "20px",
-              p: 0,
-              mt: { xs: "12px", md: 0 },
+              display: "flex",
+              justifyContent: { xs: "flex-start", md: "flex-end" },
             }}
           >
-            <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
-          </IconButton>
+            <IconButton
+              aria-label="notifications"
+              size="large"
+              sx={{
+                color: "white",
+                width: "20px",
+                p: 0,
+                mt: { xs: "12px", md: 0 },
+              }}
+            >
+              <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              justifyContent: "flex-end",
+            }}
+          >
+            {profilePercentage < 70 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  position: "absolute",
+                  backgroundImage: 'url("/profileprecentageborder.png")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  width: "70px",
+                  mt: "5px",
+                }}
+              >
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    position: "relative",
+                    fontFamily: "Inter-bold",
+                    zIndex: "1",
+                    top: "25px",
+                    left: "25px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {profilePercentage}%
+                </CustomTypography>
+                <CustomTypography
+                  variant="subtitle1"
+                  sx={{
+                    mt: "25px",
+                    fontSize: { xs: "10px", md: "14px" },
+                    position: "relative",
+                    top: "25px",
+                    color: NEUTRAL,
+                    textAlign: "center",
+                  }}
+                >
+                  Profile completed (Excellent)
+                </CustomTypography>
+              </Box>
+            )}
+          </Box>
         </Box>
         <Grid container spacing={2}>
           <Grid
@@ -78,35 +196,94 @@ const CandidateProfileHeader = ({ ...data }) => {
               alignItems: "center",
             }}
           >
-            {/* <Image
-              src="/candiImgBg.png"
-              alt=""
-              style={{ position: "absolute" }}
-            /> */}
             <Box>
               <Avatar
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src={imageUrl}
                 sx={{
                   width: "200px",
                   height: "200px",
+                  border: "12px solid rgb(240, 240, 240, 0.3)",
                 }}
               />
               <IconButton
-                //onClick={handleClickOpen}
+                onClick={handleClickOpen}
                 sx={{
                   position: "relative",
                   top: "-54px",
                   left: "164px",
                   background: "white",
                   border: "3px solid rgba(3, 66, 117, 0.6)",
-                  height: "35px",
+                  height: "30px",
+                  width: "30px",
                 }}
               >
                 <EditSharpIcon
-                  sx={{ color: "rgba(3, 66, 117, 0.6)", fontSize: "0.6em" }}
+                  sx={{ color: "rgba(3, 66, 117, 0.6)", fontSize: "0.8em" }}
                 />
               </IconButton>
+              <Dialog
+                fullWidth={fullWidth}
+                maxWidth={maxWidth}
+                open={open}
+                onClose={handleClose}
+              >
+                <Box sx={{ p: "40px" }}>
+                  <CustomTypography variant="h5" sx={{ textAlign: "center" }}>
+                    Edit Profile Photo
+                  </CustomTypography>
+                  <UploadPhoto handleChange={handleImageChange} />
+                  {first !== "" ? (
+                    <>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <img
+                          alt=""
+                          src={first !== "" ? URL.createObjectURL(first) : ""}
+                          width="123px"
+                          height="118px"
+                          style={{ borderRadius: "10px", objectFit: "contain" }}
+                        />
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <CustomTypography variant="h6">
+                            File Name :{" "}
+                          </CustomTypography>{" "}
+                          <CustomTypography variant="h7">
+                            {fileNames}
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ mt: "10px", backgroundColor: "#4fa9ff" }}
+                      onClick={() => {
+                        handleClose();
+                      }}
+                    >
+                      save
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      sx={{ mt: "10px", ml: "5px", color: "#4fa9ff" }}
+                      onClick={() => {
+                        handleCloseP();
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                </Box>
+              </Dialog>
             </Box>
           </Grid>
 
@@ -193,86 +370,46 @@ const CandidateProfileHeader = ({ ...data }) => {
               justifyContent: "flex-end",
             }}
           >
-            {/* {profilePercentage < 70 && ( */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                // alignItems: "center",
-                // textAlign: "center",
-                position: "absolute",
-                // top: "200px",
-                backgroundImage: 'url("/profileprecentageborder.png")',
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                height: { xs: "100px", md: "200px" },
-                border: "1px solid red",
-              }}
-            >
-              <CustomTypography
-                variant="h6"
+            {profilePercentage < 70 && (
+              <Box
                 sx={{
-                  position: "relative",
-                  fontFamily: "Inter-bold",
-                  zIndex: "1",
-                  margin: "auto",
-                  width: "100%",
-                  textAlign: "center",
-                  // marginTop: "50%",
-                  // left: "50%",
-                  transformY: "translate(-50%)",
-                  border: "1px solid red",
-                }}
-              >
-                {profilePercentage}%
-              </CustomTypography>
-              <CustomTypography
-                variant="subtitle1"
-                sx={{
-                  mt: "25px",
-                  fontSize: "14px",
-                  position: "relative",
-                  top: "20px",
-                  color: NEUTRAL,
-                }}
-              >
-                Profile completed (Excellent)
-              </CustomTypography>
-            </Box>
-            {/* <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <img
-                src="/profileprecentageborder.png"
-                alt=""
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              />
-              <CustomTypography
-                variant="h6"
-                sx={{
+                  display: { xs: "none", md: "flex" },
+                  flexDirection: "column",
+                  justifyContent: "center",
                   position: "absolute",
-                  bottom: "660px",
-                  fontFamily: "Inter-bold",
-                  right: "280px",
-                  zIndex: "1",
+                  backgroundImage: 'url("/profileprecentageborder.png")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  height: { xs: "100px", md: "200px" },
                 }}
               >
-                100%
-              </CustomTypography>
-              <CustomTypography variant="subtitle1" sx={{ mt: "5px" }}>
-                Profile completed (Excellent)
-              </CustomTypography>
-            </Box> */}
-            {/* )} */}
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    position: "absolute",
+                    fontFamily: "Inter-bold",
+                    zIndex: "1",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  {profilePercentage}%
+                </CustomTypography>
+                <CustomTypography
+                  variant="subtitle1"
+                  sx={{
+                    mt: "25px",
+                    fontSize: "14px",
+                    position: "relative",
+                    top: "100px",
+                    color: NEUTRAL,
+                  }}
+                >
+                  Profile completed (Excellent)
+                </CustomTypography>
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Container>
