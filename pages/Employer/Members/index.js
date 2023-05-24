@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
   Box,
@@ -11,6 +12,10 @@ import {
   Stack,
   Tabs,
   Tab,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   AppBar,
   Table,
   TableHead,
@@ -20,12 +25,32 @@ import {
   TableContainer,
   Paper,
   Divider,
+  Switch,
+  FormControlLabel,
+  InputAdornment,
+  TextField,
+  IconButton,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import EditorToolbar, {
+  modules,
+  formats,
+} from "@/components/EditorToolbar/EditorToolbar";
+// import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,14 +100,18 @@ const rows = [
 
 const EmpoyerDashboard = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  //   const member = useSelector((state) => state.company.members);
+  //   const [memberrole, setMemberrole] = React.useState(member);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+  };
+
+  const handleAddInput = () => {
+    setMemberrole([
+      ...memberrole,
+      { id: uuidv4(), memberId: "", role: "", fname: "" },
+    ]);
   };
 
   return (
@@ -205,11 +234,11 @@ const EmpoyerDashboard = () => {
                   Post New Job
                 </Button>
               </Box>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={7}>
                 <Card
                   sx={{
                     width: "100%",
-                    // height: "215px",
+                    height: "190px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -228,7 +257,7 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <img
-                      src="/active-jobs.png"
+                      src="/basic-info-img.png"
                       alt=""
                       style={{
                         width: "60px",
@@ -240,17 +269,14 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Active Jobs
+                      Basic Info
                     </CustomTypography>
                   </CardContent>
                 </Card>
                 <Card
                   sx={{
                     width: "100%",
-                    // height: "215px",
+                    height: "190px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -269,7 +295,7 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <img
-                      src="/inactive-jobs.png"
+                      src="/members-img.png"
                       alt=""
                       style={{
                         width: "60px",
@@ -281,17 +307,14 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Inactive Jobs
+                      Members
                     </CustomTypography>
                   </CardContent>
                 </Card>
                 <Card
                   sx={{
                     width: "100%",
-                    height: "235px",
+                    height: "190px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -310,7 +333,7 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <img
-                      src="/interviews.png"
+                      src="/preview-img.png"
                       alt=""
                       style={{
                         width: "60px",
@@ -322,262 +345,184 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Interviews
+                      Preview
                     </CustomTypography>
                   </CardContent>
                 </Card>
               </Stack>
-              <Grid container spacing={3} sx={{ mt: "40px" }}>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
-                      </Box>
-                      <Box
+              <Card
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#F2F8FD",
+                  mt: "40px",
+                  pb: "80px",
+                }}
+              >
+                <CardContent>
+                  <Box>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        mt: "20px",
+                      }}
+                    >
+                      <CustomTypography
                         sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
+                          color: "#034275",
+                          fontFamily: BOLD,
+                          fontSize: "28px",
                         }}
                       >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          0
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Total Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
-                      </Box>
-                      <Box
+                        Members
+                      </CustomTypography>
+                      {/* {memberrole.length === index + 1 ? ( */}
+                      <Button
+                        variant="text"
+                        //onClick={handleAddInput}
                         sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
+                          color: "#034275",
                         }}
                       >
-                        <CustomTypography
+                        + Add New Member
+                      </Button>
+                      {/* ) : (
+                        ""
+                      )} */}
+                    </Stack>
+                    <Box sx={{ display: "flex", mt: "20px" }}>
+                      <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
+                        <Box
                           sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
+                            width: "45%",
+                            display: "flex",
+                            alignItems: "center",
                           }}
                         >
-                          0
-                        </CustomTypography>
-                        <CustomTypography
+                          <FormControl sx={{ width: "100%", bgcolor: "white" }}>
+                            <InputLabel
+                              id="demo-simple-select-label"
+                              sx={{ color: "#BAD4DF" }}
+                            >
+                              Member Name
+                            </InputLabel>
+                            <Select
+                              name="memberId"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              // value={member.memberId}
+                              // onChange={(e) => {
+                              //   handleMemChange(member.id, e);
+                              // }}
+                              label="Account Members"
+                              sx={styles.naminput2}
+                              // error={errors.cmpemail ? true : false}
+                              // helperText={errors.cmpemail}
+                            >
+                              {/* {result.map((res) => (
+                          <MenuItem
+                            key={res.firstName}
+                            value={res._id}
+                            hidden={mems.some(
+                              (vendor) => vendor["memberId"] === res._id
+                            )}
+                          >
+                            {res.firstName} {res.lastName}
+                          </MenuItem>
+                        ))} */}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Box
                           sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
+                            width: "45%",
+                            display: "flex",
+                            alignItems: "center",
                           }}
                         >
-                          Rejected Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
+                          <FormControl sx={{ width: "100%", bgcolor: "white" }}>
+                            <InputLabel
+                              id="demo-simple-select-label"
+                              sx={{ color: "#BAD4DF" }}
+                            >
+                              Roles
+                            </InputLabel>
+                            {/* {user?.User?.memberType === "jobsAdmin" ? ( */}
+                            <Select
+                              name="role"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              //value={member && member.role}
+                              label="Roles"
+                              sx={styles.naminput2}
+                              // onChange={(e) => {
+                              //   handleMemChange(member.id, e);
+                              // }}
+                            >
+                              <MenuItem value="HiringManager">
+                                Hiring Manager
+                              </MenuItem>
+                            </Select>
+                            {/* ) : (
+                          <Select
+                            name="role"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={member && member.role}
+                            label="Roles"
+                            sx={styles.naminput2}
+                            onChange={(e) => {
+                              handleMemChange(member.id, e);
+                            }}
+                          >
+                            <MenuItem value="SuperAdmin">
+                              {" "}
+                              Super Admin{" "}
+                            </MenuItem>
+                            <MenuItem value="jobsAdmin">Jobs Admin</MenuItem>
+                            <MenuItem value="HiringManager">
+                              Hiring Manager
+                            </MenuItem>
+                          </Select>
+                        )} */}
+                          </FormControl>
+                        </Box>
+                        <Box
                           sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
+                            display: "flex",
+                            alignItems: "center",
+                            ml: "20px",
+                            width: "10%",
                           }}
                         >
-                          0
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Shortlisted Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          0
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Successful Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+                          {/* {memberrole.length > 1 ? ( */}
+                          <IconButton
+                            variant="contained"
+                            sx={styles.addbtn}
+                            //   onClick={() => {
+                            //     handleMemRemove(member.id);
+                            //   }}
+                          >
+                            <RemoveCircleIcon
+                              sx={{
+                                fontSize: { sm: "2.5rem", xs: "1.5rem" },
+                                color: "#FF543E",
+                              }}
+                            />
+                          </IconButton>
+                          {/* ) : (
+                        ""
+                      )} */}
+                        </Box>
+                      </Stack>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ width: "100%" }}>
-              <AppBar position="static">
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                    variant="fullWidth"
-                    centered
-                  >
-                    <Tab label="Normal Jobs" {...a11yProps(0)} />
-                    <Tab label="Featured Jobs" {...a11yProps(1)} />
-                  </Tabs>
-                </Box>
-              </AppBar>
-              <TabPanel id="simple-tab-0" value={value} index={0}>
-                <Table
-                  sx={{ minWidth: 650, bgcolor: "#F2F8FD", p: 0 }}
-                  aria-label="simple table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Job</TableCell>
-                      <TableCell align="right">Title</TableCell>
-                      <TableCell align="right">Job Type</TableCell>
-                      <TableCell align="right">Location</TableCell>
-                      <TableCell align="right">Posted Date</TableCell>
-                      <TableCell align="right">Deadline</TableCell>
-                      <TableCell align="right">Status</TableCell>
-                      <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                Item Two
-              </TabPanel>
-            </Box>
           </Grid>
         </div>
       </Container>
