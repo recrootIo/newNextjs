@@ -56,6 +56,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import CompanyData from "@/redux/services/company.service";
+import JobsCard from "./JobsCard";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -68,10 +69,10 @@ export const getSalary = (salary) => {
         fontSize={15}
         mb={1}
       >
-        {salary.salaryCrrancy} {salary.minSalary} - {salary.maxSalary} /{" "}
-        {salary.salaryType === "monthly" ? "Per Month" : ""}
-        {salary.salaryType === "hourly" ? "Per Hour" : ""}
-        {salary.salaryType === "yearly" ? "Yearly" : ""}
+        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary} /{" "}
+        {salary?.salaryType === "monthly" ? "Per Month" : ""}
+        {salary?.salaryType === "hourly" ? "Per Hour" : ""}
+        {salary?.salaryType === "yearly" ? "Yearly" : ""}
       </CustomTypography>
     );
   } else {
@@ -281,24 +282,22 @@ export const BootstrapDialogTitle = (props) => {
 };
 
 const SearchSection = ({ ...props }) => {
-  const { sectors } = props;
-  const search = useSelector((data) => data.searchJobs.jobslate);
+  const { sectors, companies } = props;
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const loading = useSelector((state) => state.searchJobs.loading);
 
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
   const [open, setOpen] = useState(false);
   const [isShown, setIsShown] = useState(false);
-  const [age, setAge] = useState("");
   const [value, setValue] = useState(0);
-  const [type, setType] = useState(search.type);
   const [selectedValues, setSelectedValues] = useState([]);
   const [names, setNames] = useState([]);
   const [exper, setExper] = useState([]);
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
+  const [jobVariant, setJobVariant] = useState("");
+  const [selectedCompanies, setSelectedCompanies] = useState("");
+  const [selectedSector, setSelectedSector] = useState("");
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -315,8 +314,19 @@ const SearchSection = ({ ...props }) => {
     setOpen(false);
   };
 
-  const getJobs = (page = 1) => {
-    dispatch(searchJobs({ value: page, names, exper, title, address }))
+  const getJobs = (page = 1, variant = "") => {
+    dispatch(
+      searchJobs({
+        value: page,
+        names,
+        exper,
+        title,
+        address,
+        jobVariant: variant,
+        selectedCompanies,
+        selectedSector,
+      })
+    )
       .then(() => {})
       .catch((error) => {
         console.warn(error);
@@ -324,11 +334,8 @@ const SearchSection = ({ ...props }) => {
   };
 
   const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const handleClick = (event) => {
-    setIsShown((current) => !current);
+    setJobVariant(event.target.value);
+    getJobs(1, event.target.value);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -371,21 +378,24 @@ const SearchSection = ({ ...props }) => {
   };
 
   const handleExperience = (re, a) => {
-    // const { name, checked } = re.target;
-    console.log(a);
     setExper(() => [a]);
   };
-
-  const handleCheckBoxChange = () => {};
 
   const clearSearch = () => {
     setExper(() => []);
     setNames(() => []);
+    setSelectedSector("");
+    setSelectedCompanies("");
+    setJobVariant("");
+    setAddress("");
+    setTitle("");
   };
 
   useEffect(() => {
     getJobs();
   }, []);
+
+  console.log(selectedCompanies, "selectedCompanies");
 
   return (
     <div>
@@ -404,6 +414,7 @@ const SearchSection = ({ ...props }) => {
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Keyword or title"
                   inputProps={{ "aria-label": "Keyword or title" }}
+                  value={title}
                   onChange={updateTitle}
                 />
               </Box>
@@ -419,6 +430,7 @@ const SearchSection = ({ ...props }) => {
                   placeholder="Location"
                   inputProps={{ "aria-label": "Location" }}
                   onChange={updateAddress}
+                  value={address}
                 />
               </Box>
               <Button
@@ -444,6 +456,11 @@ const SearchSection = ({ ...props }) => {
                     setExper={setExper}
                     clearSearch={clearSearch}
                     sectors={sectors}
+                    companies={companies}
+                    selectedCompanies={selectedCompanies}
+                    setSelectedCompanies={setSelectedCompanies}
+                    selectedSector={selectedSector}
+                    setSelectedSector={setSelectedSector}
                   />
                 </CardContent>
               </Card>
@@ -516,7 +533,6 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
-                            onDelete={() => handleDelete(value)}
                           />
                         ))}
                       </Box>
@@ -539,7 +555,7 @@ const SearchSection = ({ ...props }) => {
                         >
                           <Tab label="Professional Level" {...a11yProps(0)} />
                           <Tab label="Industry" {...a11yProps(1)} />
-                          <Tab label="Role" {...a11yProps(2)} />
+                          <Tab label="Companies" {...a11yProps(2)} />
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
@@ -566,72 +582,36 @@ const SearchSection = ({ ...props }) => {
                           </FormGroup>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                          <FormGroup sx={{ width: "150px" }}>
+                          <RadioGroup
+                            onChange={(e, a) => setSelectedSector(a)}
+                            value={selectedSector}
+                          >
                             {sectors.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
-                                control={<BpCheckbox size="small" />}
+                                control={<BpRadio size="small" />}
                                 label={sec}
                                 value={sec}
-                                checked={selectedValues.includes("IT")}
-                                onChange={handleCheckBoxChange}
+                                name={sec}
                               />
                             ))}
-                          </FormGroup>
+                          </RadioGroup>
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                          <FormGroup sx={{ width: "160px" }}>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Graphic Designer"
-                              value="Graphic Designer"
-                              checked={selectedValues.includes(
-                                "Graphic Designer"
-                              )}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Java Developer"
-                              value="Java Developer"
-                              checked={selectedValues.includes(
-                                "Java Developer"
-                              )}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="React.Js Developer"
-                              value="React.Js Developer"
-                              checked={selectedValues.includes(
-                                "React.Js Developer"
-                              )}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Project Manager"
-                              value="Project Manager"
-                              checked={selectedValues.includes(
-                                "Project Manager"
-                              )}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Data Analyst"
-                              value="Data Analyst"
-                              checked={selectedValues.includes("Data Analyst")}
-                              onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Tester"
-                              value="Tester"
-                              checked={selectedValues.includes("Tester")}
-                              onChange={handleCheckBoxChange}
-                            />
-                          </FormGroup>
+                          <RadioGroup
+                            onChange={(e, a) => setSelectedCompanies(a)}
+                            value={selectedCompanies}
+                          >
+                            {companies.map((com, index) => (
+                              <FormControlLabel
+                                key={index}
+                                control={<BpRadio size="small" />}
+                                label={com?.company_name}
+                                value={com?.id}
+                                name={com?.company_name}
+                              />
+                            ))}
+                          </RadioGroup>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
                           <FormControl>
@@ -653,20 +633,6 @@ const SearchSection = ({ ...props }) => {
                               ))}
                             </RadioGroup>
                           </FormControl>
-
-                          {/* <FormGroup sx={{ width: "130px" }}>
-                            {USER_EXPERIENCES.map((ex, index) => (
-                              <StyledFormLabel
-                                key={index}
-                                control={<BpCheckbox size="small" />}
-                                label={ex}
-                                value={ex}
-                                name={ex}
-                                checked={exper.includes(ex)}
-                                onChange={handleExperience}
-                              />
-                            ))}
-                          </FormGroup> */}
                         </TabPanel>
                         <TabPanel value={value} index={4}>
                           <FormGroup>
@@ -725,12 +691,27 @@ const SearchSection = ({ ...props }) => {
                     size="medium"
                     onClick={handleCategoryChipClick}
                   />
-                  <Chip
-                    className="categoryChip"
-                    label="IT"
-                    size="medium"
-                    onClick={handleCategoryChipClick}
-                  /> */}
+
+                  */}
+                  {selectedSector && (
+                    <Chip
+                      className="categoryChip"
+                      label={selectedSector}
+                      size="medium"
+                    />
+                  )}
+
+                  {selectedCompanies && (
+                    <Chip
+                      label={
+                        companies.filter((f) => f.id === selectedCompanies)[0]
+                          ?.company_name
+                      }
+                      size="medium"
+                      className="categoryChip"
+                    />
+                  )}
+
                   {exper.map((na, index) => (
                     <Chip
                       key={index}
@@ -790,18 +771,16 @@ const SearchSection = ({ ...props }) => {
                     <Select
                       labelId="demo-simple-select-standard-label"
                       id="demo-simple-select-standard"
-                      value={age}
+                      value={jobVariant}
                       onChange={handleChange}
                       displayEmpty
                       inputProps={{ "aria-label": "Without label" }}
                       sx={{ fontSize: "14px" }}
                     >
-                      <MenuItem value="">
-                        <em>All</em>
-                      </MenuItem>
-                      <MenuItem value={20}>Featured</MenuItem>
-                      <MenuItem value={30}>Recent</MenuItem>
-                      <MenuItem value={40}>Most viewed</MenuItem>
+                      <MenuItem value={""}>Recent</MenuItem>
+                      <MenuItem value={"featured"}>Featured</MenuItem>
+                      <MenuItem value={"immediate"}>Immediate</MenuItem>
+                      <MenuItem value={"mostViewed"}>Most viewed</MenuItem>
                     </Select>
                   </Box>
                 </FormControl>
@@ -816,142 +795,147 @@ const SearchSection = ({ ...props }) => {
                 ) : (
                   <Stack spacing={2}>
                     {latestJobs.map((lateJob, index) => (
-                      <Card className="jobCard" key={index}>
-                        <CardHeader
-                          avatar={
-                            <StyledAvatar
-                              className="recentAvatar"
-                              alt="logo"
-                              src={getImageLogo(
-                                lateJob?.company?.companyLogo?.logo
-                              )}
-                              size={100}
-                            />
-                          }
-                          titleTypographyProps={{
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            color: "#034275",
-                          }}
-                          subheaderTypographyProps={{
-                            fontSize: 15,
-                            color: "#034275",
-                          }}
-                          title={lateJob?.jobRole}
-                          subheader={lateJob?.company?.company_name}
-                          action={
-                            <>
-                              <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                                {/* <Button
-                                  className="bookmarkBtn"
-                                  size="small"
-                                  variant="outlined"
-                                  bgcolor="#02A9F7 !important"
-                                >
-                                  <BookmarkBorderIcon
-                                    sx={{ fontSize: "21px" }}
-                                  />
-                                </Button> */}
-                                <Button
-                                  variant="contained"
-                                  size="medium"
-                                  sx={{
-                                    ml: "8px",
-                                    bgcolor: "#02A9F7 !important",
-                                    fontSize: "14px",
-                                  }}
-                                  onClick={() =>
-                                    handleNavigate(
-                                      lateJob?.jobTitle,
-                                      lateJob?.jobRole,
-                                      lateJob?._id
-                                    )
-                                  }
-                                >
-                                  View Details
-                                </Button>
-                              </Box>
-                              <CustomTypography
-                                className="searchRstTypo"
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {moment(lateJob.createdAt).fromNow()}
-                              </CustomTypography>
-                            </>
-                          }
-                        />
-                        <CardContent sx={{ pt: 0 }} className="searchCard">
-                          <CustomTypography
-                            variant="body2"
-                            color="text.secondary"
-                            fontSize={15}
-                            mb={1}
-                          >
-                            {lateJob?.jobType}&nbsp;{bull}&nbsp;Part Time&nbsp;
-                            {bull}
-                            &nbsp;{lateJob?.essentialInformation?.experience}
-                            s&nbsp;
-                            {bull}
-                            &nbsp;{getSalary(lateJob?.salary)}
-                          </CustomTypography>
-                          <CustomTypography
-                            variant="body2"
-                            color="text.secondary"
-                            fontSize={15}
-                          >
-                            <div
-                              style={{
-                                overflow: "hidden",
-                                maxHeight: "100px",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              <ReactQuill
-                                value={lateJob?.jobDescription}
-                                readOnly={true}
-                                theme={"bubble"}
-                              />
-                            </div>
-                          </CustomTypography>
-                          <Box className="mobileBtn">
-                            <Box className="btnBox">
-                              <Button
-                                className="bookmarkBtn"
-                                size="small"
-                                variant="outlined"
-                                bgcolor="#02A9F7 !important"
-                              >
-                                <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                              </Button>
-                              <Button
-                                className="viewDetailBtn"
-                                variant="contained"
-                                size="medium"
-                                onClick={() =>
-                                  handleNavigate(
-                                    lateJob?.jobTitle,
-                                    lateJob?.jobRole,
-                                    lateJob?._id
-                                  )
-                                }
-                              >
-                                View Details
-                              </Button>
-                            </Box>
-                            <Box className="recentTypoBox">
-                              <CustomTypography
-                                className="recentTypo"
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {moment(lateJob.createdAt).fromNow()} days ago
-                              </CustomTypography>
-                            </Box>
-                          </Box>
-                        </CardContent>
-                      </Card>
+                      <JobsCard
+                        key={index}
+                        {...lateJob}
+                        handleNavigate={handleNavigate}
+                      />
+                      // <Card className="jobCard" key={index}>
+                      //   <CardHeader
+                      //     avatar={
+                      //       <StyledAvatar
+                      //         className="recentAvatar"
+                      //         alt="logo"
+                      //         src={getImageLogo(
+                      //           lateJob?.company?.companyLogo?.logo
+                      //         )}
+                      //         size={100}
+                      //       />
+                      //     }
+                      //     titleTypographyProps={{
+                      //       fontSize: 18,
+                      //       fontWeight: "bold",
+                      //       color: "#034275",
+                      //     }}
+                      //     subheaderTypographyProps={{
+                      //       fontSize: 15,
+                      //       color: "#034275",
+                      //     }}
+                      //     title={lateJob?.jobRole}
+                      //     subheader={lateJob?.company?.company_name}
+                      //     action={
+                      //       <>
+                      //         <Box className="searchRstBtn" sx={{ mb: "7px" }}>
+                      //           {/* <Button
+                      //             className="bookmarkBtn"
+                      //             size="small"
+                      //             variant="outlined"
+                      //             bgcolor="#02A9F7 !important"
+                      //           >
+                      //             <BookmarkBorderIcon
+                      //               sx={{ fontSize: "21px" }}
+                      //             />
+                      //           </Button> */}
+                      //           <Button
+                      //             variant="contained"
+                      //             size="medium"
+                      //             sx={{
+                      //               ml: "8px",
+                      //               bgcolor: "#02A9F7 !important",
+                      //               fontSize: "14px",
+                      //             }}
+                      //             onClick={() =>
+                      //               handleNavigate(
+                      //                 lateJob?.jobTitle,
+                      //                 lateJob?.jobRole,
+                      //                 lateJob?._id
+                      //               )
+                      //             }
+                      //           >
+                      //             View Details
+                      //           </Button>
+                      //         </Box>
+                      //         <CustomTypography
+                      //           className="searchRstTypo"
+                      //           variant="body2"
+                      //           color="text.secondary"
+                      //         >
+                      //           {moment(lateJob.createdAt).fromNow()}
+                      //         </CustomTypography>
+                      //       </>
+                      //     }
+                      //   />
+                      //   <CardContent sx={{ pt: 0 }} className="searchCard">
+                      //     <CustomTypography
+                      //       variant="body2"
+                      //       color="text.secondary"
+                      //       fontSize={15}
+                      //       mb={1}
+                      //     >
+                      //       {lateJob?.jobType}&nbsp;{bull}&nbsp;Part Time&nbsp;
+                      //       {bull}
+                      //       &nbsp;{lateJob?.essentialInformation?.experience}
+                      //       s&nbsp;
+                      //       {bull}
+                      //       &nbsp;{getSalary(lateJob?.salary)}
+                      //     </CustomTypography>
+                      //     <CustomTypography
+                      //       variant="body2"
+                      //       color="text.secondary"
+                      //       fontSize={15}
+                      //     >
+                      //       <div
+                      //         style={{
+                      //           overflow: "hidden",
+                      //           maxHeight: "100px",
+                      //           textOverflow: "ellipsis",
+                      //           whiteSpace: "nowrap",
+                      //         }}
+                      //       >
+                      //         <ReactQuill
+                      //           value={lateJob?.jobDescription}
+                      //           readOnly={true}
+                      //           theme={"bubble"}
+                      //         />
+                      //       </div>
+                      //     </CustomTypography>
+                      //     <Box className="mobileBtn">
+                      //       <Box className="btnBox">
+                      //         <Button
+                      //           className="bookmarkBtn"
+                      //           size="small"
+                      //           variant="outlined"
+                      //           bgcolor="#02A9F7 !important"
+                      //         >
+                      //           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
+                      //         </Button>
+                      //         <Button
+                      //           className="viewDetailBtn"
+                      //           variant="contained"
+                      //           size="medium"
+                      //           onClick={() =>
+                      //             handleNavigate(
+                      //               lateJob?.jobTitle,
+                      //               lateJob?.jobRole,
+                      //               lateJob?._id
+                      //             )
+                      //           }
+                      //         >
+                      //           View Details
+                      //         </Button>
+                      //       </Box>
+                      //       <Box className="recentTypoBox">
+                      //         <CustomTypography
+                      //           className="recentTypo"
+                      //           variant="body2"
+                      //           color="text.secondary"
+                      //         >
+                      //           {moment(lateJob.createdAt).fromNow()} days ago
+                      //         </CustomTypography>
+                      //       </Box>
+                      //     </Box>
+                      //   </CardContent>
+                      // </Card>
                     ))}
                   </Stack>
                 )}

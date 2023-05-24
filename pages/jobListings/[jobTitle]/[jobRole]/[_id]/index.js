@@ -28,12 +28,14 @@ export const getServerSideProps = async (context) => {
   const { jobTitle, jobRole, _id } = context.query;
   const newService = new jobsService();
   let job;
+
   await newService.getSingleJob(_id).then((res) => {
-    console.log(res.data.data);
     job = res.data.data;
   });
 
-  // const job = jobsService.
+  await newService.updateViewCount(_id).then((res) => {
+    console.log(res.data);
+  });
 
   return {
     props: {
