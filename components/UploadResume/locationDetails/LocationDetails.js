@@ -26,7 +26,7 @@ const steps = [
   "Create an ad group",
 ];
 
-const LocationDetails = ({ ...props }) => {
+const LocationInputDetails = ({ ...props }) => {
   const { scroll, setinputPersonalDetailsCountry, position } = props;
 
   const [address, setAddress] = React.useState(null);
@@ -240,4 +240,4 @@ const LocationDetails = ({ ...props }) => {
   );
 };
 
-export default LocationDetails;
+export default LocationInputDetails;
