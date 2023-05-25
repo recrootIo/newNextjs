@@ -40,7 +40,6 @@ const Index = () => {
 
     dispatch(updatePercent(70));
     setOpen(true);
-
     dispatch(
       updateFinalResumeForm({
         inputPersonalDetailsCountry,

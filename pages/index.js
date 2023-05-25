@@ -17,17 +17,20 @@ import UsersDetailsHome from "../components/Home/UsersDetailsHome";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Cookies from "js-cookie";
 
 export default function Home() {
   useEffect(() => {
     AOS.init();
   }, []);
-  // const user = JSON.parse(localStorage.getItem("User")) || "";
+  const user = Cookies.get('token');
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
       <Navbar />
-      <SignUpHome />
+     {user === undefined ? 
+      <SignUpHome /> : ''
+     }
       <SearchHome />
       <AboutHome />
       <UsersDetailsHome />

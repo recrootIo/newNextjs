@@ -1,5 +1,6 @@
 import { getUserId } from "@/utils/HelperFunctions";
 import http from "../http-common";
+import axios from "axios";
 
 const getAll = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -151,7 +152,7 @@ const editVerify = (value) => {
   return http.put(`verifyEmail`, value);
 };
 const resendCode = (value) => {
-  return http.put(`resendCode`, value);
+  return axios.put(`http://localhost:3000/resendCode`, value);
 };
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);

@@ -5,6 +5,7 @@ import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Box, Stack, styled } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const StyledButton = styled("button")({
@@ -20,7 +21,7 @@ const StyledButton = styled("button")({
 
 const Index = () => {
   const searchText = "OK";
-
+  const { push } = useRouter();
   return (
     <Box
       sx={{
@@ -81,8 +82,7 @@ const Index = () => {
         <StyledButton
           variant="contained"
           onClick={() => {
-            navigate(redirectPath);
-            if (redirect) clearStore();
+            push('/');
           }}
         >
           {searchText}
