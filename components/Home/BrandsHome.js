@@ -1,9 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { Grid, Typography, Box, Stack, Container } from "@mui/material";
-import { createElement, useContext, useRef, Fragment } from "react";
+import { Grid, Box, Stack, Container } from "@mui/material";
+import { useRef } from "react";
 // import "./homepage.css";
 import Carousel from "react-elastic-carousel";
 import Image from "next/image";

@@ -5,19 +5,9 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { styled } from "@mui/material/styles";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
-
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  "& .MuiAvatar-img": {
-    width: "20px",
-    height: "20px",
-  },
-  height: "40px",
-  width: "40px",
-}));
 
 const RecentSearch = () => {
   return (

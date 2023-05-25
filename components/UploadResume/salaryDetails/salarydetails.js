@@ -10,13 +10,11 @@ import {
   Select,
   TextField,
   Container,
-  Autocomplete,
   Stepper,
   Step,
   StepLabel,
   ListSubheader,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
 import {

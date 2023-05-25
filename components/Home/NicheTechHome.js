@@ -1,13 +1,7 @@
 "use client";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import {
-  Typography,
-  Box,
-  Button,
-  Container,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Container, useMediaQuery } from "@mui/material";
 
 const NicheTechHome = () => {
   const tablet = useMediaQuery("(max-width:909px)");

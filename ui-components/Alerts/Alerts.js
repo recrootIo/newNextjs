@@ -2,7 +2,6 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAlert } from "@/redux/slices/alert";
 

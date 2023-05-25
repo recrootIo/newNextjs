@@ -26,7 +26,7 @@ import {
   retrieveGetSinEduca,
 } from "@/redux/slices/personal";
 import { useDispatch } from "react-redux";
-import { deleteEducaAndGet } from "@/redux/slices/personal";
+// import { deleteEducaAndGet } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;

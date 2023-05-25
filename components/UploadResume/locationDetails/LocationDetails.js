@@ -6,7 +6,6 @@ import {
   Button,
   TextField,
   Container,
-  Autocomplete,
   Stepper,
   Step,
   StepLabel,

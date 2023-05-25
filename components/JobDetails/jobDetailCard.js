@@ -13,19 +13,20 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import Image from "next/image";
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetailCard = ({ ...props }) => {
   const {
     essentialInformation,
-    jobTitle,
+    // jobTitle,
     jobRole,
     company,
     salary,
     jobType,
-    address,
+    address = [],
   } = props;
 
   return (
@@ -54,12 +55,12 @@ const JobDetailCard = ({ ...props }) => {
                     className="mobileLogo"
                     sx={{ display: "flex", justifyContent: "flex-start" }}
                   >
-                    <img
+                    <Image
                       src="/logo 8.png"
                       alt=""
+                      width={120}
+                      height={35}
                       style={{
-                        width: "120px",
-                        height: "35px",
                         maxWidth: "160px",
                         maxHeight: "40px",
                       }}
@@ -100,7 +101,7 @@ const JobDetailCard = ({ ...props }) => {
                     spacing={1}
                   >
                     <Box className="imgTypo" sx={{ alignItems: "center" }}>
-                      <img
+                      <Image
                         className="firsticonImg"
                         src="/currency.png"
                         alt=""
@@ -118,7 +119,7 @@ const JobDetailCard = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
-                      <img className="iconImg" src="/bag.png" alt="" />
+                      <Image className="iconImg" src="/bag.png" alt="" />
                       <CustomTypography
                         variant="body2"
                         sx={{
@@ -131,7 +132,7 @@ const JobDetailCard = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
-                      <img className="iconImg" src="/hourglass.png" alt="" />
+                      <Image className="iconImg" src="/hourglass.png" alt="" />
                       <CustomTypography
                         variant="body2"
                         sx={{
@@ -157,7 +158,7 @@ const JobDetailCard = ({ ...props }) => {
                       spacing={1}
                     >
                       <Box className="imgTypo" sx={{ alignItems: "center" }}>
-                        <img className="iconImg" src="/location.png" alt="" />
+                        <Image className="iconImg" src="/location.png" alt="" />
                         <CustomTypography
                           variant="body2"
                           sx={{
@@ -171,7 +172,7 @@ const JobDetailCard = ({ ...props }) => {
                         </CustomTypography>
                       </Box>
                       <Box className="imgTypo">
-                        <img
+                        <Image
                           className="iconImg"
                           src="/professional.png"
                           alt=""
@@ -188,7 +189,7 @@ const JobDetailCard = ({ ...props }) => {
                         </CustomTypography>
                       </Box>
                       <Box className="imgTypo">
-                        <img className="iconImg" src="/degree.png" alt="" />
+                        <Image className="iconImg" src="/degree.png" alt="" />
                         <CustomTypography
                           variant="body2"
                           sx={{
@@ -209,7 +210,7 @@ const JobDetailCard = ({ ...props }) => {
                   className="logo"
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <img
+                  <Image
                     src={`${getImageLogo(company?.companyLogo?.logo)}`}
                     alt=""
                     style={{

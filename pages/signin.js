@@ -10,18 +10,18 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  Grid,
-  IconButton,
-  InputAdornment,
+  // Grid,
+  // IconButton,
+  // InputAdornment,
   Stack,
   styled,
 } from "@mui/material";
 import React, { useState } from "react";
-import { DANGER, PRIMARY } from "../theme/colors";
+// import { DANGER, PRIMARY } from "../theme/colors";
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Link from "next/link";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+// import { useSession, signIn, signOut } from "next-auth/react";
+// import Link from "next/link";
+// import { Visibility, VisibilityOff } from "@mui/icons-material";
 // import { login } from "../slices/auth";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -41,19 +41,19 @@ const StyledInput = styled("input")({
   padding: "10px",
 });
 
-const StyledPasswordInput = styled("input")({
-  height: "60px",
-  border: "1px solid #c2c8d0",
-  borderRadius: "8px",
-  width: "100%",
-  fontSize: "18px",
-  fontWeight: "400",
-  color: "#949494",
-  padding: "10px",
-});
+// const StyledPasswordInput = styled("input")({
+//   height: "60px",
+//   border: "1px solid #c2c8d0",
+//   borderRadius: "8px",
+//   width: "100%",
+//   fontSize: "18px",
+//   fontWeight: "400",
+//   color: "#949494",
+//   padding: "10px",
+// });
 
 function Signin() {
-  const [showPassword, setshowPassword] = useState(false);
+  const [showPassword] = useState(false);
   const [values, setValues] = React.useState({
     email: "",
     password: "",
@@ -67,9 +67,9 @@ function Signin() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const handleClickShowPassword = () => {
-    setshowPassword(!showPassword);
-  };
+  // const handleClickShowPassword = () => {
+  //   setshowPassword(!showPassword);
+  // };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -391,10 +391,11 @@ function Signin() {
                     >
                       <button className="linkedinButton">
                         <span>
-                          <img
+                          <Image
                             src={"/linkedInLogo.png"}
                             alt=""
-                            height={"30px"}
+                            height={20}
+                            width={20}
                           />
                         </span>
                         <span style={{ marginTop: "6px" }}>
@@ -403,7 +404,12 @@ function Signin() {
                       </button>
                       <button className="linkedinButton">
                         <span>
-                          <img src={"/googleLogo.png"} alt="" height={"30px"} />
+                          <Image
+                            src={"/googleLogo.png"}
+                            alt=""
+                            height={20}
+                            width={20}
+                          />
                         </span>
                         <span style={{ marginTop: "1px" }}>
                           Log in with Google

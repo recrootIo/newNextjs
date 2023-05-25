@@ -1,32 +1,26 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
   Box,
-  Button,
   Card,
-  CardActionArea,
   CardContent,
   Container,
   Divider,
   FormControl,
   FormControlLabel,
-  FormGroup,
   Grid,
   IconButton,
   InputAdornment,
   Stack,
   styled,
 } from "@mui/material";
-import { MAX } from "../theme/spacings";
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
 import Checkbox from "@mui/material/Checkbox";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-// import { register } from "../slices/auth";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+// import { useDispatch } from "react-redux";
+// import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { register } from "@/redux/slices/auth";
+// import { register } from "@/redux/slices/auth";
 import Image from "next/image";
 
 const StyledCard = styled(Card)({
@@ -75,7 +69,7 @@ const StyledPasswordInput = styled("input")({
 });
 
 function Signup() {
-  const { push } = useRouter();
+  // const { push } = useRouter();
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -97,21 +91,23 @@ function Signup() {
     checked: false,
   });
 
-  const dispatch = useDispatch();
-  const handleRegister = (e) => {
-    e.preventDefault();
-    dispatch(register({ values }))
-      .unwrap()
-      .then((originalPromiseResult) => {
-        console.log(originalPromiseResult);
-        push("/");
-        // navigate("/verifymobile", { replace: true });
-      })
-      .catch((error) => {
-        // toastyErrorFunction("The User Already Exists");
-        console.warn(error);
-      });
-  };
+  // const dispatch = useDispatch();
+
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+  //   dispatch(register({ values }))
+  //     .unwrap()
+  //     .then((originalPromiseResult) => {
+  //       console.log(originalPromiseResult);
+  //       push("/");
+  //       // navigate("/verifymobile", { replace: true });
+  //     })
+  //     .catch((error) => {
+  //       // toastyErrorFunction("The User Already Exists");
+  //       console.warn(error);
+  //     });
+  // };
+
   return (
     <Box
       sx={{
@@ -496,17 +492,29 @@ function Signup() {
                   </Stack>
                   <button className="linkedinButton">
                     <span>
-                      <img src={"/linkedInLogo.png"} alt="" height={"30px"} />
+                      <Image
+                        src={"/linkedInLogo.png"}
+                        alt=""
+                        height={20}
+                        width={20}
+                      />
                     </span>
-                    <span style={{ marginTop: "6px" }}>
+                    <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
                       Log in with LinkedIn
                     </span>
                   </button>
                   <button className="linkedinButton">
                     <span>
-                      <img src={"/googleLogo.png"} alt="" height={"30px"} />
+                      <Image
+                        src={"/googleLogo.png"}
+                        alt=""
+                        height={20}
+                        width={20}
+                      />
                     </span>
-                    <span style={{ marginTop: "1px" }}>Log in with Google</span>
+                    <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
+                      Log in with Google
+                    </span>
                   </button>
                   <Divider>OR</Divider>
                   <StyledInput placeholder="Enter Full Name" />

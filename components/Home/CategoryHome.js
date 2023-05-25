@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { NEUTRAL, PRIMARY } from "../../theme/colors";
 import { MAX, MID } from "../../theme/spacings";
 import {
   Box,
   Container,
-  Divider,
   Grid,
   Stack,
   styled,
@@ -805,7 +803,7 @@ const CategoryHome = () => {
               xs={0}
               sx={{ padding: "10px", display: mobile ? "none" : "flex" }}
             >
-              <img
+              <Image
                 src="/browseImage.png"
                 alt=""
                 className="categoryImageMiddled"
@@ -1095,7 +1093,7 @@ const CategoryHome = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
+                    <Image
                       src="/browseImage.png"
                       alt=""
                       className="categoryImage"

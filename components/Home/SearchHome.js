@@ -10,12 +10,12 @@ import {
   RadioGroup,
   Stack,
   styled,
-  TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
+import Image from "next/image";
 
 const StyledButton = styled("button")({
   height: "62px",
@@ -140,7 +140,7 @@ const SearchHome = () => {
           </Grid>
 
           <Grid item md={3} xs={0}>
-            <img src="/searchImage.png" className="searchHomeImage" />
+            <Image alt="" src="/searchImage.png" className="searchHomeImage" />
           </Grid>
         </Grid>
       </Container>

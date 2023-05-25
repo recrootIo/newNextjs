@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Box, Grid, Container } from "@mui/material";
+import { Box, Grid, Container } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 

@@ -9,34 +9,34 @@ import {
   Autocomplete,
   Card,
   CardContent,
-  Radio,
-  RadioGroup,
+  // Radio,
+  // RadioGroup,
   FormControl,
-  InputLabel,
-  Select,
+  // InputLabel,
+  // Select,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import { SelectChangeEvent } from "@mui/material/Select";
+// import { Theme, useTheme } from "@mui/material/styles";
+// import OutlinedInput from "@mui/material/OutlinedInput";
+// import MenuItem from "@mui/material/MenuItem";
+// import { SelectChangeEvent } from "@mui/material/Select";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { EDUCATION_LEVELS, ERROR, SUCCESS } from "@/utils/constants";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import moment from "moment";
+// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+// import moment from "moment";
 import dayjs from "dayjs";
-import { AddEducaAndThenGet, EditEducaAndGet } from "@/redux/slices/personal";
+// import { AddEducaAndThenGet, EditEducaAndGet } from "@/redux/slices/personal";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { convertDate } from "@/utils/HelperFunctions";
-import personalService from "@/redux/services/personal.service";
+// import personalService from "@/redux/services/personal.service";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
 
@@ -95,6 +95,7 @@ const AddEducation = () => {
   };
 
   const onChange = (e, n) => {
+    console.log(n);
     let { name, value } = e.target;
 
     setEducationDetails({
