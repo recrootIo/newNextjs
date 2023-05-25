@@ -28,7 +28,7 @@ const steps = [
   "Create an ad group",
 ];
 
-const NoticePeriod = ({ ...props }) => {
+const NoticePeriodInputs = ({ ...props }) => {
   const { scroll, setCreateResume, position } = props;
   const [notice, setNotice] = React.useState("Immediate Joiner");
   const [hasAnOffer, setHasAnOffer] = React.useState("no");
@@ -224,4 +224,4 @@ const NoticePeriod = ({ ...props }) => {
   );
 };
 
-export default NoticePeriod;
+export default NoticePeriodInputs;
