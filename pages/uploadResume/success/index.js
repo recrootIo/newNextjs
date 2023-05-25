@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import { NEUTRAL } from "@/theme/colors";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Box, Stack, styled } from "@mui/material";
+import Image from "next/image";
 import React from "react";
 
 const StyledButton = styled("button")({
@@ -42,11 +42,12 @@ const Index = () => {
           textAlign: "center",
         }}
       >
-        <img
+        <Image
           src={"/appliedSuccess.png"}
           alt=""
           className="successImage"
-          height={"500px"}
+          height={500}
+          width={500}
         />
         <div class="check-container">
           <div class="check-background">
