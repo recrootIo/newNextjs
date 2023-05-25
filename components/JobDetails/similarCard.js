@@ -66,7 +66,13 @@ const SimilarJobCard = () => {
           <Box>
             <Stack spacing={0.5}>
               <Box sx={{ display: "flex", mt: "25px" }}>
-                <Image className="similariconImg" src="/location.png" alt="" />
+                <Image
+                  className="similariconImg"
+                  src="/location.png"
+                  alt=""
+                  width={14}
+                  height={14}
+                />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -83,7 +89,13 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <Image className="similariconImg" src="/currency.png" alt="" />
+                <Image
+                  className="similariconImg"
+                  src="/currency.png"
+                  alt=""
+                  width={14}
+                  height={14}
+                />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -100,7 +112,13 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <Image className="similariconImg" src="/bag.png" alt="" />
+                <Image
+                  className="similariconImg"
+                  src="/bag.png"
+                  alt=""
+                  width={14}
+                  height={14}
+                />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -117,7 +135,13 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <Image className="similariconImg" src="/hourglass.png" alt="" />
+                <Image
+                  className="similariconImg"
+                  src="/hourglass.png"
+                  alt=""
+                  width={14}
+                  height={14}
+                />
                 <CustomTypography
                   variant="body2"
                   className="similarText"

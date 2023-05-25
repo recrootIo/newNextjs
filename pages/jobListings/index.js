@@ -17,7 +17,12 @@ const index = ({ ...props }) => {
       <Header title={"Job Lists"} />
       <Navbar />
       <DreamJob />
-      <SearchSection sectors={props.sectors} companies={props.companies} />
+      <SearchSection
+        sectors={props.sectors}
+        companies={props.companies}
+        title={props.title}
+        address={props.address}
+      />
       {/* <SearchByCategory /> */}
       <RecentSearch />
       {/* <SearchByCompany /> */}
@@ -27,7 +32,9 @@ const index = ({ ...props }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
+  const { title, address } = context.query;
+
   const newService = new CompanyData();
   let sectors = null;
   let companies = null;
@@ -44,7 +51,6 @@ export const getServerSideProps = async () => {
     .getCompanies()
     .then((res) => {
       companies = res.data;
-      console.log(companies, "asd");
     })
     .catch(() => {
       console.log("something went wrong");
@@ -56,6 +62,8 @@ export const getServerSideProps = async () => {
     props: {
       sectors,
       companies,
+      address,
+      title,
     },
   };
 };

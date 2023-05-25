@@ -377,7 +377,7 @@ const JobDetail = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Image src="/url.png" alt="" width={16} />
+                      <Image src="/url.png" alt="" width={16} height={16} />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"

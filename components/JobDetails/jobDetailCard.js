@@ -105,6 +105,8 @@ const JobDetailCard = ({ ...props }) => {
                         className="firsticonImg"
                         src="/currency.png"
                         alt=""
+                        height={14}
+                        width={14}
                       />
                       <CustomTypography
                         variant="body2"
@@ -119,7 +121,13 @@ const JobDetailCard = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
-                      <Image className="iconImg" src="/bag.png" alt="" />
+                      <Image
+                        className="iconImg"
+                        src="/bag.png"
+                        alt=""
+                        height={14}
+                        width={14}
+                      />
                       <CustomTypography
                         variant="body2"
                         sx={{
@@ -132,7 +140,13 @@ const JobDetailCard = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box className="imgTypo">
-                      <Image className="iconImg" src="/hourglass.png" alt="" />
+                      <Image
+                        className="iconImg"
+                        src="/hourglass.png"
+                        alt=""
+                        height={14}
+                        width={14}
+                      />
                       <CustomTypography
                         variant="body2"
                         sx={{
@@ -158,7 +172,13 @@ const JobDetailCard = ({ ...props }) => {
                       spacing={1}
                     >
                       <Box className="imgTypo" sx={{ alignItems: "center" }}>
-                        <Image className="iconImg" src="/location.png" alt="" />
+                        <Image
+                          className="iconImg"
+                          src="/location.png"
+                          alt=""
+                          height={14}
+                          width={14}
+                        />
                         <CustomTypography
                           variant="body2"
                           sx={{
@@ -176,6 +196,8 @@ const JobDetailCard = ({ ...props }) => {
                           className="iconImg"
                           src="/professional.png"
                           alt=""
+                          height={14}
+                          width={14}
                         />
                         <CustomTypography
                           variant="body2"
@@ -189,7 +211,13 @@ const JobDetailCard = ({ ...props }) => {
                         </CustomTypography>
                       </Box>
                       <Box className="imgTypo">
-                        <Image className="iconImg" src="/degree.png" alt="" />
+                        <Image
+                          className="iconImg"
+                          src="/degree.png"
+                          alt=""
+                          height={14}
+                          width={14}
+                        />
                         <CustomTypography
                           variant="body2"
                           sx={{
@@ -210,15 +238,20 @@ const JobDetailCard = ({ ...props }) => {
                   className="logo"
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <Image
-                    src={`${getImageLogo(company?.companyLogo?.logo)}`}
+                  {/* <Image
+                    src={`${
+                      getImageLogo(company?.companyLogo?.logo) ||
+                      "/service2.png"
+                    }`}
                     alt=""
+                    height={14}
+                    width={14}
                     style={{
-                      width: "100px",
-                      height: "100px",
-                      marginTop: "5px",
+                      width: "100px !important",
+                      height: "100px !important",
+                      marginTop: "5px !important",
                     }}
-                  />
+                  /> */}
                 </Box>
                 <Box
                   sx={{

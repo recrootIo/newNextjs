@@ -282,8 +282,8 @@ const SearchSection = ({ ...props }) => {
   const [selectedValues] = useState([]);
   const [names, setNames] = useState([]);
   const [exper, setExper] = useState([]);
-  const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
+  const [title, setTitle] = useState(props.title || "");
+  const [address, setAddress] = useState(props.address || "");
   const [jobVariant, setJobVariant] = useState("");
   const [selectedCompanies, setSelectedCompanies] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
@@ -356,7 +356,6 @@ const SearchSection = ({ ...props }) => {
   };
 
   const handleNavigate = (jobTitle, jobRole, _id) => {
-    // Programmatically navigate to a different page
     router.push(`/jobListings/${jobTitle}/${jobRole}/${_id}`);
   };
 
