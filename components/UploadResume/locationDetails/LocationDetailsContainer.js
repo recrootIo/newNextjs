@@ -1,6 +1,6 @@
 import { ParallaxLayer } from "@react-spring/parallax";
 import React from "react";
-import LocationInputDetails from "./locationDetails";
+import LocationInputDetails from "./LocationInputDetails";
 
 const LocationDetailsContainer = ({ ...props }) => {
   const { position } = props;
