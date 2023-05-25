@@ -1,12 +1,12 @@
 import { ParallaxLayer } from "@react-spring/parallax";
 import React from "react";
-import LocationDetails from "./locationDetails";
+import LocationInputDetails from "./locationDetails";
 
 const LocationDetailsContainer = ({ ...props }) => {
   const { position } = props;
   return (
     <ParallaxLayer offset={position} speed={0.9}>
-      <LocationDetails {...props} />
+      <LocationInputDetails {...props} />
     </ParallaxLayer>
   );
 };
