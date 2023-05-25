@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
-i;
 import CardContent from "@mui/material/CardContent";
 import TuneIcon from "@mui/icons-material/Tune";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
