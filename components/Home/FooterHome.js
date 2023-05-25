@@ -62,8 +62,10 @@ const FooterHome = () => {
                 <Image
                   src="/whiteLogo.png"
                   alt=""
-                  height="59px"
+                  className="whiteLogo"
+                  height={159}
                   style={{ marginRight: "10px" }}
+                  width={45}
                 />
               </div>
               <div className="para">
@@ -160,11 +162,13 @@ const FooterHome = () => {
                 <Image
                   src="/instagram.png"
                   alt=""
+                  width={45}
                   style={{ mr: "20px" }}
-                  height={"45px"}
+                  height={45}
+                  sizes="100vw"
                 />
-                <Image src="/linkedin.png" alt="" height="45px" />
-                <Image src="/facebook.png" alt="" height="45px" />
+                <Image src="/linkedin.png" alt="" height={45} width={45} />
+                <Image src="/facebook.png" alt="" height={45} width={45} />
               </Stack>
             </Grid>
           </Grid>
@@ -199,10 +203,23 @@ const FooterHome = () => {
                   src="/instagram.png"
                   alt=""
                   style={{ mr: "20px" }}
-                  height={"30px"}
+                  height={30}
+                  width={30}
                 />
-                <Image src="/linkedin.png" alt="" height={"30px"} />
-                <Image src="/facebook.png" alt="" height={"30px"} />
+                <Image
+                  src="/linkedin.png"
+                  alt=""
+                  height={30}
+                  sizes="100vw"
+                  width={30}
+                />
+                <Image
+                  src="/facebook.png"
+                  alt=""
+                  height={30}
+                  sizes="100vw"
+                  width={30}
+                />
               </Stack>
             </Grid>
 

@@ -807,6 +807,9 @@ const CategoryHome = () => {
                 src="/browseImage.png"
                 alt=""
                 className="categoryImageMiddled"
+                width="0"
+                height="0"
+                sizes="100vw"
               />
             </Grid>
           </Grid>
@@ -1097,6 +1100,8 @@ const CategoryHome = () => {
                       src="/browseImage.png"
                       alt=""
                       className="categoryImage"
+                      width="0"
+                      height="0"
                     />
                   </Stack>
                 </Grid>
