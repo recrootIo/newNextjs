@@ -666,7 +666,7 @@
   background: #f3fcff;
   border-radius: 5px;
   height: 49px;
-  width: 185px;
+  width: 165px;
 
   font-weight: 700;
   font-size: 20px;
@@ -857,11 +857,11 @@
 }
 
 .signInMain {
-  height: 100vh;
+  height: 130vh;
   width: 100vw;
   background-image: url("/SignUpBG.svg");
   overflow: auto;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
   background-size: cover;
   padding: 10px;
 }

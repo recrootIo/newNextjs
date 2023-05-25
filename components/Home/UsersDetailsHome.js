@@ -68,7 +68,7 @@ const UsersDetailsHome = () => {
                 borderRadius: "10px",
                 backgroundColor: "#E9F8FF",
                 width: "46%",
-                height: "377px",
+                height: { md: "377px", xs: "auto", sm: "auto" },
                 boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
               }}
               className="userDetailCard"
@@ -118,7 +118,7 @@ const UsersDetailsHome = () => {
                 borderRadius: "10px",
                 backgroundColor: "#E9F8FF",
                 width: "46%",
-                height: "377px",
+                height: { md: "377px", xs: "auto", sm: "auto" },
                 boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
                 mt: { md: 0, xs: "105px", sm: "105px" },
               }}

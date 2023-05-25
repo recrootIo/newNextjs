@@ -69,7 +69,7 @@ const CategoryHome = () => {
                 </CustomTypography>
               </Stack>
 
-              <StyledCarousel breakPoints={breakPoints} showArrows={false}>
+              <StyledCarousel breakPoints={breakPoints} showArrows={true}>
                 <Stack
                   sx={{
                     width: "100%",
@@ -88,7 +88,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -102,7 +102,6 @@ const CategoryHome = () => {
                           className="pointers"
                         />
                       </Grid>
-
                       <Grid
                         item
                         md={0.5}
@@ -111,10 +110,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -137,7 +135,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -148,31 +145,8 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -195,7 +169,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -206,7 +179,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -228,9 +201,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -253,7 +226,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -264,7 +236,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -286,9 +258,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
