@@ -39,9 +39,10 @@ const StyledInput = styled("input")({
   padding: "10px",
 });
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR } from "@/utils/constants";
+
 function Signin() {
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -55,7 +56,7 @@ function Signin() {
     password: "",
   });
   const redirect = null;
-  const path = false
+  const path = false;
   const dispatch = useDispatch();
   const { push } = useRouter();
   const handleLogin = (e) => {
@@ -63,7 +64,7 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        console.log(originalPromiseResult)
+        console.log(originalPromiseResult);
         // push("/");
         if (originalPromiseResult.User.email_is_verified === false) {
           push("/Verifymobile");
@@ -105,7 +106,7 @@ function Signin() {
             type: ERROR,
             message: "Please Check Your Email And Password",
           })
-        )
+        );
         // toastyErrorFunction("Please Check Your Email And Password");
       });
   };
@@ -358,12 +359,15 @@ function Signin() {
                         <CustomTypography>
                           Log in Don’t have an account?
                         </CustomTypography>
-                        <Link href={'/signup'}>
-                        <CustomTypography
-                          sx={{ color: "#034275", textDecoration: "underline" }}
-                        >
-                          Sign up
-                        </CustomTypography>
+                        <Link href={"/signup"}>
+                          <CustomTypography
+                            sx={{
+                              color: "#034275",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            Sign up
+                          </CustomTypography>
                         </Link>
                       </Stack>
                     </Stack>
@@ -382,7 +386,12 @@ function Signin() {
                           Log in with LinkedIn
                         </span>
                       </button>
-                      <button onClick={()=>{handleClick('google')}} className="linkedinButton">
+                      <button
+                        onClick={() => {
+                          handleClick("google");
+                        }}
+                        className="linkedinButton"
+                      >
                         <span>
                           <img src={"/googleLogo.png"} alt="" height={"30px"} />
                         </span>
@@ -444,11 +453,7 @@ function Signin() {
                             onMouseDown={handleClickShowPassword}
                             edge="end"
                           >
-                            {showPassword ? (
-                              <VisibilityOff />
-                            ) : (
-                              <Visibility />
-                            )}
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
                           </IconButton>
                         </InputAdornment>
                       }
