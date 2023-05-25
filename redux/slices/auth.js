@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 //   const item = localStorage.getItem('key')
 
 
-const user = Cookies.get('user');
+const user = Cookies.get('userID');
 
 
 export const register = createAsyncThunk(
@@ -26,7 +26,10 @@ export const register = createAsyncThunk(
         values.immediate
       );
       thunkAPI.dispatch(setMessage(response.data.message));
-      Cookies.set('user', JSON.stringify(response.data),{ expires: 1 })
+      Cookies.set("userID",response.data?.User?._id,{expires:1})
+      Cookies.set("verifyCode",response.data?.User?.referral_code,{expires:1})
+      Cookies.set("token",response.data?.token,{expires:1})
+      Cookies.set("userType",response.data?.User?.recrootUserType,{expires:1})
       localStorage.setItem("User", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
@@ -102,7 +105,6 @@ export const login = createAsyncThunk(
   async ({ values }, thunkAPI) => {
     try {
       const data = await AuthService.login(values.email, values.password);
-
       return { User: data.data.User };
     } catch (error) {
       const message =
