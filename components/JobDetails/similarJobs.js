@@ -70,7 +70,7 @@ const SimilarJobs = () => {
           </Carousel>
         </Stack>
 
-        <Box className="mobileSimilarJobs">
+        {/* <Box className="mobileSimilarJobs">
           <Stack spacing={2}>
             <SimilarJobCard />
             <SimilarJobCard />
@@ -105,7 +105,7 @@ const SimilarJobs = () => {
               </Box>
             </div>
           )}
-        </Box>
+        </Box> */}
 
         <Box
           sx={{
@@ -115,7 +115,7 @@ const SimilarJobs = () => {
             alignItems: "center",
           }}
         >
-          <Image src="./Frame 93.png" alt="" />
+          <img src="./Frame 93.png" alt="" />
         </Box>
       </Container>
     </Box>
