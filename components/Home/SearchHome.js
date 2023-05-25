@@ -140,7 +140,14 @@ const SearchHome = () => {
           </Grid>
 
           <Grid item md={3} xs={0}>
-            <Image alt="" src="/searchImage.png" className="searchHomeImage" />
+            <Image
+              alt=""
+              src="/searchImage.png"
+              className="searchHomeImage"
+              width="0"
+              height="0"
+              sizes="100vw"
+            />
           </Grid>
         </Grid>
       </Container>

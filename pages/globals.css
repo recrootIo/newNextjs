@@ -3,6 +3,8 @@
 @tailwind utilities;
 .categoryImage {
   height: 530px !important;
+
+  width: auto;
 }
 
 @font-face {
@@ -108,6 +110,7 @@
 @media only screen and (max-width: 1006px) {
   .categoryImage {
     height: 618px !important;
+    width: auto;
   }
 }
 
@@ -288,9 +291,7 @@
   .mobileLogo {
     display: none;
   }
-  .rec-arrow {
-    display: none;
-  }
+
   .mobileSimilarJobs {
     display: none;
   }
@@ -377,6 +378,11 @@
 
 .searchFormHome {
   width: 90%;
+}
+
+.searchHomeImage {
+  height: 573px;
+  width: auto;
 }
 
 /* Tablet queries */
@@ -1573,4 +1579,9 @@ a {
 
 .successImage {
   height: 500px !important;
+}
+
+.whiteLogo {
+  height: 41px;
+  width: 163px;
 }
