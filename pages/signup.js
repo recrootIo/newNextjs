@@ -188,9 +188,9 @@ function Signup() {
   };
   const handleClick = (val) => {
     if (val === "google") {
-      window.location.replace("http://localhost:3000/auth/google");
+      window.location.replace("https://preprod.recroot.au/auth/google");
     } else {
-      window.location.replace("http://localhost:3000/auth/linkedin");
+      window.location.replace("https://preprod.recroot.au/auth/linkedin");
     }
   };
   return (

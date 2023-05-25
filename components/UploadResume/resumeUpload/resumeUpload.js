@@ -71,7 +71,7 @@ const AddResume = ({ ...props }) => {
           //   file: originalPromiseResult.Data[0].Location,
           // };
           // await axios
-          //   .post("http://localhost:3000/api/updateResume", userObject)
+          //   .post("https://preprod.recroot.au/api/updateResume", userObject)
           //   .then(
           //     (res) => {
           //       setOpen(false);

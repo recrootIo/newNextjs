@@ -57,7 +57,7 @@ const {id} = router.query
 console.log(id,'dd')
   const getUser = () => {
     axios
-      .get(`http://localhost:3000/getUser/${id}`)
+      .get(`https://preprod.recroot.au/getUser/${id}`)
       .then((resObject) => {
         localStorage.setItem("User", JSON.stringify(resObject.data));
         dispatch(setUserFromGoogle(resObject.data));

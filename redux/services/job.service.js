@@ -11,10 +11,10 @@ class jobsService {
     return http.get(`getCompanyJobs/${companyId}`);
   }
   getSingleJob(id) {
-    return http.get(`http://localhost:3000/api/getSingleJob/${id}`);
+    return http.get(`https://preprod.recroot.au/api/getSingleJob/${id}`);
   }
   updateViewCount(id) {
-    return http.get(`http://localhost:3000/api/updateViewCount/${id}`);
+    return http.get(`https://preprod.recroot.au/api/updateViewCount/${id}`);
   }
 }
 

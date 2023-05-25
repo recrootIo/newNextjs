@@ -87,7 +87,7 @@ const Resume = ({ ...resume }) => {
                 sx={{ color: "#00339B", cursor: "pointer" }}
                 onClick={async () => {
                   const res = await fetch(
-                    ` http://localhost:3000/api/downloadResume?resume=${cv?.resume?.replace(
+                    ` https://preprod.recroot.au/api/downloadResume?resume=${cv?.resume?.replace(
                       /\\/g,
                       "/"
                     )}`
@@ -109,7 +109,7 @@ const Resume = ({ ...resume }) => {
                 <IconButton
                   onClick={async () => {
                     const res = await fetch(
-                      ` http://localhost:3000/api/downloadResume?resume=${cv.resume.replace(
+                      ` https://preprod.recroot.au/api/downloadResume?resume=${cv.resume.replace(
                         /\\/g,
                         "/"
                       )}`
