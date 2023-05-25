@@ -2,13 +2,10 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { CardContent, Grid, IconButton, Stack } from "@mui/material";
 import React from "react";
 import { StyledCard } from "../../ProfileStyles";
-import UploadIcon from "@mui/icons-material/Upload";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import AddIcon from "@mui/icons-material/Add";
 import { LAZY, MID } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 const PersonalDetail = ({ ...data }) => {

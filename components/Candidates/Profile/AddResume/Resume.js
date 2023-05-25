@@ -1,7 +1,7 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
   CardContent,
-  Grid,
+  // Grid,
   Stack,
   Dialog,
   DialogActions,
@@ -12,7 +12,7 @@ import {
   IconButton,
   Slide,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";

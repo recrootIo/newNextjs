@@ -2,10 +2,7 @@
 "use client";
 import React, { useCallback } from "react";
 import Container from "@mui/material/Container";
-import { useSession, signIn, signOut } from "next-auth/react";
-// import { logout } from "@/app/slices/auth";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { Avatar } from "@mui/material";
 const Navbar = () => {

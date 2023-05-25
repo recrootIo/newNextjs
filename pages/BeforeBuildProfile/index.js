@@ -1,13 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import { Box, Button, Container } from "@mui/material";
+import React from "react";
+import { Box, Container } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
-import OtpInput from "react-otp-input";
+// import OtpInput from "react-otp-input";
 import { BOLD } from "@/theme/fonts";
 
 const VerifyEmail = () => {
-  const [otp, setOtp] = React.useState("");
+  // const [otp, setOtp] = React.useState("");
 
   return (
     <div
@@ -68,7 +68,7 @@ const VerifyEmail = () => {
               sx={{ fontFamily: BOLD, color: "#034275", fontSize: "26px" }}
               gutterBottom
             >
-              Let's build your Recroot profile before applying for jobs
+              Let s build your Recroot profile before applying for jobs
             </CustomTypography>
           </Box>
         </Box>

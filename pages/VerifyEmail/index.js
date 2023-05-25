@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button, Container } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
@@ -98,7 +98,7 @@ const VerifyEmail = () => {
             }}
             gutterBottom
           >
-            If you didn't receive the OTP, Click Here to Resend
+            If you didn t receive the OTP, Click Here to Resend
           </CustomTypography>
         </Box>
       </Container>

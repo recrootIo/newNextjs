@@ -12,6 +12,7 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import React from "react";
+import Image from "next/image";
 
 const SimilarJobCard = () => {
   return (
@@ -65,7 +66,7 @@ const SimilarJobCard = () => {
           <Box>
             <Stack spacing={0.5}>
               <Box sx={{ display: "flex", mt: "25px" }}>
-                <img className="similariconImg" src="/location.png" alt="" />
+                <Image className="similariconImg" src="/location.png" alt="" />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -82,7 +83,7 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <img className="similariconImg" src="/currency.png" alt="" />
+                <Image className="similariconImg" src="/currency.png" alt="" />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -99,7 +100,7 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <img className="similariconImg" src="/bag.png" alt="" />
+                <Image className="similariconImg" src="/bag.png" alt="" />
                 <CustomTypography
                   variant="body2"
                   className="similarText"
@@ -116,7 +117,7 @@ const SimilarJobCard = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <img className="similariconImg" src="/hourglass.png" alt="" />
+                <Image className="similariconImg" src="/hourglass.png" alt="" />
                 <CustomTypography
                   variant="body2"
                   className="similarText"

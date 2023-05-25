@@ -6,7 +6,7 @@ import {
   Button,
   TextField,
   Container,
-  Autocomplete,
+  // Autocomplete,
   FormControl,
   Card,
   CardContent,
@@ -21,7 +21,10 @@ import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { LEVELS, SUCCESS } from "@/utils/constants";
 import candidateServices from "@/redux/services/candidate.services";
 import { openAlert } from "@/redux/slices/alert";
-import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
+import {
+  // GetCandsPrefInfo,
+  retrievePersonal,
+} from "@/redux/slices/personal";
 
 const AddSkill = () => {
   const dispatch = useDispatch();

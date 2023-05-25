@@ -4,26 +4,26 @@ import {
   Box,
   Stack,
   Button,
-  TextField,
+  // TextField,
   Container,
   Card,
   CardContent,
 } from "@mui/material";
-import { useMemo } from "react";
-import { useDropzone } from "react-dropzone";
+// import { useMemo } from "react";
+// import { useDropzone } from "react-dropzone";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { Upload } from "@/ui-components/Uploads/Uploads";
 import personalService from "@/redux/services/personal.service";
-import { AddResumeAndThenGet, retrievePersonal } from "@/redux/slices/personal";
+// import { AddResumeAndThenGet, retrievePersonal } from "@/redux/slices/personal";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 
 const AddResume = () => {
   const [pdf, setPdf] = React.useState();
-  const [fileNames, setFileNames] = React.useState("");
+  // const [fileNames, setFileNames] = React.useState("");
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const AddResume = () => {
 
   const handleChange = (file) => {
     setPdf(file);
-    setFileNames(file.name);
+    // setFileNames(file.name);
   };
 
   console.log(pdf, "pdf");

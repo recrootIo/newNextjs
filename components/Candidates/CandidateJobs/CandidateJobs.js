@@ -1,13 +1,22 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, CardContent, Collapse, Divider, Stack } from "@mui/material";
+import {
+  Box,
+  //  CardContent,
+  Collapse,
+  //  Divider,
+  Stack,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { StyledCard } from "../ProfileStyles";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AddIcon from "@mui/icons-material/Add";
-import CustomizedSteppers from "@/ui-components/CustomStpper/CustomStepper";
+// import BookmarkIcon from "@mui/icons-material/Bookmark";
+// import { StyledCard } from "../ProfileStyles";
+// import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+// import AddIcon from "@mui/icons-material/Add";
+// import CustomizedSteppers from "@/ui-components/CustomStpper/CustomStepper";
 import { BOLD } from "@/theme/fonts";
-import { DANGER, NEUTRAL } from "@/theme/colors";
+import {
+  // DANGER,
+  NEUTRAL,
+} from "@/theme/colors";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import AppliedJobs from "./AppliedJobs";
 import SavedJobs from "./SavedJobs";

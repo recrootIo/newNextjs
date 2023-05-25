@@ -8,38 +8,20 @@ import {
   Collapse,
   RadioGroup,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
+i;
 import CardContent from "@mui/material/CardContent";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import TuneIcon from "@mui/icons-material/Tune";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import SwipeableViews from "react-swipeable-views";
-import AppBar from "@mui/material/AppBar";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BpRadio } from "./SearchSection";
 
-const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
+const StyledFormLabel = styled(FormControlLabel)(({}) => ({
   color: "#01313F",
   "& .MuiTypography-root": {
     fontSize: "1rem",
@@ -111,7 +93,7 @@ function BpCheckbox({ ...props }) {
 }
 
 const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -136,7 +118,6 @@ const MainFilter = ({ ...props }) => {
     setSelectedSector,
   } = props;
 
-  const [profExpanded, setProfExpanded] = React.useState(false);
   const [industryExpanded, setIndustryExpanded] = React.useState(false);
   const [roleExpanded, setRoleExpanded] = React.useState(false);
   const [expExpanded, setExpExpanded] = React.useState(false);

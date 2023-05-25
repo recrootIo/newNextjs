@@ -17,16 +17,13 @@ import {
   Chip,
   Tabs,
   Tab,
-  FormLabel,
   RadioGroup,
   Radio,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import TuneIcon from "@mui/icons-material/Tune";
 import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from "@mui/material/Checkbox";
@@ -42,23 +39,16 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MainFilter from "./MainFilter";
 import { useDispatch, useSelector } from "react-redux";
-import { keywordSearch, searchJobs, searchKeys } from "@/redux/slices/search";
+import { searchJobs } from "@/redux/slices/search";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import dynamic from "next/dynamic";
-import moment from "moment";
 import LoadingSearchCards from "./LoadingSearchCards";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
-import CompanyData from "@/redux/services/company.service";
 import JobsCard from "./JobsCard";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export const getSalary = (salary) => {
   if (salary?.salaryType !== "noprovide") {
@@ -196,7 +186,7 @@ export const bull = (
 );
 
 export const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -233,7 +223,7 @@ export const a11yProps = (index) => {
   };
 };
 
-export const StyledAvatar = styled(Avatar)(({ theme }) => ({
+export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
     width: "20px",
     height: "20px",
@@ -242,7 +232,7 @@ export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: "40px",
 }));
 
-export const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
+export const StyledFormLabel = styled(FormControlLabel)(({}) => ({
   color: "#01313F",
   "& .MuiTypography-root": {
     fontSize: "1rem",
@@ -288,9 +278,8 @@ const SearchSection = ({ ...props }) => {
   const loading = useSelector((state) => state.searchJobs.loading);
 
   const [open, setOpen] = useState(false);
-  const [isShown, setIsShown] = useState(false);
   const [value, setValue] = useState(0);
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues] = useState([]);
   const [names, setNames] = useState([]);
   const [exper, setExper] = useState([]);
   const [title, setTitle] = useState("");
@@ -350,12 +339,6 @@ const SearchSection = ({ ...props }) => {
       let newJobs = names.filter((arr) => name != arr);
       setNames(() => [...newJobs]);
     }
-  };
-
-  const handleDelete = (value) => {
-    setSelectedValues((selectedValues) =>
-      selectedValues.filter((val) => val !== value)
-    );
   };
 
   const updateTitle = (e) => {

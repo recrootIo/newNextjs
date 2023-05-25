@@ -4,9 +4,8 @@ import Navbar from "@/components/Navbar/Navbar";
 import { NEUTRAL } from "@/theme/colors";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Button, Stack, styled } from "@mui/material";
+import { Box, Stack, styled } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const StyledButton = styled("button")({
   backgroundColor: "#015FB1",
@@ -20,8 +19,6 @@ const StyledButton = styled("button")({
 });
 
 const Index = () => {
-  const { name } = useSelector((state) => state?.personal?.ids);
-
   const searchText = "OK";
 
   return (

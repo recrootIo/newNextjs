@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Box, Grid, Container, IconButton, Avatar } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Container,
+  IconButton,
+  // Avatar
+} from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";

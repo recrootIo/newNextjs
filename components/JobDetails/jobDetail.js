@@ -21,11 +21,12 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Chip from "@mui/material/Chip";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { getImageLogo } from "../JobListings/SearchSection";
-import { getAddress } from "@/utils/HelperFunctions";
+// import { getAddress } from "@/utils/HelperFunctions";
 import moment from "moment";
+import Image from "next/image";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -376,7 +377,7 @@ const JobDetail = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <img src="/url.png" alt="" width="16px" />
+                      <Image src="/url.png" alt="" width={16} />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"

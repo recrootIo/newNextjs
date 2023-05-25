@@ -1,21 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import {
-  Box,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Stack,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import React from "react";
 import Image from "next/image";
 
 const UsersDetailsHome = () => {
-  const mobile = useMediaQuery("(max-width:900px)");
+  // const mobile = useMediaQuery("(max-width:900px)");
 
   return (
     <Box

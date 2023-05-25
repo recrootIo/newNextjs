@@ -5,6 +5,7 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 import React, { useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
+import Image from "next/image";
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -19,7 +20,7 @@ const SimilarJobs = () => {
 
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     setIsShown((current) => !current);
   };
 
@@ -114,7 +115,7 @@ const SimilarJobs = () => {
             alignItems: "center",
           }}
         >
-          <img src="./Frame 93.png" alt="" />
+          <Image src="./Frame 93.png" alt="" />
         </Box>
       </Container>
     </Box>

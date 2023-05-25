@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
-  DatePicker,
+  // DatePicker,
   LocalizationProvider,
   MobileDatePicker,
 } from "@mui/x-date-pickers";
@@ -19,20 +19,21 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import {
-  AddCertificateAndThenGet,
-  AddEditCertificates,
-  addEditCertificates,
+  // AddCertificateAndThenGet,
+  // AddEditCertificates,
+  // addEditCertificates,
   retrievePersonal,
 } from "@/redux/slices/personal";
-import moment from "moment";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+// import moment from "moment";
+// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { convertDate } from "@/utils/HelperFunctions";
-import personalService from "@/redux/services/personal.service";
+// import personalService from "@/redux/services/personal.service";
 import resumeService from "@/redux/services/resume.service";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import Image from "next/image";
 
 const AddCertificates = ({}) => {
   const certOne = useSelector((state) => state.personal.certone);
@@ -71,6 +72,7 @@ const AddCertificates = ({}) => {
   }, [certOne]);
 
   const onChange = (e, n) => {
+    console.log(n);
     let { name, value } = e.target;
 
     setInputCertificate({
@@ -252,7 +254,7 @@ const AddCertificates = ({}) => {
                     width: "5%",
                   }}
                 >
-                  <img src="/upload.png" alt="" style={{ width: "20px" }} />
+                  <Image src="/upload.png" alt="" width={20} />
                   <input
                     type="file"
                     accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.jpg,.jpeg,.png"

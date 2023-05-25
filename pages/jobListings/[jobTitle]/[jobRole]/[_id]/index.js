@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import jobsService from "@/redux/services/job.service";
 import React from "react";
 
-const JobDetails = ({ jobTitle, job, jobRole }) => {
+const JobDetails = ({ job, jobRole }) => {
   return (
     <>
       <Header title={jobRole} description={job?.jobDescription} />

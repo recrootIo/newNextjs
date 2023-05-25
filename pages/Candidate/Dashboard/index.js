@@ -1,25 +1,17 @@
 "use client";
-import { BOLD } from "@/theme/fonts";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
   Collapse,
   Container,
-  Divider,
   Drawer,
   Grid,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Stack,
   styled,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import List from "@mui/material/List";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
@@ -42,7 +34,6 @@ import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePasswor
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
 import authService from "@/redux/services/auth.service";
-import alert from "@/redux/slices/alert";
 import Navbar from "@/components/Navbar/Navbar";
 import CandidateProfileHeader from "@/components/Candidates/CandidateProfileHeader/CandidateProfileHeader";
 

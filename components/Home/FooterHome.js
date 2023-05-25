@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { Grid, Typography, Box, Stack, Container, styled } from "@mui/material";
-import { createElement, useContext, useRef, Fragment } from "react";
+import { Grid, Box, Stack, Container, styled } from "@mui/material";
+import Image from "next/image";
 
 const StyledTypo = styled(CustomTypography)({
   cursor: "pointer",
@@ -60,10 +59,11 @@ const FooterHome = () => {
                   },
                 }}
               >
-                <img
+                <Image
                   src="/whiteLogo.png"
                   alt=""
-                  style={{ height: "59px", marginRight: "10px" }}
+                  height="59px"
+                  style={{ marginRight: "10px" }}
                 />
               </div>
               <div className="para">
@@ -157,13 +157,14 @@ const FooterHome = () => {
                   marginTop: "20px",
                 }}
               >
-                <img
+                <Image
                   src="/instagram.png"
                   alt=""
-                  style={{ mr: "20px", height: "45px" }}
+                  style={{ mr: "20px" }}
+                  height={"45px"}
                 />
-                <img src="/linkedin.png" alt="" style={{ height: "45px" }} />
-                <img src="/facebook.png" alt="" style={{ height: "45px" }} />
+                <Image src="/linkedin.png" alt="" height="45px" />
+                <Image src="/facebook.png" alt="" height="45px" />
               </Stack>
             </Grid>
           </Grid>
@@ -194,13 +195,14 @@ const FooterHome = () => {
                 alignItems="center"
                 spacing={2}
               >
-                <img
+                <Image
                   src="/instagram.png"
                   alt=""
-                  style={{ mr: "20px", height: "30px" }}
+                  style={{ mr: "20px" }}
+                  height={"30px"}
                 />
-                <img src="/linkedin.png" alt="" style={{ height: "30px" }} />
-                <img src="/facebook.png" alt="" style={{ height: "30px" }} />
+                <Image src="/linkedin.png" alt="" height={"30px"} />
+                <Image src="/facebook.png" alt="" height={"30px"} />
               </Stack>
             </Grid>
 
