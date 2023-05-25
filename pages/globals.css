@@ -291,9 +291,7 @@
   .mobileLogo {
     display: none;
   }
-  .rec-arrow {
-    display: none;
-  }
+
   .mobileSimilarJobs {
     display: none;
   }
@@ -384,6 +382,7 @@
 
 .searchHomeImage {
   height: 573px;
+  width: auto;
 }
 
 /* Tablet queries */
