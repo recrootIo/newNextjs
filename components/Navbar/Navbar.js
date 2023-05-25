@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { Avatar } from "@mui/material";
 import { logout } from "@/redux/slices/auth";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
@@ -59,13 +60,15 @@ const Navbar = () => {
                     About Us
                   </a>
       {userType === "Candidate" ? 
-                  <a
-                    href="#"
-                    className="   rounded-md px-3 py-2 text-sm font-medium"
+      <Link href={'/Candidate/Dashboard'}>
+                  <p
+                    className="rounded-md px-3 py-2 text-sm font-medium"
                     style={{ fontSize: "20px", color: "black" }}
                   >
                     Candidate
-                  </a> :
+                  </p> 
+      </Link>
+                  :
                   <a
                     href="#"
                     className="   rounded-md px-3 py-2 text-sm font-medium"

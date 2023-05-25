@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Cookies from "js-cookie";
 const http = axios.create({
   baseURL: "https://preprod.recroot.au/api/",
   headers: {
@@ -8,9 +9,9 @@ const http = axios.create({
 });
 
 http.interceptors.request.use((config) => {
-  // const token = JSON.parse(localStorage.getItem("User")).token;
-  // config.headers = config.headers || {};
-  // config.headers["x-access-token"] = token;
+  const token = Cookies.get('token')
+  config.headers = config.headers || {};
+  config.headers["x-access-token"] = token;
 
   return config;
 });
