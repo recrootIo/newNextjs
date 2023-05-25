@@ -1,12 +1,8 @@
-import { DANGER } from "@/theme/colors";
-import { ERROR, SUCCESS } from "@/utils/constants";
-import { getUserId } from "@/utils/HelperFunctions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
-import { openAlert } from "./alert";
 import { updateCurrentScreen } from "./candidate";
 
 const initialState = {
