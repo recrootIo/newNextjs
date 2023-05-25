@@ -33,7 +33,7 @@ const index = ({ ...props }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const { title, address } = context.query;
+  const { title = null, address = null } = context.query;
 
   const newService = new CompanyData();
   let sectors = null;
