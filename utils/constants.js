@@ -212,3 +212,7 @@ export const USER_EXPERIENCES = [
   "15+ Years",
   "20+ Years",
 ];
+
+// Data formats
+export const YEARS = "YYYY";
+export const YYYY_MM_DD = "YYYY/MM/DD";
