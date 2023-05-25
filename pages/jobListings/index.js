@@ -36,8 +36,8 @@ export const getServerSideProps = async (context) => {
   const { title = null, address = null } = context.query;
 
   const newService = new CompanyData();
-  let sectors = null;
-  let companies = null;
+  let sectors = [];
+  let companies = [];
   await newService
     .getAllInfoSectors()
     .then((res) => {
