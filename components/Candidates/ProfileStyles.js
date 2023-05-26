@@ -1,5 +1,4 @@
-import { Card } from "@mui/material";
-import styled from "styled-components";
+import { Card, styled } from "@mui/material";
 
 const StyledCard = styled(Card)({
   border: "1px solid #D3EAFF",
