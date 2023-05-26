@@ -1133,7 +1133,7 @@ a {
   display: flex;
   align-items: flex-end;
   padding-left: 16px;
-  font-family: "Inter-Bold";
+  font-family: "Inter-Bold" !important;
 }
 
 .divider {
