@@ -1079,7 +1079,7 @@ a {
 
 .jobCard {
   width: 100%;
-  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
 }
 
