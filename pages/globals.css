@@ -1128,17 +1128,16 @@ a {
 }
 
 .filterTopic {
-  font-size: 19px;
-  font-style: bold;
-  font-weight: 600;
+  font-size: 19px !important;
+  font-weight: 900;
   display: flex;
   align-items: flex-end;
   padding-left: 16px;
 }
 
 .divider {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
   color: rgba(3, 66, 117, 0.3);
 }
 
