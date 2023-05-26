@@ -163,7 +163,14 @@ const Navbar = () => {
                 />
                 <IconButton
                   onClick={() => drawerFunction()}
-                  className="lg:hidden md:hidden"
+                  sx={{
+                    display: {
+                      md: "none",
+                      lg: "none",
+                      sm: "block",
+                      xs: "block",
+                    },
+                  }}
                 >
                   <MenuIcon />
                 </IconButton>
