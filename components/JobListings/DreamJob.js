@@ -2,17 +2,17 @@ import React from "react";
 import { Box, Grid, Container } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { BOLD } from "@/theme/fonts";
+import styles from "./joblistings.module.css";
 
 const DreamJob = () => {
   return (
-    <Box className="dreamjob">
+    <Box className={styles.dreamjob}>
       <Container>
         <Grid container spacing={2}>
-          <Grid item className="dreamJobTypoGrid" xs={12} md={6}>
-            <Box className="dreamjobTypoBox" xs={12}>
+          <Grid item className={styles.dreamJobTypoGrid} xs={12} md={6}>
+            <Box className={styles.dreamjobTypoBox} xs={12}>
               <CustomTypography
-                className="dreamjobTypo"
+                className={styles.dreamjobTypo}
                 variant="h3"
                 gutterBottom
               >
@@ -20,10 +20,10 @@ const DreamJob = () => {
               </CustomTypography>
             </Box>
           </Grid>
-          <Grid className="dreamjobGrid" item xs={12} md={6}>
-            <Box className="dreamjobImgBox">
+          <Grid className={styles.dreamjobGrid} item xs={12} md={6}>
+            <Box className={styles.dreamjobImgBox}>
               <Image
-                className="dreamJobImage"
+                className={styles.dreamJobImage}
                 src="/image head.png"
                 alt=""
                 width="0"

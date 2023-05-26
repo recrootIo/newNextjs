@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { BOLD } from "@/theme/fonts";
+import styles from "./joblistings.module.css";
 
 const RecentSearch = () => {
   return (
@@ -22,7 +22,6 @@ const RecentSearch = () => {
           <Box>
             <CustomTypography
               variant="h4"
-              fontFamily={BOLD}
               pt="50px"
               textAlign="center"
               gutterBottom
@@ -36,9 +35,9 @@ const RecentSearch = () => {
             sx={{ mt: "20px", display: "flex", justifyContent: "center" }}
           >
             <Grid item xs={12} md={8}>
-              <Box className="smallRecent">
+              <Box className={styles.smallRecent}>
                 <Image
-                  className="mobileRecentImg"
+                  className={styles.mobileRecentImg}
                   src="/imageRecentSearch.png"
                   alt=""
                   width="0"
@@ -55,7 +54,7 @@ const RecentSearch = () => {
                 }}
                 spacing={2}
               >
-                <Card className="recentCard">
+                <Card className={styles.recentCard}>
                   <CardContent
                     sx={{
                       display: "flex",
@@ -77,7 +76,7 @@ const RecentSearch = () => {
                   <CardHeader
                     avatar={
                       <Avatar
-                        className="recentAvatar"
+                        className={styles.recentAvatar}
                         alt="logo"
                         src="/logo 2.png"
                         sx={{
@@ -111,7 +110,7 @@ const RecentSearch = () => {
                       <Stack spacing={0.5}>
                         <Box sx={{ display: "flex", mt: "17px" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/location.png"
                             alt=""
                             width="0"
@@ -120,14 +119,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Location
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;US
@@ -135,7 +134,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/currency.png"
                             alt=""
                             width="0"
@@ -144,14 +143,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Salary
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;4 LPA
@@ -159,7 +158,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/bag.png"
                             alt=""
                             width="0"
@@ -168,14 +167,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Job Type
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;Full Time
@@ -183,7 +182,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/hourglass.png"
                             alt=""
                             width="0"
@@ -192,23 +191,23 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Exp
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;3 Years
                           </CustomTypography>
                         </Box>
                       </Stack>
-                      <Box className="btnBox">
+                      <Box className={styles.btnBox}>
                         <Button
-                          className="bookmarkBtn"
+                          className={styles.bookmarkBtn}
                           size="medium"
                           variant="outlined"
                           bgcolor="#02A9F7 !important"
@@ -216,23 +215,23 @@ const RecentSearch = () => {
                           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                         </Button>
                         <Button
-                          className="viewDetailBtn"
+                          className={styles.viewDetailBtn}
                           variant="contained"
                           size="medium"
                         >
                           View Details
                         </Button>
                       </Box>
-                      <Box className="recentTypoBox">
+                      <Box className={styles.recentTypoBox}>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
                           10 days ago
                         </CustomTypography>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
@@ -242,7 +241,7 @@ const RecentSearch = () => {
                     </Box>
                   </CardContent>
                 </Card>
-                <Card className="recentCard">
+                <Card className={styles.recentCard}>
                   <CardContent
                     sx={{
                       display: "flex",
@@ -264,7 +263,7 @@ const RecentSearch = () => {
                   <CardHeader
                     avatar={
                       <Avatar
-                        className="recentAvatar"
+                        className={styles.recentAvatar}
                         alt="logo"
                         src="/logo 2.png"
                         sx={{
@@ -298,7 +297,7 @@ const RecentSearch = () => {
                       <Stack spacing={0.5}>
                         <Box sx={{ display: "flex", mt: "17px" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/location.png"
                             alt=""
                             width="0"
@@ -307,14 +306,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Location
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;US
@@ -322,7 +321,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/currency.png"
                             alt=""
                             width="0"
@@ -331,14 +330,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Salary
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;4 LPA
@@ -346,7 +345,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/bag.png"
                             alt=""
                             width="0"
@@ -355,23 +354,22 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Job Type
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;Full Time
                           </CustomTypography>
                         </Box>
-
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/hourglass.png"
                             alt=""
                             width="0"
@@ -380,23 +378,23 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Exp
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;3 Years
                           </CustomTypography>
                         </Box>
                       </Stack>
-                      <Box className="btnBox">
+                      <Box className={styles.btnBox}>
                         <Button
-                          className="bookmarkBtn"
+                          className={styles.bookmarkBtn}
                           size="medium"
                           variant="outlined"
                           bgcolor="#02A9F7 !important"
@@ -404,23 +402,23 @@ const RecentSearch = () => {
                           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                         </Button>
                         <Button
-                          className="viewDetailBtn"
+                          className={styles.viewDetailBtn}
                           variant="contained"
                           size="medium"
                         >
                           View Details
                         </Button>
                       </Box>
-                      <Box className="recentTypoBox">
+                      <Box className={styles.recentTypoBox}>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
                           10 days ago
                         </CustomTypography>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
@@ -430,7 +428,7 @@ const RecentSearch = () => {
                     </Box>
                   </CardContent>
                 </Card>
-                <Card className="recentCard">
+                <Card className={styles.recentCard}>
                   <CardContent
                     sx={{
                       display: "flex",
@@ -452,7 +450,7 @@ const RecentSearch = () => {
                   <CardHeader
                     avatar={
                       <Avatar
-                        className="recentAvatar"
+                        className={styles.recentAvatar}
                         alt="logo"
                         src="/logo 2.png"
                         sx={{
@@ -486,7 +484,7 @@ const RecentSearch = () => {
                       <Stack spacing={0.5}>
                         <Box sx={{ display: "flex", mt: "17px" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/location.png"
                             alt=""
                             width="0"
@@ -495,14 +493,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Location
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;US
@@ -510,7 +508,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/currency.png"
                             alt=""
                             width="0"
@@ -519,14 +517,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Salary
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;4 LPA
@@ -534,7 +532,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/bag.png"
                             alt=""
                             width="0"
@@ -543,14 +541,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Job Type
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;Full Time
@@ -558,7 +556,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/hourglass.png"
                             alt=""
                             width="0"
@@ -567,23 +565,23 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Exp
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;3 Years
                           </CustomTypography>
                         </Box>
                       </Stack>
-                      <Box className="btnBox">
+                      <Box className={styles.btnBox}>
                         <Button
-                          className="bookmarkBtn"
+                          className={styles.bookmarkBtn}
                           size="medium"
                           variant="outlined"
                           bgcolor="#02A9F7 !important"
@@ -591,23 +589,23 @@ const RecentSearch = () => {
                           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                         </Button>
                         <Button
-                          className="viewDetailBtn"
+                          className={styles.viewDetailBtn}
                           variant="contained"
                           size="medium"
                         >
                           View Details
                         </Button>
                       </Box>
-                      <Box className="recentTypoBox">
+                      <Box className={styles.recentTypoBox}>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
                           10 days ago
                         </CustomTypography>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
@@ -617,7 +615,7 @@ const RecentSearch = () => {
                     </Box>
                   </CardContent>
                 </Card>
-                <Card className="recentCard">
+                <Card className={styles.recentCard}>
                   <CardContent
                     sx={{
                       display: "flex",
@@ -639,7 +637,7 @@ const RecentSearch = () => {
                   <CardHeader
                     avatar={
                       <Avatar
-                        className="recentAvatar"
+                        className={styles.recentAvatar}
                         alt="logo"
                         src="/logo 2.png"
                         sx={{
@@ -673,7 +671,7 @@ const RecentSearch = () => {
                       <Stack spacing={0.5}>
                         <Box sx={{ display: "flex", mt: "17px" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/location.png"
                             alt=""
                             width="0"
@@ -682,14 +680,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Location
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;US
@@ -697,7 +695,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/currency.png"
                             alt=""
                             width="0"
@@ -706,14 +704,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Salary
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;4 LPA
@@ -721,7 +719,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/bag.png"
                             alt=""
                             width="0"
@@ -730,14 +728,14 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Job Type
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;Full Time
@@ -745,7 +743,7 @@ const RecentSearch = () => {
                         </Box>
                         <Box sx={{ display: "flex" }}>
                           <Image
-                            className="similariconImg"
+                            className={styles.similariconImg}
                             src="/hourglass.png"
                             alt=""
                             width="0"
@@ -754,23 +752,23 @@ const RecentSearch = () => {
                           />
                           <CustomTypography
                             variant="body2"
-                            className="similarText"
+                            className={styles.similarText}
                             gutterBottom
                           >
                             Exp
                           </CustomTypography>
                           <CustomTypography
                             variant="body2"
-                            className="similarInputText"
+                            className={styles.similarInputText}
                             gutterBottom
                           >
                             :&nbsp;3 Years
                           </CustomTypography>
                         </Box>
                       </Stack>
-                      <Box className="btnBox">
+                      <Box className={styles.btnBox}>
                         <Button
-                          className="bookmarkBtn"
+                          className={styles.bookmarkBtn}
                           size="medium"
                           variant="outlined"
                           bgcolor="#02A9F7 !important"
@@ -778,23 +776,23 @@ const RecentSearch = () => {
                           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                         </Button>
                         <Button
-                          className="viewDetailBtn"
+                          className={styles.viewDetailBtn}
                           variant="contained"
                           size="medium"
                         >
                           View Details
                         </Button>
                       </Box>
-                      <Box className="recentTypoBox">
+                      <Box className={styles.recentTypoBox}>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
                           10 days ago
                         </CustomTypography>
                         <CustomTypography
-                          className="recentTypo"
+                          className={styles.recentTypo}
                           variant="body2"
                           color="text.secondary"
                         >
@@ -807,14 +805,14 @@ const RecentSearch = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Box className="largeRecent">
+              <Box className={styles.largeRecent}>
                 <Image
                   src="/imageRecentSearchSection.png"
                   alt=""
                   width="0"
                   height="0"
                   sizes="100vw"
-                  className="recentSearchImage"
+                  className={styles.recentSearchImage}
                 />
               </Box>
             </Grid>

@@ -1,0 +1,361 @@
+.dreamjob {
+  background: linear-gradient(200.27deg, #034275cc 0.25%, #02a9f7cc 500.41%);
+  background-image: url("/JobListingPageBG.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.dreamjobTypo {
+  font-size: 50px;
+  text-align: center;
+  color: white;
+}
+
+.dreamjobTypoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  height: 350px;
+  width: 80%;
+}
+
+.dreamJobTypoGrid {
+  display: flex;
+  justify-content: center;
+}
+
+.dreamjobImgBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.dreamJobImage {
+  width: auto;
+  height: 300px;
+}
+
+.jobCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+}
+
+.recentAvatar {
+  object-fit: contain;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #2699ff;
+}
+
+.searchRstBtn {
+  display: none;
+}
+
+.searchRstTypo {
+  display: none;
+}
+.searchCard {
+  padding-top: 0;
+}
+
+@media only screen and (min-width: 900px) {
+  .mobileBtn {
+    display: none;
+  }
+  .smallRecent {
+    display: none !important;
+  }
+
+  .recentCard {
+    margin-right: 20px;
+  }
+  .searchBox {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+    border: 1px solid rgba(3, 66, 117, 0.3);
+    border-radius: 8px;
+    height: 60px;
+  }
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 13px;
+  width: 65%;
+}
+
+.recentTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  /* margin-bottom: 15px; */
+}
+
+.filterTopic {
+  font-size: 19px;
+  font-style: bold;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 16px;
+}
+
+.divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: rgba(3, 66, 117, 0.3);
+}
+
+.scrollbar {
+  margin-left: 15px;
+  float: left;
+  height: 180px;
+  overflow-y: scroll;
+}
+
+.smallRecent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileRecentImg {
+  height: 85%;
+  width: 62%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.recentAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.similariconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 14px;
+}
+
+.similarInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.recentTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+.recentCard {
+  width: 45%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+  padding-top: 0;
+}
+
+.locationContainer {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  width: 40%;
+  height: 62px;
+  align-items: center;
+}
+
+.recentSearchImage {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoryCard {
+  width: 135px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.12);
+  border-radius: 15px;
+}
+
+.cousltypo {
+  margin-top: 10;
+  color: #01313f;
+  font-weight: 500;
+  margin-top: 9px;
+  font-size: 16px;
+}
+
+.searchIcon {
+  color: #a6a6a6;
+  align-self: center;
+  margin-right: 38px;
+  margin-left: 34px;
+}
+
+.searchBox {
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
+.searchButton {
+  background-color: #00339b !important;
+  color: "white";
+  margin-right: 5px;
+  box-shadow: none;
+  border-radius: 8px;
+  width: 20%;
+  height: 50px;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 900px) {
+  .dreamjobGrid {
+    order: -1;
+  }
+  .dreamjobTypo {
+    font-size: 45px;
+  }
+  .dreamjobTypoBox {
+    height: 200px;
+  }
+  .dreamjob {
+    display: none;
+  }
+  .searchRstTypo {
+    text-align: right;
+    font-style: italic;
+    font-size: 11px;
+  }
+  .filterBtn {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .jobResult {
+    padding-left: 8px;
+    padding-top: 8px;
+  }
+  .sortBy {
+    display: none;
+  }
+  .categoryChipStack {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .categoryChip {
+    background-color: #d4f0fc;
+    color: rgba(3, 66, 117, 0.69);
+    size: small;
+  }
+  .recentCard {
+    width: 100%;
+  }
+  .largeRecent {
+    display: none;
+  }
+  .searchbycaregoryContainer {
+    display: none;
+  }
+  .searchIcon {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .outerSearchBox {
+    background-color: #e9f7fd;
+    padding-bottom: 5px;
+  }
+  .searchBox {
+    padding-top: 30px;
+  }
+  .locationContainer {
+    border: 1px solid rgba(3, 66, 117, 0.3);
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+  }
+  .searchDivider {
+    display: none;
+  }
+  .searchButton {
+    width: 100%;
+    height: 62px;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  .filter {
+    display: none;
+  }
+}

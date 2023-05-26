@@ -12,8 +12,18 @@ export default class MyDocument extends Document {
 
           <link rel="shortcut icon" href="/static/favicon.ico" />
           <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="preload"
+            href="./asset/Inter-Regular.ttf"
+            as="Inter"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="./asset/Inter-Bold.ttf"
+            as="Inter-Bold"
+            type="font/woff2"
+            crossOrigin="anonymous"
           />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {this.props.emotionStyleTags}
