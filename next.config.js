@@ -7,6 +7,7 @@ const nextConfig = {
   // transpilePackages: ["@mui/material/css"],
   webpack(config) {
     config.resolve.alias["@emotion/core"] = "@emotion/react";
+    config.resolve.alias["styled-components"] = "styled-components/react";
     return config;
   },
 };
