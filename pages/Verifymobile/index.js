@@ -15,32 +15,32 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 const VerifyEmail = () => {
   const [otp, setOtp] = React.useState("");
   const dispatch = useDispatch();
-  const userId = Cookies.get("userId");
-  const vcode = Cookies.get("verifyCode");
+  const userId = Cookies.get('userId');
+  const vcode = Cookies.get('verifyCode');
   const { push } = useRouter();
   const code = useSelector((state) => state.personal.code);
   const path = useSelector((state) => state.personal.pricing);
-  useEffect(() => {
+  useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("User"));
     if (user === null) {
-      push("/");
-    } else {
+      push('/')
+    }else{
       if (user.User.email_is_verified === true) {
-        push("/");
+        push('/')
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     if (code.codes === undefined) {
     } else {
       const loggedInUser = JSON.parse(localStorage.getItem("User"));
       loggedInUser.User.referral_code = code.codes;
       localStorage.setItem("User", JSON.stringify(loggedInUser));
-      Cookies.set("verifyCode", code.codes);
+      Cookies.set('verifyCode',code.codes)
     }
   }, [code]);
-  const redirect = Cookies.get("Redirect");
+  const redirect = Cookies.get('Redirect');
   const handleVerify = () => {
     // eslint-disable-next-line eqeqeq
     if (vcode == otp) {
@@ -48,14 +48,13 @@ const VerifyEmail = () => {
       const loggedInUser = JSON.parse(localStorage.getItem("User"));
       loggedInUser.User.email_is_verified = true;
       localStorage.setItem("User", JSON.stringify(loggedInUser));
-
+      
       dispatch(
         openAlert({
-          type: SUCCESS,
-          message:
-            "Your account verification is successful and is ready to go!",
+          type:SUCCESS,
+          message:"Your account verification is successful and is ready to go!"
         })
-      );
+      )
       // notify("Your account verification is successful and is ready to go!");
       if (
         loggedInUser.User.recrootUserType === "Employer" ||
@@ -73,17 +72,17 @@ const VerifyEmail = () => {
       } else if (loggedInUser.User.resume.resumeFileLocation.length === 0) {
         push("/uploadResume");
       } else {
-        push("/");
+        push("/",);
       }
     } else {
       // notifye("Your Otp Is Wrong");
       dispatch(
         openAlert({
-          type: ERROR,
-          message: "Your Otp Is Wrong",
+          type:ERROR,
+          message:"Your Otp Is Wrong"
         })
-      );
-      setOtp("");
+      )
+      setOtp('')
     }
   };
 
@@ -98,12 +97,12 @@ const VerifyEmail = () => {
     ).then(
       dispatch(
         openAlert({
-          type: SUCCESS,
-          message: "New Otp Has Been Sent",
+          type:SUCCESS,
+          message:"New Otp Has Been Sent"
         })
       )
-    );
-
+    )
+    
     // notify("New Otp Has Been Sent");
   };
   return (
@@ -196,10 +195,9 @@ const VerifyEmail = () => {
             }}
             gutterBottom
           >
-            If you {"didn't"} receive the OTP, Click Here to
-            <span>
-              <Button onClick={sendCode}>Resend</Button>
-            </span>
+          If you {"didn't"} receive the OTP, Click Here to<span>
+            <Button onClick={sendCode}>Resend</Button>
+            </span> 
           </CustomTypography>
         </Box>
       </Container>

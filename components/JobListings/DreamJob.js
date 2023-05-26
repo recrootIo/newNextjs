@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid, Container } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { BOLD } from "@/theme/fonts";
 
 const DreamJob = () => {
   return (
@@ -13,7 +12,8 @@ const DreamJob = () => {
             <Box className="dreamjobTypoBox" xs={12}>
               <CustomTypography
                 className="dreamjobTypo"
-                variant="h3"
+                variant="h4"
+                fontWeight={700}
                 gutterBottom
               >
                 Find your Dream Job
