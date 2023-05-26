@@ -5,3 +5,7 @@ import { Typography } from "@mui/material";
 export const CustomTypography = ({ children, ...props }) => {
   return <Typography {...props}>{children}</Typography>;
 };
+
+CustomTypography.defaultProps = {
+  fontFamily: "Inter",
+};

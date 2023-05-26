@@ -16,9 +16,6 @@ export const darkTheme = createTheme({
       fontSize: 50,
       fontFamily: ["Inter-Bold !important"],
     },
-    h4: {
-      fontFamily: ["Inter-Bold !important"],
-    },
     subtitle1: { fontFamily: ["Inter"] },
     subtitle2: { fontFamily: ["Inter"] },
     body1: { fontFamily: ["Inter"] },

@@ -49,7 +49,6 @@ import LoadingSearchCards from "./LoadingSearchCards";
 import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
-import styles from "./joblistings.module.css";
 
 export const getSalary = (salary) => {
   if (salary?.salaryType !== "noprovide") {
@@ -378,6 +377,8 @@ const SearchSection = ({ ...props }) => {
     getJobs();
   }, []);
 
+  console.log(selectedCompanies, "selectedCompanies");
+
   return (
     <div>
       <Box
@@ -386,11 +387,11 @@ const SearchSection = ({ ...props }) => {
           mb: "40px",
         }}
       >
-        <Box className={styles.outerSearchBox}>
+        <Box className="outerSearchBox">
           <Container>
-            <Box className={styles.searchBox}>
-              <Box className={styles.locationContainer}>
-                <SearchIcon className={styles.searchIcon} />
+            <Box className="searchBox">
+              <Box className="locationContainer">
+                <SearchIcon className="searchIcon" />
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Keyword or title"
@@ -400,12 +401,12 @@ const SearchSection = ({ ...props }) => {
                 />
               </Box>
               <Divider
-                className={styles.searchDivider}
+                className="searchDivider"
                 sx={{ height: 28, m: 0.5 }}
                 orientation="vertical"
               />
-              <Box className={styles.locationContainer}>
-                <LocationOnOutlinedIcon className={styles.searchIcon} />
+              <Box className="locationContainer">
+                <LocationOnOutlinedIcon className="searchIcon" />
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Location"
@@ -416,7 +417,7 @@ const SearchSection = ({ ...props }) => {
               </Box>
               <Button
                 variant="contained"
-                className={styles.searchButton}
+                className="searchButton"
                 onClick={() => getJobs()}
               >
                 Search
@@ -427,7 +428,7 @@ const SearchSection = ({ ...props }) => {
 
         <Container>
           <Grid container spacing={2} style={{ marginBottom: 30 }}>
-            <Grid className={styles.filter} item xs={0} md={4}>
+            <Grid className="filter" item xs={0} md={4}>
               <Card sx={{ width: "100%", height: "100%" }}>
                 <CardContent>
                   <MainFilter
@@ -449,7 +450,7 @@ const SearchSection = ({ ...props }) => {
 
             <Grid item xs={12} md={8}>
               <Box sx={{ display: "flex", marginTop: "10px" }}>
-                <div className={styles.filterBtn}>
+                <div className="filterBtn">
                   <IconButton onClick={handleClickOpen} aria-label="filter">
                     <FilterAltOutlinedIcon />
                   </IconButton>
@@ -507,7 +508,7 @@ const SearchSection = ({ ...props }) => {
                             key={value}
                             label={value}
                             color="primary"
-                            sx={{
+                            style={{
                               fontWeight: 500,
                               marginTop: "10px",
                               marginRight: "10px",
@@ -534,13 +535,13 @@ const SearchSection = ({ ...props }) => {
                           aria-label="Vertical tabs example"
                           sx={{ borderRight: 1, borderColor: "divider" }}
                         >
-                          {/* <Tab label="Professional Level" {...a11yProps(0)} /> */}
+                          <Tab label="Professional Level" {...a11yProps(0)} />
                           <Tab label="Industry" {...a11yProps(1)} />
                           <Tab label="Companies" {...a11yProps(2)} />
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
-                        {/* <TabPanel
+                        <TabPanel
                           value={value}
                           index={0}
                           style={{ p: "0px !important" }}
@@ -561,7 +562,7 @@ const SearchSection = ({ ...props }) => {
                               // onChange={handleCheckBoxChange}
                             />
                           </FormGroup>
-                        </TabPanel> */}
+                        </TabPanel>
                         <TabPanel value={value} index={1}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedSector(a)}
@@ -662,7 +663,7 @@ const SearchSection = ({ ...props }) => {
                   </BootstrapDialog>
                 </div>
                 <Stack
-                  className={styles.categoryChipStack}
+                  className="categoryChipStack"
                   direction="row"
                   spacing={1}
                 >
@@ -676,7 +677,7 @@ const SearchSection = ({ ...props }) => {
                   */}
                   {selectedSector && (
                     <Chip
-                      className={styles.categoryChip}
+                      className="categoryChip"
                       label={selectedSector}
                       size="medium"
                     />
@@ -689,14 +690,14 @@ const SearchSection = ({ ...props }) => {
                           ?.company_name
                       }
                       size="medium"
-                      className={styles.categoryChip}
+                      className="categoryChip"
                     />
                   )}
 
                   {exper.map((na, index) => (
                     <Chip
                       key={index}
-                      className={styles.categoryChip}
+                      className="categoryChip"
                       label={na}
                       size="medium"
                     />
@@ -705,7 +706,7 @@ const SearchSection = ({ ...props }) => {
                   {names.map((na, index) => (
                     <Chip
                       key={index}
-                      className={styles.categoryChip}
+                      className="categoryChip"
                       label={na}
                       size="medium"
                     />
@@ -720,7 +721,7 @@ const SearchSection = ({ ...props }) => {
                 }}
               >
                 <CustomTypography
-                  className={styles.jobResult}
+                  className="jobResult"
                   sx={{ alignItems: "flex-end" }}
                   variant="body2"
                   color="rgba(3, 66, 117, 0.6);"
@@ -729,7 +730,7 @@ const SearchSection = ({ ...props }) => {
                   {totalPage * 10} Jobs Result
                 </CustomTypography>
                 <FormControl
-                  className={styles.sortBy}
+                  className="sortBy"
                   variant="standard"
                   size="small"
                   sx={{

@@ -21,3 +21,1566 @@
   font-family: "Inter-Thin";
   src: url("./asset/Inter-Thin.ttf");
 }
+
+.loginLogo {
+  height: 33px;
+}
+
+.linkedinButton {
+  display: flex;
+  position: relative;
+  background: #fff;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  height: 40px;
+  border: 1px solid #c2c8d0;
+  color: #202124;
+  cursor: pointer;
+  outline: 0;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 4px;
+  height: 60px;
+  border-radius: 8px;
+  width: 95%;
+  font-size: 18px;
+  font-weight: 400;
+  color: #949494;
+}
+
+.MuiContainer-maxWidthLg {
+  max-width: 1232px;
+}
+
+.userDetailsImages {
+  top: -124px !important;
+  position: relative !important;
+}
+
+.userDetailCard {
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  box-shadow: "inset 0px 0px 10px rgba(0,0,0,0.5)";
+  cursor: pointer;
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+
+.userDetailCard2 {
+  transform: translatey(0px);
+  animation: float 7s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+
+.aboutImage {
+  height: 400px !important;
+  width: auto;
+}
+
+/* Tab queries */
+@media only screen and (max-width: 1006px) {
+  .categoryImage {
+    height: 618px !important;
+    width: auto;
+  }
+}
+
+.categoryBox {
+  width: 352px;
+  height: 107px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  padding: 10px;
+}
+
+.categoryBox:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2);
+}
+
+.nicheMinHight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 430px;
+}
+
+.numcard {
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+}
+
+.brandsBackgroundImage {
+  height: 250px;
+}
+
+/* Tab queries */
+@media only screen and (max-width: 974px) {
+  .categoryBox {
+    width: 409px !important;
+    height: 130px;
+  }
+
+  .nicheMinHight {
+    min-height: 473px;
+  }
+
+  .numcard {
+    width: 217px;
+  }
+
+  .brandsBackgroundImage {
+    height: 200px;
+  }
+}
+
+.rec-dot_active {
+  background-color: #1097cd !important;
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.rec-dot:focus,
+.rec-dot:hover {
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+.detailCard {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.viewmoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.similarjobsViewmorebtn {
+  background-color: #00339b !important;
+  border-radius: 8px;
+  height: 50px;
+  width: 160px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.similarCard {
+  width: 340px;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
+  border-radius: 10px;
+  padding-top: 0;
+}
+
+.similarAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+
+.similarInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 14px;
+  width: 65%;
+}
+
+.similarTopic {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 30px;
+}
+
+.similarTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.similarTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+.skillChip {
+  border-radius: 8px;
+  size: small;
+  background-color: #edf8fd;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #01313f;
+}
+
+.mobileSimilarJobs {
+  padding-bottom: 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobileLogo {
+    display: none;
+  }
+
+  .mobileSimilarJobs {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .similarCard {
+    width: 100%;
+  }
+  .carouselstack {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+.imgTypo {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0;
+  margin-right: 30px !important;
+  min-width: 25%;
+}
+
+.iconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.firsticonImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.similariconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.rec-dot_active:focus,
+.rec-dot_active:hover {
+  background-color: #1097cd !important;
+  box-shadow: 0 0 1px 3px var(--blue) !important;
+}
+
+.rec-arrow {
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+  font-size: 1.1rem !important;
+  color: black !important;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
+  min-width: 1.7rem !important;
+  line-height: 1.7rem !important;
+  box-shadow: none !important;
+}
+
+.rec-arrow:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.categoryImageMiddled {
+  height: 623px !important;
+}
+
+.signUpContainer {
+  min-height: 735px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.searchFormHome {
+  width: 90%;
+}
+
+.searchHomeImage {
+  height: 573px;
+  width: auto;
+}
+
+/* Tablet queries */
+@media only screen and (max-width: 1106px) {
+  .signUpContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .signHomeImage {
+    height: 499px;
+    width: auto;
+  }
+}
+
+/* Mobile queries */
+@media only screen and (max-width: 896px) {
+  .signUpContainer {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    padding: 30px;
+  }
+  .signHomeImage {
+    height: 406px;
+    width: auto;
+  }
+
+  .searchHomeImage {
+    display: none;
+  }
+  .searchFormHome {
+    width: 100%;
+    justify-content: center;
+    height: 379px;
+  }
+}
+#getHiredMain {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.noSelect {
+  -webkit-user-select: none;
+  -html-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.getHiredImage {
+  top: -91px !important;
+  position: relative !important;
+  height: 213px;
+  width: 204px;
+}
+
+.card-carousel {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.hiredCard {
+  border-radius: 25px;
+  background-color: #1097cd;
+  display: flex;
+  transition: box-shadow 9s;
+  cursor: pointer;
+}
+
+.hiredCard:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2);
+}
+
+.hiredRight {
+  position: relative;
+  z-index: 0;
+}
+
+.hiredMiddle {
+  position: relative;
+}
+
+.hiredCardActive {
+  top: -70px;
+  z-index: 30 !important;
+  width: 432px;
+  height: 280px;
+  transform: scale(0.9);
+  transition: filter 0.5s ease 0s, transform 0.5s ease-out 0s;
+}
+
+.hiredCardActive button {
+  width: 185px;
+  height: 50px;
+  font-size: 22px;
+  font-family: Inter;
+}
+
+.noHiredCard {
+  opacity: 0.4;
+  width: 360px;
+  height: 260px;
+}
+
+.noHiredCard image {
+  height: 200px !important;
+}
+
+.noHiredCard button {
+  width: 140px;
+  font-size: 15px !important;
+  height: 32px;
+  font-family: Inter;
+}
+
+.hiredLeft {
+  position: relative;
+  z-index: 0;
+  /* left: 118px; */
+}
+
+@media (max-width: 1560px) {
+  .hiredRight {
+    position: relative;
+    z-index: 0;
+    /* left: -190px; */
+  }
+}
+
+.noHiredCardGetHiredBody {
+  font-size: 15px;
+}
+
+.activeBody {
+  font-size: 18px !important;
+  font-weight: 400;
+  color: white;
+}
+
+.nonActiveBody {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+}
+.activeHeader {
+  font-size: 30px;
+  color: white;
+  font-weight: 700;
+}
+.nonActiveHeader {
+  font-size: 25px;
+  color: white;
+  font-weight: 700;
+}
+
+.swipImages {
+  height: 100px !important;
+}
+.swiper_container {
+  height: 32rem;
+  padding: 2rem 0 0 0;
+  position: relative;
+}
+
+.swiper-slide {
+  width: 25rem;
+  position: relative;
+  opacity: 0.3;
+  padding-top: 67px;
+}
+
+@media (max-width: 500px) {
+  .swiper_container {
+    height: 30rem;
+  }
+  .swiper-slide {
+    height: 36rem !important;
+  }
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
+.slider-controler {
+  position: relative;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 690px) {
+  .hiredCardActive {
+    width: 100%;
+  }
+  .swiper-slide-next {
+    opacity: 0;
+  }
+  .swiper-slide-prev {
+    opacity: 0;
+  }
+}
+
+.swiper-pagination {
+  position: relative !important;
+  width: 15rem !important;
+  bottom: 1rem;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
+
+.swiper-slide-prev {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-next {
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}
+
+.swiper-slide-prev .hiredCardActive {
+  opacity: 0.8 !important;
+}
+
+.brands {
+  background-image: url("/BrandsectionBG.svg");
+  min-height: 350px;
+  padding-top: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.brands svg {
+  display: block;
+}
+
+.numbers {
+  /* display: inline; */
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 0 0 0;
+}
+
+.numcard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0099ff14;
+}
+
+.nichetech {
+  /* background: linear-gradient(98.12deg, #034275 -3.27%, #02a9f7 93.69%); */
+  background-image: url("/NicheSectionBG.svg");
+  color: white;
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signUpButton {
+  background: #f3fcff;
+  border-radius: 5px;
+  height: 49px;
+  width: 165px;
+
+  font-weight: 700;
+  font-size: 20px;
+  font-family: "Inter";
+}
+
+@media only screen and (max-width: 528px) {
+  .categoryBox {
+    width: 100% !important;
+    height: 130px;
+  }
+}
+
+@media only screen and (max-width: 896px) {
+  .aboutImage {
+    height: 200px !important;
+  }
+}
+
+.pointers {
+  width: auto;
+}
+
+.brandsLogos {
+  /* clip-path: path(var(--badge));
+  height: 300px; */
+  clip-path: polygon(52% 3%, 97% 26%, 97% 75%, 53% 99%, 5% 75%, 5% 27%);
+  width: 149px;
+  height: 165px;
+}
+
+.testimonialContainer {
+  background-image: url("/union.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: 150px;
+  border-color: #034275;
+  border-style: solid;
+}
+
+@media only screen and (max-width: 588px) {
+  .testimonialContainer {
+    background-image: none;
+    background-color: rgba(3, 195, 227, 0.1);
+    border-style: solid;
+    opacity: 0.9;
+  }
+}
+
+.brandsImages {
+  height: 161px;
+  width: 160px;
+}
+
+.topbar {
+  height: 103px;
+  width: 100%;
+  background-image: url("/Group 86.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.logoImage {
+  margin-top: 63px;
+  width: 190px;
+  height: 43px;
+  max-width: 400px;
+  max-height: 70px;
+}
+
+.resumeUploadTitle {
+  text-align: center;
+  color: #034275;
+  font-family: "Inter-Bold";
+  font-size: 40px;
+  line-height: 48px;
+}
+
+.resumeUploadText {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+
+  color: #01313f;
+}
+
+.salaryForm {
+  display: flex;
+  justify-content: center;
+  width: 793px;
+  height: 64px;
+}
+
+.searchJobsBtn {
+  background-color: #015fb1 !important;
+  height: 50px;
+  width: 40%;
+  text-align: center;
+  margin-bottom: 50px;
+  text-transform: capitalize;
+  font-size: medium;
+}
+
+.nextBtn {
+  background-color: #015fb1 !important;
+  height: 50px;
+  width: 30%;
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: 50px;
+}
+
+.stepperContainer {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .searchJobsBtn {
+    width: 100%;
+  }
+}
+
+.styledRows {
+  height: 50px;
+}
+
+/* .styledRows .startingTd {
+  padding-left: 30px;
+}
+
+.styledRows .endTd {
+  padding-right: 30px;
+} */
+
+.styledRows:nth-child(even) {
+  background-color: #5ca9e814;
+}
+
+.iconPointers {
+  cursor: pointer;
+}
+
+.loginLogo {
+  width: auto;
+}
+
+.loginImages {
+  height: 183px;
+  width: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .loginImages {
+    height: 120px;
+  }
+
+  .styledRows .startingTd {
+    padding-left: 10px;
+  }
+
+  .styledRows .endTd {
+    padding-right: 10px;
+  }
+}
+
+.signInSideImage1 {
+  position: absolute;
+  right: -250px;
+  width: auto;
+}
+
+.signInSideImage2 {
+  position: absolute;
+  left: -250px;
+  height: 600px;
+  width: auto;
+}
+
+.signInMain {
+  height: 130vh;
+  width: 100vw;
+  background-image: url("/SignUpBG.svg");
+  overflow: auto;
+  background-repeat: no-repeat !important;
+  background-size: cover;
+  padding: 10px;
+}
+
+.signInContent {
+  width: 700px;
+  gap: 20px;
+  position: fixed;
+}
+
+@media only screen and (max-width: 1137px) {
+  .signInSideImage1 {
+    display: none;
+  }
+  .signInSideImage2 {
+    display: none;
+  }
+  .signInMain {
+    height: 120vh;
+  }
+  .signInContent {
+    width: 100%;
+    position: initial;
+  }
+}
+
+.dreamjob {
+  background: linear-gradient(200.27deg, #034275cc 0.25%, #02a9f7cc 500.41%);
+  background-image: url("/JobListingPageBG.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.categoryCard {
+  width: 135px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.12);
+  border-radius: 15px;
+}
+
+.cousltypo {
+  margin-top: 10;
+  color: #01313f;
+  font-weight: 500;
+  margin-top: 9px;
+  font-size: 16px;
+}
+
+.dreamjobTypo {
+  font-size: 50px;
+  text-align: center;
+  color: white;
+}
+
+.dreamjobTypoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  height: 350px;
+  width: 80%;
+}
+
+.dreamJobTypoGrid {
+  display: flex;
+  justify-content: center;
+}
+
+.dreamjobImgBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  height: 100%;
+}
+
+@media only screen and (max-width: 900px) {
+  .carousel {
+    display: none;
+  }
+  .dreamjobGrid {
+    order: -1;
+  }
+  .dreamjobTypo {
+    font-size: 45px;
+  }
+  .dreamjobTypoBox {
+    height: 200px;
+  }
+  .dreamjob {
+    display: none;
+  }
+}
+
+.rec-dot {
+  display: none;
+}
+
+.rec-arrow {
+  background-color: var(--blue) !important;
+  transition: all 0.3s ease;
+  font-size: 1.1rem !important;
+  color: rgba(3, 66, 117, 0.4) !important;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
+  min-width: 1.7rem !important;
+  line-height: 1.7rem !important;
+  box-shadow: none !important;
+}
+
+.rec-arrow:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.searchCard {
+  padding-top: 0;
+}
+
+header {
+  font-family: "Lobster", cursive;
+  text-align: center;
+  font-size: 25px;
+}
+
+#info {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+a {
+  color: #074e8c;
+}
+
+.scrollbar {
+  margin-left: 15px;
+  float: left;
+  height: 180px;
+  overflow-y: scroll;
+}
+
+.force-overflow {
+  min-height: 450px;
+}
+
+#wrapper {
+  text-align: center;
+  width: 500px;
+  margin: auto;
+}
+
+/*
+ *  STYLE 1
+ */
+
+#style-1::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-1::-webkit-scrollbar {
+  width: 5px;
+  background-color: #f5f5f5;
+}
+
+#style-1::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+.ViewSecondBtn {
+  margin-left: 8px;
+  background-color: white !important;
+  font-size: 12px;
+  color: black;
+  font-weight: 600;
+}
+
+.recentCard {
+  width: 45%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+  padding-top: 0;
+}
+
+.similariconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+}
+
+.similarInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+}
+
+.jobCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+}
+
+.recentTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  /* margin-bottom: 15px; */
+}
+
+.recentTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+.recentAvatar {
+  object-fit: contain;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #2699ff;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 14px;
+  width: 65%;
+}
+
+.filterTopic {
+  font-size: 19px;
+  font-style: bold;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  padding-left: 16px;
+}
+
+.divider {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: rgba(3, 66, 117, 0.3);
+}
+
+.searchIcon {
+  color: #a6a6a6;
+  align-self: center;
+  margin-right: 38px;
+  margin-left: 34px;
+}
+
+.searchButton {
+  background-color: #00339b !important;
+  color: "white";
+  margin-right: 5px;
+  box-shadow: none;
+  border-radius: 8px;
+  width: 20%;
+  height: 50px;
+  font-size: 14px;
+}
+
+/* .Mui-selected {
+  background-color: #034275 !important;
+  color: white !important;
+} */
+
+.MuiTab-root.Mui-selected {
+  background-color: #d3eaff !important;
+  color: #034275 !important;
+}
+
+.MuiChip-deleteIconFilledColorPrimary {
+  color: rgba(3, 66, 117, 0.69);
+}
+
+.locationContainer {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  width: 40%;
+  height: 62px;
+  align-items: center;
+}
+
+.searchBox {
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
+.mobileRecentImg {
+  height: 85%;
+  width: 62%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.smallRecent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recentAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.searchcardsviewmorebtn {
+  background-color: #00339b !important;
+  border-radius: 8px;
+  height: 55px;
+  width: 160px;
+}
+
+.searchcardsviewlessbtn {
+  background-color: #00339b !important;
+  border-radius: 8px;
+  height: 55px;
+  width: 160px;
+  margin-top: 30px;
+}
+
+.viewmoreContainer {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 850px) {
+  .recentCard {
+    width: 100%;
+  }
+  .searchbycaregoryContainer {
+    display: none;
+  }
+  .jobResult {
+    padding-left: 8px;
+    padding-top: 8px;
+  }
+  .categoryChipStack {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .categoryChip {
+    background-color: #d4f0fc;
+    color: rgba(3, 66, 117, 0.69);
+    size: small;
+  }
+  .filter {
+    display: none;
+  }
+  .sortBy {
+    display: none;
+  }
+  .largeRecent {
+    display: none;
+  }
+  .searchRstBtn {
+    display: none;
+  }
+  .searchRstTypo {
+    display: none;
+  }
+  .searchDivider {
+    display: none;
+  }
+  .searchButton {
+    width: 100%;
+    height: 62px;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  .locationContainer {
+    border: 1px solid rgba(3, 66, 117, 0.3);
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+  }
+  .searchBox {
+    padding-top: 30px;
+  }
+  .outerSearchBox {
+    background-color: #e9f7fd;
+    padding-bottom: 5px;
+  }
+  .searchIcon {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .viewmoreContainer {
+    display: none;
+  }
+  .categoryChipStack {
+    display: none;
+  }
+  .recentCard {
+    margin-right: 20px;
+  }
+  .smallRecent {
+    display: none;
+  }
+  .searchRstTypo {
+    text-align: right;
+    font-style: italic;
+    font-size: 11px;
+  }
+  .mobileBtn {
+    display: none;
+  }
+  .filterBtn {
+    display: none;
+  }
+  .searchBox {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+    border: 1px solid rgba(3, 66, 117, 0.3);
+    border-radius: 8px;
+    height: 60px;
+  }
+}
+
+.dreamJobImage {
+  width: auto;
+  height: 300px;
+}
+
+.recentSearchImage {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailCard {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.similarCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  border-radius: 10px;
+}
+
+.similarAvatar {
+  object-fit: contain;
+  border: 1px solid #2699ff;
+}
+
+.similarCard {
+  padding-top: 0;
+}
+
+.similarBulletText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 13px;
+}
+
+.similarText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 14px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.bookmarkBtn {
+  min-width: 5px !important;
+  min-height: 5px !important;
+  padding: 5px !important;
+  color: #02a9f7;
+  border-color: #02a9f7;
+  font-size: 9px;
+}
+
+.viewDetailBtn {
+  margin-left: 8px;
+  background-color: #02a9f7 !important;
+  font-size: 13px;
+  width: 65%;
+}
+
+.similarTopic {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 27px;
+  font-family: "Inter-Bold";
+}
+
+.similarTypoBox {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 5px;
+  /* margin-bottom: 10px; */
+}
+
+.similarTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.skillChip {
+  border-radius: 8px;
+  size: small;
+  background-color: #edf8fd;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: #01313f;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobileLogo {
+    display: none;
+  }
+}
+
+/* custom scrollbar */
+/* header {
+  font-family: "Lobster", cursive;
+  text-align: center;
+  font-size: 25px;
+}
+
+#info {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+a {
+  color: #074e8c;
+}
+
+.scrollbar {
+  margin-left: 30px;
+  float: left;
+  height: 300px;
+  width: 65px;
+  background: #f5f5f5;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+
+.force-overflow {
+  min-height: 450px;
+}
+
+#wrapper {
+  text-align: center;
+  width: 500px;
+  margin: auto;
+}
+
+/*
+ *  STYLE 1
+ */
+
+/* #style-1::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-1::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+#style-1::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+} */
+
+.scrollbarm {
+  margin-left: 15px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#style-2::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-2::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+#style-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #a3c2c2;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 50px;
+  border: 2px dashed #4f9aff;
+  background-color: #f6fcff;
+  color: #afafaf;
+  border-radius: 8px;
+}
+
+.accept {
+  border-color: #107c10 !important;
+}
+
+.reject {
+  border-color: #d83b01 !important;
+}
+
+/* resume second */
+.animationcontainer {
+  /* overflow-y: scroll !important; */
+  overflow-x: hidden !important;
+  min-height: 1200px !important;
+  background-color: white;
+}
+
+.animationWithoutcontainer {
+  /* overflow-y: scroll !important; */
+  overflow-x: hidden !important;
+  background-color: white;
+  min-height: 1200px !important;
+}
+
+.skillcontainer {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  min-height: 2000px !important;
+  padding-top: 50px;
+  background-color: white;
+}
+
+@media only screen and (min-width: 900px) {
+  .newContainers {
+    background-repeat: no-repeat, no-repeat;
+    background-image: url(https://d8it4huxumps7.cloudfront.net/uploads/images/63d4b178b31d5_home_hero_before.svg),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63de43bdce283_multi_color_dot.png?d=76x188),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63de48d55dbba_yellow_dot.png),
+      url(https://d8it4huxumps7.cloudfront.net/uploads/images/63d4b178b31d5_home_hero_before.svg);
+    background-color: "white";
+    background-position: top left, top right, right center, left center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .animationWithoutcontainer {
+    min-height: 1200px !important;
+  }
+}
+
+.successImage {
+  height: 500px !important;
+}
+
+.whiteLogo {
+  height: 41px;
+  width: 163px;
+}
