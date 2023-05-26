@@ -82,7 +82,7 @@ const JobTitle = ({ ...props }) => {
           />
         </Box>
         <Box className="stepperContainer">
-          <Stepper sx={{ width: "50%" }} activeStep={1} alternativeLabel>
+          <Stepper activeStep={1} alternativeLabel>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel></StepLabel>

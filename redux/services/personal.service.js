@@ -84,7 +84,11 @@ const addSocial = (value) => {
 };
 const addPhoto = (formData) => {
   const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`addProfpic/${user.User._id}`, formData);
+  return http.post(`addProfpic/${user.User._id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 const applyJob = (value) => {
   return http.post("/applyJob", value);

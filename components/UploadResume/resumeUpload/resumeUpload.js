@@ -118,7 +118,7 @@ const AddResume = ({ ...props }) => {
             />
           </Box>
           <Box className="stepperContainer">
-            <Stepper sx={{ width: "50%" }} activeStep={0} alternativeLabel>
+            <Stepper  activeStep={0} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>

@@ -867,9 +867,9 @@
 }
 
 .signInContent {
-  width: 700px;
+  width: fit-content;
   gap: 20px;
-  position: fixed;
+  /* position: fixed; */
 }
 
 @media only screen and (max-width: 1137px) {
@@ -1584,4 +1584,21 @@ a {
 .whiteLogo {
   height: 41px;
   width: 163px;
+}
+
+.dropzone {
+  text-align: center;
+  /* padding: 50px;
+  border: 2px dashed #4F9AFF;
+  background-color: #eaeaea;
+  color: #afafaf; */
+ border-radius: 8px;
+}
+
+.accept {
+  border-color: #107c10 !important;
+}
+
+.reject {
+  border-color: #d83b01 !important;
 }

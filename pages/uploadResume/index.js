@@ -127,12 +127,13 @@ const Index = () => {
           backgroundImage: `url("/bg.svg")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "100vh",
+          height: "950px",
           width: "100vw",
         }}
       >
         <Box className="topbar"></Box>
         <Parallax
+        style={{position:'inherit'}}
           ref={parallax}
           pages={getTheScreenCount}
           horizontal

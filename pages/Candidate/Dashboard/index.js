@@ -11,7 +11,7 @@ import {
   Stack,
   styled,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import List from "@mui/material/List";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
@@ -38,6 +38,7 @@ import CandidateProfileHeader from "@/components/Candidates/CandidateProfileHead
 import { useRouter } from "next/router";
 import { logout } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -95,7 +96,25 @@ const Index = () => {
       );
     });
   };
+ const handleTop = () =>{
 
+ }
+ const containerRef = useRef(null);
+ const scrollToElement = (id) => {
+  // const container = containerRef.current;
+  // const element = document.getElementById(elementId);
+  // console.log(container,element,'checkincei')
+
+  // if (container && element) {
+  //   const containerTop = container.getBoundingClientRect().top;
+  //   const elementTop = element.getBoundingClientRect().top;
+  //   console.log(containerTop,elementTop,'checkincei')
+  //   container.scrollTop = elementTop - containerTop;
+  // }
+  const container = containerRef.current;
+  const offsetTop = ref.current.offsetTop;
+  container.scrollTop = offsetTop;
+};
   const getPages = () => {
     if (currentScreen === "resume") {
       return <AddResume />;
@@ -129,11 +148,13 @@ const Index = () => {
     }
 
     return (
-      <Stack className="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
-        <Profile {...data} />
+      <div ref={containerRef} className="scrollbarm">
+      <Stack  id="style-2" sx={{ gap: "30px" }}>
+        <Profile handle={handleTop()} {...data} />
         <Certifications />
         <CandidateJobs {...data} />
       </Stack>
+      </div>
     );
   };
 
@@ -167,7 +188,7 @@ const Index = () => {
             </ListItemButton>
             <Collapse in={profile} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton onClick={()=>scrollToElement("child1")} sx={{ pl: 4 }}>
                   <ListItemText primary="Resume" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
