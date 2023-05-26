@@ -19,7 +19,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BpRadio } from "./SearchSection";
-import styles from "./joblistings.module.css";
 
 const StyledFormLabel = styled(FormControlLabel)(({}) => ({
   color: "#01313F",
@@ -192,7 +191,7 @@ const MainFilter = ({ ...props }) => {
       </Box>
       <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
-        <Typography className={styles.filterTopic} color="#034275" gutterBottom>
+        <Typography className="filterTopic" color="#034275" gutterBottom>
           Industry
         </Typography>
         <ExpandMore
@@ -206,7 +205,7 @@ const MainFilter = ({ ...props }) => {
       </Box>
       <Collapse in={industryExpanded} timeout="auto" unmountOnExit>
         <CardContent
-          className={styles.scrollbar}
+          className="scrollbar"
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
@@ -223,9 +222,9 @@ const MainFilter = ({ ...props }) => {
           </RadioGroup>
         </CardContent>
       </Collapse>
-      <Divider className={styles.divider} variant="middle" />
+      <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
-        <Typography className={styles.filterTopic} color="#034275" gutterBottom>
+        <Typography className="filterTopic" color="#034275" gutterBottom>
           Companies
         </Typography>
         <ExpandMore
@@ -239,7 +238,7 @@ const MainFilter = ({ ...props }) => {
       </Box>
       <Collapse in={roleExpanded} timeout="auto" unmountOnExit>
         <CardContent
-          className={styles.scrollbar}
+          className="scrollbar"
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
@@ -256,9 +255,9 @@ const MainFilter = ({ ...props }) => {
           </RadioGroup>
         </CardContent>
       </Collapse>
-      <Divider variant="middle" className={styles.divider} />
+      <Divider variant="middle" className="divider" />
       <Box sx={{ display: "flex" }}>
-        <Typography className={styles.filterTopic} color="#034275" gutterBottom>
+        <Typography className="filterTopic" color="#034275" gutterBottom>
           Experience
         </Typography>
         <ExpandMore
@@ -285,9 +284,9 @@ const MainFilter = ({ ...props }) => {
           </RadioGroup>
         </CardContent>
       </Collapse>
-      <Divider className={styles.divider} variant="middle" />
+      <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
-        <Typography className={styles.filterTopic} color="#034275" gutterBottom>
+        <Typography className="filterTopic" color="#034275" gutterBottom>
           Job Type
         </Typography>
         <ExpandMore
