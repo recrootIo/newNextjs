@@ -3,8 +3,9 @@ import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Box, Stack, Container } from "@mui/material";
 import { useRef } from "react";
-import Image from "next/image";
+// import "./homepage.css";
 import Carousel from "react-elastic-carousel";
+import Image from "next/image";
 
 const BrandsHome = () => {
   const breakPoints = [

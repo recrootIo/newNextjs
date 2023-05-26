@@ -12,15 +12,12 @@ import React from "react";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import Carousel from "react-elastic-carousel";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 
-const StyledCarousel = dynamic(() =>
-  styled(Carousel)({
-    "& .rec .rec-carousel": {
-      height: "705px",
-    },
-  })
-);
+const StyledCarousel = styled(Carousel)({
+  "& .rec .rec-carousel": {
+    height: "705px",
+  },
+});
 
 const CategoryHome = () => {
   const tablet = useMediaQuery("(max-width:974px)");
