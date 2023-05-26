@@ -13,7 +13,7 @@ const DreamJob = () => {
             <Box className="dreamjobTypoBox" xs={12}>
               <CustomTypography
                 className="dreamjobTypo"
-                variant="h4"
+                variant="h3"
                 fontFamily={BOLD}
                 gutterBottom
               >
