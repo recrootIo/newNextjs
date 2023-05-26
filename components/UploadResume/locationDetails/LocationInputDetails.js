@@ -90,7 +90,7 @@ const LocationInputDetails = ({ ...props }) => {
             />
           </Box>
           <Box className="stepperContainer">
-            <Stepper sx={{ width: "50%" }} activeStep={2} alternativeLabel>
+            <Stepper  activeStep={2} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>

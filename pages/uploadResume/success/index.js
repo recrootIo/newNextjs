@@ -28,7 +28,7 @@ const Index = () => {
         backgroundImage: `url("/bg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "100vh",
+        height: "100%",
         width: "100vw",
       }}
     >

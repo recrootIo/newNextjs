@@ -196,7 +196,8 @@ function Signup() {
   return (
     <Box
       sx={{
-        height: { md: "100vh", xs: "150vh" },
+        height: { md: "100%", xs: "100%" },
+        p:{sm:'50px',xs:'0px'},
         width: "100vw",
         backgroundImage: "url(/SignUpBG.svg)",
         overflow: "auto",
@@ -646,7 +647,7 @@ function Signup() {
                    error={errors.email || freeemail.sts ? true : false}
                    helperText={errors.email || freeemail.msg} />
 
-                  <Stack direction={"row"} sx={{ width: "95%", gap: "10px" }}>
+                  <Stack direction={{sm:"row",xs:'column'}} sx={{ width: "95%", gap: "10px" }}>
                   <FormControl fullWidth>
                     <OutlinedInput
                       placeholder="Password"
@@ -690,7 +691,6 @@ function Signup() {
                     </FormHelperText>
                   )}
                   </FormControl>
-                  {console.log(values)}
                   <FormControl fullWidth>
                     <OutlinedInput 
                        placeholder="Confirm Password"

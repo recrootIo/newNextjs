@@ -15,7 +15,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 const VerifyEmail = () => {
   const [otp, setOtp] = React.useState("");
   const dispatch = useDispatch();
-  const userId = Cookies.get('userId');
+  const userId = Cookies.get('userID');
   const vcode = Cookies.get('verifyCode');
   const { push } = useRouter();
   const code = useSelector((state) => state.personal.code);
@@ -48,7 +48,6 @@ const VerifyEmail = () => {
       const loggedInUser = JSON.parse(localStorage.getItem("User"));
       loggedInUser.User.email_is_verified = true;
       localStorage.setItem("User", JSON.stringify(loggedInUser));
-      
       dispatch(
         openAlert({
           type:SUCCESS,

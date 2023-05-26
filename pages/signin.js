@@ -400,7 +400,7 @@ function Signin() {
                         </span>
                       </button>
                     </Stack>
-                    <img
+                    {/* <img
                       src="/signIn.png"
                       className="signInSideImage1"
                       alt=""
@@ -415,7 +415,7 @@ function Signin() {
                       width="0"
                       height="0"
                       sizes="100vw"
-                    />
+                    /> */}
                     <Divider>OR</Divider>
                     <StyledInput
                       autoComplete="given-name"
