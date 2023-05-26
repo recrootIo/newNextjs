@@ -1129,10 +1129,11 @@ a {
 
 .filterTopic {
   font-size: 19px !important;
-  font-weight: 900;
+  font-weight: 900 !important;
   display: flex;
   align-items: flex-end;
   padding-left: 16px;
+  font-family: "Inter-Bold";
 }
 
 .divider {
