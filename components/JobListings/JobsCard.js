@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
+import React from "react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const StyledIconWrapper = styled(Box)({
@@ -25,6 +26,17 @@ const StyledIconWrapper = styled(Box)({
 });
 
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
+  const extractFirstTwoTags = (data) => {
+    const container = document.createElement("div");
+    container.innerHTML = data;
+    const firstPTag = container.querySelector("p");
+
+    // Return the text content of the first <p> tag
+    return firstPTag ? firstPTag.textContent : "";
+  };
+
+  console.log(extractFirstTwoTags(lateJob?.jobDescription));
+
   return (
     <Card className="jobCard">
       <CardHeader
@@ -125,11 +137,13 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
               whiteSpace: "nowrap",
             }}
           >
-            <ReactQuill
-              value={lateJob?.jobDescription}
+            {extractFirstTwoTags(lateJob?.jobDescription)}
+            {/* <ReactQuill
+              value={}
               readOnly={true}
               theme={"bubble"}
-            />
+            /> */}
+            {/* {} */}
           </div>
         </CustomTypography>
         <Box className="mobileBtn">

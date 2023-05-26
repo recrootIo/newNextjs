@@ -429,7 +429,14 @@ const SearchSection = ({ ...props }) => {
         <Container>
           <Grid container spacing={2} style={{ marginBottom: 30 }}>
             <Grid className="filter" item xs={0} md={4}>
-              <Card sx={{ width: "100%", height: "100%" }}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  boxShadow: "4px 4px 10px rgba(3, 66, 117, 0.1)",
+                }}
+                variant="outline"
+              >
                 <CardContent>
                   <MainFilter
                     setNames={setNames}
@@ -782,142 +789,6 @@ const SearchSection = ({ ...props }) => {
                         {...lateJob}
                         handleNavigate={handleNavigate}
                       />
-                      // <Card className="jobCard" key={index}>
-                      //   <CardHeader
-                      //     avatar={
-                      //       <StyledAvatar
-                      //         className="recentAvatar"
-                      //         alt="logo"
-                      //         src={getImageLogo(
-                      //           lateJob?.company?.companyLogo?.logo
-                      //         )}
-                      //         size={100}
-                      //       />
-                      //     }
-                      //     titleTypographyProps={{
-                      //       fontSize: 18,
-                      //       fontWeight: "bold",
-                      //       color: "#034275",
-                      //     }}
-                      //     subheaderTypographyProps={{
-                      //       fontSize: 15,
-                      //       color: "#034275",
-                      //     }}
-                      //     title={lateJob?.jobRole}
-                      //     subheader={lateJob?.company?.company_name}
-                      //     action={
-                      //       <>
-                      //         <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-                      //           {/* <Button
-                      //             className="bookmarkBtn"
-                      //             size="small"
-                      //             variant="outlined"
-                      //             bgcolor="#02A9F7 !important"
-                      //           >
-                      //             <BookmarkBorderIcon
-                      //               sx={{ fontSize: "21px" }}
-                      //             />
-                      //           </Button> */}
-                      //           <Button
-                      //             variant="contained"
-                      //             size="medium"
-                      //             sx={{
-                      //               ml: "8px",
-                      //               bgcolor: "#02A9F7 !important",
-                      //               fontSize: "14px",
-                      //             }}
-                      //             onClick={() =>
-                      //               handleNavigate(
-                      //                 lateJob?.jobTitle,
-                      //                 lateJob?.jobRole,
-                      //                 lateJob?._id
-                      //               )
-                      //             }
-                      //           >
-                      //             View Details
-                      //           </Button>
-                      //         </Box>
-                      //         <CustomTypography
-                      //           className="searchRstTypo"
-                      //           variant="body2"
-                      //           color="text.secondary"
-                      //         >
-                      //           {moment(lateJob.createdAt).fromNow()}
-                      //         </CustomTypography>
-                      //       </>
-                      //     }
-                      //   />
-                      //   <CardContent sx={{ pt: 0 }} className="searchCard">
-                      //     <CustomTypography
-                      //       variant="body2"
-                      //       color="text.secondary"
-                      //       fontSize={15}
-                      //       mb={1}
-                      //     >
-                      //       {lateJob?.jobType}&nbsp;{bull}&nbsp;Part Time&nbsp;
-                      //       {bull}
-                      //       &nbsp;{lateJob?.essentialInformation?.experience}
-                      //       s&nbsp;
-                      //       {bull}
-                      //       &nbsp;{getSalary(lateJob?.salary)}
-                      //     </CustomTypography>
-                      //     <CustomTypography
-                      //       variant="body2"
-                      //       color="text.secondary"
-                      //       fontSize={15}
-                      //     >
-                      //       <div
-                      //         style={{
-                      //           overflow: "hidden",
-                      //           maxHeight: "100px",
-                      //           textOverflow: "ellipsis",
-                      //           whiteSpace: "nowrap",
-                      //         }}
-                      //       >
-                      //         <ReactQuill
-                      //           value={lateJob?.jobDescription}
-                      //           readOnly={true}
-                      //           theme={"bubble"}
-                      //         />
-                      //       </div>
-                      //     </CustomTypography>
-                      //     <Box className="mobileBtn">
-                      //       <Box className="btnBox">
-                      //         <Button
-                      //           className="bookmarkBtn"
-                      //           size="small"
-                      //           variant="outlined"
-                      //           bgcolor="#02A9F7 !important"
-                      //         >
-                      //           <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                      //         </Button>
-                      //         <Button
-                      //           className="viewDetailBtn"
-                      //           variant="contained"
-                      //           size="medium"
-                      //           onClick={() =>
-                      //             handleNavigate(
-                      //               lateJob?.jobTitle,
-                      //               lateJob?.jobRole,
-                      //               lateJob?._id
-                      //             )
-                      //           }
-                      //         >
-                      //           View Details
-                      //         </Button>
-                      //       </Box>
-                      //       <Box className="recentTypoBox">
-                      //         <CustomTypography
-                      //           className="recentTypo"
-                      //           variant="body2"
-                      //           color="text.secondary"
-                      //         >
-                      //           {moment(lateJob.createdAt).fromNow()} days ago
-                      //         </CustomTypography>
-                      //       </Box>
-                      //     </Box>
-                      //   </CardContent>
-                      // </Card>
                     ))}
                   </Stack>
                 )}

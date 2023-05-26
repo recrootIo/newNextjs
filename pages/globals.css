@@ -1079,7 +1079,7 @@ a {
 
 .jobCard {
   width: 100%;
-  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
 }
 
@@ -1128,17 +1128,17 @@ a {
 }
 
 .filterTopic {
-  font-size: 19px;
-  font-style: bold;
-  font-weight: 600;
+  font-size: 19px !important;
+  font-weight: 900 !important;
   display: flex;
   align-items: flex-end;
   padding-left: 16px;
+  font-family: "Inter-Bold" !important;
 }
 
 .divider {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
   color: rgba(3, 66, 117, 0.3);
 }
 

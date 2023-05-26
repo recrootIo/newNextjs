@@ -7,6 +7,7 @@ import {
   Button,
   Collapse,
   RadioGroup,
+  Stack,
 } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
@@ -163,19 +164,12 @@ const MainFilter = ({ ...props }) => {
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography
-          sx={{
-            fontSize: 19,
-            fontStyle: "bold",
-            fontWeight: 600,
-            pl: "16px",
-          }}
-          color="#034275"
-          gutterBottom
-        >
-          Filter
+        <Stack direction={"row"} sx={{ gap: "10px", alignItems: "center" }}>
+          <Typography className="filterTopic" color="#034275">
+            Filter
+          </Typography>
           <TuneIcon sx={{ height: "16px" }} />
-        </Typography>
+        </Stack>
         <Button variant="text" size="small" onClick={() => clearSearch()}>
           <CustomTypography
             sx={{
