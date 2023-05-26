@@ -1,11 +1,12 @@
 "use client";
-import { Box, Stack, Button, Container } from "@mui/material";
-import Carousel from "react-elastic-carousel";
+import { Box, Stack, Container } from "@mui/material";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import React, { useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import Carousel from "react-elastic-carousel";
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },

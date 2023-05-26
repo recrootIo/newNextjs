@@ -3,9 +3,11 @@ import { Typography, Box, Stack, Container } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
-import Carousel from "react-elastic-carousel";
 import { useRef } from "react";
 import styles from "./joblistings.module.css";
+const Carousel = dynamic(() => import("react-elastic-carousel"), {
+  ssr: false,
+});
 
 const SearchByCompany = () => {
   const breakPoints = [
