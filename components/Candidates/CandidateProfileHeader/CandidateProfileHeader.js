@@ -23,7 +23,7 @@ const bull = (
   </Box>
 );
 
-const CandidateProfileHeader = () => {
+const CandidateProfileHeader = (data) => {
   return (
     <Box
       sx={{
@@ -88,10 +88,10 @@ const CandidateProfileHeader = () => {
                 fontFamily="Inter-bold"
                 gutterBottom
               >
-                Candidate Name
+               {data?.firstName}
               </CustomTypography>
               <CustomTypography variant="subtitle1" color="white" gutterBottom>
-                Graphic Designer {bull} 3 Years, 5 Months
+              {data?.jobTitle}{bull} {data?.resume?.totalWorkExperience} Years
               </CustomTypography>
               <Box sx={{ display: "flex", gap: "20px", mt: "25px" }}>
                 <CustomTypography
@@ -100,14 +100,14 @@ const CandidateProfileHeader = () => {
                   minWidth="30%"
                   gutterBottom
                 >
-                  <PlaceOutlinedIcon /> Bhopal, India
+                  <PlaceOutlinedIcon /> {data?.resume?.location?.city},{data?.resume?.location?.state},{data?.resume?.location?.country}.
                 </CustomTypography>
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
                   gutterBottom
                 >
-                  <PhoneOutlinedIcon /> + 91 7424300000
+                  <PhoneOutlinedIcon /> +{data?.mobile}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex", gap: "20px" }}>
@@ -117,14 +117,14 @@ const CandidateProfileHeader = () => {
                   minWidth="30%"
                   gutterBottom
                 >
-                  <EmailOutlinedIcon /> abc@gmail.com
+                  <EmailOutlinedIcon />{data?.email}
                 </CustomTypography>
                 <CustomTypography
                   variant="subtitle1"
                   color="white"
                   gutterBottom
                 >
-                  <LocalAtmOutlinedIcon /> 5,00,000
+                  <LocalAtmOutlinedIcon /> {data?.resume?.currentSalary?.salary !== null ? `${data?.resume?.currentSalary?.salary} ${data?.resume?.currentSalary?.denomination}` : ''}
                 </CustomTypography>
               </Box>
             </Box>

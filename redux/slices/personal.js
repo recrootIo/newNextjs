@@ -145,7 +145,7 @@ export const getCandsPrefInfo = createAsyncThunk("Cover/pref", async (id) => {
 
 export const GetCandsPrefInfo = () => async (dispatch) => {
   const user = JSON.parse(localStorage.getItem("User"));
-  return dispatch(getCandsPrefInfo(user.User._id));
+  return dispatch(getCandsPrefInfo(user?.User?._id));
 };
 
 export const AddResumeAndThenGet = (pdf) => async (dispatch) => {

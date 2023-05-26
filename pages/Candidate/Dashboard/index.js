@@ -33,10 +33,11 @@ import AddCertificates from "@/components/Candidates/Certifications/AddCertifica
 import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePassword";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
-import authService from "@/redux/services/auth.service";
 import Navbar from "@/components/Navbar/Navbar";
 import CandidateProfileHeader from "@/components/Candidates/CandidateProfileHeader/CandidateProfileHeader";
-
+import { useRouter } from "next/router";
+import { logout } from "@/redux/slices/auth";
+import { openAlert } from "@/redux/slices/alert";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -45,12 +46,19 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 const Index = () => {
+  const router = useRouter();
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user === null) {
+      router.push('/')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
-  const { data = {} } = useSelector((state) => state?.personal);
+  const { data } = useSelector((state) => state?.personal);
   const { currentScreen } = useSelector((state) => state?.candidate);
-
   // const { data = {} } = useSelector((state) => state?.personal);
 
   const dispatch = useDispatch();
@@ -76,9 +84,9 @@ const Index = () => {
     dispatch(GetCandsPrefInfo());
   }, [dispatch]);
 
-  const logout = () => {
-    authService.logout().then(() => {
-      navigate("/signin", { state: true });
+  const logouts = () => {
+    dispatch(logout()).then(() => {
+     router.push("/signin", { state: true });
       dispatch(
         openAlert({
           type: SUCCESS,
@@ -214,7 +222,7 @@ const Index = () => {
             <ListItemButton onClick={() => gotToScreens("updatePassword")}>
               <StyledListItemText primary="Update Password" />
             </ListItemButton>
-            <ListItemButton onClick={() => logout()}>
+            <ListItemButton onClick={() => logouts()}>
               <StyledListItemText primary="Log Out" />
             </ListItemButton>
           </List>
