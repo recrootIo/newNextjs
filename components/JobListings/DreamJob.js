@@ -14,7 +14,6 @@ const DreamJob = () => {
               <CustomTypography
                 className="dreamjobTypo"
                 variant="h3"
-                fontFamily={BOLD}
                 gutterBottom
               >
                 Find your Dream Job
