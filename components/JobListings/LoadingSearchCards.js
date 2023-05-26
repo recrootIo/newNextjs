@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, Skeleton } from "@mui/material";
+import styles from "./joblistings.module.css";
 
 const LoadingSearchCards = () => {
   return (
     <div>
-      <Card className="jobCard">
+      <Card className={styles.jobCard}>
         <CardHeader
           avatar={<Skeleton variant="circular" width={40} height={40} />}
           titleTypographyProps={{
@@ -16,7 +17,7 @@ const LoadingSearchCards = () => {
             color: "#034275",
           }}
         />
-        <CardContent sx={{ pt: 0 }} className="searchCard">
+        <CardContent sx={{ pt: 0 }} className={styles.searchCard}>
           <Skeleton />
           <Skeleton animation="wave" />
           <Skeleton />

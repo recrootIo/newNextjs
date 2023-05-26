@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 import Carousel from "react-elastic-carousel";
 import { useRef } from "react";
+import styles from "./joblistings.module.css";
 
 const SearchByCompany = () => {
   const breakPoints = [
@@ -57,7 +58,7 @@ const SearchByCompany = () => {
                 }
               }}
             >
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -68,114 +69,79 @@ const SearchByCompany = () => {
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>
               </Card>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/logo 7.png"
                     alt="green iguana"
-                    sx={{
-                      p: "10px",
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
+                    sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
                 </CardActionArea>

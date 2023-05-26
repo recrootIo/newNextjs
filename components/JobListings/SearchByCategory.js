@@ -7,6 +7,7 @@ import Carousel from "react-elastic-carousel";
 import { useRef } from "react";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
+import styles from "./joblistings.module.css";
 
 const SearchByCategory = () => {
   const breakPoints = [
@@ -21,14 +22,13 @@ const SearchByCategory = () => {
 
   return (
     <div
-      className="searchbycaregoryContainer"
+      className={styles.searchbycaregoryContainer}
       style={{ backgroundColor: "#D4F0FC", height: "300px" }}
     >
       <Container>
         <Box>
           <CustomTypography
             variant="h4"
-            fontFamily={BOLD}
             pt="50px"
             textAlign="center"
             gutterBottom
@@ -53,12 +53,12 @@ const SearchByCategory = () => {
             }}
           >
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     image="/Saly-25.png"
-                    alt="green iguana"
+                    alt=""
                     sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
                   />
@@ -74,7 +74,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -100,7 +100,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -117,7 +117,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom
@@ -126,7 +126,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -143,7 +143,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom
@@ -152,7 +152,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -169,7 +169,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom
@@ -178,7 +178,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -195,7 +195,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom
@@ -204,7 +204,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -221,7 +221,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom
@@ -230,7 +230,7 @@ const SearchByCategory = () => {
               </CustomTypography>
             </div>
             <div>
-              <Card className="categoryCard">
+              <Card className={styles.categoryCard}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -247,7 +247,7 @@ const SearchByCategory = () => {
                 </CardActionArea>
               </Card>
               <CustomTypography
-                className="cousltypo"
+                className={styles.cousltypo}
                 variant="body1"
                 textAlign={"center"}
                 gutterBottom

@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
+import styles from "./joblistings.module.css";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const StyledIconWrapper = styled(Box)({
@@ -26,11 +27,11 @@ const StyledIconWrapper = styled(Box)({
 
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
   return (
-    <Card className="jobCard">
+    <Card className={styles.jobCard}>
       <CardHeader
         avatar={
           <StyledAvatar
-            className="recentAvatar"
+            className={styles.recentAvatar}
             alt="logo"
             src={getImageLogo(lateJob?.company?.companyLogo?.logo)}
             size={100}
@@ -49,7 +50,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
         subheader={lateJob?.company?.company_name}
         action={
           <>
-            <Box className="searchRstBtn" sx={{ mb: "7px" }}>
+            <Box className={styles.searchRstBtn} sx={{ mb: "7px" }}>
               {/* <Button
                 className="bookmarkBtn"
                 size="small"
@@ -78,7 +79,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
               </Button>
             </Box>
             <CustomTypography
-              className="searchRstTypo"
+              className={styles.searchRstTypo}
               variant="body2"
               color="text.secondary"
             >
@@ -87,7 +88,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           </>
         }
       />
-      <CardContent sx={{ pt: 0 }} className="searchCard">
+      <CardContent sx={{ pt: 0 }} className={styles.searchCard}>
         <Stack direction={"row"} sx={{ gap: "15px", margin: "10px 0" }}>
           {lateJob?.featureType && (
             <StyledIconWrapper>
@@ -132,10 +133,10 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
             />
           </div>
         </CustomTypography>
-        <Box className="mobileBtn">
-          <Box className="btnBox">
+        <Box className={styles.mobileBtn}>
+          <Box className={styles.btnBox}>
             <Button
-              className="bookmarkBtn"
+              className={styles.bookmarkBtn}
               size="small"
               variant="outlined"
               bgcolor="#02A9F7 !important"
@@ -143,7 +144,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
               <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
             </Button>
             <Button
-              className="viewDetailBtn"
+              className={styles.viewDetailBtn}
               variant="contained"
               size="medium"
               onClick={() =>
@@ -157,9 +158,9 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
               View Details
             </Button>
           </Box>
-          <Box className="recentTypoBox">
+          <Box className={styles.recentTypoBox}>
             <CustomTypography
-              className="recentTypo"
+              className={styles.recentTypo}
               variant="body2"
               color="text.secondary"
             >
