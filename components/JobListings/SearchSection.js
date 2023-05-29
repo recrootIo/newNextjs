@@ -356,7 +356,7 @@ const SearchSection = ({ ...props }) => {
   };
 
   const handleNavigate = (jobTitle, jobRole, _id) => {
-    router.push(`/jobListings/${jobTitle}/${jobRole}/${_id}`);
+    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
   };
 
   const handleExperience = (re, a) => {

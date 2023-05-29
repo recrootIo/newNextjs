@@ -28,9 +28,14 @@ import { getImageLogo } from "../JobListings/SearchSection";
 // import { getAddress } from "@/utils/HelperFunctions";
 import moment from "moment";
 import Image from "next/image";
+import { getUserId } from "@/utils/HelperFunctions";
+import { useRouter } from "next/router";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
+  const router = useRouter();
+  // console.log(getUserId(), "getUserId");
+  // console.log(user, "user");
   const {
     jobDescription,
     requiredSkill = [],
@@ -39,7 +44,9 @@ const JobDetail = ({ ...props }) => {
     createdAt,
   } = props;
 
-  console.log(moment(applicationDeadline).endOf("day").fromNow(), "props");
+  const gotApply = () => {
+    router.push(`/jobListings?title=${title}&address=${address}`);
+  };
 
   return (
     <Box
@@ -140,6 +147,7 @@ const JobDetail = ({ ...props }) => {
                     bgcolor: "#02A9F7 !important",
                     fontSize: "15px",
                   }}
+                  onClick={() => gotApply()}
                 >
                   Apply now
                 </Button>

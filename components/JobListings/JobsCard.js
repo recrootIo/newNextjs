@@ -31,12 +31,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     const container = document.createElement("div");
     container.innerHTML = data;
     const firstPTag = container.querySelector("p");
-
-    // Return the text content of the first <p> tag
     return firstPTag ? firstPTag.textContent : "";
   };
-
-  console.log(extractFirstTwoTags(lateJob?.jobDescription));
 
   return (
     <Card className="jobCard">

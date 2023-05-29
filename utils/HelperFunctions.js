@@ -103,8 +103,8 @@ export const convertDate = (date) => {
  * @returns id
  */
 export const getUserId = () => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  return user.User._id;
+  const user = JSON.parse(localStorage?.getItem("User"));
+  return user?.User?._id;
 };
 
 /**

@@ -1616,3 +1616,7 @@ a {
 .reject {
   border-color: #d83b01 !important;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

@@ -36,8 +36,6 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 
-
-
 const StyledInput = styled("input")({
   height: "60px",
   border: "1px solid #c2c8d0",
@@ -62,49 +60,56 @@ const StyledPasswordInput = styled("input")({
 
 function Signup() {
   // const { push } = useRouter();
-  const [userType, setuserType] = useState('candidate')
+  const [userType, setuserType] = useState("candidate");
   const StyledCard = styled(Card)(
-    userType === 'candidate' ?  {
-     background: "rgba(255, 255, 255, 0.2)",
-     boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-     backdropFilter: "blur(5px)",
-     border: " 1px solid rgba(255, 255, 255, 0.3)",
-     width: "250px",
-     // height: "250px",
-     borderRadius: "20px",
-     cursor: "pointer",
-   } : {
-     /* From https://css.glass */
-     background: "rgba(255, 255, 255, 0)",
-     borderRadius: "16px",
-     boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-     backdropFilter: "blur(0.2px)",
-     border: "1px solid rgba(255, 255, 255, 0.01)",
-     width: "250px",
-     // height: "250px",
-     cursor: "pointer",
-   });
-   
-   const NonCard = styled(Card)( userType === 'employer' ?  {
-     background: "rgba(255, 255, 255, 0.2)",
-     boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-     backdropFilter: "blur(5px)",
-     border: " 1px solid rgba(255, 255, 255, 0.3)",
-     width: "250px",
-     // height: "250px",
-     borderRadius: "20px",
-     cursor: "pointer",
-   } : {
-     /* From https://css.glass */
-     background: "rgba(255, 255, 255, 0)",
-     borderRadius: "16px",
-     boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-     backdropFilter: "blur(0.2px)",
-     border: "1px solid rgba(255, 255, 255, 0.01)",
-     width: "250px",
-     // height: "250px",
-     cursor: "pointer",
-   });
+    userType === "candidate"
+      ? {
+          background: "rgba(255, 255, 255, 0.2)",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(5px)",
+          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          width: "250px",
+          // height: "250px",
+          borderRadius: "20px",
+          cursor: "pointer",
+        }
+      : {
+          /* From https://css.glass */
+          background: "rgba(255, 255, 255, 0)",
+          borderRadius: "16px",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(0.2px)",
+          border: "1px solid rgba(255, 255, 255, 0.01)",
+          width: "250px",
+          // height: "250px",
+          cursor: "pointer",
+        }
+  );
+
+  const NonCard = styled(Card)(
+    userType === "employer"
+      ? {
+          background: "rgba(255, 255, 255, 0.2)",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(5px)",
+          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          width: "250px",
+          // height: "250px",
+          borderRadius: "20px",
+          cursor: "pointer",
+        }
+      : {
+          /* From https://css.glass */
+          background: "rgba(255, 255, 255, 0)",
+          borderRadius: "16px",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(0.2px)",
+          border: "1px solid rgba(255, 255, 255, 0.01)",
+          width: "250px",
+          // height: "250px",
+          cursor: "pointer",
+        }
+  );
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -112,7 +117,7 @@ function Signup() {
   const handleClickShowPassword = () => {
     setshowPassword(!showPassword);
   };
-  const handleCheckboxChange =  (event) => {
+  const handleCheckboxChange = (event) => {
     setValues({ ...values, checked: event.target.checked });
   };
   const [values, setValues] = useState({
@@ -145,9 +150,9 @@ function Signup() {
     return regex.test(email);
   }
   const [freeemail, setFreeemail] = useState({
-    sts:false,
-    msg:''
-  })
+    sts: false,
+    msg: "",
+  });
   const isEmployer = userType === "employer";
   const { push } = useRouter();
   const handleRegister = (e) => {
@@ -158,16 +163,18 @@ function Signup() {
     if (Object.keys(obj).length > 0) {
       return;
     }
-    if(isEmployer === true){
+    if (isEmployer === true) {
       if (isNotFreeEmail(values.email) === false) {
         setFreeemail({
-          sts:true,
-          msg:'Please Provide Company Email'})
-        return
-      }else{
+          sts: true,
+          msg: "Please Provide Company Email",
+        });
+        return;
+      } else {
         setFreeemail({
-          sts:false,
-          msg:''})
+          sts: false,
+          msg: "",
+        });
       }
     }
     dispatch(register({ values }))
@@ -178,10 +185,12 @@ function Signup() {
         // navigate("/verifymobile", { replace: true });
       })
       .catch((error) => {
-        dispatch(openAlert({
-          type:ERROR,
-          message:"The User Already Exists"
-        }))
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "The User Already Exists",
+          })
+        );
         // toastyErrorFunction("The User Already Exists");
         console.warn(error);
       });
@@ -197,7 +206,7 @@ function Signup() {
     <Box
       sx={{
         height: { md: "100%", xs: "100%" },
-        p:{sm:'50px',xs:'0px'},
+        p: { sm: "50px", xs: "0px" },
         width: "100vw",
         backgroundImage: "url(/SignUpBG.svg)",
         overflow: "auto",
@@ -470,7 +479,7 @@ function Signup() {
                 width: "100%",
               }}
             >
-              <StyledCard 
+              <StyledCard
                 variant="outlined"
                 sx={{
                   width: { md: "250px", xs: "100%", sm: "100%" },
@@ -480,7 +489,10 @@ function Signup() {
                   alignItems: "center",
                   gap: "5px",
                 }}
-                onClick={()=>{setuserType('candidate');setValues({...values,recrootUserType:'Candidate'})}}
+                onClick={() => {
+                  setuserType("candidate");
+                  setValues({ ...values, recrootUserType: "Candidate" });
+                }}
               >
                 <CardContent
                   sx={{
@@ -515,7 +527,10 @@ function Signup() {
                   alignItems: "center",
                   gap: "5px",
                 }}
-                onClick={()=>{setuserType('employer');setValues({...values,recrootUserType:'Employer'})}}
+                onClick={() => {
+                  setuserType("employer");
+                  setValues({ ...values, recrootUserType: "Employer" });
+                }}
               >
                 <CardContent
                   sx={{
@@ -553,255 +568,304 @@ function Signup() {
             >
               <CardContent>
                 <form onSubmit={handleRegister}>
-                <Stack sx={{ alignItems: "center", gap: "20px" }}>
-                  <Stack sx={{ alignItems: "center" }}>
-                    <CustomTypography
-                      sx={{ fontSize: "30px", fontWeight: "900" }}
+                  <Stack sx={{ alignItems: "center", gap: "20px" }}>
+                    <Stack sx={{ alignItems: "center" }}>
+                      <CustomTypography
+                        sx={{ fontSize: "30px", fontWeight: "900" }}
+                      >
+                        Sign Up
+                      </CustomTypography>
+                      <Stack
+                        direction={"row"}
+                        sx={{
+                          gap: "5px",
+                          display: { md: "flex", xs: "none", sm: "none" },
+                        }}
+                      >
+                        <CustomTypography>
+                          Sign Up Already have an account?
+                        </CustomTypography>
+                        <Link href="/signin">
+                          <CustomTypography
+                            sx={{
+                              color: "#034275",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            Log In
+                          </CustomTypography>
+                        </Link>
+                      </Stack>
+                    </Stack>
+                    <button onClick={handleClick} className="linkedinButton">
+                      <span>
+                        <Image
+                          src={"/linkedInLogo.png"}
+                          alt=""
+                          height={20}
+                          width={20}
+                        />
+                      </span>
+                      <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
+                        Log in with LinkedIn
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleClick("google");
+                      }}
+                      className="linkedinButton"
+                    >
+                      <span>
+                        <Image
+                          src={"/googleLogo.png"}
+                          alt=""
+                          height={20}
+                          width={20}
+                        />
+                      </span>
+                      <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
+                        Log in with Google
+                      </span>
+                    </button>
+                    <Divider>OR</Divider>
+                    <Stack
+                      direction={{ sm: "row", xs: "column" }}
+                      sx={{ width: "95%", gap: "10px" }}
+                    >
+                      <StyledInput
+                        autoComplete="given-name"
+                        name="firstName"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        placeholder="Enter First Name"
+                        autoFocus
+                        value={values.firstName}
+                        onChange={handleChange}
+                        error={errors.firstName ? true : false}
+                        helperText={errors.firstName}
+                      />
+                      <StyledInput
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="family-name"
+                        placeholder="Enter Last Name"
+                        value={values.lastName}
+                        onChange={handleChange}
+                        error={errors.lastName ? true : false}
+                        helperText={errors.lastName}
+                      />
+                    </Stack>
+                    <StyledInput
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      placeholder="Enter E-mail"
+                      type="email"
+                      required
+                      value={values.email}
+                      onChange={handleChange}
+                      error={errors.email || freeemail.sts ? true : false}
+                      helperText={errors.email || freeemail.msg}
+                    />
+
+                    <Stack
+                      direction={{ sm: "row", xs: "column" }}
+                      sx={{ width: "95%", gap: "10px" }}
+                    >
+                      <FormControl fullWidth>
+                        <OutlinedInput
+                          placeholder="Password"
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          sx={{
+                            height: "60px",
+                            borderRadius: "8px",
+                            width: "100%",
+                            fontSize: "18px",
+                            fontWeight: "400",
+                            color: "#949494",
+                            padding: "10px",
+                          }}
+                          onChange={handleChange}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleClickShowPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          error={errors.password ? true : false}
+                        />
+                        {!!errors.password && (
+                          <FormHelperText error id="accountId-error">
+                            {errors.password}
+                          </FormHelperText>
+                        )}
+                        {!errors.password && (
+                          <FormHelperText
+                            id="accountpAss-error"
+                            sx={{
+                              width: {
+                                sm: "400px",
+                                xs: "100%",
+                                marginLeft: "0px",
+                              },
+                            }}
+                          >
+                            Password must contain at least one uppercase
+                            character, one lowercase character, one special
+                            character and one number
+                          </FormHelperText>
+                        )}
+                      </FormControl>
+                      <FormControl fullWidth>
+                        <OutlinedInput
+                          placeholder="Confirm Password"
+                          type={
+                            confirmP.showConfirmPassword ? "text" : "password"
+                          }
+                          name="confirmPassword"
+                          sx={{
+                            height: "60px",
+                            borderRadius: "8px",
+                            width: "100%",
+                            fontSize: "18px",
+                            fontWeight: "400",
+                            color: "#949494",
+                            padding: "10px",
+                          }}
+                          onChange={handleChange}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowConfirmPassword}
+                                onMouseDown={handleClickShowConfirmPassword}
+                                edge="end"
+                              >
+                                {confirmP.showConfirmPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                        />
+                        {!!errors.confirmPassword && (
+                          <FormHelperText error id="accountId-error">
+                            {errors.confirmPassword}
+                          </FormHelperText>
+                        )}
+                      </FormControl>
+                    </Stack>
+                    {userType === "employer" ? (
+                      <Stack
+                        direction={{ sm: "row", xs: "column" }}
+                        sx={{ width: "95%", gap: "10px" }}
+                      >
+                        <TextField
+                          required
+                          fullWidth
+                          id="organization"
+                          label="Organization Name"
+                          name="organization"
+                          autoComplete="name"
+                          onChange={handleChange}
+                          placeholder="Enter Your Organization Name"
+                          // sx={{mt:'20px'}}
+                        />
+
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">
+                            Sector
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={values.sector}
+                            name="sector"
+                            required
+                            label="sector"
+                            onChange={handleChange}
+                          >
+                            {SECTORS.map((job, ind) => (
+                              <MenuItem key={ind} value={job}>
+                                {job}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Stack>
+                    ) : (
+                      ""
+                    )}
+
+                    <FormControl sx={{ mt: "15px", width: "95%" }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            value={values.checked}
+                            color="primary"
+                            checked={values.checked}
+                            onChange={(e) => {
+                              handleCheckboxChange(e);
+                            }}
+                          />
+                        }
+                        label={
+                          <p>
+                            By clicking checkbox, you agree to our{" "}
+                            <span>
+                              <a
+                                style={{ color: "#4fa9ff" }}
+                                target="blank"
+                                href="https://graceful-donut-d1174d.netlify.app/WebsiteUse"
+                              >
+                                Terms and Conditions and Privacy Policy
+                              </a>
+                            </span>
+                          </p>
+                        }
+                      />
+                      {!!errors.agreeTermasValue && (
+                        <FormHelperText error id="accountId-error">
+                          {errors.agreeTermasValue}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                    <button
+                      style={{
+                        height: "60px",
+                        backgroundColor: "#015FB1",
+                        borderRadius: "8px",
+                        width: "95%",
+                        fontSize: "18px",
+                        fontWeight: "400",
+                        color: "white",
+                      }}
+                      type="submit"
                     >
                       Sign Up
-                    </CustomTypography>
-                    <Stack
-                      direction={"row"}
-                      sx={{
-                        gap: "5px",
-                        display: { md: "flex", xs: "none", sm: "none" },
-                      }}
-                    >
-                      <CustomTypography>
-                        Sign Up Already have an account?
-                      </CustomTypography>
-                      <Link href="/signin">
-                        <CustomTypography
-                          sx={{ color: "#034275", textDecoration: "underline" }}
-                        >
-                          Log In
-                        </CustomTypography>
-                      </Link>
-                    </Stack>
+                    </button>
                   </Stack>
-                  <button onClick={handleClick} className="linkedinButton">
-                    <span>
-                      <Image
-                        src={"/linkedInLogo.png"}
-                        alt=""
-                        height={20}
-                        width={20}
-                      />
-                    </span>
-                    <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
-                      Log in with LinkedIn
-                    </span>
-                  </button>
-                  <button onClick={()=>{handleClick('google')}} className="linkedinButton">
-                    <span>
-                      <Image
-                        src={"/googleLogo.png"}
-                        alt=""
-                        height={20}
-                        width={20}
-                      />
-                    </span>
-                    <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
-                      Log in with Google
-                    </span>
-                  </button>
-                  <Divider>OR</Divider>
-                  <Stack direction={{sm:"row",xs:'column'}} sx={{ width: "95%", gap: "10px" }}>
-                  <StyledInput
-                           autoComplete="given-name"
-                           name="firstName"
-                           required
-                           fullWidth
-                           id="firstName"
-                           label="First Name"
-                           placeholder="Enter First Name"
-                           autoFocus
-                           value={values.firstName}
-                           onChange={handleChange}
-                           error={errors.firstName ? true : false}
-                           helperText={errors.firstName} />
-                  <StyledInput
-                       required
-                       fullWidth
-                       id="lastName"
-                       label="Last Name"
-                       name="lastName"
-                       autoComplete="family-name"
-                       placeholder="Enter Last Name"
-                       value={values.lastName}
-                       onChange={handleChange}
-                       error={errors.lastName ? true : false}
-                       helperText={errors.lastName} />
-                  </Stack>
-                  <StyledInput
-                   fullWidth
-                   id="email"
-                   label="Email Address"
-                   name="email"
-                   autoComplete="email"
-                   placeholder="Enter E-mail"
-                   type="email"
-                   required
-                   value={values.email}
-                   onChange={handleChange}
-                   error={errors.email || freeemail.sts ? true : false}
-                   helperText={errors.email || freeemail.msg} />
-
-                  <Stack direction={{sm:"row",xs:'column'}} sx={{ width: "95%", gap: "10px" }}>
-                  <FormControl fullWidth>
-                    <OutlinedInput
-                      placeholder="Password"
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      sx={{  height: "60px",
-                      borderRadius: "8px",
-                      width: "100%",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                      color: "#949494",
-                      padding: "10px",}}
-                      onChange={handleChange}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleClickShowPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      error={errors.password ? true : false}
-                    />
-                    {!!errors.password && (
-                    <FormHelperText error id="accountId-error">
-                      {errors.password}
-                    </FormHelperText>
-                  )}
-                  {!errors.password && (
-                    <FormHelperText
-                      id="accountpAss-error"
-                      sx={{ width: { sm: "400px", xs: "100%",marginLeft:'0px' } }}
-                    >
-                   Password must contain at least one uppercase character,
-                      one lowercase character, one special character and one
-                      number
-                    </FormHelperText>
-                  )}
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <OutlinedInput 
-                       placeholder="Confirm Password"
-                       type={confirmP.showConfirmPassword ? "text" : "password"}
-                       name="confirmPassword"
-                       sx={{  height: "60px",
-                       borderRadius: "8px",
-                       width: "100%",
-                       fontSize: "18px",
-                       fontWeight: "400",
-                       color: "#949494",
-                       padding: "10px",}}
-                       onChange={handleChange}
-                       endAdornment={
-                         <InputAdornment position="end">
-                           <IconButton
-                             aria-label="toggle password visibility"
-                             onClick={handleClickShowConfirmPassword}
-                             onMouseDown={handleClickShowConfirmPassword}
-                             edge="end"
-                           >
-                             {confirmP.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                           </IconButton>
-                         </InputAdornment>
-                       }  />
-                            {!!errors.confirmPassword && (
-                    <FormHelperText error id="accountId-error">
-                      {errors.confirmPassword}
-                    </FormHelperText>
-                  )}
-                  </FormControl>
-                  </Stack>
-                 {userType === 'employer' ? <Stack direction={{sm:"row",xs:'column'}} sx={{ width: "95%", gap: "10px" }}>
-                <TextField
-                  required
-                  fullWidth
-                  id="organization"
-                  label="Organization Name"
-                  name="organization"
-                  autoComplete="name"
-                  onChange={handleChange}
-                  placeholder="Enter Your Organization Name"
-                  // sx={{mt:'20px'}}
-                />
-
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Sector</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={values.sector}
-                    name="sector"
-                    required
-                    label="sector"
-                    onChange={handleChange}
-                  >
-                    {SECTORS.map((job, ind) => (
-                      <MenuItem key={ind} value={job}>
-                        {job}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                  </Stack> : ''}
-              
-                  <FormControl sx={{ mt: "15px", width: "95%" }}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                        value={values.checked}
-                        color="primary"
-                        checked={values.checked}
-                        onChange={(e)=>{handleCheckboxChange(e)}}
-                        />
-                      }
-                      label={
-                        <p>
-                          By clicking checkbox, you agree to our{" "}
-                          <span>
-                            <a
-                              style={{ color: "#4fa9ff" }}
-                              target="blank"
-                              href="https://graceful-donut-d1174d.netlify.app/WebsiteUse"
-                            >
-                              Terms and Conditions and Privacy Policy
-                            </a>
-                          </span>
-                        </p>
-                      }
-                    />
-                {!!errors.agreeTermasValue && (
-                <FormHelperText error id="accountId-error">
-                  {errors.agreeTermasValue}
-                </FormHelperText>
-              )}
-                  </FormControl>
-                  <button
-                    style={{
-                      height: "60px",
-                      backgroundColor: "#015FB1",
-                      borderRadius: "8px",
-                      width: "95%",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                      color: "white",
-                    }}
-                    type="submit"
-                  >
-                    Sign Up
-                  </button>
-                </Stack>
                 </form>
               </CardContent>
             </Card>
