@@ -38,6 +38,7 @@ export const retrievePersonal = createAsyncThunk(
   "personal/retrive",
   async () => {
     const res = await personalService.getAll();
+    console.log(res.data, "aa");
     try {
       return res.data[0];
     } catch (error) {
