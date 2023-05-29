@@ -29,7 +29,7 @@ const CandidateJobs = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Stack sx={{ gap: "10px", mt: "10px" }}>
       <Box
         sx={{
           backgroundColor: "#2699FF",
@@ -67,7 +67,7 @@ const CandidateJobs = () => {
           <SavedJobs />
         </Stack>
       </Collapse>
-    </>
+    </Stack>
   );
 };
 

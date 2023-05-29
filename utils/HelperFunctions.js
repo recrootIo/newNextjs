@@ -83,3 +83,50 @@ export const getZerosCurrencies = (value, denominator) => {
   //     return `${value}000`;
   // }
 };
+
+/**
+ *
+ * @param {*} date
+ * @returns
+ */
+export const convertDate = (date) => {
+  const dateObj = new Date(date);
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const year = String(dateObj.getFullYear());
+
+  return `${month}/${day}/${year}`;
+};
+
+/**
+ * Returns Users Id
+ * @returns id
+ */
+export const getUserId = () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  return user.User._id;
+};
+
+/**
+ *
+ * @param {*} strng
+ * @returns
+ */
+export const reduceLength = (string) => {
+  if (string?.length > 100) return `${string?.slice(0, 60)}...`;
+  return string;
+};
+
+/**
+ *
+ * @param {*} address
+ * @returns
+ */
+export const getAddress = (address) => {
+  if (address.length > 1) {
+    const newAddress = address[0].split(",");
+    return reduceLength(newAddress[newAddress.length - 1]);
+  } else {
+    return reduceLength(address[0]);
+  }
+};

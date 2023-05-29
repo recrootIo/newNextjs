@@ -2,23 +2,24 @@
 "use client";
 import React, { useCallback } from "react";
 import Container from "@mui/material/Container";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 // import { logout } from "@/app/slices/auth";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+import { Avatar } from "@mui/material";
 const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
   // const user = JSON.parse(localStorage.getItem("User")) || "";
-  const cookie = Cookies.get('user')
-  const user = Cookies.get('user') !== undefined ? JSON.parse(cookie) : cookie
+  const cookie = Cookies.get("user");
+  const user = Cookies.get("user") !== undefined ? JSON.parse(cookie) : cookie;
   // const dispatch = useDispatch()
   const logOut = useCallback(() => {
     dispatch(logout()).then(() => {
       push("/");
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <nav>
@@ -33,7 +34,7 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
-        <Container maxWidth="lg">
+        <Container>
           <div className="relative flex h-16 items-center justify-between">
             <div className="flex flex-1 items-center justify-center md:justify-between sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
@@ -74,17 +75,19 @@ const Navbar = () => {
                   >
                     Pricing
                   </a>
-                
-                  {
-                    user === undefined ? '':
-                  <button
-                    className="   rounded-md px-3 py-2 text-sm font-medium"
-                    style={{ fontSize: "20px", color: "black" }}
-                    onClick={logOut}
-                  >
-                    Logout
-                  </button>
-                  }
+
+                  {user === undefined ? (
+                    ""
+                  ) : (
+                    <button
+                      className="   rounded-md px-3 py-2 text-sm font-medium"
+                      style={{ fontSize: "20px", color: "black" }}
+                      onClick={logOut}
+                    >
+                      Logout
+                    </button>
+                  )}
+                  <Avatar />
                 </div>
               </div>
             </div>

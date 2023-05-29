@@ -2,6 +2,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import {
   CardContent,
   Grid,
+  IconButton,
   Stack,
   Dialog,
   DialogActions,
@@ -22,6 +23,7 @@ import { LAZY } from "@/theme/spacings";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { deleteExperAndGet } from "@/redux/slices/personal";
+import { retrieveGetSinExperience } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -29,25 +31,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Experience = ({ ...experience }) => {
   const dispatch = useDispatch();
+  const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState("");
 
-  const gotToAddExperience = () => {
+  const gotToExperience = () => {
     dispatch(updateCurrentScreen("experience"));
   };
 
-  const [openDel, setOpenDel] = React.useState(false);
-  const [delExp, setDelExp] = useState("");
-
-  const handleClickOpenDeleteExp = (id) => {
-    setDelExp(id);
-    setOpenDel(true);
+  const handleGetSingle = (id) => {
+    dispatch(retrieveGetSinExperience(id));
+    gotToExperience();
   };
 
-  const handleDeleteExp = () => {
-    dispatch(deleteExperAndGet(delExp));
+  const handleDelete = () => {
+    dispatch(deleteExperAndGet(selectedId));
   };
 
-  const handleCloseDeleteExp = () => {
-    setOpenDel(false);
+  const closeMessage = () => {
+    setOpenDeleteScreen(false);
   };
 
   return (
@@ -71,10 +72,9 @@ const Experience = ({ ...experience }) => {
           >
             Experience
           </CustomTypography>
-          <AddIcon
-            className="iconPointers"
-            onClick={() => gotToAddExperience()}
-          />
+          <IconButton onClick={() => gotToExperience()}>
+            <AddIcon sx={{ cursor: "pointer" }} />
+          </IconButton>
         </Stack>
         <CardContent
           sx={{
@@ -97,20 +97,25 @@ const Experience = ({ ...experience }) => {
                   sx={{
                     justifyContent: "flex-end",
                     alignItems: "center",
-                    gap: "10px",
                   }}
                 >
-                  <CreateIcon sx={{ color: "#00339B" }} fontSize="small" />
-                  <DeleteIcon
-                    sx={{ color: DANGER }}
-                    className="iconPointers"
+                  <IconButton onClick={() => handleGetSingle(ex?._id)}>
+                    <CreateIcon
+                      sx={{ color: "#00339B", cursor: "pointer" }}
+                      fontSize="small"
+                    />
+                  </IconButton>
+                  <IconButton
                     onClick={() => {
-                      handleClickOpenDeleteExp(_id);
+                      setOpenDeleteScreen(() => true);
+                      setSelectedId(ex?._id);
                     }}
-                  />
+                  >
+                    <DeleteIcon sx={{ color: DANGER }} />
+                  </IconButton>
                 </Stack>
                 <Grid container spacing={2}>
-                  <Grid item md={6}>
+                  <Grid item md={6} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
@@ -143,7 +148,7 @@ const Experience = ({ ...experience }) => {
                       </Stack>
                     </Stack>
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={6} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
@@ -174,7 +179,7 @@ const Experience = ({ ...experience }) => {
                       </Stack>
                     </Stack>
                   </Grid>
-                  <Grid item md={12}>
+                  <Grid item md={12} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
@@ -191,16 +196,14 @@ const Experience = ({ ...experience }) => {
         </CardContent>
       </StyledCard>
       <Dialog
-        open={openDel}
+        open={openDeleteScreen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleCloseDeleteExp}
+        onClose={closeMessage}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
-          {
-            "Are you sure you want to proceed with deleting your work experience ?"
-          }
+          Are you sure you want to proceed with deleting your work experience ?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
@@ -208,13 +211,13 @@ const Experience = ({ ...experience }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              handleCloseDeleteExp();
-              handleDeleteExp();
+              closeMessage();
+              handleDelete();
             }}
           >
             Yes
           </Button>
-          <Button onClick={handleCloseDeleteExp}>No</Button>
+          <Button onClick={() => closeMessage()}>No</Button>
         </DialogActions>
       </Dialog>
     </>

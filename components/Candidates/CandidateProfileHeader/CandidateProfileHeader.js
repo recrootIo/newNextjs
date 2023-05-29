@@ -6,7 +6,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
-import index from "../uploadResume/jobTitle";
+import { EditRounded } from "@mui/icons-material";
 
 const bull = (
   <Box
@@ -55,16 +55,24 @@ const CandidateProfileHeader = () => {
               alignItems: "center",
             }}
           >
-            <img
-              src="/candiImgBg.png"
-              alt=""
-              style={{ position: "absolute" }}
-            />
-            <Avatar
+            {/* <Avatar
               alt="Remy Sharp"
               src="/static/images/avatar/1.jpg"
               sx={{ width: "200px", height: "200px" }}
-            />
+            /> */}
+            <IconButton
+              sx={{
+                position: "relative",
+                top: "-36px",
+                left: "34px",
+                backgroundColor: "#4fa9ff",
+              }}
+              onClick={() => {
+                handleClickOpen();
+              }}
+            >
+              <EditRounded sx={{ color: "#ffff" }} />
+            </IconButton>
           </Grid>
           <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
             <Box sx={{ width: "100%" }}>

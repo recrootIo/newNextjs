@@ -12,8 +12,8 @@ class jobsService {
     return http.get(`getCompanyJobs/${companyId}`);
   }
   getSingleJob(id) {
-    return axios.get(`http://localhost:3000/api/getSingleJob/${id}`);
+    return http.get(`http://localhost:3000/api/getSingleJob/${id}`);
   }
 }
 
-export default new jobsService();
+export default jobsService;
