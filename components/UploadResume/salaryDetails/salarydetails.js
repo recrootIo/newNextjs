@@ -32,6 +32,7 @@ import {
 } from "@/utils/currency";
 import { NEUTRAL } from "@/theme/colors";
 import { currencyConvert } from "@/utils/HelperFunctions";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -42,7 +43,7 @@ const steps = [
 ];
 
 const Salary = ({ ...props }) => {
-  const { setCreateResume, saveAllData } = props;
+  const { setCreateResume, saveAllData ,scroll , position} = props;
   const [currency, setCurrency] = React.useState(INDIAN_CURRENCY.country);
   const [currentSalary, setCurrentSalary] = React.useState({
     denomination: THOUSAND,
@@ -123,6 +124,22 @@ const Salary = ({ ...props }) => {
             sizes="100vw"
           />
         </Box>
+        <Stack
+          sx={{
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            display: { md: "flex", padding: { md: "130px 0", xs: "20px 0" } },
+          }}
+        >
+          <Button
+            onClick={() => scroll(position - 1)}
+            startIcon={<KeyboardBackspaceIcon />}
+            sx={{ color: 'black', textDecoration: "underline" }}
+            variant="text"
+          >
+            Back
+          </Button>
+        </Stack>
         <Box className="stepperContainer">
           <Stepper sx={{ width: "50%" }} activeStep={4} alternativeLabel>
             {steps.map((label) => (

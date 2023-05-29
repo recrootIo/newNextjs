@@ -20,6 +20,7 @@ import personalService from "@/redux/services/personal.service";
 // import { AddResumeAndThenGet, retrievePersonal } from "@/redux/slices/personal";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import { retrievePersonal } from "@/redux/slices/personal";
 
 const AddResume = () => {
   const [pdf, setPdf] = React.useState();
@@ -29,14 +30,13 @@ const AddResume = () => {
 
   const gotToResume = () => {
     dispatch(updateCurrentScreen(""));
+    setPdf("")
   };
 
   const handleChange = (file) => {
     setPdf(file);
     // setFileNames(file.name);
   };
-
-  console.log(pdf, "pdf");
 
   const send = (file) => {
     let formData = new FormData();
@@ -45,15 +45,17 @@ const AddResume = () => {
 
     personalService
       .addResume(formData)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Resume is Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 200) {          
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Resume is Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(

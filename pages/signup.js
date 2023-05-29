@@ -45,7 +45,7 @@ const StyledInput = styled("input")({
   width: "95%",
   fontSize: "18px",
   fontWeight: "400",
-  color: "#949494",
+  color: "#000",
   padding: "10px",
 });
 
@@ -56,7 +56,7 @@ const StyledPasswordInput = styled("input")({
   width: "100%",
   fontSize: "18px",
   fontWeight: "400",
-  color: "#949494",
+  color: "#000",
   padding: "10px",
 });
 
@@ -552,7 +552,6 @@ function Signup() {
               }}
             >
               <CardContent>
-                <form onSubmit={handleRegister}>
                 <Stack sx={{ alignItems: "center", gap: "20px" }}>
                   <Stack sx={{ alignItems: "center" }}>
                     <CustomTypography
@@ -606,6 +605,13 @@ function Signup() {
                     </span>
                   </button>
                   <Divider>OR</Divider>
+                <form style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '20px',
+                  alignItems: 'center'}} 
+                onSubmit={handleRegister}>
                   <Stack direction={{sm:"row",xs:'column'}} sx={{ width: "95%", gap: "10px" }}>
                   <StyledInput
                            autoComplete="given-name"
@@ -658,7 +664,7 @@ function Signup() {
                       width: "100%",
                       fontSize: "18px",
                       fontWeight: "400",
-                      color: "#949494",
+                      color: "#000",
                       padding: "10px",}}
                       onChange={handleChange}
                       endAdornment={
@@ -701,7 +707,7 @@ function Signup() {
                        width: "100%",
                        fontSize: "18px",
                        fontWeight: "400",
-                       color: "#949494",
+                       color: "#000",
                        padding: "10px",}}
                        onChange={handleChange}
                        endAdornment={
@@ -801,8 +807,8 @@ function Signup() {
                   >
                     Sign Up
                   </button>
-                </Stack>
                 </form>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
