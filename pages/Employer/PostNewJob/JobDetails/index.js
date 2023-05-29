@@ -10,44 +10,16 @@ import {
   Card,
   CardContent,
   Stack,
-  Tabs,
-  Tab,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  AppBar,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
   Divider,
-  Switch,
-  FormControlLabel,
-  InputAdornment,
   TextField,
-  IconButton,
   Autocomplete,
   Chip,
-  RadioGroup,
-  Radio,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Close } from "@mui/icons-material";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import AddIcon from "@mui/icons-material/Add";
 import EditorToolbar, {
@@ -90,13 +62,6 @@ const JobDetails = () => {
     setSelectedIndex(index);
   };
 
-  const handleAddInput = () => {
-    setMemberrole([
-      ...memberrole,
-      { id: uuidv4(), memberId: "", role: "", fname: "" },
-    ]);
-  };
-
   return (
     <>
       <EmployerNavbar />
@@ -110,9 +75,7 @@ const JobDetails = () => {
       ></Box>
 
       <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
+        <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
             <Grid item xs={2}>
               <Box
@@ -204,7 +167,7 @@ const JobDetails = () => {
                   }}
                   gutterBottom
                 >
-                  Hello User
+                  Create New Job
                 </CustomTypography>
                 <Button
                   variant="contained"
@@ -282,9 +245,10 @@ const JobDetails = () => {
                       <Box
                         sx={{
                           width: "100%",
+                          height: "320px",
                         }}
                       >
-                        <EditorToolbar />
+                        <EditorToolbar sx={{ bgcolor: "#F2F8FD" }} />
                         <ReactQuill
                           placeholder="Add Description"
                           // value={cmpin.infodes}
@@ -296,7 +260,7 @@ const JobDetails = () => {
                           style={{ height: "250px" }}
                         />
                       </Box>
-                      <Stack direction="row" spacing={2} sx={{ mt: "120px" }}>
+                      <Stack direction="row" spacing={2}>
                         <Autocomplete
                           freeSolo
                           id="free-solo-2-demo"
@@ -367,7 +331,6 @@ const JobDetails = () => {
                           display: "flex",
                           flexWrap: "wrap",
                           gap: "10px",
-                          marginTop: "10px",
                         }}
                       >
                         {/* {jobs.requiredSkill &&

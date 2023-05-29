@@ -101,67 +101,73 @@ function ScreeningQuestions() {
           />
         </RadioGroup>
       </Box>
-      {showq === undefined || showq === "true"
+      {/* {showq === undefined || showq === "true"
         ? question &&
-          question.map((quest, ind) => (
-            <Box key={quest.id} sx={{ margin: "10px 0 " }}>
-              <Box>
-                <CustomTypography>Question {ind + 1}</CustomTypography>
-              </Box>
+          question.map((quest, ind) => ( */}
+      <Box
+        //key={quest.id}
+        sx={{ margin: "10px 0 " }}
+      >
+        <Box>
+          <CustomTypography sx={{ fontSize: "18px", color: "#034275" }}>
+            Question
+            {/* {ind + 1} */}
+          </CustomTypography>
+        </Box>
 
-              <Box>
-                <TextareaAutosize
-                  minRows={4}
-                  placeholder="Enter Question"
-                  onChange={(e) => {
-                    handleQuestion(quest.id, e);
-                  }}
-                  value={quest.questions}
-                  name="questions"
-                  className="textareaQuestion"
-                />
+        <Box sx={{ mt: "10px" }}>
+          <TextareaAutosize
+            minRows={4}
+            placeholder="Enter Question"
+            // onChange={(e) => {
+            //   handleQuestion(quest.id, e);
+            // }}
+            // value={quest.questions}
+            name="questions"
+            className="textareaQuestion"
+            style={{ width: "80%" }}
+          />
 
-                {question.length > 1 ? (
-                  <IconButton edge="end" sx={{ mr: "2px", color: "#4fa9ff" }}>
-                    <Close
-                      onClick={() => {
-                        deleteQuestion(quest.id);
-                      }}
-                    />
-                  </IconButton>
-                ) : (
+          {/* {question.length > 1 ? ( */}
+          <IconButton edge="end" sx={{ mr: "1px", color: "#3771C8" }}>
+            <Close
+            // onClick={() => {
+            //   deleteQuestion(quest.id);
+            // }}
+            />
+          </IconButton>
+          {/* ) : (
                   ""
-                )}
+                )} */}
 
-                <Button onClick={handleAdd}>
-                  <Add />
-                </Button>
-              </Box>
+          <Button onClick={handleAdd}>
+            <Add sx={{ color: "#3771C8" }} />
+          </Button>
+        </Box>
 
-              <Box>
-                <CustomTypography variant="p" sx={styles.sectxt}>
-                  Preferred Answer
-                </CustomTypography>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue={quest.preferedAns}
-                  name="preferedAns"
-                  onChange={(e) => {
-                    handleQuestion(quest.id, e);
-                  }}
-                  sx={{ flexDirection: "row" }}
-                >
-                  <FormControlLabel
-                    value="yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="no" control={<Radio />} label="No" />
-                </RadioGroup>
-              </Box>
-            </Box>
-          ))
-        : ""}
+        <Box>
+          <CustomTypography
+            variant="p"
+            sx={{ fontSize: "18px", color: "#034275" }}
+          >
+            Preferred Answer
+          </CustomTypography>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            // defaultValue={quest.preferedAns}
+            name="preferedAns"
+            // onChange={(e) => {
+            //   handleQuestion(quest.id, e);
+            // }}
+            sx={{ flexDirection: "row", gap: "50px" }}
+          >
+            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+          </RadioGroup>
+        </Box>
+      </Box>
+      {/* ))
+        : ""} */}
     </Box>
   );
 }

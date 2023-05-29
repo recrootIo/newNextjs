@@ -10,95 +10,21 @@ import {
   Card,
   CardContent,
   Stack,
-  Tabs,
-  Tab,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  AppBar,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
   Divider,
-  Switch,
-  FormControlLabel,
-  InputAdornment,
-  TextField,
   IconButton,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "@/components/EditorToolbar/EditorToolbar";
-// import ReactQuill from "react-quill";
-import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <CustomTypography>{children}</CustomTypography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-//Table
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-const EmpoyerDashboard = () => {
+const Members = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
@@ -127,9 +53,7 @@ const EmpoyerDashboard = () => {
       ></Box>
 
       <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
+        <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
             <Grid item xs={2}>
               <Box
@@ -530,4 +454,4 @@ const EmpoyerDashboard = () => {
   );
 };
 
-export default EmpoyerDashboard;
+export default Members;

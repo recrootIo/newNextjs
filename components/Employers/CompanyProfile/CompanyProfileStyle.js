@@ -72,10 +72,10 @@ export const styles = {
   },
   naminput: {
     width: { md: "100%", xs: "100%" },
-    // marginLeft: "40px",
     height: "60px",
     color: "#BAD4DF",
     backgroundColor: "white",
+    border: "1px solid white",
   },
   naminputs1: {
     position: "fixed",

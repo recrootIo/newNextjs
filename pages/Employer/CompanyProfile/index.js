@@ -93,53 +93,7 @@ const selectstyle = {
   },
 };
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <CustomTypography>{children}</CustomTypography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-//Table
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-const EmpoyerDashboard = () => {
+const CompanyProfile = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [value, setValue] = React.useState(0);
   const [checked, setChecked] = React.useState(true);
@@ -161,14 +115,6 @@ const EmpoyerDashboard = () => {
     setOpen(false);
   };
 
-  const handleBasicInfoChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -186,9 +132,7 @@ const EmpoyerDashboard = () => {
       ></Box>
 
       <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
+        <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
             <Grid item xs={2}>
               <Box
@@ -414,7 +358,7 @@ const EmpoyerDashboard = () => {
                   width: "100%",
                   backgroundColor: "#F2F8FD",
                   mt: "40px",
-                  pb: "80px",
+                  p: "25px 25px 80px 25px",
                 }}
               >
                 <CardContent>
@@ -537,8 +481,8 @@ const EmpoyerDashboard = () => {
                       </Dialog>
                     </Box>
                   </Box>
-                  <Divider variant="middle" />
-                  <Box sx={{ display: "flex", mt: "20px" }}>
+                  <Divider />
+                  <Box sx={{ display: "flex", mt: "20px", mb: "35px" }}>
                     <CustomTypography
                       sx={{
                         color: "#034275",
@@ -630,8 +574,11 @@ const EmpoyerDashboard = () => {
                     Company Information
                   </CustomTypography>
                   <Box sx={styles.infofld}>
-                    <FormControl>
-                      <InputLabel id="demo-simple-select-label">
+                    <FormControl sx={style.naminput}>
+                      <InputLabel
+                        id="demo-simple-select-label"
+                        sx={{ color: "#BAD4DF" }}
+                      >
                         Sector
                       </InputLabel>
                       <Select
@@ -668,7 +615,9 @@ const EmpoyerDashboard = () => {
                     <Box
                       sx={{
                         width: "100%",
-                        minHeight: "250px",
+                        minHeight: "320px",
+                        backgroundColor: "white",
+                        border: "1px solid white",
                       }}
                     >
                       <EditorToolbar />
@@ -697,7 +646,7 @@ const EmpoyerDashboard = () => {
                       }}
                     >
                       <TextField
-                        InputLabelProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "#BAD4DF" } }}
                         sx={styles.naminput}
                         id="outlined-basic"
                         placeholder="Enter FaceBook Link"
@@ -720,7 +669,7 @@ const EmpoyerDashboard = () => {
                       />
 
                       <TextField
-                        InputLabelProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "#BAD4DF" } }}
                         sx={styles.naminput}
                         id="outlined-basic"
                         placeholder="Enter Twitter Link"
@@ -769,8 +718,12 @@ const EmpoyerDashboard = () => {
                         // helperText={errors.linkin}
                       />
                       <TextField
+                        width="100%"
                         InputLabelProps={{ style: { color: "black" } }}
-                        sx={styles.naminput}
+                        sx={{
+                          ...style.naminput,
+                          width: "100%",
+                        }}
                         id="outlined-basic"
                         placeholder="Enter Youtube Link"
                         variant="outlined"
@@ -784,7 +737,11 @@ const EmpoyerDashboard = () => {
                           startAdornment: (
                             <InputAdornment position="start">
                               <YouTubeIcon
-                                sx={{ color: "#E7274B", fontSize: "1.5rem" }}
+                                sx={{
+                                  color: "#E7274B",
+                                  fontSize: "1.5rem",
+                                  zIndex: 1,
+                                }}
                               />
                             </InputAdornment>
                           ),
@@ -829,4 +786,4 @@ const EmpoyerDashboard = () => {
   );
 };
 
-export default EmpoyerDashboard;
+export default CompanyProfile;

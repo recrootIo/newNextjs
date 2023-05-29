@@ -27,66 +27,13 @@ import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
 import styles from "./companyPreview.module.css";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <CustomTypography>{children}</CustomTypography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-//Table
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-const EmpoyerDashboard = () => {
+const CompanyPreview = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
-  };
-
-  const handleAddInput = () => {
-    setMemberrole([
-      ...memberrole,
-      { id: uuidv4(), memberId: "", role: "", fname: "" },
-    ]);
   };
 
   return (
@@ -102,9 +49,7 @@ const EmpoyerDashboard = () => {
       ></Box>
 
       <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
+        <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
             <Grid item xs={2}>
               <Box
@@ -332,6 +277,7 @@ const EmpoyerDashboard = () => {
                   width: "100%",
                   textAlign: "center",
                   mt: "80px",
+                  mb: "160px",
                   fontFamily: BOLD,
                 }}
                 variant="h5"
@@ -343,9 +289,9 @@ const EmpoyerDashboard = () => {
                 sx={{
                   width: "100%",
                   backgroundColor: "#F2F8FD",
-                  //mt: "80px",
                   pb: "80px",
                   boder: "none",
+                  overflow: "visible",
                 }}
               >
                 <CardContent>
@@ -363,6 +309,9 @@ const EmpoyerDashboard = () => {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
+                        position: "relative",
+                        top: "-220px",
+                        mt: "80px",
                       }}
                     >
                       <Box
@@ -374,9 +323,6 @@ const EmpoyerDashboard = () => {
                           justifyContent: "center",
                           alignItems: "center",
                           backgroundColor: "white",
-                          position: "relative",
-                          top: "-130px",
-                          zIndex: 1,
                         }}
                       >
                         <Avatar
@@ -387,14 +333,6 @@ const EmpoyerDashboard = () => {
                       </Box>
                       <CustomTypography
                         className={styles.comapnyNameTypo}
-                        // sx={{
-                        //   color: "#034275",
-                        //   fontSize: "30px",
-                        //   width: "100%",
-                        //   textAlign: "center",
-                        //   mt: "40px",
-                        //   fontFamily: BOLD,
-                        // }}
                         variant="h5"
                       >
                         Lorem Ipsum Pvt. Ltd
@@ -551,4 +489,4 @@ const EmpoyerDashboard = () => {
   );
 };
 
-export default EmpoyerDashboard;
+export default CompanyPreview;

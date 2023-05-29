@@ -40,7 +40,7 @@ export const styles = {
 
   sectxt: {
     fontWeight: "700",
-    fontSize: "16px",
+    fontSize: "18px",
     lineHeight: "30px",
     mb: "8px",
     mt: "20px",

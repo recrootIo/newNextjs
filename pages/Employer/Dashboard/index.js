@@ -98,9 +98,7 @@ const EmpoyerDashboard = () => {
       ></Box>
 
       <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
+        <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
             <Grid item xs={2}>
               <Box
@@ -345,16 +343,18 @@ const EmpoyerDashboard = () => {
                       <Box
                         sx={{
                           width: "30%",
-                          backgroundImage: 'url("/inactivejobs-bg.svg")',
+                          height: "100px",
+                          backgroundImage:
+                            'url("/dashbaordcard-circle-bg.png")',
                           backgroundRepeat: "no-repeat",
-                          backgroundSize: "cover",
+                          backgroundSize: "contain",
+                          backgroundPosition: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
+                        <img src="/total-applicants-img.png" alt="" />
                       </Box>
                       <Box
                         sx={{
@@ -395,12 +395,21 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
+                      <Box
+                        sx={{
+                          width: "30%",
+                          height: "100px",
+                          backgroundImage:
+                            'url("/dashbaordcard-circle-bg.png")',
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "contain",
+                          backgroundPosition: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img src="/rejected-applicants-img.png" alt="" />
                       </Box>
                       <Box
                         sx={{
@@ -441,12 +450,21 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
+                      <Box
+                        sx={{
+                          width: "30%",
+                          height: "100px",
+                          backgroundImage:
+                            'url("/dashbaordcard-circle-bg.png")',
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "contain",
+                          backgroundPosition: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img src="/shorlist-applicants-img.png" alt="" />
                       </Box>
                       <Box
                         sx={{
@@ -487,12 +505,21 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
-                        <img
-                          src="/dashbaordcard-circle-bg.png"
-                          alt=""
-                          style={{ width: "100px", height: "100px" }}
-                        />
+                      <Box
+                        sx={{
+                          width: "30%",
+                          height: "100px",
+                          backgroundImage:
+                            'url("/dashbaordcard-circle-bg.png")',
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "contain",
+                          backgroundPosition: "center",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img src="/selected-applicants-img.png" alt="" />
                       </Box>
                       <Box
                         sx={{

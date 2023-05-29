@@ -10,61 +10,17 @@ import {
   Card,
   CardContent,
   Stack,
-  Tabs,
-  Tab,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  AppBar,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
   Divider,
-  Switch,
-  FormControlLabel,
-  InputAdornment,
-  TextField,
-  IconButton,
-  Autocomplete,
   Chip,
-  RadioGroup,
-  Radio,
-  FormHelperText,
-  FormGroup,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Close } from "@mui/icons-material";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import AddIcon from "@mui/icons-material/Add";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "@/components/EditorToolbar/EditorToolbar";
-// import ReactQuill from "react-quill";
-import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import ScreeningQuestions from "@/components/Employers/ScreeningQuestions/ScreeningQuestions";
 import styled from "styled-components";
 import styles from "./postNewJobPreview.module.css";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const bull = (
   <Box
@@ -95,7 +51,7 @@ const style = {
   },
 };
 
-const EssentialInformation = () => {
+const JobPreview = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [apiAddress, setapiAddress] = useState("");
   //   const member = useSelector((state) => state.company.members);
@@ -105,11 +61,8 @@ const EssentialInformation = () => {
     setSelectedIndex(index);
   };
 
-  const handleAddInput = () => {
-    setMemberrole([
-      ...memberrole,
-      { id: uuidv4(), memberId: "", role: "", fname: "" },
-    ]);
+  const handleDelete = () => {
+    console.info("You clicked the delete icon.");
   };
 
   return (
@@ -272,26 +225,25 @@ const EssentialInformation = () => {
                     </Box>
                     <Box sx={{ p: "20px 15px 0px 15px" }}>
                       <Stack spacing={3}>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
-                            {" "}
                             Job Title :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            &nbsp;&nbsp;Lorem Ipsum
+                            Lorem Ipsum
                           </CustomTypography>
                         </Box>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Job Description :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            &nbsp;&nbsp;Are you looking for the next
-                            professional opportunity that will challenge you and
-                            advance your career? Join our team now!
+                            Are you looking for the next professional
+                            opportunity that will challenge you and advance your
+                            career? Join our team now!
                           </CustomTypography>
                         </Box>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Requirements :
                           </CustomTypography>
@@ -309,7 +261,7 @@ const EssentialInformation = () => {
                             {bull} Recommend and execute<br></br>
                           </CustomTypography>
                         </Box>
-                        <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Job Requirements :
                           </CustomTypography>
@@ -326,6 +278,107 @@ const EssentialInformation = () => {
                             {bull} Great attention to detail<br></br>
                           </CustomTypography>
                         </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Required Skills :
+                          </CustomTypography>
+                          <Stack direction="row" spacing={2}>
+                            <Chip
+                              label="Deletable"
+                              onDelete={handleDelete}
+                              sx={{ bgcolor: "#D4F0FC" }}
+                            />
+                          </Stack>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Job Location :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            Lorem Ipsum
+                          </CustomTypography>
+                        </Box>
+                      </Stack>
+                    </Box>
+                    <Box
+                      sx={{
+                        bgcolor: "#2699FF",
+                        height: "55px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        p: "0px 15px 0px 15px",
+                        mt: "25px",
+                      }}
+                    >
+                      <CustomTypography
+                        sx={{
+                          color: "white",
+                          fontSize: "16px",
+                        }}
+                      >
+                        Essential Information
+                      </CustomTypography>
+                      <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+                    </Box>
+                    <Box sx={{ p: "20px 15px 0px 15px" }}>
+                      <Stack spacing={3}>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Career Level :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            Lorem Ipsum
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Experience :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            3+ Years
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Qualifications :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            Postgraduate Diploma
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Application Deadline :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            05/26/2023
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Notice Period :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            15 Days
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Job Type :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            Remote
+                          </CustomTypography>
+                        </Box>
+                        <Box sx={{ display: "flex", gap: "10px" }}>
+                          <CustomTypography className={styles.JobPreviewTypo}>
+                            Salary :
+                          </CustomTypography>
+                          <CustomTypography className={styles.JobPreviewData}>
+                            Negotiable
+                          </CustomTypography>
+                        </Box>
                       </Stack>
                     </Box>
                   </Box>
@@ -339,4 +392,4 @@ const EssentialInformation = () => {
   );
 };
 
-export default EssentialInformation;
+export default JobPreview;
