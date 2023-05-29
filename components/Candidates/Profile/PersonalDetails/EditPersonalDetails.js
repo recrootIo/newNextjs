@@ -41,7 +41,7 @@ import { NEUTRAL } from "@/theme/colors";
 import {
   // EditPersonalandGet,
   // editPersonalsName,
-  getCandsPrefInfo,
+  getCandsPrefInfo, retrievePersonal,
 } from "@/redux/slices/personal";
 import { BOLD } from "@/theme/fonts";
 // import personalService from "@/redux/services/personal.service";
@@ -66,6 +66,7 @@ const EditPersonalDetails = () => {
     notice: resume.notice,
     salaryCurrency: resume.salaryCurrency,
     currentSalary: resume?.currentSalary,
+    expectedSalary: resume?.expectedSalary,
     workPrefence: resume?.resume,
     mobile: mobile,
     country: resume.location.country,
@@ -174,15 +175,19 @@ const EditPersonalDetails = () => {
   const handleEdit = () => {
     candidateServices
       .editMyPersonalDetails(personal)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Personal details updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(getCandsPrefInfo());
+      .then((res) => {
+        console.log(res,'resp')
+        if (res?.status === 201) {        
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Personal details updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(getCandsPrefInfo());
+          dispatch(retrievePersonal())
+        }
       })
       .catch(() => {
         dispatch(
@@ -214,6 +219,28 @@ const EditPersonalDetails = () => {
     setPersonal((state) => ({
       ...state,
       currentSalary: currentSalary,
+    }));
+  };
+  const changeSalariesexpec = (e, a) => {
+    console.log(a);
+    const { name, value } = e.target;
+    const salary = personal.expectedSalary.salary;
+    const denomination = personal.expectedSalary.denomination;
+
+    let expectedSalary = {
+      salary,
+      denomination,
+    };
+
+    if (name === "salary") {
+      expectedSalary.salary = value;
+    } else {
+      expectedSalary.denomination = value;
+    }
+
+    setPersonal((state) => ({
+      ...state,
+      expectedSalary: expectedSalary,
     }));
   };
 
@@ -392,6 +419,7 @@ const EditPersonalDetails = () => {
                 <Stack
                   sx={{
                     flexDirection: { md: "row", sm: "column", xs: "column" },
+                    gap:'5px'
                   }}
                   spacing={2}
                   marginTop={2}
@@ -408,7 +436,7 @@ const EditPersonalDetails = () => {
                       onChange={handleChangeName}
                     />
                   </FormControl>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth sx={{m:'0 !important'}}>
                     <CustomTypography variant="body2">State</CustomTypography>
                     <TextField
                       autoComplete="given-name"
@@ -420,7 +448,7 @@ const EditPersonalDetails = () => {
                       onChange={handleChangeName}
                     />
                   </FormControl>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth  sx={{m:'0 !important'}}>
                     <CustomTypography variant="body2">City</CustomTypography>
                     <TextField
                       autoComplete="given-name"
@@ -526,6 +554,7 @@ const EditPersonalDetails = () => {
               <Stack
                 sx={{
                   flexDirection: { md: "row", sm: "column", xs: "column" },
+                  gap:'5px'
                 }}
                 spacing={2}
               >
@@ -541,7 +570,7 @@ const EditPersonalDetails = () => {
                 />
 
                 {/* DENOMINATIONS */}
-                <FormControl sx={{ width: "100%" }}>
+                <FormControl sx={{ width: "100%" ,m:'0 !important'}}>
                   <InputLabel id="demo-simple-select-label">
                     Denomination *
                   </InputLabel>
@@ -563,9 +592,50 @@ const EditPersonalDetails = () => {
                   </Select>
                 </FormControl>
               </Stack>
+              <Stack
+                sx={{
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                  gap:'5px'
+                }}
+                spacing={2}
+              >
+                <TextField
+                  variant="outlined"
+                  value={personal?.expectedSalary?.salary}
+                  name="salary"
+                  label="Expected Salary(Per Annum)"
+                  type="number"
+                  onChange={changeSalariesexpec}
+                  sx={{ width: "100%" }}
+                  required
+                />
+
+                {/* DENOMINATIONS */}
+                <FormControl sx={{ width: "100%" ,m:'0 !important'}}>
+                  <InputLabel id="demo-simple-select-label">
+                    Denomination *
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={personal?.expectedSalary?.denomination}
+                    name="denomination"
+                    label="Denomination *"
+                    sx={{ backgroundColor: NEUTRAL, width: "100%" }}
+                    onChange={changeSalariesexpec}
+                    required
+                  >
+                    {DENOMINATIONS.map((data, ind) => (
+                      <MenuItem key={ind} value={data}>
+                        {data}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
 
               <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">
+                <FormLabel sx={{color:'black'}} id="demo-row-radio-buttons-group-label">
                   Do you already have an offer?*
                 </FormLabel>
                 <RadioGroup
@@ -594,6 +664,7 @@ const EditPersonalDetails = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={gotToPersonalDetails}
                 >
                   Cancel
                 </Button>

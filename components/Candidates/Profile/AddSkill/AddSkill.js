@@ -38,6 +38,11 @@ const AddSkill = () => {
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
+    setSkillSet({
+      skillName: '',
+      Experience: '',
+      Compitance: '',
+    })
   };
 
   const handleLevelChange = (e) => {
@@ -67,15 +72,17 @@ const AddSkill = () => {
   const addNewSkill = () => {
     candidateServices
       .addSkill(skillSet)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res.status === 201) {
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch(() => {
         dispatch(
@@ -90,15 +97,17 @@ const AddSkill = () => {
   const editNewSkill = () => {
     candidateServices
       .editSkills(skillSet, skillSet?.id)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 201) {         
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch(() => {
         dispatch(

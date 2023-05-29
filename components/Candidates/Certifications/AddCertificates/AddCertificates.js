@@ -41,6 +41,16 @@ const AddCertificates = ({}) => {
 
   const gotToCertificates = () => {
     dispatch(updateCurrentScreen(""));
+    setInputCertificate(
+      {
+        title: "",
+        organization: "",
+        certificate: "",
+        certificateLink: "",
+        issueDate: "",
+        expireDate: "",
+      }
+    )
   };
 
   const [inputCertificate, setInputCertificate] = React.useState({
@@ -117,15 +127,17 @@ const AddCertificates = ({}) => {
   const addNewCertificate = () => {
     resumeService
       .certificatesAdd(inputCertificate)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Certifications has been added",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 200) {  
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Certifications has been added",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -140,15 +152,17 @@ const AddCertificates = ({}) => {
   const editNewCertification = () => {
     resumeService
       .certificatesEdit(inputCertificate)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Certifications has been updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 200) {  
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Certifications has been updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -272,6 +286,7 @@ const AddCertificates = ({}) => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={gotToCertificates}
                 >
                   Cancel
                 </Button>

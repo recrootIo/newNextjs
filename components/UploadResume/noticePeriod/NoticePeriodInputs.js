@@ -19,6 +19,7 @@ import FormLabel from "@mui/material/FormLabel";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import Image from "next/image";
 import { WORK_PREFERENCE } from "@/utils/constants";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -76,6 +77,7 @@ const NoticePeriodInputs = ({ ...props }) => {
   return (
     <>
       <Container>
+        
         <Box className="logoContainer">
           <Image
             className="logoImage"
@@ -86,6 +88,22 @@ const NoticePeriodInputs = ({ ...props }) => {
             sizes="100vw"
           />
         </Box>
+        <Stack
+          sx={{
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            display: { md: "flex", padding: { md: "130px 0", xs: "20px 0" } },
+          }}
+        >
+          <Button
+            onClick={() => scroll(position - 1)}
+            startIcon={<KeyboardBackspaceIcon />}
+            sx={{ color: 'black', textDecoration: "underline" }}
+            variant="text"
+          >
+            Back
+          </Button>
+        </Stack>
         <Box className="stepperContainer">
           <Stepper sx={{ width: "50%" }} activeStep={3} alternativeLabel>
             {steps.map((label) => (

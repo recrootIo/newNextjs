@@ -39,6 +39,7 @@ import { convertDate } from "@/utils/HelperFunctions";
 // import personalService from "@/redux/services/personal.service";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
+import { retrievePersonal } from "@/redux/slices/personal";
 
 const AddEducation = () => {
   const education = useSelector((state) => state.personal.education);
@@ -106,6 +107,17 @@ const AddEducation = () => {
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
+    setEducationDetails({
+      graduate: "",
+      degreeName: "",
+      country: "",
+      state: "",
+      city: "",
+      experience: "",
+      collegeName: "",
+      fromDate: "",
+      toDate: "",
+    })
   };
 
   const handleSelect = async (selected) => {
@@ -135,15 +147,18 @@ const AddEducation = () => {
   const addEducation = () => {
     candidateServices
       .addPersonalEducation(educationDetails)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(GetCandsPrefInfo());
+      .then((res) => {
+        if (res.status === 201) {        
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(GetCandsPrefInfo());
+          dispatch(retrievePersonal())
+        }
       })
       .catch((error) => {
         dispatch(
@@ -158,15 +173,18 @@ const AddEducation = () => {
   const editEducation = () => {
     candidateServices
       .editPersonalEducation(educationDetails, educationDetails?._id)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(GetCandsPrefInfo());
+      .then((res) => {
+        if (res?.status === 201) {
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(GetCandsPrefInfo());
+          dispatch(retrievePersonal())
+        }
       })
       .catch((error) => {
         dispatch(
