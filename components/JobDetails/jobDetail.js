@@ -33,7 +33,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const JobDetail = ({ ...props }) => {
   const {
     jobDescription,
-    requiredSkill,
+    requiredSkill = [],
     company,
     applicationDeadline,
     createdAt,
@@ -249,7 +249,7 @@ const JobDetail = ({ ...props }) => {
                 />
 
                 <CardContent sx={{ rowGap: "70px" }}>
-                  {requiredSkill.map((skill, index) => (
+                  {requiredSkill?.map((skill, index) => (
                     <Chip
                       key={index}
                       label={skill.skill}
@@ -334,7 +334,7 @@ const JobDetail = ({ ...props }) => {
                       </Grid>
                     </Grid>
                   </Box>
-                  <CustomTypography
+                  {/* <CustomTypography
                     variant="body2"
                     // color="text.secondary"
                     lineHeight="27px"
@@ -347,8 +347,8 @@ const JobDetail = ({ ...props }) => {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat. .
-                  </CustomTypography>
-                  <Stack spacing={1} sx={{ mt: "25px" }}>
+                  </CustomTypography> */}
+                  {/* <Stack spacing={1} sx={{ mt: "25px" }}>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <CallIcon
                         fontSize="14px"
@@ -388,7 +388,7 @@ const JobDetail = ({ ...props }) => {
                         &nbsp;&nbsp;lorem@recroot.io
                       </CustomTypography>
                     </Box>
-                  </Stack>
+                  </Stack> */}
                 </CardContent>
               </Card>
             </Stack>

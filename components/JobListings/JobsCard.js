@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Chip,
   Stack,
   styled,
 } from "@mui/material";
@@ -100,20 +101,23 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
         }
       />
       <CardContent sx={{ pt: 0 }} className="searchCard">
-        <Stack direction={"row"} sx={{ gap: "15px", margin: "10px 0" }}>
-          {lateJob?.featureType && (
-            <StyledIconWrapper>
-              <span style={{ color: PRIMARY }}>Featured</span>
-              <TurnedInNotOutlinedIcon color="primary" fontSize="medium" />
-            </StyledIconWrapper>
-          )}
-          {lateJob?.immediate && (
-            <StyledIconWrapper>
-              <span style={{ color: PRIMARY }}>Immediate</span>
-              <VerifiedIcon color="primary" fontSize="medium" />
-            </StyledIconWrapper>
-          )}
-        </Stack>
+        {lateJob?.featureType ||
+          (lateJob?.immediate && (
+            <Stack direction={"row"} sx={{ gap: "15px", margin: "10px 0" }}>
+              {lateJob?.featureType && (
+                <StyledIconWrapper>
+                  <span style={{ color: PRIMARY }}>Featured</span>
+                  <TurnedInNotOutlinedIcon color="primary" fontSize="medium" />
+                </StyledIconWrapper>
+              )}
+              {lateJob?.immediate && (
+                <StyledIconWrapper>
+                  <span style={{ color: PRIMARY }}>Immediate</span>
+                  <VerifiedIcon color="primary" fontSize="medium" />
+                </StyledIconWrapper>
+              )}
+            </Stack>
+          ))}
 
         <CustomTypography
           variant="body2"
@@ -128,6 +132,16 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           {bull}
           &nbsp;{getSalary(lateJob?.salary)}
         </CustomTypography>
+        <Stack direction={"row"} sx={{ padding: "7px 0" }}>
+          {lateJob?.requiredSkill?.map((skill, index) => (
+            <Chip
+              key={index}
+              label={`#${skill?.skill}`}
+              color="primary"
+              variant="outlined"
+            />
+          ))}
+        </Stack>
         <CustomTypography variant="body2" color="text.secondary" fontSize={15}>
           <div
             style={{
@@ -146,6 +160,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
             {/* {} */}
           </div>
         </CustomTypography>
+
         <Box className="mobileBtn">
           <Box className="btnBox">
             <Button
