@@ -12,9 +12,9 @@ const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
   // const user = JSON.parse(localStorage.getItem("User")) || "";
-  const user = Cookies.get("token")
-  const userType = Cookies.get("userType")
-  const dispatch = useDispatch()
+  const user = Cookies.get("token");
+  const userType = Cookies.get("userType");
+  const dispatch = useDispatch();
   const logOut = useCallback(() => {
     dispatch(logout()).then(() => {
       push("/");
@@ -59,24 +59,24 @@ const Navbar = () => {
                   >
                     About Us
                   </a>
-      {userType === "Candidate" ? 
-      <Link href={'/Candidate/Dashboard'}>
-                  <p
-                    className="rounded-md px-3 py-2 text-sm font-medium"
-                    style={{ fontSize: "20px", color: "black" }}
-                  >
-                    Candidate
-                  </p> 
-      </Link>
-                  :
-                  <a
-                    href="#"
-                    className="   rounded-md px-3 py-2 text-sm font-medium"
-                    style={{ fontSize: "20px", color: "black" }}
-                  >
-                    Employer
-                  </a>
-                  }
+                  {userType === "Candidate" ? (
+                    <Link href={"/Candidate/Dashboard"}>
+                      <p
+                        className="rounded-md px-3 py-2 text-sm font-medium"
+                        style={{ fontSize: "20px", color: "black" }}
+                      >
+                        Candidate
+                      </p>
+                    </Link>
+                  ) : (
+                    <a
+                      href="#"
+                      className="   rounded-md px-3 py-2 text-sm font-medium"
+                      style={{ fontSize: "20px", color: "black" }}
+                    >
+                      Employer
+                    </a>
+                  )}
 
                   <a
                     href="#"

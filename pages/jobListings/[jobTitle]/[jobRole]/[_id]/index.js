@@ -7,7 +7,6 @@ import JobDetailCard from "@/components/JobDetails/jobDetailCard";
 import SimilarJobs from "@/components/JobDetails/similarJobs";
 import Navbar from "@/components/Navbar/Navbar";
 import jobsService from "@/redux/services/job.service";
-import React from "react";
 
 const JobDetails = ({ job, jobRole }) => {
   return (
@@ -27,20 +26,18 @@ const JobDetails = ({ job, jobRole }) => {
 export const getServerSideProps = async (context) => {
   const { jobTitle = "", jobRole = "", _id = "" } = context.query;
   const newService = new jobsService();
-  let job;
+  let job = {};
 
   await newService
     .getSingleJob(_id)
     .then((res) => {
-      job = res.data.data;
+      job = res?.data?.data;
     })
     .catch((error) => console.log(error));
 
   await newService
     .updateViewCount(_id)
-    .then((res) => {
-      console.log(res.data);
-    })
+    .then(() => {})
     .catch((error) => console.log(error));
 
   return {
