@@ -6,6 +6,6 @@ export const CustomTypography = ({ children, ...props }) => {
   return <Typography {...props}>{children}</Typography>;
 };
 
-CustomTypography.defaultProps = {
-  fontFamily: "Inter",
-};
+// CustomTypography.defaultProps = {
+//   fontFamily: "Inter",
+// };
