@@ -1,0 +1,12 @@
+.JobPreviewTypo {
+  color: #01313f;
+  font-size: 34px;
+  font-family: "Inter-Bold";
+  white-space: nowrap;
+}
+
+.JobPreviewData {
+  color: #01313f;
+  font-size: 16px;
+  font-weight: 400;
+}

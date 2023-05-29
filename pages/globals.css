@@ -1550,6 +1550,19 @@ a {
   border-color: #d83b01 !important;
 }
 
+.MuiListItemButton-root.Mui-selected {
+  color: red;
+}
+
+/* .MuiTab-root.Mui-selected {
+  background-color: #d3eaff !important;
+  color: #034275 !important;
+} */
+
+#simple-tabpanel .MuiBox-root {
+  padding: 0;
+}
+
 /* resume second */
 .animationcontainer {
   /* overflow-y: scroll !important; */
