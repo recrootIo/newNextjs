@@ -14,6 +14,9 @@ class jobsService {
   getSingleJob(id) {
     return axios.get(`http://localhost:3000/api/getSingleJob/${id}`);
   }
+  updateViewCount(id) {
+    return http.get(`https://preprod.recroot.au/api/updateViewCount/${id}`);
+  }
 }
 
 export default new jobsService();

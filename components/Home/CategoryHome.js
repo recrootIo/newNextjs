@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { NEUTRAL, PRIMARY } from "../../theme/colors";
 import { MAX, MID } from "../../theme/spacings";
 import {
   Box,
   Container,
-  Divider,
   Grid,
   Stack,
   styled,
@@ -71,7 +69,7 @@ const CategoryHome = () => {
                 </CustomTypography>
               </Stack>
 
-              <StyledCarousel breakPoints={breakPoints} showArrows={false}>
+              <StyledCarousel breakPoints={breakPoints} showArrows={true}>
                 <Stack
                   sx={{
                     width: "100%",
@@ -90,7 +88,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -104,7 +102,6 @@ const CategoryHome = () => {
                           className="pointers"
                         />
                       </Grid>
-
                       <Grid
                         item
                         md={0.5}
@@ -113,10 +110,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -139,7 +135,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -150,31 +145,8 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -197,7 +169,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -208,7 +179,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -230,9 +201,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -255,7 +226,6 @@ const CategoryHome = () => {
                       </Grid>
                     </Grid>
                   </Box>
-
                   <Box
                     className="categoryBox"
                     sx={{
@@ -266,7 +236,7 @@ const CategoryHome = () => {
                     }}
                   >
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         md={3}
                         sx={{ display: "flex", justifyContent: "center" }}
@@ -288,9 +258,9 @@ const CategoryHome = () => {
                           borderLeft: "1px solid",
                           borderLeftStyle: "outset",
                         }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
+                      ></Grid> */}
+                      <Grid item md={12}>
+                        <Stack sx={{ justifyContent: "center" }}>
                           <CustomTypography
                             sx={{
                               fontSize: "22px",
@@ -805,10 +775,13 @@ const CategoryHome = () => {
               xs={0}
               sx={{ padding: "10px", display: mobile ? "none" : "flex" }}
             >
-              <img
+              <Image
                 src="/browseImage.png"
                 alt=""
                 className="categoryImageMiddled"
+                width="0"
+                height="0"
+                sizes="100vw"
               />
             </Grid>
           </Grid>
@@ -1095,10 +1068,12 @@ const CategoryHome = () => {
                       alignItems: "center",
                     }}
                   >
-                    <img
+                    <Image
                       src="/browseImage.png"
                       alt=""
                       className="categoryImage"
+                      width="0"
+                      height="0"
                     />
                   </Stack>
                 </Grid>

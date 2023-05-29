@@ -1,12 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import { NEUTRAL } from "@/theme/colors";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Button, Stack, styled } from "@mui/material";
+import { Box, Stack, styled } from "@mui/material";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const StyledButton = styled("button")({
   backgroundColor: "#015FB1",
@@ -20,17 +20,15 @@ const StyledButton = styled("button")({
 });
 
 const Index = () => {
-  const { name } = useSelector((state) => state?.personal?.ids);
-
   const searchText = "OK";
-
+  const { push } = useRouter();
   return (
     <Box
       sx={{
         backgroundImage: `url("/bg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "100vh",
+        height: "100%",
         width: "100vw",
       }}
     >
@@ -45,11 +43,12 @@ const Index = () => {
           textAlign: "center",
         }}
       >
-        <img
+        <Image
           src={"/appliedSuccess.png"}
           alt=""
           className="successImage"
-          height={"500px"}
+          height={500}
+          width={500}
         />
         <div class="check-container">
           <div class="check-background">
@@ -83,8 +82,7 @@ const Index = () => {
         <StyledButton
           variant="contained"
           onClick={() => {
-            navigate(redirectPath);
-            if (redirect) clearStore();
+            push('/');
           }}
         >
           {searchText}

@@ -1,7 +1,7 @@
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
   CardContent,
-  Grid,
+  // Grid,
   Stack,
   Dialog,
   DialogActions,
@@ -12,7 +12,7 @@ import {
   IconButton,
   Slide,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -87,7 +87,7 @@ const Resume = ({ ...resume }) => {
                 sx={{ color: "#00339B", cursor: "pointer" }}
                 onClick={async () => {
                   const res = await fetch(
-                    ` http://localhost:3000/api/downloadResume?resume=${cv?.resume?.replace(
+                    ` https://preprod.recroot.au/api/downloadResume?resume=${cv?.resume?.replace(
                       /\\/g,
                       "/"
                     )}`
@@ -109,7 +109,7 @@ const Resume = ({ ...resume }) => {
                 <IconButton
                   onClick={async () => {
                     const res = await fetch(
-                      ` http://localhost:3000/api/downloadResume?resume=${cv.resume.replace(
+                      ` https://preprod.recroot.au/api/downloadResume?resume=${cv.resume.replace(
                         /\\/g,
                         "/"
                       )}`

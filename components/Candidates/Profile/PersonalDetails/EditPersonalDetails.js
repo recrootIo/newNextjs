@@ -19,13 +19,13 @@ import {
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
-import { Theme, useTheme } from "@mui/material/styles";
+
 import InputLabel from "@mui/material/InputLabel";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import axios from "axios";
@@ -36,16 +36,16 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from "react-google-places-autocomplete";
 import { DENOMINATIONS, ERROR, LANGUAGES, SUCCESS } from "@/utils/constants";
-import { CURRENCY, currency } from "@/utils/currency";
+import { CURRENCY } from "@/utils/currency";
 import { NEUTRAL } from "@/theme/colors";
 import {
-  EditPersonalandGet,
-  editPersonalsName,
+  // EditPersonalandGet,
+  // editPersonalsName,
   getCandsPrefInfo,
 } from "@/redux/slices/personal";
 import { BOLD } from "@/theme/fonts";
-import personalService from "@/redux/services/personal.service";
-import userService from "@/redux/services/user.service";
+// import personalService from "@/redux/services/personal.service";
+// import userService from "@/redux/services/user.service";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
 
@@ -101,7 +101,7 @@ const EditPersonalDetails = () => {
   const requestTitles = (e) => {
     setTitleLoading(true);
     axios
-      .get(`http://localhost:3000/api/getTitles?searchTitle=${e}`, {
+      .get(`https://preprod.recroot.au/api/getTitles?searchTitle=${e}`, {
         headers: { "x-access-token": `${user.token}` },
       })
       .then((response) => {
@@ -119,6 +119,7 @@ const EditPersonalDetails = () => {
   };
 
   const handlePhoneNumber = (e, count) => {
+    console.log(count);
     setPersonal({
       ...personal,
       mobile: parseInt(e),
@@ -173,7 +174,7 @@ const EditPersonalDetails = () => {
   const handleEdit = () => {
     candidateServices
       .editMyPersonalDetails(personal)
-      .then((res) => {
+      .then(() => {
         dispatch(
           openAlert({
             type: SUCCESS,
@@ -194,6 +195,7 @@ const EditPersonalDetails = () => {
   };
 
   const changeSalaries = (e, a) => {
+    console.log(a);
     const { name, value } = e.target;
     const salary = personal.currentSalary.salary;
     const denomination = personal.currentSalary.denomination;

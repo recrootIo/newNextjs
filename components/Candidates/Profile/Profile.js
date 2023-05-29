@@ -1,23 +1,24 @@
-import { DANGER, NEUTRAL } from "@/theme/colors";
+import {
+  // DANGER,
+  NEUTRAL,
+} from "@/theme/colors";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
   Box,
-  CardContent,
+  // CardContent,
   Collapse,
-  Grid,
-  LinearProgress,
+  // Grid,
+  // LinearProgress,
   Stack,
 } from "@mui/material";
 import React, { useState } from "react";
-import { StyledCard } from "../ProfileStyles";
+// import { StyledCard } from "../ProfileStyles";
 import {
   ExpandLess,
   ExpandMore,
-  KeyboardArrowDownIcon,
+  // KeyboardArrowDownIcon,
 } from "@mui/icons-material";
-import { LAZY, MID } from "@/theme/spacings";
-import { useSelector } from "react-redux";
 import PersonalDetail from "./PersonalDetails/PersonalDetail";
 import Education from "./Education/Education";
 import Experience from "./Experience/Experience";

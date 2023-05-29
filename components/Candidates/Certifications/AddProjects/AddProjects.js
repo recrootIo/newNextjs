@@ -14,8 +14,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  AddProAndThenGet,
-  EditProjectAndGet,
+  // AddProAndThenGet,
+  // EditProjectAndGet,
   retrievePersonal,
 } from "@/redux/slices/personal";
 import candidateServices from "@/redux/services/candidate.services";
@@ -93,6 +93,7 @@ const AddProjects = () => {
   };
 
   const buttonText = project?._id ? "Update" : "Add";
+
   const handleAdd = () => {
     if (project?._id) {
       editNewProject();

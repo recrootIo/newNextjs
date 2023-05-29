@@ -11,14 +11,11 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { Backdrop, Box, CircularProgress, Stack } from "@mui/material";
 import { Parallax } from "@react-spring/parallax";
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { SUCCESS } from "@/utils/constants";
 
 const Index = () => {
-  const state = useSelector((state) => state);
-  console.log(state, "state");
-
   const [createResume, setCreateResume] = useState({});
   const [totalExperience, setTotalExperience] = useState("");
   const [inputPersonalDetailsCountry, setinputPersonalDetailsCountry] =
@@ -43,7 +40,6 @@ const Index = () => {
 
     dispatch(updatePercent(70));
     setOpen(true);
-
     dispatch(
       updateFinalResumeForm({
         inputPersonalDetailsCountry,
@@ -131,12 +127,13 @@ const Index = () => {
           backgroundImage: `url("/bg.svg")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "100vh",
+          height: "950px",
           width: "100vw",
         }}
       >
         <Box className="topbar"></Box>
         <Parallax
+        style={{position:'inherit'}}
           ref={parallax}
           pages={getTheScreenCount}
           horizontal

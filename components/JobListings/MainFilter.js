@@ -6,38 +6,22 @@ import {
   Divider,
   Button,
   Collapse,
+  RadioGroup,
+  Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import TuneIcon from "@mui/icons-material/Tune";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CloseIcon from "@mui/icons-material/Close";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import SwipeableViews from "react-swipeable-views";
-import AppBar from "@mui/material/AppBar";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { BpRadio } from "./SearchSection";
 
-const StyledFormLabel = styled(FormControlLabel)(({ theme }) => ({
+const StyledFormLabel = styled(FormControlLabel)(({}) => ({
   color: "#01313F",
   "& .MuiTypography-root": {
     fontSize: "1rem",
@@ -109,7 +93,7 @@ function BpCheckbox({ ...props }) {
 }
 
 const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
+  const { ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -120,16 +104,24 @@ const ExpandMore = styled((props) => {
 }));
 
 const MainFilter = ({ ...props }) => {
-  const { setExper, exper, setNames, names, clearSearch, sectors } = props;
-  const [profExpanded, setProfExpanded] = React.useState(false);
+  const {
+    setExper,
+    exper,
+    setNames,
+    names,
+    clearSearch,
+    sectors,
+    companies,
+    setSelectedCompanies,
+    selectedCompanies,
+    selectedSector,
+    setSelectedSector,
+  } = props;
+
   const [industryExpanded, setIndustryExpanded] = React.useState(false);
   const [roleExpanded, setRoleExpanded] = React.useState(false);
   const [expExpanded, setExpExpanded] = React.useState(false);
   const [typeExpanded, setTypeExpanded] = React.useState(false);
-
-  const handleProfExpandClick = () => {
-    setProfExpanded(!profExpanded);
-  };
 
   const handleIndustryExpandClick = () => {
     setIndustryExpanded(!industryExpanded);
@@ -157,32 +149,27 @@ const MainFilter = ({ ...props }) => {
     }
   };
 
-  const handleExperience = (re) => {
-    const { name, checked } = re.target;
-    if (checked) {
-      setExper((state) => [...state, name]);
-    } else {
-      let newJobs = exper.filter((arr) => name != arr);
-      setExper(() => [...newJobs]);
-    }
+  const handleExperience = (re, a) => {
+    setExper(() => [a]);
+  };
+
+  const selectCompanies = (re, a) => {
+    setSelectedCompanies(() => a);
+  };
+
+  const selectTheSector = (re, a) => {
+    setSelectedSector(() => a);
   };
 
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography
-          sx={{
-            fontSize: 19,
-            fontStyle: "bold",
-            fontWeight: 600,
-            pl: "16px",
-          }}
-          color="#034275"
-          gutterBottom
-        >
-          Filter
+        <Stack direction={"row"} sx={{ gap: "10px", alignItems: "center" }}>
+          <Typography className="filterTopic" color="#034275">
+            Filter
+          </Typography>
           <TuneIcon sx={{ height: "16px" }} />
-        </Typography>
+        </Stack>
         <Button variant="text" size="small" onClick={() => clearSearch()}>
           <CustomTypography
             sx={{
@@ -216,21 +203,23 @@ const MainFilter = ({ ...props }) => {
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
-          <FormGroup sx={{ width: "315px" }}>
-            {sectors.map((ind, index) => (
-              <StyledFormLabel
+          <RadioGroup onChange={selectTheSector} value={selectedSector}>
+            {sectors.map((sec, index) => (
+              <FormControlLabel
                 key={index}
-                control={<BpCheckbox size="small" />}
-                label={ind}
+                control={<BpRadio size="small" />}
+                label={sec}
+                value={sec}
+                name={sec}
               />
             ))}
-          </FormGroup>
+          </RadioGroup>
         </CardContent>
       </Collapse>
       <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
         <Typography className="filterTopic" color="#034275" gutterBottom>
-          Role
+          Companies
         </Typography>
         <ExpandMore
           expand={roleExpanded}
@@ -247,32 +236,17 @@ const MainFilter = ({ ...props }) => {
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
-          <FormGroup sx={{ width: "315px" }}>
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Graphic Designer"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Java Developer"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="React.Js Developer"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Project Manager"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Data Analyst"
-            />
-            <StyledFormLabel
-              control={<BpCheckbox size="small" />}
-              label="Tester"
-            />
-          </FormGroup>
+          <RadioGroup onChange={selectCompanies} value={selectedCompanies}>
+            {companies.map((com, index) => (
+              <FormControlLabel
+                key={index}
+                control={<BpRadio size="small" />}
+                label={com?.company_name}
+                value={com?.id}
+                name={com?.company_name}
+              />
+            ))}
+          </RadioGroup>
         </CardContent>
       </Collapse>
       <Divider variant="middle" className="divider" />
@@ -291,22 +265,17 @@ const MainFilter = ({ ...props }) => {
       </Box>
       <Collapse in={expExpanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, pb: "0px !important" }}>
-          <FormGroup>
+          <RadioGroup onChange={handleExperience} value={exper[0] || null}>
             {USER_EXPERIENCES.map((ex, index) => (
-              <StyledFormLabel
+              <FormControlLabel
                 key={index}
-                control={
-                  <BpCheckbox
-                    size="small"
-                    name={ex}
-                    checked={exper.includes(ex)}
-                    onChange={(e) => handleExperience(e)}
-                  />
-                }
+                control={<BpRadio size="small" />}
                 label={ex}
+                value={ex}
+                name={ex}
               />
             ))}
-          </FormGroup>
+          </RadioGroup>
         </CardContent>
       </Collapse>
       <Divider className="divider" variant="middle" />

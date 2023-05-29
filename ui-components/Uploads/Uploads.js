@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BackupIcon from "@mui/icons-material/Backup";
 import Dropzone from "react-dropzone";
 import { Stack, Typography } from "@mui/material";
+import Image from "next/image";
 
 export function Upload({ ...props }) {
   const [fileNames, setFileNames] = useState([]);
@@ -25,11 +26,11 @@ export function Upload({ ...props }) {
           {({
             getRootProps,
             getInputProps,
-            isDragActive,
+            // isDragActive,
             isDragAccept,
             isDragReject,
             fileRejections,
-            acceptedFiles,
+            // acceptedFiles,
           }) => {
             const fileRejectionItems = fileRejections.map(
               ({ file, errors }) => {
@@ -69,12 +70,7 @@ export function Upload({ ...props }) {
                     direction={"column"}
                     sx={{ justifyContent: "center", alignItems: "center" }}
                   >
-                    <img
-                      src={"/pdf.png"}
-                      alt=""
-                      height={"50px"}
-                      width={"40px"}
-                    />
+                    <Image src={"/pdf.png"} alt="" height={50} width={40} />
                     <Typography>{props?.pdf?.name}</Typography>
                   </Stack>
                 ) : props?.pdfC?.name !== undefined ? (
@@ -82,12 +78,7 @@ export function Upload({ ...props }) {
                     direction={"column"}
                     sx={{ justifyContent: "center", alignItems: "center" }}
                   >
-                    <img
-                      src={"/pdf.png"}
-                      alt=""
-                      height={"50px"}
-                      width={"40px"}
-                    />
+                    <Image src={"/pdf.png"} alt="" height={50} width={40} />
                     <Typography>{props?.pdfC?.name}</Typography>
                   </Stack>
                 ) : (

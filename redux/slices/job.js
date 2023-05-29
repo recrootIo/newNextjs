@@ -26,9 +26,9 @@ const initialState = {
   immediate: false,
   queshow: "true",
   jobId: "",
-  companyJobs: "",
-  jLoad: false,
-  jobDet: "",
+  companyJobs:"",
+  jLoad:false,
+  jobDet:''
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -117,15 +117,22 @@ export const updateJobs = createAsyncThunk(
     return res.data;
   }
 );
-export const companyJobs = createAsyncThunk("company/gjobs", async () => {
-  const user = JSON.parse(localStorage.getItem("User"));
-  const res = await jobsService.getJobss(user.User.companyId);
-  return res.data;
-});
-export const singleJobs = createAsyncThunk("single/gjobs", async (id) => {
-  const res = await jobsService.getSingleJob(id);
-  return res.data;
-});
+
+export const companyJobs = createAsyncThunk(
+  "company/gjobs",
+  async () => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const res = await jobsService.getJobss(user.User.companyId);
+    return res.data;
+  }
+);
+export const singleJobs = createAsyncThunk(
+  "single/gjobs",
+  async (id) => {
+    const res = await jobsService.getSingleJob(id);
+    return res.data;
+  }
+);
 
 const jobsSlice = createSlice({
   name: "jobs",

@@ -9,24 +9,25 @@ import {
   Autocomplete,
   Chip,
   FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
+  // FormControlLabel,
+  // FormLabel,
+  // Radio,
+  // RadioGroup,
   IconButton,
   Card,
   CardContent,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
+// import { Theme, useTheme } from "@mui/material/styles";
+// import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Select from //  SelectChangeEvent
+"@mui/material/Select";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -37,15 +38,15 @@ import http from "@/redux/http-common";
 import { ERROR, JOB_NATURE, SUCCESS, WORK_PREFERENCE } from "@/utils/constants";
 import {
   GetCandsPrefInfo,
-  insertNewJobTitles,
-  insertNewJobType,
-  insertNewLocation,
-  insertNewPlace,
-  updateAvailablity,
+  // insertNewJobTitles,
+  // insertNewJobType,
+  // insertNewLocation,
+  // insertNewPlace,
+  // updateAvailablity,
 } from "@/redux/slices/personal";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import userService from "@/redux/services/user.service";
-import alert, { openAlert } from "@/redux/slices/alert";
+import { openAlert } from "@/redux/slices/alert";
 
 const AddCareerPreference = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -158,7 +159,7 @@ const AddCareerPreference = () => {
   const updateData = () => {
     userService
       .updateMyPreference(careerPre)
-      .then((res) => {
+      .then(() => {
         dispatch(
           openAlert({
             type: SUCCESS,

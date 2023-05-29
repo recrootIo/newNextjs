@@ -11,10 +11,7 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import styled from "styled-components";
-import { useMemo } from "react";
+
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Upload } from "@/ui-components/Uploads/Uploads";
@@ -69,12 +66,12 @@ const AddResume = ({ ...props }) => {
             return;
           }
           scroll(position + 1);
-          const userObject = {
-            userId: currentUser.User._id,
-            file: originalPromiseResult.Data[0].Location,
-          };
+          // const userObject = {
+          //   userId: currentUser.User._id,
+          //   file: originalPromiseResult.Data[0].Location,
+          // };
           // await axios
-          //   .post("http://localhost:3000/api/updateResume", userObject)
+          //   .post("https://preprod.recroot.au/api/updateResume", userObject)
           //   .then(
           //     (res) => {
           //       setOpen(false);
@@ -121,7 +118,7 @@ const AddResume = ({ ...props }) => {
             />
           </Box>
           <Box className="stepperContainer">
-            <Stepper sx={{ width: "50%" }} activeStep={0} alternativeLabel>
+            <Stepper  activeStep={0} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>

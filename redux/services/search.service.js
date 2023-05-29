@@ -1,12 +1,24 @@
 import http from "../http-common";
 
-const getLatestJObs = (value, names, exper, title, address) => {
+const getLatestJObs = (
+  value,
+  names,
+  exper,
+  title,
+  address,
+  jobVariant,
+  selectedCompanies,
+  selectedSector
+) => {
   return http
     .post(`getLatestJobs?page=${value}&limit=10`, {
       names,
       exper,
       title,
       address,
+      jobVariant,
+      selectedCompanies,
+      selectedSector,
     })
     .then((response) => {
       return response;

@@ -18,8 +18,8 @@ import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { convertDate } from "@/utils/HelperFunctions";
 import {
-  AddTrainAndThenGet,
-  EditTrainAndGet,
+  // AddTrainAndThenGet,
+  // EditTrainAndGet,
   retrievePersonal,
 } from "@/redux/slices/personal";
 import dayjs from "dayjs";

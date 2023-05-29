@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import {
-  Backdrop,
   Card,
   CardContent,
   Checkbox,
-  CircularProgress,
   Container,
   Divider,
   FormControl,
@@ -13,11 +11,12 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  OutlinedInput,
   Stack,
   styled,
 } from "@mui/material";
 import React, { useState } from "react";
-import { DANGER, PRIMARY } from "../theme/colors";
+import { PRIMARY } from "../theme/colors";
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -27,8 +26,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
-import { openAlert } from "@/redux/slices/alert";
-import { ERROR, SUCCESS } from "@/utils/constants";
+import Cookies from "js-cookie";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -41,101 +39,83 @@ const StyledInput = styled("input")({
   padding: "10px",
 });
 
-const StyledPasswordInput = styled("input")({
-  height: "60px",
-  border: "1px solid #c2c8d0",
-  borderRadius: "8px",
-  width: "100%",
-  fontSize: "18px",
-  fontWeight: "400",
-  color: "#949494",
-  padding: "10px",
-});
+import { cookies } from "next/headers";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR } from "@/utils/constants";
 
 function Signin() {
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
   const [showPassword, setshowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setshowPassword(!showPassword);
+  };
   const [values, setValues] = React.useState({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
-
+  const redirect = null;
+  const path = false;
   const dispatch = useDispatch();
   const { push } = useRouter();
-
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setshowPassword(!showPassword);
-  };
-
   const handleLogin = (e) => {
     e.preventDefault();
-    setLoading(true);
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Sign in successfully",
-          })
-        );
         console.log(originalPromiseResult);
-        setLoading(false);
-        push("/");
-        console.log(originalPromiseResult, "originalPromiseResult");
-        const completedProfiles = originalPromiseResult.User.profilePercentage;
-        if (completedProfiles > 69) {
+        // push("/");
+        if (originalPromiseResult.User.email_is_verified === false) {
+          push("/Verifymobile");
+        } else if (originalPromiseResult.User.recrootUserType === "Member") {
+          if (path === true) {
+            push("/Pricing");
+            return;
+          }
+          push("/");
+        } else if (originalPromiseResult.User.recrootUserType === "Candidate") {
+          if (originalPromiseResult?.User?.profilePercentage > 69) {
+            if (redirect) {
+              push(redirect);
+            } else {
+              push("/");
+            }
+          } else {
+            console.log("resumeSecond");
+            push("/uploadResume");
+          }
           push("/");
         } else {
-          push("/uploadResume");
+          push("/");
+          if (path === true) {
+            push("/Pricing");
+            return;
+          }
+          if (redirect === null) {
+            push("/");
+          } else {
+            push(redirect);
+          }
         }
-
-        // if (originalPromiseResult.User.email_is_verified === false) {
-        //   navigate("/Verifymobile");
-        // } else if (originalPromiseResult.User.recrootUserType === "Member") {
-        //   if (path === true) {
-        //     navigate("/Pricing", { replace: true });
-        //     return;
-        //   }
-        //   navigate("/", { replace: true });
-        // } else if (originalPromiseResult.User.recrootUserType === "Candidate") {
-        //   if (originalPromiseResult?.User?.profilePercentage > 69) {
-        //     if (redirect) {
-        //       navigate(redirect, { replace: true });
-        //     } else {
-        //       navigate("/", { replace: true });
-        //     }
-        //   } else {
-        //     console.log("resumeSecond");
-        //     navigate("/resumeSecond", { replace: true });
-        //   }
-        // } else {
-        //   if (path === true) {
-        //     navigate("/Pricing", { replace: true });
-        //     return;
-        //   }
-        //   if (redirect === null) {
-        //     navigate("/", { replace: true });
-        //   } else {
-        //     navigate(redirect, { replace: true });
-        //   }
-        // }
       })
       .catch((error) => {
-        console.log(error);
-        setLoading(false);
+        console.warn(error);
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.message,
+            message: "Please Check Your Email And Password",
           })
         );
         // toastyErrorFunction("Please Check Your Email And Password");
       });
+  };
+  const handleClick = (val) => {
+    if (val === "google") {
+      window.location.replace("https://preprod.recroot.au/auth/google");
+    } else {
+      window.location.replace("https://preprod.recroot.au/auth/linkedin");
+    }
   };
   return (
     // <section
@@ -237,7 +217,7 @@ function Signin() {
     //                   <button
     //                     onClick={() => {
     //                       signIn("google", {
-    //                         callbackUrl: "http://localhost:3000",
+    //                         callbackUrl: "https://preprod.recroot.au",
     //                       });
     //                     }}
     //                     className="linkedinButton"
@@ -379,17 +359,22 @@ function Signin() {
                         <CustomTypography>
                           Log in Don’t have an account?
                         </CustomTypography>
-                        <CustomTypography
-                          sx={{ color: "#034275", textDecoration: "underline" }}
-                        >
-                          Sign up
-                        </CustomTypography>
+                        <Link href={"/signup"}>
+                          <CustomTypography
+                            sx={{
+                              color: "#034275",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            Sign up
+                          </CustomTypography>
+                        </Link>
                       </Stack>
                     </Stack>
                     <Stack
                       sx={{ alignItems: "center", gap: "20px", width: "100%" }}
                     >
-                      <button className="linkedinButton">
+                      <button onClick={handleClick} className="linkedinButton">
                         <span>
                           <img
                             src={"/linkedInLogo.png"}
@@ -401,7 +386,12 @@ function Signin() {
                           Log in with LinkedIn
                         </span>
                       </button>
-                      <button className="linkedinButton">
+                      <button
+                        onClick={() => {
+                          handleClick("google");
+                        }}
+                        className="linkedinButton"
+                      >
                         <span>
                           <img src={"/googleLogo.png"} alt="" height={"30px"} />
                         </span>
@@ -410,7 +400,7 @@ function Signin() {
                         </span>
                       </button>
                     </Stack>
-                    <img
+                    {/* <img
                       src="/signIn.png"
                       className="signInSideImage1"
                       alt=""
@@ -425,24 +415,48 @@ function Signin() {
                       width="0"
                       height="0"
                       sizes="100vw"
-                    />
+                    /> */}
                     <Divider>OR</Divider>
                     <StyledInput
                       autoComplete="given-name"
                       name="email"
                       required
                       fullWidth
+                      type="email"
                       id="email"
                       placeholder="Enter Email ID"
                       onChange={handleChange}
                     />
-                    <StyledInput
+                    <OutlinedInput
                       id="outlined-adornment-password"
                       type={showPassword ? "text" : "password"}
                       value={values.password}
+                      required
+                      sx={{
+                        height: "60px",
+                        border: "1px solid #c2c8d0",
+                        borderRadius: "8px",
+                        width: "95%",
+                        fontSize: "18px",
+                        fontWeight: "400",
+                        color: "#949494",
+                        padding: "10px",
+                      }}
                       placeholder="Password"
                       name="password"
                       onChange={handleChange}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
                     />
                     <Stack
                       direction={"row"}
@@ -466,7 +480,6 @@ function Signin() {
                       </FormControl>
                       <CustomTypography>Forget Your Password</CustomTypography>
                     </Stack>
-
                     <button
                       style={{
                         height: "60px",
@@ -477,18 +490,10 @@ function Signin() {
                         fontWeight: "400",
                         color: "white",
                       }}
+                      type="submit"
                     >
                       Log in
                     </button>
-                    <Backdrop
-                      sx={{
-                        color: "#fff",
-                        zIndex: (theme) => theme.zIndex.drawer + 1,
-                      }}
-                      open={loading}
-                    >
-                      <CircularProgress color="inherit" />
-                    </Backdrop>
                   </Stack>
                 </form>
               </CardContent>

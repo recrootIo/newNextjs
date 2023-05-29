@@ -1,6 +1,6 @@
-import { NEUTRAL, PRIMARY } from "../../theme/colors";
+import { PRIMARY } from "../../theme/colors";
 import { Box, Container, Grid, Stack, useMediaQuery } from "@mui/material";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
@@ -23,10 +23,6 @@ const GetHiredHome = () => {
   const mobile = useMediaQuery("(max-width:700px)");
   const tablet = useMediaQuery("(max-width:1039px)");
 
-  const getActive = (id) => {
-    return active === id ? `hiredCardActive` : "noHiredCard";
-  };
-
   const getNextActive = () => {
     setActive((state) => state + 1);
   };
@@ -37,10 +33,6 @@ const GetHiredHome = () => {
 
   const getActiveBody = (id) => {
     return active === id ? `activeBody` : "nonActiveBody";
-  };
-
-  const getActiveHeader = (id) => {
-    return active === id ? `activeHeader` : "nonActiveHeader";
   };
 
   const numberOfCards = mobile ? 1 : tablet ? 2 : 3;
@@ -109,10 +101,10 @@ const GetHiredHome = () => {
             depth: 100,
             modifier: 2.5,
           }}
-          // autoplay={{
-          //   delay: 2500,
-          //   disableOnInteraction: false,
-          // }}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
           pagination={{ el: ".swiper-pagination", clickable: true }}
           navigation={{
             nextEl: ".swiper-next",

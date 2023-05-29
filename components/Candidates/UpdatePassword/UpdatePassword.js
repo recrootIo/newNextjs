@@ -4,7 +4,6 @@ import {
   Box,
   Stack,
   Button,
-  TextField,
   Container,
   Card,
   CardContent,
@@ -21,12 +20,7 @@ import { useDispatch } from "react-redux";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { getUserId } from "@/utils/HelperFunctions";
-import {
-  UpdatePassUser,
-  updateUser,
-  UpdateUser,
-} from "@/redux/slices/personal";
-import { DANGER } from "@/theme/colors";
+// import { DANGER } from "@/theme/colors";
 import userService from "@/redux/services/user.service";
 import {
   COMPLETE_FIELDS,
@@ -129,7 +123,7 @@ const UpdatePassword = () => {
         } else {
           await userService
             .updateService(user)
-            .then((re) => {
+            .then(() => {
               dispatch(
                 openAlert({
                   type: SUCCESS,

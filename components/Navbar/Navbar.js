@@ -2,19 +2,19 @@
 "use client";
 import React, { useCallback } from "react";
 import Container from "@mui/material/Container";
-import { useSession, signIn, signOut } from "next-auth/react";
-// import { logout } from "@/app/slices/auth";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { Avatar } from "@mui/material";
+import { logout } from "@/redux/slices/auth";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
   // const user = JSON.parse(localStorage.getItem("User")) || "";
-  const cookie = Cookies.get("user");
-  const user = Cookies.get("user") !== undefined ? JSON.parse(cookie) : cookie;
-  // const dispatch = useDispatch()
+  const user = Cookies.get("token");
+  const userType = Cookies.get("userType");
+  const dispatch = useDispatch();
   const logOut = useCallback(() => {
     dispatch(logout()).then(() => {
       push("/");
@@ -59,14 +59,24 @@ const Navbar = () => {
                   >
                     About Us
                   </a>
-
-                  <a
-                    href="#"
-                    className="   rounded-md px-3 py-2 text-sm font-medium"
-                    style={{ fontSize: "20px", color: "black" }}
-                  >
-                    Employer
-                  </a>
+                  {userType === "Candidate" ? (
+                    <Link href={"/Candidate/Dashboard"}>
+                      <p
+                        className="rounded-md px-3 py-2 text-sm font-medium"
+                        style={{ fontSize: "20px", color: "black" }}
+                      >
+                        Candidate
+                      </p>
+                    </Link>
+                  ) : (
+                    <a
+                      href="#"
+                      className="   rounded-md px-3 py-2 text-sm font-medium"
+                      style={{ fontSize: "20px", color: "black" }}
+                    >
+                      Employer
+                    </a>
+                  )}
 
                   <a
                     href="#"

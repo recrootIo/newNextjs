@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import {
   Box,
@@ -10,12 +10,15 @@ import {
   RadioGroup,
   Stack,
   styled,
-  TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
+import Image from "next/image";
+import { searchJobs } from "@/redux/slices/search";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const StyledButton = styled("button")({
   height: "62px",
@@ -28,6 +31,23 @@ const StyledButton = styled("button")({
 });
 
 const SearchHome = () => {
+  const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
+
+  const router = useRouter();
+
+  const changeAddress = (e) => {
+    setAddress(() => e.target.value);
+  };
+
+  const changeTitle = (e) => {
+    setTitle(() => e.target.value);
+  };
+
+  const searchData = () => {
+    router.push(`/jobListings?title=${title}&address=${address}`);
+  };
+
   return (
     <div style={{ backgroundColor: "#D4F0FC" }}>
       <Container>
@@ -66,8 +86,8 @@ const SearchHome = () => {
                   sx={{ ml: 1, flex: 1, height: MAX }}
                   placeholder="Keyword or title"
                   inputProps={{ "aria-label": "Keyword or title" }}
-                  // value={keyword}
-                  // onChange={handleChangeKeyword}
+                  value={title}
+                  onChange={changeTitle}
                 />
               </Box>
 
@@ -92,10 +112,10 @@ const SearchHome = () => {
                 />
                 <InputBase
                   sx={{ ml: 1, flex: 1, height: MAX }}
-                  placeholder="Keyword or title"
+                  placeholder="Location"
                   inputProps={{ "aria-label": "Keyword or title" }}
-                  // value={keyword}
-                  // onChange={handleChangeKeyword}
+                  value={address}
+                  onChange={changeAddress}
                 />
               </Box>
 
@@ -135,12 +155,19 @@ const SearchHome = () => {
                 </RadioGroup>
               </FormControl>
 
-              <StyledButton>Search</StyledButton>
+              <StyledButton onClick={() => searchData()}>Search</StyledButton>
             </Stack>
           </Grid>
 
           <Grid item md={3} xs={0}>
-            <img src="/searchImage.png" className="searchHomeImage" />
+            <Image
+              alt=""
+              src="/searchImage.png"
+              className="searchHomeImage"
+              width="0"
+              height="0"
+              sizes="100vw"
+            />
           </Grid>
         </Grid>
       </Container>

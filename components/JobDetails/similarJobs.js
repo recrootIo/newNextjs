@@ -5,6 +5,7 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 import React, { useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
+import Image from "next/image";
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -19,7 +20,7 @@ const SimilarJobs = () => {
 
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     setIsShown((current) => !current);
   };
 
@@ -69,7 +70,7 @@ const SimilarJobs = () => {
           </Carousel>
         </Stack>
 
-        <Box className="mobileSimilarJobs">
+        {/* <Box className="mobileSimilarJobs">
           <Stack spacing={2}>
             <SimilarJobCard />
             <SimilarJobCard />
@@ -104,7 +105,7 @@ const SimilarJobs = () => {
               </Box>
             </div>
           )}
-        </Box>
+        </Box> */}
 
         <Box
           sx={{

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
   Box,
@@ -21,17 +22,18 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Chip from "@mui/material/Chip";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { getImageLogo } from "../JobListings/SearchSection";
-import { getAddress } from "@/utils/HelperFunctions";
+// import { getAddress } from "@/utils/HelperFunctions";
 import moment from "moment";
+import Image from "next/image";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
   const {
     jobDescription,
-    requiredSkill,
+    requiredSkill = [],
     company,
     applicationDeadline,
     createdAt,
@@ -247,7 +249,7 @@ const JobDetail = ({ ...props }) => {
                 />
 
                 <CardContent sx={{ rowGap: "70px" }}>
-                  {requiredSkill.map((skill, index) => (
+                  {requiredSkill?.map((skill, index) => (
                     <Chip
                       key={index}
                       label={skill.skill}
@@ -332,7 +334,7 @@ const JobDetail = ({ ...props }) => {
                       </Grid>
                     </Grid>
                   </Box>
-                  <CustomTypography
+                  {/* <CustomTypography
                     variant="body2"
                     // color="text.secondary"
                     lineHeight="27px"
@@ -345,8 +347,8 @@ const JobDetail = ({ ...props }) => {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat. .
-                  </CustomTypography>
-                  <Stack spacing={1} sx={{ mt: "25px" }}>
+                  </CustomTypography> */}
+                  {/* <Stack spacing={1} sx={{ mt: "25px" }}>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <CallIcon
                         fontSize="14px"
@@ -376,7 +378,7 @@ const JobDetail = ({ ...props }) => {
                       </CustomTypography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <img src="/url.png" alt="" width="16px" />
+                      <Image src="/url.png" alt="" width={16} height={16} />
                       <CustomTypography
                         variant="body2"
                         color="text.secondary"
@@ -386,7 +388,7 @@ const JobDetail = ({ ...props }) => {
                         &nbsp;&nbsp;lorem@recroot.io
                       </CustomTypography>
                     </Box>
-                  </Stack>
+                  </Stack> */}
                 </CardContent>
               </Card>
             </Stack>

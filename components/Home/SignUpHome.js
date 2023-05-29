@@ -7,6 +7,7 @@ import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { NEUTRAL } from "@/theme/colors";
 import { MAX } from "@/theme/spacings";
+import Link from "next/link";
 
 const SignUpHome = () => {
   const tablet = useMediaQuery("(max-width:1106px)");
@@ -61,8 +62,12 @@ const SignUpHome = () => {
             with us.
           </CustomTypography>
           <Stack direction={"row"} sx={{ gap: "10px" }}>
+            <Link href={'/signin'}>
             <button className="signUpButton">SIGN IN</button>
+            </Link>
+            <Link href={'/signup'}>
             <button className="signUpButton">SIGN UP</button>
+            </Link>
           </Stack>
         </Stack>
 

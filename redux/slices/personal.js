@@ -1,12 +1,8 @@
-import { DANGER } from "@/theme/colors";
-import { ERROR, SUCCESS } from "@/utils/constants";
-import { getUserId } from "@/utils/HelperFunctions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
-import { openAlert } from "./alert";
 import { updateCurrentScreen } from "./candidate";
 
 const initialState = {
@@ -42,6 +38,7 @@ export const retrievePersonal = createAsyncThunk(
   "personal/retrive",
   async () => {
     const res = await personalService.getAll();
+    console.log(res.data, "aa");
     try {
       return res.data[0];
     } catch (error) {
@@ -149,7 +146,7 @@ export const getCandsPrefInfo = createAsyncThunk("Cover/pref", async (id) => {
 
 export const GetCandsPrefInfo = () => async (dispatch) => {
   const user = JSON.parse(localStorage.getItem("User"));
-  return dispatch(getCandsPrefInfo(user.User._id));
+  return dispatch(getCandsPrefInfo(user?.User?._id));
 };
 
 export const AddResumeAndThenGet = (pdf) => async (dispatch) => {

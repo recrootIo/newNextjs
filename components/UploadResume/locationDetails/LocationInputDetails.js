@@ -6,7 +6,6 @@ import {
   Button,
   TextField,
   Container,
-  Autocomplete,
   Stepper,
   Step,
   StepLabel,
@@ -27,7 +26,7 @@ const steps = [
   "Create an ad group",
 ];
 
-const LocationDetails = ({ ...props }) => {
+const LocationInputDetails = ({ ...props }) => {
   const { scroll, setinputPersonalDetailsCountry, position } = props;
 
   const [address, setAddress] = React.useState(null);
@@ -91,7 +90,7 @@ const LocationDetails = ({ ...props }) => {
             />
           </Box>
           <Box className="stepperContainer">
-            <Stepper sx={{ width: "50%" }} activeStep={2} alternativeLabel>
+            <Stepper  activeStep={2} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>
@@ -241,4 +240,4 @@ const LocationDetails = ({ ...props }) => {
   );
 };
 
-export default LocationDetails;
+export default LocationInputDetails;

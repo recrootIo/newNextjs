@@ -1,8 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  font-family: "Inter";
+}
+h1 {
+  font-family: "Inter-Bold !important";
+}
+h2 {
+  font-family: "Inter-Bold !important";
+}
+h3 {
+  font-family: "Inter-Bold !important";
+}
+
 .categoryImage {
   height: 530px !important;
+
+  width: auto;
 }
 
 @font-face {
@@ -108,6 +124,7 @@
 @media only screen and (max-width: 1006px) {
   .categoryImage {
     height: 618px !important;
+    width: auto;
   }
 }
 
@@ -288,9 +305,7 @@
   .mobileLogo {
     display: none;
   }
-  .rec-arrow {
-    display: none;
-  }
+
   .mobileSimilarJobs {
     display: none;
   }
@@ -377,6 +392,11 @@
 
 .searchFormHome {
   width: 90%;
+}
+
+.searchHomeImage {
+  height: 573px;
+  width: auto;
 }
 
 /* Tablet queries */
@@ -660,7 +680,7 @@
   background: #f3fcff;
   border-radius: 5px;
   height: 49px;
-  width: 185px;
+  width: 165px;
 
   font-weight: 700;
   font-size: 20px;
@@ -851,19 +871,19 @@
 }
 
 .signInMain {
-  height: 100vh;
+  height: 130vh;
   width: 100vw;
   background-image: url("/SignUpBG.svg");
   overflow: auto;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
   background-size: cover;
   padding: 10px;
 }
 
 .signInContent {
-  width: 700px;
+  width: fit-content;
   gap: 20px;
-  position: fixed;
+  /* position: fixed; */
 }
 
 @media only screen and (max-width: 1137px) {
@@ -1073,7 +1093,7 @@ a {
 
 .jobCard {
   width: 100%;
-  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1);
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
 }
 
@@ -1122,17 +1142,17 @@ a {
 }
 
 .filterTopic {
-  font-size: 19px;
-  font-style: bold;
-  font-weight: 600;
+  font-size: 19px !important;
+  font-weight: 900 !important;
   display: flex;
   align-items: flex-end;
   padding-left: 16px;
+  font-family: "Inter-Bold" !important;
 }
 
 .divider {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
   color: rgba(3, 66, 117, 0.3);
 }
 
@@ -1586,4 +1606,26 @@ a {
 
 .successImage {
   height: 500px !important;
+}
+
+.whiteLogo {
+  height: 41px;
+  width: 163px;
+}
+
+.dropzone {
+  text-align: center;
+  /* padding: 50px;
+  border: 2px dashed #4F9AFF;
+  background-color: #eaeaea;
+  color: #afafaf; */
+  border-radius: 8px;
+}
+
+.accept {
+  border-color: #107c10 !important;
+}
+
+.reject {
+  border-color: #d83b01 !important;
 }

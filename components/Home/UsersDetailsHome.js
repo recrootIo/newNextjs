@@ -1,21 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import {
-  Box,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Stack,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import React from "react";
 import Image from "next/image";
 
 const UsersDetailsHome = () => {
-  const mobile = useMediaQuery("(max-width:900px)");
+  // const mobile = useMediaQuery("(max-width:900px)");
 
   return (
     <Box
@@ -77,7 +68,7 @@ const UsersDetailsHome = () => {
                 borderRadius: "10px",
                 backgroundColor: "#E9F8FF",
                 width: "46%",
-                height: "377px",
+                height: { md: "377px", xs: "auto", sm: "auto" },
                 boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
               }}
               className="userDetailCard"
@@ -127,7 +118,7 @@ const UsersDetailsHome = () => {
                 borderRadius: "10px",
                 backgroundColor: "#E9F8FF",
                 width: "46%",
-                height: "377px",
+                height: { md: "377px", xs: "auto", sm: "auto" },
                 boxShadow: "inset 0px 0px 10px rgba(0,0,0,0.5)",
                 mt: { md: 0, xs: "105px", sm: "105px" },
               }}

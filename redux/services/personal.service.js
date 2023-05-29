@@ -1,5 +1,6 @@
 import { getUserId } from "@/utils/HelperFunctions";
 import http from "../http-common";
+import axios from "axios";
 
 const getAll = () => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -83,7 +84,11 @@ const addSocial = (value) => {
 };
 const addPhoto = (formData) => {
   const user = JSON.parse(localStorage.getItem("User"));
-  return http.post(`addProfpic/${user.User._id}`, formData);
+  return http.post(`addProfpic/${user.User._id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 const applyJob = (value) => {
   return http.post("/applyJob", value);
@@ -151,7 +156,7 @@ const editVerify = (value) => {
   return http.put(`verifyEmail`, value);
 };
 const resendCode = (value) => {
-  return http.put(`resendCode`, value);
+  return axios.put(`https://preprod.recroot.au/resendCode`, value);
 };
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);

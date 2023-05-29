@@ -1,25 +1,17 @@
 "use client";
-import { BOLD } from "@/theme/fonts";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
   Collapse,
   Container,
-  Divider,
   Drawer,
   Grid,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Stack,
   styled,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import List from "@mui/material/List";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
@@ -41,11 +33,12 @@ import AddCertificates from "@/components/Candidates/Certifications/AddCertifica
 import UpdatePassword from "@/components/Candidates/UpdatePassword/UpdatePassword";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import AddCareerPreference from "@/components/Candidates/AddCareerPreference/AddCareerPreference";
-import authService from "@/redux/services/auth.service";
-import alert from "@/redux/slices/alert";
 import Navbar from "@/components/Navbar/Navbar";
 import CandidateProfileHeader from "@/components/Candidates/CandidateProfileHeader/CandidateProfileHeader";
-
+import { useRouter } from "next/router";
+import { logout } from "@/redux/slices/auth";
+import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -54,12 +47,19 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 const Index = () => {
+  const router = useRouter();
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user === null) {
+      router.push('/')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
-  const { data = {} } = useSelector((state) => state?.personal);
+  const { data } = useSelector((state) => state?.personal);
   const { currentScreen } = useSelector((state) => state?.candidate);
-
   // const { data = {} } = useSelector((state) => state?.personal);
 
   const dispatch = useDispatch();
@@ -85,9 +85,9 @@ const Index = () => {
     dispatch(GetCandsPrefInfo());
   }, [dispatch]);
 
-  const logout = () => {
-    authService.logout().then(() => {
-      navigate("/signin", { state: true });
+  const logouts = () => {
+    dispatch(logout()).then(() => {
+     router.push("/signin", { state: true });
       dispatch(
         openAlert({
           type: SUCCESS,
@@ -96,7 +96,25 @@ const Index = () => {
       );
     });
   };
+ const handleTop = () =>{
 
+ }
+ const containerRef = useRef(null);
+ const scrollToElement = (id) => {
+  // const container = containerRef.current;
+  // const element = document.getElementById(elementId);
+  // console.log(container,element,'checkincei')
+
+  // if (container && element) {
+  //   const containerTop = container.getBoundingClientRect().top;
+  //   const elementTop = element.getBoundingClientRect().top;
+  //   console.log(containerTop,elementTop,'checkincei')
+  //   container.scrollTop = elementTop - containerTop;
+  // }
+  const container = containerRef.current;
+  const offsetTop = ref.current.offsetTop;
+  container.scrollTop = offsetTop;
+};
   const getPages = () => {
     if (currentScreen === "resume") {
       return <AddResume />;
@@ -130,11 +148,13 @@ const Index = () => {
     }
 
     return (
-      <Stack className="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
-        <Profile {...data} />
+      <div ref={containerRef} className="scrollbarm">
+      <Stack  id="style-2" sx={{ gap: "30px" }}>
+        <Profile handle={handleTop()} {...data} />
         <Certifications />
         <CandidateJobs {...data} />
       </Stack>
+      </div>
     );
   };
 
@@ -168,7 +188,7 @@ const Index = () => {
             </ListItemButton>
             <Collapse in={profile} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton onClick={()=>scrollToElement("child1")} sx={{ pl: 4 }}>
                   <ListItemText primary="Resume" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
@@ -223,7 +243,7 @@ const Index = () => {
             <ListItemButton onClick={() => gotToScreens("updatePassword")}>
               <StyledListItemText primary="Update Password" />
             </ListItemButton>
-            <ListItemButton onClick={() => logout()}>
+            <ListItemButton onClick={() => logouts()}>
               <StyledListItemText primary="Log Out" />
             </ListItemButton>
           </List>

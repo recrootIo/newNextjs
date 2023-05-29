@@ -4,14 +4,7 @@ import { PRIMARY } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import CounterUpCom from "../../ui-components/CounterUpCom/CounterUpCom";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import {
-  Grid,
-  Typography,
-  Stack,
-  Card,
-  CardContent,
-  Container,
-} from "@mui/material";
+import { Grid, Stack, Card, CardContent, Container } from "@mui/material";
 // import "./homepage.css";
 
 const OurNumHome = () => {

@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import { Grid, Typography, Box, Stack, Container, styled } from "@mui/material";
-import { createElement, useContext, useRef, Fragment } from "react";
+import { Grid, Box, Stack, Container, styled } from "@mui/material";
+import Image from "next/image";
 
 const StyledTypo = styled(CustomTypography)({
   cursor: "pointer",
@@ -60,10 +59,13 @@ const FooterHome = () => {
                   },
                 }}
               >
-                <img
+                <Image
                   src="/whiteLogo.png"
                   alt=""
-                  style={{ height: "59px", marginRight: "10px" }}
+                  className="whiteLogo"
+                  height={159}
+                  style={{ marginRight: "10px" }}
+                  width={45}
                 />
               </div>
               <div className="para">
@@ -157,13 +159,16 @@ const FooterHome = () => {
                   marginTop: "20px",
                 }}
               >
-                <img
+                <Image
                   src="/instagram.png"
                   alt=""
-                  style={{ mr: "20px", height: "45px" }}
+                  width={45}
+                  style={{ mr: "20px" }}
+                  height={45}
+                  sizes="100vw"
                 />
-                <img src="/linkedin.png" alt="" style={{ height: "45px" }} />
-                <img src="/facebook.png" alt="" style={{ height: "45px" }} />
+                <Image src="/linkedin.png" alt="" height={45} width={45} />
+                <Image src="/facebook.png" alt="" height={45} width={45} />
               </Stack>
             </Grid>
           </Grid>
@@ -194,13 +199,27 @@ const FooterHome = () => {
                 alignItems="center"
                 spacing={2}
               >
-                <img
+                <Image
                   src="/instagram.png"
                   alt=""
-                  style={{ mr: "20px", height: "30px" }}
+                  style={{ mr: "20px" }}
+                  height={30}
+                  width={30}
                 />
-                <img src="/linkedin.png" alt="" style={{ height: "30px" }} />
-                <img src="/facebook.png" alt="" style={{ height: "30px" }} />
+                <Image
+                  src="/linkedin.png"
+                  alt=""
+                  height={30}
+                  sizes="100vw"
+                  width={30}
+                />
+                <Image
+                  src="/facebook.png"
+                  alt=""
+                  height={30}
+                  sizes="100vw"
+                  width={30}
+                />
               </Stack>
             </Grid>
 

@@ -3,7 +3,7 @@ import { PRIMARY } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Box, Stack, Container, Avatar } from "@mui/material";
-import { Swiper, SwiperSlide } from "swiper/react";
+// import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
