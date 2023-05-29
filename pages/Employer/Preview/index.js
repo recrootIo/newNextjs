@@ -10,54 +10,22 @@ import {
   Card,
   CardContent,
   Stack,
-  Tabs,
-  Tab,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  AppBar,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
   Divider,
-  Switch,
-  FormControlLabel,
-  InputAdornment,
-  TextField,
-  IconButton,
   Avatar,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import FactoryOutlinedIcon from "@mui/icons-material/FactoryOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import BoyIcon from "@mui/icons-material/Boy";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "@/components/EditorToolbar/EditorToolbar";
-// import ReactQuill from "react-quill";
-import dynamic from "next/dynamic";
-import "./companyPreview.module.css";
-import { useSelector } from "react-redux";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import styles from "./companyPreview.module.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -357,23 +325,44 @@ const EmpoyerDashboard = () => {
                   </CardContent>
                 </Card>
               </Stack>
+              <CustomTypography
+                sx={{
+                  color: "#034275",
+                  fontSize: "30px",
+                  width: "100%",
+                  textAlign: "center",
+                  mt: "80px",
+                  fontFamily: BOLD,
+                }}
+                variant="h5"
+              >
+                Preview
+              </CustomTypography>
               <Card
                 variant="outlined"
                 sx={{
                   width: "100%",
                   backgroundColor: "#F2F8FD",
-                  mt: "40px",
+                  //mt: "80px",
                   pb: "80px",
                   boder: "none",
                 }}
               >
                 <CardContent>
-                  <Box sx={{ backgroundColor: "#D4F0FC", padding: "20px" }}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#D4F0FC",
+                      padding: "20px",
+                      borderRadius: "10px",
+                    }}
+                  >
                     <Box
                       sx={{
                         height: "300px",
                         display: "flex",
+                        flexDirection: "column",
                         justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       <Box
@@ -384,115 +373,147 @@ const EmpoyerDashboard = () => {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
+                          backgroundColor: "white",
+                          position: "relative",
+                          top: "-130px",
+                          zIndex: 1,
                         }}
                       >
                         <Avatar
                           alt="Remy Sharp"
-                          src="/profile.png"
+                          src=""
                           sx={{ height: "228px", width: "228px" }}
                         />
                       </Box>
+                      <CustomTypography
+                        className={styles.comapnyNameTypo}
+                        // sx={{
+                        //   color: "#034275",
+                        //   fontSize: "30px",
+                        //   width: "100%",
+                        //   textAlign: "center",
+                        //   mt: "40px",
+                        //   fontFamily: BOLD,
+                        // }}
+                        variant="h5"
+                      >
+                        Lorem Ipsum Pvt. Ltd
+                      </CustomTypography>
                     </Box>
-                    <Box>
+                    <Box className={styles.PreviewTypoBox}>
+                      <EmailOutlinedIcon className={styles.PreviewIcon} />
                       <CustomTypography
                         variant="subtitle2"
-                        className="PreviewTypo"
-                        gutterBottom
+                        className={styles.PreviewTypo}
                       >
-                        <EmailOutlinedIcon className="PreviewIcon" />
                         &nbsp;&nbsp;loremIpsum@lorem.com
                       </CustomTypography>
-                      <Divider variant="middle" />
                     </Box>
-                    <Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
                       <CustomTypography
                         variant="subtitle2"
-                        className="PreviewTypo"
-                        gutterBottom
+                        className={styles.PreviewTypo}
                       >
-                        <PhoneOutlinedIcon className="PreviewIcon" />
+                        <PhoneOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;+91 00000-00000
                       </CustomTypography>
-                      <Divider variant="middle" />
                     </Box>
-                    <Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
                       <CustomTypography
                         variant="subtitle2"
-                        className="PreviewTypo"
-                        gutterBottom
+                        className={styles.PreviewTypo}
                       >
-                        <PlaceOutlinedIcon className="PreviewIcon" />
+                        <PlaceOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;Location
                       </CustomTypography>
-                      <Divider variant="middle" />
                     </Box>
-                    <Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
                       <CustomTypography
                         variant="subtitle2"
-                        className="PreviewTypo"
-                        gutterBottom
+                        className={styles.PreviewTypo}
                       >
-                        <LanguageOutlinedIcon className="PreviewIcon" />
+                        <LanguageOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;www.loremipsum.com
                       </CustomTypography>
                     </Box>
                   </Box>
-                </CardContent>
-              </Card>
-              <Card
-                sx={{
-                  mt: "20px",
-                  bgcolor: "#D4F0FC",
-                  borderRadius: "10px",
-                  ml: "16px",
-                  mr: "16px",
-                }}
-              >
-                <CardContent>
-                  <Box>
-                    <CustomTypography
-                      variant="subtitle2"
-                      className="PreviewTypo"
-                      gutterBottom
-                    >
-                      <BoyIcon className="PreviewIcon" />
-                      &nbsp;&nbsp;loremIpsum@lorem.com
-                    </CustomTypography>
-                    <Divider variant="middle" />
+                  <Box className={styles.PreviewTypoContainer}>
+                    <Box className={styles.PreviewTypoBox}>
+                      <FactoryOutlinedIcon className={styles.PreviewIcon} />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;&nbsp;Industry
+                      </CustomTypography>
+                    </Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
+                      <ErrorOutlineOutlinedIcon
+                        className={styles.PreviewIcon}
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewCompanyDescriptionTypo}
+                      >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.loremIpsum@lorem.com
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                  <Box sx={{ display: "flex" }}>
-                    <CustomTypography
-                      variant="subtitle2"
-                      className="PreviewTypoRole"
-                      sx={{ width: "50%" }}
-                      gutterBottom
-                    >
-                      <BoyIcon className="PreviewIcon" />
-                      &nbsp;&nbsp;Member Name
-                    </CustomTypography>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <CustomTypography
-                      variant="subtitle2"
-                      className="PreviewTypo"
-                      gutterBottom
-                    >
-                      &nbsp;&nbsp;Role
-                    </CustomTypography>
+                  <Box className={styles.PreviewTypoContainer}>
+                    <Box className={styles.PreviewTypoBox}>
+                      <BoyIcon className={styles.PreviewIcon} />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                        sx={{ width: "50%" }}
+                      >
+                        &nbsp;&nbsp;Member Name
+                      </CustomTypography>
+                      <Divider
+                        orientation="vertical"
+                        variant="middle"
+                        flexItem
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;Role
+                      </CustomTypography>
+                    </Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
+                      <BoyIcon className={styles.PreviewIcon} />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                        sx={{ width: "50%" }}
+                      >
+                        &nbsp;&nbsp;Member Name
+                      </CustomTypography>
+                      <Divider
+                        orientation="vertical"
+                        variant="middle"
+                        flexItem
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;Role
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                </CardContent>
-              </Card>
-              <Card
-                sx={{
-                  mt: "20px",
-                  bgcolor: "#D4F0FC",
-                  borderRadius: "10px",
-                  ml: "16px",
-                  mr: "16px",
-                }}
-              >
-                <CardContent>
-                  <Box>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Box className={styles.PreviewTypoContainer}>
+                    <Box className={styles.PreviewTypoBox}>
                       <img
                         src="/outlined-linkedin.png"
                         alt=""
@@ -500,27 +521,25 @@ const EmpoyerDashboard = () => {
                       />
                       <CustomTypography
                         variant="subtitle2"
-                        className="PreviewTypo"
-                        gutterBottom
+                        className={styles.PreviewTypo}
                       >
                         &nbsp;&nbsp;&nbsp;loremIpsum@lorem.com
                       </CustomTypography>
                     </Box>
-                    <Divider variant="middle" />
-                  </Box>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <img
-                      src="/outlined-insta.png"
-                      alt=""
-                      style={{ height: "28px" }}
-                    />
-                    <CustomTypography
-                      variant="subtitle2"
-                      className="PreviewTypo"
-                      gutterBottom
-                    >
-                      &nbsp;&nbsp;loremIpsum@lorem.com
-                    </CustomTypography>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
+                      <img
+                        src="/outlined-insta.png"
+                        alt=""
+                        style={{ height: "28px" }}
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;loremIpsum@lorem.com
+                      </CustomTypography>
+                    </Box>
                   </Box>
                 </CardContent>
               </Card>

@@ -31,6 +31,7 @@ import {
   TextField,
   IconButton,
   Dialog,
+  Avatar,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -417,41 +418,43 @@ const EmpoyerDashboard = () => {
                 }}
               >
                 <CardContent>
-                  <Box sx={{ height: "300px" }}>
+                  <Box
+                    sx={{
+                      height: "300px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Box sx={styles.logosec}>
                       <Box sx={styles.companylogo}>
-                        {/* {logo === null ? (
-                          <label></label>
-                        ) : ( */}
-                        <label>
-                          {/* <img
-                            alt=""
-                            src={
-                              logo && logo.logo !== undefined
-                                ? `http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo.logo}`
-                                : URL.createObjectURL(logo)
-                            }
-                            width="123px"
-                            height="118px"
-                            style={{
-                              borderRadius: "10px",
-                              objectFit: "contain",
-                            }}
-                          /> */}
-                        </label>
-                        {/* )} */}
+                        <Avatar
+                          alt="Remy Sharp"
+                          //src={imageUrl}
+                          sx={{
+                            width: "200px",
+                            height: "200px",
+                            border: "12px solid #03B2EF",
+                          }}
+                        />
                       </Box>
                       <IconButton
                         onClick={handleClickOpen}
                         sx={{
                           position: "relative",
-                          top: "65px",
-                          left: "-25px",
-                          background: "#4fa9ff",
+                          top: "31px",
+                          left: "-14px",
+                          background: "white",
+                          border: "3px solid rgba(3, 66, 117, 0.6)",
+                          height: "30px",
+                          width: "30px",
                         }}
                       >
                         <EditSharpIcon
-                          sx={{ color: "#fff", fontSize: "0.6em" }}
+                          sx={{
+                            color: "rgba(3, 66, 117, 0.6)",
+                            fontSize: "0.8em",
+                          }}
                         />
                       </IconButton>
                       <Dialog
@@ -532,9 +535,6 @@ const EmpoyerDashboard = () => {
                           </Box>
                         </Box>
                       </Dialog>
-                      <CustomTypography variant="h5" sx={styles.logotxt}>
-                        Upload Company Logo
-                      </CustomTypography>
                     </Box>
                   </Box>
                   <Divider variant="middle" />

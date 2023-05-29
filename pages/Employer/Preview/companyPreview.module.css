@@ -1,9 +1,32 @@
 .PreviewTypo {
-  color: "#00339B";
-  font-size: "16px";
+  color: #01313f;
+  font-size: 16px;
 }
 
 .PreviewIcon {
-  color: "#00339B";
-  font-size: "20px";
+  color: #00339b;
+  font-size: 20px;
+}
+
+.comapnyNameTypo {
+  color: #034275;
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+  font-family: "Inter-Bold";
+}
+
+.PreviewTypoBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+}
+
+.PreviewTypoContainer {
+  background-color: #d4f0fc;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
 }
