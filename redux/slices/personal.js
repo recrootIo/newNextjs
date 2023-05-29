@@ -158,6 +158,7 @@ export const addResume = createAsyncThunk("add/resume", async (pdf) => {
   const formData = new FormData();
   formData.append("resume", pdf);
   const res = await personalService.addResume(formData);
+  dispatch(retrievePersonal());
   return res.data;
 });
 
@@ -170,6 +171,7 @@ export const addCover = createAsyncThunk("add/Cover", async (pdf) => {
   const formData = new FormData();
   formData.append("cover", pdf);
   const res = await personalService.addCover(formData);
+
   return res.data;
 });
 

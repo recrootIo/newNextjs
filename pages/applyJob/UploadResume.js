@@ -31,7 +31,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 // import { notifySuccess } from "../../helpers/Toast";
 import {
+  addCover,
   AddCoverAndThenGet,
+  addResume,
   AddResumeAndThenGet,
   clearCover,
   clearCoversin,
@@ -47,84 +49,140 @@ import { Uploader } from "@/components/Uploader/Uploader";
 import Navbar from "@/components/Navbar/Navbar";
 import { DANGER, NEUTRAL, PRIMARY } from "@/theme/colors";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const UploadResume = () => {
+const UploadResume = ({ ...props }) => {
+  const { setApplication, setCurrentScreen } = props;
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(retrievePersonal());
-  }, [dispatch]);
+
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
   const show = useSelector((state) => state.personal.show);
   const resLoad = useSelector((state) => state.personal.resLoad);
+  const resumes = useSelector((state) => state.personal.data.resume);
+
   const [checked, setChecked] = React.useState(false);
   const [checkedcov, setCheckedcov] = React.useState(false);
-  const [activeStep, setActiveStep] = useState();
+  const [opena, setOpena] = React.useState(false);
+  const [openc, setOpenc] = React.useState(false);
+  const [opencov, setOpencov] = React.useState(false);
+  const [cover, setCover] = useState(true);
+  const [pdf, setPdf] = useState(null);
+  const [pdfC, setPdfC] = useState();
 
   const [resume, setResume] = React.useState({
     resume: resumeSin && resumeSin.resumeName,
     id: resumeSin && resumeSin._id,
   });
+
   const [covers, setCovers] = React.useState({
     cover: CoverSin && CoverSin.coverName,
     id: CoverSin && CoverSin._id,
   });
+
+  const resumeLoc = resumes && resumes.resumeFileLocation;
+  const coverLoc = resumes && resumes.coverLetterFileLocation;
+
+  React.useEffect(() => {
+    dispatch(retrievePersonal());
+  }, [dispatch]);
+
   const handleChange = (e) => {
     setResume({ id: e.target.value });
     dispatch(retrieveGetSinResume(e.target.value));
+    setApplication((state) => ({
+      ...state,
+      resumeId: e.target.value,
+    }));
   };
+
   const handleChangeC = (e) => {
     setCovers({ id: e.target.value });
     dispatch(retrieveGetSinCover(e.target.value));
   };
-  const [opena, setOpena] = React.useState(false);
-  const [openc, setOpenc] = React.useState(false);
-  const [opencov, setOpencov] = React.useState(false);
 
   const handleClickOpena = () => {
     setOpena(true);
   };
+
   const handleClosea = () => {
     setOpena(false);
   };
+
   const handleClickOpenc = () => {
     setOpenc(true);
   };
+
   const handleClosec = () => {
     setOpenc(false);
   };
 
-  const [pdf, setPdf] = useState();
-  const [pdfC, setPdfC] = useState();
-
   const handleChangeR = (file) => {
     setPdf(file);
   };
+
   const handleChangeCov = (file) => {
     setPdfC(file);
   };
 
   const send = (pdf) => {
-    dispatch(AddResumeAndThenGet(pdf)).then(setPdf());
+    dispatch(addResume(pdf))
+      .unwrap()
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Resume has been saved successfully",
+          })
+        );
+        dispatch(retrievePersonal());
+        dispatch(removeResume({}));
+        setResume({
+          resume: undefined,
+          id: undefined,
+        });
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error?.response?.data?.message || "Something went wrong",
+          })
+        );
+      });
   };
 
-  const sendC = (pdfC) => {
-    setOpencov(true);
-    dispatch(AddCoverAndThenGet(pdfC)).then((originalPromiseResult) => {
-      if (originalPromiseResult?.meta?.requestStatus === "fulfilled") {
-        setTimeout(() => {
-          dispatch(retrievePersonal());
-        }, 500);
-        setOpencov(false);
-        // notifySuccess("Your Cover Letter Was Uploaded");
-      }
-    });
-    setPdfC();
+  const sendC = async (pdfC) => {
+    await dispatch(addCover(pdfC))
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Cover letter has been saved successfully",
+          })
+        );
+        dispatch(retrievePersonal());
+        dispatch(removeCover({}));
+        setCovers({
+          cover: undefined,
+          id: undefined,
+        });
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error?.response?.data?.message || "Something went wrong",
+          })
+        );
+      });
   };
+
   const handleDelete = (id) => {
     dispatch(updateAndThenGet(id));
     dispatch(removeResume({}));
@@ -133,6 +191,7 @@ const UploadResume = () => {
       id: undefined,
     });
   };
+
   const handleDeleteC = (id) => {
     dispatch(deleteCoverAndGet(id));
     dispatch(removeCover({}));
@@ -141,7 +200,6 @@ const UploadResume = () => {
       id: undefined,
     });
   };
-  const [cover, setCover] = useState(true);
 
   const handleCover = () => {
     setCover(!cover);
@@ -153,27 +211,8 @@ const UploadResume = () => {
     });
   };
 
-  const resumes = useSelector((state) => state.personal.data.resume);
-  const resumeLoc = resumes && resumes.resumeFileLocation;
-  const coverLoc = resumes && resumes.coverLetterFileLocation;
-
-  const notifyD = (del) =>
-    toast.error(del, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  //   const handleCVUploaderClick = (event) => {
-  //     setResumeUploaderShown(true);
-  //   };
-  //   const handleCoverUploaderClick = (event) => {
-  //     setCoverUploaderShown(true);
-  //   };
+  const coverDisabled = !show || covers?.id;
+  const buttonDisable = resume?.id && coverDisabled;
 
   return (
     <div
@@ -181,6 +220,9 @@ const UploadResume = () => {
         backgroundImage: `url("/selectResumeBg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
+        width: "100%",
+        minHeight: "1000px",
+        overflow: "auto",
       }}
     >
       <Box
@@ -193,6 +235,7 @@ const UploadResume = () => {
           alignItems: "center",
         }}
       ></Box>
+
       <Box>
         <Container>
           <ApplyJobStepper activeStep={0} />
@@ -226,34 +269,7 @@ const UploadResume = () => {
                     Delete
                   </Button>
                 )}
-                <Dialog
-                  open={opena}
-                  TransitionComponent={Transition}
-                  keepMounted
-                  onClose={handleClosea}
-                  aria-describedby="alert-dialog-slide-description"
-                >
-                  <DialogTitle>
-                    {"Are you sure you want to proceed with deleting your CV?"}
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={() => {
-                        handleClosea();
-                        handleDelete(resumeSin._id);
-                        notifyD(
-                          "Your resume has been deleted from your profile"
-                        );
-                      }}
-                    >
-                      Yes
-                    </Button>
-                    <Button onClick={handleClosea}>No</Button>
-                  </DialogActions>
-                </Dialog>
+
                 {resume?.id && (
                   <Button
                     variant="body1"
@@ -275,6 +291,7 @@ const UploadResume = () => {
                 )}
               </Stack>
             </Grid>
+
             <Grid item xs={12} md={12} sx={{ marginTop: 2, marginBottom: 2 }}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
@@ -293,7 +310,7 @@ const UploadResume = () => {
                   {resumeLoc &&
                     resumeLoc.map((resume) => (
                       <MenuItem key={resume.resumeName} value={resume._id}>
-                        {resume.resumeName}{" "}
+                        {resume.resumeName}
                       </MenuItem>
                     ))}
                 </Select>
@@ -310,51 +327,38 @@ const UploadResume = () => {
                 }
                 label="Add New Resume"
               />
-              {/* <AddIcon
-                className="iconPointers"
-                // onClick={() => {
-                //   handleClickOpenDeleteSkill(skill?.id);
-                // }}
-              /> */}
             </Grid>
-            {checked === false ? (
-              ""
-            ) : (
-              <>
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                  sx={{ marginTop: 2, marginBottom: 2 }}
-                >
+
+            {checked && (
+              <Grid item xs={12} md={12} sx={{ marginTop: 2, marginBottom: 2 }}>
+                <Box>
                   <Box>
-                    <Box>
-                      <Uploader pdf={pdf} handleChange={handleChangeR} />
-                    </Box>
-                    <Box sx={{ textAlign: "right" }}>
-                      {pdf ? (
-                        <>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              backgroundColor: "#4fa9ff !important",
-                              ml: "20px",
-                            }}
-                            onClick={() => {
-                              send(pdf);
-                            }}
-                          >
-                            Save
-                          </Button>{" "}
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </Box>
+                    <Uploader pdf={pdf} handleChange={handleChangeR} />
                   </Box>
-                </Grid>
-              </>
+                  <Box sx={{ textAlign: "right" }}>
+                    {pdf ? (
+                      <>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#4fa9ff !important",
+                            ml: "20px",
+                          }}
+                          onClick={() => {
+                            send(pdf);
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
+                </Box>
+              </Grid>
             )}
+
             {resume.id !== undefined ? (
               <Grid
                 item
@@ -458,8 +462,12 @@ const UploadResume = () => {
                           onClick={() => {
                             handleClosec();
                             handleDeleteC(CoverSin._id);
-                            notifyD(
-                              "Your cover letter has been deleted from your profile"
+                            dispatch(
+                              openAlert({
+                                type: ERROR,
+                                message:
+                                  "Your cover letter has been deleted from your profile",
+                              })
                             );
                           }}
                         >
@@ -601,6 +609,7 @@ const UploadResume = () => {
             ) : (
               ""
             )}
+
             <Backdrop
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={resLoad}
@@ -619,6 +628,80 @@ const UploadResume = () => {
             </Backdrop>
           </Stack>
         </Container>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              m: "65px 0 45px 0",
+              gap: "15px",
+              width: { md: "100%", xs: "200px" },
+            }}
+          >
+            <Button
+              variant="outlined"
+              onClick={() => {}}
+              sx={{
+                width: "50%",
+                height: "50px",
+                borderRadius: "8px",
+                color: "#4F9AFF",
+              }}
+            >
+              Cancel
+            </Button>
+
+            <button
+              variant="outlined"
+              onClick={() => {
+                setCurrentScreen("Review");
+              }}
+              style={{
+                width: "50%",
+                height: "50px",
+                borderRadius: "8px",
+                color: "white",
+                backgroundColor: "#015FB1",
+              }}
+              disabled={!buttonDisable}
+            >
+              Next
+            </button>
+          </Box>
+        </Container>
+
+        <Dialog
+          open={opena}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClosea}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>
+            {"Are you sure you want to proceed with deleting your CV?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                handleClosea();
+                handleDelete(resumeSin._id);
+                dispatch(
+                  openAlert({
+                    type: ERROR,
+                    message: "Your resume has been deleted from your profile",
+                  })
+                );
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={handleClosea}>No</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </div>
   );

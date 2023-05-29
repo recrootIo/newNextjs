@@ -79,33 +79,20 @@ const StyledProjectBoxed = styled(Box)({
 
 const lightTheme = createTheme({ palette: { mode: "light" } });
 
-function ReviewAppication(props) {
+function ReviewAppication({ ...props }) {
+  const { setCurrentScreen, submit } = props;
+
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(retrievePersonal());
   }, [dispatch]);
+
   const details = useSelector((state) => state.personal.data);
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
   const salary = useSelector((state) => state.apply);
   const ids = useSelector((state) => state.personal.ids);
-  const [activeStep, setActiveStep] = useState(2);
 
-  // eslint-disable-next-line no-unused-vars
-  const [final, setFinal] = React.useState({
-    resumeId: resumeSin && resumeSin._id,
-    coverId: CoverSin && CoverSin._id,
-    candidateId: details && details._id,
-    jobId: ids && ids.jobId,
-    question: ids && ids.question,
-    companyId: ids && ids.companyId,
-    salary: salary && salary,
-  });
-
-  const settingIndex = (index) => {
-    props.Pages(index);
-  };
-  props.change(final);
   const [opena, setOpena] = React.useState(false);
   const [did, setDid] = useState("");
   const [diaDel, setDiaDel] = useState("");
@@ -150,6 +137,9 @@ function ReviewAppication(props) {
         backgroundImage: `url("/selectResumeBg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
+        width: "100%",
+        minHeight: "1000px",
+        overflow: "auto",
       }}
     >
       <Box
@@ -164,6 +154,7 @@ function ReviewAppication(props) {
       ></Box>
       <Container>
         <ApplyJobStepper activeStep={1} />
+
         <Box sx={{ marginTop: "60px" }}>
           {[lightTheme].map((theme, index) => (
             <Box sx={{ margin: 0, padding: 0 }} key={index}>
@@ -476,13 +467,13 @@ function ReviewAppication(props) {
                           paddingInlineStart: "0px",
                         }}
                       >
-                        {details?.resume?.workExperience &&
+                        {/* {details?.resume?.workExperience &&
                           details?.resume?.workExperience.map((experience) => (
                             <li style={{ margin: "10px", color: "#034275" }}>
                               {bull}&nbsp;
                               {`${experience?.role} at  ${experience?.companyName} for ${experience?.experience} years `}
                             </li>
-                          ))}
+                          ))} */}
                       </ul>
                     )}
                   </CardContent>
@@ -535,8 +526,9 @@ function ReviewAppication(props) {
                         }}
                       >
                         {details?.resume?.skills &&
-                          details?.resume?.skills.map((skills) => (
+                          details?.resume?.skills.map((skills, index) => (
                             <Box
+                              key={index}
                               sx={{
                                 display: "flex",
                                 flexWrap: "wrap",
@@ -603,8 +595,11 @@ function ReviewAppication(props) {
                     ) : (
                       <ul style={{ paddingInlineStart: "0px" }}>
                         {details?.resume?.education &&
-                          details?.resume?.education.map((education) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
+                          details?.resume?.education.map((education, index) => (
+                            <li
+                              style={{ margin: "10px", color: "#034275" }}
+                              key={index}
+                            >
                               {bull}&nbsp;
                               {`${education.graduate} in ${
                                 education.degreeName
@@ -669,6 +664,7 @@ function ReviewAppication(props) {
                         details?.resume?.projects &&
                         details?.resume?.projects.map((projects, index) => (
                           <Card
+                            key={index}
                             variant="outlined"
                             sx={{ minWidth: "260px", height: "150px" }}
                           >
@@ -737,8 +733,11 @@ function ReviewAppication(props) {
                     ) : (
                       <ul>
                         {details?.resume?.traning &&
-                          details.resume.traning.map((traning) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
+                          details.resume.traning.map((traning, index) => (
+                            <li
+                              style={{ margin: "10px", color: "#034275" }}
+                              key={index}
+                            >
                               {bull}&nbsp;
                               {traning.title} for (
                               {moment(traning.fromDate).format("l")} -
@@ -754,6 +753,50 @@ function ReviewAppication(props) {
             </Box>
           ))}
         </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            m: "65px 0 45px 0",
+            gap: "15px",
+            width: { md: "100%", xs: "200px" },
+          }}
+        >
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setCurrentScreen("upload");
+            }}
+            sx={{
+              width: "100%",
+              height: "50px",
+              borderRadius: "8px",
+              color: "#4F9AFF",
+            }}
+          >
+            Back
+          </Button>
+
+          <button
+            variant="outlined"
+            onClick={() => {
+              submit();
+            }}
+            style={{
+              width: "50%",
+              height: "50px",
+              borderRadius: "8px",
+              color: "white",
+              backgroundColor: "#015FB1",
+            }}
+            // disabled={!buttonDisable}
+          >
+            Submit
+          </button>
+        </Box>
+
         <Dialog
           open={opena}
           TransitionComponent={Transition}

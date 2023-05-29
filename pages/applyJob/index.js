@@ -12,12 +12,10 @@ import { singleJobs } from "@/redux/slices/job";
 import { useRouter } from "next/router";
 
 const CandidateProfile = () => {
-  const ids = useSelector((state) => state.personal.ids);
-  // eslint-disable-next-line no-unused-vars
-  const test = useSearchParams();
   const { query } = useRouter();
   const dispatch = useDispatch();
-  const jobId = query.jobId;
+  const jobId = query.jobid;
+
   useEffect(() => {
     if (jobId !== null) {
       dispatch(singleJobs(jobId)).then((res) => {
@@ -35,10 +33,10 @@ const CandidateProfile = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ height: "100%" }}>
       <Navbar />
-      <ProfileCard />
-    </>
+      <ProfileCard jobId={jobId} />
+    </div>
   );
 };
 

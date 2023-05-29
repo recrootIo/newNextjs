@@ -42,10 +42,11 @@ const JobDetail = ({ ...props }) => {
     company,
     applicationDeadline,
     createdAt,
+    _id,
   } = props;
 
   const gotApply = () => {
-    router.push(`/jobListings?title=${title}&address=${address}`);
+    router.push(`/applyJob?jobid=${_id}`);
   };
 
   return (

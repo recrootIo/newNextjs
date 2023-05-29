@@ -33,6 +33,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
+import { useRouter } from "next/router";
 
 const styles = {
   container: {
@@ -51,6 +52,12 @@ const styles = {
 };
 
 const ApplyConfirmation = () => {
+  const router = useRouter();
+
+  const goBack = () => {
+    router.push(`/jobs}`);
+  };
+
   return (
     <div
       style={{
@@ -114,6 +121,7 @@ const ApplyConfirmation = () => {
             mb: "100px",
             fontSize: "16px",
           }}
+          onClick={() => goBack()}
         >
           Search For More Jobs
         </Button>
