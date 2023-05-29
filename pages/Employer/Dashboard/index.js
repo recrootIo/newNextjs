@@ -342,7 +342,14 @@ const EmpoyerDashboard = () => {
                     }}
                   >
                     <CardContent sx={{ display: "flex" }}>
-                      <Box sx={{ width: "30%" }}>
+                      <Box
+                        sx={{
+                          width: "30%",
+                          backgroundImage: 'url("/inactivejobs-bg.svg")',
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      >
                         <img
                           src="/dashbaordcard-circle-bg.png"
                           alt=""
