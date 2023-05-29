@@ -1530,7 +1530,6 @@ a {
   border-color: #d83b01 !important;
 }
 
-<<<<<<< HEAD
 .MuiListItemButton-root.Mui-selected {
   color: red;
 }
@@ -1542,7 +1541,8 @@ a {
 
 #simple-tabpanel .MuiBox-root {
   padding: 0;
-=======
+}
+
 /* resume second */
 .animationcontainer {
   /* overflow-y: scroll !important; */
@@ -1586,5 +1586,4 @@ a {
 
 .successImage {
   height: 500px !important;
->>>>>>> main
 }
