@@ -1,3 +1,4 @@
+"use client";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
@@ -24,7 +25,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Profile from "@/components/Candidates/Profile/Profile";
 import Certifications from "@/components/Candidates/Certifications/Certifications";
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
-import CandidateProfileHeader from "@/pages/candiProfileHeader";
+
 import { useDispatch, useSelector } from "react-redux";
 import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -43,6 +44,7 @@ import AddCareerPreference from "@/components/Candidates/AddCareerPreference/Add
 import authService from "@/redux/services/auth.service";
 import alert from "@/redux/slices/alert";
 import Navbar from "@/components/Navbar/Navbar";
+import CandidateProfileHeader from "@/components/Candidates/CandidateProfileHeader/CandidateProfileHeader";
 
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
@@ -128,7 +130,7 @@ const Index = () => {
     }
 
     return (
-      <Stack class="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
+      <Stack className="scrollbarm" id="style-2" sx={{ gap: "30px" }}>
         <Profile {...data} />
         <Certifications />
         <CandidateJobs {...data} />

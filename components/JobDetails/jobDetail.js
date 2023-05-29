@@ -21,17 +21,24 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Chip from "@mui/material/Chip";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { getImageLogo } from "../JobListings/SearchSection";
+import { getAddress } from "@/utils/HelperFunctions";
+import moment from "moment";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.9)" }}
-  >
-    •
-  </Box>
-);
+const JobDetail = ({ ...props }) => {
+  const {
+    jobDescription,
+    requiredSkill,
+    company,
+    applicationDeadline,
+    createdAt,
+  } = props;
 
-const JobDetail = () => {
+  console.log(moment(applicationDeadline).endOf("day").fromNow(), "props");
+
   return (
     <Box
       sx={{
@@ -64,7 +71,7 @@ const JobDetail = () => {
                 }}
               />
               <CardContent sx={{ paddingLeft: "24px" }}>
-                <CustomTypography
+                {/* <CustomTypography
                   variant="body2"
                   color="text.secondary"
                   lineHeight="27px"
@@ -79,18 +86,15 @@ const JobDetail = () => {
                   skills. Areas of focus may include content, controls, visual
                   design and development, information architecture, user
                   research, branding, and customer/technical support.
-                </CustomTypography>
-                <CustomTypography
-                  variant="body1"
-                  sx={{
-                    mt: "20px",
-                    color: "#034275",
-                    fontSize: "17px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Responsibilities
-                </CustomTypography>
+                </CustomTypography> */}
+
+                <ReactQuill
+                  value={jobDescription}
+                  readOnly={true}
+                  theme={"bubble"}
+                />
+
+                {/*                 
                 <CustomTypography
                   variant="body2"
                   color="text.secondary"
@@ -123,37 +127,7 @@ const JobDetail = () => {
                   }}
                 >
                   Requirements
-                </CustomTypography>
-                <CustomTypography
-                  variant="body2"
-                  color="rgba(1, 49, 63, 0.8)"
-                  lineHeight="27px"
-                  fontSize="16px"
-                  sx={{ mt: "15px", color: "rgba(1, 49, 63, 0.8)" }}
-                  gutterBottom
-                >
-                  {bull} Should have atleast 2+years of experience in UX
-                  designing.
-                  <br></br>
-                  {bull} Good to have Visual design and design software
-                  experience.
-                  <br></br>
-                  {bull} Good to have a basic understanding of application
-                  development, including languages like JavaScript, CSS, and
-                  HTML.
-                  <br></br>
-                  {bull} Conducting the right type of user research for the
-                  product or feature you’re designing can empower you to make a
-                  product even better. <br></br>
-                  {bull} As you develop prototypes, you’ll conduct user testing
-                  to validate your design choices. <br></br>
-                  {bull} Knowing how to iterate through these two user-centric
-                  phases can help make you a more effective designer. <br></br>
-                  {bull} Since many software development teams use the Agile
-                  methodology, it would make sense that UX designers could
-                  benefit from an understanding of this popular product
-                  management approach as well.
-                </CustomTypography>
+                </CustomTypography> */}
               </CardContent>
               <CardActions sx={{ mb: "20px" }}>
                 <Button
@@ -216,7 +190,8 @@ const JobDetail = () => {
                       }}
                       gutterBottom
                     >
-                      <CalendarMonthIcon fontSize="16px" /> Posted 5 Days Ago
+                      <CalendarMonthIcon fontSize="16px" />
+                      {moment(createdAt).fromNow()}
                     </CustomTypography>
                     <CustomTypography
                       variant="body2"
@@ -247,7 +222,8 @@ const JobDetail = () => {
                       }}
                       gutterBottom
                     >
-                      <AccessTimeIcon fontSize="16px" /> Expires in 45 Days
+                      <AccessTimeIcon fontSize="16px" /> Expires
+                      {moment(applicationDeadline).endOf("day").fromNow()}
                     </CustomTypography>
                   </Stack>
                 </CardContent>
@@ -269,28 +245,16 @@ const JobDetail = () => {
                   }}
                   sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
                 />
+
                 <CardContent sx={{ rowGap: "70px" }}>
-                  <Chip
-                    label="Visual Design"
-                    size="small"
-                    className="skillChip"
-                  />
-                  <Chip label="Figma" size="small" className="skillChip" />
-                  <Chip label="Sketch" size="small" className="skillChip" />
-                  <Chip
-                    label="Illustrator"
-                    size="small"
-                    className="skillChip"
-                  />
-                  <Chip label="Adobe XD" size="small" className="skillChip" />
-                  <Chip label="UI/UX" size="small" className="skillChip" />
-                  <Chip label="Miro" size="small" className="skillChip" />
-                  <Chip label="Photoshop" size="small" className="skillChip" />
-                  <Chip
-                    label="After Effect"
-                    size="small"
-                    className="skillChip"
-                  />
+                  {requiredSkill.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      label={skill.skill}
+                      size="small"
+                      className="skillChip"
+                    />
+                  ))}
                 </CardContent>
               </Card>
               <Card
@@ -321,7 +285,7 @@ const JobDetail = () => {
                         <Avatar
                           className="similarAvatar"
                           alt="logo"
-                          src="/logo 2.png"
+                          src={getImageLogo(company?.companyLogo?.logo)}
                           size={100}
                           sx={{
                             "& .MuiAvatar-img": {
@@ -348,14 +312,14 @@ const JobDetail = () => {
                           fontWeight="700"
                           color="#034275"
                         >
-                          Recroot
+                          {company?.basicInformation?.cmpname}
                         </CustomTypography>
                         <CustomTypography
                           variant="body2"
                           fontSize="17px"
                           color="#034275"
                         >
-                          Location
+                          {company?.address[0]?.address?.label}
                         </CustomTypography>
                         <CustomTypography
                           variant="body2"
