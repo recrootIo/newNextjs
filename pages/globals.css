@@ -17,7 +17,6 @@ h3 {
 
 .categoryImage {
   height: 530px !important;
-
   width: auto;
 }
 
@@ -380,6 +379,7 @@ h3 {
 
 .categoryImageMiddled {
   height: 623px !important;
+  width: auto;
 }
 
 .signUpContainer {
