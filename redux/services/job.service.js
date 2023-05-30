@@ -19,4 +19,4 @@ class jobsService {
   }
 }
 
-export default new jobsService();
+export default jobsService;
