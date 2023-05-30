@@ -4,10 +4,13 @@ import React, { useCallback } from "react";
 import Container from "@mui/material/Container";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { Avatar } from "@mui/material";
+import { Avatar, Button, Menu, MenuItem, Stack } from "@mui/material";
 import { logout } from "@/redux/slices/auth";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import Fade from "@mui/material/Fade";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
 const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
@@ -15,12 +18,36 @@ const Navbar = () => {
   const user = Cookies.get("token");
   const userType = Cookies.get("userType");
   const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEmp, setAnchorEmp] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const openEmp = Boolean(anchorEmp);
+
   const logOut = useCallback(() => {
+    handleClose();
     dispatch(logout()).then(() => {
       push("/");
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClickEmp = (event) => {
+    setAnchorEmp(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleCloseEmp = () => {
+    setAnchorEmp(null);
+  };
+
   return (
     <nav>
       <div
@@ -50,7 +77,7 @@ const Navbar = () => {
                 />
               </div>
               <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4 gap-3">
+                <div className="flex space-x-4 gap-3 justify-between items-center">
                   <Link
                     href="/"
                     style={{
@@ -86,16 +113,37 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <>
-                      <Link
-                        href="#"
-                        style={{
+                      <Button
+                        id="fade-button"
+                        aria-controls={openEmp ? "fade-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openEmp ? "true" : undefined}
+                        onClick={handleClickEmp}
+                        endIcon={<KeyboardArrowDownIcon />}
+                        sx={{
                           fontSize: "17px",
                           color: "black",
                           fontWeight: 600,
+                          textTransform: "capitalize",
+                          fontFamily: "Inter",
                         }}
                       >
                         Employer
-                      </Link>
+                      </Button>
+
+                      <Menu
+                        id="fade-menu"
+                        MenuListProps={{
+                          "aria-labelledby": "fade-button",
+                        }}
+                        anchorEl={anchorEmp}
+                        open={openEmp}
+                        onClose={handleCloseEmp}
+                        TransitionComponent={Fade}
+                      >
+                        <MenuItem>Pricing</MenuItem>
+                      </Menu>
+
                       <Link
                         href="#"
                         style={{
@@ -110,58 +158,53 @@ const Navbar = () => {
                   )}
 
                   {user === undefined ? (
-                    ""
+                    <>
+                      <Link
+                        href="/signin"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        href="/signup"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                      >
+                        SignIn
+                      </Link>
+                    </>
                   ) : (
                     <>
                       <div>
-                        <div className="dropdown inline-block relative">
-                          <button className="">
-                            <Avatar />
-                          </button>
-                          <ul
-                            className="dropdown-menu absolute hidden text-gray-700 pt-1"
-                            style={{}}
-                          >
-                            <li className="" style={{ minWidth: "200px" }}>
-                              <a
-                                className=" bg-white  py-2 px-4 block whitespace-no-wrap"
-                                style={{
-                                  // backgroundColor: "white",
-                                  cursor: "pointer",
-                                }}
-                                onClick={logOut}
-                              >
-                                Logout
-                              </a>
-                            </li>
-                            {/* <li className="">
-                              <a
-                                className="hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                                href="#"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                Two
-                              </a>
-                            </li>
-                            <li className="">
-                              <a
-                                className="rounded-b  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-                                href="#"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                Three is the magic number
-                              </a>
-                            </li> */}
-                          </ul>
-                        </div>
+                        <Button
+                          id="fade-button"
+                          aria-controls={open ? "fade-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          onClick={handleClick}
+                        >
+                          <Avatar />
+                        </Button>
+                        <Menu
+                          id="fade-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "fade-button",
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          TransitionComponent={Fade}
+                        >
+                          <MenuItem onClick={logOut}>Logout</MenuItem>
+                        </Menu>
                       </div>
-
-                      {/* <button
-                        style={{ fontSize: "17px", color: "black" }}
-                        onClick={logOut}
-                      >
-                        Logout
-                      </button> */}
                     </>
                   )}
                 </div>

@@ -1630,6 +1630,6 @@ a {
   border-color: #d83b01 !important;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown .dropdown-menu {
   display: block;
 }
