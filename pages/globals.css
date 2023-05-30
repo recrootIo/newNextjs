@@ -17,7 +17,6 @@ h3 {
 
 .categoryImage {
   height: 530px !important;
-
   width: auto;
 }
 
@@ -380,11 +379,12 @@ h3 {
 
 .categoryImageMiddled {
   height: 623px !important;
+  width: auto;
 }
 
 .signUpContainer {
   min-height: 735px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -1635,12 +1635,13 @@ a {
 }
 
 .navBar {
-  display: none;
+  display: none !important
+  ;
 }
 
 /* Tab queries */
 @media only screen and (max-width: 633px) {
   .navBar {
-    display: block;
+    display: block !important;
   }
 }

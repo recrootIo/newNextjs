@@ -81,10 +81,10 @@ export function UploadPhoto(props) {
                 <span>
                   <BackupIcon sx={{ fontSize: "6em" }} />
                 </span>
-                <p>
+                <span>
                   Drag and drop or
                   <span style={{ color: "#4F9AFF" }}>Browse</span>
-                </p>
+                </span>
               </div>
             );
           }}

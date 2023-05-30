@@ -29,6 +29,8 @@ const CategoryHome = () => {
     { width: 974, itemsToShow: 4 },
   ];
 
+  console.log(tablet, "tablet");
+
   return (
     <div
       style={{
@@ -42,749 +44,837 @@ const CategoryHome = () => {
     >
       <Container>
         {tablet ? (
-          <Grid container>
-            <Grid item md={8} sm={12} xs={12}>
-              <Stack
-                direction={"row"}
-                sx={{ gap: "10px", justifyContent: "center", flexWrap: "wrap" }}
-              >
-                <CustomTypography
-                  sx={{
-                    fontSize: MAX,
-                    fontWeight: "700",
-                    fontFamily: "Inter-Bold",
-                  }}
-                >
-                  Browse
-                </CustomTypography>
-                <CustomTypography
-                  sx={{
-                    fontSize: MAX,
-                    fontWeight: "700",
-                    color: PRIMARY,
-                    fontFamily: "Inter-Bold",
-                  }}
-                >
-                  Category
-                </CustomTypography>
-              </Stack>
-
-              <StyledCarousel breakPoints={breakPoints} showArrows={true}>
-                <Stack
-                  sx={{
-                    width: "100%",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    minHeight: "700px",
-                  }}
-                >
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      {/* <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid> */}
-                      <Grid item md={12}>
-                        <Stack sx={{ justifyContent: "center" }}>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid item md={12}>
-                        <Stack sx={{ justifyContent: "center" }}>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      {/* <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid> */}
-                      <Grid item md={12}>
-                        <Stack sx={{ justifyContent: "center" }}>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      {/* <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid> */}
-                      <Grid item md={12}>
-                        <Stack sx={{ justifyContent: "center" }}>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Stack>
-
-                <Stack
-                  sx={{
-                    width: "100%",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    minHeight: "700px",
-                  }}
-                >
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Stack>
-
-                <Stack
-                  sx={{
-                    width: "100%",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    minHeight: "700px",
-                  }}
-                >
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  <Box
-                    className="categoryBox"
-                    sx={{
-                      backgroundColor: "#034275CC",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Grid container>
-                      <Grid
-                        item
-                        md={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          src="/pointer.svg"
-                          alt=""
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="pointers"
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        md={0.5}
-                        sx={{
-                          padding: "0 5px",
-                          borderLeft: "1px solid",
-                          borderLeftStyle: "outset",
-                        }}
-                      ></Grid>
-                      <Grid item md={8}>
-                        <Stack>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "22px",
-                              fontWeight: 900,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            Software Engineer
-                          </CustomTypography>
-                          <CustomTypography
-                            sx={{
-                              fontSize: "18px",
-                              fontWeight: 500,
-                              color: NEUTRAL,
-                            }}
-                          >
-                            155 Jobs Available
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Stack>
-              </StyledCarousel>
-            </Grid>
-            <Grid
-              item
-              md={4}
-              sm={0}
-              xs={0}
-              sx={{ padding: "10px", display: mobile ? "none" : "flex" }}
+          <>
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", justifyContent: "center", flexWrap: "wrap" }}
             >
-              <Image
-                src="/browseImage.png"
-                alt=""
-                className="categoryImageMiddled"
-                width="0"
-                height="0"
-                sizes="100vw"
-              />
+              <CustomTypography
+                sx={{
+                  fontSize: MAX,
+                  fontWeight: "700",
+                  fontFamily: "Inter-Bold",
+                }}
+              >
+                Browse
+              </CustomTypography>
+              <CustomTypography
+                sx={{
+                  fontSize: MAX,
+                  fontWeight: "700",
+                  color: PRIMARY,
+                  fontFamily: "Inter-Bold",
+                }}
+              >
+                Category
+              </CustomTypography>
+            </Stack>
+            <Grid container>
+              <Grid item md={8} sm={12} xs={12}>
+                <StyledCarousel breakPoints={breakPoints} showArrows={true}>
+                  <Stack
+                    sx={{
+                      width: "100%",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      minHeight: "700px",
+                    }}
+                  >
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid
+                        container
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Grid
+                          item
+                          md={3}
+                          sx={{
+                            display: { sm: "none", xs: "none", md: "flex" },
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                            display: { sm: "none", xs: "none" },
+                          }}
+                        ></Grid>
+                        <Grid item md={8.5}>
+                          <Stack
+                            sx={{
+                              justifyContent: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid
+                        container
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Grid
+                          item
+                          md={3}
+                          sx={{
+                            display: { sm: "none", xs: "none", md: "flex" },
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                            display: { sm: "none", xs: "none" },
+                          }}
+                        ></Grid>
+                        <Grid item md={8.5}>
+                          <Stack
+                            sx={{
+                              justifyContent: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid
+                        container
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Grid
+                          item
+                          md={3}
+                          sx={{
+                            display: { sm: "none", xs: "none", md: "flex" },
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                            display: { sm: "none", xs: "none" },
+                          }}
+                        ></Grid>
+                        <Grid item md={8.5}>
+                          <Stack
+                            sx={{
+                              justifyContent: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid
+                        container
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Grid
+                          item
+                          md={3}
+                          sx={{
+                            display: { sm: "none", xs: "none", md: "flex" },
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                            display: { sm: "none", xs: "none" },
+                          }}
+                        ></Grid>
+                        <Grid item md={8.5}>
+                          <Stack
+                            sx={{
+                              justifyContent: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Stack>
+
+                  <Stack
+                    sx={{
+                      width: "100%",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      minHeight: "700px",
+                    }}
+                  >
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Stack>
+
+                  <Stack
+                    sx={{
+                      width: "100%",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      minHeight: "700px",
+                    }}
+                  >
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+
+                    <Box
+                      className="categoryBox"
+                      sx={{
+                        backgroundColor: "#034275CC",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          sx={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <Image
+                            src="/pointer.svg"
+                            alt=""
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="pointers"
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          md={0.5}
+                          sx={{
+                            padding: "0 5px",
+                            borderLeft: "1px solid",
+                            borderLeftStyle: "outset",
+                          }}
+                        ></Grid>
+                        <Grid item md={8}>
+                          <Stack>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "22px",
+                                fontWeight: 900,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              Software Engineer
+                            </CustomTypography>
+                            <CustomTypography
+                              sx={{
+                                fontSize: "18px",
+                                fontWeight: 500,
+                                color: NEUTRAL,
+                              }}
+                            >
+                              155 Jobs Available
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Stack>
+                </StyledCarousel>
+              </Grid>
+              <Grid
+                item
+                md={4}
+                sm={0}
+                xs={0}
+                sx={{ padding: "10px", display: mobile ? "none" : "flex" }}
+              >
+                <Image
+                  src="/browseImage.png"
+                  alt=""
+                  className="categoryImageMiddled"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                />
+              </Grid>
             </Grid>
-          </Grid>
+          </>
         ) : (
           <>
             <Stack
@@ -1069,11 +1159,12 @@ const CategoryHome = () => {
                     }}
                   >
                     <Image
-                      src="/browseImage.png"
+                      src="/browseImage1.png"
                       alt=""
                       className="categoryImage"
                       width="0"
                       height="0"
+                      sizes="100vw"
                     />
                   </Stack>
                 </Grid>
