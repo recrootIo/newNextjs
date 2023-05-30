@@ -396,6 +396,33 @@ const JobPreview = () => {
                           </CustomTypography>
                         </Box>
                       </Stack>
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          mt: "40px",
+                        }}
+                      >
+                        <Button
+                          variant="outlined"
+                          sx={{ width: "50%", height: "55px" }}
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            width: "50%",
+                            bgcolor: "#015FB1 !important",
+                            height: "55px",
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </Stack>
                     </Box>
                   </Box>
                 </CardContent>
