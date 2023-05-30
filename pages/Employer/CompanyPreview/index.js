@@ -26,6 +26,7 @@ import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
 import styles from "./companyPreview.module.css";
+import Image from "next/image";
 
 const CompanyPreview = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -67,7 +68,7 @@ const CompanyPreview = () => {
                     selected={selectedIndex === 0}
                     onClick={(event) => handleListItemClick(event, 0)}
                   >
-                    <img src="/empImg.png" alt="" />
+                    <Image src="/empImg.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <Divider variant="middle" color="gray" />
                   <ListItemButton
@@ -75,56 +76,66 @@ const CompanyPreview = () => {
                     selected={selectedIndex === 1}
                     onClick={(event) => handleListItemClick(event, 1)}
                   >
-                    <img src="/home.png" alt="" />
+                    <Image src="/home.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 2}
                     onClick={(event) => handleListItemClick(event, 2)}
                   >
-                    <img src="/profile.png" alt="" />
+                    <Image src="/profile.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 3}
                     onClick={(event) => handleListItemClick(event, 3)}
                   >
-                    <img src="/jobs.png" alt="" />
+                    <Image src="/jobs.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 4}
                     onClick={(event) => handleListItemClick(event, 4)}
                   >
-                    <img src="/team.png" alt="" />
+                    <Image src="/team.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 5}
                     onClick={(event) => handleListItemClick(event, 5)}
                   >
-                    <img src="/convo.png" alt="" />
+                    <Image src="/convo.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 6}
                     onClick={(event) => handleListItemClick(event, 6)}
                   >
-                    <img src="/subscription.png" alt="" />
+                    <Image
+                      src="/subscription.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 7}
                     onClick={(event) => handleListItemClick(event, 7)}
                   >
-                    <img src="/myAccount.png" alt="" />
+                    <Image src="/myAccount.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 8}
                     onClick={(event) => handleListItemClick(event, 8)}
                   >
-                    <img src="/power-icon.png" alt="" />
+                    <Image
+                      src="/power-icon.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                 </List>
               </Box>
@@ -176,12 +187,11 @@ const CompanyPreview = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/basic-info-img.png"
                       alt=""
-                      style={{
-                        width: "60px",
-                      }}
+                      width="60"
+                      height="42"
                     />
                   </Box>
                   <CardContent>
@@ -214,12 +224,11 @@ const CompanyPreview = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/members-img.png"
                       alt=""
-                      style={{
-                        width: "60px",
-                      }}
+                      width="60"
+                      height="62"
                     />
                   </Box>
                   <CardContent>
@@ -252,9 +261,11 @@ const CompanyPreview = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/preview-img.png"
                       alt=""
+                      width="70"
+                      height="62"
                       style={{
                         width: "60px",
                       }}
@@ -452,10 +463,11 @@ const CompanyPreview = () => {
                   </Box>
                   <Box className={styles.PreviewTypoContainer}>
                     <Box className={styles.PreviewTypoBox}>
-                      <img
+                      <Image
                         src="/outlined-linkedin.png"
                         alt=""
-                        style={{ height: "18px" }}
+                        height="18"
+                        width="20"
                       />
                       <CustomTypography
                         variant="subtitle2"
@@ -466,10 +478,11 @@ const CompanyPreview = () => {
                     </Box>
                     <Divider />
                     <Box className={styles.PreviewTypoBox}>
-                      <img
+                      <Image
                         src="/outlined-insta.png"
                         alt=""
-                        style={{ height: "28px" }}
+                        height="28"
+                        width="30"
                       />
                       <CustomTypography
                         variant="subtitle2"

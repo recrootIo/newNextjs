@@ -52,6 +52,7 @@ import EditorToolbar, {
 import dynamic from "next/dynamic";
 import { UploadPhoto } from "@/components/UploadPhoto/UploadPhoto";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import Image from "next/image";
 
 const style = {
   naminput: {
@@ -150,7 +151,7 @@ const CompanyProfile = () => {
                     selected={selectedIndex === 0}
                     onClick={(event) => handleListItemClick(event, 0)}
                   >
-                    <img src="/empImg.png" alt="" />
+                    <Image src="/empImg.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <Divider variant="middle" color="gray" />
                   <ListItemButton
@@ -158,56 +159,66 @@ const CompanyProfile = () => {
                     selected={selectedIndex === 1}
                     onClick={(event) => handleListItemClick(event, 1)}
                   >
-                    <img src="/home.png" alt="" />
+                    <Image src="/home.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 2}
                     onClick={(event) => handleListItemClick(event, 2)}
                   >
-                    <img src="/profile.png" alt="" />
+                    <Image src="/profile.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 3}
                     onClick={(event) => handleListItemClick(event, 3)}
                   >
-                    <img src="/jobs.png" alt="" />
+                    <Image src="/jobs.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 4}
                     onClick={(event) => handleListItemClick(event, 4)}
                   >
-                    <img src="/team.png" alt="" />
+                    <Image src="/team.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 5}
                     onClick={(event) => handleListItemClick(event, 5)}
                   >
-                    <img src="/convo.png" alt="" />
+                    <Image src="/convo.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 6}
                     onClick={(event) => handleListItemClick(event, 6)}
                   >
-                    <img src="/subscription.png" alt="" />
+                    <Image
+                      src="/subscription.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 7}
                     onClick={(event) => handleListItemClick(event, 7)}
                   >
-                    <img src="/myAccount.png" alt="" />
+                    <Image src="/myAccount.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 8}
                     onClick={(event) => handleListItemClick(event, 8)}
                   >
-                    <img src="/power-icon.png" alt="" />
+                    <Image
+                      src="/power-icon.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                 </List>
               </Box>
@@ -259,12 +270,11 @@ const CompanyProfile = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/basic-info-img.png"
                       alt=""
-                      style={{
-                        width: "60px",
-                      }}
+                      width="60"
+                      height="42"
                     />
                   </Box>
                   <CardContent>
@@ -297,12 +307,11 @@ const CompanyProfile = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/members-img.png"
                       alt=""
-                      style={{
-                        width: "60px",
-                      }}
+                      width="60"
+                      height="62"
                     />
                   </Box>
                   <CardContent>
@@ -335,9 +344,11 @@ const CompanyProfile = () => {
                       mt: "25px",
                     }}
                   >
-                    <img
+                    <Image
                       src="/preview-img.png"
                       alt=""
+                      width="70"
+                      height="62"
                       style={{
                         width: "60px",
                       }}
