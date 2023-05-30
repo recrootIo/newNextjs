@@ -837,18 +837,18 @@ function Signup() {
                           />
                         }
                         label={
-                          <p>
+                          <span>
                             By clicking checkbox, you agree to our{" "}
                             <span>
-                              <a
+                              <Link
                                 style={{ color: "#4fa9ff" }}
                                 target="blank"
                                 href="https://graceful-donut-d1174d.netlify.app/WebsiteUse"
                               >
                                 Terms and Conditions and Privacy Policy
-                              </a>
+                              </Link>
                             </span>
-                          </p>
+                          </span>
                         }
                       />
                       {!!errors.agreeTermasValue && (
