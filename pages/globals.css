@@ -1630,6 +1630,17 @@ a {
   border-color: #d83b01 !important;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown .dropdown-menu {
   display: block;
+}
+
+.navBar {
+  display: none;
+}
+
+/* Tab queries */
+@media only screen and (max-width: 633px) {
+  .navBar {
+    display: block;
+  }
 }
