@@ -4,13 +4,13 @@ import NoticePeriodContainer from "@/components/UploadResume/noticePeriod/Notice
 import ResumeUploadContainer from "@/components/UploadResume/resumeUpload/ResumeUploadContainer";
 import SalaryDetailsContainer from "@/components/UploadResume/salaryDetails/SalaryDetailsContainer";
 import { openAlert } from "@/redux/slices/alert";
-import { updatePercent } from "@/redux/slices/personal";
+import { retrievePersonal, updatePercent } from "@/redux/slices/personal";
 import { updateFinalResumeForm } from "@/redux/slices/uploadingResume";
 import { DANGER } from "@/theme/colors";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Backdrop, Box, CircularProgress, Stack } from "@mui/material";
 import { Parallax } from "@react-spring/parallax";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { SUCCESS } from "@/utils/constants";
@@ -18,12 +18,10 @@ import { SUCCESS } from "@/utils/constants";
 const Index = () => {
   const [createResume, setCreateResume] = useState({});
   const [totalExperience, setTotalExperience] = useState("");
-  const [inputPersonalDetailsCountry, setinputPersonalDetailsCountry] =
-    useState({});
+  const [inputPersonalDetailsCountry, setinputPersonalDetailsCountry] = useState({});
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const router = useRouter();
-
+  const router = useRouter();  
   const parallax = useRef();
   const getTheScreenCount = 5;
 
@@ -32,7 +30,13 @@ const Index = () => {
       parallax.current.scrollTo(to);
     }
   };
-
+  useEffect(() => {
+    dispatch(retrievePersonal()).then((res)=>{
+     if (res?.payload?.resume?.resumeFileLocation?.length > 0 ) {
+      parallax.current.scrollTo(1);
+     }
+    })
+      }, [dispatch])
   const saveAllData = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("User"));
     loggedInUser.User.profilePercentage = 70;
@@ -56,7 +60,8 @@ const Index = () => {
           })
         );
         setOpen(false);
-        router.push("/uploadResume/success");
+        // router.push("/uploadResume/success");
+        router.push("/");
       })
       .catch(() => {
         setOpen(false);
@@ -133,7 +138,7 @@ const Index = () => {
       >
         <Box className="topbar"></Box>
         <Parallax
-        style={{position:'inherit'}}
+          style={{position:'inherit'}}
           ref={parallax}
           pages={getTheScreenCount}
           horizontal

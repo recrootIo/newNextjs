@@ -52,6 +52,12 @@ const AddTraining = () => {
 
   const gotToTraining = () => {
     dispatch(updateCurrentScreen(""));
+    setNewTrainings({
+      title: "",
+      instituete: "",
+      fromDate: "",
+      toDate: "",
+    })
   };
 
   const handleChange = (newValue) => {
@@ -91,15 +97,17 @@ const AddTraining = () => {
   const addNewTraining = () => {
     candidateServices
       .addTrainings(newTrainings)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "New Training is added",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 201) {          
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "New Training is added",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -114,15 +122,17 @@ const AddTraining = () => {
   const editTrainings = () => {
     candidateServices
       .editTrainings(newTrainings, training?._id)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Edited Successfully",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 201) {          
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Edited Successfully",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -229,6 +239,7 @@ const AddTraining = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  onClick={gotToTraining}
                 >
                   Cancel
                 </Button>

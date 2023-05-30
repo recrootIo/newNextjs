@@ -43,7 +43,7 @@ const StyledInput = styled("input")({
   width: "95%",
   fontSize: "18px",
   fontWeight: "400",
-  color: "#949494",
+  color: "#000",
   padding: "10px",
 });
 
@@ -54,7 +54,7 @@ const StyledPasswordInput = styled("input")({
   width: "100%",
   fontSize: "18px",
   fontWeight: "400",
-  color: "#949494",
+  color: "#000",
   padding: "10px",
 });
 
@@ -567,68 +567,74 @@ function Signup() {
               }}
             >
               <CardContent>
-                <form onSubmit={handleRegister}>
-                  <Stack sx={{ alignItems: "center", gap: "20px" }}>
-                    <Stack sx={{ alignItems: "center" }}>
-                      <CustomTypography
-                        sx={{ fontSize: "30px", fontWeight: "900" }}
-                      >
-                        Sign Up
-                      </CustomTypography>
-                      <Stack
-                        direction={"row"}
-                        sx={{
-                          gap: "5px",
-                          display: { md: "flex", xs: "none", sm: "none" },
-                        }}
-                      >
-                        <CustomTypography>
-                          Sign Up Already have an account?
-                        </CustomTypography>
-                        <Link href="/signin">
-                          <CustomTypography
-                            sx={{
-                              color: "#034275",
-                              textDecoration: "underline",
-                            }}
-                          >
-                            Log In
-                          </CustomTypography>
-                        </Link>
-                      </Stack>
-                    </Stack>
-                    <button onClick={handleClick} className="linkedinButton">
-                      <span>
-                        <Image
-                          src={"/linkedInLogo.png"}
-                          alt=""
-                          height={20}
-                          width={20}
-                        />
-                      </span>
-                      <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
-                        Log in with LinkedIn
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleClick("google");
-                      }}
-                      className="linkedinButton"
+                <Stack sx={{ alignItems: "center", gap: "20px" }}>
+                  <Stack sx={{ alignItems: "center" }}>
+                    <CustomTypography
+                      sx={{ fontSize: "30px", fontWeight: "900" }}
                     >
-                      <span>
-                        <Image
-                          src={"/googleLogo.png"}
-                          alt=""
-                          height={20}
-                          width={20}
-                        />
-                      </span>
-                      <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
-                        Log in with Google
-                      </span>
-                    </button>
-                    <Divider>OR</Divider>
+                      Sign Up
+                    </CustomTypography>
+                    <Stack
+                      direction={"row"}
+                      sx={{
+                        gap: "5px",
+                        display: { md: "flex", xs: "none", sm: "none" },
+                      }}
+                    >
+                      <CustomTypography>
+                        Sign Up Already have an account?
+                      </CustomTypography>
+                      <Link href="/signin">
+                        <CustomTypography
+                          sx={{ color: "#034275", textDecoration: "underline" }}
+                        >
+                          Log In
+                        </CustomTypography>
+                      </Link>
+                    </Stack>
+                  </Stack>
+                  <button onClick={handleClick} className="linkedinButton">
+                    <span>
+                      <Image
+                        src={"/linkedInLogo.png"}
+                        alt=""
+                        height={20}
+                        width={20}
+                      />
+                    </span>
+                    <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
+                      Log in with LinkedIn
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleClick("google");
+                    }}
+                    className="linkedinButton"
+                  >
+                    <span>
+                      <Image
+                        src={"/googleLogo.png"}
+                        alt=""
+                        height={20}
+                        width={20}
+                      />
+                    </span>
+                    <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
+                      Log in with Google
+                    </span>
+                  </button>
+                  <Divider>OR</Divider>
+                  <form
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "20px",
+                      alignItems: "center",
+                    }}
+                    onSubmit={handleRegister}
+                  >
                     <Stack
                       direction={{ sm: "row", xs: "column" }}
                       sx={{ width: "95%", gap: "10px" }}
@@ -691,7 +697,7 @@ function Signup() {
                             width: "100%",
                             fontSize: "18px",
                             fontWeight: "400",
-                            color: "#949494",
+                            color: "#000",
                             padding: "10px",
                           }}
                           onChange={handleChange}
@@ -748,7 +754,7 @@ function Signup() {
                             width: "100%",
                             fontSize: "18px",
                             fontWeight: "400",
-                            color: "#949494",
+                            color: "#000",
                             padding: "10px",
                           }}
                           onChange={handleChange}
@@ -865,8 +871,8 @@ function Signup() {
                     >
                       Sign Up
                     </button>
-                  </Stack>
-                </form>
+                  </form>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>

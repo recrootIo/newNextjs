@@ -35,7 +35,7 @@ const StyledInput = styled("input")({
   width: "95%",
   fontSize: "18px",
   fontWeight: "400",
-  color: "#949494",
+  color: "#000",
   padding: "10px",
 });
 
@@ -340,11 +340,7 @@ function Signin() {
               }}
             >
               <CardContent>
-                <form
-                  onSubmit={(e) => {
-                    handleLogin(e);
-                  }}
-                >
+             
                   <Stack sx={{ alignItems: "center", gap: "20px" }}>
                     <Stack sx={{ alignItems: "center" }}>
                       <CustomTypography
@@ -400,6 +396,7 @@ function Signin() {
                         </span>
                       </button>
                     </Stack>
+                        <Divider>OR</Divider>
                     {/* <img
                       src="/signIn.png"
                       className="signInSideImage1"
@@ -416,8 +413,19 @@ function Signin() {
                       height="0"
                       sizes="100vw"
                     /> */}
-                    <Divider>OR</Divider>
-                    <StyledInput
+                       <form
+                  onSubmit={(e) => {
+                    handleLogin(e);
+                  }}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '20px'
+                    }}
+                >
+                      <StyledInput
                       autoComplete="given-name"
                       name="email"
                       required
@@ -439,7 +447,7 @@ function Signin() {
                         width: "95%",
                         fontSize: "18px",
                         fontWeight: "400",
-                        color: "#949494",
+                        color: "#000",
                         padding: "10px",
                       }}
                       placeholder="Password"
@@ -494,8 +502,8 @@ function Signin() {
                     >
                       Log in
                     </button>
-                  </Stack>
                 </form>
+                  </Stack>
               </CardContent>
             </Card>
           </Stack>

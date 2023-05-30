@@ -120,6 +120,16 @@ const AddExperience = () => {
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
+    setExperienceFields({
+      companyName: "",
+      role: "",
+      country: "",
+      state: "",
+      city: "",
+      experience: "",
+      fromDate: "",
+      toDate: "",
+    })
   };
 
   const addExperience = () => {
@@ -133,15 +143,17 @@ const AddExperience = () => {
   const editMyExperience = () => {
     candidateServices
       .editExperience(experienceFields, resume?._id)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res?.status === 201) {          
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -156,15 +168,17 @@ const AddExperience = () => {
   const addMyExperience = () => {
     candidateServices
       .addExperience(experienceFields)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "User Preferences Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res.status === 201) {      
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "User Preferences Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(

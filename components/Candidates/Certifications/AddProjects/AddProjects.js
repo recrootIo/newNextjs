@@ -44,20 +44,28 @@ const AddProjects = () => {
 
   const gotToProjects = () => {
     dispatch(updateCurrentScreen(""));
+    setNewProject({
+      Description: "",
+      Organization: "",
+      ProjectName: "",
+      portafolioLink: "",
+    })
   };
 
   const addNewProject = () => {
     candidateServices
       .addProjects(newProject)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Project is Updated",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res.status === 201) {        
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Project is Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(
@@ -72,15 +80,17 @@ const AddProjects = () => {
   const editNewProject = () => {
     candidateServices
       .editProjects(newProject, project?._id)
-      .then(() => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "New Project is added",
-          })
-        );
-        dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+      .then((res) => {
+        if (res.status === 201) {       
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "New Project is added",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal());
+        }
       })
       .catch((error) => {
         dispatch(

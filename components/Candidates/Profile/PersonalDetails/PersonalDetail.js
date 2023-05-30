@@ -132,16 +132,19 @@ const PersonalDetail = ({ ...data }) => {
                   Current Salary:
                 </CustomTypography>
                 <CustomTypography>
-                  {resume?.currentSalary?.salary}
+                  {resume?.currentSalary?.salary}  {resume?.currentSalary?.denomination} 
+                </CustomTypography>
+              </Stack>
+              <Stack direction={"row"} sx={{ gap: MID }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Expected Salary:
+                </CustomTypography>
+                <CustomTypography>
+                  {resume?.expectedSalary?.salary}  {resume?.expectedSalary?.denomination} 
                 </CustomTypography>
               </Stack>
 
-              <Stack direction={"row"} sx={{ gap: MID }}>
-                <CustomTypography sx={{ fontWeight: "900" }}>
-                  Region:
-                </CustomTypography>
-                <CustomTypography>Name</CustomTypography>
-              </Stack>
+          
             </Stack>
           </Grid>
         </Grid>

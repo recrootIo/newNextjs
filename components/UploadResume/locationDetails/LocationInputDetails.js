@@ -17,6 +17,7 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from "react-google-places-autocomplete";
 import { NEUTRAL } from "@/theme/colors";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -74,6 +75,7 @@ const LocationInputDetails = ({ ...props }) => {
           flexDirection: "row",
         }}
       >
+   
         <Box
           sx={{
             width: { md: "70%", sm: "100%", xs: "100%" },
@@ -89,6 +91,22 @@ const LocationInputDetails = ({ ...props }) => {
               sizes="100vw"
             />
           </Box>
+          <Stack
+          sx={{
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            display: { md: "flex", padding: { md: "130px 0", xs: "20px 0" } },
+          }}
+        >
+          <Button
+            onClick={() => scroll(position - 1)}
+            startIcon={<KeyboardBackspaceIcon />}
+            sx={{ color: 'black', textDecoration: "underline" }}
+            variant="text"
+          >
+            Back
+          </Button>
+        </Stack>
           <Box className="stepperContainer">
             <Stepper  activeStep={2} alternativeLabel>
               {steps.map((label) => (

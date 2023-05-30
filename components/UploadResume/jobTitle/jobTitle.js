@@ -17,6 +17,7 @@ import Image from "next/image";
 import http from "@/redux/http-common";
 import { NEUTRAL } from "@/theme/colors";
 import { debounce } from "@/utils/HelperFunctions";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const steps = [
   "Select master blaster campaign settings",

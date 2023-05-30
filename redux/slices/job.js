@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jobsService from "../services/job.service";
 
 const initialState = {
-  details: { salary: {}, requiredSkill: []},
+  details: { salary: {}, requiredSkill: [] },
   essential: {
     careerlevel: "",
     experience: "",
@@ -104,7 +104,6 @@ export const jobId = createAsyncThunk("jobId/jobs", async (data) => {
   return data;
 });
 
-
 export const addJobs = createAsyncThunk("add/jobs", async (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   const res = await jobsService.addJobss(value, user.User.companyId);
@@ -118,6 +117,7 @@ export const updateJobs = createAsyncThunk(
     return res.data;
   }
 );
+
 export const companyJobs = createAsyncThunk(
   "company/gjobs",
   async () => {
