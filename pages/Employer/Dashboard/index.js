@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from "react";
 import {
   Box,
@@ -20,61 +21,644 @@ import {
   TableContainer,
   Paper,
   Divider,
+  Menu,
+  MenuItem,
+  Slide,
+  Typography,
 } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { ArrowDropDownCircleOutlined, ArrowDropDownCircleRounded } from "@mui/icons-material";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
+import { logout } from "@/redux/slices/auth";
+import { addCandidatesRequest, getCandidatesRequest, getCompanyDetails, getapplCount } from "@/redux/slices/companyslice";
+import { companyJobs, jobId, setEditJob } from "@/redux/slices/job";
+import { getSchedules } from "@/redux/slices/interviewslice";
+import moment from "moment";
+import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
+import axios from "axios";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
-function TabPanel(props) {
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    textAlign: "center",
+  },
+  papercard: {
+    minHeight: 140,
+    minWidth: 190,
+  },
+}));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <CustomTypography>{children}</CustomTypography>
+        <Box sx={{ pt: 2 }}>
+          <Typography>{children}</Typography>
         </Box>
       )}
     </div>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-//Table
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const EmpoyerDashboard = () => {
+  let dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(applyJobsdet())
+     .then((res) => {
+            if (res.error !== undefined) {
+              res.error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+                ? dispatch(logout()).then(() => {
+                    push("/signin", { state: true });
+                  })
+                : console.warn("error");
+            }
+          })
+          .catch((error) => {
+            if (
+              error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+            ) {
+              dispatch(logout()).then(() => {
+                push("/signin", { state: true });
+              });
+            }
+          });;
+    dispatch(getJobsfil());
+    dispatch(getCompanyDetails());
+    dispatch(companyJobs());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
+  // const [value, setValue] = React.useState(0);
+  const [value2, setValue2] = React.useState(0);
+  const [opena, setOpena] = React.useState(false);
+  const handleClosea = () => {
+    setOpena(false);
+  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
+  const handleChange2 = (event, newValue) => {
+    setValue2(newValue);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+
+  useEffect(() => {
+    dispatch(getSchedules());
+    dispatch(getCandidatesRequest());
+    dispatch(getapplCount())
+  }, [dispatch]);
+  const sear = useSelector((state) => state?.sinterview?.schedules);
+
+  const names = useSelector((state) => state?.apply?.names);
+  const company = useSelector((state) => state?.company?.companyDetl);
+  const requestJobs = useSelector((state) => state?.company?.requestJobs);
+  const totalCount = useSelector((state) => state?.company?.totalCount);
+  const shortlistCount = useSelector((state) => state?.company?.shortlistCount);
+  const rejectCount = useSelector((state) => state?.company?.rejectCount);
+  // const status = "active";
+  // const count = names.filter((obj) => obj.status === status).length;
+  const expired = [];
+  const active = [];
+  function isValuePresentInArray(array, value) {
+    return array.some((obj) => obj.jobId === value);
+  }
+  const cjobs = useSelector((state) => state?.jobs?.companyJobs);
+
+  names.map((nam) => {
+    if (
+      moment(nam.applicationDeadline).format() < moment(new Date()).format() ||
+      nam.status === "inactive"
+    ) {
+      expired.push(nam.applicationDeadline);
+    }
+    if (
+      moment(nam.applicationDeadline).format() >
+        moment(new Date()).subtract(1, "days").format() &&
+      nam.status === "active"
+    ) {
+      active.push(nam.applicationDeadline);
+    }
+    return null;
+  });
+
+  var formattedNumber = ("0" + expired.length).slice(-2);
+  var formattedActive = ("0" + active.length).slice(-2);
+  var formattedint = ("0" + sear.length).slice(-2);
+  var namesFeautre = [];
+  var namesFeautreNo = [];
+  var namesjSlots= [];
+  var namesjSlotsFeano= [];
+  names.map((nam) => {
+    if (nam.featureType === true ) {
+      namesFeautre.push(nam);
+    }
+    return null;
+  });
+
+  names.map((nam) => {
+    // eslint-disable-next-line no-mixed-operators
+    if ( nam.featureType === false || nam.featureType === undefined) {
+      namesFeautreNo.push(nam);
+    }
+    return null;
+  });
+  names.map((nam) => {
+    if (nam.packageType === 'jSlot' && nam.featureType === true ) {
+      namesjSlots.push(nam);
+    }
+    return null;
+  });
+  names.map((nam) => {
+    // eslint-disable-next-line no-mixed-operators
+    if (nam.packageType === 'jSlot' && nam.featureType === false || nam.featureType === undefined) {
+      namesjSlotsFeano.push(nam);
+    }
+    return null;
+  });
+
+  const rows = namesFeautreNo?.map((nam, index) => ({
+    id: nam._id,
+    _id: index + 1,
+    title: nam.jobRole,
+    jobtype: nam.jobType,
+    Location: nam.address,
+    company: nam.company,
+    packType:nam.packageType,
+    posteddate: moment(nam.createdAt).format("L"),
+    status: capitalizeFirstLetter(nam?.status),
+    deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
+    action: nam.packageType,
+  }));
+
+  const rows2 = namesFeautre?.map((nam, index) => ({
+    id: nam._id,
+    _id: index + 1,
+    title: nam.jobRole,
+    jobtype: nam.jobType,
+    Location: nam.address,
+    company: nam.company,
+    packType:nam.packageType,
+    posteddate: moment(nam.createdAt).format("L"),
+    status: capitalizeFirstLetter(nam?.status),
+    deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
+    action: nam.packageType,
+  }));
+
+  // const rows3 = namesjSlots?.map((nam, index) => ({
+  //   id: nam._id,
+  //   _id: index + 1,
+  //   title: nam.jobRole,
+  //   jobtype: nam.jobType,
+  //   Location: nam.address,
+  //   company: nam.company,
+  //   packType:nam.packageType,
+  //   posteddate: moment(nam.createdAt).format("L"),
+  //   status: capitalizeFirstLetter(nam?.status),
+  //   deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
+  //   action: nam.packageType,
+  // }));
+  // const rows4 = namesjSlotsFeano?.map((nam, index) => ({
+  //   id: nam._id,
+  //   _id: index + 1,
+  //   title: nam.jobRole,
+  //   jobtype: nam.jobType,
+  //   Location: nam.address,
+  //   company: nam.company,
+  //   packType:nam.packageType,
+  //   posteddate: moment(nam.createdAt).format("L"),
+  //   status: capitalizeFirstLetter(nam?.status),
+  //   deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
+  //   action: nam.packageType,
+  // }));
+
+  // let navigate = useNavigate();
+  const {push} = useRouter()
+  const classes = useStyles();
+
+  const [jobid, setJobid] = useState("");
+
+  const handleIdJob = (parms) => {
+    setJobid(parms.id);
+    setpackType(parms?.row?.packType)
+    dispatch(jobId(parms.id));
+  };
+
+  useEffect(() => {
+    dispatch(
+      setEditJob({
+        salary: {},
+        question: [
+          {
+            id: new Date().getTime(),
+            questions: "",
+            answer: "",
+            preferedAns: "",
+          },
+        ],
+        requiredSkill: [],
+      })
+    );
+  }, [dispatch]);
+
+  const handleEdit = () => {
+    dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
+      setTimeout(() => {
+        push("/employerhome/newjob");
+      }, 500)
+    );
+  };
+
+
+  const user = Cookies.get();
+
+  const handleAppilcants = () => {
+    // const details = {
+    //   page: 1,
+    //   status: [],
+    //   jobid: jobid,
+    // };
+    // dispatch(seeAll({ jobId: jobid, state: true }));
+    // dispatch(applyJobsdetFilter(details)).then(
+    //   setTimeout(() => {
+    push(`/employerhome/matchingApplicants/${jobid}`, { state: true });
+    // }, 500)
+    // );
+  };
+
+  const handleActivate = () => {
+      axios
+        .put(
+          `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
+          { status: "active" },
+          { headers: { "x-access-token": `${user.token}` } }
+        )
+        .then(function (res) {
+          if (res.data.code) {
+            if (res.data.code === 899) {
+              push("/Pricing");
+            }
+            dispatch(
+              openAlert({
+                type:ERROR,
+                message:res.data.message
+              })
+            )
+            // notifyEroor(res.data.message);
+          } else {
+            dispatch(
+              openAlert({
+                type:SUCCESS,
+                message:res.data
+              })
+            )
+            // notify(res.data);
+            dispatch(applyJobsdet());
+            dispatch(getJobsfil());
+          }
+        })
+        .catch(function (error) {
+          console.warn(error);
+        });
+  };
+
+  const handleDeActivate = () => {
+    axios
+      .put(
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
+        { status: "inactive" },
+        { headers: { "x-access-token": `${user.token}` } }
+      )
+      .then(function (res) {
+        dispatch(
+          openAlert({
+            type:SUCCESS,
+            message:res.data
+          })
+        )
+        // notify(res.data);
+        dispatch(applyJobsdet());
+        dispatch(getJobsfil());
+      })
+      .catch(function (error) {
+        if (
+          error.message === "Request failed with status code 401" ||
+          "Request failed with status code 403"
+        ) {
+          dispatch(logout()).then(() => {
+            push("/signin", { state: true });
+          });
+        }
+      });
+  };
+
+  const handleRequest = (parms) => {
+    if (parms === "addrequest") {
+      dispatch(
+        openAlert({
+          type:SUCCESS,
+          message: "Your request has been sent successfully. We are extracting candidates based on your job description and guarantee to populate matching candidates within 12 hours."
+        })
+      )
+      dispatch(addCandidatesRequest(jobid));
+    } else {
+      push(`/requestCandidates/${jobid}`);
+      // dispatch(jobCandidatesRequest(jobid));
+    }
+  };
+const [packType, setpackType] = useState('')
+  const handleCloseJob = ()=>{
+    if (packType === 'free' || packType === 'pro' || packType === 'premium') {
+      handleDeActivate();
+      setOpena(true)
+      handleClose();
+    } else {      
+      handleClose();
+      handleDeActivate();
+    }
+  }
+
+
+
+  const columns = [
+    { field: "id", headerName: "Id", width: 100, hide: true },
+    { field: "_id", headerName: "Job", width: 120 },
+    { field: "title", headerName: "Title", width: 260 },
+    {
+      field: "jobtype",
+      headerName: "Job type",
+      width: 130,
+    },
+    {
+      field: "Location",
+      headerName: "Location",
+      width: 130,
+    },
+    {
+      field: "posteddate",
+      headerName: "Posted date",
+      width: 130,
+    },
+    {
+      field: "deadline",
+      headerName: "Deadline",
+      width: 130,
+    },
+    { field: "packType", headerName: "Package Type", width: 140 ,
+    renderCell: (parms) => (
+      <p>{parms?.value === 'premium' ? 'Premium' : parms?.value === 'pro' ? 'Pro Plan' :  parms?.value === 'free' ? 'Free' : parms?.value === 'jSlot' ? 'Job Slot' : 'N/A'}</p>
+    )},
+    { field: "status", headerName: "Status", width: 140 ,
+    renderCell: (parms) => (
+      <>
+      <p>{(parms?.row?.packType === 'free' && parms?.value === 'Inactive') || (parms?.row?.packType === 'pro'&& parms?.value === 'Inactive') || (parms?.row?.packType === 'premium'&& parms?.value === 'Inactive') ? 'Closed' : parms.value === 'Active' ? 'Active' : 'Inactive'}</p>
+      </>
+    )},
+    {
+      field: "action",
+      headerName: "Action",
+      width: 130,
+      renderCell: (parms) =>
+        user?.memberType === "HiringManager" ? (
+          <>
+            <Button
+              className="editButton"
+              id="basic-button"
+              aria-controls={open2 ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open2 ? "true" : undefined}
+              onClick={(e) => {
+                handleClick2(e);
+                handleIdJob(parms);
+              }}
+            >
+              Action <ArrowDropDownCircleRounded style={{ marginLeft: 10 }} />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl2}
+              open={open2}
+              onClose={handleClose2}
+              aria-labelledby="basic-demo-button"
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose2();
+                  handleAppilcants();
+                }}
+                value="applicNTS"
+              >
+                See Applicants
+              </MenuItem>
+            </Menu>
+          </>
+        ) : capitalizeFirstLetter(parms.row.status) ===
+          capitalizeFirstLetter("inactive") ? (
+          <>
+            <Button
+              className="editButton"
+              id="basic-button"
+              aria-controls={open2 ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open2 ? "true" : undefined}
+              onClick={(e) => {
+                handleClick2(e);
+                handleIdJob(parms);
+              }}
+            >
+              Action <ArrowDropDownCircleRounded style={{ marginLeft: 10 }} />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl2}
+              open={open2}
+              onClose={handleClose2}
+              aria-labelledby="basic-demo-button"
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose2();
+                  handleEdit(parms);
+                }}
+                value="edit"
+              >
+                Edit Jobs
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose2();
+                  handleAppilcants();
+                }}
+                value="applicNTS"
+              >
+                See Applicants
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  handleClose2();
+                  handleActivate();
+                }}
+                value="delete"
+                disabled={packType === 'free' || packType === 'pro' || packType === 'premium'}
+              >
+                Activate
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <>
+            <Button
+              className="editButton"
+              id="basic-button"
+              // id="basic-demo-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              // variant="outlined"
+              // color="neutral"
+              onClick={(e) => {
+                handleClick(e);
+                handleIdJob(parms);
+              }}
+            >
+              Action <ArrowDropDownCircleOutlined style={{ marginLeft: 10 }} />
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="basic-demo-button"
+            >
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleEdit(parms);
+                }}
+                value="edit"
+              >
+                Edit Jobs
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleAppilcants();
+                }}
+                value="applicNTS"
+              >
+                See Applicants
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+               handleCloseJob()
+                }}
+                value="delete"
+              >
+               {packType === 'free' || packType === 'pro' || packType === 'premium' ? "Close The Job" :  packType === 'jSlot' ?"Deactivate" :"Deactivate"}
+              </MenuItem>
+              {isValuePresentInArray(requestJobs, jobid) === true ? (
+                <MenuItem
+                  onClick={() => {
+                    handleRequest("requested");
+                  }}
+                  sx={{ color: "green" }}
+                >
+                  Candidate Database
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    handleRequest("addrequest");
+                  }}
+                  sx={{ color: "#4fa9ff" }}
+                >
+                  Request Candidate Database
+                </MenuItem>
+              )}
+            </Menu>
+          </>
+        ),
+    },
+  ];
+
+  const handleGetRowId = (e) => {
+    return e.id;
+  };
+
+  // eslint-disable-next-line no-mixed-operators
+
+  const enableFeaturedJobs =
+    // eslint-disable-next-line no-mixed-operators
+    company?.package?.subscription_package === "SuperEmployer" ||
+    (company?.jobCounts?.premiumPayment  === "Completed");
+  const enableFeaturedJobs2 =
+    // eslint-disable-next-line no-mixed-operators
+    company?.package?.subscription_package === "SuperEmployer" ||
+    company?.package?.subscription_package === 'Gold'  ||
+    company?.jobSlotGold === true
+    const freePack = company?.package?.subscription_package === "Free"
+    const freeCount = freePack === true ? (3-cjobs.length  ) : 0  
+    const proCOunt = company?.jobCounts?.proCount 
+    const preCOunt = company?.jobCounts?.premiumCount 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [value, setValue] = React.useState(0);
 
@@ -248,7 +832,8 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
+                       {formattedActive}/
+                  {parseInt(formattedActive) + parseInt(formattedNumber)}
                     </CustomTypography>
                     <CustomTypography variant="body1" sx={{ color: "white" }}>
                       Active Jobs
@@ -288,7 +873,8 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
+                        {formattedNumber}/
+                  {parseInt(formattedActive) + parseInt(formattedNumber)}
                     </CustomTypography>
                     <CustomTypography variant="body1" sx={{ color: "white" }}>
                       Inactive Jobs
@@ -328,7 +914,7 @@ const EmpoyerDashboard = () => {
                       sx={{ color: "white", fontSize: "30px" }}
                       variant="h5"
                     >
-                      0/00
+                     {formattedint}
                     </CustomTypography>
                     <CustomTypography variant="body1" sx={{ color: "white" }}>
                       Interviews
@@ -383,7 +969,7 @@ const EmpoyerDashboard = () => {
                             fontWeight: 600,
                           }}
                         >
-                          0
+                          {totalCount}
                         </CustomTypography>
                         <CustomTypography
                           sx={{
@@ -443,7 +1029,7 @@ const EmpoyerDashboard = () => {
                             fontWeight: 600,
                           }}
                         >
-                          0
+                          {rejectCount}
                         </CustomTypography>
                         <CustomTypography
                           sx={{
@@ -503,7 +1089,7 @@ const EmpoyerDashboard = () => {
                             fontWeight: 600,
                           }}
                         >
-                          0
+                          {shortlistCount}
                         </CustomTypography>
                         <CustomTypography
                           sx={{
@@ -578,6 +1164,131 @@ const EmpoyerDashboard = () => {
                   </Card>
                 </Grid>
               </Grid>
+              <Stack direction="row" spacing={2} sx={{mt:1}}>
+                <Card
+                  sx={{
+                    width: "100%",
+                    // height: "215px",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/activejob-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: "25px",
+                    }}
+                  >
+                    <img
+                      src="/free-board-sign-icon.svg"
+                      alt=""
+                      style={{
+                        width: "60px",
+                      }}
+                    />
+                  </Box>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{ color: "white", fontSize: "30px" }}
+                      variant="h5"
+                    >
+                     {freeCount}
+                    </CustomTypography>
+                    <CustomTypography variant="body1" sx={{ color: "white" }}>
+                      Free Jobs
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+                <Card
+                  sx={{
+                    width: "100%",
+                    // height: "215px",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/inactivejobs-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: "25px",
+                    }}
+                  >
+                    <img
+                      src="/projob.svg"
+                      alt=""
+                      style={{
+                        width: "60px",
+                      }}
+                    />
+                  </Box>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{ color: "white", fontSize: "30px" }}
+                      variant="h5"
+                    >
+                      {proCOunt}
+                    </CustomTypography>
+                    <CustomTypography variant="body1" sx={{ color: "white" }}>
+                      Pro Jobs
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+                <Card
+                  sx={{
+                    width: "100%",
+                    height: "235px",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/interviews-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: "25px",
+                    }}
+                  >
+                    <img
+                      src="/premiumjob.svg"
+                      alt=""
+                      style={{
+                        width: "60px",
+                      }}
+                    />
+                  </Box>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{ color: "white", fontSize: "30px" }}
+                      variant="h5"
+                    >
+                      {preCOunt}
+                    </CustomTypography>
+                    <CustomTypography variant="body1" sx={{ color: "white" }}>
+                      Premium Jobs
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Stack>
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -597,7 +1308,15 @@ const EmpoyerDashboard = () => {
                 </Box>
               </AppBar>
               <TabPanel id="simple-tab-0" value={value} index={0}>
-                <Table
+              <Box sx={{ height: "550px", width: "100%" }}>
+              <DataGrid
+                  sx={{ display: "flex", justifyContent: "center" }}
+                  getRowId={handleGetRowId}
+                  rows={rows}
+                  columns={columns}
+                />
+              </Box>
+                {/* <Table
                   sx={{ minWidth: 650, bgcolor: "#F2F8FD", p: 0 }}
                   aria-label="simple table"
                 >
@@ -634,10 +1353,34 @@ const EmpoyerDashboard = () => {
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                </Table> */}
               </TabPanel>
               <TabPanel value={value} index={1}>
-                Item Two
+              {enableFeaturedJobs ? (
+                <div style={{ height: "550px", width: "100%" }}>
+                  <DataGrid
+                    sx={{ display: "flex", justifyContent: "center" }}
+                    getRowId={handleGetRowId}
+                    rows={rows2}
+                    columns={columns}
+                  />
+                </div>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "1px solid rgba(224, 224, 224, 1)",
+                    height: "200px",
+                  }}
+                >
+                  <Typography>
+                    {" "}
+                    Subscribe Gold/Premium package to get Featured jobs
+                  </Typography>
+                </Box>
+              )}
               </TabPanel>
             </Box>
           </Grid>

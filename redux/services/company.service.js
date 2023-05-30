@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class CompanyData {
+class companyservice {
   editExper(value, compId) {
     return http.post(`updateCompanyDetails/${compId}`, value);
   }
@@ -45,7 +45,6 @@ class CompanyData {
     return http.post(`/addFreePlan/${rs?.User?.companyId}`);
   }
   getMatchingCandidates(value) {
-    console.log(value);
     return http.get(`/matchCandidate/${value?.id}?page=${value?.page}`);
   }
 
@@ -59,6 +58,10 @@ class CompanyData {
   getCompanies() {
     return http.get(`/getCompanies`);
   }
+  getApplCounts(value) {
+    return http.get(`/getApplCounts/${value}`);
+  }
 }
 
-export default CompanyData;
+// eslint-disable-next-line import/no-anonymous-default-export
+export default new companyservice();

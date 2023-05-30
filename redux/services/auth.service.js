@@ -57,6 +57,7 @@ const login = (email, password) => {
         Cookies.set("verifyCode",response.data?.User?.referral_code,{expires:1})
         Cookies.set("token",response.data?.token,{expires:1})
         Cookies.set("userType",response.data?.User?.recrootUserType,{expires:1})
+        Cookies.set("memberType",response.data?.User?.memberType,{expires:1})
       }
       return response;
     });
