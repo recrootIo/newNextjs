@@ -282,7 +282,7 @@ const JobPreview = () => {
                             Job Requirements :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            {bull} Bachelor's degree
+                            {bull} Bachelor&apos;s degree
                             <br></br>
                             {bull} At least 1+ years of prior experience in a
                             similar area<br></br>
