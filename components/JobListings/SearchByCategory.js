@@ -47,7 +47,7 @@ const SearchByCategory = () => {
               clearTimeout(resetTimeout);
               if (index + 1 === totalPages) {
                 resetTimeout = setTimeout(() => {
-                  carouselRef.current.goTo(0);
+                  carouselRef?.current?.goTo(0);
                 }, 1500); // same time
               }
             }}

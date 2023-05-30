@@ -1,38 +1,12 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
-import {
-  Backdrop,
-  Checkbox,
-  CircularProgress,
-  Dialog,
-  FormGroup,
-  Stack,
-  Switch,
-  Container,
-  Typography,
-} from "@mui/material";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import { toast } from "react-toastify";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { useDispatch, useSelector } from "react-redux";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import download from "downloadjs";
-import AddIcon from "@mui/icons-material/Add";
 import Navbar from "@/components/Navbar/Navbar";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
+import { useRouter } from "next/router";
 
 const styles = {
   container: {
@@ -51,6 +25,12 @@ const styles = {
 };
 
 const ApplyConfirmation = () => {
+  const router = useRouter();
+
+  const goBack = () => {
+    router.push(`/jobs`);
+  };
+
   return (
     <div
       style={{
@@ -114,6 +94,7 @@ const ApplyConfirmation = () => {
             mb: "100px",
             fontSize: "16px",
           }}
+          onClick={() => goBack()}
         >
           Search For More Jobs
         </Button>

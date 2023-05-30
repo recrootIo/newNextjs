@@ -194,7 +194,7 @@ const AddProjects = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
-                  onClick={gotToProjects()}
+                  onClick={() => gotToProjects()}
                 >
                   Cancel
                 </Button>

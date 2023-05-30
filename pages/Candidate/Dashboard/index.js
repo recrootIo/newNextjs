@@ -48,13 +48,13 @@ const StyledListItemText = styled(ListItemText)`
 
 const Index = () => {
   const router = useRouter();
-  useEffect(()=>{
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("User"));
     if (user === null) {
-      router.push('/')
+      router.push("/");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
@@ -87,7 +87,7 @@ const Index = () => {
 
   const logouts = () => {
     dispatch(logout()).then(() => {
-     router.push("/signin", { state: true });
+      router.push("/signin", { state: true });
       dispatch(
         openAlert({
           type: SUCCESS,
@@ -96,25 +96,23 @@ const Index = () => {
       );
     });
   };
- const handleTop = () =>{
+  const handleTop = () => {};
+  const containerRef = useRef(null);
+  const scrollToElement = (id) => {
+    // const container = containerRef.current;
+    // const element = document.getElementById(elementId);
+    // console.log(container,element,'checkincei')
 
- }
- const containerRef = useRef(null);
- const scrollToElement = (id) => {
-  // const container = containerRef.current;
-  // const element = document.getElementById(elementId);
-  // console.log(container,element,'checkincei')
-
-  // if (container && element) {
-  //   const containerTop = container.getBoundingClientRect().top;
-  //   const elementTop = element.getBoundingClientRect().top;
-  //   console.log(containerTop,elementTop,'checkincei')
-  //   container.scrollTop = elementTop - containerTop;
-  // }
-  const container = containerRef.current;
-  const offsetTop = ref.current.offsetTop;
-  container.scrollTop = offsetTop;
-};
+    // if (container && element) {
+    //   const containerTop = container.getBoundingClientRect().top;
+    //   const elementTop = element.getBoundingClientRect().top;
+    //   console.log(containerTop,elementTop,'checkincei')
+    //   container.scrollTop = elementTop - containerTop;
+    // }
+    const container = containerRef.current;
+    const offsetTop = ref.current.offsetTop;
+    container.scrollTop = offsetTop;
+  };
   const getPages = () => {
     if (currentScreen === "resume") {
       return <AddResume />;
@@ -131,9 +129,11 @@ const Index = () => {
     if (currentScreen === "skill") {
       return <AddSkill />;
     }
+
     if (currentScreen === "projects") {
       return <AddProjects />;
     }
+
     if (currentScreen === "training") {
       return <AddTraining />;
     }
@@ -143,17 +143,18 @@ const Index = () => {
     if (currentScreen === "updatePassword") {
       return <UpdatePassword />;
     }
+
     if (currentScreen === "careerPreference") {
       return <AddCareerPreference />;
     }
 
     return (
       <div ref={containerRef} className="scrollbarm">
-      <Stack  id="style-2" sx={{ gap: "30px" }}>
-        <Profile handle={handleTop()} {...data} />
-        <Certifications />
-        <CandidateJobs {...data} />
-      </Stack>
+        <Stack id="style-2" sx={{ gap: "30px" }}>
+          <Profile handle={handleTop()} {...data} />
+          <Certifications />
+          <CandidateJobs {...data} />
+        </Stack>
       </div>
     );
   };
@@ -188,7 +189,10 @@ const Index = () => {
             </ListItemButton>
             <Collapse in={profile} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton onClick={()=>scrollToElement("child1")} sx={{ pl: 4 }}>
+                <ListItemButton
+                  onClick={() => scrollToElement("child1")}
+                  sx={{ pl: 4 }}
+                >
                   <ListItemText primary="Resume" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>

@@ -566,8 +566,12 @@ const Certifications = () => {
             onClick={() => {
               handleCloseDeleteProject();
               handleDeleteProject();
-              notify3(
-                "Your project information has been deleted from your profile"
+              dispatch(
+                openAlert({
+                  type: ERROR,
+                  message:
+                    '"Your project information has been deleted from your profile"',
+                })
               );
             }}
           >
@@ -597,7 +601,13 @@ const Certifications = () => {
             onClick={() => {
               handleCloseDelTraining();
               handleDelTraining();
-              notify3T();
+              dispatch(
+                openAlert({
+                  type: ERROR,
+                  message:
+                    "Your project training has been deleted from your profile",
+                })
+              );
             }}
           >
             Yes
@@ -626,8 +636,12 @@ const Certifications = () => {
             onClick={() => {
               handleCloseDelCert();
               handleDelCert();
-              notify3(
-                "Your certificate information has been deleted from your profile"
+              dispatch(
+                openAlert({
+                  type: ERROR,
+                  message:
+                    "Your certificate information has been deleted from your profile",
+                })
               );
             }}
           >

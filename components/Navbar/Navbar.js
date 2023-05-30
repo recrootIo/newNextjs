@@ -50,54 +50,120 @@ const Navbar = () => {
                 />
               </div>
               <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
-                  <a
-                    href="#"
-                    className="  rounded-md px-3 py-2 text-sm font-medium"
-                    aria-current="page"
-                    style={{ fontSize: "20px", color: "black" }}
+                <div className="flex space-x-4 gap-3">
+                  <Link
+                    href="/"
+                    style={{
+                      fontSize: "17px",
+                      color: "black",
+                      fontWeight: 600,
+                    }}
                   >
-                    About Us
-                  </a>
+                    Home
+                  </Link>
+
+                  <Link
+                    href="/jobs"
+                    style={{
+                      fontSize: "17px",
+                      color: "black",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Jobs
+                  </Link>
+
                   {userType === "Candidate" ? (
-                    <Link href={"/Candidate/Dashboard"}>
-                      <p
-                        className="rounded-md px-3 py-2 text-sm font-medium"
-                        style={{ fontSize: "20px", color: "black" }}
-                      >
-                        Candidate
-                      </p>
+                    <Link
+                      href={"/Candidate/Dashboard"}
+                      style={{
+                        fontSize: "17px",
+                        color: "black",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Candidate
                     </Link>
                   ) : (
-                    <a
-                      href="#"
-                      className="   rounded-md px-3 py-2 text-sm font-medium"
-                      style={{ fontSize: "20px", color: "black" }}
-                    >
-                      Employer
-                    </a>
+                    <>
+                      <Link
+                        href="#"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Employer
+                      </Link>
+                      <Link
+                        href="#"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Pricing
+                      </Link>
+                    </>
                   )}
-
-                  <a
-                    href="#"
-                    className="   rounded-md px-3 py-2 text-sm font-medium"
-                    style={{ fontSize: "20px", color: "black" }}
-                  >
-                    Pricing
-                  </a>
 
                   {user === undefined ? (
                     ""
                   ) : (
-                    <button
-                      className="   rounded-md px-3 py-2 text-sm font-medium"
-                      style={{ fontSize: "20px", color: "black" }}
-                      onClick={logOut}
-                    >
-                      Logout
-                    </button>
+                    <>
+                      <div>
+                        <div className="dropdown inline-block relative">
+                          <button className="">
+                            <Avatar />
+                          </button>
+                          <ul
+                            className="dropdown-menu absolute hidden text-gray-700 pt-1"
+                            style={{}}
+                          >
+                            <li className="" style={{ minWidth: "200px" }}>
+                              <a
+                                className=" bg-white  py-2 px-4 block whitespace-no-wrap"
+                                style={{
+                                  // backgroundColor: "white",
+                                  cursor: "pointer",
+                                }}
+                                onClick={logOut}
+                              >
+                                Logout
+                              </a>
+                            </li>
+                            {/* <li className="">
+                              <a
+                                className="hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                                href="#"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                Two
+                              </a>
+                            </li>
+                            <li className="">
+                              <a
+                                className="rounded-b  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+                                href="#"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                Three is the magic number
+                              </a>
+                            </li> */}
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* <button
+                        style={{ fontSize: "17px", color: "black" }}
+                        onClick={logOut}
+                      >
+                        Logout
+                      </button> */}
+                    </>
                   )}
-                  <Avatar />
                 </div>
               </div>
             </div>

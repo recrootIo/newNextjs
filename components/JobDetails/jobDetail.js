@@ -28,6 +28,11 @@ import { getImageLogo } from "../JobListings/SearchSection";
 // import { getAddress } from "@/utils/HelperFunctions";
 import moment from "moment";
 import Image from "next/image";
+import { getUserId } from "@/utils/HelperFunctions";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppliedJobs } from "@/redux/slices/personal";
+import { useEffect } from "react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -37,9 +42,24 @@ const JobDetail = ({ ...props }) => {
     company,
     applicationDeadline,
     createdAt,
+    _id,
   } = props;
 
-  console.log(moment(applicationDeadline).endOf("day").fromNow(), "props");
+  const { appliedJobs = [] } = useSelector((state) => state?.personal);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const appliedIds = appliedJobs.map((i) => i.jobId[0]);
+  const isApplied = appliedIds.includes(_id);
+
+  const gotApply = () => {
+    router.push(`/applyJob?jobid=${_id}`);
+  };
+
+  useEffect(() => {
+    dispatch(fetchAppliedJobs());
+  }, [dispatch]);
 
   return (
     <Box
@@ -140,8 +160,10 @@ const JobDetail = ({ ...props }) => {
                     bgcolor: "#02A9F7 !important",
                     fontSize: "15px",
                   }}
+                  disabled={isApplied}
+                  onClick={() => gotApply()}
                 >
-                  Apply now
+                  {isApplied ? "applied" : " Apply now"}
                 </Button>
                 <Button
                   className="bookmarkBtn"

@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 const BackBar = () => {
   const router = useRouter();
 
-  const handleGoBack = () => {
+  const handleGoBack = (e) => {
+    e.preventDefault();
     router.back();
   };
 
@@ -29,7 +30,7 @@ const BackBar = () => {
             fontSize: "20px",
             textTransform: "capitalize",
           }}
-          onClick={() => handleGoBack()}
+          onClick={handleGoBack}
           startIcon={<ArrowBackIcon />}
         >
           Back

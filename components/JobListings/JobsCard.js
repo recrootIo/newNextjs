@@ -31,12 +31,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     const container = document.createElement("div");
     container.innerHTML = data;
     const firstPTag = container.querySelector("p");
-
-    // Return the text content of the first <p> tag
     return firstPTag ? firstPTag.textContent : "";
   };
-
-  console.log(extractFirstTwoTags(lateJob?.jobDescription));
 
   return (
     <Card className="jobCard">
@@ -132,16 +128,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           {bull}
           &nbsp;{getSalary(lateJob?.salary)}
         </CustomTypography>
-        <Stack direction={"row"} sx={{ padding: "7px 0" }}>
-          {lateJob?.requiredSkill?.map((skill, index) => (
-            <Chip
-              key={index}
-              label={`#${skill?.skill}`}
-              color="primary"
-              variant="outlined"
-            />
-          ))}
-        </Stack>
+
         <CustomTypography variant="body2" color="text.secondary" fontSize={15}>
           <div
             style={{
@@ -160,6 +147,17 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
             {/* {} */}
           </div>
         </CustomTypography>
+
+        <Stack direction={"row"} sx={{ padding: "7px 0" }}>
+          {lateJob?.requiredSkill?.map((skill, index) => (
+            <Chip
+              key={index}
+              label={`#${skill?.skill}`}
+              color="primary"
+              variant="outlined"
+            />
+          ))}
+        </Stack>
 
         <Box className="mobileBtn">
           <Box className="btnBox">
