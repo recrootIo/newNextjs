@@ -2,7 +2,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import ProfileCard from "./ProfileCard";
+import ProfileCard from "../../components/ApplyJob/ProfileCard";
 import Navbar from "@/components/Navbar/Navbar";
 import { setJobID } from "@/redux/slices/personal";
 import { singleJobs } from "@/redux/slices/job";
