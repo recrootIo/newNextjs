@@ -21,9 +21,9 @@ const ProfileCard = ({ ...props }) => {
     companyId = "",
     jobTitle = "",
   } = props?.companyDetails;
-  const details = useSelector((state) => state.personal.data);
-  const CoverSin = useSelector((state) => state.personal.cover);
-  const resumeSin = useSelector((state) => state.personal.resume);
+  const details = useSelector((state) => state?.personal?.data);
+  const CoverSin = useSelector((state) => state?.personal?.cover);
+  const resumeSin = useSelector((state) => state?.personal?.resume);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,9 +31,9 @@ const ProfileCard = ({ ...props }) => {
   const [currentScreen, setCurrentScreen] = useState("upload");
 
   const [final, setFinal] = React.useState({
-    resumeId: resumeSin._id,
-    coverId: CoverSin && CoverSin._id,
-    candidateId: details && details._id,
+    resumeId: resumeSin?._id,
+    coverId: CoverSin && CoverSin?._id,
+    candidateId: details && details?._id,
     jobId: _id,
     question: question,
     companyId: companyId,
