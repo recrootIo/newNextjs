@@ -28,6 +28,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
+import Image from "next/image";
 
 const style = {
   txtinput: {
@@ -37,7 +38,6 @@ const style = {
         width: { md: "100%", xs: "100%" },
         height: "60px",
         color: "#BAD4DF",
-        backgroundColor: "white",
       },
       "&:hover fieldset": {
         borderColor: "#BAD4DF",
@@ -92,7 +92,7 @@ const EssentialInformation = () => {
                     selected={selectedIndex === 0}
                     onClick={(event) => handleListItemClick(event, 0)}
                   >
-                    <img src="/empImg.png" alt="" />
+                    <Image src="/empImg.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <Divider variant="middle" color="gray" />
                   <ListItemButton
@@ -100,56 +100,66 @@ const EssentialInformation = () => {
                     selected={selectedIndex === 1}
                     onClick={(event) => handleListItemClick(event, 1)}
                   >
-                    <img src="/home.png" alt="" />
+                    <Image src="/home.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 2}
                     onClick={(event) => handleListItemClick(event, 2)}
                   >
-                    <img src="/profile.png" alt="" />
+                    <Image src="/profile.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 3}
                     onClick={(event) => handleListItemClick(event, 3)}
                   >
-                    <img src="/jobs.png" alt="" />
+                    <Image src="/jobs.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 4}
                     onClick={(event) => handleListItemClick(event, 4)}
                   >
-                    <img src="/team.png" alt="" />
+                    <Image src="/team.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 5}
                     onClick={(event) => handleListItemClick(event, 5)}
                   >
-                    <img src="/convo.png" alt="" />
+                    <Image src="/convo.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 6}
                     onClick={(event) => handleListItemClick(event, 6)}
                   >
-                    <img src="/subscription.png" alt="" />
+                    <Image
+                      src="/subscription.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 7}
                     onClick={(event) => handleListItemClick(event, 7)}
                   >
-                    <img src="/myAccount.png" alt="" />
+                    <Image src="/myAccount.png" alt="" width="40" height="40" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ display: "flex", justifyContent: "center" }}
                     selected={selectedIndex === 8}
                     onClick={(event) => handleListItemClick(event, 8)}
                   >
-                    <img src="/power-icon.png" alt="" />
+                    <Image
+                      src="/power-icon.png"
+                      alt=""
+                      width="40"
+                      height="40"
+                    />
                   </ListItemButton>
                 </List>
               </Box>
@@ -197,7 +207,12 @@ const EssentialInformation = () => {
                         mb: "100px",
                       }}
                     >
-                      <img src="/post-newjob-secondstep-img.png" alt="" />
+                      <Image
+                        src="/post-newjob-secondstep-img.png"
+                        alt=""
+                        width="320"
+                        height="20"
+                      />
                     </Box>
                     <CustomTypography
                       sx={{
@@ -214,7 +229,13 @@ const EssentialInformation = () => {
                     />
                     <Stack spacing={3}>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -249,7 +270,13 @@ const EssentialInformation = () => {
                           </FormHelperText>
                           {/* )} */}
                         </FormControl>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -287,7 +314,13 @@ const EssentialInformation = () => {
                         </FormControl>
                       </Stack>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -331,7 +364,11 @@ const EssentialInformation = () => {
                           >
                             <MobileDatePicker
                               slotProps={{
-                                textField: { ...style.txtinput, width: "50%" },
+                                textField: {
+                                  ...style.txtinput,
+                                  bgcolor: "white",
+                                  width: "50%",
+                                },
                               }}
                               style={{ width: "50%", bgcolor: "white" }}
                               label="Deadline"
@@ -362,7 +399,7 @@ const EssentialInformation = () => {
                           )} */}
                         </Box>
                       </Stack>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -394,7 +431,7 @@ const EssentialInformation = () => {
                           </FormHelperText>
                         )} */}
                       </FormControl>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -424,7 +461,7 @@ const EssentialInformation = () => {
                           </FormHelperText>
                         )} */}
                       </FormControl>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -453,7 +490,13 @@ const EssentialInformation = () => {
                         </Select>
                       </FormControl>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -498,7 +541,11 @@ const EssentialInformation = () => {
                           //   helperText={errors.minSalary}
                           placeholder="Enter Min Salary"
                           variant="outlined"
-                          sx={{ ...style.txtinput, width: "25%" }}
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "25%",
+                          }}
                         />
                         <TextField
                           InputLabelProps={{ style: { color: "#BAD4DF" } }}
@@ -514,7 +561,11 @@ const EssentialInformation = () => {
                           name="maxSalary"
                           placeholder="Enter Max Salary"
                           variant="outlined"
-                          sx={{ ...style.txtinput, width: "25%" }}
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "25%",
+                          }}
                         />
                       </Stack>
                       <Box>
@@ -571,6 +622,33 @@ const EssentialInformation = () => {
                           />
                         </FormGroup>
                       </Box>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "40px",
+                      }}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{ width: "50%", height: "55px" }}
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "50%",
+                          bgcolor: "#015FB1 !important",
+                          height: "55px",
+                        }}
+                      >
+                        Submit
+                      </Button>
                     </Stack>
                   </Box>
                 </CardContent>

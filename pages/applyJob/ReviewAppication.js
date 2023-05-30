@@ -362,7 +362,7 @@ function ReviewAppication({ ...props }) {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` http://localhost:3000/api/downloadResume?resume=${resumeSin.resume.replace(
+                              ` https://preprod.recroot.au/api/downloadResume?resume=${resumeSin.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`
