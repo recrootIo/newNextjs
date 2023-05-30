@@ -130,3 +130,14 @@ export const getAddress = (address) => {
     return reduceLength(address[0]);
   }
 };
+
+/**
+ * Action to Capitalize
+ * @param {*} string
+ * @returns string first letter will be Capital
+ */
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export { capitalizeFirstLetter };

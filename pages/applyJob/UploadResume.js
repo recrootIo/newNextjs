@@ -290,7 +290,7 @@ const UploadResume = ({ ...props }) => {
                     sx={{ fontSize: "14px", float: "right", color: PRIMARY }}
                     onClick={async () => {
                       const res = await fetch(
-                        ` http://localhost:3000/api/downloadResume?resume=${resumeSin.resume.replace(
+                        ` https://preprod.recroot.au/api/downloadResume?resume=${resumeSin.resume.replace(
                           /\\/g,
                           "/"
                         )}`
@@ -500,7 +500,7 @@ const UploadResume = ({ ...props }) => {
                         }}
                         onClick={async () => {
                           const res = await fetch(
-                            ` http://localhost:3000/api/downloadCover?cover=${CoverSin.cover.replace(
+                            ` https://preprod.recroot.au/api/downloadCover?cover=${CoverSin.cover.replace(
                               /\\/g,
                               "/"
                             )}`
