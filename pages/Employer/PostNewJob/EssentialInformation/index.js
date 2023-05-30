@@ -38,7 +38,6 @@ const style = {
         width: { md: "100%", xs: "100%" },
         height: "60px",
         color: "#BAD4DF",
-        backgroundColor: "white",
       },
       "&:hover fieldset": {
         borderColor: "#BAD4DF",
@@ -230,7 +229,13 @@ const EssentialInformation = () => {
                     />
                     <Stack spacing={3}>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -265,7 +270,13 @@ const EssentialInformation = () => {
                           </FormHelperText>
                           {/* )} */}
                         </FormControl>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -303,7 +314,13 @@ const EssentialInformation = () => {
                         </FormControl>
                       </Stack>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -347,7 +364,11 @@ const EssentialInformation = () => {
                           >
                             <MobileDatePicker
                               slotProps={{
-                                textField: { ...style.txtinput, width: "50%" },
+                                textField: {
+                                  ...style.txtinput,
+                                  bgcolor: "white",
+                                  width: "50%",
+                                },
                               }}
                               style={{ width: "50%", bgcolor: "white" }}
                               label="Deadline"
@@ -378,7 +399,7 @@ const EssentialInformation = () => {
                           )} */}
                         </Box>
                       </Stack>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -410,7 +431,7 @@ const EssentialInformation = () => {
                           </FormHelperText>
                         )} */}
                       </FormControl>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -440,7 +461,7 @@ const EssentialInformation = () => {
                           </FormHelperText>
                         )} */}
                       </FormControl>
-                      <FormControl sx={style.txtinput}>
+                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
                           id="demo-simple-select-label"
                           sx={{ color: "#BAD4DF" }}
@@ -469,7 +490,13 @@ const EssentialInformation = () => {
                         </Select>
                       </FormControl>
                       <Stack direction="row" spacing={2}>
-                        <FormControl sx={{ ...style.txtinput, width: "50%" }}>
+                        <FormControl
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "50%",
+                          }}
+                        >
                           <InputLabel
                             id="demo-simple-select-label"
                             sx={{ color: "#BAD4DF" }}
@@ -514,7 +541,11 @@ const EssentialInformation = () => {
                           //   helperText={errors.minSalary}
                           placeholder="Enter Min Salary"
                           variant="outlined"
-                          sx={{ ...style.txtinput, width: "25%" }}
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "25%",
+                          }}
                         />
                         <TextField
                           InputLabelProps={{ style: { color: "#BAD4DF" } }}
@@ -530,7 +561,11 @@ const EssentialInformation = () => {
                           name="maxSalary"
                           placeholder="Enter Max Salary"
                           variant="outlined"
-                          sx={{ ...style.txtinput, width: "25%" }}
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "25%",
+                          }}
                         />
                       </Stack>
                       <Box>
@@ -587,6 +622,33 @@ const EssentialInformation = () => {
                           />
                         </FormGroup>
                       </Box>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "40px",
+                      }}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{ width: "50%", height: "55px" }}
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "50%",
+                          bgcolor: "#015FB1 !important",
+                          height: "55px",
+                        }}
+                      >
+                        Submit
+                      </Button>
                     </Stack>
                   </Box>
                 </CardContent>

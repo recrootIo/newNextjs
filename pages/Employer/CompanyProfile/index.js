@@ -62,7 +62,6 @@ const style = {
         width: { md: "100%", xs: "100%" },
         height: "60px",
         color: "#BAD4DF",
-        backgroundColor: "white",
       },
       "&:hover fieldset": {
         borderColor: "#BAD4DF",
@@ -522,7 +521,7 @@ const CompanyProfile = () => {
                   <Stack spacing={2}>
                     <TextField
                       InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                      sx={style.naminput}
+                      sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Company Name"
                       placeholder="Enter Company Name"
@@ -536,7 +535,7 @@ const CompanyProfile = () => {
                     />
                     <TextField
                       InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                      sx={style.naminput}
+                      sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Email"
                       type="email"
@@ -556,7 +555,7 @@ const CompanyProfile = () => {
                     />
                     <TextField
                       InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                      sx={style.naminput}
+                      sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Website(Optional)"
                       placeholder="Company URL"
@@ -585,7 +584,7 @@ const CompanyProfile = () => {
                     Company Information
                   </CustomTypography>
                   <Box sx={styles.infofld}>
-                    <FormControl sx={style.naminput}>
+                    <FormControl sx={{ ...style.naminput, bgcolor: "white" }}>
                       <InputLabel
                         id="demo-simple-select-label"
                         sx={{ color: "#BAD4DF" }}
@@ -658,7 +657,11 @@ const CompanyProfile = () => {
                     >
                       <TextField
                         InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                        sx={styles.naminput}
+                        sx={{
+                          ...style.naminput,
+                          bgcolor: "white",
+                          width: "100%",
+                        }}
                         id="outlined-basic"
                         placeholder="Enter FaceBook Link"
                         variant="outlined"
@@ -681,7 +684,11 @@ const CompanyProfile = () => {
 
                       <TextField
                         InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                        sx={styles.naminput}
+                        sx={{
+                          ...style.naminput,
+                          bgcolor: "white",
+                          width: "100%",
+                        }}
                         id="outlined-basic"
                         placeholder="Enter Twitter Link"
                         variant="outlined"
@@ -705,7 +712,11 @@ const CompanyProfile = () => {
                       />
                       <TextField
                         InputLabelProps={{ style: { color: "black" } }}
-                        sx={styles.naminput}
+                        sx={{
+                          ...style.naminput,
+                          bgcolor: "white",
+                          width: "100%",
+                        }}
                         id="outlined-basic"
                         placeholder="Enter LinkedIn Link"
                         variant="outlined"
@@ -729,10 +740,10 @@ const CompanyProfile = () => {
                         // helperText={errors.linkin}
                       />
                       <TextField
-                        width="100%"
                         InputLabelProps={{ style: { color: "black" } }}
                         sx={{
                           ...style.naminput,
+                          bgcolor: "white",
                           width: "100%",
                         }}
                         id="outlined-basic"

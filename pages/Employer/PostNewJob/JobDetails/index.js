@@ -41,7 +41,6 @@ const style = {
         width: { md: "100%", xs: "100%" },
         height: "60px",
         color: "#BAD4DF",
-        backgroundColor: "white",
       },
       "&:hover fieldset": {
         borderColor: "#BAD4DF",
@@ -243,7 +242,7 @@ const JobDetails = () => {
                         // options={titleDesc.map((option) => option.rol.role)}
                         renderInput={(params) => (
                           <TextField
-                            sx={style.txtinput}
+                            sx={{ ...style.txtinput, bgcolor: "white" }}
                             {...params}
                             label="Job Title"
                             //error={errors.jobRole ? true : false}
@@ -282,7 +281,11 @@ const JobDetails = () => {
                           id="free-solo-2-demo"
                           disableClearable={false}
                           name="skills"
-                          sx={{ width: "80%" }}
+                          sx={{
+                            ...style.txtinput,
+                            bgcolor: "white",
+                            width: "80%",
+                          }}
                           // value={role.skill}
                           // onBlurCapture={(e) =>
                           //   setRole({ skill: e.target.value, id: uuidv4() })
@@ -397,6 +400,33 @@ const JobDetails = () => {
                         />
                       </Box>
                       <ScreeningQuestions />
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "40px",
+                      }}
+                    >
+                      <Button
+                        variant="outlined"
+                        sx={{ width: "50%", height: "55px" }}
+                      >
+                        Previous
+                      </Button>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "50%",
+                          bgcolor: "#015FB1 !important",
+                          height: "55px",
+                        }}
+                      >
+                        Submit
+                      </Button>
                     </Stack>
                   </Box>
                 </CardContent>
