@@ -24,7 +24,6 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
-// import { Link } from "react-router-dom";
 import Link from "next/link";
 import moment from "moment";
 import { NEUTRAL, PRIMARY, DANGER } from "@/theme/colors";
@@ -154,7 +153,7 @@ function ReviewAppication({ ...props }) {
           alignItems: "center",
         }}
       ></Box>
-      <Container>
+      <Container sx={{ width: { md: "50%", sm: "100%", xs: "100%" } }}>
         <Stack
           sx={{
             justifyContent: "center",

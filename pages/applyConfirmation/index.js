@@ -7,6 +7,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { BOLD } from "@/theme/fonts";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { useRouter } from "next/router";
+import { Stack } from "@mui/material";
 
 const styles = {
   container: {
@@ -50,9 +51,19 @@ const ApplyConfirmation = () => {
           alignItems: "center",
         }}
       ></Box>
-      <Box sx={{ mb: "60px" }}>
+
+      <Stack
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "40px",
+          mt: "20px",
+          mb: "60px",
+        }}
+      >
         <ApplyJobStepper activeStep={2} />
-      </Box>
+      </Stack>
+
       <div style={styles.container}>
         <img
           src="/applyConfirmation Img.png"
