@@ -9,6 +9,9 @@ import {
   Stack,
   Switch,
   Container,
+  Radio,
+  RadioGroup,
+  styled,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -45,20 +48,82 @@ import {
 } from "@/redux/slices/personal";
 import { Uploader } from "@/components/Uploader/Uploader";
 import Navbar from "@/components/Navbar/Navbar";
-import { DANGER, PRIMARY } from "@/theme/colors";
+import { DANGER, NEUTRAL, PRIMARY } from "@/theme/colors";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { BOLD } from "@/theme/fonts";
 import styles from "./applyJobs.module.css";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import { useRouter } from "next/router";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
+const BpIcon = styled("span")(({ theme }) => ({
+  borderRadius: "50%",
+  width: 23,
+  height: 23,
+  boxShadow:
+    theme.palette.mode === "dark"
+      ? "0 0 0 1px rgb(16 22 26 / 40%)"
+      : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+  backgroundColor: theme.palette.mode === "dark" ? "#394b59" : "#f5f8fa",
+  backgroundImage:
+    theme.palette.mode === "dark"
+      ? "linear-gradient(180deg,hsla(0,0%,100%,.05),hsla(0,0%,100%,0))"
+      : "linear-gradient(180deg,hsla(0,0%,100%,.8),hsla(0,0%,100%,0))",
+  ".Mui-focusVisible &": {
+    outline: "2px auto rgba(19,124,189,.6)",
+    outlineOffset: 2,
+  },
+  "input:hover ~ &": {
+    backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
+  },
+  "input:disabled ~ &": {
+    boxShadow: "none",
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(57,75,89,.5)"
+        : "rgba(206,217,224,.5)",
+  },
+}));
+
+const BpCheckedIcon = styled(BpIcon)({
+  backgroundColor: "#137cbd",
+  backgroundImage:
+    "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+  "&:before": {
+    display: "block",
+    width: 23,
+    height: 23,
+    backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
+    content: '""',
+  },
+  "input:hover ~ &": {
+    backgroundColor: "#106ba3",
+  },
+});
+
+// Inspired by blueprintjs
+function BpRadio(props) {
+  return (
+    <Radio
+      disableRipple
+      color="default"
+      checkedIcon={<BpCheckedIcon />}
+      icon={<BpIcon />}
+      {...props}
+    />
+  );
+}
+
 const UploadResume = ({ ...props }) => {
   const { setApplication, setCurrentScreen, jobTitle } = props;
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
@@ -75,9 +140,9 @@ const UploadResume = ({ ...props }) => {
   const [pdf, setPdf] = useState(null);
   const [pdfC, setPdfC] = useState();
 
-  const [resume, setResume] = React.useState({
-    resume: resumeSin && resumeSin.resumeName,
-    id: resumeSin && resumeSin._id,
+  const [selectedResume, setSelectedResume] = React.useState({
+    resume: resumeSin && resumeSin?.resumeName,
+    id: resumeSin && resumeSin?._id,
   });
 
   const [covers, setCovers] = React.useState({
@@ -85,7 +150,7 @@ const UploadResume = ({ ...props }) => {
     id: CoverSin && CoverSin._id,
   });
 
-  const resumeLoc = resumes && resumes.resumeFileLocation;
+  const resumeLoc = (resumes && resumes.resumeFileLocation) || [];
   const coverLoc = resumes && resumes.coverLetterFileLocation;
 
   React.useEffect(() => {
@@ -93,7 +158,7 @@ const UploadResume = ({ ...props }) => {
   }, [dispatch]);
 
   const handleChange = (e) => {
-    setResume({ id: e.target.value });
+    setSelectedResume({ id: e.target.value });
     dispatch(retrieveGetSinResume(e.target.value));
     setApplication((state) => ({
       ...state,
@@ -142,7 +207,7 @@ const UploadResume = ({ ...props }) => {
         );
         dispatch(retrievePersonal());
         dispatch(removeResume({}));
-        setResume({
+        setSelectedResume({
           resume: undefined,
           id: undefined,
         });
@@ -186,7 +251,7 @@ const UploadResume = ({ ...props }) => {
   const handleDelete = (id) => {
     dispatch(updateAndThenGet(id));
     dispatch(removeResume({}));
-    setResume({
+    setSelectedResume({
       resume: undefined,
       id: undefined,
     });
@@ -211,8 +276,12 @@ const UploadResume = ({ ...props }) => {
     });
   };
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   const coverDisabled = !show || covers?.id;
-  const buttonDisable = resume?.id && coverDisabled;
+  const buttonDisable = selectedResume?.id && coverDisabled;
 
   return (
     <div
@@ -237,7 +306,7 @@ const UploadResume = ({ ...props }) => {
       ></Box>
 
       <Box>
-        <Container>
+        <Container sx={{ width: { md: "50%", sm: "100%", xs: "100%" } }}>
           <Stack
             sx={{
               justifyContent: "center",
@@ -257,77 +326,122 @@ const UploadResume = ({ ...props }) => {
             className="selectResumeContainer"
             spacing={2}
           >
-            <Grid
-              item
-              xs={12}
-              md={12}
-              sx={{
-                marginTop: 2,
-                mt: 0,
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-              fullWidth
-            >
-              <Stack direction="row" spacing={2}>
-                {resume?.id && (
-                  <Button
-                    variant="body1"
-                    color="initial"
-                    sx={{ fontSize: "14px", marginRight: "5px", color: DANGER }}
-                    onClick={() => {
-                      handleClickOpena();
-                    }}
-                  >
-                    Delete
-                  </Button>
-                )}
-
-                {resume?.id && (
-                  <Button
-                    variant="body1"
-                    color="initial"
-                    sx={{ fontSize: "14px", float: "right", color: PRIMARY }}
-                    onClick={async () => {
-                      const res = await fetch(
-                        ` https://preprod.recroot.au/api/downloadResume?resume=${resumeSin.resume.replace(
-                          /\\/g,
-                          "/"
-                        )}`
-                      );
-                      const blob = await res.blob();
-                      download(blob, `${resumeSin.resumeName}`);
-                    }}
-                  >
-                    Download
-                  </Button>
-                )}
-              </Stack>
-            </Grid>
-
             <Grid item xs={12} md={12} sx={{ marginTop: 2, marginBottom: 2 }}>
+              <InputLabel id="demo-simple-select-label">
+                Select Resume
+              </InputLabel>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Select Resume
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  name="resume"
-                  value={resume.id}
-                  label="Select Resume"
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                >
-                  {resumeLoc &&
-                    resumeLoc.map((resume) => (
-                      <MenuItem key={resume.resumeName} value={resume._id}>
+                <Stack sx={{ gap: "10px" }}>
+                  {resumeLoc.map((resume, index) => (
+                    <Grid
+                      key={index}
+                      container
+                      sx={{
+                        border: "1px solid black",
+                        borderRadius: "10px",
+                        minHeight: "60px",
+                      }}
+                    >
+                      <Grid
+                        item
+                        md={2}
+                        lg={2}
+                        sm={3}
+                        xs={3}
+                        sx={{
+                          backgroundColor: "#cc1016",
+                          color: NEUTRAL,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "10px",
+                          borderTopLeftRadius: "10px",
+                          borderBottomLeftRadius: "10px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Pdf
+                      </Grid>
+                      <Grid
+                        item
+                        md={6}
+                        lg={6}
+                        sm={4}
+                        xs={4}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                          padding: "10px",
+                          borderTopLeftRadius: "10px",
+                          borderBottomLeftRadius: "10px",
+                          fontWeight: 600,
+                        }}
+                      >
                         {resume.resumeName}
-                      </MenuItem>
-                    ))}
-                </Select>
+                      </Grid>
+                      <Grid
+                        item
+                        md={2}
+                        lg={2}
+                        sm={4}
+                        xs={4}
+                        sx={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          display: "flex",
+                          gap: "5px",
+                          flexDirection: {
+                            md: "row",
+                            // sm: "column",
+                            // xs: "column",
+                          },
+                        }}
+                      >
+                        <IconButton
+                          onClick={async () => {
+                            const res = await fetch(
+                              ` http://localhost:3000/api/downloadResume?resume=${resume.resume.replace(
+                                /\\/g,
+                                "/"
+                              )}`
+                            );
+                            const blob = await res.blob();
+                            download(blob, `${resume.resumeName}`);
+                          }}
+                        >
+                          <SaveAltIcon />
+                        </IconButton>
+                      </Grid>
+                      <Grid
+                        item
+                        md={2}
+                        lg={2}
+                        sm={1}
+                        xs={1}
+                        sx={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          display: "flex",
+                        }}
+                      >
+                        <RadioGroup
+                          aria-labelledby="demo-customized-radios"
+                          name="customized-radios"
+                          value={selectedResume.id}
+                          onChange={handleChange}
+                        >
+                          <FormControlLabel
+                            value={resume._id}
+                            control={<BpRadio />}
+                          />
+                        </RadioGroup>
+                      </Grid>
+                    </Grid>
+                  ))}
+                </Stack>
               </FormControl>
+
               <FormControlLabel
                 control={
                   <Checkbox
@@ -372,7 +486,7 @@ const UploadResume = ({ ...props }) => {
               </Grid>
             )}
 
-            {resume.id !== undefined ? (
+            {selectedResume.id !== undefined ? (
               <Grid
                 item
                 xs={12}
@@ -401,7 +515,6 @@ const UploadResume = ({ ...props }) => {
             ) : (
               ""
             )}
-
             <Grid
               item
               xs={12}
@@ -421,7 +534,6 @@ const UploadResume = ({ ...props }) => {
                 />
               </FormGroup>
             </Grid>
-
             {show ? (
               <div>
                 <Grid
@@ -622,7 +734,6 @@ const UploadResume = ({ ...props }) => {
             ) : (
               ""
             )}
-
             <Backdrop
               sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
               open={resLoad}
@@ -642,7 +753,7 @@ const UploadResume = ({ ...props }) => {
           </Stack>
         </Container>
 
-        <Container>
+        <Container sx={{ width: { md: "50%", sm: "100%", xs: "100%" } }}>
           <Box
             sx={{
               display: "flex",
@@ -655,7 +766,7 @@ const UploadResume = ({ ...props }) => {
           >
             <Button
               variant="outlined"
-              onClick={() => {}}
+              onClick={() => handleGoBack()}
               sx={{
                 width: "100%",
                 height: "50px",

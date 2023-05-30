@@ -158,7 +158,7 @@ export const addResume = createAsyncThunk("add/resume", async (pdf) => {
   const formData = new FormData();
   formData.append("resume", pdf);
   const res = await personalService.addResume(formData);
-  dispatch(retrievePersonal());
+
   return res.data;
 });
 
@@ -718,6 +718,10 @@ const personalSlice = createSlice({
       state.resLoad = true;
     },
     [addResume.fulfilled]: (state, action) => {
+      state.resLoad = false;
+      // notifySuccess("Resume Was Added Succesfully");
+    },
+    [addResume.rejected]: (state, action) => {
       state.resLoad = false;
       // notifySuccess("Resume Was Added Succesfully");
     },
