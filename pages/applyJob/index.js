@@ -25,6 +25,7 @@ export const getServerSideProps = async (context) => {
 
   const newService = new jobsService();
   let companyDetails = {};
+  let jobTitle = "";
 
   await newService
     .getSingleJob(jobid)
@@ -34,6 +35,7 @@ export const getServerSideProps = async (context) => {
       companyDetails.question = res.data.data.question;
       companyDetails.name = res.data.data.jobRole;
       companyDetails.show = res.data.data?.queshow;
+      companyDetails.jobTitle = res.data.data?.jobTitle;
     })
     .catch((error) => {
       console.log("Something went wrong");
@@ -42,6 +44,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       companyDetails,
+      jobTitle,
     },
   };
 };

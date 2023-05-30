@@ -27,9 +27,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import download from "downloadjs";
-import AddIcon from "@mui/icons-material/Add";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-// import { notifySuccess } from "../../helpers/Toast";
 import {
   addCover,
   AddCoverAndThenGet,
@@ -47,17 +45,19 @@ import {
 } from "@/redux/slices/personal";
 import { Uploader } from "@/components/Uploader/Uploader";
 import Navbar from "@/components/Navbar/Navbar";
-import { DANGER, NEUTRAL, PRIMARY } from "@/theme/colors";
+import { DANGER, PRIMARY } from "@/theme/colors";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import { BOLD } from "@/theme/fonts";
+import styles from "./applyJobs.module.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const UploadResume = ({ ...props }) => {
-  const { setApplication, setCurrentScreen } = props;
+  const { setApplication, setCurrentScreen, jobTitle } = props;
   const dispatch = useDispatch();
 
   const resumeSin = useSelector((state) => state.personal.resume);
@@ -238,7 +238,20 @@ const UploadResume = ({ ...props }) => {
 
       <Box>
         <Container>
-          <ApplyJobStepper activeStep={0} />
+          <Stack
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "40px",
+              mt: "20px",
+            }}
+          >
+            <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
+              {jobTitle}
+            </CustomTypography>
+            <ApplyJobStepper activeStep={0} />
+          </Stack>
+
           <Stack
             sx={{ marginTop: "60px" }}
             className="selectResumeContainer"
@@ -628,6 +641,7 @@ const UploadResume = ({ ...props }) => {
             </Backdrop>
           </Stack>
         </Container>
+
         <Container>
           <Box
             sx={{
@@ -636,14 +650,14 @@ const UploadResume = ({ ...props }) => {
               alignItems: "center",
               m: "65px 0 45px 0",
               gap: "15px",
-              width: { md: "100%", xs: "200px" },
+              width: { md: "100%" },
             }}
           >
             <Button
               variant="outlined"
               onClick={() => {}}
               sx={{
-                width: "50%",
+                width: "100%",
                 height: "50px",
                 borderRadius: "8px",
                 color: "#4F9AFF",
@@ -657,16 +671,12 @@ const UploadResume = ({ ...props }) => {
               onClick={() => {
                 setCurrentScreen("Review");
               }}
-              style={{
-                width: "50%",
-                height: "50px",
-                borderRadius: "8px",
-                color: "white",
-                backgroundColor: "#015FB1",
-              }}
+              className={
+                !buttonDisable ? styles.nextButtonDisabled : styles.nextButton
+              }
               disabled={!buttonDisable}
             >
-              Next
+              NEXT
             </button>
           </Box>
         </Container>

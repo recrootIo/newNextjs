@@ -36,6 +36,8 @@ import {
   retrievePersonal,
   updateAndThenGet,
 } from "@/redux/slices/personal";
+import { BOLD } from "@/theme/fonts";
+import styles from "./applyJobs.module.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -80,7 +82,7 @@ const StyledProjectBoxed = styled(Box)({
 const lightTheme = createTheme({ palette: { mode: "light" } });
 
 function ReviewAppication({ ...props }) {
-  const { setCurrentScreen, submit } = props;
+  const { setCurrentScreen, submit, jobTitle } = props;
 
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -153,7 +155,19 @@ function ReviewAppication({ ...props }) {
         }}
       ></Box>
       <Container>
-        <ApplyJobStepper activeStep={1} />
+        <Stack
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "40px",
+            mt: "20px",
+          }}
+        >
+          <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
+            {jobTitle}
+          </CustomTypography>
+          <ApplyJobStepper activeStep={1} />
+        </Stack>
 
         <Box sx={{ marginTop: "60px" }}>
           {[lightTheme].map((theme, index) => (
@@ -784,16 +798,9 @@ function ReviewAppication({ ...props }) {
             onClick={() => {
               submit();
             }}
-            style={{
-              width: "50%",
-              height: "50px",
-              borderRadius: "8px",
-              color: "white",
-              backgroundColor: "#015FB1",
-            }}
-            // disabled={!buttonDisable}
+            className={styles.nextButton}
           >
-            Submit
+            SUBMIT
           </button>
         </Box>
 

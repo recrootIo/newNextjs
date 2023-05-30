@@ -15,7 +15,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import { Stack } from "@mui/material";
 
 const ProfileCard = ({ ...props }) => {
-  const { _id, question, companyId } = props.companyDetails;
+  const { _id, question, companyId, jobTitle } = props.companyDetails;
   const details = useSelector((state) => state.personal.data);
   const CoverSin = useSelector((state) => state.personal.cover);
   const resumeSin = useSelector((state) => state.personal.resume);
@@ -70,12 +70,14 @@ const ProfileCard = ({ ...props }) => {
         <UploadResume
           setApplication={setFinal}
           setCurrentScreen={setCurrentScreen}
+          jobTitle={jobTitle}
         />
       ) : (
         <ReviewAppication
           setApplication={setFinal}
           setCurrentScreen={setCurrentScreen}
           submit={submit}
+          jobTitle={jobTitle}
         />
       )}
     </Stack>

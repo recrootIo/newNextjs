@@ -110,7 +110,7 @@ export default function ApplyJobStepper(activeStep) {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        mt: "60px",
+        // mt: "60px",
       }}
     >
       <Stack sx={{ width: "50%" }} spacing={4}>
