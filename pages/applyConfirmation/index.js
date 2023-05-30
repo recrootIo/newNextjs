@@ -55,7 +55,7 @@ const ApplyConfirmation = () => {
   const router = useRouter();
 
   const goBack = () => {
-    router.push(`/jobs}`);
+    router.push(`/jobs`);
   };
 
   return (

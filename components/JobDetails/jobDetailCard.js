@@ -16,7 +16,8 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 // import dynamic from "next/dynamic";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import Image from "next/image";
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -27,7 +28,18 @@ const JobDetailCard = ({ ...props }) => {
     salary,
     jobType,
     address = [],
+    _id,
   } = props;
+
+  const { appliedJobs = [] } = useSelector((state) => state?.personal);
+  const appliedIds = appliedJobs.map((i) => i.jobId[0]);
+  const isApplied = appliedIds.includes(_id);
+
+  const router = useRouter();
+
+  const gotApply = () => {
+    router.push(`/applyJob?jobid=${_id}`);
+  };
 
   return (
     <Box
@@ -286,8 +298,10 @@ const JobDetailCard = ({ ...props }) => {
                         bgcolor: "#02A9F7 !important",
                         fontSize: "15px",
                       }}
+                      disabled={isApplied}
+                      onClick={() => gotApply()}
                     >
-                      Apply now
+                      {isApplied ? "applied" : " Apply now"}
                     </Button>
                   </Stack>
                 </Box>

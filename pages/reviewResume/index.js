@@ -87,21 +87,6 @@ function ReviewAppication(props) {
   // console.log(salary);
   const ids = useSelector((state) => state.personal.ids);
 
-  // eslint-disable-next-line no-unused-vars
-  const [final, setFinal] = React.useState({
-    resumeId: resumeSin && resumeSin._id,
-    coverId: CoverSin && CoverSin._id,
-    candidateId: details && details._id,
-    jobId: ids && ids.jobId,
-    question: ids && ids.question,
-    companyId: ids && ids.companyId,
-    // salary: salary && salary,
-  });
-
-  //   const settingIndex = (index) => {
-  //     props.Pages(index);
-  //   };
-  //   props.change(final);
   const [opena, setOpena] = React.useState(false);
   const [did, setDid] = useState("");
   const [diaDel, setDiaDel] = useState("");
@@ -441,12 +426,17 @@ function ReviewAppication(props) {
                         }}
                       >
                         {details?.resume?.workExperience &&
-                          details?.resume?.workExperience.map((experience) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
-                              {bull}&nbsp;
-                              {`${experience?.role} at  ${experience?.companyName} for ${experience?.experience} years `}
-                            </li>
-                          ))}
+                          details?.resume?.workExperience.map(
+                            (experience, index) => (
+                              <li
+                                style={{ margin: "10px", color: "#034275" }}
+                                key={index}
+                              >
+                                {bull}&nbsp;
+                                {`${experience?.role} at  ${experience?.companyName} for ${experience?.experience} years `}
+                              </li>
+                            )
+                          )}
                       </ul>
                     )}
                   </CardContent>
@@ -496,8 +486,9 @@ function ReviewAppication(props) {
                         }}
                       >
                         {details?.resume?.skills &&
-                          details?.resume?.skills.map((skills) => (
+                          details?.resume?.skills.map((skills, index) => (
                             <Box
+                              key={index}
                               sx={{
                                 display: "flex",
                                 flexWrap: "wrap",
@@ -561,8 +552,11 @@ function ReviewAppication(props) {
                     ) : (
                       <ul style={{ margin: "10px", paddingInlineStart: "0px" }}>
                         {details?.resume?.education &&
-                          details?.resume?.education.map((education) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
+                          details?.resume?.education.map((education, index) => (
+                            <li
+                              style={{ margin: "10px", color: "#034275" }}
+                              key={index}
+                            >
                               {bull}&nbsp;
                               {`${education.graduate} in ${
                                 education.degreeName
@@ -624,6 +618,7 @@ function ReviewAppication(props) {
                         details?.resume?.projects &&
                         details?.resume?.projects.map((projects, index) => (
                           <Card
+                            key={index}
                             variant="outlined"
                             sx={{ minWidth: "260px", height: "150px" }}
                           >
@@ -689,8 +684,11 @@ function ReviewAppication(props) {
                     ) : (
                       <ul>
                         {details?.resume?.traning &&
-                          details.resume.traning.map((traning) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
+                          details.resume.traning.map((traning, index) => (
+                            <li
+                              style={{ margin: "10px", color: "#034275" }}
+                              key={index}
+                            >
                               {bull}&nbsp;
                               {traning.title} for (
                               {moment(traning.fromDate).format("l")} -

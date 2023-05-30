@@ -1,43 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import Grid from "@mui/material/Grid";
-import { Box } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import ProfileCard from "./ProfileCard";
 import Navbar from "@/components/Navbar/Navbar";
-import { useSearchParams } from "next/navigation";
 import { setJobID } from "@/redux/slices/personal";
 import { singleJobs } from "@/redux/slices/job";
 import { useRouter } from "next/router";
+import jobsService from "@/redux/services/job.service";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR } from "@/utils/constants";
 
-const CandidateProfile = () => {
-  const { query } = useRouter();
-  const dispatch = useDispatch();
-  const jobId = query.jobid;
-
-  useEffect(() => {
-    if (jobId !== null) {
-      dispatch(singleJobs(jobId)).then((res) => {
-        dispatch(
-          setJobID({
-            companyId: res?.payload?.data?.company,
-            jobId: res?.payload?.data?._id,
-            question: res?.payload?.data?.question,
-            name: res?.payload?.data?.jobRole,
-            show: res?.payload?.data?.queshow,
-          })
-        );
-      });
-    }
-  }, []);
-
+const CandidateProfile = ({ ...companyDetails }) => {
   return (
     <div style={{ height: "100%" }}>
       <Navbar />
-      <ProfileCard jobId={jobId} />
+      <ProfileCard {...companyDetails} />
     </div>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const { jobid = "" } = context.query;
+
+  const newService = new jobsService();
+  let companyDetails = {};
+
+  await newService
+    .getSingleJob(jobid)
+    .then((res) => {
+      companyDetails.companyId = res.data.data.company._id;
+      companyDetails._id = res.data.data?._id;
+      companyDetails.question = res.data.data.question;
+      companyDetails.name = res.data.data.jobRole;
+      companyDetails.show = res.data.data?.queshow;
+    })
+    .catch((error) => {
+      console.log("Something went wrong");
+    });
+
+  return {
+    props: {
+      companyDetails,
+    },
+  };
 };
 
 export default CandidateProfile;

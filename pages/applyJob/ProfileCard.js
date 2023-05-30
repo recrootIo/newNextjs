@@ -15,11 +15,10 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import { Stack } from "@mui/material";
 
 const ProfileCard = ({ ...props }) => {
-  const { jobId } = props;
+  const { _id, question, companyId } = props.companyDetails;
   const details = useSelector((state) => state.personal.data);
   const CoverSin = useSelector((state) => state.personal.cover);
   const resumeSin = useSelector((state) => state.personal.resume);
-  const ids = useSelector((state) => state.personal.ids);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -30,17 +29,15 @@ const ProfileCard = ({ ...props }) => {
     resumeId: resumeSin._id,
     coverId: CoverSin && CoverSin._id,
     candidateId: details && details._id,
-    jobId: jobId,
-    question: ids && ids.question,
-    companyId: ids && ids.companyId,
+    jobId: _id,
+    question: question,
+    companyId: companyId,
     //  salary: salary && salary,
   });
 
   useEffect(() => {
     dispatch(retrievePersonal());
   }, [dispatch]);
-
-  console.log(final, "final");
 
   const submit = () => {
     dispatch(applyJobs(final))
