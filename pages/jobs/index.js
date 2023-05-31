@@ -38,6 +38,7 @@ export const getServerSideProps = async (context) => {
   const newService = new CompanyData();
   let sectors = [];
   let companies = [];
+
   await newService
     .getAllInfoSectors()
     .then((res) => {
@@ -55,8 +56,6 @@ export const getServerSideProps = async (context) => {
     .catch(() => {
       console.log("something went wrong");
     });
-
-  // const job = jobsService.
 
   return {
     props: {

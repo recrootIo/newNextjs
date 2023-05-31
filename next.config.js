@@ -5,6 +5,9 @@ const nextConfig = {
   },
   reactStrictMode: false,
   transpilePackages: ["@mui/material/css"],
+  images: {
+    domains: ["localhost"],
+  },
 };
 
 module.exports = nextConfig;

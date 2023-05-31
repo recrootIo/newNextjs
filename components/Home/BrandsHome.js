@@ -2,12 +2,38 @@
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Box, Stack, Container } from "@mui/material";
-import { useRef } from "react";
-// import "./homepage.css";
+import { useEffect, useRef, useState } from "react";
 import Carousel from "react-elastic-carousel";
 import Image from "next/image";
+import companyservice from "@/redux/services/company.service";
+import http from "@/redux/http-common";
 
 const BrandsHome = () => {
+  const newService = new companyservice();
+  const [brands, setBrands] = useState([]);
+
+  const getCompanies = async () => {
+    await newService
+      .getCompanies()
+      .then((res) => {
+        console.log(res.data, "companies");
+        setBrands(res.data);
+      })
+      .catch(() => {
+        console.log("something went wrong 1");
+      });
+  };
+
+  const getLogo = (logo) => {
+    if (logo) {
+      return `http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo}`;
+      // return await http
+      //   .get(`getCompanyPhotos?compPhotos=${logo}`)
+      //   .then((res) => res);
+    }
+    return "/logo4.png";
+  };
+
   const breakPoints = [
     // { width: 451, itemsToShow: 1 },
     { width: 687, itemsToShow: 1 },
@@ -18,6 +44,12 @@ const BrandsHome = () => {
   const carouselRef = useRef(null);
   const totalPages = 4;
   let resetTimeout;
+
+  useEffect(() => {
+    getCompanies();
+  }, []);
+
+  if (brands.length < 1) return;
 
   return (
     <div>
@@ -79,7 +111,6 @@ const BrandsHome = () => {
             enableAutoPlay
             ref={carouselRef}
             onNextEnd={({ index }) => {
-              console.log(index, "index");
               clearTimeout(resetTimeout);
               if (index + 1 === totalPages) {
                 resetTimeout = setTimeout(() => {
@@ -89,98 +120,33 @@ const BrandsHome = () => {
             }}
             itemsToShow={3}
           >
-            <Box
-              sx={{
-                backgroundImage: "url(/Polygon1.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "205px",
-                width: "180px",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Box className="brandsLogos">
-                <Image
-                  src="/logo1.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="brandsImages"
-                  alt=""
-                />
+            {brands.map((brand, index) => (
+              <Box
+                key={index}
+                sx={{
+                  backgroundImage: "url(/Polygon1.png)",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  height: "205px",
+                  width: "180px",
+                  justifyContent: "center",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Box className="brandsLogos">
+                  {console.log(getLogo(brand?.logo))}
+                  <Image
+                    src={getLogo(brand?.logo)}
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    className="brandsImages"
+                    alt=""
+                  />
+                </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/Polygon1.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "205px",
-                width: "180px",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Box className="brandsLogos">
-                <Image
-                  src="/logo2.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="brandsImages"
-                  alt=""
-                />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/Polygon1.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "205px",
-                width: "180px",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Box className="brandsLogos">
-                <Image
-                  src="/logo1.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="brandsImages"
-                  alt=""
-                />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/Polygon1.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "205px",
-                width: "180px",
-                justifyContent: "center",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Box className="brandsLogos">
-                <Image
-                  src="/logo4.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="brandsImages"
-                  alt=""
-                />
-              </Box>
-            </Box>
+            ))}
           </Carousel>
         </Stack>
       </Container>
