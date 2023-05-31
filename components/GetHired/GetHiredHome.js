@@ -1,6 +1,6 @@
 import { PRIMARY } from "../../theme/colors";
 import { Box, Container, Grid, Stack, useMediaQuery } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
@@ -16,8 +16,15 @@ import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper";
 import "./GetHired.module.css";
 import { MAX } from "../../theme/spacings";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { searchJobs } from "@/redux/slices/search";
+import { useRouter } from "next/router";
 
 const GetHiredHome = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
+
   const [active, setActive] = useState(2);
 
   const mobile = useMediaQuery("(max-width:700px)");
@@ -34,6 +41,46 @@ const GetHiredHome = () => {
   const getActiveBody = (id) => {
     return active === id ? `activeBody` : "nonActiveBody";
   };
+
+  const getJobs = () => {
+    dispatch(
+      searchJobs({
+        value: 1,
+        names: [],
+        exper: [],
+        title: "",
+        address: "",
+        jobVariant: "",
+        selectedCompanies: "",
+        selectedSector: "",
+      })
+    )
+      .then(() => {})
+      .catch((error) => {
+        console.warn(error);
+      });
+  };
+
+  const handleNavigate = (jobTitle, jobRole, _id) => {
+    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
+  };
+
+  const extractFirstTwoTags = (data) => {
+    const container = document.createElement("div");
+    container.innerHTML = data;
+    const firstPTag = container.querySelector("p");
+    if (firstPTag) {
+      const textContent = firstPTag.textContent.trim();
+      return textContent.length <= 60
+        ? textContent
+        : `${textContent.substring(0, 60)}...`;
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    getJobs();
+  }, []);
 
   const numberOfCards = mobile ? 1 : tablet ? 2 : 3;
 
@@ -114,281 +161,78 @@ const GetHiredHome = () => {
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="swiper_container"
         >
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
+          {latestJobs.map((jobs, index) => (
+            <SwiperSlide key={index}>
+              <Box className={`hiredCard hiredCardActive`}>
+                <Grid container>
+                  <Grid
+                    item
+                    md={7}
+                    sm={6}
+                    xs={12}
+                    sx={{ padding: "15px 30px" }}
                   >
-                    <CustomTypography
+                    <Stack
                       sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
+                        gap: "15px",
+                        justifyContent: "center",
+                        width: "100%",
                       }}
                     >
-                      Featured Job 1
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
-                </Grid>
-                <Grid
-                  item
-                  md={4.8}
-                  sm={6}
-                  xs={0}
-                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-                >
-                  <Image
-                    src="/hired1.png"
-                    className="getHiredImage"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
+                      <CustomTypography
+                        sx={{
+                          fontFamily: "Inter-Bold",
+                          fontSize: "22px",
+                          color: "white",
+                          fontWeight: 700,
+                        }}
+                      >
+                        {jobs.jobRole}
+                      </CustomTypography>
+                      <CustomTypography
+                        className={`${getActiveBody(3)} wrapText`}
+                      >
+                        {extractFirstTwoTags(jobs?.jobDescription)}
+                      </CustomTypography>
+                      <button
+                        style={{
+                          backgroundColor: "#F3FCFF",
+                          borderRadius: "5px",
+                          fontSize: "25px",
+                          fontWeight: "700",
+                        }}
+                        onClick={() => {
+                          handleNavigate(
+                            jobs.jobTitle,
+                            jobs?.jobRole,
+                            jobs?._id
+                          );
+                        }}
+                      >
+                        View More
+                      </button>
+                    </Stack>
+                  </Grid>
+                  <Grid
+                    item
+                    md={4.8}
+                    sm={6}
+                    xs={0}
+                    sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
                   >
-                    <CustomTypography
-                      sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Featured Job 1
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
+                    <Image
+                      src="/hired1.png"
+                      className="getHiredImage"
+                      alt=""
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid
-                  item
-                  md={4.8}
-                  sm={6}
-                  xs={0}
-                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-                >
-                  <Image
-                    src="/hired1.png"
-                    className="getHiredImage"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Featured Job 1
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
-                </Grid>
-                <Grid
-                  item
-                  md={4.8}
-                  sm={6}
-                  xs={0}
-                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-                >
-                  <Image
-                    src="/hired1.png"
-                    className="getHiredImage"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Featured Job 1
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
-                </Grid>
-                <Grid
-                  item
-                  md={4.8}
-                  sm={6}
-                  xs={0}
-                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-                >
-                  <Image
-                    src="/hired1.png"
-                    className="getHiredImage"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Box className={`hiredCard hiredCardActive`}>
-              <Grid container>
-                <Grid item md={7} sm={6} xs={12} sx={{ padding: "30px" }}>
-                  <Stack
-                    sx={{
-                      gap: "30px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <CustomTypography
-                      sx={{
-                        fontFamily: "Inter-Bold",
-                        fontSize: "25px",
-                        color: "white",
-                        fontWeight: 700,
-                      }}
-                    >
-                      Featured Job 1
-                    </CustomTypography>
-                    <CustomTypography className={`${getActiveBody(3)}`}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </CustomTypography>
-                    <button
-                      style={{
-                        backgroundColor: "#F3FCFF",
-                        borderRadius: "5px",
-                        fontSize: "25px",
-                        fontWeight: "700",
-                      }}
-                    >
-                      View More
-                    </button>
-                  </Stack>
-                </Grid>
-                <Grid
-                  item
-                  md={4.8}
-                  sm={6}
-                  xs={0}
-                  sx={{ display: { md: "flex", sm: "flex", xs: "none" } }}
-                >
-                  <Image
-                    src="/hired1.png"
-                    className="getHiredImage"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </SwiperSlide>
+              </Box>
+            </SwiperSlide>
+          ))}
 
           <div className="slider-controler">
             {/* <div className="swiper-button-prev slider-arrow"></div>
