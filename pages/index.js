@@ -23,14 +23,14 @@ export default function Home() {
   useEffect(() => {
     AOS.init();
   }, []);
-  const user = Cookies.get('token');
+  const user = Cookies.get("token");
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
       <Navbar />
-     {user === undefined ? 
-      <SignUpHome /> : ''
-     }
+
+      {user === undefined ? <SignUpHome /> : ""}
+
       <SearchHome />
       <AboutHome />
       <UsersDetailsHome />
