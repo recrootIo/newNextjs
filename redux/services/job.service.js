@@ -1,4 +1,3 @@
-import axios from "axios";
 import http from "../http-common";
 
 class jobsService {
@@ -12,10 +11,14 @@ class jobsService {
     return http.get(`getCompanyJobs/${companyId}`);
   }
   getSingleJob(id) {
-    return axios.get(`https://preprod.recroot.au/api/getSingleJob/${id}`);
+    return http.get(`getSingleJob/${id}`);
   }
   updateViewCount(id) {
-    return http.get(`https://preprod.recroot.au/api/updateViewCount/${id}`);
+    return http.get(`updateViewCount/${id}`);
+  }
+
+  getJobsCatCount() {
+    return http.get(`getJobsCatCount`);
   }
 }
 

@@ -27,7 +27,7 @@ const RecentSearch = () => {
               textAlign="center"
               gutterBottom
             >
-              Recent Search&nbsp;<span style={{ color: "#02A9F7" }}>Jobs</span>
+              Similar&nbsp;<span style={{ color: "#02A9F7" }}>Jobs</span>
             </CustomTypography>
           </Box>
           <Grid

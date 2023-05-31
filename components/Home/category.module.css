@@ -1,0 +1,13 @@
+.categoryCards {
+  background-color: #034275cc;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  width: 350px;
+  height: 120px;
+}
+
+.categoryCards:nth-child(even) {
+  background-color: #02a9f7;
+}
