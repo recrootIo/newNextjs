@@ -69,6 +69,8 @@ const Navbar = () => {
     setAnchorEmp(null);
   };
 
+  console.log(userType, "user");
+
   return (
     <nav>
       <div
@@ -196,6 +198,19 @@ const Navbar = () => {
                         Pricing
                       </Link>
                     </>
+                  )}
+
+                  {userType === "Employer" && (
+                    <Link
+                      href="/Employer/Dashboard"
+                      style={{
+                        fontSize: "17px",
+                        color: "black",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Dashboard
+                    </Link>
                   )}
 
                   {user === undefined ? (
