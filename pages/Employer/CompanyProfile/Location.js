@@ -10,7 +10,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 uuidv4();
 
-export function Location(props) {
+export default function Location(props) {
   const coun = useSelector((state) => state.company.locate);
   const final = useSelector((state) => state.company);
 

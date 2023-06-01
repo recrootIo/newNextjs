@@ -1,4 +1,4 @@
-export const validator = (values) => {
+  export default function validator(values) {
   let errors = {};
 
   Object.entries(values).map((item) => {

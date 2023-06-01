@@ -2,7 +2,6 @@
 import { Button, Card, CircularProgress, Container, Divider, Grid, List, ListItemButton, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { styles } from "./postjobstyle";
 // import { Jobdetails } from "./Jobdetails";
 // import { EssentialInfo } from "./EssentialInfo";
 import { useSelector, useDispatch } from "react-redux";
