@@ -6,8 +6,37 @@ import AddIcon from "@mui/icons-material/Add";
 import CustomizedSteppers from "@/ui-components/CustomStpper/CustomStepper";
 import { BOLD } from "@/theme/fonts";
 import { DANGER, NEUTRAL } from "@/theme/colors";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { getSalary } from "@/components/JobListings/SearchSection";
 
 const AppliedJobs = ({ appliedJobs }) => {
+  const getActive = (step) => {
+    switch (step) {
+      case "unview": {
+        return 0;
+      }
+      case "viewed": {
+        return 1;
+      }
+      case "shortlist": {
+        return 2;
+      }
+      case "interivewed": {
+        return 3;
+      }
+      default:
+        return 0;
+    }
+  };
+
+  const handleNavigate = (applied) => {
+    const jobTitle = applied?.jobTitle[0];
+    const jobRole = applied?.jobRole[0];
+    const _id = applied.jobId[0];
+    return `/jobs/${jobTitle}/${jobRole}/${_id}`;
+  };
+
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -77,8 +106,8 @@ const AppliedJobs = ({ appliedJobs }) => {
                     height: "29px",
                   }}
                 >
-                  <CustomTypography sx={{ color: "#02A9F7", fontSize: "12px" }}>
-                    Viewed
+                  <CustomTypography sx={{ color: NEUTRAL, fontSize: "12px" }}>
+                    {applied.status}
                   </CustomTypography>
                 </Box>
               </Stack>
@@ -86,17 +115,32 @@ const AppliedJobs = ({ appliedJobs }) => {
                 <CustomTypography>{applied?.companyName}</CustomTypography>
               </Stack>
               <Stack direction={"row"} sx={{ gap: "20px" }}>
-                <CustomTypography sx={{ color: "gray", fontSize: "13px" }}>
-                  Remote
+                <CustomTypography
+                  variant="body2"
+                  color="text.secondary"
+                  fontSize={16}
+                  sx={{ color: "gray" }}
+                >
+                  {applied?.jobType[0]}
                 </CustomTypography>
-                <CustomTypography sx={{ color: "gray", fontSize: "13px" }}>
+                <CustomTypography
+                  variant="body2"
+                  color="text.secondary"
+                  fontSize={16}
+                  sx={{ color: "gray" }}
+                >
                   Part Time
                 </CustomTypography>
-                <CustomTypography sx={{ color: "gray", fontSize: "13px" }}>
-                  3-6 Years
+                <CustomTypography
+                  variant="body2"
+                  color="text.secondary"
+                  fontSize={16}
+                  sx={{ color: "gray" }}
+                >
+                  {applied?.experience[0].experience}
                 </CustomTypography>
-                <CustomTypography sx={{ color: "gray", fontSize: "13px" }}>
-                  3-6 LPA
+                <CustomTypography sx={{ color: "gray" }} fontSize={15}>
+                  {getSalary(applied?.salary[0])}
                 </CustomTypography>
               </Stack>
               <Stack
@@ -108,15 +152,18 @@ const AppliedJobs = ({ appliedJobs }) => {
                   flexDirection: { md: "row", sm: "column", xs: "column" },
                 }}
               >
-                <CustomTypography
-                  sx={{
-                    color: "#00339B",
-                    textDecoration: "underline",
-                    fontSize: "15px",
-                  }}
-                >
-                  See Full Description
-                </CustomTypography>
+                <Link href={handleNavigate(applied)}>
+                  <CustomTypography
+                    sx={{
+                      color: "#00339B",
+                      textDecoration: "underline",
+                      fontSize: "15px",
+                    }}
+                  >
+                    See Full Description
+                  </CustomTypography>
+                </Link>
+
                 <CustomTypography
                   sx={{
                     color: "gray",
@@ -132,7 +179,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                 <CustomTypography sx={{ fontFamily: BOLD }}>
                   Application Status
                 </CustomTypography>
-                <CustomizedSteppers />
+                <CustomizedSteppers activeStep={getActive(applied.status)} />
                 <Stack
                   sx={{
                     justifyContent: "space-between",

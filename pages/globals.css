@@ -135,6 +135,7 @@ h3 {
   transition: box-shadow 0.3s;
   padding: 10px;
   background-color: #034275cc;
+  cursor: pointer;
 }
 
 .categoryBox:nth-child(even) {

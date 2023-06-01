@@ -18,11 +18,7 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import { EditRounded } from "@mui/icons-material";
-import {
-  AddPhotoAndThenGet,
-  addProfphoto,
-  retrievePersonal,
-} from "@/redux/slices/personal";
+import { addProfphoto, retrievePersonal } from "@/redux/slices/personal";
 import { UploadPhoto } from "@/utils/UploadPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { NEUTRAL } from "@/theme/colors";
@@ -37,41 +33,37 @@ const bull = (
 );
 
 const CandidateProfileHeader = (data) => {
+  const photoss = useSelector(
+    (state) => state.personal?.data?.profpicFileLocation
+  );
+
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("sm");
   const [open, setOpen] = React.useState(false);
   const [photo, setPhoto] = React.useState("");
   const [fileNames, setFileNames] = React.useState("");
   const [srcsjjj, setSrcsjjj] = React.useState("");
+  const [loadimg, setloadimg] = React.useState(false);
+
+  console.log(data, "data");
+
   const dispatch = useDispatch();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
     setPhoto("");
     setFileNames("");
   };
+
   const handleChangePhoto = (file) => {
     setPhoto(file);
     setFileNames(file.name);
   };
-  const photoss = useSelector(
-    (state) => state.personal?.data?.profpicFileLocation
-  );
-  // const users = useSelector((state) => state.personal.data);
-  React.useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("User"));
-    loggedInUser.User.profpicFileLocation.photo = photoss && photoss.photo;
-    localStorage.setItem("User", JSON.stringify(loggedInUser));
-    if (photoss === undefined) {
-    } else {
-      setSrcsjjj(
-        `https://api.arinnovate.io/api/openProfpic?photo=${photoss.photo}`
-      );
-    }
-  }, [photoss]);
-  const [loadimg, setloadimg] = React.useState(false);
+
   const Edit = (photo) => {
     setloadimg(true);
     dispatch(addProfphoto(photo)).then((res) => {
@@ -86,10 +78,22 @@ const CandidateProfileHeader = (data) => {
     setPhoto("");
     setFileNames("");
     handleClose();
-    // notify("Your Profile Picture Was Updated");
   };
 
+  React.useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("User"));
+    loggedInUser.User.profpicFileLocation.photo = photoss && photoss.photo;
+    localStorage.setItem("User", JSON.stringify(loggedInUser));
+    if (photoss === undefined) {
+    } else {
+      setSrcsjjj(
+        `https://api.arinnovate.io/api/openProfpic?photo=${photoss.photo}`
+      );
+    }
+  }, [photoss]);
+
   const imageUrl = photoss?.photo ? srcsjjj : "";
+
   return (
     <Box
       sx={{
@@ -98,25 +102,10 @@ const CandidateProfileHeader = (data) => {
         backgroundImage: 'url("/CandiHeaderImg.svg")',
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        // height: "330px",
         p: "40px",
       }}
     >
       <Container>
-        {/* <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <IconButton
-            aria-label="notifications"
-            size="large"
-            sx={{ color: "white", width: "20px", p: 0 }}
-          >
-            <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
-          </IconButton>
-        </Box> */}
         <Grid container spacing={2}>
           <Grid
             item
@@ -161,18 +150,27 @@ const CandidateProfileHeader = (data) => {
             sx={{ display: "flex", alignItems: "center" }}
           >
             <Box sx={{ width: "100%" }}>
-              <CustomTypography
-                variant="h4"
-                color="white"
-                fontFamily="Inter-bold"
-                gutterBottom
-              >
-                {data?.firstName}
-              </CustomTypography>
-              <CustomTypography variant="subtitle1" color="white" gutterBottom>
-                {data?.jobTitle}
-                {bull} {data?.resume?.totalWorkExperience} Years
-              </CustomTypography>
+              {data?.firstName && (
+                <CustomTypography
+                  variant="h4"
+                  color="white"
+                  fontFamily="Inter-bold"
+                  gutterBottom
+                >
+                  {data?.firstName}
+                </CustomTypography>
+              )}
+              {(data?.jobTitle || data?.resume?.totalWorkExperience) && (
+                <CustomTypography
+                  variant="subtitle1"
+                  color="white"
+                  gutterBottom
+                >
+                  {data?.jobTitle}
+                  {bull} {data?.resume?.totalWorkExperience} Years
+                </CustomTypography>
+              )}
+
               <Box
                 sx={{
                   display: "flex",
@@ -182,44 +180,59 @@ const CandidateProfileHeader = (data) => {
                 }}
               >
                 <Box>
-                  <CustomTypography
-                    variant="subtitle1"
-                    color="white"
-                    minWidth="30%"
-                    gutterBottom
-                  >
-                    <PlaceOutlinedIcon /> {data?.resume?.location?.city},
-                    {data?.resume?.location?.state},
-                    {data?.resume?.location?.country}.
-                  </CustomTypography>
-                  <CustomTypography
-                    variant="subtitle1"
-                    color="white"
-                    gutterBottom
-                  >
-                    <PhoneOutlinedIcon />{" "}
-                    {data?.mobile ? `+${data?.mobile}` : "No Provided"}
-                  </CustomTypography>
+                  {(data?.resume?.location?.city ||
+                    data?.resume?.location?.state ||
+                    data?.resume?.location?.country) && (
+                    <CustomTypography
+                      variant="subtitle1"
+                      color="white"
+                      minWidth="30%"
+                      gutterBottom
+                    >
+                      <PlaceOutlinedIcon /> {data?.resume?.location?.city},
+                      {data?.resume?.location?.state},
+                      {data?.resume?.location?.country}.
+                    </CustomTypography>
+                  )}
+
+                  {data?.mobile && (
+                    <CustomTypography
+                      variant="subtitle1"
+                      color="white"
+                      gutterBottom
+                    >
+                      <PhoneOutlinedIcon />{" "}
+                      {data?.mobile ? `+${data?.mobile}` : "No Provided"}
+                    </CustomTypography>
+                  )}
                 </Box>
+
                 <Box>
-                  <CustomTypography
-                    variant="subtitle1"
-                    color="white"
-                    minWidth="30%"
-                    gutterBottom
-                  >
-                    <EmailOutlinedIcon /> {data?.email}
-                  </CustomTypography>
-                  <CustomTypography
-                    variant="subtitle1"
-                    color="white"
-                    gutterBottom
-                  >
-                    <LocalAtmOutlinedIcon />{" "}
-                    {data?.resume?.currentSalary?.salary !== null
-                      ? `${data?.resume?.currentSalary?.salary} ${data?.resume?.currentSalary?.denomination}`
-                      : "No Provided"}
-                  </CustomTypography>
+                  {data?.email && (
+                    <CustomTypography
+                      variant="subtitle1"
+                      color="white"
+                      minWidth="30%"
+                      gutterBottom
+                    >
+                      <EmailOutlinedIcon /> {data?.email}
+                    </CustomTypography>
+                  )}
+
+                  {(data?.resume?.currentSalary?.salary ||
+                    data?.resume?.currentSalary?.salary ||
+                    data?.resume?.currentSalary?.denomination) && (
+                    <CustomTypography
+                      variant="subtitle1"
+                      color="white"
+                      gutterBottom
+                    >
+                      <LocalAtmOutlinedIcon />
+                      {data?.resume?.currentSalary?.salary !== null
+                        ? `${data?.resume?.currentSalary?.salary} ${data?.resume?.currentSalary?.denomination}`
+                        : "No Provided"}
+                    </CustomTypography>
+                  )}
                 </Box>
               </Box>
             </Box>
@@ -233,47 +246,52 @@ const CandidateProfileHeader = (data) => {
               justifyContent: "flex-end",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-                position: "absolute",
-                top: "133px",
-                backgroundImage: 'url("/profileprecentageborder.png")',
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                height: "200px",
-              }}
-            >
-              <CustomTypography
-                variant="h6"
+            {data?.profilePercentage < 70 && (
+              <Box
                 sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
                   position: "absolute",
-                  fontFamily: "Inter-bold",
-                  zIndex: "1",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
+                  top: "133px",
+                  backgroundImage: 'url("/profileprecentageborder.png")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  height: "200px",
                 }}
               >
-                100%
-              </CustomTypography>
-              <CustomTypography
-                variant="subtitle1"
-                sx={{
-                  mt: "25px",
-                  fontSize: "14px",
-                  position: "relative",
-                  top: "20px",
-                }}
-              >
-                Profile completed (Excellent)
-              </CustomTypography>
-            </Box>
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    position: "absolute",
+                    fontFamily: "Inter-bold",
+                    zIndex: "1",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  {data?.profilePercentage}
+                </CustomTypography>
+
+                <CustomTypography
+                  variant="subtitle1"
+                  sx={{
+                    mt: "25px",
+                    fontSize: "14px",
+                    position: "relative",
+                    top: "20px",
+                    color: NEUTRAL,
+                  }}
+                >
+                  Profile completed (Excellent)
+                </CustomTypography>
+              </Box>
+            )}
           </Grid>
         </Grid>
+
         <Dialog
           fullWidth={fullWidth}
           maxWidth={maxWidth}

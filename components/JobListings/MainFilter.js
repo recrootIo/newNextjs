@@ -116,10 +116,14 @@ const MainFilter = ({ ...props }) => {
     selectedCompanies,
     selectedSector,
     setSelectedSector,
+    categories,
+    selectedCategory,
+    setSelectedCategory,
   } = props;
 
   const [industryExpanded, setIndustryExpanded] = React.useState(false);
   const [roleExpanded, setRoleExpanded] = React.useState(false);
+  const [cateExpanded, setCateExpanded] = React.useState(false);
   const [expExpanded, setExpExpanded] = React.useState(false);
   const [typeExpanded, setTypeExpanded] = React.useState(false);
 
@@ -159,6 +163,15 @@ const MainFilter = ({ ...props }) => {
 
   const selectTheSector = (re, a) => {
     setSelectedSector(() => a);
+  };
+
+  const handleCateExpandClick = () => {
+    setCateExpanded(!cateExpanded);
+  };
+
+  const selectTheCate = (re, a) => {
+    console.log(a, "selectTheCate");
+    setSelectedCategory(() => a);
   };
 
   return (
@@ -216,6 +229,40 @@ const MainFilter = ({ ...props }) => {
           </RadioGroup>
         </CardContent>
       </Collapse>
+      <Divider className="divider" variant="middle" />
+      <Box sx={{ display: "flex" }}>
+        <Typography className="filterTopic" color="#034275" gutterBottom>
+          Categories
+        </Typography>
+        <ExpandMore
+          expand={cateExpanded}
+          onClick={handleCateExpandClick}
+          aria-expanded={cateExpanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </Box>
+      <Collapse in={cateExpanded} timeout="auto" unmountOnExit>
+        <CardContent
+          className="scrollbar"
+          id="style-1"
+          sx={{ pt: 0, pb: "0px !important" }}
+        >
+          <RadioGroup onChange={selectTheCate} value={selectedCategory}>
+            {categories.map((sec, index) => (
+              <FormControlLabel
+                key={index}
+                control={<BpRadio size="small" />}
+                label={sec}
+                value={sec}
+                name={sec}
+              />
+            ))}
+          </RadioGroup>
+        </CardContent>
+      </Collapse>
+
       <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
         <Typography className="filterTopic" color="#034275" gutterBottom>
