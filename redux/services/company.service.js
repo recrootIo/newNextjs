@@ -19,7 +19,11 @@ class companyservice {
     const formData = new FormData();
     const compLogos = value;
     formData.append("logo", compLogos);
-    return http.post(`updateCompanyLogo/${compId}`, formData);
+    return http.post(`updateCompanyLogo/${compId}`, formData,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
   getBillings() {
     const rs = JSON.parse(localStorage.getItem("User"));
@@ -63,4 +67,5 @@ class companyservice {
   }
 }
 
-export default companyservice;
+// eslint-disable-next-line import/no-anonymous-default-export
+export default new companyservice();

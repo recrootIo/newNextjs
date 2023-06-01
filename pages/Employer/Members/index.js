@@ -16,15 +16,34 @@ import {
   Select,
   Divider,
   IconButton,
+  FormHelperText,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+  Typography,
+  Modal,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-
+import { useState } from "react";
+import { registerMember } from "@/redux/slices/auth";
+import axios from "axios";
+import { useEffect } from "react";
+import { getCompanyDetails, memberPosting, updateFinaldetails } from "@/redux/slices/companyslice";
+import Cookies from "js-cookie";
+import { ControlPointDuplicateRounded, Visibility, VisibilityOff } from "@mui/icons-material";
+import ReactPhoneInput from "react-phone-input-2";
+import { validator } from "@/utils/Validator";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
+uuidv4()
 const Members = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
@@ -33,6 +52,172 @@ const Members = () => {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+  const [errors, setErrors] = React.useState(true);
+  const user = Cookies.get()
+  // const user = JSON.parse(localStorage.getItem("User"));
+
+  const companyId = user?.companyId;
+
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    showPassword: false,
+    firstName: "",
+    lastName: "",
+    sector: "",
+    companyId: companyId,
+    organization: "",
+    recrootUserType: "Member",
+    confirmPassword: "",
+    checked: true,
+  });
+  const [phoneNumber, setphoneNumber] = useState("");
+  const [confirmP, setconfirmP] = useState({
+    confirmPassword: "",
+    showConfirmPassword: false,
+  });
+useEffect(() => {
+dispatch(getCompanyDetails())
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
+
+  const handleChanges = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleConfirmPasswordChange = (prop) => (event) => {
+    setconfirmP({ ...confirmP, [prop]: event.target.value });
+    setValues({
+      ...values,
+      confirmPassword: event.target.value,
+    });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setconfirmP({
+      ...confirmP,
+      showConfirmPassword: !confirmP.showConfirmPassword,
+    });
+  };
+
+  const handleMouseConfirmDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleChangeTWo = (value) => {
+    setphoneNumber(value);
+  };
+  const handleRegister = (event) => {
+    event.preventDefault();
+    setErrors(validator(values));
+    const obj = validator(values);
+
+    if (Object.keys(obj).length > 0) {
+      return phoneNumber;
+    }
+
+    dispatch(registerMember({ values }))
+      .unwrap()
+      .then((originalPromiseResult) => {
+        // toastySucessFunction("New Account Member Added Successfully");
+        getMember();
+        handleClose();
+        setValues("");
+        setconfirmP("");
+      })
+      .catch((error) => {
+        // toastyErrorFunction("The User Already Exists");
+        console.warn(error);
+      });
+  };
+  const dispatch = useDispatch();
+
+  const [result, setResult] = useState([]);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => {
+    setValues("");
+    setOpen(false);
+    setconfirmP("");
+  };
+
+  const style1 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "auto",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style2 = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "20px",
+  };
+
+  const member = useSelector((state) => state.company.members);
+
+  const getMember = () => {
+    axios
+      .get(`https://preprod.recroot.au/api/getMember/${companyId}`, {
+        headers: { "x-access-token": `${user?.token}` },
+      })
+      .then((res) => setResult(res.data))
+      .catch((error) => console.warn(error));
+  };
+  useEffect(() => {
+    axios
+      .get(`https://preprod.recroot.au/api/getMember/${companyId}`, {
+        headers: { "x-access-token": `${user?.token}` },
+      })
+      .then((res) => setResult(res.data))
+      .catch((error) => console.warn(error));
+  }, [companyId, user?.token]);
+
+  const [memberrole, setMemberrole] = useState(member);
+  useEffect(() => {
+   setMemberrole(member)
+  }, [member])
+  
+  var mems = [];
+
+  memberrole?.map((mem) => {
+    if (user?.memberType === "jobsAdmin") {
+      if (mem.memberId !== user?.userID) {
+        mems.push(mem);
+      }
+    } else {
+      mems.push(mem);
+    }
+    return null;
+  });
+  useEffect(() => {
+    if (member.length === 0) {
+      setMemberrole([
+        { memberId: "", role: "", id: new Date().getTime(), fname: "" },
+      ]);
+    }
+  }, [member.length]);
+
+  const final = useSelector((state) => state.company);
 
   const handleAddInput = () => {
     setMemberrole([
@@ -41,6 +226,129 @@ const Members = () => {
     ]);
   };
 
+  const handleMemChange = (id, event) => {
+    var name;
+    if (event.target.name === "memberId") {
+      if (mems.find((mems) => mems.id === id).role === "") {
+        name = result.filter((res) => res._id === event.target.value);
+        const newMemChange = memberrole.map((i) => {
+          if (id === i.id) {
+            i = {
+              ...i,
+              [event.target.name]: event.target.value,
+              fname: name[0].firstName,
+            };
+
+            i.id = id;
+          }
+          return i;
+        });
+
+        setMemberrole(newMemChange);
+      }
+    }
+    if (event.target.name === "memberId") {
+      if (mems.find((mems) => mems.id === id).role !== "") {
+        name = result.filter((res) => res._id === event.target.value);
+        const newMemChange = memberrole.map((i) => {
+          if (id === i.id) {
+            i = {
+              ...i,
+              [event.target.name]: event.target.value,
+              fname: name[0].firstName,
+            };
+
+            i.id = id;
+          }
+          return i;
+        });
+
+        setMemberrole(newMemChange);
+        dispatch(updateFinaldetails({ ...final, members: newMemChange }));
+        dispatch(
+          openAlert(
+            {type:SUCCESS,
+            message:'Company Member Details Was Updated'}
+          )
+        )
+      }
+    }
+    if (event.target.name === "role") {
+      const newMemChange = memberrole.map((i) => {
+        if (id === i.id) {
+          i = { ...i, [event.target.name]: event.target.value };
+          i.id = id;
+        }
+        return i;
+      });
+      setMemberrole(newMemChange);
+      let obj = newMemChange.find((o) => o.id === id);
+
+      if (event.target.value === "") {
+        return;
+      }
+      axios
+        .post(
+          `https://preprod.recroot.au/api/updateMemberState/${obj.memberId}`,
+
+          {
+            type: event.target.value,
+          }
+        )
+        //  .post(`https://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
+        //  .post(`https://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
+
+        //  .post(`https://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
+
+        //   type: event.target.value,
+        // })
+
+        .then(function (response) {
+          return;
+        })
+        .catch(function (error) {
+          console.warn(error);
+        });
+      dispatch(updateFinaldetails({ ...final, members: newMemChange }));
+      dispatch(
+        openAlert(
+          {type:SUCCESS,
+          message:'Company Member Details Was Updated'}
+        )
+      )
+    }
+  };
+
+  const handleMemRemove = (id) => {
+    const memId = mems.find((d) => d.id === id).memberId;
+    if (memId !== "") {
+      axios
+        .post(`https://preprod.recroot.au/api/updateMemberState/${memId}`, {
+          type: "normal",
+        })
+        .then(function (response) {
+          return;
+        })
+        .catch(function (error) {
+          console.warn(error);
+        });
+    }
+    let updatedField = [...mems].filter((fiel) => fiel.id !== id);
+    setMemberrole(updatedField);
+    dispatch(updateFinaldetails({ ...final, members: updatedField }));
+    dispatch(
+      openAlert(
+        {type:ERROR,
+        message:"Company Member Details Was Removed"}
+      )
+    )
+  };
+
+  useEffect(() => {
+    dispatch(memberPosting(memberrole));
+  }, [dispatch, memberrole]);
+
+  const {push} = useRouter()
   return (
     <>
       <EmployerNavbar />
@@ -293,6 +601,182 @@ const Members = () => {
                   pb: "80px",
                 }}
               >
+                 <Box sx={styles.infofld}>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <form onSubmit={handleRegister}>
+              <Box sx={style1}>
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "900", marginBottom: "15px" }}
+                >
+                  ADD ACCOUNT MEMBER
+                </Typography>
+                <Box sx={style2}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    placeholder="Enter First Name"
+                    autoFocus
+                    value={values.firstName}
+                    onChange={handleChanges("firstName")}
+                    error={errors.firstName ? true : false}
+                    helperText={errors.firstName}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                    placeholder="Enter Last Name"
+                    value={values.lastName}
+                    onChange={handleChanges("lastName")}
+                    error={errors.lastName ? true : false}
+                    helperText={errors.lastName}
+                  />
+
+                  <TextField
+                    fullWidth
+                    required
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    placeholder="Enter E-mail"
+                    value={values.email}
+                    onChange={handleChanges("email")}
+                    error={errors.email ? true : false}
+                    helperText={errors.email}
+                  />
+
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      required
+                      id="outlined-adornment-password"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password}
+                      onChange={handleChanges("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      placeholder="Enter Password"
+                      error={errors.password ? true : false}
+                    />
+                    {!!errors.password && (
+                      <FormHelperText error id="accountId-error">
+                        {errors.password}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-confirm-adornment-password">
+                      Confirm Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-confirm-adornment-password"
+                      type={confirmP.showConfirmPassword ? "text" : "password"}
+                      value={confirmP.confirmPassword}
+                      name="confirmPassword"
+                      onChange={handleConfirmPasswordChange("confirmPassword")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle confirm-password visibility"
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseConfirmDownPassword}
+                            edge="end"
+                          >
+                            {confirmP.showConfirmPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Confirm Password"
+                      placeholder="Confirm Password"
+                    />
+                    {!!errors.confirmPassword && (
+                      <FormHelperText error id="accountId-error">
+                        {errors.confirmPassword}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+
+                  <ReactPhoneInput
+                    inputExtraProps={{
+                      name: "phoneNumber",
+                      required: true,
+                      autoFocus: true,
+                    }}
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    defaultCountry={"au"}
+                    value={values.phoneNumber}
+                    onChange={handleChangeTWo}
+                    inputStyle={{
+                      width: "100%",
+                      height: "3.7375em",
+                      fontSize: "16px",
+                    }}
+                  />
+                </Box>
+                <Button
+                  size="medium"
+                  type="submit"
+                  align="center"
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    backgroundColor:'#4fa9ff !important'
+                  }}
+                >
+                  Ok
+                </Button>
+                &nbsp;
+                <Button
+                  sx={{
+                    mt: 3,
+                    backgroundColor:'#4fa9ff !important'
+                  }}
+                  variant="contained"
+                  size="medium"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </form>
+          </Modal>
+        </Box>
                 <CardContent>
                   <Box>
                     <Stack
@@ -317,7 +801,8 @@ const Members = () => {
                       {/* {memberrole.length === index + 1 ? ( */}
                       <Button
                         variant="text"
-                        //onClick={handleAddInput}
+                        // onClick={handleAddInput}
+                        onClick={handleOpen}
                         sx={{
                           color: "#034275",
                         }}
@@ -328,7 +813,9 @@ const Members = () => {
                         ""
                       )} */}
                     </Stack>
-                    <Box sx={{ display: "flex", mt: "20px" }}>
+                    <Box sx={{ display: "flex", mt: "20px",flexDirection:'column',gap:'20px' }}>
+                    {mems.map((member, index) => (
+                      <Box sx={styles.membox} key={index}>
                       <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
                         <Box
                           sx={{
@@ -348,16 +835,16 @@ const Members = () => {
                               name="memberId"
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              // value={member.memberId}
-                              // onChange={(e) => {
-                              //   handleMemChange(member.id, e);
-                              // }}
+                              value={member.memberId}
+                              onChange={(e) => {
+                                handleMemChange(member.id, e);
+                              }}
                               label="Account Members"
                               sx={styles.naminput2}
                               // error={errors.cmpemail ? true : false}
                               // helperText={errors.cmpemail}
                             >
-                              {/* {result.map((res) => (
+                              {result.map((res) => (
                           <MenuItem
                             key={res.firstName}
                             value={res._id}
@@ -367,7 +854,7 @@ const Members = () => {
                           >
                             {res.firstName} {res.lastName}
                           </MenuItem>
-                        ))} */}
+                        ))}
                             </Select>
                           </FormControl>
                         </Box>
@@ -385,23 +872,23 @@ const Members = () => {
                             >
                               Roles
                             </InputLabel>
-                            {/* {user?.User?.memberType === "jobsAdmin" ? ( */}
+                            {user?.memberType === "jobsAdmin" ? (
                             <Select
                               name="role"
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
-                              //value={member && member.role}
+                              value={member && member.role}
                               label="Roles"
                               sx={styles.naminput2}
-                              // onChange={(e) => {
-                              //   handleMemChange(member.id, e);
-                              // }}
+                              onChange={(e) => {
+                                handleMemChange(member.id, e);
+                              }}
                             >
                               <MenuItem value="HiringManager">
                                 Hiring Manager
                               </MenuItem>
                             </Select>
-                            {/* ) : (
+                          ) : (
                           <Select
                             name="role"
                             labelId="demo-simple-select-label"
@@ -422,39 +909,83 @@ const Members = () => {
                               Hiring Manager
                             </MenuItem>
                           </Select>
-                        )} */}
+                        )} 
                           </FormControl>
                         </Box>
                         <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            ml: "20px",
-                            width: "10%",
-                          }}
+                         sx={{ display: "flex", ml: "20px" }}
                         >
-                          {/* {memberrole.length > 1 ? ( */}
+                              {memberrole.length === index + 1 ? (
+                        <IconButton
+                          variant="contained"
+                          sx={styles.addbtn}
+                          onClick={handleAddInput}
+                        >
+                          <ControlPointDuplicateRounded
+                            sx={{
+                              fontSize: { sm: "1.5rem", xs: "1.5rem" },
+                              color: "#4fa9ff",
+                            }}
+                          />
+                        </IconButton>
+                      ) : (
+                        ""
+                      )}
+                          {memberrole.length > 1 ? (
                           <IconButton
                             variant="contained"
                             sx={styles.addbtn}
-                            //   onClick={() => {
-                            //     handleMemRemove(member.id);
-                            //   }}
+                              onClick={() => {
+                                handleMemRemove(member.id);
+                              }}
                           >
                             <RemoveCircleIcon
                               sx={{
-                                fontSize: { sm: "2.5rem", xs: "1.5rem" },
+                                fontSize: { sm: "1.5rem", xs: "1.5rem" },
                                 color: "#FF543E",
                               }}
                             />
                           </IconButton>
-                          {/* ) : (
+                           ) : (
                         ""
-                      )} */}
+                      )} 
+                  
                         </Box>
                       </Stack>
+                      </Box>
+                       ))}
                     </Box>
                   </Box>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      mt: "40px",
+                    }}
+                  >
+                    <Button
+                      variant="outlined"
+                      sx={{ width: "50%", height: "55px" }}
+                    >
+                      Previous
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        width: "50%",
+                        bgcolor: "#015FB1 !important",
+                        height: "55px",
+                      }}
+                      onClick={()=>{
+                        push('/Employer/CompanyPreview')
+                      }}
+                    >
+                      Next
+                    </Button>
+                  </Stack>
                 </CardContent>
               </Card>
             </Grid>

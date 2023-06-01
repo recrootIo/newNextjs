@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -23,12 +23,19 @@ import {
   FormGroup,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+// import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { detailsSet, essentialSet, featureSet, immediateSet, salarySet, skillSet } from "@/redux/slices/job";
+import moment from "moment";
+import { CAREER_LEVEL, EDUCATION_LEVELS, NoticePeriod, USER_EXPERIENCES } from "@/utils/constants";
+import { CURRENCY } from "@/utils/currency";
+import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const style = {
   txtinput: {
@@ -50,155 +57,123 @@ const style = {
 };
 
 const EssentialInformation = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [apiAddress, setapiAddress] = useState("");
-  //   const member = useSelector((state) => state.company.members);
-  //   const [memberrole, setMemberrole] = React.useState(member);
+  const essen = useSelector((state) => state.jobs.essential);
+  const _id = useSelector((state) => state.jobs._id);
+  const errors = useSelector((state) => state.jobs.error);
+  const feature = useSelector((state) => state.jobs.featureType);
+  const companyDet = useSelector((state) => state.company.companyDetl);
+  const jobs = useSelector((state) => state.jobs.details);
+  const full = useSelector((state) => state.jobs.packageType);
+  const roles = useSelector((state) => state.jobs.details.requiredSkill);
+  const immediate = useSelector((state) => state.jobs.immediate);
+  const [value, setValue] = useState(full === 'jSlot' ? new Date() : moment(new Date()).add(30, 'days').format());
+ const dispatch = useDispatch();
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const [salary, setSalary] = useState({
+    salaryType: jobs.salary && jobs.salary.salaryType,
+    minSalary: jobs.salary && jobs.salary.minSalary,
+    maxSalary: jobs.salary && jobs.salary.maxSalary,
+    salaryCrrancy: jobs.salary && jobs.salary.salaryCrrancy,
+  });
+  useEffect(() => {
+    if (full === 'jSlot') {
+      return
+    }
+  if (jobs?.applicationDeadline === undefined) {
+    const futureDate = new Date();
+futureDate.setDate(currentDate.getDate() + 30);
+   setDatas({...datas,
+    applicationDeadline:futureDate,
+   })
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobs])
+  
+  const [datas, setDatas] = useState({
+    jobType: jobs && jobs.jobType,
+    applicationDeadline: jobs && jobs.applicationDeadline,
+  });
+
+  const handleChangesChild = (e) => {
+    let { name, value } = e.target;
+    setDatas({
+      ...datas,
+      [name]: value,
+      salary,
+    });
+    dispatch(detailsSet({ ...datas, [name]: value, salary }));
+    dispatch(skillSet([...roles]));
+  };
+
+  const handleChangeDate = (newValue) => {
+    setValue(newValue);
+    setDatas({
+      ...datas,
+      applicationDeadline: newValue,
+    });
+    dispatch(
+      detailsSet({
+        ...datas,
+        applicationDeadline: newValue,
+        salary,
+        roles,
+      })
+    );
+    dispatch(skillSet([...roles]));
+  };
+  const handleChangesSalary = (e) => {
+    if (e.target.value === "noprovide") {
+      dispatch(
+        salarySet({
+          salaryType: "noprovide",
+        })
+      );
+      dispatch(skillSet([...roles]));
+    } else {
+      let { name, value } = e.target;
+      setSalary({
+        ...salary,
+        [name]: value,
+      });
+      dispatch(salarySet({ ...salary, [name]: value }));
+      dispatch(skillSet([...roles]));
+    }
+  };
+
+  // eslint-disable-next-line no-extend-native
+  Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+
+  const [level, setLevel] = useState({
+    careerlevel: essen && essen.careerlevel,
+    experience: essen && essen.experience,
+    qualification: essen && essen.qualification,
+  });
+
+
+  const handleChangeLevel = (e) => {
+    let { name, value } = e.target;
+    setLevel({
+      ...level,
+      [name]: value,
+    });
+    dispatch(essentialSet({ ...level, [name]: value }));
+  };
+
+  const handleFeatureType = (event) => {
+    dispatch(featureSet(event.target.checked));
+  };
+
+  const handleImmediateType = (event) => {
+    dispatch(immediateSet(event.target.checked));
   };
 
   return (
     <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div
-        //style={{ position: "absolute" }}
-        >
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Hello User
-                </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
-                    height: "42px",
-                  }}
-                >
-                  Post New Job
-                </Button>
-              </Box>
-              <Card
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#F2F8FD",
-                  mt: "40px",
-                  p: "25px 25px 80px 25px",
-                }}
-              >
-                <CardContent>
-                  <Box>
+   <Box>
                     <Box
                       sx={{
                         display: "flex",
@@ -246,29 +221,29 @@ const EssentialInformation = () => {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             label="Career Level"
-                            //value={level.careerlevel}
+                            value={level.careerlevel}
                             name="careerlevel"
-                            // onChange={(e) => {
-                            //   handleChangeLevel(e);
-                            // }}
-                            // error={errors.careerlevel ? true : false}
-                            // helperText={errors.careerlevel}
+                            onChange={(e) => {
+                              handleChangeLevel(e);
+                            }}
+                            error={errors.careerlevel ? true : false}
+                            helperText={errors.careerlevel}
                           >
-                            {/* {CAREER_LEVEL.map((CareerLevel) => ( */}
+                            {CAREER_LEVEL.map((CareerLevel) => (
                             <MenuItem
-                            //   key={CareerLevel} value={CareerLevel}
+                              key={CareerLevel} value={CareerLevel}
                             >
                               <CustomTypography textAlign="center">
-                                {/* {CareerLevel} */}
+                                {CareerLevel}
                               </CustomTypography>
                             </MenuItem>
-                            {/* ))} */}
+                           ))}
                           </Select>
-                          {/* {!!errors.careerlevel && ( */}
+                          {!!errors.careerlevel && (
                           <FormHelperText error id="accountId-error">
-                            {/* {errors.careerlevel} */}
+                            {errors.careerlevel}
                           </FormHelperText>
-                          {/* )} */}
+                         )}
                         </FormControl>
                         <FormControl
                           sx={{
@@ -288,29 +263,29 @@ const EssentialInformation = () => {
                             id="demo-simple-select"
                             label="Experience"
                             sx={styles.naminput2}
-                            // value={level.experience}
-                            // name="experience"
-                            // onChange={(e) => {
-                            //   handleChangeLevel(e);
-                            // }}
-                            // error={errors.experience ? true : false}
-                            // helperText={errors.experience}
+                            value={level.experience}
+                            name="experience"
+                            onChange={(e) => {
+                              handleChangeLevel(e);
+                            }}
+                            error={errors.experience ? true : false}
+                            helperText={errors.experience}
                           >
-                            {/* {USER_EXPERIENCES.map((Experiences) => ( */}
+                            {USER_EXPERIENCES.map((Experiences) => (
                             <MenuItem
-                            //key={Experiences} value={Experiences}
+                            key={Experiences} value={Experiences}
                             >
                               <CustomTypography textAlign="center">
-                                {/* {Experiences} */}
+                                {Experiences}
                               </CustomTypography>
                             </MenuItem>
-                            {/* ))} */}
+                         ))}
                           </Select>
-                          {/* {!!errors.experience && ( */}
+                          {!!errors.experience && (
                           <FormHelperText error id="accountId-error">
-                            {/* {errors.experience} */}
+                            {errors.experience}
                           </FormHelperText>
-                          {/* )} */}
+                         )} 
                         </FormControl>
                       </Stack>
                       <Stack direction="row" spacing={2}>
@@ -332,30 +307,30 @@ const EssentialInformation = () => {
                             id="demo-simple-select"
                             label="Qualifications"
                             sx={styles.naminput2}
-                            //value={level.qualification}
+                            value={level.qualification}
                             name="qualification"
-                            // error={errors.qualification ? true : false}
-                            // helperText={errors.qualification}
-                            // onChange={(e) => {
-                            //   handleChangeLevel(e);
-                            // }}
+                            error={errors.qualification ? true : false}
+                            helperText={errors.qualification}
+                            onChange={(e) => {
+                              handleChangeLevel(e);
+                            }}
                           >
-                            {/* {EDUCATION_LEVELS.map((Qualifications) => ( */}
+                            {EDUCATION_LEVELS.map((Qualifications) => (
                             <MenuItem
-                            // key={Qualifications}
-                            // value={Qualifications}
+                            key={Qualifications}
+                            value={Qualifications}
                             >
                               <CustomTypography textAlign="center">
-                                {/* {Qualifications} */}
+                                {Qualifications}
                               </CustomTypography>
                             </MenuItem>
-                            {/* ))} */}
+                          ))}
                           </Select>
-                          {/* {!!errors.qualification && (
+                          {!!errors.qualification && (
                             <FormHelperText error id="accountId-error">
                               {errors.qualification}
                             </FormHelperText>
-                          )} */}
+                          )}
                         </FormControl>
                         <Box sx={{ width: "50%" }}>
                           <LocalizationProvider
@@ -375,12 +350,10 @@ const EssentialInformation = () => {
                               name="applicationDeadline"
                               inputFormat="dd/MM/yyyy"
                               minDate={new Date()}
-                              //   value={
-                              //     jobs === ""
-                              //       ? value
-                              //       : jobs && jobs.applicationDeadline
-                              //   }
-                              //   onChange={handleChangeDate}
+                              maxDate={full === 'jSlot' ? '' : moment(new Date()).add(30, 'days').format()}
+                              value={jobs.applicationDeadline === undefined ? value : jobs.applicationDeadline}
+                              disabled={_id !== undefined }
+                              onChange={handleChangeDate}
                               renderInput={(params) => (
                                 <TextField
                                   error={
@@ -392,11 +365,11 @@ const EssentialInformation = () => {
                               )}
                             />
                           </LocalizationProvider>
-                          {/* {!!errors.applicationDeadline && (
+                          {!!errors.applicationDeadline && (
                             <FormHelperText error id="accountId-error">
                               {errors.applicationDeadline}
                             </FormHelperText>
-                          )} */}
+                          )}
                         </Box>
                       </Stack>
                       <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
@@ -409,27 +382,27 @@ const EssentialInformation = () => {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          //   value={jobs && jobs?.notice}
-                          //   onChange={(e) => {
-                          //     handleChangesChild(e);
-                          //   }}
+                            value={jobs && jobs?.notice}
+                            onChange={(e) => {
+                              handleChangesChild(e);
+                            }}
                           name="notice"
-                          //   error={errors.notice ? true : false}
-                          //   helperText={errors.notice}
+                            error={errors.notice ? true : false}
+                            helperText={errors.notice}
                           label="notice period"
                           sx={styles.naminput2}
                         >
-                          {/* {NoticePeriod.map((not, ind) => (
+                          {NoticePeriod.map((not, ind) => (
                             <MenuItem key={ind} value={not}>
                               {not}
                             </MenuItem>
-                          ))} */}
+                          ))}
                         </Select>
-                        {/* {!!errors.notice && (
+                        {!!errors.notice && (
                           <FormHelperText error id="accountId-error">
                             {errors.notice}
                           </FormHelperText>
-                        )} */}
+                        )}
                       </FormControl>
                       <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
@@ -441,13 +414,13 @@ const EssentialInformation = () => {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          //   value={jobs && jobs.jobType}
-                          //   onChange={(e) => {
-                          //     handleChangesChild(e);
-                          //   }}
+                            value={jobs && jobs.jobType}
+                            onChange={(e) => {
+                              handleChangesChild(e);
+                            }}
                           name="jobType"
-                          //   error={errors.jobType ? true : false}
-                          //   helperText={errors.jobType}
+                          error={errors.jobType ? true : false}
+                          helperText={errors.jobType}
                           label="Job Type"
                           sx={styles.naminput2}
                         >
@@ -455,11 +428,11 @@ const EssentialInformation = () => {
                           <MenuItem value={"Onsite"}>Onsite</MenuItem>
                           <MenuItem value={"Hybrid"}>Hybrid</MenuItem>
                         </Select>
-                        {/* {!!errors.jobType && (
+                        {!!errors.jobType && (
                           <FormHelperText error id="accountId-error">
                             {errors.jobType}
                           </FormHelperText>
-                        )} */}
+                        )}
                       </FormControl>
                       <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
                         <InputLabel
@@ -471,14 +444,14 @@ const EssentialInformation = () => {
                         <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
-                          //   value={jobs?.salary?.salaryType}
-                          //   name={"salaryType"}
-                          //   onChange={(e) => {
-                          //     handleChangesSalary(e);
-                          //   }}
+                            value={jobs?.salary?.salaryType}
+                            name={"salaryType"}
+                            onChange={(e) => {
+                              handleChangesSalary(e);
+                            }}
                           label="Salary Type"
-                          //   error={errors.salaryType ? true : false}
-                          //   helperText={errors.salaryType}
+                          error={errors.salaryType ? true : false}
+                          helperText={errors.salaryType}
                           sx={styles.naminput2}
                         >
                           <MenuItem selected value={"noprovide"}>
@@ -489,6 +462,10 @@ const EssentialInformation = () => {
                           <MenuItem value={"hourly"}>Hourly</MenuItem>
                         </Select>
                       </FormControl>
+                      {jobs?.salary?.salaryType === "noprovide" ||
+          jobs?.salary?.salaryType === undefined ? (
+            ""
+          ) : (
                       <Stack direction="row" spacing={2}>
                         <FormControl
                           sx={{
@@ -508,37 +485,37 @@ const EssentialInformation = () => {
                             id="demo-simple-select"
                             name="salaryCrrancy"
                             label="Salary Currency"
-                            //   value={jobs.salary && jobs.salary.salaryCrrancy}
-                            //   onChange={(e) => {
-                            //     handleChangesSalary(e);
-                            //   }}
-                            //   error={errors.salaryCrrancy ? true : false}
-                            //   helperText={errors.salaryCrrancy}
+                              value={jobs.salary && jobs.salary.salaryCrrancy}
+                              onChange={(e) => {
+                                handleChangesSalary(e);
+                              }}
+                              error={errors.salaryCrrancy ? true : false}
+                              helperText={errors.salaryCrrancy}
                           >
-                            {/* {CURRENCY.map((cur, ind) => (
+                            {CURRENCY.map((cur, ind) => (
                             <MenuItem key={ind} value={cur.symbol}>
                               {cur.country}-{cur.symbol}
                             </MenuItem>
-                          ))} */}
+                          ))}
                           </Select>
-                          {/* {!!errors.salaryCrrancy && (
+                          {!!errors.salaryCrrancy && (
                           <FormHelperText error id="accountId-error">
                             {errors.salaryCrrancy}
                           </FormHelperText>
-                        )} */}
+                        )}
                         </FormControl>
                         <TextField
                           InputLabelProps={{ style: { color: "#BAD4DF" } }}
                           id="outlined-basic"
                           label="Min Salary"
-                          //   value={jobs.salary && jobs.salary.minSalary}
-                          //   onChange={(e) => {
-                          //     handleChangesSalary(e);
-                          //   }}
+                            value={jobs.salary && jobs.salary.minSalary}
+                            onChange={(e) => {
+                              handleChangesSalary(e);
+                            }}
                           type="number"
                           name="minSalary"
-                          //   error={errors.minSalary ? true : false}
-                          //   helperText={errors.minSalary}
+                            error={errors.minSalary ? true : false}
+                            helperText={errors.minSalary}
                           placeholder="Enter Min Salary"
                           variant="outlined"
                           sx={{
@@ -550,13 +527,13 @@ const EssentialInformation = () => {
                         <TextField
                           InputLabelProps={{ style: { color: "#BAD4DF" } }}
                           id="outlined-basic"
-                          //   value={jobs.salary && jobs.salary.maxSalary}
-                          //   onChange={(e) => {
-                          //     handleChangesSalary(e);
-                          //   }}
+                            value={jobs.salary && jobs.salary.maxSalary}
+                            onChange={(e) => {
+                              handleChangesSalary(e);
+                            }}
                           label="Max Salary"
-                          //   error={errors.maxSalary ? true : false}
-                          //   helperText={errors.maxSalary}
+                          error={errors.maxSalary ? true : false}
+                          helperText={errors.maxSalary}
                           type="number"
                           name="maxSalary"
                           placeholder="Enter Max Salary"
@@ -567,15 +544,16 @@ const EssentialInformation = () => {
                             width: "25%",
                           }}
                         />
-                      </Stack>
-                      <Box>
+                      </Stack> )}
+                      {(companyDet?.jobSlotGold === true && full === 'jSlot') || companyDet.package.subscription_package === 'SuperEmployer' ? (
+                       <Box>
                         <FormGroup>
                           <FormControlLabel
                             sx={{ justifyContent: "flex-end", ml: 0 }}
                             control={
                               <Switch
-                                // checked={feature}
-                                // onChange={handleFeatureType}
+                                checked={feature}
+                                onChange={handleFeatureType}
                                 inputProps={{ "aria-label": "controlled" }}
                               />
                             }
@@ -594,15 +572,15 @@ const EssentialInformation = () => {
                             labelPlacement="start"
                           />
                         </FormGroup>
-                      </Box>
+                      </Box> ) : ""}
                       <Box>
                         <FormGroup>
                           <FormControlLabel
                             sx={{ justifyContent: "flex-end", ml: 0 }}
                             control={
                               <Switch
-                                // checked={immediate}
-                                // onChange={handleImmediateType}
+                                checked={immediate}
+                                onChange={handleImmediateType}
                                 inputProps={{ "aria-label": "controlled" }}
                               />
                             }
@@ -623,40 +601,7 @@ const EssentialInformation = () => {
                         </FormGroup>
                       </Box>
                     </Stack>
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        mt: "40px",
-                      }}
-                    >
-                      <Button
-                        variant="outlined"
-                        sx={{ width: "50%", height: "55px" }}
-                      >
-                        Previous
-                      </Button>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          width: "50%",
-                          bgcolor: "#015FB1 !important",
-                          height: "55px",
-                        }}
-                      >
-                        Submit
-                      </Button>
-                    </Stack>
                   </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
     </>
   );
 };

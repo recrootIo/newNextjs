@@ -4,7 +4,7 @@ import alert from "../slices/alert";
 import authReducer from "../slices/auth";
 import candidateReducer from "../slices/candidate";
 // import messageReducer from "./slices/message";
-// import jobReducer from "./slices/job";
+import jobReducer from "../slices/job";
 import applyReducer from "../slices/applyJobs";
 import personalReducer from "../slices/personal";
 import searchReducer from "../slices/search";
@@ -19,7 +19,7 @@ const reducer = {
   auth: authReducer,
   //   message: messageReducer,
     apply: applyReducer,
-  //   jobs: jobReducer,
+    jobs: jobReducer,
   personal: personalReducer,
   candidate: candidateReducer,
   searchJobs: searchReducer,

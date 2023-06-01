@@ -32,6 +32,8 @@ import {
   IconButton,
   Dialog,
   Avatar,
+  useMediaQuery,
+  FormHelperText,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -53,6 +55,14 @@ import dynamic from "next/dynamic";
 import { UploadPhoto } from "@/components/UploadPhoto/UploadPhoto";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useEffect } from "react";
+import { Setprivacy, basicInfor, cmpInfor, cmpLogo, getCompanyDetails, linkInfor, updateFinalPhoto, updateFinaldetails } from "@/redux/slices/companyslice";
+import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
+import { useRouter } from "next/navigation";
+import { Location } from "./Location";
 
 const style = {
   naminput: {
@@ -95,8 +105,80 @@ const selectstyle = {
 
 const CompanyProfile = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [value, setValue] = React.useState(0);
-  const [checked, setChecked] = React.useState(true);
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+  const basicin = useSelector((state) => state.company.basicinformation);
+  const cmpin = useSelector((state) => state.company.cmpinformation);
+  const links = useSelector((state) => state.company.links);
+  const logo = useSelector((state) => state.company.companylogo);
+  const errors = useSelector((state) => state.company.error);
+  const privacy = useSelector((state) => state.company.privacy);
+  const [basic, setBasic] = useState({
+    cmpname: basicin && basicin.cmpname,
+    cmpphone: basicin && basicin.cmpphone,
+    cmpemail: basicin && basicin.cmpemail,
+    cmpwebsite: basicin && basicin.cmpwebsite,
+  });
+  const [cpinfor, setCmpinfor] = useState({
+    infosector: cmpin && cmpin.infosector,
+    infodes: cmpin && cmpin.infodes,
+  });
+  useEffect(() => {
+   dispatch(getCompanyDetails())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+  useEffect(() => {
+    setBasic({
+      cmpname: basicin.cmpname,
+      cmpphone: basicin.cmpphone,
+      cmpemail: basicin.cmpemail,
+      cmpwebsite: basicin.cmpwebsite,
+    });
+    setCmpinfor({
+      infosector: cmpin && cmpin.infosector,
+      infodes: cmpin && cmpin.infodes,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [basicin]);
+  const dispatch = useDispatch();
+
+  const [first, setFirst] = useState("");
+  const [fileNames, setFileNames] = useState("");
+
+  function handleImageChange(file) {
+    setFirst(file);
+    setFileNames(file.name);
+  }
+const {push} = useRouter()
+  const basicadd = (e) => {
+    const { name, value } = e.target;
+    setBasic({ ...basic, [name]: value });
+    dispatch(basicInfor({ ...basic, [name]: value }));
+  };
+
+  const basicPhone = (value) => {
+    setBasic({ ...basic, cmpphone: value });
+    dispatch(basicInfor({ ...basic, cmpphone: value }));
+  };
+
+  const matches = useMediaQuery("(max-width:900px)");
+  const matches2 = useMediaQuery("(max-width:970px)");
+
+  const handleLinks = (e) => {
+    const { name, value } = e.target;
+    dispatch(linkInfor({ ...links, [name]: value }));
+  };
+  const companyadd = (e) => {
+    const { name, value } = e.target;
+    setCmpinfor({ ...cpinfor, [name]: value });
+    dispatch(cmpInfor({ ...cpinfor, [name]: value }));
+  };
+  const handleDesc = (value) => {
+    dispatch(cmpInfor({ ...cpinfor, infodes: value }));
+  };
+
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("sm");
   const [open, setOpen] = React.useState(false);
@@ -110,15 +192,72 @@ const CompanyProfile = () => {
   const handleClose = () => {
     dispatch(cmpLogo(first));
     dispatch(updateFinalPhoto(first)).then(
-      notify("Your Company Logo Was Updated")
-    );
+      dispatch(
+        openAlert({ type: SUCCESS, message: "Your Company Logo Was Updated"})
+      )
+          );
     setOpen(false);
   };
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const handleCloseP = () => {
+    setOpen(false);
+    setFullWidth(true);
+    setMaxWidth("sm");
+  };
+  const final = useSelector((state) => state.company);
+  const re =
+    /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const handleBlur = (e, msg) => {
+    if (e.target.name === "cmpemail") {
+      let result = re.test(String(e.target.value).toLowerCase());
+      if (!result) {
+        dispatch(
+          openAlert({ type: ERROR, message: "Invalid Email address" })
+        );
+        return;
+      }
+    }
+    if (e.target.value === "") {
+      return;
+    }
+    dispatch(updateFinaldetails(final));
+    dispatch(
+      openAlert({ type: SUCCESS, message: msg})
+    );
+    handleClick();
+  };
+  const handleBlurDes = (value) => {
+    if (value.index === 0) {
+      return;
+    }
+    dispatch(updateFinaldetails(final));
+    dispatch(
+      openAlert({ type: SUCCESS, message: "Company Description Was Updated"})
+    );
+    handleClick();
+  };
+  const [open1, setOpen1] = React.useState(false);
+  const [message, setmessage] = React.useState("");
+
+  const handleClick = () => {
+    setOpen1(true);
   };
 
+  const handleClose1 = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen1(false);
+  };
+  const handleChange = (event) => {
+    dispatch(Setprivacy(event.target.checked));
+    dispatch(updateFinaldetails({ ...final, privacy: event.target.checked }));
+    dispatch(
+      openAlert({ type: SUCCESS, message: "Basic Info Privacy Was Updated"})
+    );
+    handleClick();
+  };
   return (
     <>
       <EmployerNavbar />
@@ -383,8 +522,11 @@ const CompanyProfile = () => {
                     <Box sx={styles.logosec}>
                       <Box sx={styles.companylogo}>
                         <Avatar
-                          alt="Remy Sharp"
-                          //src={imageUrl}
+                          src={
+                            logo && logo.logo !== undefined
+                              ? `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo.logo}`
+                              : URL.createObjectURL(logo)
+                          }
                           sx={{
                             width: "200px",
                             height: "200px",
@@ -425,7 +567,7 @@ const CompanyProfile = () => {
                             Edit Profile Photo
                           </CustomTypography>
                           <UploadPhoto
-                          //handleChange={handleImageChange}
+                          handleChange={handleImageChange}
                           />
                           {/* {first !== "" ? (
                             <>
@@ -471,18 +613,18 @@ const CompanyProfile = () => {
                             <Button
                               variant="contained"
                               sx={{ mt: "10px", backgroundColor: "#4fa9ff" }}
-                              // onClick={() => {
-                              //   handleClose();
-                              // }}
+                              onClick={() => {
+                                handleClose();
+                              }}
                             >
                               save
                             </Button>
                             <Button
                               variant="outlined"
                               sx={{ mt: "10px", ml: "5px", color: "#4fa9ff" }}
-                              // onClick={() => {
-                              //   handleCloseP();
-                              // }}
+                              onClick={() => {
+                                handleCloseP();
+                              }}
                             >
                               Cancel
                             </Button>
@@ -515,7 +657,10 @@ const CompanyProfile = () => {
                       <CustomTypography sx={{ color: "#01313F" }}>
                         Make Basic Info As Private
                       </CustomTypography>
-                      <FormControlLabel control={<Switch />} />
+                      <FormControlLabel control={<Switch 
+                                   checked={privacy}
+                                   onChange={handleChange}
+                                   inputProps={{ "aria-label": "controlled" }}/>} />
                     </Stack>
                   </Box>
                   <Stack spacing={2}>
@@ -527,11 +672,11 @@ const CompanyProfile = () => {
                       placeholder="Enter Company Name"
                       variant="outlined"
                       name="cmpname"
-                      //onChange={(e) => basicadd(e)}
-                      //onBlur={(e) => handleBlur(e, "Company Name Was Updated")}
-                      //value={basicin?.cmpname || ""}
-                      //error={errors.cmpname ? true : false}
-                      //helperText={errors.cmpname}
+                      onChange={(e) => basicadd(e)}
+                      onBlur={(e) => handleBlur(e, "Company Name Was Updated")}
+                      value={basicin?.cmpname || ""}
+                      error={errors.cmpname ? true : false}
+                      helperText={errors.cmpname}
                     />
                     <TextField
                       InputLabelProps={{ style: { color: "#BAD4DF" } }}
@@ -542,16 +687,16 @@ const CompanyProfile = () => {
                       placeholder="Enter Email ID"
                       variant="outlined"
                       name="cmpemail"
-                      //onChange={(e) => basicadd(e)}
-                      //onBlur={(e) => handleBlur(e, "Company Email Was Updated")}
-                      // value={
-                      //   basicin !== null && basicin !== undefined
-                      //     ? basicin.cmpemail
-                      //     : ""
-                      // }
+                      onChange={(e) => basicadd(e)}
+                      onBlur={(e) => handleBlur(e, "Company Email Was Updated")}
+                      value={
+                        basicin !== null && basicin !== undefined
+                          ? basicin.cmpemail
+                          : ""
+                      }
                       required
-                      // error={errors.cmpemail ? true : false}
-                      // helperText={errors.cmpemail}
+                      error={errors.cmpemail ? true : false}
+                      helperText={errors.cmpemail}
                     />
                     <TextField
                       InputLabelProps={{ style: { color: "#BAD4DF" } }}
@@ -561,15 +706,15 @@ const CompanyProfile = () => {
                       placeholder="Company URL"
                       variant="outlined"
                       name="cmpwebsite"
-                      // onChange={(e) => basicadd(e)}
-                      // onBlur={(e) =>
-                      //   handleBlur(e, "Company Website Was Updated")
-                      // }
-                      // value={
-                      //   basicin !== null && basicin !== undefined
-                      //     ? basicin.cmpwebsite
-                      //     : ""
-                      // }
+                      onChange={(e) => basicadd(e)}
+                      onBlur={(e) =>
+                        handleBlur(e, "Company Website Was Updated")
+                      }
+                      value={
+                        basicin !== null && basicin !== undefined
+                          ? basicin.cmpwebsite
+                          : ""
+                      }
                     />
                     <Divider variant="middle" />
                   </Stack>
@@ -598,24 +743,24 @@ const CompanyProfile = () => {
                         sx={selectstyle.naminputSelect}
                         name="infosector"
                         onChange={(e) => companyadd(e)}
-                        //   value={cmpin?.infosector || ""}
-                        //   error={errors.infosector ? true : false}
-                        //   helperText={errors.infosector}
-                        //   onBlur={(e) =>
-                        //     handleBlur(e, "Company Sector Was Updated")
-                        //   }
+                          value={cmpin?.infosector || ""}
+                          error={errors.infosector ? true : false}
+                          helperText={errors.infosector}
+                          onBlur={(e) =>
+                            handleBlur(e, "Company Sector Was Updated")
+                          }
                       >
-                        {/* {sector.map((sec, index) => (
+                        {SECTORS.map((sec, index) => (
                           <MenuItem key={index} value={sec}>
                             {sec}
                           </MenuItem>
-                        ))} */}
+                        ))}
                       </Select>
-                      {/* {!!errors.infosector && (
+                      {!!errors.infosector && (
                         <FormHelperText error id="accountId-error">
                           {errors.infosector}
                         </FormHelperText>
-                      )} */}
+                      )}
                     </FormControl>
                   </Box>
                   <Box sx={styles.infofld}>
@@ -633,12 +778,12 @@ const CompanyProfile = () => {
                       <EditorToolbar />
                       <ReactQuill
                         placeholder="Add Description"
-                        // value={cmpin.infodes}
-                        // onChange={handleDesc}
-                        // onBlur={handleBlurDes}
-                        // modules={modules}
-                        // formats={formats}
-                        // className="textareaQuestion"
+                        value={cmpin.infodes}
+                        onChange={handleDesc}
+                        onBlur={handleBlurDes}
+                        modules={modules}
+                        formats={formats}
+                        className="textareaQuestion"
                         style={{ height: "250px" }}
                       />
                     </Box>
@@ -666,10 +811,10 @@ const CompanyProfile = () => {
                         placeholder="Enter FaceBook Link"
                         variant="outlined"
                         name="fb"
-                        // onChange={(e) => handleLinks(e)}
-                        // onBlur={(e) =>
-                        //   handleBlur(e, "Facebook Link Was Updated")
-                        // }
+                        onChange={(e) => handleLinks(e)}
+                        onBlur={(e) =>
+                          handleBlur(e, "Facebook Link Was Updated")
+                        }
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -677,9 +822,9 @@ const CompanyProfile = () => {
                             </InputAdornment>
                           ),
                         }}
-                        // value={links && links.fb}
-                        // error={errors.fb ? true : false}
-                        // helperText={errors.fb}
+                        value={links && links.fb}
+                        error={errors.fb ? true : false}
+                        helperText={errors.fb}
                       />
 
                       <TextField
@@ -693,10 +838,10 @@ const CompanyProfile = () => {
                         placeholder="Enter Twitter Link"
                         variant="outlined"
                         name="twitter"
-                        // onChange={(e) => handleLinks(e)}
-                        // onBlur={(e) =>
-                        //   handleBlur(e, "Twitter Link Was Updated")
-                        // }
+                        onChange={(e) => handleLinks(e)}
+                        onBlur={(e) =>
+                          handleBlur(e, "Twitter Link Was Updated")
+                        }
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -706,9 +851,9 @@ const CompanyProfile = () => {
                             </InputAdornment>
                           ),
                         }}
-                        // value={links && links.twitter}
-                        // error={errors.twitter ? true : false}
-                        // helperText={errors.twitter}
+                        value={links && links.twitter}
+                        error={errors.twitter ? true : false}
+                        helperText={errors.twitter}
                       />
                       <TextField
                         InputLabelProps={{ style: { color: "black" } }}
@@ -721,11 +866,11 @@ const CompanyProfile = () => {
                         placeholder="Enter LinkedIn Link"
                         variant="outlined"
                         name="linkin"
-                        // onChange={(e) => handleLinks(e)}
-                        // onBlur={(e) =>
-                        //   handleBlur(e, "LinkedIn Link Was Updated")
-                        // }
-                        // value={links && links.linkin}
+                        onChange={(e) => handleLinks(e)}
+                        onBlur={(e) =>
+                          handleBlur(e, "LinkedIn Link Was Updated")
+                        }
+                        value={links && links.linkin}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -750,11 +895,11 @@ const CompanyProfile = () => {
                         placeholder="Enter Youtube Link"
                         variant="outlined"
                         name="utube"
-                        // onChange={(e) => handleLinks(e)}
-                        // onBlur={(e) =>
-                        //   handleBlur(e, "Youtube Link Was Updated")
-                        // }
-                        // value={links && links.utube}
+                        onChange={(e) => handleLinks(e)}
+                        onBlur={(e) =>
+                          handleBlur(e, "Youtube Link Was Updated")
+                        }
+                        value={links && links.utube}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -770,6 +915,12 @@ const CompanyProfile = () => {
                         }}
                       />
                     </Box>
+                  </Box>
+                  <Box display="block" sx={styles.infofld}>
+                  <CustomTypography variant="body2" sx={styles.sectxt}>
+                      Location
+                    </CustomTypography>
+                    <Location />
                   </Box>
                   <Stack
                     direction="row"
@@ -794,8 +945,11 @@ const CompanyProfile = () => {
                         bgcolor: "#015FB1 !important",
                         height: "55px",
                       }}
+                      onClick={()=>{
+                        push('/Employer/Members')
+                      }}
                     >
-                      Submit
+                      Next
                     </Button>
                   </Stack>
                 </CardContent>
