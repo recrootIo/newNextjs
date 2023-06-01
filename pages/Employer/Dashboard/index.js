@@ -50,6 +50,7 @@ import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import axios from "axios";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import Layout from "../layout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -707,722 +708,564 @@ const EmpoyerDashboard = () => {
   };
 
   return (
-    <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
+    <Layout>
+      <Grid container sx={{ gap: "10px" }}>
+        <Grid item xs={12}>
+          <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
+            <CustomTypography
+              variant="h6"
+              sx={{
+                fontFamily: BOLD,
+                fontSize: "28px",
+                flex: 1,
+                color: "white",
+              }}
+              gutterBottom
+            >
+              Hello User
+            </CustomTypography>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "white !important",
+                color: "#01313F",
+                height: "42px",
+              }}
+            >
+              Post New Job
+            </Button>
+          </Box>
+          <Stack direction="row" spacing={2}>
+            <Card
+              sx={{
+                width: "100%",
+                // height: "215px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/activejob-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
               <Box
                 sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
                 }}
               >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
+                <Image src="/active-jobs.png" alt="" height="60" width="60" />
               </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
+              <CardContent>
                 <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
                 >
-                  Hello User
+                  {formattedActive}/
+                  {parseInt(formattedActive) + parseInt(formattedNumber)}
                 </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
-                    height: "42px",
-                  }}
-                >
-                  Post New Job
-                </Button>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Active Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
+                // height: "215px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/inactivejobs-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
+                }}
+              >
+                <Image src="/inactive-jobs.png" alt="" height="60" width="60" />
               </Box>
-              <Stack direction="row" spacing={2}>
-                <Card
-                  sx={{
-                    width: "100%",
-                    // height: "215px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/activejob-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
                 >
+                  {formattedNumber}/
+                  {parseInt(formattedActive) + parseInt(formattedNumber)}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Inactive Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
+                height: "235px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/interviews-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
+                }}
+              >
+                <Image src="/interviews.png" alt="" height="60" width="60" />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {formattedint}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Interviews
+                </CustomTypography>
+              </CardContent>
+            </Card>
+          </Stack>
+          <Grid container spacing={3} sx={{ mt: "40px" }}>
+            <Grid item xs={6}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "145px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
+                  paddingBottom: "16px !important",
+                }}
+              >
+                <CardContent sx={{ display: "flex" }}>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <Image
-                      src="/active-jobs.png"
-                      alt=""
-                      height="60"
-                      width="60"
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {formattedActive}/
-                      {parseInt(formattedActive) + parseInt(formattedNumber)}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Active Jobs
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    // height: "215px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/inactivejobs-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <Image
-                      src="/inactive-jobs.png"
-                      alt=""
-                      height="60"
-                      width="60"
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {formattedNumber}/
-                      {parseInt(formattedActive) + parseInt(formattedNumber)}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Inactive Jobs
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "235px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/interviews-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <Image
-                      src="/interviews.png"
-                      alt=""
-                      height="60"
-                      width="60"
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {formattedint}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Interviews
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-              </Stack>
-              <Grid container spacing={3} sx={{ mt: "40px" }}>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box
-                        sx={{
-                          width: "30%",
-                          height: "100px",
-                          backgroundImage:
-                            'url("/dashbaordcard-circle-bg.png")',
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Image
-                          src="/total-applicants-img.png"
-                          alt=""
-                          height="60"
-                          width="50"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {totalCount}
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Total Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box
-                        sx={{
-                          width: "30%",
-                          height: "100px",
-                          backgroundImage:
-                            'url("/dashbaordcard-circle-bg.png")',
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Image
-                          src="/rejected-applicants-img.png"
-                          alt=""
-                          height="60"
-                          width="50"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {rejectCount}
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Rejected Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box
-                        sx={{
-                          width: "30%",
-                          height: "100px",
-                          backgroundImage:
-                            'url("/dashbaordcard-circle-bg.png")',
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Image
-                          src="/shorlist-applicants-img.png"
-                          alt=""
-                          height="60"
-                          width="50"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          {shortlistCount}
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Shortlisted Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: "145px",
-                      borderRadius: "15px",
-                      boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
-                      paddingBottom: "16px !important",
-                    }}
-                  >
-                    <CardContent sx={{ display: "flex" }}>
-                      <Box
-                        sx={{
-                          width: "30%",
-                          height: "100px",
-                          backgroundImage:
-                            'url("/dashbaordcard-circle-bg.png")',
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
-                          backgroundPosition: "center",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Image
-                          src="/selected-applicants-img.png"
-                          alt=""
-                          height="60"
-                          width="50"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          width: "70%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CustomTypography
-                          sx={{
-                            fontSize: "22px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          0
-                        </CustomTypography>
-                        <CustomTypography
-                          sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Successful Applicants
-                        </CustomTypography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-              <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
-                <Card
-                  sx={{
-                    width: "100%",
-                    // height: "215px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/activejob-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <img
-                      src="/free-board-sign-icon.svg"
-                      alt=""
-                      style={{
-                        width: "60px",
-                      }}
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {freeCount}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Free Jobs
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    // height: "215px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/inactivejobs-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <img
-                      src="/projob.svg"
-                      alt=""
-                      style={{
-                        width: "60px",
-                      }}
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {proCOunt}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Pro Jobs
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "235px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/interviews-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <img
-                      src="/premiumjob.svg"
-                      alt=""
-                      style={{
-                        width: "60px",
-                      }}
-                    />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      {preCOunt}
-                    </CustomTypography>
-                    <CustomTypography variant="body1" sx={{ color: "white" }}>
-                      Premium Jobs
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-              </Stack>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ width: "100%" }}>
-              <AppBar position="static">
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                    variant="fullWidth"
-                    centered
-                  >
-                    <Tab label="Normal Jobs" {...a11yProps(0)} />
-                    <Tab label="Featured Jobs" {...a11yProps(1)} />
-                  </Tabs>
-                </Box>
-              </AppBar>
-              <TabPanel id="simple-tab-0" value={value} index={0}>
-                <Box sx={{ height: "550px", width: "100%" }}>
-                  <DataGrid
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    getRowId={handleGetRowId}
-                    rows={rows}
-                    columns={columns}
-                  />
-                </Box>
-                {/* <Table
-                  sx={{ minWidth: 650, bgcolor: "#F2F8FD", p: 0 }}
-                  aria-label="simple table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Job</TableCell>
-                      <TableCell align="right">Title</TableCell>
-                      <TableCell align="right">Job Type</TableCell>
-                      <TableCell align="right">Location</TableCell>
-                      <TableCell align="right">Posted Date</TableCell>
-                      <TableCell align="right">Deadline</TableCell>
-                      <TableCell align="right">Status</TableCell>
-                      <TableCell align="right">Action</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table> */}
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                {enableFeaturedJobs ? (
-                  <div style={{ height: "550px", width: "100%" }}>
-                    <DataGrid
-                      sx={{ display: "flex", justifyContent: "center" }}
-                      getRowId={handleGetRowId}
-                      rows={rows2}
-                      columns={columns}
-                    />
-                  </div>
-                ) : (
-                  <Box
-                    sx={{
+                      width: "30%",
+                      height: "100px",
+                      backgroundImage: 'url("/dashbaordcard-circle-bg.png")',
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      border: "1px solid rgba(224, 224, 224, 1)",
-                      height: "200px",
                     }}
                   >
-                    <Typography>
-                      {" "}
-                      Subscribe Gold/Premium package to get Featured jobs
-                    </Typography>
+                    <Image
+                      src="/total-applicants-img.png"
+                      alt=""
+                      height="60"
+                      width="50"
+                    />
                   </Box>
-                )}
-              </TabPanel>
-            </Box>
+                  <Box
+                    sx={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CustomTypography
+                      sx={{
+                        fontSize: "22px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {totalCount}
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Total Applicants
+                    </CustomTypography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "145px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
+                  paddingBottom: "16px !important",
+                }}
+              >
+                <CardContent sx={{ display: "flex" }}>
+                  <Box
+                    sx={{
+                      width: "30%",
+                      height: "100px",
+                      backgroundImage: 'url("/dashbaordcard-circle-bg.png")',
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      src="/rejected-applicants-img.png"
+                      alt=""
+                      height="60"
+                      width="50"
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CustomTypography
+                      sx={{
+                        fontSize: "22px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {rejectCount}
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Rejected Applicants
+                    </CustomTypography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "145px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
+                  paddingBottom: "16px !important",
+                }}
+              >
+                <CardContent sx={{ display: "flex" }}>
+                  <Box
+                    sx={{
+                      width: "30%",
+                      height: "100px",
+                      backgroundImage: 'url("/dashbaordcard-circle-bg.png")',
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      src="/shorlist-applicants-img.png"
+                      alt=""
+                      height="60"
+                      width="50"
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CustomTypography
+                      sx={{
+                        fontSize: "22px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {shortlistCount}
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Shortlisted Applicants
+                    </CustomTypography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "145px",
+                  borderRadius: "15px",
+                  boxShadow: "0px 2px 20px rgba(0, 51, 155, 0.2)",
+                  paddingBottom: "16px !important",
+                }}
+              >
+                <CardContent sx={{ display: "flex" }}>
+                  <Box
+                    sx={{
+                      width: "30%",
+                      height: "100px",
+                      backgroundImage: 'url("/dashbaordcard-circle-bg.png")',
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      src="/selected-applicants-img.png"
+                      alt=""
+                      height="60"
+                      width="50"
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      width: "70%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CustomTypography
+                      sx={{
+                        fontSize: "22px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      0
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Successful Applicants
+                    </CustomTypography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </div>
-      </Container>
-    </>
+          <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+            <Card
+              sx={{
+                width: "100%",
+                // height: "215px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/activejob-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
+                }}
+              >
+                <img
+                  src="/free-board-sign-icon.svg"
+                  alt=""
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {freeCount}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Free Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
+                // height: "215px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/inactivejobs-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
+                }}
+              >
+                <img
+                  src="/projob.svg"
+                  alt=""
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {proCOunt}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Pro Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
+                height: "235px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/interviews-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
+                }}
+              >
+                <img
+                  src="/premiumjob.svg"
+                  alt=""
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {preCOunt}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Premium Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Grid>
+
+        <Grid item xs={12} sx={{ mt: "10px" }}>
+          <Box sx={{ width: "100%" }}>
+            <AppBar position="static">
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  variant="fullWidth"
+                  centered
+                >
+                  <Tab label="Normal Jobs" {...a11yProps(0)} />
+                  <Tab label="Featured Jobs" {...a11yProps(1)} />
+                </Tabs>
+              </Box>
+            </AppBar>
+            <TabPanel id="simple-tab-0" value={value} index={0}>
+              <Box sx={{ height: "550px", width: "100%" }}>
+                <DataGrid
+                  sx={{ display: "flex", justifyContent: "center" }}
+                  getRowId={handleGetRowId}
+                  rows={rows}
+                  columns={columns}
+                />
+              </Box>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              {enableFeaturedJobs ? (
+                <div style={{ height: "550px", width: "100%" }}>
+                  <DataGrid
+                    sx={{ display: "flex", justifyContent: "center" }}
+                    getRowId={handleGetRowId}
+                    rows={rows2}
+                    columns={columns}
+                  />
+                </div>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "1px solid rgba(224, 224, 224, 1)",
+                    height: "200px",
+                  }}
+                >
+                  <Typography>
+                    {" "}
+                    Subscribe Gold/Premium package to get Featured jobs
+                  </Typography>
+                </Box>
+              )}
+            </TabPanel>
+          </Box>
+        </Grid>
+      </Grid>
+    </Layout>
   );
 };
 
