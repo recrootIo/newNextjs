@@ -401,7 +401,7 @@ const UploadResume = ({ ...props }) => {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` http://localhost:3000/api/downloadResume?resume=${resume.resume.replace(
+                              ` ttps://preprod.recroot.au/api/downloadResume?resume=${resume.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`
