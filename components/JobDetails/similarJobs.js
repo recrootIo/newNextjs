@@ -2,10 +2,13 @@
 import { Box, Stack, Button, Container } from "@mui/material";
 import Carousel from "react-elastic-carousel";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import searchService from "@/redux/services/search.service";
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -14,6 +17,32 @@ const breakPoints = [
 ];
 
 const SimilarJobs = () => {
+  const { data } = useSelector((state) => state?.personal);
+  console.log(data, "data");
+  const router = useRouter();
+
+  const [similar, setSimilar] = useState([]);
+
+  const similarJobs = () => {
+    searchService
+      .getLatestJObs(1, [], [], data.jobTitle, "", "", "", "", "", 10)
+      .then((res) => {
+        console.log(res);
+        setSimilar(res.data.posts);
+      })
+      .catch(() => {});
+  };
+
+  const handleNavigate = (jobTitle, jobRole, _id) => {
+    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
+  };
+
+  useEffect(() => {
+    if (data.jobTitle) {
+      similarJobs();
+    }
+  }, []);
+
   const carouselRef = useRef(null);
   const totalPages = 4;
   let resetTimeout;
@@ -59,53 +88,11 @@ const SimilarJobs = () => {
               }
             }}
           >
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
+            {similar.map((simi, index) => (
+              <SimilarJobCard key={index} data={simi} />
+            ))}
           </Carousel>
         </Stack>
-
-        {/* <Box className="mobileSimilarJobs">
-          <Stack spacing={2}>
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-            <SimilarJobCard />
-          </Stack>
-          {!isShown && (
-            <Box className="viewmoreContainer">
-              <Button
-                className="similarjobsViewmorebtn"
-                onClick={handleClick}
-                variant="contained"
-              >
-                View more
-              </Button>
-            </Box>
-          )}
-          {isShown && (
-            <div>
-              <SimilarJobCard />
-              <SimilarJobCard />
-              <SimilarJobCard />
-              <SimilarJobCard />
-              <Box className="viewmoreContainer">
-                <Button
-                  className="similarjobsViewmorebtn"
-                  onClick={handleClick}
-                  variant="contained"
-                >
-                  View less
-                </Button>
-              </Box>
-            </div>
-          )}
-        </Box> */}
 
         <Box
           sx={{

@@ -13,29 +13,46 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import React from "react";
 import Image from "next/image";
+import { getImageLogo, getSalary } from "../JobListings/SearchSection";
+import moment from "moment";
 
-const SimilarJobCard = () => {
+const SimilarJobCard = ({ ...props }) => {
+  const { data } = props;
   return (
     <div>
       <Card className="similarCard">
         <CardContent sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Chip
-            label="Immediate"
-            sx={{
-              borderRadius: "8px",
-              backgroundColor: "#3771C8",
-              color: "white",
-              fontWeight: 600,
-              height: "25px",
-            }}
-          />
+          {data?.immediate && (
+            <Chip
+              label="Immediate"
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: "#3771C8",
+                color: "white",
+                fontWeight: 600,
+                height: "25px",
+              }}
+            />
+          )}
+          {data?.featureType && (
+            <Chip
+              label="featured"
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: "#3771C8",
+                color: "white",
+                fontWeight: 600,
+                height: "25px",
+              }}
+            />
+          )}
         </CardContent>
         <CardHeader
           avatar={
             <Avatar
               className="similarAvatar"
               alt="logo"
-              src="/logo 2.png"
+              src={getImageLogo(data?.company?.companyLogo?.logo)}
               sx={{
                 "& .MuiAvatar-img": {
                   height: "25px",
@@ -55,8 +72,8 @@ const SimilarJobCard = () => {
             fontSize: 16,
             color: "#034275",
           }}
-          title="Graphic Designer2"
-          subheader="Recroot"
+          title={data?.jobRole}
+          subheader={data?.company.company_name}
           sx={{
             borderBottom: "1px solid rgba(3, 66, 117, 0.15)",
             paddingTop: "0px",
@@ -85,7 +102,7 @@ const SimilarJobCard = () => {
                   className="similarInputText"
                   gutterBottom
                 >
-                  :&nbsp;US
+                  {data?.address[0]}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -108,7 +125,8 @@ const SimilarJobCard = () => {
                   className="similarInputText"
                   gutterBottom
                 >
-                  :&nbsp;4 LPA
+                  {" "}
+                  {getSalary(data?.salary)}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -131,7 +149,7 @@ const SimilarJobCard = () => {
                   className="similarInputText"
                   gutterBottom
                 >
-                  :&nbsp;Full Time
+                  {data?.jobType}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -154,23 +172,26 @@ const SimilarJobCard = () => {
                   className="similarInputText"
                   gutterBottom
                 >
-                  :&nbsp;3 Years
+                  {data?.essentialInformation?.experience}
                 </CustomTypography>
               </Box>
             </Stack>
             <Box className="btnBox">
-              <Button
+              {/* <Button
                 className="bookmarkBtn"
                 size="medium"
                 variant="outlined"
                 bgcolor="#02A9F7 !important"
               >
                 <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-              </Button>
+              </Button> */}
               <Button
                 className="viewDetailBtn"
                 variant="contained"
                 size="medium"
+                onClick={() =>
+                  handleNavigate(data?.jobTitle, data?.jobRole, data?._id)
+                }
               >
                 View Details
               </Button>
@@ -181,14 +202,15 @@ const SimilarJobCard = () => {
                 variant="body2"
                 color="text.secondary"
               >
-                10 days ago
+                {moment(data.createdAt).fromNow()}
               </CustomTypography>
               <CustomTypography
                 className="similarTypo"
                 variant="body2"
                 color="text.secondary"
               >
-                Expires in a month
+                Expires
+                {moment(data.applicationDeadline).endOf("day").fromNow()}
               </CustomTypography>
             </Box>
           </Box>
