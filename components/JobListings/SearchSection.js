@@ -652,6 +652,7 @@ const SearchSection = ({ ...props }) => {
                         >
                           Cancel
                         </Button>
+
                         <Button
                           variant="contained"
                           onClick={() => {

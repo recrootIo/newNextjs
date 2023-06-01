@@ -35,7 +35,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./scheduledinterviews.module.css";
+import AddIcon from "@mui/icons-material/Add";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import InterviewCalendar from "@/components/Employers/InterviewCalendar/InterviewCalendar";
 
 const style = {
   passinput: {
@@ -258,7 +261,7 @@ const ScheduledInterviews = () => {
                 <CardContent>
                   <Box>
                     <Grid container spacing={2}>
-                      <Grid item xs={4}>
+                      <Grid item xs={5}>
                         <Box
                           variant="outlined"
                           sx={{
@@ -331,27 +334,44 @@ const ScheduledInterviews = () => {
                           }}
                         >
                           <Calendar
-                            // onChange={(e) => handleDate(e)}
-                            // value={date}
-                            // tileClassName={({ date }) => {
-                            //   if (
-                            //     mark.find(
-                            //       (x) => x === moment(date).format("DD-MM-YYYY")
-                            //     )
-                            //   ) {
-                            //     return "highlight";
-                            //   }
-                            // }}
-                            className={["c1", "c2"]}
-                            className="styles.calendar"
-                            sx={{
-                              border: "1px solid white !important",
-                              borderRadius: "24px",
-                            }}
+                          // onChange={(e) => handleDate(e)}
+                          // value={date}
+                          // tileClassName={({ date }) => {
+                          //   if (
+                          //     mark.find(
+                          //       (x) => x === moment(date).format("DD-MM-YYYY")
+                          //     )
+                          //   ) {
+                          //     return "highlight";
+                          //   }
+                          // }}
                           />
                         </Box>
                       </Grid>
-                      <Grid item xs={8}></Grid>
+                      <Grid item xs={7}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            startIcon={<AddIcon />}
+                            sx={{
+                              bgcolor: "#2699FF !important",
+                              borderRadius: "8px",
+                              width: "200px",
+                              height: "47px",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            New Interview
+                          </Button>
+                        </Box>
+                        <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
+                        <InterviewCalendar />
+                      </Grid>
                     </Grid>
                   </Box>
                 </CardContent>
