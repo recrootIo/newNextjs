@@ -365,3 +365,26 @@ export const SECTORS = [
   "Wireless",
   "Writing / Editing",
 ];
+
+export const CAREER_LEVEL = [
+  "Board",
+  "Co-founder/partner",
+  "Executives/C-suites",
+  "Director/VP",
+  "Manager/Senior Manager",
+  "Architects/Senior Architects",
+  "Tech Lead/Team Leader",
+  "Senior Professional",
+  "Junior Professional",
+  "Fresher",
+  "Intern",
+];
+
+export const NoticePeriod = [
+  "Immediate Joiner",
+  "15 Days",
+  "30 days",
+  "45 Days",
+  "60 Days",
+  "90 Days",
+];
