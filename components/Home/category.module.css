@@ -6,6 +6,7 @@
   border-radius: 20px;
   width: 350px;
   height: 120px;
+  cursor: pointer;
 }
 
 .categoryCards:nth-child(even) {

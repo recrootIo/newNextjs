@@ -15,6 +15,7 @@ export const searchJobs = createAsyncThunk(
       jobVariant,
       selectedCompanies,
       selectedSector,
+      selectedCategory,
     },
     thunkAPI
   ) => {
@@ -27,7 +28,8 @@ export const searchJobs = createAsyncThunk(
         address,
         jobVariant,
         selectedCompanies,
-        selectedSector
+        selectedSector,
+        selectedCategory
       );
       return response.data;
     } catch (error) {

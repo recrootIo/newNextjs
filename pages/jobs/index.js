@@ -8,6 +8,7 @@ import RecentSearch from "@/components/JobListings/RecentSearch";
 import SearchSection from "@/components/JobListings/SearchSection";
 import Navbar from "@/components/Navbar/Navbar";
 import CompanyData from "@/redux/services/company.service";
+import jobsService from "@/redux/services/job.service";
 // import Head from "next/head";
 import React from "react";
 
@@ -22,6 +23,8 @@ const index = ({ ...props }) => {
         companies={props.companies}
         title={props.title}
         address={props.address}
+        categories={props.categories}
+        category={props.category}
       />
       {/* <SearchByCategory /> */}
       <RecentSearch />
@@ -33,11 +36,13 @@ const index = ({ ...props }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const { title = null, address = null } = context.query;
+  const { title = null, address = null, category = null } = context.query;
 
   const newService = new CompanyData();
+  const jobsServices = new jobsService();
   let sectors = [];
   let companies = [];
+  let categories = [];
 
   await newService
     .getAllInfoSectors()
@@ -57,12 +62,24 @@ export const getServerSideProps = async (context) => {
       console.log("something went wrong");
     });
 
+  await jobsServices
+    .getJobsCatCount()
+    .then((res) => {
+      console.log(res.data);
+      let newCate = res.data.jobCount.map((cat) => cat._id);
+      categories = newCate;
+      console.log(categories);
+    })
+    .catch((res) => console.log(res));
+
   return {
     props: {
       sectors,
       companies,
       address,
       title,
+      categories,
+      category,
     },
   };
 };

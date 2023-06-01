@@ -16,8 +16,6 @@ import AddLocationIcon from "@mui/icons-material/AddLocation";
 import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import Image from "next/image";
-import { searchJobs } from "@/redux/slices/search";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 const StyledButton = styled("button")({

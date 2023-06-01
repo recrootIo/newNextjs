@@ -14,6 +14,7 @@ import Carousel from "react-elastic-carousel";
 import Image from "next/image";
 import jobsService from "@/redux/services/job.service";
 import styles from "./category.module.css";
+import { useRouter } from "next/router";
 
 const StyledCarousel = styled(Carousel)({
   "& .rec .rec-carousel": {
@@ -22,11 +23,14 @@ const StyledCarousel = styled(Carousel)({
 });
 
 const CategoryHome = () => {
+  const router = useRouter();
+
   const breakPoints = [
     { width: 550, itemsToShow: 1 },
     { width: 768, itemsToShow: 1 },
     { width: 974, itemsToShow: 4 },
   ];
+
   const [categorySetOne, setCategorySetOne] = useState([]);
   const [categorySetTwo, setCategorySetTwo] = useState([]);
   const jobs = new jobsService();
@@ -43,6 +47,10 @@ const CategoryHome = () => {
       .catch((res) => {
         console.log(res.data);
       });
+  };
+
+  const searchCategory = (category) => {
+    router.push(`jobs?category=${category}`);
   };
 
   const tablet = useMediaQuery("(max-width:974px)");
@@ -196,6 +204,7 @@ const CategoryHome = () => {
                           flexDirection: "row",
                           alignItems: "center",
                         }}
+                        onClick={() => searchCategory(cat?._id)}
                       >
                         <Grid
                           container
@@ -256,7 +265,7 @@ const CategoryHome = () => {
                                 }}
                               >
                                 {cat.count}
-                                155 Jobs Available
+                                Available
                               </CustomTypography>
                             </Stack>
                           </Grid>
@@ -326,7 +335,11 @@ const CategoryHome = () => {
                     }}
                   >
                     {categorySetOne.map((cat, index) => (
-                      <Box key={index} className={styles.categoryCards}>
+                      <Box
+                        key={index}
+                        className={styles.categoryCards}
+                        onClick={() => searchCategory(cat?._id)}
+                      >
                         <Grid container>
                           <Grid item md={3}>
                             <Image
@@ -406,7 +419,11 @@ const CategoryHome = () => {
                     }}
                   >
                     {categorySetTwo.map((cate, index) => (
-                      <Box key={index} className={styles.categoryCards}>
+                      <Box
+                        key={index}
+                        className={styles.categoryCards}
+                        onClick={() => searchCategory(cate?._id)}
+                      >
                         <Grid container>
                           <Grid item md={3}>
                             <Image
