@@ -31,12 +31,13 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import { useEffect } from "react";
-import ReactQuill from "react-quill";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { isEmpty } from "lodash";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
