@@ -4,7 +4,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { styles } from "../postjobstyle";
 import { useSelector, useDispatch } from "react-redux";
 // import { addressSet } from "../slices/job";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
@@ -14,7 +13,7 @@ import { addressSet } from "@/redux/slices/job";
 uuidv4();
 
 
-export function Address() {
+export default function Address() {
   const dispatch = useDispatch();
   const addrss = useSelector((state) => state.jobs?.location);
   const [gaddres, setgaddres] = useState('')
@@ -35,7 +34,14 @@ export function Address() {
 
   return (
     <Box sx={{ p: "20px" }}>
-      <Typography variant="p" sx={styles.sectxt}>
+      <Typography variant="p" sx={{
+         fontWeight: "700",
+         fontSize: "16px",
+         lineHeight: "30px",
+         mb: "8px",
+         mt: "20px",
+         color: "#4a4a4a",
+      }}>
         Add Location
       </Typography>
       <Box
@@ -88,7 +94,10 @@ export function Address() {
           justifyContent: "center",
           borderRadius: "16px",
           cursor: "pointer",}}>
-        <Typography sx={styles.bluetxt}>{addd}</Typography> 
+        <Typography sx={{  fontWeight: 700,
+    fontSize: "16px",
+    lineHeight: "18px",
+    color: "#4fa9ff",}}>{addd}</Typography> 
         <IconButton onClick={()=>{handleRemove(index)}}>
         <CloseRoundedIcon />
         </IconButton>

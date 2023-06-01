@@ -12,7 +12,6 @@ import {
 import { Add, Close } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { styles } from "../postjobstyle";
 import { queShow, quesSet } from "@/redux/slices/job";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 
@@ -75,7 +74,14 @@ function ScreeningQuestions() {
 
   return (
     <Box>
-      <Typography variant="p" sx={styles.sectxt}>
+      <Typography variant="p" sx={{
+         fontWeight: "700",
+         fontSize: "16px",
+         lineHeight: "30px",
+         mb: "8px",
+         mt: "20px",
+         color: "#4a4a4a",
+      }}>
         Screening Questions
       </Typography>
       <Box>
