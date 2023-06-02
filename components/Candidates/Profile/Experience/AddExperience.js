@@ -28,6 +28,7 @@ import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import {
   AddExperinceAndThenGet,
+  retrievePersonal,
   // EditExperinceAndGet,
   // GetCandsPrefInfo,
 } from "@/redux/slices/personal";
@@ -35,116 +36,74 @@ import dayjs from "dayjs";
 import candidateServices from "@/redux/services/candidate.services";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import * as Yup from "yup";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import { Form, Formik } from "formik";
+import CustomPickers from "@/components/Forms/CustomPickers";
+
+const FORM_VALIDATION = Yup.object().shape({
+  companyName: Yup.string().required("Company Name Required"),
+  role: Yup.string().required("Role Name Required"),
+  country: Yup.string().required("country Name Required"),
+  state: Yup.string().required("state Name Required"),
+  city: Yup.string().required("city Name Required"),
+  experience: Yup.string().required("experience Name Required"),
+  fromDate: Yup.date()
+    .required("From Date field is required")
+    .max(Yup.ref("toDate"), "From Date cannot exceed To Date")
+    .test("future-date", "From Date cannot be a future date", function (value) {
+      const toDate = this.resolve(Yup.ref("toDate"));
+      if (!value || !toDate) {
+        return true;
+      }
+      return new Date(value) <= new Date(toDate);
+    }),
+  toDate: Yup.date()
+    .required("To Date field is required")
+    .min(Yup.ref("fromDate"), "To Date cannot be less than From Date")
+    .test("future-date", "To Date cannot be a future date", function (value) {
+      const fromDate = this.resolve(Yup.ref("fromDate"));
+      if (!value || !fromDate) {
+        return true;
+      }
+      return new Date(value) >= new Date(fromDate);
+    }),
+});
 
 const AddExperience = () => {
   const resume = useSelector((state) => state.personal.exper);
   const dispatch = useDispatch();
 
-  const [experienceFields, setExperienceFields] = React.useState({
-    companyName: "",
-    role: "",
-    country: "",
-    state: "",
-    city: "",
-    experience: "",
-    fromDate: "",
-    toDate: "",
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
+    companyName: resume?.companyName,
+    role: resume?.role,
+    country: resume?.country,
+    state: resume?.state,
+    city: resume?.city,
+    experience: resume?.experience,
+    fromDate: resume?.fromDate,
+    toDate: resume?.toDate,
+    jobProfile: resume?.jobProfile,
+    _id: resume?._id,
   });
-
-  React.useEffect(() => {
-    setExperienceFields(() => ({
-      companyName: resume?.companyName,
-      role: resume?.role,
-      country: resume?.country,
-      state: resume?.state,
-      city: resume?.city,
-      experience: resume?.experience,
-      fromDate: resume?.fromDate,
-      toDate: resume?.toDate,
-      jobProfile: resume?.jobProfile,
-      _id: resume?._id,
-    }));
-    setValue(() => dayjs(resume?.fromDate));
-    setValue2(() => dayjs(resume?.toDate));
-  }, [resume]);
-
-  const [value, setValue] = React.useState("");
-  const [value2, setValue2] = React.useState("");
-  const [empType, setEmpType] = React.useState("");
-
-  const handleEmpTypeChange = (event) => {
-    setEmpType(event.target.value);
-  };
-
-  const onChange = (e) => {
-    let { name, value } = e.target;
-    setExperienceFields({
-      ...experienceFields,
-      [name]: value,
-    });
-  };
-
-  const handleSelect = async (selected) => {
-    const results = await geocodeByAddress(selected.label);
-    setExperienceFields({
-      ...experienceFields,
-      country: results[0].address_components.find((c) =>
-        c.types.includes("country")
-      )?.long_name,
-      state: results[0].address_components.find((c) =>
-        c.types.includes("administrative_area_level_1")
-      )?.long_name,
-      city: results[0].address_components.find((c) =>
-        c.types.includes("locality")
-      )?.long_name,
-    });
-  };
-
-  const handleChange = (newValue) => {
-    let val = convertDate(newValue);
-    setValue(() => newValue);
-    setExperienceFields((state) => ({
-      ...state,
-      fromDate: val,
-    }));
-  };
-
-  const handleChangeto = (newValue2) => {
-    let val = convertDate(newValue2);
-    setValue2(() => newValue2);
-    setExperienceFields((state) => ({
-      ...state,
-      toDate: val,
-    }));
-  };
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
-    setExperienceFields({
-      companyName: "",
-      role: "",
-      country: "",
-      state: "",
-      city: "",
-      experience: "",
-      fromDate: "",
-      toDate: "",
-    })
   };
 
-  const addExperience = () => {
-    if (resume?._id) {
-      editMyExperience();
+  const addExperience = (values) => {
+    if (values?._id) {
+      editMyExperience(values);
     } else {
-      addMyExperience(AddExperinceAndThenGet(experienceFields));
+      addMyExperience(values);
     }
   };
 
-  const editMyExperience = () => {
+  const editMyExperience = (values) => {
     candidateServices
-      .editExperience(experienceFields, resume?._id)
+      .editExperience(values, values?._id)
       .then((res) => {
-        if (res?.status === 201) {          
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -159,17 +118,21 @@ const AddExperience = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data?.message || "Something went wrong",
           })
         );
       });
   };
 
-  const addMyExperience = () => {
+  React.useEffect(() => {
+    setInitialValues(() => resume);
+  }, []);
+
+  const addMyExperience = (values) => {
     candidateServices
-      .addExperience(experienceFields)
+      .addExperience(values)
       .then((res) => {
-        if (res.status === 201) {      
+        if (res.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -184,7 +147,7 @@ const AddExperience = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data.message || "Something went wrong",
           })
         );
       });
@@ -222,212 +185,178 @@ const AddExperience = () => {
               Add Experience
             </CustomTypography>
 
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <TextField
-                autoComplete="given-name"
-                name="role"
-                required
-                fullWidth
-                id="companyRole"
-                label="Role"
-                autoFocus
-                value={experienceFields?.role}
-                onChange={onChange}
-              />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                addExperience(values);
+                console.log(values, "values");
+              }}
+            >
+              {({ errors, values, setFieldValue, submitForm }) => {
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <CustomTextField label="Role" name={"role"} />
+                      <CustomTextField
+                        name="companyName"
+                        label="Company Name"
+                      />
+                      <Box sx={{ width: "100%" }}>
+                        <GooglePlacesAutocomplete
+                          apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                          selectProps={{
+                            isClearable: true,
+                            placeholder: "Enter Your Location",
+                            value: values.country,
+                            onChange: async (selected) => {
+                              const results = await geocodeByAddress(
+                                selected.label
+                              );
 
-              <TextField
-                autoComplete="given-name"
-                name="companyName"
-                required
-                fullWidth
-                id="cmopanyName"
-                label="Company Name"
-                autoFocus
-                value={experienceFields?.companyName}
-                onChange={onChange}
-              />
+                              setFieldValue(
+                                "country",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("country")
+                                )?.long_name
+                              );
 
-              <Box sx={{ width: "100%" }}>
-                <GooglePlacesAutocomplete
-                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                  selectProps={{
-                    isClearable: true,
-                    placeholder: "Enter Your Location",
-                    value: experienceFields?.country,
-                    onChange: (val) => {
-                      handleSelect(val);
-                    },
-                    styles: {
-                      input: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        height: "40px",
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                    },
-                  }}
-                />
-              </Box>
+                              setFieldValue(
+                                "state",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes(
+                                    "administrative_area_level_1"
+                                  )
+                                )?.long_name
+                              );
 
-              {experienceFields?.country === "" ? (
-                ""
-              ) : (
-                <Stack
-                  sx={{
-                    flexDirection: { md: "row", sm: "column", xs: "column" },
-                    alignItems: "center",
-                    gap: "10px",
-                  }}
-                  marginTop={2}
-                >
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">Country</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="country"
-                      fullWidth
-                      id="about"
-                      placeholder="Country"
-                      value={experienceFields?.country}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">State</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="state"
-                      fullWidth
-                      id="about"
-                      placeholder="State"
-                      value={experienceFields?.state}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">City</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="city"
-                      fullWidth
-                      id="about"
-                      placeholder="City"
-                      value={experienceFields?.city}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                </Stack>
-              )}
+                              setFieldValue(
+                                "city",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("locality")
+                                )?.long_name
+                              );
+                            },
+                            styles: {
+                              input: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                height: "40px",
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                              }),
+                            },
+                          }}
+                        />
+                      </Box>
 
-              <TextField
-                id="outlined-basic"
-                label="Total Experience(Years)"
-                type="number"
-                variant="outlined"
-                onChange={onChange}
-                name="experience"
-                value={experienceFields?.experience}
-              />
+                      {values?.country === undefined ? (
+                        ""
+                      ) : (
+                        <Stack
+                          sx={{
+                            flexDirection: {
+                              md: "row",
+                              sm: "column",
+                              xs: "column",
+                            },
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                          marginTop={2}
+                        >
+                          <CustomTextField name="country" label="country" />
+                          <CustomTextField name="state" label="State" />
+                          <CustomTextField name="city" label="city" />
+                        </Stack>
+                      )}
 
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Employement Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={empType}
-                  label="Employement Type"
-                  onChange={handleEmpTypeChange}
-                >
-                  <MenuItem value={"Permanent"}>Permanent</MenuItem>
-                  <MenuItem value={"Contract"}>Contract</MenuItem>
-                  <MenuItem value={"Contract"}>Freelancing</MenuItem>
-                </Select>
-              </FormControl>
+                      <CustomTextField
+                        label="Total Experience(Years)"
+                        name="experience"
+                      />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: { md: "row", sm: "column", xs: "column" },
-                  gap: "20px",
-                  width: "100%",
-                }}
-              >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MobileDatePicker
-                    label="From"
-                    sx={{ width: "100%" }}
-                    // inputFormat="MM/dd/YYYY"
-                    name="fromDate"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                          gap: "20px",
+                          width: "100%",
+                        }}
+                      >
+                        <CustomPickers name="fromDate" label="From" />
+                        <CustomPickers name="toDate" label="To" />
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <MobileDatePicker
+                              label="From"
+                              sx={{ width: "100%" }}
+                              // inputFormat="MM/dd/YYYY"
+                              name="fromDate"
+                              value={value}
+                              onChange={handleChange}
+                              renderInput={(params) => (
+                                <TextField {...params} sx={{ width: "100%" }} />
+                              )}
+                            />
 
-                  <MobileDatePicker
-                    label="To"
-                    sx={{ width: "100%" }}
-                    // inputFormat="MM/dd/YYYY"
-                    name="toDate"
-                    value={value2}
-                    onChange={handleChangeto}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Box>
+                            <MobileDatePicker
+                              label="To"
+                              sx={{ width: "100%" }}
+                              // inputFormat="MM/dd/YYYY"
+                              name="toDate"
+                              value={value2}
+                              onChange={handleChangeto}
+                              renderInput={(params) => (
+                                <TextField {...params} sx={{ width: "100%" }} />
+                              )}
+                            />
+                          </LocalizationProvider> */}
+                      </Box>
 
-              <TextField
-                required
-                id="outlined-basic"
-                label="Salary"
-                variant="outlined"
-              />
+                      <CustomTextField
+                        label="Job Profile"
+                        multiline
+                        name="jobProfile"
+                        rows={4}
+                      />
 
-              <TextField
-                id="outlined-multiline-static"
-                label="Job Profile"
-                multiline
-                name="jobProfile"
-                rows={4}
-                value={experienceFields.jobProfile}
-                onChange={onChange}
-              />
-
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => gotoHome()}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => addExperience()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={() => gotoHome()}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

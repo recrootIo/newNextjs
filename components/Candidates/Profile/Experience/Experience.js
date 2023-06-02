@@ -30,6 +30,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Experience = ({ ...experience }) => {
+  console.log(experience, "experience");
   const dispatch = useDispatch();
   const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState("");
@@ -156,20 +157,20 @@ const Experience = ({ ...experience }) => {
                         </CustomTypography>
                         <CustomTypography>{ex?.companyName}</CustomTypography>
                       </Stack>
-
+                      {/* 
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Employement:
                         </CustomTypography>
                         <CustomTypography></CustomTypography>
-                      </Stack>
+                      </Stack> */}
 
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      {/* <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Salary:
                         </CustomTypography>
                         <CustomTypography></CustomTypography>
-                      </Stack>
+                      </Stack> */}
 
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
@@ -185,7 +186,7 @@ const Experience = ({ ...experience }) => {
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Job Profile:
                         </CustomTypography>
-                        <CustomTypography></CustomTypography>
+                        <CustomTypography>{ex?.jobProfile}</CustomTypography>
                       </Stack>
                     </Stack>
                   </Grid>
