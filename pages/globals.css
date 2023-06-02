@@ -1755,7 +1755,10 @@ a {
   background-color: #e6e6e6;
 }
 .highlight {
-  color: white;
-  background: #52e1aa;
-  border-radius: 50px;
+  color: white !important;
+  background: #52e1aa !important;
+  border-radius: 50px !important;
+}
+.fc-event {
+  height: 35px !important; /* Adjust the height as needed */
 }
