@@ -481,7 +481,7 @@ function Signin() {
                           label={<p>Remember Me</p>}
                         />
                       </FormControl>
-                      <CustomTypography>Forget Your Password</CustomTypography>
+                      <CustomTypography>Forgot Your Password</CustomTypography>
                     </Stack>
                     <button
                       style={{
