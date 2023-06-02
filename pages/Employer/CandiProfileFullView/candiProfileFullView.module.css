@@ -1,0 +1,59 @@
+.FullProfileSectionTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: #00339b;
+  font-family: "Inter-bold";
+}
+
+.FullProfileSectionTypo {
+  font-size: 17px;
+  font-weight: 600;
+  color: #01313f;
+  /* font-family: "Inter-bold"; */
+}
+
+.FullProfileSectionData {
+  font-size: 17px;
+  font-weight: 400;
+  color: #01313f;
+}
+
+.FullProfilePersonalDetailsTypoBox {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ViewFullCandiProfileCard {
+  width: 558px;
+  height: auto;
+  background-color: #f2f8fd;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.ViewFullCandiProfileSkillCard {
+  width: 558px;
+  height: 50px;
+  background-color: #f2f8fd;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.ViewFullInfoMainText {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.ViewFullInfoText {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000000;
+}
