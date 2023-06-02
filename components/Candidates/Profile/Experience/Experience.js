@@ -22,14 +22,17 @@ import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { deleteExperAndGet } from "@/redux/slices/personal";
+import { deleteExperAndGet, retrievePersonal } from "@/redux/slices/personal";
 import { retrieveGetSinExperience } from "@/redux/slices/personal";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Experience = ({ ...experience }) => {
+  console.log(experience, "experience");
   const dispatch = useDispatch();
   const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState("");
@@ -44,7 +47,24 @@ const Experience = ({ ...experience }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteExperAndGet(selectedId));
+    dispatch(deleteExperAndGet(selectedId))
+      .then((res) => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Experience is deleted",
+          })
+        );
+        dispatch(retrievePersonal());
+      })
+      .catch((error) => {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: error?.response?.data?.message || "Something went wrong",
+          })
+        );
+      });
   };
 
   const closeMessage = () => {
@@ -156,20 +176,20 @@ const Experience = ({ ...experience }) => {
                         </CustomTypography>
                         <CustomTypography>{ex?.companyName}</CustomTypography>
                       </Stack>
-
+                      {/* 
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Employement:
                         </CustomTypography>
                         <CustomTypography></CustomTypography>
-                      </Stack>
+                      </Stack> */}
 
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      {/* <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Salary:
                         </CustomTypography>
                         <CustomTypography></CustomTypography>
-                      </Stack>
+                      </Stack> */}
 
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
@@ -185,7 +205,7 @@ const Experience = ({ ...experience }) => {
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Job Profile:
                         </CustomTypography>
-                        <CustomTypography></CustomTypography>
+                        <CustomTypography>{ex?.jobProfile}</CustomTypography>
                       </Stack>
                     </Stack>
                   </Grid>
@@ -203,7 +223,7 @@ const Experience = ({ ...experience }) => {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
-          Are you sure you want to proceed with deleting your work experience ?
+          Are you sure you want to proceed with deleting your work experience?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description"></DialogContentText>

@@ -102,7 +102,7 @@ const AddEducation = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "User Education is Updated",
             })
           );
           dispatch(updateCurrentScreen(""));
