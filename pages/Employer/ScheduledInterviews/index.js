@@ -39,6 +39,8 @@ import AddIcon from "@mui/icons-material/Add";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import InterviewCalendar from "@/components/Employers/InterviewCalendar/InterviewCalendar";
+import { getSchedules } from "@/redux/slices/interviewslice";
+import moment from "moment";
 
 const style = {
   passinput: {
@@ -60,17 +62,23 @@ const style = {
 };
 
 const ScheduledInterviews = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   let dispatch = useDispatch();
   const [date, setDate] = useState(new Date());
   const [result, setResult] = useState(false);
   const dateFormat = `${date.getDate()} ${date.toLocaleString("en-us", {
     month: "long",
   })} ${date.getFullYear()}`;
-  //const jobs = useSelector((state) => state.apply.names);
+  const jobs = useSelector((state) => state?.apply?.names);
   const [names, setNames] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    if (names.length === 0) {
+      setUser(arry);
+    }
+  };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -85,24 +93,41 @@ const ScheduledInterviews = () => {
       },
     },
   };
+  useEffect(() => {
+    dispatch(getSchedules());
+    // dispatch(getJobsfil());
+  }, [dispatch]);
+  const sear = useSelector((state) => state?.sinterview?.schedules);
 
   const [arry, setArry] = useState([]);
+  useEffect(() => {
+    var arrras = [];
+    sear.map((set) => {
+      if (
+        moment(set.day).format("YYYY-MM-DD") ===
+        moment(date).format("YYYY-MM-DD")
+      ) {
+        arrras.push(set);
+      }
+      return setArry(arrras);
+    });
+  }, [date, sear]);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    if (names.length === 0) {
-      setUser(arry);
-    }
+  var schedules = [];
+  sear.map((set) => {
+    schedules.push({
+      title:`${set?.jobDetail?.jobRole}(${set.subject})`,
+      start: `${set?.day}T${set?.time.split('T')[1].split('+')[0]}`,
+      end:moment(`${set?.day}T${set?.time.split('T')[1].split('+')[0]}`).add(set.duration,'minutes').format(),
+      datas:set
+    })
+  })  
+console.log(schedules,'s')
+  const handleDate = (e) => {
+    setDate(e);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    if (names.length > 0) {
-      setArry(filterObjectArray(arry, names));
-    }
-    if (names.length === 0) {
-      setArry(user);
-    }
+  const handlechange = () => {
+    setResult(!result);
   };
 
   const handleName = (event) => {
@@ -123,15 +148,33 @@ const ScheduledInterviews = () => {
     setNames(duplicateRemoved);
   };
 
-  const handleDate = (e) => {
-    setDate(e);
+  const filterObjectArray = (arr, filterArr) => {
+    return arr.filter((el) =>
+      filterArr.some((f) => f === el.jobDetail.jobTitle)
+    );
   };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    if (names.length > 0) {
+      setArry(filterObjectArray(arry, names));
+    }
+    if (names.length === 0) {
+      setArry(user);
+    }
+  };
+
   const mark = [];
+  sear.map((dat) => mark.push(moment(dat.day).format("DD-MM-YYYY")));
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const handleSetint = (id) => {
+    dispatch(setinterview(sear.filter((job) => job._id === id)[0])).then(
+      setTimeout(() => {
+        navigate("/employerhome/interview");
+      }, 500)
+    );
   };
-
+  console.log(mark,'ffff')
   return (
     <>
       <EmployerNavbar />
@@ -147,94 +190,6 @@ const ScheduledInterviews = () => {
       <Container>
         <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
             <Grid item xs={10}>
               <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
                 <CustomTypography
@@ -334,17 +289,16 @@ const ScheduledInterviews = () => {
                           }}
                         >
                           <Calendar
-                          // onChange={(e) => handleDate(e)}
-                          // value={date}
-                          // tileClassName={({ date }) => {
-                          //   if (
-                          //     mark.find(
-                          //       (x) => x === moment(date).format("DD-MM-YYYY")
-                          //     )
-                          //   ) {
-                          //     return "highlight";
-                          //   }
-                          // }}
+                          onChange={(e) => handleDate(e)}
+                          value={date}
+                          tileClassName={({ date }) => {
+                            if (
+                              mark.find((x) => x === moment(date).format("DD-MM-YYYY"))
+                              // mark[0] === moment(date).format("DD-MM-YYYY")
+                            ) {
+                              return "highlight";
+                            }
+                          }}
                           />
                         </Box>
                       </Grid>
@@ -370,7 +324,7 @@ const ScheduledInterviews = () => {
                           </Button>
                         </Box>
                         <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
-                        <InterviewCalendar />
+                        <InterviewCalendar  date={date} schedules={schedules}/>
                       </Grid>
                     </Grid>
                   </Box>
