@@ -69,8 +69,18 @@ const AddEducation = () => {
   const education = useSelector((state) => state.personal.education);
   const dispatch = useDispatch();
 
-  // const [value, setValue] = React.useState("");
-  // const [value2, setValue2] = React.useState("");
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
+    graduate: education?.graduate || "",
+    degreeName: education?.degreeName,
+    country: education?.country || "",
+    state: education?.state || "",
+    city: education?.city || "",
+    experience: education?.experience || "",
+    collegeName: education?.collegeName || "",
+    fromDate: education?.fromDate || "",
+    toDate: education?.toDate || "",
+    _id: education?._id,
+  });
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
@@ -136,18 +146,10 @@ const AddEducation = () => {
       });
   };
 
-  const INITIAL_VALUES = {
-    graduate: education?.graduate || "",
-    degreeName: education?.degreeName,
-    country: education.country || "",
-    state: education?.state || "",
-    city: education?.city || "",
-    experience: education?.experience || "",
-    collegeName: education?.collegeName || "",
-    fromDate: education?.fromDate || "",
-    toDate: education?.toDate || "",
-    _id: education?._id,
-  };
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setInitialValues(() => education);
+  }, []);
 
   return (
     <div>
