@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
   const links = [
     { img: "/home.png", path: "/Employer/Dashboard" },
     { img: "/profile.png", path: "/Employer/CompanyProfile" },
-    { img: "/jobs.png", path: "/Employer" },
+    { img: "/jobs.png", path: "/Employer/PostNewJob" },
     { img: "/team.png", path: "/Employer" },
     { img: "/convo.png", path: "/Employer" },
     { img: "/subscription.png", path: "/Employer" },
