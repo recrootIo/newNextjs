@@ -52,10 +52,11 @@ import { BOLD } from "@/theme/fonts";
 // import userService from "@/redux/services/user.service";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
-import * as YUP from "yup";
+
 import { Form, Formik, useFormikContext } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomSelect from "@/components/Forms/CustomSelect";
+import { FORM_VALIDATION } from "./personalValidators";
 
 const jobs = ["Remote", "Onsite", "Hybrid"];
 
@@ -105,29 +106,6 @@ const EditPersonalDetails = () => {
     languages: resume?.languages,
     notice: resume?.notice,
   };
-
-  const FORM_VALIDATION = YUP.object().shape({
-    firstName: YUP.string().required("First Name Required"),
-    lastName: YUP.string().required("Last Name Required"),
-    jobTitle: YUP.string().required("Job Title  Required"),
-    mobile: YUP.string().required("Mobile  Required"),
-    languages: YUP.array().min(1).required("Languages required"),
-    salaryCurrency: YUP.string().required("Salary currency required"),
-    currentSalary: YUP.number().required("Current Salary required"),
-    currentSalaryDenomination: YUP.string().required(
-      "Salary currency required"
-    ),
-    expectedSalary: YUP.number().required("Expected Salary required"),
-    expectedSalaryDenomination: YUP.string().required(
-      "Expected Salary denomination required"
-    ),
-    workPrefence: YUP.array().min(1).required("Languages required"),
-    country: YUP.string().required("Country required"),
-    state: YUP.string().required("State required"),
-    city: YUP.string().required("City required"),
-    totalWorkExperience: YUP.number().required("Years of Experience required"),
-    about: YUP.string().required("About required"),
-  });
 
   const dispatch = useDispatch();
 
@@ -368,7 +346,7 @@ const EditPersonalDetails = () => {
                               );
 
                               setFieldValue(
-                                "country",
+                                "state",
                                 results[0].address_components.find((c) =>
                                   c.types.includes("locality")
                                 )?.long_name
