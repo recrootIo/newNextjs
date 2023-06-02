@@ -455,7 +455,6 @@ const EditPersonalDetails = () => {
                           <IconButton
                             onClick={() => {
                               let newLanguage = values.languages;
-                              newLanguage.push(language);
                               changeLanguages("");
                               setFieldValue("languages", newLanguage);
                             }}
