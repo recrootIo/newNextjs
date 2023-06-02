@@ -54,7 +54,6 @@ function RedirectUser() {
 //   const redirect = localStorage.getItem("Redirect");
 const router = useRouter()
 const {id} = router.query
-console.log(id,'dd')
   const getUser = () => {
     axios
       .get(`https://preprod.recroot.au/getUser/${id}`)

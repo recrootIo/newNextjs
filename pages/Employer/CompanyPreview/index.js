@@ -53,8 +53,7 @@ dispatch(getCompanyDetails())
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  const logo = isEmpty(final.companyLogo.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo.logo;
-console.log(final)
+  const logo = isEmpty(final?.companyLogo?.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo?.logo;
   return (
     <>
       <EmployerNavbar />

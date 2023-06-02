@@ -41,9 +41,9 @@ import Image from "next/image";
 import axios from "axios";
 import { descSet, errorJobs, jobPackType, quesSend, roleSet, skillSet, titleSet } from "@/redux/slices/job";
 import { v4 as uuidv4 } from "uuid";
-import { Address } from "./Address";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
+import Address from "@/components/Address";
 uuidv4()
 const style = {
   txtinput: {

@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 // import { PreviewJob } from "./PreviewJob
 // import { addJobs, companyJobs, errorJobs, updateJobs } from "../slices/job";
 // import { applyJobsdet, getJobsfil } from "../slices/applyJobs";
-import { validator } from "./Validator";
 // import { logout } from "../slices/auth";
 // import { getCompanyDetails } from "../slices/companyslice";
 import { useEffect } from "react";
@@ -28,6 +27,8 @@ import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
+import validator from "@/components/Validator";
+
 function PostnewJob() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [apiAddress, setapiAddress] = useState("");

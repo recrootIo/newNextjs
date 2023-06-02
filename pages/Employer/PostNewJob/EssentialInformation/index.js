@@ -66,7 +66,9 @@ const EssentialInformation = () => {
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
-  const [value, setValue] = useState(full === 'jSlot' ? new Date() : moment(new Date()).add(30, 'days').format());
+  const futureDate = new Date();
+  futureDate.setDate(futureDate.getDate() + 30);
+  const [value, setValue] = useState(full === 'jSlot' ? new Date() :futureDate);
  const dispatch = useDispatch();
 
   const [salary, setSalary] = useState({
@@ -81,14 +83,13 @@ const EssentialInformation = () => {
     }
   if (jobs?.applicationDeadline === undefined) {
     const futureDate = new Date();
-futureDate.setDate(currentDate.getDate() + 30);
+   futureDate.setDate(futureDate.getDate() + 30);
    setDatas({...datas,
     applicationDeadline:futureDate,
    })
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs])
-  
   const [datas, setDatas] = useState({
     jobType: jobs && jobs.jobType,
     applicationDeadline: jobs && jobs.applicationDeadline,
@@ -350,8 +351,8 @@ futureDate.setDate(currentDate.getDate() + 30);
                               name="applicationDeadline"
                               inputFormat="dd/MM/yyyy"
                               minDate={new Date()}
-                              maxDate={full === 'jSlot' ? '' : moment(new Date()).add(30, 'days').format()}
-                              value={jobs.applicationDeadline === undefined ? value : jobs.applicationDeadline}
+                              maxDate={full === 'jSlot' ? '' : futureDate}
+                              value={(jobs.applicationDeadline === undefined ? value : jobs.applicationDeadline) || new Date()}
                               disabled={_id !== undefined }
                               onChange={handleChangeDate}
                               renderInput={(params) => (
@@ -545,7 +546,7 @@ futureDate.setDate(currentDate.getDate() + 30);
                           }}
                         />
                       </Stack> )}
-                      {(companyDet?.jobSlotGold === true && full === 'jSlot') || companyDet.package.subscription_package === 'SuperEmployer' ? (
+                      {(companyDet?.jobSlotGold === true && full === 'jSlot') || companyDet?.package?.subscription_package === 'SuperEmployer' ? (
                        <Box>
                         <FormGroup>
                           <FormControlLabel
