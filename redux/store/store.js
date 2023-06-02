@@ -11,7 +11,7 @@ import searchReducer from "../slices/search";
 // import resumeReducer from "./slices/UploadingResume";
 import cmpReducer from "../slices/companyslice";
 import intReducer from "../slices/interviewslice";
-// import SubscriptionSlice from "./slices/Subscription";
+import SubscriptionSlice from "../slices/Subscription";
 // import AlertSlice from "./slices/AlertSlice";
 // import retrenchedReducer from "./slices/Retrenched";
 
@@ -26,7 +26,7 @@ const reducer = {
   //   resume: resumeReducer,
     company: cmpReducer,
     sinterview: intReducer,
-  //   subscription: SubscriptionSlice,
+    subscription: SubscriptionSlice,
   alertMessage: alert,
   //   retrenched: retrenchedReducer,
 };

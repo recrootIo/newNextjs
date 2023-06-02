@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import companyservice from "../services/company.service";
+import company from "../services/company.service";
 // import companyservice from "../services/company.service";
 // import companyservice from "../services/companyservice";
 // import { notifySuccess } from "../helpers/Toast";
-
+const companyservice = new company();
 const initialState = {
   companylogo: { logo: "" },
   basicinformation: { cmpemail: "", cmpname: "", cmpphone: "", cmpwebsite: "" },

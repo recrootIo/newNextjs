@@ -39,8 +39,6 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -62,7 +60,8 @@ import { Setprivacy, basicInfor, cmpInfor, cmpLogo, getCompanyDetails, linkInfor
 import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
-import { Location } from "./Location";
+import Location from "@/components/Location";
+
 
 const style = {
   naminput: {

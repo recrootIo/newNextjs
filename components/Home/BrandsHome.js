@@ -26,7 +26,7 @@ const BrandsHome = () => {
 
   const getLogo = (logo) => {
     if (logo) {
-      return `ttps://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`;
+      return `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`;
       // return await http
       //   .get(`getCompanyPhotos?compPhotos=${logo}`)
       //   .then((res) => res);

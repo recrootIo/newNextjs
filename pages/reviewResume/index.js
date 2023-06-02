@@ -81,7 +81,6 @@ function ReviewAppication(props) {
   }, [dispatch]);
   const details = useSelector((state) => state.personal.data);
   const resumeSin = useSelector((state) => state.personal.resume);
-  console.log(resumeSin, "resumeSin");
   const CoverSin = useSelector((state) => state.personal.cover);
   const salary = useSelector((state) => state.apply);
   // console.log(salary);
