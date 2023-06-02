@@ -208,7 +208,7 @@ const Navbar = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Login
+                        Sign In
                       </Link>
                       <Link
                         href="/signup"
@@ -218,7 +218,7 @@ const Navbar = () => {
                           fontWeight: 600,
                         }}
                       >
-                        SignIn
+                        Sign Up
                       </Link>
                     </>
                   ) : (
@@ -341,7 +341,7 @@ const Navbar = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Login
+                        SIGN IN
                       </Link>
                     </ListItemButton>
                   </ListItem>
@@ -356,7 +356,7 @@ const Navbar = () => {
                           fontWeight: 600,
                         }}
                       >
-                        SignIn
+                        SIGN UP
                       </Link>
                     </ListItemButton>
                   </ListItem>

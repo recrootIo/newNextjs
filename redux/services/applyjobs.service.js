@@ -20,7 +20,7 @@ class applyJobService {
     return http.get(`/getExperience/${id}`);
   }
   getEmailTemplapes(value) {
-    console.log(value,'service')
+    console.log(value, "service");
     return http.get(`/getEmailTemplates/${value.id}/${value.type}`);
   }
   updateEmailTemplapes(id, data) {
@@ -28,5 +28,4 @@ class applyJobService {
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default new applyJobService();
+export default applyJobService;
