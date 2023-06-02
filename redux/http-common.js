@@ -2,7 +2,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 const http = axios.create({
-  // baseURL: "ttps://preprod.recroot.au/api/",
+  // baseURL: "https://preprod.recroot.au/api/",
   baseURL: "https://preprod.recroot.au/api/",
   headers: {
     "Content-type": "application/json",

@@ -19,6 +19,8 @@
     "@mui/x-date-pickers": "^6.3.1",
     "@react-spring/parallax": "^9.7.2",
     "@reduxjs/toolkit": "^1.9.5",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.54.0",
     "aos": "^2.3.4",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",

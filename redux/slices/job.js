@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import jobsService from "../services/job.service";
-
+import jobsS from "../services/job.service";
+const jobsService = new jobsS();
 const initialState = {
   details: { salary: {}, requiredSkill: []},
   essential: {
