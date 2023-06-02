@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 const GetHiredHome = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
+  const latestJobs = useSelector((state) => state?.searchJobs?.searchDetails) || [];
 
   const [active, setActive] = useState(2);
 
