@@ -30,7 +30,7 @@ const AddResume = () => {
 
   const gotToResume = () => {
     dispatch(updateCurrentScreen(""));
-    setPdf("")
+    setPdf("");
   };
 
   const handleChange = (file) => {
@@ -46,16 +46,14 @@ const AddResume = () => {
     personalService
       .addResume(formData)
       .then((res) => {
-        if (res?.status === 200) {          
-          dispatch(
-            openAlert({
-              type: SUCCESS,
-              message: "Resume is Updated",
-            })
-          );
-          dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
-        }
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Resume is Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
       })
       .catch((error) => {
         dispatch(
