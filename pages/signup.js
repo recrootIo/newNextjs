@@ -214,6 +214,7 @@ function Signup() {
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
+        minHeight: "100vh",
       }}
     >
       {/* <Container
@@ -637,7 +638,11 @@ function Signup() {
                   >
                     <Stack
                       direction={{ sm: "row", xs: "column" }}
-                      sx={{ width: "95%", gap: "10px" }}
+                      sx={{
+                        width: { md: "95%", sm: "100%", xs: "100%" },
+                        gap: "10px",
+                        alignItems: "center",
+                      }}
                     >
                       <StyledInput
                         autoComplete="given-name"
