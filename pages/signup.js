@@ -36,15 +36,15 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 
-const StyledInput = styled("input")({
-  height: "60px",
-  border: "1px solid #c2c8d0",
-  borderRadius: "8px",
+const StyledInput = styled(TextField)({
+  // height: "60px",
+  // border: "1px solid #c2c8d0",
+  // borderRadius: "8px",
   width: "95%",
   fontSize: "18px",
-  fontWeight: "400",
-  color: "#000",
-  padding: "10px",
+  // fontWeight: "400",
+  // color: "#000",
+  // padding: "10px",
 });
 
 const StyledPasswordInput = styled("input")({
@@ -59,8 +59,34 @@ const StyledPasswordInput = styled("input")({
 });
 
 function Signup() {
-  // const { push } = useRouter();
+  const dispatch = useDispatch();
+  const { push } = useRouter();
   const [userType, setuserType] = useState("candidate");
+  const [showPassword, setshowPassword] = useState(false);
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    showPassword: false,
+    firstName: "",
+    lastName: "",
+    sector: "",
+    organization: "",
+    recrootUserType: "Candidate",
+    confirmPassword: "",
+    checked: false,
+  });
+  const [errors, setErrors] = useState({});
+  const [confirmP, setconfirmP] = useState({
+    confirmPassword: "",
+    showConfirmPassword: false,
+  });
+  const [freeemail, setFreeemail] = useState({
+    sts: false,
+    msg: "",
+  });
+
+  const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
+
   const StyledCard = styled(Card)(
     userType === "candidate"
       ? {
@@ -110,59 +136,42 @@ function Signup() {
           cursor: "pointer",
         }
   );
+
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
-  const [showPassword, setshowPassword] = useState(false);
+
   const handleClickShowPassword = () => {
     setshowPassword(!showPassword);
   };
+
   const handleCheckboxChange = (event) => {
     setValues({ ...values, checked: event.target.checked });
   };
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-    showPassword: false,
-    firstName: "",
-    lastName: "",
-    sector: "",
-    organization: "",
-    recrootUserType: "Candidate",
-    confirmPassword: "",
-    checked: false,
-  });
 
-  const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
-  const [confirmP, setconfirmP] = useState({
-    confirmPassword: "",
-    showConfirmPassword: false,
-  });
   const handleClickShowConfirmPassword = () => {
     setconfirmP({
       ...confirmP,
       showConfirmPassword: !confirmP.showConfirmPassword,
     });
   };
+
   function isNotFreeEmail(email) {
     const regex = /^(?!.*(gmail\.com|yahoo\.com|hotmail\.com)).+@.+$/i;
     return regex.test(email);
   }
-  const [freeemail, setFreeemail] = useState({
-    sts: false,
-    msg: "",
-  });
+
   const isEmployer = userType === "employer";
-  const { push } = useRouter();
+
   const handleRegister = (e) => {
     e.preventDefault();
-    setErrors(validator(values));
+    setErrors(() => validator(values));
     const obj = validator(values);
 
     if (Object.keys(obj).length > 0) {
       return;
     }
+
     if (isEmployer === true) {
       if (isNotFreeEmail(values.email) === false) {
         setFreeemail({
@@ -177,6 +186,7 @@ function Signup() {
         });
       }
     }
+
     dispatch(register({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
@@ -195,6 +205,7 @@ function Signup() {
         console.warn(error);
       });
   };
+
   const handleClick = (val) => {
     if (val === "google") {
       window.location.replace("https://preprod.recroot.au/auth/google");
@@ -202,6 +213,9 @@ function Signup() {
       window.location.replace("https://preprod.recroot.au/auth/linkedin");
     }
   };
+
+  console.log(errors.email, "errors");
+
   return (
     <Box
       sx={{
@@ -214,224 +228,9 @@ function Signup() {
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
+        minHeight: "100vh",
       }}
     >
-      {/* <Container
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Grid container>
-          <Grid
-            md={6}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Stack
-              sx={{
-                alignItems: "flex-start",
-                gap: "30px",
-                padding: "10px",
-                justifyContent: "space-between",
-              }}
-            >
-              <img src="/whiteLogo.png" className="loginLogo" alt="" />
-              <CustomTypography
-                sx={{
-                  fontSize: "40px",
-                  color: "white",
-                  fontFamily: "Inter-Bold",
-                }}
-              >
-                Sign Up and Find Your Dream Job
-              </CustomTypography>
-            </Stack>
-            <Stack
-              sx={{
-                justifyContent: "center",
-                gap: "20px",
-                alignItems: "center",
-              }}
-            >
-              <StyledCard variant="outlined">
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                >
-                  <img alt="" src="/candidate.png" className="loginImages" />
-                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
-                    Candidate
-                  </CustomTypography>
-                </CardContent>
-              </StyledCard>
-              <NonCard variant="outlined">
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                >
-                  <img alt="" src="/Employer.png" className="loginImages" />
-                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
-                    Employer
-                  </CustomTypography>
-                </CardContent>
-              </NonCard>
-            </Stack>
-          </Grid>
-
-          <Grid md={6}>
-            <Card
-              variant="outlined"
-              sx={{
-                background: "white",
-                borderRadius: "20px",
-                padding: "30px",
-              }}
-            >
-              <form
-                onSubmit={(e) => {
-                  handleRegister(e);
-                }}
-              >
-                <CardContent>
-                  <Stack sx={{ alignItems: "center", gap: "20px" }}>
-                    <Stack sx={{ alignItems: "center" }}>
-                      <CustomTypography
-                        sx={{ fontSize: "30px", fontWeight: "900" }}
-                      >
-                        Sign Up
-                      </CustomTypography>
-                      <Stack direction={"row"} sx={{ gap: "5px" }}>
-                        <CustomTypography>
-                          Sign Up Already have an account?
-                        </CustomTypography>
-                        <Link href="/signin">
-                          <CustomTypography
-                            sx={{
-                              color: "#034275",
-                              textDecoration: "underline",
-                            }}
-                          >
-                            Log In
-                          </CustomTypography>
-                        </Link>
-                      </Stack>
-                    </Stack>
-                    <button className="linkedinButton">
-                      <span>
-                        <img src={"/linkedInLogo.png"} alt="" height={"30px"} />
-                      </span>
-                      <span style={{ marginTop: "6px" }}>
-                        Log in with LinkedIn
-                      </span>
-                    </button>
-                    <button className="linkedinButton">
-                      <span>
-                        <img src={"/googleLogo.png"} alt="" height={"30px"} />
-                      </span>
-                      <span style={{ marginTop: "1px" }}>
-                        Log in with Google
-                      </span>
-                    </button>
-                    <Divider>OR</Divider>
-                    <StyledInput
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      placeholder="Enter First Name"
-                      autoFocus
-                      value={values?.firstName}
-                      onChange={handleChange}
-                    />
-                    <StyledInput
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                      placeholder="Enter Last Name"
-                      onChange={handleChange}
-                      value={values?.lastName}
-                    />
-                    <StyledInput
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      required
-                      placeholder="Enter Email ID"
-                      type="email"
-                      onChange={handleChange}
-                      value={values?.email}
-                    />
-                    
-                    <FormControl sx={{ mt: "15px", width: "95%" }}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            // value={values.checked}
-                            color="primary"
-                            // checked={values.checked}
-                          />
-                        }
-                        label={
-                          <p>
-                            By clicking checkbox, you agree to our{" "}
-                            <span>
-                              <a
-                                style={{ color: "#4fa9ff" }}
-                                target="blank"
-                                href="https://graceful-donut-d1174d.netlify.app/WebsiteUse"
-                              >
-                                Terms and Conditions and Privacy Policy
-                              </a>
-                            </span>
-                          </p>
-                        }
-                      />
-                    </FormControl>
-                    <button
-                      style={{
-                        height: "60px",
-                        backgroundColor: "#015FB1",
-                        borderRadius: "8px",
-                        width: "95%",
-                        fontSize: "18px",
-                        fontWeight: "400",
-                        color: "white",
-                      }}
-                      type="submit"
-                    >
-                      Sign Up
-                    </button>
-                  </Stack>
-                </CardContent>
-              </form>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container> */}
-
       <Container
         sx={{
           display: "flex",
@@ -637,7 +436,11 @@ function Signup() {
                   >
                     <Stack
                       direction={{ sm: "row", xs: "column" }}
-                      sx={{ width: "95%", gap: "10px" }}
+                      sx={{
+                        width: { md: "95%", sm: "100%", xs: "100%" },
+                        gap: "10px",
+                        alignItems: "center",
+                      }}
                     >
                       <StyledInput
                         autoComplete="given-name"
@@ -678,7 +481,7 @@ function Signup() {
                       required
                       value={values.email}
                       onChange={handleChange}
-                      error={errors.email || freeemail.sts ? true : false}
+                      error={errors.email || freeemail.sts}
                       helperText={errors.email || freeemail.msg}
                     />
 

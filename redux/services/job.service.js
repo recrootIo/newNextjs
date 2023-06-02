@@ -22,5 +22,4 @@ class jobsService {
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default  jobsService;
+export default jobsService;
