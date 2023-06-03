@@ -191,7 +191,7 @@ function Signup() {
       .unwrap()
       .then((originalPromiseResult) => {
         console.log(originalPromiseResult);
-        push("/Verifymobile");
+        push("/verifymobile");
         // navigate("/verifymobile", { replace: true });
       })
       .catch((error) => {

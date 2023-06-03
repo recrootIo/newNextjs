@@ -33,13 +33,17 @@ const LocationInputDetails = ({ ...props }) => {
   const [address, setAddress] = React.useState(null);
   const [inputPersonalDetailsCountry, setInputPersonalDetailsCountry] =
     React.useState({
-      country: "",
-      state: "",
-      city: "",
+      country: null,
+      state: null,
+      city: null,
     });
+  const actionNext = () => {
+    scroll(position + 1);
+    setinputPersonalDetailsCountry(() => ({ ...inputPersonalDetailsCountry }));
+  };
 
   const handleSelect = async (selected) => {
-    const results = await geocodeByAddress(selected.label);
+    const results = await geocodeByAddress(selected?.label);
     console.log(handleSelect, "handleSelect");
     setInputPersonalDetailsCountry({
       country: results[0].address_components.find((c) =>
@@ -59,12 +63,7 @@ const LocationInputDetails = ({ ...props }) => {
     inputPersonalDetailsCountry?.state &&
     inputPersonalDetailsCountry?.city;
 
-  // const { innerWidth } = window;
-
-  const actionNext = () => {
-    scroll(position + 1);
-    setinputPersonalDetailsCountry(() => ({ ...inputPersonalDetailsCountry }));
-  };
+  console.log(enableButton, "enableButton");
 
   return (
     <>
@@ -75,7 +74,6 @@ const LocationInputDetails = ({ ...props }) => {
           flexDirection: "row",
         }}
       >
-   
         <Box
           sx={{
             width: { md: "70%", sm: "100%", xs: "100%" },
@@ -92,23 +90,23 @@ const LocationInputDetails = ({ ...props }) => {
             />
           </Box>
           <Stack
-          sx={{
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            display: { md: "flex", padding: { md: "130px 0", xs: "20px 0" } },
-          }}
-        >
-          <Button
-            onClick={() => scroll(position - 1)}
-            startIcon={<KeyboardBackspaceIcon />}
-            sx={{ color: 'black', textDecoration: "underline" }}
-            variant="text"
+            sx={{
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              display: { md: "flex", padding: { md: "130px 0", xs: "20px 0" } },
+            }}
           >
-            Back
-          </Button>
-        </Stack>
+            <Button
+              onClick={() => scroll(position - 1)}
+              startIcon={<KeyboardBackspaceIcon />}
+              sx={{ color: "black", textDecoration: "underline" }}
+              variant="text"
+            >
+              Back
+            </Button>
+          </Stack>
           <Box className="stepperContainer">
-            <Stepper  activeStep={2} alternativeLabel>
+            <Stepper activeStep={2} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>
@@ -164,7 +162,6 @@ const LocationInputDetails = ({ ...props }) => {
                     },
                   }}
                 />
-
                 {inputPersonalDetailsCountry?.country && (
                   <Stack
                     direction={{ md: "row", xs: "column" }}
@@ -241,7 +238,14 @@ const LocationInputDetails = ({ ...props }) => {
                   }}
                 >
                   <Button
-                    className="nextBtn"
+                    className={!enableButton ? "disabledButtons" : "nextBtn"}
+                    sx={{
+                      height: "50px",
+                      width: "30%",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      marginBottom: "50px",
+                    }}
                     variant="contained"
                     onClick={() => actionNext()}
                     display={!enableButton}

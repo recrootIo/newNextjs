@@ -43,7 +43,7 @@ const steps = [
 ];
 
 const Salary = ({ ...props }) => {
-  const { setCreateResume, saveAllData ,scroll , position} = props;
+  const { setCreateResume, saveAllData, scroll, position } = props;
   const [currency, setCurrency] = React.useState(INDIAN_CURRENCY.country);
   const [currentSalary, setCurrentSalary] = React.useState({
     denomination: THOUSAND,
@@ -134,7 +134,7 @@ const Salary = ({ ...props }) => {
           <Button
             onClick={() => scroll(position - 1)}
             startIcon={<KeyboardBackspaceIcon />}
-            sx={{ color: 'black', textDecoration: "underline" }}
+            sx={{ color: "black", textDecoration: "underline" }}
             variant="text"
           >
             Back
@@ -270,7 +270,14 @@ const Salary = ({ ...props }) => {
             >
               <Button
                 onClick={() => actionNext()}
-                className="searchJobsBtn"
+                className={!enableNext ? "disabledButtons" : "nextBtn"}
+                sx={{
+                  height: "50px",
+                  width: "30%",
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                  marginBottom: "50px",
+                }}
                 variant="contained"
                 disabled={!enableNext}
               >
