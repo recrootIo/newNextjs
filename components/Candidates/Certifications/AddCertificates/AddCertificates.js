@@ -18,126 +18,90 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import {
-  // AddCertificateAndThenGet,
-  // AddEditCertificates,
-  // addEditCertificates,
-  retrievePersonal,
-} from "@/redux/slices/personal";
-// import moment from "moment";
-// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
-import { convertDate } from "@/utils/HelperFunctions";
-// import personalService from "@/redux/services/personal.service";
+import { retrievePersonal } from "@/redux/slices/personal";
 import resumeService from "@/redux/services/resume.service";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import Image from "next/image";
+import { Form, Formik } from "formik";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import CustomPickers from "@/components/Forms/CustomPickers";
+import * as YUP from "yup";
+
+export const FORM_VALIDATION = YUP.object().shape({
+  title: YUP.string().required("certOne Name Required"),
+  organization: YUP.string().required("Organization Required"),
+  certificate: YUP.mixed().nullable(),
+  certificateName: YUP.mixed().nullable(),
+  certificatepath: YUP.mixed().nullable(),
+  certificateLink: YUP.mixed().nullable(),
+  issueDate: YUP.date()
+    .required("From Date field is required")
+    .max(YUP.ref("expireDate"), "From Date cannot exceed To Date")
+    .test("future-date", "From Date cannot be a future date", function (value) {
+      const expireDate = this.resolve(YUP.ref("expireDate"));
+      if (!value || !expireDate) {
+        return true;
+      }
+      return new Date(value) <= new Date(expireDate);
+    }),
+  expireDate: YUP.date()
+    .required("To Date field is required")
+    .min(YUP.ref("issueDate"), "To Date cannot be less than From Date")
+    .test("future-date", "To Date cannot be a future date", function (value) {
+      const issueDate = this.resolve(YUP.ref("issueDate"));
+      if (!value || !issueDate) {
+        return true;
+      }
+      return new Date(value) >= new Date(issueDate);
+    }),
+});
 
 const AddCertificates = ({}) => {
   const certOne = useSelector((state) => state.personal.certone);
+  console.log(certOne, "certOne");
   const dispatch = useDispatch();
 
   const gotToCertificates = () => {
     dispatch(updateCurrentScreen(""));
-    setInputCertificate(
-      {
-        title: "",
-        organization: "",
-        certificate: "",
-        certificateLink: "",
-        issueDate: "",
-        expireDate: "",
-      }
-    )
   };
 
-  const [inputCertificate, setInputCertificate] = React.useState({
-    title: "",
-    organization: "",
-    certificate: "",
-    certificateLink: "",
-    issueDate: "",
-    expireDate: "",
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
+    title: certOne?.title,
+    organization: certOne?.organization,
+    certificate: null,
+    certificateName: certOne?.certificateName,
+    certificatepath: certOne?.certificatepath,
+    certificateLink: certOne?.certificateLink,
+    expireDate: certOne?.expireDate,
+    issueDate: certOne?.issueDate,
+    id: certOne?._id,
   });
 
-  const [value, setValue] = React.useState("");
-  const [value2, setValue2] = React.useState("");
-
   React.useEffect(() => {
-    setInputCertificate({
-      title: certOne && certOne.title,
-      organization: certOne && certOne.organization,
-      certificate: null,
-      certificateName: certOne && certOne.certificateName,
-      certificatepath: certOne && certOne.certificatepath,
-      certificateLink: certOne && certOne.certificateLink,
-      expireDate: certOne?.expireDate,
-      issueDate: certOne?.issueDate,
-      id: certOne && certOne._id,
-    });
-    setValue(() => dayjs(certOne?.issueDate));
-    setValue2(() => dayjs(certOne?.expireDate));
+    setInitialValues(certOne);
   }, [certOne]);
 
-  const onChange = (e, n) => {
-    console.log(n);
-    let { name, value } = e.target;
-
-    setInputCertificate({
-      ...inputCertificate,
-      [name]: value,
-    });
-  };
-
-  const fileChange = (e) => {
-    setInputCertificate({
-      ...inputCertificate,
-      certificate: e.target.files[0],
-    });
-  };
-
-  const handleChangeForm = (newValue) => {
-    let val = convertDate(newValue);
-    setValue(() => newValue);
-    setInputCertificate((state) => ({
-      ...state,
-      issueDate: val,
-    }));
-  };
-
-  const handleChangeto = (newValue2) => {
-    let val = convertDate(newValue2);
-    setValue2(() => newValue2);
-    setInputCertificate((state) => ({
-      ...state,
-      expireDate: val,
-    }));
-  };
-
-  const saveCertificates = () => {
-    if (certOne?._id) {
-      editNewCertification();
+  const saveCertificates = (values) => {
+    if (values?._id) {
+      editNewCertification(values);
     } else {
-      addNewCertificate();
+      addNewCertificate(values);
     }
   };
 
-  const addNewCertificate = () => {
+  const addNewCertificate = (values) => {
     resumeService
-      .certificatesAdd(inputCertificate)
+      .certificatesAdd(values)
       .then((res) => {
-        if (res?.status === 200) {  
-          dispatch(
-            openAlert({
-              type: SUCCESS,
-              message: "Certifications has been added",
-            })
-          );
-          dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
-        }
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Certifications has been added",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
       })
       .catch((error) => {
         dispatch(
@@ -149,11 +113,11 @@ const AddCertificates = ({}) => {
       });
   };
 
-  const editNewCertification = () => {
+  const editNewCertification = (values) => {
     resumeService
-      .certificatesEdit(inputCertificate)
+      .certificatesEdit(values)
       .then((res) => {
-        if (res?.status === 200) {  
+        if (res?.status === 200) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -193,7 +157,12 @@ const AddCertificates = ({}) => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               sx={{
@@ -205,100 +174,117 @@ const AddCertificates = ({}) => {
             >
               Add Certificates
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <TextField
-                id="outlined-basic"
-                label="Title"
-                variant="outlined"
-                value={inputCertificate?.title}
-                name="title"
-                onChange={onChange}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Organization"
-                variant="outlined"
-                name="organization"
-                value={inputCertificate.organization}
-                onChange={onChange}
-              />
-              <Stack direction="row" spacing={2}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MobileDatePicker
-                    sx={{ width: "100%" }}
-                    label="From"
-                    // inputFormat="MM/dd/YYYY"
-                    name="fromDate"
-                    value={value}
-                    onChange={handleChangeForm}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                saveCertificates(values);
+                console.log(values, "values");
+              }}
+            >
+              {({ submitForm, setFieldValue }) => {
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <CustomTextField label="Title" name="title" />
+                      <CustomTextField
+                        label="Organization"
+                        name="organization"
+                      />
+                      <Stack
+                        spacing={2}
+                        sx={{
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                        }}
+                      >
+                        <CustomPickers name="issueDate" label="From" />
+                        <CustomPickers name="expireDate" label="To" />
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <MobileDatePicker
+                            sx={{ width: "100%" }}
+                            label="From"
+                            // inputFormat="MM/dd/YYYY"
+                            name="fromDate"
+                            value={value}
+                            onChange={handleChangeForm}
+                            renderInput={(params) => (
+                              <TextField {...params} sx={{ width: "100%" }} />
+                            )}
+                          />
 
-                  <MobileDatePicker
-                    label="To"
-                    sx={{ width: "100%" }}
-                    // inputFormat="MM/dd/YYYY"
-                    name="toDate"
-                    value={value2}
-                    onChange={handleChangeto}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Stack>
-              <Stack direction="row" spacing={2}>
-                <TextField
-                  id="outlined-basic"
-                  label="Certificate link"
-                  variant="outlined"
-                  sx={{ width: "95%" }}
-                  value={inputCertificate?.certificateLink}
-                  name="certificateLink"
-                  onChange={onChange}
-                />
-                <Button
-                  variant="outlined"
-                  component="label"
-                  sx={{
-                    bgcolor: "transparent",
-                    borderColor: "#a3c2c2",
-                    width: "5%",
-                  }}
-                >
-                  <Image src="/upload.png" alt="" width={20} />
-                  <input
-                    type="file"
-                    accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.jpg,.jpeg,.png"
-                    hidden
-                    name="certificate"
-                    onChange={fileChange}
-                  />
-                </Button>
-              </Stack>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={gotToCertificates}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => saveCertificates()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                          <MobileDatePicker
+                            label="To"
+                            sx={{ width: "100%" }}
+                            // inputFormat="MM/dd/YYYY"
+                            name="toDate"
+                            value={value2}
+                            onChange={handleChangeto}
+                            renderInput={(params) => (
+                              <TextField {...params} sx={{ width: "100%" }} />
+                            )}
+                          />
+                        </LocalizationProvider> */}
+                      </Stack>
+                      <Stack direction="row" spacing={2}>
+                        <CustomTextField
+                          label="Certificate link"
+                          name="certificateName"
+                        />
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          sx={{
+                            bgcolor: "transparent",
+                            borderColor: "#a3c2c2",
+                            width: "5%",
+                          }}
+                        >
+                          <Image
+                            src="/upload.png"
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                          <input
+                            type="file"
+                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.jpg,.jpeg,.png"
+                            hidden
+                            name="certificate"
+                            onChange={(e) => {
+                              setFieldValue("certificate", e.target.files[0]);
+                            }}
+                          />
+                        </Button>
+                      </Stack>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={gotToCertificates}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

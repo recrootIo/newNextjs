@@ -126,8 +126,9 @@ const Certifications = () => {
   };
 
   const handleGetSingleCer = (id) => {
-    dispatch(retrieveGetSinCertificate(id));
-    gotToAddCertifications();
+    dispatch(retrieveGetSinCertificate(id)).then(() => {
+      gotToAddCertifications();
+    });
   };
 
   const handleGetSingle = (id) => {

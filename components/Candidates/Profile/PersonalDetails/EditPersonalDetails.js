@@ -189,7 +189,12 @@ const EditPersonalDetails = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               variant="h4"
@@ -384,8 +389,8 @@ const EditPersonalDetails = () => {
                               xs: "column",
                             },
                             gap: "5px",
+                            alignItems: "center",
                           }}
-                          spacing={2}
                           marginTop={2}
                         >
                           <CustomTextField name="country" label="country" />
