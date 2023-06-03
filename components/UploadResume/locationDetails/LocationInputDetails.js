@@ -248,7 +248,7 @@ const LocationInputDetails = ({ ...props }) => {
                     }}
                     variant="contained"
                     onClick={() => actionNext()}
-                    display={!enableButton}
+                    disabled={!enableButton}
                   >
                     Next
                   </Button>
