@@ -26,79 +26,69 @@ import dayjs from "dayjs";
 import candidateServices from "@/redux/services/candidate.services";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import CustomPickers from "@/components/Forms/CustomPickers";
+
+const FORM_VALIDATION = Yup.object().shape({
+  title: Yup.string().required("Description field is required"),
+  instituete: Yup.string().required("Organization field is required"),
+  fromDate: Yup.date()
+    .required("From Date field is required")
+    .max(Yup.ref("toDate"), "From Date cannot exceed To Date")
+    .test("future-date", "From Date cannot be a future date", function (value) {
+      const toDate = this.resolve(Yup.ref("toDate"));
+      if (!value || !toDate) {
+        return true;
+      }
+      return new Date(value) <= new Date(toDate);
+    }),
+  toDate: Yup.date()
+    .required("To Date field is required")
+    .min(Yup.ref("fromDate"), "To Date cannot be less than From Date")
+    .test("future-date", "To Date cannot be a future date", function (value) {
+      const fromDate = this.resolve(Yup.ref("fromDate"));
+      if (!value || !fromDate) {
+        return true;
+      }
+      return new Date(value) >= new Date(fromDate);
+    }),
+});
 
 const AddTraining = () => {
   const dispatch = useDispatch();
   const training = useSelector((state) => state?.personal?.training);
-  const [value, setValue] = React.useState("");
-  const [value2, setValue2] = React.useState("");
-  const [newTrainings, setNewTrainings] = React.useState({
-    title: "",
-    instituete: "",
-    fromDate: "",
-    toDate: "",
+
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
+    title: training?.title,
+    instituete: training?.instituete,
+    fromDate: training?.fromDate,
+    toDate: training?.toDate,
+    _id: training?._id,
   });
 
   React.useEffect(() => {
-    setNewTrainings(() => ({
-      title: training?.title,
-      instituete: training?.instituete,
-      fromDate: training?.fromDate,
-      toDate: training?.toDate,
-    }));
-    setValue(() => dayjs(training?.fromDate));
-    setValue2(() => dayjs(training?.toDate));
+    setInitialValues(INITIAL_VALUES);
   }, [training]);
 
   const gotToTraining = () => {
     dispatch(updateCurrentScreen(""));
-    setNewTrainings({
-      title: "",
-      instituete: "",
-      fromDate: "",
-      toDate: "",
-    })
   };
 
-  const handleChange = (newValue) => {
-    let val = convertDate(newValue);
-    setValue(() => newValue);
-    setNewTrainings((state) => ({
-      ...state,
-      fromDate: val,
-    }));
-  };
-
-  const handleChangeto = (newValue2) => {
-    let val = convertDate(newValue2);
-    setValue2(() => newValue2);
-    setNewTrainings((state) => ({
-      ...state,
-      toDate: val,
-    }));
-  };
-
-  const saveTrainings = () => {
-    if (training?._id) {
-      editTrainings();
+  const saveTrainings = (values) => {
+    if (values?._id) {
+      editTrainings(values);
     } else {
-      addNewTraining();
+      addNewTraining(values);
     }
   };
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setNewTrainings({
-      ...newTrainings,
-      [name]: value,
-    });
-  };
-
-  const addNewTraining = () => {
+  const addNewTraining = (values) => {
     candidateServices
-      .addTrainings(newTrainings)
+      .addTrainings(values)
       .then((res) => {
-        if (res?.status === 201) {          
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -119,11 +109,11 @@ const AddTraining = () => {
       });
   };
 
-  const editTrainings = () => {
+  const editTrainings = (values) => {
     candidateServices
-      .editTrainings(newTrainings, training?._id)
+      .editTrainings(values, values?._id)
       .then((res) => {
-        if (res?.status === 201) {          
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -143,6 +133,10 @@ const AddTraining = () => {
         );
       });
   };
+
+  React.useEffect(() => {
+    setInitialValues(training);
+  });
 
   return (
     <div>
@@ -175,36 +169,34 @@ const AddTraining = () => {
             >
               Add Training
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <TextField
-                required
-                id="outlined-basic"
-                label="Title"
-                variant="outlined"
-                name="title"
-                value={newTrainings.title}
-                onChange={onChange}
-              />
 
-              <TextField
-                required
-                id="outlined-basic"
-                label="Institute"
-                variant="outlined"
-                name="instituete"
-                value={newTrainings.instituete}
-                onChange={onChange}
-              />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                saveTrainings(values);
+                console.log(values, "values");
+              }}
+            >
+              {({ submitForm }) => {
+                return (
+                  <Form>
+                    {" "}
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <CustomTextField label="Title" name="title" />
+                      <CustomTextField label="Institute" name="instituete" />
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "20px",
-                  width: "100%",
-                }}
-              >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: "20px",
+                          width: "100%",
+                        }}
+                      >
+                        <CustomPickers name="fromDate" label="From" />
+                        <CustomPickers name="toDate" label="To" />
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <MobileDatePicker
                     label="From"
                     // inputFormat="MM/dd/YYYY"
@@ -228,30 +220,34 @@ const AddTraining = () => {
                       <TextField {...params} sx={{ width: "100%" }} />
                     )}
                   />
-                </LocalizationProvider>
-              </Box>
+                </LocalizationProvider> */}
+                      </Box>
 
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={gotToTraining}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => saveTrainings()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={gotToTraining}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

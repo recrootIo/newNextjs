@@ -135,8 +135,9 @@ const Certifications = () => {
   };
 
   const openEditTraining = (id) => {
-    dispatch(retrieveGetSinTrain(id));
-    gotToAddTraining();
+    dispatch(retrieveGetSinTrain(id)).then(() => {
+      gotToAddTraining();
+    });
   };
 
   return (
