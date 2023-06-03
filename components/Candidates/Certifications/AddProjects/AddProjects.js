@@ -65,7 +65,7 @@ const AddProjects = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "Project is Updated",
+              message: "New Project is added",
             })
           );
           dispatch(updateCurrentScreen(""));
@@ -76,7 +76,7 @@ const AddProjects = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data?.message || "Something went wrong",
           })
         );
       });
@@ -90,7 +90,7 @@ const AddProjects = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "New Project is added",
+              message: "Project is Updated",
             })
           );
           dispatch(updateCurrentScreen(""));
