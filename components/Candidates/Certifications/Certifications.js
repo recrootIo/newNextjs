@@ -131,28 +131,13 @@ const Certifications = () => {
   };
 
   const handleGetSingle = (id) => {
-    dispatch(retrieveGetSinProject(id));
-    gotToAddProject();
+    dispatch(retrieveGetSinProject(id)).then(() => gotToAddProject());
   };
 
   const openEditTraining = (id) => {
     dispatch(retrieveGetSinTrain(id));
     gotToAddTraining();
   };
-
-  const notify3T = () =>
-    toast.error(
-      "Your training information has been deleted from your profile ",
-      {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
 
   return (
     <Stack sx={{ gap: "10px", mt: "10px" }}>
