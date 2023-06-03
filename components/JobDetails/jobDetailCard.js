@@ -18,6 +18,7 @@ import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { CANDIDATE } from "@/utils/constants";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -31,9 +32,10 @@ const JobDetailCard = ({ ...props }) => {
     _id,
   } = props;
 
-  const { appliedJobs = [] } = useSelector((state) => state?.personal);
+  const { appliedJobs = [], data } = useSelector((state) => state?.personal);
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
+  const isUserType = data?.recrootUserType === CANDIDATE;
 
   const router = useRouter();
 
@@ -290,19 +292,28 @@ const JobDetailCard = ({ ...props }) => {
                     >
                       <ShareIcon />
                     </IconButton>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      sx={{
-                        ml: "8px",
-                        bgcolor: "#02A9F7 !important",
-                        fontSize: "15px",
-                      }}
-                      disabled={isApplied}
-                      onClick={() => gotApply()}
-                    >
-                      {isApplied ? "applied" : " Apply now"}
-                    </Button>
+                    {isUserType ? (
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        className={
+                          isApplied ? "disabledButtons" : "activeButton"
+                        }
+                        disabled={isApplied}
+                        onClick={() => gotApply()}
+                      >
+                        {isApplied ? "applied" : " Apply now"}
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        className="disabledButtons"
+                        disabled
+                      >
+                        Login
+                      </Button>
+                    )}
                   </Stack>
                 </Box>
               </Grid>

@@ -18,8 +18,6 @@ const breakPoints = [
 
 const SimilarJobs = () => {
   const { data } = useSelector((state) => state?.personal);
-  console.log(data, "data");
-  const router = useRouter();
 
   const [similar, setSimilar] = useState([]);
 
@@ -33,10 +31,6 @@ const SimilarJobs = () => {
       .catch(() => {});
   };
 
-  const handleNavigate = (jobTitle, jobRole, _id) => {
-    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
-  };
-
   useEffect(() => {
     if (data.jobTitle) {
       similarJobs();
@@ -47,11 +41,7 @@ const SimilarJobs = () => {
   const totalPages = 4;
   let resetTimeout;
 
-  const [isShown, setIsShown] = useState(false);
-
-  const handleClick = () => {
-    setIsShown((current) => !current);
-  };
+  if (similar.length < 1) return;
 
   return (
     <Box

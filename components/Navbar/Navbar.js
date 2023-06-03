@@ -184,17 +184,6 @@ const Navbar = () => {
                       >
                         <MenuItem>Pricing</MenuItem>
                       </Menu>
-
-                      <Link
-                        href="#"
-                        style={{
-                          fontSize: "17px",
-                          color: "black",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Pricing
-                      </Link>
                     </>
                   )}
 
