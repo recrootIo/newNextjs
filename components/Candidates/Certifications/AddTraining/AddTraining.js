@@ -157,7 +157,12 @@ const AddTraining = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               sx={{
@@ -189,7 +194,11 @@ const AddTraining = () => {
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "row",
+                          flexDirection: {
+                            md: "row",
+                            xs: "column",
+                            sm: "column",
+                          },
                           gap: "20px",
                           width: "100%",
                         }}

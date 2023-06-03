@@ -136,7 +136,12 @@ const AddProjects = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               sx={{
