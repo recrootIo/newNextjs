@@ -12,8 +12,7 @@ import {
   Slide,
   IconButton,
 } from "@mui/material";
-import React from //  useState
-"react";
+import React from "react"; //  useState
 import { StyledCard } from "../../ProfileStyles";
 import AddIcon from "@mui/icons-material/Add";
 import CreateIcon from "@mui/icons-material/Create";
@@ -47,8 +46,9 @@ const Skills = ({ skills }) => {
   };
 
   const handleGetSingle = (id) => {
-    dispatch(retrieveGetSinSkill(id));
-    gotToAddSkills();
+    dispatch(retrieveGetSinSkill(id)).then(() => {
+      gotToAddSkills();
+    });
   };
 
   const handleDelete = () => {
