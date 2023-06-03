@@ -21,12 +21,12 @@ import { CustomTypography } from "../ui-components/CustomTypography/CustomTypogr
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-// import { login } from "../slices/auth";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
-import Cookies from "js-cookie";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR } from "@/utils/constants";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -39,65 +39,82 @@ const StyledInput = styled("input")({
   padding: "10px",
 });
 
-import { cookies } from "next/headers";
-import { openAlert } from "@/redux/slices/alert";
-import { ERROR } from "@/utils/constants";
-
 function Signin() {
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
+  const dispatch = useDispatch();
+  const { push } = useRouter();
+
   const [showPassword, setshowPassword] = useState(false);
-  const handleClickShowPassword = () => {
-    setshowPassword(!showPassword);
-  };
   const [values, setValues] = React.useState({
     email: "",
     password: "",
   });
-  const redirect = null;
-  const path = false;
-  const dispatch = useDispatch();
-  const { push } = useRouter();
+
+  const handleClickShowPassword = () => {
+    setshowPassword(!showPassword);
+  };
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
         console.log(originalPromiseResult);
-        // push("/");
         if (originalPromiseResult.User.email_is_verified === false) {
-          push("/Verifymobile");
-        } else if (originalPromiseResult.User.recrootUserType === "Member") {
-          if (path === true) {
-            push("/Pricing");
-            return;
-          }
-          push("/");
-        } else if (originalPromiseResult.User.recrootUserType === "Candidate") {
+          push("/verifymobile");
+          return;
+        }
+
+        if (originalPromiseResult.User.recrootUserType === "Candidate") {
+          // checks profile completions
           if (originalPromiseResult?.User?.profilePercentage > 69) {
             if (redirect) {
               push(redirect);
+              return;
             } else {
               push("/");
+              return;
             }
           } else {
-            console.log("resumeSecond");
             push("/uploadResume");
           }
-          push("/");
-        } else {
-          push("/");
-          if (path === true) {
-            push("/Pricing");
-            return;
-          }
-          if (redirect === null) {
-            push("/");
-          } else {
-            push(redirect);
-          }
         }
+
+        // if (originalPromiseResult.User.email_is_verified === false) {
+
+        // } else if (originalPromiseResult.User.recrootUserType === "Member") {
+        //   if (path === true) {
+        //     push("/Pricing");
+        //     return;
+        //   }
+        //   push("/");
+        // } else if (originalPromiseResult.User.recrootUserType === "Candidate") {
+        //   if (originalPromiseResult?.User?.profilePercentage > 69) {
+        //     if (redirect) {
+        //       push(redirect);
+        //     } else {
+        //       push("/");
+        //     }
+        //   } else {
+        //     console.log("resumeSecond");
+        //     push("/uploadResume");
+        //   }
+        //   push("/");
+        // } else {
+        //   push("/");
+        //   if (path === true) {
+        //     push("/Pricing");
+        //     return;
+        //   }
+        //   if (redirect === null) {
+        //     push("/");
+        //   } else {
+        //     push(redirect);
+        //   }
+        // }
       })
       .catch((error) => {
         console.warn(error);
@@ -110,6 +127,7 @@ function Signin() {
         // toastyErrorFunction("Please Check Your Email And Password");
       });
   };
+
   const handleClick = (val) => {
     if (val === "google") {
       window.location.replace("https://preprod.recroot.au/auth/google");
@@ -117,6 +135,7 @@ function Signin() {
       window.location.replace("https://preprod.recroot.au/auth/linkedin");
     }
   };
+
   return (
     <section className="signInMain">
       <Container

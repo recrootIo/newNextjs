@@ -60,6 +60,11 @@ const JobDetail = ({ ...props }) => {
     router.push(`/applyJob?jobid=${_id}`);
   };
 
+  const goToLogin = () => {
+    router.push(`/signin`);
+    localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+  };
+
   useEffect(() => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
@@ -170,8 +175,8 @@ const JobDetail = ({ ...props }) => {
                   <Button
                     variant="contained"
                     size="medium"
-                    className="disabledButtons"
-                    disabled
+                    className="activeButton"
+                    onClick={() => goToLogin()}
                   >
                     Login
                   </Button>
