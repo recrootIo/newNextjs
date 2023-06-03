@@ -25,59 +25,53 @@ import {
   // GetCandsPrefInfo,
   retrievePersonal,
 } from "@/redux/slices/personal";
+import { Form, Formik } from "formik";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import * as Yup from "yup";
+
+const FORM_VALIDATION = Yup.object().shape({
+  skillName: Yup.string().required("skill Name field is required"),
+  Experience: Yup.number().required("Degree Name field is required"),
+  Compitance: Yup.string().required("Compitance field is required"),
+});
 
 const AddSkill = () => {
   const dispatch = useDispatch();
   const { skill } = useSelector((state) => state?.personal);
+  console.log(skill, "skill");
 
-  const [skillSet, setSkillSet] = React.useState({
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
     skillName: skill?.skillName,
     Experience: skill?.Experience,
     Compitance: skill?.Compitance,
+    _id: skill?._id,
   });
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
-    setSkillSet({
-      skillName: '',
-      Experience: '',
-      Compitance: '',
-    })
   };
 
-  const handleLevelChange = (e) => {
-    const { value } = e.target;
-    setSkillSet((state) => ({
-      ...state,
-      Compitance: value,
-    }));
-  };
-
-  const submitSkill = () => {
-    if (skillSet?.id) {
-      editNewSkill();
+  const submitSkill = (values) => {
+    if (values?.id) {
+      editNewSkill(values);
     } else {
-      addNewSkill();
+      addNewSkill(values);
     }
   };
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setSkillSet((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
+  React.useEffect(() => {
+    setInitialValues(() => skill);
+  }, [skill]);
 
-  const addNewSkill = () => {
+  const addNewSkill = (values) => {
     candidateServices
-      .addSkill(skillSet)
+      .addSkill(values)
       .then((res) => {
         if (res.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "new Skill added",
             })
           );
           dispatch(updateCurrentScreen(""));
@@ -94,15 +88,15 @@ const AddSkill = () => {
       });
   };
 
-  const editNewSkill = () => {
+  const editNewSkill = (values) => {
     candidateServices
-      .editSkills(skillSet, skillSet?.id)
+      .editSkills(values, values?.id)
       .then((res) => {
-        if (res?.status === 201) {         
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "Skill is updated",
             })
           );
           dispatch(updateCurrentScreen(""));
@@ -113,7 +107,7 @@ const AddSkill = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data.message || "Something went wrong",
           })
         );
       });
@@ -151,63 +145,76 @@ const AddSkill = () => {
               Add Skill
             </CustomTypography>
 
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <TextField
-                id="outlined-basic"
-                label="skill"
-                variant="outlined"
-                value={skillSet.skillName}
-                name="skillName"
-                onChange={onChange}
-              />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                // submitSkill(values);
+                console.log(values, "values");
+              }}
+            >
+              {({ errors, values, setFieldValue, submitForm }) => {
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <CustomTextField
+                        id="outlined-basic"
+                        label="skill"
+                        name="skillName"
+                      />
 
-              <TextField
-                id="outlined-basic"
-                label="Experience(Years)"
-                type="number"
-                variant="outlined"
-                value={skillSet.Experience}
-                name="Experience"
-                onChange={onChange}
-              />
+                      <CustomTextField
+                        label="Experience(Years)"
+                        name="Experience"
+                      />
 
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Level</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={skillSet.Compitance}
-                  label="Level"
-                  onChange={handleLevelChange}
-                >
-                  {LEVELS.map((l, index) => (
-                    <MenuItem key={index} value={l}>
-                      {l}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => gotoHome()}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => submitSkill()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Level
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={values.Compitance}
+                          label="Level"
+                          onChange={(e, a) => {
+                            console.log(e.target.value, "e");
+                            setFieldValue("Compitance", e.target.value);
+                          }}
+                          error={errors.Compitance}
+                        >
+                          {LEVELS.map((l, index) => (
+                            <MenuItem key={index} value={l}>
+                              {l}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={() => gotoHome()}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>
