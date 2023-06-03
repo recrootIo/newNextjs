@@ -40,6 +40,8 @@ const RecentSearch = () => {
     }
   }, []);
 
+  if (similar.length < 1) return;
+
   return (
     <div>
       <Box

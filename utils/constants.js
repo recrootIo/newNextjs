@@ -503,3 +503,5 @@ export const NEW_PRICING_PLAN = {
   [GROWTH]: GROWTH_PACKAGE,
   [GOLD]: GOLD_PACKAGE,
 };
+
+export const CANDIDATE = "Candidate";
