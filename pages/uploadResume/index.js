@@ -180,6 +180,7 @@ const Index = () => {
     dispatch(applyJobs(final))
       .then(() => {
         setOpen(false);
+        localStorage.removeItem("redirect");
         router.push("/uploadResume/success");
       })
       .catch(() => {
