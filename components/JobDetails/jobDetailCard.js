@@ -16,9 +16,11 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 // import dynamic from "next/dynamic";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { CANDIDATE } from "@/utils/constants";
+import { useEffect } from "react";
+import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
 
 const JobDetailCard = ({ ...props }) => {
   const {
