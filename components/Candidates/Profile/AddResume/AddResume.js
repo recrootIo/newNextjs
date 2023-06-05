@@ -110,12 +110,9 @@ const AddResume = () => {
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
+                  className={pdf ? "activeButton" : "disabledButtons"}
                   disabled={!pdf}
+                  sx={{ width: "50%" }}
                   onClick={() => send(pdf)}
                 >
                   Add
