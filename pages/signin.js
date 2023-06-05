@@ -57,6 +57,8 @@ function Signin() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  const redirect = localStorage.getItem("redirect");
+
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(login({ values }))
