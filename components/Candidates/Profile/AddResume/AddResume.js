@@ -115,6 +115,7 @@ const AddResume = () => {
                     width: "50%",
                     borderRadius: "8px",
                   }}
+                  disabled={!pdf}
                   onClick={() => send(pdf)}
                 >
                   Add

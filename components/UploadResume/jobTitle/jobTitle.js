@@ -172,8 +172,7 @@ const JobTitle = ({ ...props }) => {
                 }}
               >
                 <Button
-                  // className="nextBtn"
-                  classes={!enableButton ? "disabledButtons" : "nextBtn"}
+                  className={!enableButton ? "disabledButtons" : "nextBtn"}
                   sx={{
                     height: "50px",
                     width: "30%",

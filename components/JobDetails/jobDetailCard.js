@@ -33,15 +33,42 @@ const JobDetailCard = ({ ...props }) => {
   } = props;
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
   const isUserType = data?.recrootUserType === CANDIDATE;
 
-  const router = useRouter();
-
   const gotApply = () => {
-    router.push(`/applyJob?jobid=${_id}`);
+    if (data.profilePercentage < 70) {
+      localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+      router.push(`/uploadResume`);
+
+      dispatch(
+        setJobID({
+          companyId: company?._id,
+          jobId: _id,
+          question: question,
+          name: jobRole,
+          show: queshow,
+        })
+      );
+    } else {
+      router.push(`/applyJob?jobid=${_id}`);
+    }
   };
+
+  const goToLogin = () => {
+    router.push(`/signin`);
+    localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+  };
+
+  useEffect(() => {
+    dispatch(fetchAppliedJobs());
+    dispatch(retrievePersonal());
+  }, [dispatch]);
 
   return (
     <Box
@@ -308,8 +335,8 @@ const JobDetailCard = ({ ...props }) => {
                       <Button
                         variant="contained"
                         size="medium"
-                        className="disabledButtons"
-                        disabled
+                        className="activeButton"
+                        onClick={() => goToLogin()}
                       >
                         Login
                       </Button>
