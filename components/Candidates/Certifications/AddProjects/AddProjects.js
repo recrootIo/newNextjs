@@ -28,7 +28,7 @@ import * as Yup from "yup";
 const FORM_VALIDATION = Yup.object().shape({
   Description: Yup.string().required("Description field is required"),
   Organization: Yup.string().required("Organization field is required"),
-  ProjectName: Yup.string().required("ProjectName field is required"),
+  ProjectName: Yup.string().required("Project Name field is required"),
   portafolioLink: Yup.string()
     .matches(
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
@@ -161,7 +161,7 @@ const AddProjects = () => {
                 console.log(values, "values");
               }}
             >
-              {({ errors, values, setFieldValue, submitForm }) => {
+              {({ submitForm }) => {
                 return (
                   <Form>
                     <Stack spacing={2} sx={{ mt: "50px" }}>

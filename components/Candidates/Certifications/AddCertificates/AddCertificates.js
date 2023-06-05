@@ -18,7 +18,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { retrievePersonal } from "@/redux/slices/personal";
+import { clearCertificate, retrievePersonal } from "@/redux/slices/personal";
 import resumeService from "@/redux/services/resume.service";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
@@ -29,32 +29,40 @@ import CustomPickers from "@/components/Forms/CustomPickers";
 import * as YUP from "yup";
 
 export const FORM_VALIDATION = YUP.object().shape({
-  title: YUP.string().required("certOne Name Required"),
-  organization: YUP.string().required("Organization Required"),
+  title: YUP.string().required("Title field Required"),
+  organization: YUP.string().required("Organization field required"),
   certificate: YUP.mixed().nullable(),
   certificateName: YUP.mixed().nullable(),
   certificatepath: YUP.mixed().nullable(),
   certificateLink: YUP.mixed().nullable(),
   issueDate: YUP.date()
     .required("From Date field is required")
-    .max(YUP.ref("expireDate"), "From Date cannot exceed To Date")
-    .test("future-date", "From Date cannot be a future date", function (value) {
-      const expireDate = this.resolve(YUP.ref("expireDate"));
-      if (!value || !expireDate) {
-        return true;
+    .max(YUP.ref("expireDate"), "Issue Date cannot exceed To Date")
+    .test(
+      "future-date",
+      "Issue Date cannot be a future date",
+      function (value) {
+        const expireDate = this.resolve(YUP.ref("expireDate"));
+        if (!value || !expireDate) {
+          return true;
+        }
+        return new Date(value) <= new Date(expireDate);
       }
-      return new Date(value) <= new Date(expireDate);
-    }),
+    ),
   expireDate: YUP.date()
     .required("To Date field is required")
-    .min(YUP.ref("issueDate"), "To Date cannot be less than From Date")
-    .test("future-date", "To Date cannot be a future date", function (value) {
-      const issueDate = this.resolve(YUP.ref("issueDate"));
-      if (!value || !issueDate) {
-        return true;
+    .min(YUP.ref("issueDate"), "Expire Date cannot be less than From Date")
+    .test(
+      "future-date",
+      "Expire Date cannot be a future date",
+      function (value) {
+        const issueDate = this.resolve(YUP.ref("issueDate"));
+        if (!value || !issueDate) {
+          return true;
+        }
+        return new Date(value) >= new Date(issueDate);
       }
-      return new Date(value) >= new Date(issueDate);
-    }),
+    ),
 });
 
 const AddCertificates = ({}) => {
@@ -64,6 +72,7 @@ const AddCertificates = ({}) => {
 
   const gotToCertificates = () => {
     dispatch(updateCurrentScreen(""));
+    dispatch(clearCertificate());
   };
 
   const [INITIAL_VALUES, setInitialValues] = React.useState({
@@ -100,7 +109,7 @@ const AddCertificates = ({}) => {
             message: "Certifications has been added",
           })
         );
-        dispatch(updateCurrentScreen(""));
+        gotToCertificates();
         dispatch(retrievePersonal());
       })
       .catch((error) => {
@@ -124,7 +133,7 @@ const AddCertificates = ({}) => {
               message: "Certifications has been updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotToCertificates();
           dispatch(retrievePersonal());
         }
       })
@@ -192,13 +201,15 @@ const AddCertificates = ({}) => {
                         name="organization"
                       />
                       <Stack
-                        spacing={2}
                         sx={{
                           flexDirection: {
                             md: "row",
                             sm: "column",
                             xs: "column",
                           },
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          gap: "5px",
                         }}
                       >
                         <CustomPickers name="issueDate" label="From" />
