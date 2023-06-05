@@ -76,10 +76,6 @@ export const retrieveGetSinEduca = createAsyncThunk(
   }
 );
 
-export const clearSinEduca = createAsyncThunk("educa/clear", async (id) => {
-  return;
-});
-
 export const retrieveGetSinProject = createAsyncThunk(
   "project/retrive",
   async (id) => {
@@ -640,6 +636,14 @@ export const updateUser = createAsyncThunk("set/Password", async (data) => {
   return await userService.updateService(data);
 });
 
+export const clearSkill = createAsyncThunk("set/clearSkill", async (data) => {
+  return;
+});
+
+export const clearSinEduca = createAsyncThunk("educa/clear", async (id) => {
+  return;
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -792,6 +796,9 @@ const personalSlice = createSlice({
     },
     [clearSinEduca.fulfilled]: (state, action) => {
       state.education = {};
+    },
+    [clearSkill.fulfilled]: (state, action) => {
+      state.skill = {};
     },
   },
 });

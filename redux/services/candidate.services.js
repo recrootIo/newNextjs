@@ -34,8 +34,8 @@ const addSkill = (value) => {
   return http.post(`addSkills/${getUserId()}`, value);
 };
 
-const editSkills = (value, id) => {
-  return http.put(`editSkills/${id}`, value);
+const editSkills = (value) => {
+  return http.put(`editSkills/${value?._id}`, value);
 };
 
 const addProjects = (value) => {

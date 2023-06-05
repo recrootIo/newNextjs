@@ -18,10 +18,11 @@ import Select from "@mui/material/Select";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { LEVELS, SUCCESS } from "@/utils/constants";
+import { ERROR, LEVELS, SUCCESS } from "@/utils/constants";
 import candidateServices from "@/redux/services/candidate.services";
 import { openAlert } from "@/redux/slices/alert";
 import {
+  clearSkill,
   // GetCandsPrefInfo,
   retrievePersonal,
 } from "@/redux/slices/personal";
@@ -49,10 +50,11 @@ const AddSkill = () => {
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
+    dispatch(clearSkill());
   };
 
   const submitSkill = (values) => {
-    if (values?.id) {
+    if (values?._id) {
       editNewSkill(values);
     } else {
       addNewSkill(values);
@@ -74,7 +76,7 @@ const AddSkill = () => {
               message: "new Skill added",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(retrievePersonal());
         }
       })
@@ -82,7 +84,7 @@ const AddSkill = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data?.message || "Something went wrong",
           })
         );
       });
@@ -99,11 +101,11 @@ const AddSkill = () => {
               message: "Skill is updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(retrievePersonal());
         }
       })
-      .catch(() => {
+      .catch((error) => {
         dispatch(
           openAlert({
             type: ERROR,
@@ -154,8 +156,7 @@ const AddSkill = () => {
               initialValues={{ ...INITIAL_VALUES }}
               validationSchema={FORM_VALIDATION}
               onSubmit={(values) => {
-                // submitSkill(values);
-                console.log(values, "values");
+                submitSkill(values);
               }}
             >
               {({ errors, values, setFieldValue, submitForm }) => {

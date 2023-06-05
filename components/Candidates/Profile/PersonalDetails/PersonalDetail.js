@@ -19,6 +19,7 @@ const PersonalDetail = ({ ...data }) => {
     dispatch(updateCurrentScreen("personalDetails"));
   };
 
+  console.log(data, "data");
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -132,7 +133,8 @@ const PersonalDetail = ({ ...data }) => {
                   Current Salary:
                 </CustomTypography>
                 <CustomTypography>
-                  {resume?.currentSalary?.salary}  {resume?.currentSalary?.denomination} 
+                  {resume?.currentSalary?.salary}{" "}
+                  {resume?.currentSalary?.denomination}
                 </CustomTypography>
               </Stack>
               <Stack direction={"row"} sx={{ gap: MID }}>
@@ -140,11 +142,10 @@ const PersonalDetail = ({ ...data }) => {
                   Expected Salary:
                 </CustomTypography>
                 <CustomTypography>
-                  {resume?.expectedSalary?.salary}  {resume?.expectedSalary?.denomination} 
+                  {resume?.expectedSalary?.salary}{" "}
+                  {resume?.expectedSalary?.denomination}
                 </CustomTypography>
               </Stack>
-
-          
             </Stack>
           </Grid>
         </Grid>
