@@ -212,6 +212,7 @@ const EditPersonalDetails = () => {
               initialValues={{ ...INITIAL_VALUES }}
               validationSchema={FORM_VALIDATION}
               onSubmit={(values) => {
+                console.log(values, "values");
                 let currentSalary = {
                   salary: values.currentSalary,
                   denomination: values.currentSalaryDenomination,
@@ -229,15 +230,15 @@ const EditPersonalDetails = () => {
                   lastName: values.lastName,
                   jobTitle: values.jobTitle,
                   mobile: values.mobile,
-                  country: resume.location.country,
-                  state: resume.location.state,
-                  city: resume.location.city,
-                  totalWorkExperience: resume?.totalWorkExperience,
-                  about,
-                  currentOffer: resume.currentOffer,
-                  workPrefence: resume.workPrefence,
-                  languages: resume?.languages,
-                  notice: resume?.notice,
+                  country: values.country,
+                  state: values.state,
+                  city: values.city,
+                  totalWorkExperience: values?.totalWorkExperience,
+                  about: values.about,
+                  currentOffer: values.currentOffer,
+                  workPrefence: values.workPrefence,
+                  languages: values?.languages,
+                  notice: values?.notice,
                 };
                 handleEdit(updatedValues);
               }}
