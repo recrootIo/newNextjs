@@ -78,7 +78,7 @@ const PrivacyInfo = () => {
             }}
             gutterBottom
           >
-            Welcome to Recroot. This privacy policy ("Policy") describes how AR
+            Welcome to Recroot. This privacy policy (&ldquo;Policy&ldquo;) describes how AR
             Innovations Pty Ltd (ACN 652 722 337) (&ldquo;We&ldquo;, &ldquo;we&ldquo;, or &ldquo;Recroot&ldquo;) may
             collect, use, store and disclose Personal Information that we may
             collect about our candidates and clients. In this Policy, &ldquo;Personal
