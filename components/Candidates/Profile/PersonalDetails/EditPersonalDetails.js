@@ -243,6 +243,7 @@ const EditPersonalDetails = () => {
               }}
             >
               {({ errors, values, setFieldValue, submitForm }) => {
+                console.log(values.languages, "values.languages");
                 return (
                   <Form>
                     <Stack spacing={2} sx={{ mt: "50px" }}>
@@ -287,6 +288,10 @@ const EditPersonalDetails = () => {
                             }}
                             onChange={(e) => {
                               getJobTitles(e.target.value);
+                              console.log(e.target.value, "a");
+                              if (!e.target.value) {
+                                setFieldValue("jobTitle", null);
+                              }
                             }}
                             error={errors.jobTitle}
                             helperText={errors.jobTitle}
@@ -320,6 +325,9 @@ const EditPersonalDetails = () => {
                           width: "100%",
                           height: "3.7375em",
                           fontSize: "16px",
+                          border: errors.mobile
+                            ? "1px solid red"
+                            : "1px solid hsl(0, 0%, 80%)",
                         }}
                       />
 
@@ -437,9 +445,12 @@ const EditPersonalDetails = () => {
 
                           <IconButton
                             onClick={() => {
-                              let newLanguage = values.languages;
-                              changeLanguages("");
-                              setFieldValue("languages", newLanguage);
+                              if (language) {
+                                let newLanguage = [...values.languages];
+                                newLanguage.push(language);
+                                changeLanguages("");
+                                setFieldValue("languages", newLanguage);
+                              }
                             }}
                           >
                             <AddIcon sx={{ color: "#1976d2" }} />
