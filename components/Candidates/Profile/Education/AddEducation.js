@@ -29,7 +29,11 @@ import { geocodeByAddress } from "react-google-places-autocomplete";
 // import { convertDate } from "@/utils/HelperFunctions";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
-import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
+import {
+  clearSinEduca,
+  GetCandsPrefInfo,
+  retrievePersonal,
+} from "@/redux/slices/personal";
 import { Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import CustomTextField from "@/components/Forms/CustomTextField";
@@ -84,6 +88,7 @@ const AddEducation = () => {
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
+    dispatch(clearSinEduca());
   };
 
   const handleAdd = (educationDetails) => {
@@ -105,7 +110,7 @@ const AddEducation = () => {
               message: "User Education is Updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(GetCandsPrefInfo());
           dispatch(retrievePersonal());
         }
@@ -131,7 +136,7 @@ const AddEducation = () => {
               message: "User Preferences Updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(GetCandsPrefInfo());
           dispatch(retrievePersonal());
         }
@@ -211,12 +216,10 @@ const AddEducation = () => {
                           setFieldValue("graduate", a);
                         }}
                         renderInput={(params) => (
-                          <TextField
+                          <CustomTextField
                             {...params}
                             name="graduate"
                             label="Graduation"
-                            error={errors.graduate}
-                            helperText={errors.graduate}
                           />
                         )}
                       />
@@ -290,8 +293,8 @@ const AddEducation = () => {
                               xs: "column",
                             },
                             gap: "5px",
+                            alignItems: "center",
                           }}
-                          spacing={2}
                           marginTop={2}
                         >
                           <CustomTextField name="country" label="country" />

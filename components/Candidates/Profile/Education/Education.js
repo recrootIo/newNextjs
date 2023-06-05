@@ -42,8 +42,9 @@ const Education = ({ ...resume }) => {
   };
 
   const handleGetSingle = (id) => {
-    dispatch(retrieveGetSinEduca(id));
-    gotToEducation();
+    dispatch(retrieveGetSinEduca(id)).then(() => {
+      gotToEducation();
+    });
   };
 
   const handleDelete = () => {
@@ -117,7 +118,10 @@ const Education = ({ ...resume }) => {
               <Grid container spacing={2}>
                 <Grid item md={6} sm={12} xs={12}>
                   <Stack sx={{ gap: LAZY }}>
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <Stack
+                      direction={"row"}
+                      sx={{ gap: "10px", flexWrap: "wrap" }}
+                    >
                       <CustomTypography
                         sx={{ fontWeight: "700", flexWrap: "wrap" }}
                       >
