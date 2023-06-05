@@ -648,6 +648,13 @@ export const clearTraining = createAsyncThunk("training/clear", async (id) => {
   return;
 });
 
+export const clearCertificate = createAsyncThunk(
+  "certificate/clear",
+  async (id) => {
+    return;
+  }
+);
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -806,6 +813,9 @@ const personalSlice = createSlice({
     },
     [clearTraining.fulfilled]: (state, action) => {
       state.training = {};
+    },
+    [clearCertificate.fulfilled]: (state, action) => {
+      state.certOne = {};
     },
   },
 });
