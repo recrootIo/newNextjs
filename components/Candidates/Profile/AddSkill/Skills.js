@@ -25,6 +25,8 @@ import {
   deleteSkillAndGet,
   retrieveGetSinSkill,
 } from "@/redux/slices/personal";
+import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -52,7 +54,14 @@ const Skills = ({ skills }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteSkillAndGet(selectedId));
+    dispatch(deleteSkillAndGet(selectedId)).then(() => {
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Skill is deleted",
+        })
+      );
+    });
   };
 
   const closeMessage = () => {

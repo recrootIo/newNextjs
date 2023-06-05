@@ -1,10 +1,11 @@
+import { min } from "lodash";
 import * as YUP from "yup";
 
 export const FORM_VALIDATION = YUP.object().shape({
   firstName: YUP.string().required("First Name Required"),
   lastName: YUP.string().required("Last Name Required"),
   jobTitle: YUP.string().required("Job Title  Required"),
-  mobile: YUP.string().required("Mobile  Required"),
+  mobile: YUP.string().min(5).required("Mobile  Required"),
   languages: YUP.array().min(1).required("Languages required"),
   salaryCurrency: YUP.string().required("Salary currency required"),
   currentSalary: YUP.number().required("Current Salary required"),
