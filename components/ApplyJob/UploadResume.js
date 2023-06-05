@@ -108,7 +108,7 @@ const BpCheckedIcon = styled(BpIcon)({
 });
 
 // Inspired by blueprintjs
-function BpRadio(props) {
+const BpRadio = (props) => {
   return (
     <Radio
       disableRipple
@@ -118,7 +118,7 @@ function BpRadio(props) {
       {...props}
     />
   );
-}
+};
 
 const UploadResume = ({ ...props }) => {
   const { setApplication, setCurrentScreen, jobTitle } = props;
@@ -158,6 +158,7 @@ const UploadResume = ({ ...props }) => {
   }, [dispatch]);
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setSelectedResume({ id: e.target.value });
     dispatch(retrieveGetSinResume(e.target.value));
     setApplication((state) => ({
@@ -169,10 +170,6 @@ const UploadResume = ({ ...props }) => {
   const handleChangeC = (e) => {
     setCovers({ id: e.target.value });
     dispatch(retrieveGetSinCover(e.target.value));
-  };
-
-  const handleClickOpena = () => {
-    setOpena(true);
   };
 
   const handleClosea = () => {
@@ -283,6 +280,8 @@ const UploadResume = ({ ...props }) => {
   const coverDisabled = !show || covers?.id;
   const buttonDisable = selectedResume?.id && coverDisabled;
 
+  console.log(selectedResume?.id, "selectedResume");
+
   return (
     <div
       style={{
@@ -349,7 +348,9 @@ const UploadResume = ({ ...props }) => {
                         sm={3}
                         xs={3}
                         sx={{
-                          backgroundColor: "#cc1016",
+                          backgroundColor: resume.resumeName.includes("pdf")
+                            ? "#cc1016"
+                            : PRIMARY,
                           color: NEUTRAL,
                           display: "flex",
                           alignItems: "center",
@@ -360,7 +361,7 @@ const UploadResume = ({ ...props }) => {
                           fontWeight: 600,
                         }}
                       >
-                        Pdf
+                        {resume.resumeName.includes("pdf") ? "PDF" : "DOC"}
                       </Grid>
                       <Grid
                         item
@@ -425,17 +426,22 @@ const UploadResume = ({ ...props }) => {
                           display: "flex",
                         }}
                       >
-                        <RadioGroup
+                        <BpRadio
+                          checked={resume?._id === selectedResume?.id}
+                          onChange={handleChange}
+                          value={resume?._id}
+                        />
+                        {/* <RadioGroup
                           aria-labelledby="demo-customized-radios"
                           name="customized-radios"
-                          value={selectedResume.id}
+                          value={selectedResume?._id}
                           onChange={handleChange}
                         >
                           <FormControlLabel
                             value={resume._id}
                             control={<BpRadio />}
                           />
-                        </RadioGroup>
+                        </RadioGroup> */}
                       </Grid>
                     </Grid>
                   ))}
