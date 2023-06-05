@@ -15,7 +15,7 @@ import {
   Stack,
   styled,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PRIMARY } from "../theme/colors";
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -43,6 +43,8 @@ function Signin() {
   const dispatch = useDispatch();
   const { push } = useRouter();
 
+  const redirect = useRef();
+
   const [showPassword, setshowPassword] = useState(false);
   const [values, setValues] = React.useState({
     email: "",
@@ -57,24 +59,24 @@ function Signin() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const redirect = localStorage.getItem("redirect");
+  useEffect(() => {
+    redirect.current = localStorage.getItem("redirect");
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        console.log(originalPromiseResult);
         if (originalPromiseResult.User.email_is_verified === false) {
           push("/verifymobile");
           return;
         }
 
         if (originalPromiseResult.User.recrootUserType === "Candidate") {
-          // checks profile completions
           if (originalPromiseResult?.User?.profilePercentage > 69) {
-            if (redirect) {
-              push(redirect);
+            if (redirect.current) {
+              push(redirect.current);
               return;
             } else {
               push("/");

@@ -35,6 +35,10 @@ h3 {
   src: url("./asset/Inter-Thin.ttf");
 }
 
+body {
+  min-height: 100vh;
+}
+
 .loginLogo {
   height: 33px;
 }
@@ -900,7 +904,7 @@ h3 {
     display: none;
   }
   .signInMain {
-    height: 120vh;
+    min-height: 100vh;
   }
   .signInContent {
     width: 100%;
