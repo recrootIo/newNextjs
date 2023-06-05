@@ -18,6 +18,7 @@ import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import { convertDate } from "@/utils/HelperFunctions";
 import {
+  clearTraining,
   // AddTrainAndThenGet,
   // EditTrainAndGet,
   retrievePersonal,
@@ -32,7 +33,7 @@ import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 
 const FORM_VALIDATION = Yup.object().shape({
-  title: Yup.string().required("Description field is required"),
+  title: Yup.string().required("Title field is required"),
   instituete: Yup.string().required("Organization field is required"),
   fromDate: Yup.date()
     .required("From Date field is required")
@@ -74,6 +75,7 @@ const AddTraining = () => {
 
   const gotToTraining = () => {
     dispatch(updateCurrentScreen(""));
+    dispatch(clearTraining());
   };
 
   const saveTrainings = (values) => {
@@ -95,7 +97,7 @@ const AddTraining = () => {
               message: "New Training is added",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotToTraining();
           dispatch(retrievePersonal());
         }
       })
@@ -120,7 +122,7 @@ const AddTraining = () => {
               message: "Edited Successfully",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotToTraining();
           dispatch(retrievePersonal());
         }
       })
@@ -136,7 +138,7 @@ const AddTraining = () => {
 
   React.useEffect(() => {
     setInitialValues(training);
-  });
+  }, [training]);
 
   return (
     <div>

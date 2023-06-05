@@ -644,6 +644,10 @@ export const clearSinEduca = createAsyncThunk("educa/clear", async (id) => {
   return;
 });
 
+export const clearTraining = createAsyncThunk("training/clear", async (id) => {
+  return;
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -799,6 +803,9 @@ const personalSlice = createSlice({
     },
     [clearSkill.fulfilled]: (state, action) => {
       state.skill = {};
+    },
+    [clearTraining.fulfilled]: (state, action) => {
+      state.training = {};
     },
   },
 });

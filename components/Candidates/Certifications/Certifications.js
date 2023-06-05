@@ -41,6 +41,8 @@ import {
   retrieveGetSinProject,
   retrieveGetSinTrain,
 } from "@/redux/slices/personal";
+import { SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -102,11 +104,20 @@ const Certifications = () => {
   };
 
   const handleDeleteProject = () => {
-    dispatch(deleteProjectAndGet(delProject));
+    dispatch(deleteProjectAndGet(delProject)).then(() => {});
   };
 
   const handleDelTraining = () => {
-    dispatch(deleteTrainAndGet(delTraining));
+    dispatch(deleteTrainAndGet(delTraining))
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Training is deleted",
+          })
+        );
+      })
+      .catch(() => {});
   };
 
   const handleDelCert = () => {
@@ -553,13 +564,6 @@ const Certifications = () => {
             onClick={() => {
               handleCloseDeleteProject();
               handleDeleteProject();
-              dispatch(
-                openAlert({
-                  type: ERROR,
-                  message:
-                    '"Your project information has been deleted from your profile"',
-                })
-              );
             }}
           >
             Yes

@@ -22,10 +22,14 @@ import { DANGER } from "@/theme/colors";
 import { LAZY } from "@/theme/spacings";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import {
+  deleteEducaAndGet,
   deleteExperAndGet,
   retrieveGetSinEduca,
+  retrievePersonal,
 } from "@/redux/slices/personal";
 import { useDispatch } from "react-redux";
+import { SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 // import { deleteEducaAndGet } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -48,7 +52,18 @@ const Education = ({ ...resume }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteExperAndGet(selectedId));
+    dispatch(deleteEducaAndGet(selectedId))
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Education is deleted",
+          })
+        );
+        gotoHome();
+        dispatch(retrievePersonal());
+      })
+      .catch(() => {});
   };
 
   const closeMessage = () => {
@@ -184,8 +199,7 @@ const Education = ({ ...resume }) => {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle>
-            Are you sure you want to proceed with deleting your work experience
-            ?
+            Are you sure you want to proceed with deleting your Education ?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description"></DialogContentText>

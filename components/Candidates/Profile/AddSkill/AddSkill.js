@@ -73,7 +73,7 @@ const AddSkill = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "new Skill added",
+              message: "New Skill added",
             })
           );
           gotoHome();
