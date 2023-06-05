@@ -31,7 +31,11 @@ import Image from "next/image";
 import { getUserId } from "@/utils/HelperFunctions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
+import {
+  fetchAppliedJobs,
+  retrievePersonal,
+  setJobID,
+} from "@/redux/slices/personal";
 import { useEffect } from "react";
 import { CANDIDATE } from "@/utils/constants";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -43,11 +47,13 @@ const JobDetail = ({ ...props }) => {
     company,
     applicationDeadline,
     createdAt,
+    question,
+    jobRole,
+    queshow,
     _id,
   } = props;
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
-  console.log(data, "data");
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -57,7 +63,22 @@ const JobDetail = ({ ...props }) => {
   const isUserType = data?.recrootUserType === CANDIDATE;
 
   const gotApply = () => {
-    router.push(`/applyJob?jobid=${_id}`);
+    if (data.profilePercentage < 70) {
+      localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+      router.push(`/uploadResume`);
+
+      dispatch(
+        setJobID({
+          companyId: company?._id,
+          jobId: _id,
+          question: question,
+          name: jobRole,
+          show: queshow,
+        })
+      );
+    } else {
+      router.push(`/applyJob?jobid=${_id}`);
+    }
   };
 
   const goToLogin = () => {

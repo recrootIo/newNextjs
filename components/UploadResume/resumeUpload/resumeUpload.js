@@ -118,7 +118,7 @@ const AddResume = ({ ...props }) => {
             />
           </Box>
           <Box className="stepperContainer">
-            <Stepper  activeStep={0} alternativeLabel>
+            <Stepper activeStep={0} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel></StepLabel>
@@ -215,10 +215,11 @@ const AddResume = ({ ...props }) => {
               }}
             >
               <Button
-                className="nextBtn"
                 variant="contained"
                 sx={{ width: "277px" }}
+                className={enableUpload ? "disabledButtons" : "nextBtn"}
                 onClick={() => actionNext()}
+                disabled={enableUpload}
               >
                 Next
               </Button>

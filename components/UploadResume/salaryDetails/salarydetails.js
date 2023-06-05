@@ -43,12 +43,13 @@ const steps = [
 ];
 
 const Salary = ({ ...props }) => {
-  const { setCreateResume, saveAllData, scroll, position } = props;
+  const { setCreateResume, saveAllData, scroll, position, url } = props;
   const [currency, setCurrency] = React.useState(INDIAN_CURRENCY.country);
   const [currentSalary, setCurrentSalary] = React.useState({
     denomination: THOUSAND,
     salary: "",
   });
+
   const [expectedSalary, setExpectedSalary] = React.useState({
     denomination: THOUSAND,
     salary: null,
@@ -281,7 +282,7 @@ const Salary = ({ ...props }) => {
                 variant="contained"
                 disabled={!enableNext}
               >
-                Search For Jobs
+                {url ? "Apply" : " Search For Jobs"}
               </Button>
             </Box>
           </Stack>

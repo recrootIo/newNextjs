@@ -195,12 +195,12 @@ function Signup() {
         // navigate("/verifymobile", { replace: true });
       })
       .catch((error) => {
-        dispatch(
-          openAlert({
-            type: ERROR,
-            message: "The User Already Exists",
-          })
-        );
+        // dispatch(
+        //   openAlert({
+        //     type: ERROR,
+        //     message: "The User Already Exists",
+        //   })
+        // );
         // toastyErrorFunction("The User Already Exists");
         console.warn(error);
       });
