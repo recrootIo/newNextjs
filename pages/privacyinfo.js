@@ -79,10 +79,10 @@ const PrivacyInfo = () => {
             gutterBottom
           >
             Welcome to Recroot. This privacy policy ("Policy") describes how AR
-            Innovations Pty Ltd (ACN 652 722 337) ("We", "we", or "Recroot") may
+            Innovations Pty Ltd (ACN 652 722 337) (&ldquo;We&ldquo;, &ldquo;we&ldquo;, or &ldquo;Recroot&ldquo;) may
             collect, use, store and disclose Personal Information that we may
-            collect about our candidates and clients. In this Policy, "Personal
-            Information" refers to information or an opinion about an identified
+            collect about our candidates and clients. In this Policy, &ldquo;Personal
+            Information&ldquo; refers to information or an opinion about an identified
             individual or an individual who is reasonably identifiable, whether
             the information is true or not or is recorded in a material form or
             not.
@@ -136,10 +136,10 @@ const PrivacyInfo = () => {
             The Recroot.io site also utilises cookies to track your online
             activities, including, but not limited to, registration,
             submissions, and information requests. Cookies are pieces of
-            information that a website transfers to your computer's hard disk
+            information that a website transfers to your computer&apos;s hard disk
             for record keeping purposes. Most web browsers are set to accept
             cookies. Cookies in and of themselves do not personally identify
-            users, although they do identify a user's browser. If you do not
+            users, although they do identify a user&apos;s browser. If you do not
             wish to receive any cookies you may set your browser to refuse
             cookies. This may mean you will not be able to take full advantage
             of the services on the Site.
@@ -231,7 +231,7 @@ const PrivacyInfo = () => {
                 a crime or protect national security (d) protect the personal
                 safety of the users or the public;(e) to assist the
                 investigation of an offence by a law enforcement authority; or
-                prevent a serious or imminent threat to an individual's life,
+                prevent a serious or imminent threat to an individual&apos;s life,
                 health or safety or public health or safety.
               </li>
             </ol>
