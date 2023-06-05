@@ -76,6 +76,10 @@ export const retrieveGetSinEduca = createAsyncThunk(
   }
 );
 
+export const clearSinEduca = createAsyncThunk("educa/clear", async (id) => {
+  return;
+});
+
 export const retrieveGetSinProject = createAsyncThunk(
   "project/retrive",
   async (id) => {
@@ -785,6 +789,9 @@ const personalSlice = createSlice({
     },
     [getCandsPrefInfo.fulfilled]: (state, action) => {
       state.myPreferenceInfo = action.payload;
+    },
+    [clearSinEduca.fulfilled]: (state, action) => {
+      state.education = {};
     },
   },
 });
