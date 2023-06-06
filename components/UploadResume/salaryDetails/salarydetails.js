@@ -82,7 +82,7 @@ const Salary = ({ ...props }) => {
   const enableNext =
     currency && currentSalary.salary > 0 && expectedSalary.salary > 0;
 
-  const actionNext = () => {
+  const actionNext = (apply = false) => {
     setCreateResume((state) => ({
       ...state,
       salaryCurrency: currency,
@@ -90,7 +90,7 @@ const Salary = ({ ...props }) => {
       currentSalary,
     }));
     // scroll(position + 1);
-    saveAllData(expectedSalary, currentSalary, currency);
+    saveAllData(expectedSalary, currentSalary, currency, apply);
     // console.log(expectedSalary, "expectedSalary");
   };
 
@@ -267,8 +267,13 @@ const Salary = ({ ...props }) => {
               </Stack>
             )}
 
-            <Box
-              sx={{ display: "flex", justifyContent: "flex-end", mb: "120px" }}
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: url ? "space-between" : "flex-end",
+                mb: "120px",
+              }}
             >
               <Button
                 onClick={() => actionNext()}
@@ -283,9 +288,27 @@ const Salary = ({ ...props }) => {
                 variant="contained"
                 disabled={!enableNext}
               >
-                {url ? "Apply" : " Search For Jobs"}
+                Search For Jobs
               </Button>
-            </Box>
+
+              {url && (
+                <Button
+                  onClick={() => actionNext(true)}
+                  className={!enableNext ? "disabledButtons" : "nextBtn"}
+                  sx={{
+                    height: "50px",
+                    width: "30%",
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                    marginBottom: "50px",
+                  }}
+                  variant="contained"
+                  disabled={!enableNext}
+                >
+                  Apply
+                </Button>
+              )}
+            </Stack>
           </Stack>
         </Box>
       </Container>
