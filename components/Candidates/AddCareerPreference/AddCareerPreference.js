@@ -23,8 +23,7 @@ import { useState } from "react";
 // import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select from //  SelectChangeEvent
-"@mui/material/Select";
+import Select from "@mui/material/Select"; //  SelectChangeEvent
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -126,6 +125,7 @@ const AddCareerPreference = () => {
   const addPreference = () => {
     let preferences = careerPre.workPlaces;
     preferences = [...preferences, preference];
+    preferences = Array.from(new Set(preferences));
     setCareerPre((state) => ({ ...state, workPlaces: preferences }));
     setPreference("");
   };
@@ -142,6 +142,7 @@ const AddCareerPreference = () => {
   const addWordType = () => {
     let work = careerPre.jobTypes;
     work = [...work, jobTypes];
+    work = Array.from(new Set(work));
     setCareerPre((state) => ({ ...state, jobTypes: work }));
     setJobTypes(() => "");
   };

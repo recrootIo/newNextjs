@@ -157,6 +157,10 @@ const updateUser = (user) => {
   return http.put(`/updateUser`, user);
 };
 
+const updateMyPreference = (user) => {
+  return http.put(`/updateMyPreference/${getUserId()}`, user);
+};
+
 const userService = {
   searchCandidates,
   getPublicContent,
@@ -181,5 +185,6 @@ const userService = {
   verifyMobile,
   confirmMobile,
   updateUser,
+  updateMyPreference,
 };
 export default userService;
