@@ -35,7 +35,8 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
-
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 const StyledInput = styled(TextField)({
   // height: "60px",
   // border: "1px solid #c2c8d0",
@@ -348,7 +349,10 @@ function Signup() {
                     height="0"
                     sizes="100vw"
                   />
-                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
+                  <CustomTypography
+                    sx={{ color: "white", fontWeight: "900" }}
+                    className={inter.className}
+                  >
                     Employer
                   </CustomTypography>
                 </CardContent>
