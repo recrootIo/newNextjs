@@ -39,6 +39,7 @@ const bull = (
 );
 
 const CandidateProfileHeader = (data) => {
+  console.log(data, "data");
   const photoss = useSelector(
     (state) => state.personal?.data?.profpicFileLocation
   );
@@ -182,18 +183,15 @@ const CandidateProfileHeader = (data) => {
     const loggedInUser = JSON.parse(localStorage.getItem("User"));
     loggedInUser.User.profilePercentage = finalPercent;
     localStorage.setItem("User", JSON.stringify(loggedInUser));
-    dispatch(updatePercent(finalPercent));
+    dispatch(updatePercent(finalPercent)).then(() => {
+      dispatch(retrievePersonal());
+    });
   };
 
   React.useEffect(() => {
     addPercent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    percent?.skills,
-    percent?.workExperince,
-    percent?.education,
-    percent?.certificate,
-  ]);
+  }, [finalPercent]);
 
   return (
     <Box
