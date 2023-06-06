@@ -3,65 +3,32 @@ import FooterHome from "@/components/Home/FooterHome";
 import Navbar from "@/components/Navbar/Navbar";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import {
-  Box,
-  Button,
-  Chip,
-  Collapse,
-  Container,
-  InputBase,
-  Pagination,
-  Stack,
-} from "@mui/material";
+import { Box, Button, Chip, Container, InputBase, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
 import styled from "styled-components";
-import { alpha } from "@material-ui/core";
-import CandiDatabaseCard from "@/components/Employers/CandiDatabaseCard/CandiDatabaseCard";
 import CandiDatabaseFilter from "@/components/Employers/CandiDatabaseFilter/CandiDatabaseFilter";
+import CandidateDatabaseListPage from "@/components/Employers/CandidateDatabaseListPage/CandidateDatabaseListPage";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  //borderRadius: theme.shape.borderRadius,
-  //backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    //backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  // marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
-  //   [theme.breakpoints.up("sm")]: {
-  //     // marginLeft: theme.spacing(3),
-  //     width: "auto",
-  //   },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  //padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
-    //padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    //paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    //transition: theme.transitions.create("width"),
-    width: "100%",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
-    // },
+    width: "90%",
   },
 }));
 
 const CandiDatabase = () => {
+  const [showComponent1, setShowComponent1] = useState(true);
+
+  const toggleComponent = () => {
+    setShowComponent1(!showComponent1);
+  };
   const handleDelete = () => {
     console.info("You clicked the delete icon.");
   };
@@ -95,26 +62,36 @@ const CandiDatabase = () => {
           </CustomTypography>
         </Container>
       </Box>
-
-      {/* <Container>
+      <Container>
         <Box
           sx={{
             bgcolor: "#F2F8FD",
-            height: "2350px",
+            height: "auto",
             position: "relative",
             top: "-80px",
             p: "30px",
           }}
         >
           <Stack direction="row" spacing={2}>
-            <Search sx={{ display: "flex", bgcolor: "white" }}>
-              <SearchIconWrapper>
+            <Search>
+              <Box
+                sx={{
+                  display: "flex",
+                  bgcolor: "white",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  height: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                }}
+              >
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
                 <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
+              </Box>
             </Search>
             <Button
               variant="contained"
@@ -124,6 +101,7 @@ const CandiDatabase = () => {
                 height: "54px",
                 width: "20%",
               }}
+              onClick={toggleComponent}
             >
               Filter
             </Button>
@@ -163,27 +141,13 @@ const CandiDatabase = () => {
               }}
             />
           </Stack>
-          <Stack spacing={3} sx={{ mt: "30px" }}>
-            <CandiDatabaseCard />
-            <CandiDatabaseCard />
-            <CandiDatabaseCard />
-            <CandiDatabaseCard />
-          </Stack>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mt: "40px",
-            }}
-          >
-            <Pagination count={1200} hidePrevButton hideNextButton />
-          </Box>
+          {showComponent1 ? (
+            <CandidateDatabaseListPage />
+          ) : (
+            <CandiDatabaseFilter />
+          )}
         </Box>
-      </Container> */}
-
-      <CandiDatabaseFilter />
-
+      </Container>
       <FooterHome />
     </div>
   );

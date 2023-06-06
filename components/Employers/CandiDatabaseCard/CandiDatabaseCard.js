@@ -7,25 +7,74 @@ import {
   CardContent,
   CardHeader,
   Chip,
+  Dialog,
   Divider,
+  IconButton,
   Stack,
   styled,
 } from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
-import dynamic from "next/dynamic";
-import moment from "moment";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { PRIMARY } from "@/theme/colors";
 import React from "react";
-import DownloadIcon from "@mui/icons-material/Download";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
+import Image from "next/image";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import styles from "./CandiDatabaseCard.module.css";
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+  bgcolor: "#EEFAFF",
+}));
+
+function BootstrapDialogTitle(props) {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle
+      sx={{
+        m: 0,
+        p: 2,
+        color: "#034275",
+        fontWeight: 600,
+        borderBottom: "1px solid red",
+      }}
+      {...other}
+    >
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: "#034275",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+}
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 const bull = (
   <Box
@@ -51,6 +100,15 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
 }));
 
 const CandiDatabaseCard = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Card
       sx={{
@@ -122,7 +180,7 @@ const CandiDatabaseCard = () => {
                   size="medium"
                   sx={{
                     ml: "8px",
-                    height: "52px",
+                    height: "45px",
                     width: "180px",
                     bgcolor: "#02A9F7 !important",
                     fontSize: "16px",
@@ -132,7 +190,7 @@ const CandiDatabaseCard = () => {
                 </Button>
                 <Button
                   sx={{
-                    height: "52px",
+                    height: "45px",
                     width: "180px",
                     padding: "5px !important",
                     color: "#034275",
@@ -142,10 +200,73 @@ const CandiDatabaseCard = () => {
                   size="large"
                   variant="outlined"
                   bgcolor="#02A9F7 !important"
+                  onClick={handleClickOpen}
                 >
                   Quick View
                 </Button>
               </Stack>
+              <Dialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+              >
+                <BootstrapDialogTitle
+                  sx={{ bgcolor: "#EEFAFF", borderColor: "none" }}
+                  id="customized-dialog-title"
+                  onClose={handleClose}
+                >
+                  Lorem Ipsum Reume
+                </BootstrapDialogTitle>
+                <DialogContent
+                  className={styles.scrollbar}
+                  id="style-5"
+                  sx={{ bgcolor: "#EEFAFF" }}
+                >
+                  <Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        height: "30px",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ArrowLeftIcon sx={{ cursor: "pointer" }} />
+                      <CustomTypography sx={{ color: "#02A9F7" }}>
+                        1{" "}
+                      </CustomTypography>
+                      <CustomTypography sx={{ ml: "5px", mr: "5px" }}>
+                        {" "}
+                        |
+                      </CustomTypography>
+                      <CustomTypography> 1</CustomTypography>
+                      <ArrowRightIcon sx={{ cursor: "pointer" }} />
+                    </Box>
+                    <Image
+                      src="/candi-database-cv-img.png"
+                      alt=""
+                      width={520}
+                      height={20}
+                    />
+                  </Box>
+                </DialogContent>
+                <DialogActions sx={{ bgcolor: "#EEFAFF" }}>
+                  <Button
+                    variant="contained"
+                    sx={{ bgcolor: "#02A9F7 !important", width: "120px" }}
+                  >
+                    Download
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ width: "120px" }}
+                    onClick={handleClose}
+                  >
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </>
         }

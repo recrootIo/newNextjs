@@ -1,142 +1,698 @@
 import * as React from "react";
-import FooterHome from "@/components/Home/FooterHome";
-import Navbar from "@/components/Navbar/Navbar";
-import { BOLD } from "@/theme/fonts";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import {
+  Autocomplete,
   Box,
-  Button,
-  Chip,
-  Collapse,
-  Container,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Grid,
   InputBase,
-  Pagination,
   Stack,
+  TextField,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { useState } from "react";
-import styled from "styled-components";
-import { alpha } from "@material-ui/core";
-import CandiDatabaseCard from "@/components/Employers/CandiDatabaseCard/CandiDatabaseCard";
+import styles from "./CandiDatabaseFilter.module.css";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  //borderRadius: theme.shape.borderRadius,
-  //backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    //backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  // marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  //   [theme.breakpoints.up("sm")]: {
-  //     // marginLeft: theme.spacing(3),
-  //     width: "auto",
-  //   },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  //padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    //padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    //paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    //transition: theme.transitions.create("width"),
-    width: "100%",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
-    // },
-  },
-}));
+const top100Films = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+  { label: "The Godfather: Part II", year: 1974 },
+  { label: "The Dark Knight", year: 2008 },
+  { label: "12 Angry Men", year: 1957 },
+  { label: "Schindler's List", year: 1993 },
+  { label: "Pulp Fiction", year: 1994 },
+];
 
 const CandiDatabaseFilter = () => {
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
-
   return (
-    <div>
-      <Container>
-        <Box
-          sx={{
-            bgcolor: "#F2F8FD",
-            height: "2350px",
-            position: "relative",
-            top: "-80px",
-            p: "30px",
-          }}
-        >
-          <Stack direction="row" spacing={2}>
-            <Search sx={{ display: "flex", bgcolor: "white" }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
+    <>
+      <Grid container spacing={3} sx={{ mt: "30px" }}>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Job Title"
+                inputProps={{ "aria-label": "Job Title" }}
               />
-            </Search>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#02A9F7 !important",
-                borderRadius: "8px",
-                height: "54px",
-                width: "20%",
-              }}
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
             >
-              Filter
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#D4F0FC !important",
-                color: "#01313F",
-                fontWeight: 500,
-                borderRadius: "8px",
-                height: "54px",
-                width: "20%",
-              }}
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="AutoCad Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Apparel Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Graphic Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Architectural Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Assistant Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="ASIC Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Apparel Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Graphic Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Architectural Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Assistant Designer"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="ASIC Designer"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Skills"
+                inputProps={{ "aria-label": "Skills" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
             >
-              Reset Filter
-            </Button>
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ mt: "20px" }}>
-            <Chip
-              label="Graphic Designer"
-              onDelete={handleDelete}
-              sx={{
-                bgcolor: "#1097CD",
-                color: "white",
-                height: "38px",
-                fontSize: "15px",
-              }}
-            />
-            <Chip
-              label="Graphic Designer"
-              onDelete={handleDelete}
-              sx={{
-                bgcolor: "#D4F0FC",
-                color: "#01313F",
-                height: "38px",
-                fontSize: "15px",
-              }}
-            />
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Industry"
+                inputProps={{ "aria-label": "Industry" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
           </Stack>
-        </Box>
-      </Container>
-    </div>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Availability"
+                inputProps={{ "aria-label": "Availability" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Years Of Exeperience"
+                inputProps={{ "aria-label": "Years Of Exeperience" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Communication Skills"
+                inputProps={{ "aria-label": "Communication Skills" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Beginner"
+              />
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Intermediate"
+              />
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Expert"
+              />
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Location"
+                inputProps={{ "aria-label": "Location" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Language"
+                inputProps={{ "aria-label": "Language" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Nationality"
+                inputProps={{ "aria-label": "Nationality" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Work Preference"
+                inputProps={{ "aria-label": "Work Preference" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Remote"
+              />
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Onsite"
+              />
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Hybrid"
+              />
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Working Rights Country"
+                inputProps={{ "aria-label": "Working Rights Country" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Education"
+                inputProps={{ "aria-label": "Education" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Offer In Hand"
+                inputProps={{ "aria-label": "Offer In Hand" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                control={<Checkbox size="small" />}
+                label="No"
+              />
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Current Salary"
+                inputProps={{ "aria-label": "Current Salary" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{
+                mt: "10px",
+                width: "100%",
+                "& .MuiInputBase-root": {
+                  height: "48px",
+                  width: "100%",
+                },
+                "& .MuiAutocomplete-inputRoot": {
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100% !important",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select Currency" />
+              )}
+            />
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+        <Grid item xs={3}>
+          <Stack spacing={1}>
+            <Box sx={{ borderBottom: "1px solid rgba(1, 49, 63, 0.2)" }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Expected salary"
+                inputProps={{ "aria-label": "Expected salary" }}
+              />
+              <SearchIcon sx={{ color: "rgba(1, 49, 63, 0.2)" }} />
+            </Box>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={top100Films}
+              sx={{
+                mt: "10px",
+                width: "100%",
+                "& .MuiInputBase-root": {
+                  height: "48px",
+                  width: "100%",
+                },
+                "& .MuiAutocomplete-inputRoot": {
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100% !important",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Select Currency" />
+              )}
+            />
+            <FormGroup
+              className={styles.scrollbar}
+              id="style-5"
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ columnCount: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Photoshop"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Animate"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe After Effect"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Illustrator"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe Indesign"
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  label="Adobe XD"
+                />
+              </div>
+            </FormGroup>
+          </Stack>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
