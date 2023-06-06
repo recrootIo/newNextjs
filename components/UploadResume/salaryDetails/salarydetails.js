@@ -90,7 +90,8 @@ const Salary = ({ ...props }) => {
       currentSalary,
     }));
     // scroll(position + 1);
-    saveAllData();
+    saveAllData(expectedSalary, currentSalary, currency);
+    // console.log(expectedSalary, "expectedSalary");
   };
 
   const getSalary = (salary) => {

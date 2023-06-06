@@ -36,7 +36,7 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 import { Inter, Roboto_Mono } from "next/font/google";
-const inter = Roboto_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 const StyledInput = styled(TextField)({
   // height: "60px",
   // border: "1px solid #c2c8d0",
@@ -682,7 +682,6 @@ function Signup() {
           </Grid>
         </Grid>
       </Container>
-      <p className={inter.className}>klsnfdgksdvv</p>
     </Box>
   );
 }

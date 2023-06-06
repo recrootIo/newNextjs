@@ -60,17 +60,35 @@ const UploadResume = () => {
     url.current = localStorage.getItem("redirect");
   }, [dispatch]);
 
-  const saveAllData = () => {
+  const saveAllData = (
+    expectedSalary = null,
+    currentSalary = null,
+    currency = null
+  ) => {
     const loggedInUser = JSON.parse(localStorage.getItem("User"));
     loggedInUser.User.profilePercentage = 70;
     localStorage.setItem("User", JSON.stringify(loggedInUser));
+    let newCreateResume = createResume;
 
+    if (expectedSalary && currentSalary && currency) {
+      setCreateResume((state) => ({
+        ...state,
+        salaryCurrency: currency,
+        expectedSalary,
+        currentSalary,
+      }));
+      newCreateResume.salaryCurrency = currency;
+      newCreateResume.expectedSalary = expectedSalary;
+      newCreateResume.currentSalary = currentSalary;
+    }
+
+    console.log(createResume, "createResume");
     dispatch(updatePercent(70));
     setOpen(true);
     dispatch(
       updateFinalResumeForm({
         inputPersonalDetailsCountry,
-        createResume,
+        createResume: newCreateResume,
         totalExperience,
       })
     )
@@ -83,7 +101,7 @@ const UploadResume = () => {
           })
         );
 
-        if (url) {
+        if (url.current) {
           dispatch(retrievePersonal()).then(() => {
             applyFirstJob();
           });
