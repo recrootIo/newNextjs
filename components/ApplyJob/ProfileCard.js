@@ -21,6 +21,7 @@ const ProfileCard = ({ ...props }) => {
     companyId = "",
     jobTitle = "",
   } = props?.companyDetails;
+
   const details = useSelector((state) => state?.personal?.data);
   const CoverSin = useSelector((state) => state?.personal?.cover);
   const resumeSin = useSelector((state) => state?.personal?.resume);
@@ -54,6 +55,7 @@ const ProfileCard = ({ ...props }) => {
             message: "Application has been sent",
           })
         );
+
         router.push("/applyConfirmation");
       })
       .catch((error) => {
@@ -64,6 +66,46 @@ const ProfileCard = ({ ...props }) => {
       });
   };
 
+  console.log(question, "upload");
+
+  const hasQuestions = question.length > 0;
+
+  const getScreens = () => {
+    if (currentScreen === "upload") {
+      return (
+        <UploadResume
+          setApplication={setFinal}
+          setCurrentScreen={setCurrentScreen}
+          jobTitle={jobTitle}
+          hasQuestions={hasQuestions}
+        />
+      );
+    }
+
+    if (currentScreen === "review") {
+      return (
+        <ReviewAppication
+          setApplication={setFinal}
+          setCurrentScreen={setCurrentScreen}
+          submit={submit}
+          jobTitle={jobTitle}
+          hasQuestions={hasQuestions}
+        />
+      );
+    }
+
+    return (
+      <EmpQuiz
+        setApplication={setFinal}
+        setCurrentScreen={setCurrentScreen}
+        submit={submit}
+        questions={final.question}
+        jobTitle={jobTitle}
+        setFinal={setFinal}
+      />
+    );
+  };
+
   return (
     <Stack
       spacing={5}
@@ -71,20 +113,7 @@ const ProfileCard = ({ ...props }) => {
       alignItems="center"
       sx={{ width: "100%" }}
     >
-      {currentScreen === "upload" ? (
-        <UploadResume
-          setApplication={setFinal}
-          setCurrentScreen={setCurrentScreen}
-          jobTitle={jobTitle}
-        />
-      ) : (
-        <ReviewAppication
-          setApplication={setFinal}
-          setCurrentScreen={setCurrentScreen}
-          submit={submit}
-          jobTitle={jobTitle}
-        />
-      )}
+      {getScreens()}
     </Stack>
   );
 };

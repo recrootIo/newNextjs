@@ -121,7 +121,7 @@ const BpRadio = (props) => {
 };
 
 const UploadResume = ({ ...props }) => {
-  const { setApplication, setCurrentScreen, jobTitle } = props;
+  const { setApplication, setCurrentScreen, jobTitle, hasQuestions } = props;
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -786,7 +786,11 @@ const UploadResume = ({ ...props }) => {
             <button
               variant="outlined"
               onClick={() => {
-                setCurrentScreen("Review");
+                if (hasQuestions) {
+                  setCurrentScreen("quize");
+                } else {
+                  setCurrentScreen("Review");
+                }
               }}
               className={
                 !buttonDisable ? styles.nextButtonDisabled : styles.nextButton
