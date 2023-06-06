@@ -47,7 +47,7 @@ const FORM_VALIDATION = Yup.object().shape({
   country: Yup.string().required("Country Name Required"),
   state: Yup.string().required("State Name Required"),
   city: Yup.string().required("City Name Required"),
-  experience: Yup.string().required("Experience Required"),
+  experience: Yup.number().required("Experience Required"),
   fromDate: Yup.date()
     .required("From Date field is required")
     .max(Yup.ref("toDate"), "From Date cannot exceed To Date")

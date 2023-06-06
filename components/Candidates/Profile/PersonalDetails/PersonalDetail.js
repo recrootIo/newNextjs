@@ -101,8 +101,16 @@ const PersonalDetail = ({ ...data }) => {
                 </CustomTypography>
                 <CustomTypography>{resume?.currentOffer}</CustomTypography>
               </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Notice Period:
+                </CustomTypography>
+                <CustomTypography>{resume?.notice}</CustomTypography>
+              </Stack>
             </Stack>
           </Grid>
+
           <Grid item md={6} xs={12}>
             <Stack sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
@@ -145,6 +153,17 @@ const PersonalDetail = ({ ...data }) => {
                   {resume?.expectedSalary?.salary}{" "}
                   {resume?.expectedSalary?.denomination}
                 </CustomTypography>
+              </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Work Preference:
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.workPrefence.map((pre, index) => (
+                    <CustomTypography key={index}>{pre}</CustomTypography>
+                  ))}
+                </Stack>
               </Stack>
             </Stack>
           </Grid>
