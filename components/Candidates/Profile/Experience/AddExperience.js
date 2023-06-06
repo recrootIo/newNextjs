@@ -44,10 +44,10 @@ import CustomPickers from "@/components/Forms/CustomPickers";
 const FORM_VALIDATION = Yup.object().shape({
   companyName: Yup.string().required("Company Name Required"),
   role: Yup.string().required("Role Name Required"),
-  country: Yup.string().required("country Name Required"),
-  state: Yup.string().required("state Name Required"),
-  city: Yup.string().required("city Name Required"),
-  experience: Yup.string().required("experience Name Required"),
+  country: Yup.string().required("Country Name Required"),
+  state: Yup.string().required("State Name Required"),
+  city: Yup.string().required("City Name Required"),
+  experience: Yup.string().required("Experience Required"),
   fromDate: Yup.date()
     .required("From Date field is required")
     .max(Yup.ref("toDate"), "From Date cannot exceed To Date")

@@ -104,7 +104,14 @@ const Certifications = () => {
   };
 
   const handleDeleteProject = () => {
-    dispatch(deleteProjectAndGet(delProject)).then(() => {});
+    dispatch(deleteProjectAndGet(delProject)).then(() => {
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Project is deleted",
+        })
+      );
+    });
   };
 
   const handleDelTraining = () => {

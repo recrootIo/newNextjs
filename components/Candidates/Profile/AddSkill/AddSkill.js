@@ -31,7 +31,7 @@ import CustomTextField from "@/components/Forms/CustomTextField";
 import * as Yup from "yup";
 
 const FORM_VALIDATION = Yup.object().shape({
-  skillName: Yup.string().required("skill Name field is required"),
+  skillName: Yup.string().required("Skill Name field is required"),
   Experience: Yup.number().required("Degree Name field is required"),
   Compitance: Yup.string().required("Compitance field is required"),
 });
@@ -39,7 +39,6 @@ const FORM_VALIDATION = Yup.object().shape({
 const AddSkill = () => {
   const dispatch = useDispatch();
   const { skill } = useSelector((state) => state?.personal);
-  console.log(skill, "skill");
 
   const [INITIAL_VALUES, setInitialValues] = React.useState({
     skillName: skill?.skillName,
@@ -165,7 +164,7 @@ const AddSkill = () => {
                     <Stack spacing={2} sx={{ mt: "50px" }}>
                       <CustomTextField
                         id="outlined-basic"
-                        label="skill"
+                        label="Skill"
                         name="skillName"
                       />
 
