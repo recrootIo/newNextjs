@@ -633,7 +633,7 @@ export const insertNewPlace = createAsyncThunk("set/Place", async (data) => {
 });
 
 export const updateUser = createAsyncThunk("set/Password", async (data) => {
-  return await userService.updateService(data);
+  return await userService.updateUser(data);
 });
 
 export const clearSkill = createAsyncThunk("set/clearSkill", async (data) => {

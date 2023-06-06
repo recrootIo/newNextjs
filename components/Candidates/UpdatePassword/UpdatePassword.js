@@ -21,7 +21,6 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { getUserId } from "@/utils/HelperFunctions";
 // import { DANGER } from "@/theme/colors";
-import userService from "@/redux/services/user.service";
 import {
   COMPLETE_FIELDS,
   INVALID_PASSWORD,
@@ -30,6 +29,21 @@ import {
   OLD_NOT_PROVIDED,
 } from "./constants";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
+import userService from "@/redux/services/user.service";
+
+// const validationSchema = Yup.object().shape({
+//   password: Yup.string().required("Old Password is required"),
+//   newPassword: Yup.string()
+//     .min(8, "New Password must be at least 8 characters")
+//     .matches(
+//       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).*$/,
+//       "New Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
+//     )
+//     .required("New Password is required"),
+//   confirmPassword: Yup.string()
+//     .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+//     .required("Confirm Password is required"),
+// });
 
 const UpdatePassword = () => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
@@ -59,9 +73,11 @@ const UpdatePassword = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
   const handleMouseDownPasswordcon = (event) => {
     event.preventDefault();
   };
+
   const handleMouseDownPasswordnew = (event) => {
     event.preventDefault();
   };
@@ -122,7 +138,7 @@ const UpdatePassword = () => {
           return;
         } else {
           await userService
-            .updateService(user)
+            .updateUser(user)
             .then(() => {
               dispatch(
                 openAlert({

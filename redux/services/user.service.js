@@ -153,6 +153,10 @@ const confirmMobile = (code, mobile, id, token) => {
   );
 };
 
+const updateUser = (user) => {
+  return http.put(`/updateUser`, user);
+};
+
 const userService = {
   searchCandidates,
   getPublicContent,
@@ -176,5 +180,6 @@ const userService = {
   removeTheLocation,
   verifyMobile,
   confirmMobile,
+  updateUser,
 };
 export default userService;
