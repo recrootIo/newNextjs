@@ -30,6 +30,7 @@ export const getServerSideProps = async (context) => {
   await newService
     .getSingleJob(jobid)
     .then((res) => {
+      console.log(res.data.data, "res");
       companyDetails.companyId = res.data.data.company._id;
       companyDetails._id = res.data.data?._id;
       companyDetails.question = res.data.data.question;
