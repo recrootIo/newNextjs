@@ -345,76 +345,76 @@ const CandidateProfileHeader = (data) => {
               justifyContent: "flex-end",
             }}
           >
-            {data?.profilePercentage < 70 && (
-              <Box
+            {/* {data?.profilePercentage < 70 && ( */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+                position: "absolute",
+                top: "133px",
+                backgroundImage: 'url("/profileprecentageborder.png")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                height: "200px",
+                flexWrap: "wrap",
+              }}
+            >
+              <CustomTypography
+                variant="h6"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
                   position: "absolute",
-                  top: "133px",
-                  backgroundImage: 'url("/profileprecentageborder.png")',
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  height: "200px",
-                  flexWrap: "wrap",
+                  fontFamily: "Inter-bold",
+                  zIndex: "1",
+                  fontSize: "2rem",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
                 }}
               >
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    position: "absolute",
-                    fontFamily: "Inter-bold",
-                    zIndex: "1",
-                    fontSize: "2rem",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  {data?.profilePercentage}%
-                </CustomTypography>
+                {data?.profilePercentage}%
+              </CustomTypography>
 
-                <CustomTypography
-                  variant="subtitle1"
-                  sx={{
-                    mt: "20px",
-                    fontSize: "17px",
-                    position: "relative",
-                    top: "50px",
-                    color: NEUTRAL,
-                    flexWrap: "wrap",
-                    width: "200px",
-                  }}
-                >
-                  {/* Enhance your profile by adding more information to aim for a
+              <CustomTypography
+                variant="subtitle1"
+                sx={{
+                  mt: "20px",
+                  fontSize: "17px",
+                  position: "relative",
+                  top: "50px",
+                  color: NEUTRAL,
+                  flexWrap: "wrap",
+                  width: "200px",
+                }}
+              >
+                {/* Enhance your profile by adding more information to aim for a
                   minimum of 70%. */}
-                </CustomTypography>
-              </Box>
-            )}
+              </CustomTypography>
+            </Box>
+            {/* )} */}
           </Grid>
-          {data?.profilePercentage < 70 && (
-            <Grid md={12}>
-              <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
-                <CustomTypography
-                  variant="subtitle1"
-                  sx={{
-                    fontSize: "17px",
-                    position: "relative",
-                    color: NEUTRAL,
-                    flexWrap: "wrap",
-                    width: { md: "300px", xs: "100%", sm: "100%" },
-                    textAlign: "right",
-                    fontWeight: "900",
-                  }}
-                >
-                  Enhance your profile by adding more information to aim for a
-                  minimum of 70%.
-                </CustomTypography>
-              </Stack>
-            </Grid>
-          )}
+          {/* {data?.profilePercentage < 70 && ( */}
+          <Grid md={12}>
+            <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
+              <CustomTypography
+                variant="subtitle1"
+                sx={{
+                  fontSize: "17px",
+                  position: "relative",
+                  color: NEUTRAL,
+                  flexWrap: "wrap",
+                  width: { md: "300px", xs: "100%", sm: "100%" },
+                  textAlign: "right",
+                  fontWeight: "900",
+                }}
+              >
+                Enhance your profile by adding more information to aim for a
+                minimum of 70%.
+              </CustomTypography>
+            </Stack>
+          </Grid>
+          {/* )} */}
         </Grid>
 
         <Dialog
