@@ -200,7 +200,7 @@ const AddEducation = () => {
                 console.log(values, "values");
               }}
             >
-              {({ errors, values, setFieldValue, submitForm }) => {
+              {({ values, setFieldValue, submitForm, errors }) => {
                 return (
                   <Form>
                     <Stack spacing={2} sx={{ mt: "50px" }}>
@@ -262,6 +262,12 @@ const AddEducation = () => {
                               );
                             },
                             styles: {
+                              textInputContainer: (provided) => ({
+                                ...provided,
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
+                              }),
                               input: (provided) => ({
                                 ...provided,
                                 boxShadow: 0,
@@ -269,10 +275,16 @@ const AddEducation = () => {
                                 "&:hover": {
                                   border: "1px solid purple",
                                 },
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
                               }),
                               singleValue: (provided) => ({
                                 ...provided,
                                 boxShadow: 0,
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
                                 "&:hover": {
                                   border: "1px solid purple",
                                 },
