@@ -205,6 +205,81 @@ const CandidateProfileHeader = (data) => {
       }}
     >
       <Container>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "space-between", md: "flex-end" },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "flex-start", md: "flex-end" },
+            }}
+          >
+            <IconButton
+              aria-label="notifications"
+              size="large"
+              sx={{
+                color: "white",
+                width: "20px",
+                p: 0,
+                mt: { xs: "12px", md: 0 },
+              }}
+            >
+              <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
+            </IconButton>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              justifyContent: "flex-end",
+            }}
+          >
+            {data?.profilePercentage < 70 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  position: "absolute",
+                  backgroundImage: 'url("/profileprecentageborder.png")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  width: "70px",
+                  mt: "5px",
+                }}
+              >
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    position: "relative",
+                    fontFamily: "Inter-bold",
+                    zIndex: "1",
+                    top: "25px",
+                    left: "22px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {data?.profilePercentage}%
+                </CustomTypography>
+                <CustomTypography
+                  variant="subtitle1"
+                  sx={{
+                    mt: "25px",
+                    fontSize: { xs: "10px", md: "14px" },
+                    position: "relative",
+                    top: "25px",
+                    color: NEUTRAL,
+                    textAlign: "center",
+                  }}
+                >
+                  Profile completed (Excellent)
+                </CustomTypography>
+              </Box>
+            )}
+          </Box>
+        </Box>
         <Grid container spacing={2}>
           <Grid
             item
