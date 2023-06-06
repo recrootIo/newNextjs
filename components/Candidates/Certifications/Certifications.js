@@ -41,7 +41,7 @@ import {
   retrieveGetSinProject,
   retrieveGetSinTrain,
 } from "@/redux/slices/personal";
-import { SUCCESS } from "@/utils/constants";
+import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

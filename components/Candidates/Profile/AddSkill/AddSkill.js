@@ -32,7 +32,7 @@ import * as Yup from "yup";
 
 const FORM_VALIDATION = Yup.object().shape({
   skillName: Yup.string().required("Skill Name field is required"),
-  Experience: Yup.number().required("Degree Name field is required"),
+  Experience: Yup.number().required("Experience field is required"),
   Compitance: Yup.string().required("Compitance field is required"),
 });
 
