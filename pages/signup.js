@@ -349,10 +349,7 @@ function Signup() {
                     height="0"
                     sizes="100vw"
                   />
-                  <CustomTypography
-                    sx={{ color: "white", fontWeight: "900" }}
-                    className={inter.className}
-                  >
+                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
                     Employer
                   </CustomTypography>
                 </CardContent>
@@ -685,7 +682,7 @@ function Signup() {
           </Grid>
         </Grid>
       </Container>
-      <p>klsnfdgksdvv</p>
+      <p className={inter.className}>klsnfdgksdvv</p>
     </Box>
   );
 }
