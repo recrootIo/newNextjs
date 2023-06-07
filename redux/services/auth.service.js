@@ -79,6 +79,7 @@ const login = (email, password) => {
         Cookies.set("memberType", response.data?.User?.memberType, {
           expires: 1,
         });
+        Cookies.set("firstName",response.data?.User?.firstName,{expires:1})
       }
       return response;
     });

@@ -28,6 +28,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
 import validator from "@/components/Validator";
+import Employer from "..";
 
 function PostnewJob() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -282,8 +283,93 @@ function PostnewJob() {
   );
 
   return (
-    <Box>
-    <EmployerNavbar />
+    <Employer>
+    <Box>    
+    <Card   sx={{
+                  width: "100%",
+                  backgroundColor: "#F2F8FD",
+                  mt: "40px",
+                  p: "25px 25px 80px 25px",
+                }}
+                 variant="outlined">
+        {profiletab.index === profiletab.index + 0 ? profiletab.page : ""}
+                 <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: "40px",
+                      }}
+                    >
+          {profiletab.index === 0 ? 
+                        <Button
+                        variant="outlined"
+                        sx={{ width: "50%", height: "55px" }}
+                        disabled
+                      >
+                        Previous
+                      </Button> 
+                       : 
+                       <Button
+                       variant="outlined"
+                       sx={{ width: "50%", height: "55px" }}
+                       onClick={() => {
+                        PagesTwo(profiletab.index, "sub");
+                      }}
+                     >
+                       Previous
+                     </Button> }
+                     {profiletab.index === 2 ? jLoad === true ? (
+             <Button
+             variant="contained"
+             sx={{
+               width: "50%",
+               bgcolor: "#015FB1 !important",
+               height: "55px",
+             }}
+            >
+              <CircularProgress color="inherit" />
+            </Button>) :
+           (
+            <Button
+            variant="contained"
+            sx={{
+              width: "50%",
+              bgcolor: "#015FB1 !important",
+              height: "55px",
+            }}
+              onClick={
+                (final && final._id) !== undefined || null
+                  ? () => {
+                      handleEdit();
+                    }
+                  : () => {
+                      postJobs(final);
+                    }
+              }
+            >
+              {(final && final._id) !== undefined || null ? "Save" : "Submit"}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                Pages(profiletab.index, "add");
+              }}
+              sx={{
+                width: "50%",
+                bgcolor: "#015FB1 !important",
+                height: "55px",
+              }}
+            >
+              Next
+            </Button>
+          )}
+                    </Stack>
+      </Card>
+    {/* <EmployerNavbar />
       <Box
         sx={{
           backgroundImage: 'url("/EmployerDashboardBG.svg")',
@@ -384,118 +470,11 @@ function PostnewJob() {
               </Box>
             </Grid>
             <Grid item xs={10}>
-            <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Create New Job
-                </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
-                    height: "42px",
-                  }}
-                >
-                  Post New Job
-                </Button>
-              </Box>     
-    <Card   sx={{
-                  width: "100%",
-                  backgroundColor: "#F2F8FD",
-                  mt: "40px",
-                  p: "25px 25px 80px 25px",
-                }}
-                 variant="outlined">
-        {profiletab.index === profiletab.index + 0 ? profiletab.page : ""}
-                 <Stack
-                      direction="row"
-                      spacing={2}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        mt: "40px",
-                      }}
-                    >
-          {profiletab.index === 0 ? 
-                        <Button
-                        variant="outlined"
-                        sx={{ width: "50%", height: "55px" }}
-                        disabled
-                      >
-                        Previous
-                      </Button> 
-                       : 
-                       <Button
-                       variant="outlined"
-                       sx={{ width: "50%", height: "55px" }}
-                       onClick={() => {
-                        PagesTwo(profiletab.index, "sub");
-                      }}
-                     >
-                       Previous
-                     </Button> }
-                     {profiletab.index === 2 ? jLoad === true ? (
-             <Button
-             variant="contained"
-             sx={{
-               width: "50%",
-               bgcolor: "#015FB1 !important",
-               height: "55px",
-             }}
-            >
-              <CircularProgress color="inherit" />
-            </Button>) :
-           (
-            <Button
-            variant="contained"
-            sx={{
-              width: "50%",
-              bgcolor: "#015FB1 !important",
-              height: "55px",
-            }}
-              onClick={
-                (final && final._id) !== undefined || null
-                  ? () => {
-                      handleEdit();
-                    }
-                  : () => {
-                      postJobs(final);
-                    }
-              }
-            >
-              {(final && final._id) !== undefined || null ? "Save" : "Submit"}
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => {
-                Pages(profiletab.index, "add");
-              }}
-              sx={{
-                width: "50%",
-                bgcolor: "#015FB1 !important",
-                height: "55px",
-              }}
-            >
-              Next
-            </Button>
-          )}
-                    </Stack>
-      </Card>
+    
             </Grid>
          </Grid>
          </div>
-         </Container>
+         </Container> */}
       {/* <Container> */}
         {/* <div style={{ position: "relative", top: "-150px" }}>
           <Grid container spacing={2} sx={{ pb: "50px" }}>
@@ -618,6 +597,7 @@ function PostnewJob() {
         </div> */}
       {/* </Container> */}
     </Box>
+    </Employer>
   );
 }
 

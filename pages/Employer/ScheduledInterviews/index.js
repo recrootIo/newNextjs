@@ -41,6 +41,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import InterviewCalendar from "@/components/Employers/InterviewCalendar/InterviewCalendar";
 import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
+import Employer from "..";
 
 const style = {
   passinput: {
@@ -177,34 +178,7 @@ console.log(schedules,'s')
   console.log(mark,'ffff')
   return (
     <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Scheduled Interviews
-                </CustomTypography>
-              </Box>
+<Employer>
               <Card
                 sx={{
                   width: "100%",
@@ -330,10 +304,7 @@ console.log(schedules,'s')
                   </Box>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
+</Employer>
     </>
   );
 };
