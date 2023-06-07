@@ -72,7 +72,6 @@ function Signin() {
           push("/verifymobile");
           return;
         }
-
         if (originalPromiseResult.User.recrootUserType === "Candidate") {
           if (originalPromiseResult?.User?.profilePercentage > 69) {
             if (redirect.current) {
@@ -86,7 +85,9 @@ function Signin() {
             push("/uploadResume");
           }
         }
-
+        else if (originalPromiseResult.User.recrootUserType === "Employer" ||originalPromiseResult.User.recrootUserType === "Member") {
+          push("/");
+        }
         // if (originalPromiseResult.User.email_is_verified === false) {
 
         // } else if (originalPromiseResult.User.recrootUserType === "Member") {
