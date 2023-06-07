@@ -27,7 +27,7 @@ const reducer = {
     company: cmpReducer,
     sinterview: intReducer,
     subscription: SubscriptionSlice,
-  alertMessage: alert,
+    alertMessage: alert,
   //   retrenched: retrenchedReducer,
 };
 

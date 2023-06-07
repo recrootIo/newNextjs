@@ -186,11 +186,14 @@ const Subscriptions = () => {
                       sx={{
                         width: "100%",
                         borderRadius: "10px",
+                        backgroundImage:
+                          'url("/Subscription card with white top sectionBG.svg")',
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
                       }}
                     >
                       <Box
                         sx={{
-                          backgroundColor: "rgba(255, 252, 252, 0.91)",
                           height: "67px",
                           display: "flex",
                           alignItems: "center",
@@ -209,7 +212,6 @@ const Subscriptions = () => {
                       </Box>
                       <Box
                         sx={{
-                          backgroundColor: "blue",
                           height: "210px",
                           p: "0px 15px 0px 15px",
                         }}
@@ -219,7 +221,6 @@ const Subscriptions = () => {
                             <Stack spacing={3}>
                               <Box
                                 sx={{
-                                  bgcolor: "#03E7F4",
                                   width: "40%",
                                   display: "flex",
                                   justifyContent: "center",
@@ -310,10 +311,9 @@ const Subscriptions = () => {
                         width: "100%",
                         borderRadius: "10px",
                         p: "15px",
-                        // backgroundImage: 'url("/manage-payments-card-bg.svg")',
-                        // backgroundRepeat: "no-repeat",
-                        // backgroundSize: "cover",
-                        bgcolor: "blue",
+                        backgroundImage: 'url("/Manage Payment card.svg")',
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
                       }}
                     >
                       <Box
