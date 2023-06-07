@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import applyjobsService from "../services/applyjobs.service";
+import applyjob from "../services/applyjobs.service";
 // import { notifySuccess } from "../helpers/Toast";
-
+const applyjobsService = new applyjob()
 const initialState = {
   details: [],
   single: {},
