@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Checkbox,
   Chip,
   Stack,
   styled,
@@ -23,6 +24,10 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
@@ -83,11 +88,35 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
                 spacing={2}
                 sx={{ display: "flex", justifyContent: "flex-end", mb: "10px" }}
               >
-                <ThumbUpOffAltIcon
+                {/* <ThumbUpOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 />
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                /> */}
+                <Checkbox
+                  {...label}
+                  icon={
+                    <ThumbUpOffAltIcon
+                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                    />
+                  }
+                  checkedIcon={
+                    <ThumbUpIcon sx={{ color: "#7AC1DA", fontSize: "30px" }} />
+                  }
+                />
+                <Checkbox
+                  {...label}
+                  icon={
+                    <ThumbDownOffAltIcon
+                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                    />
+                  }
+                  checkedIcon={
+                    <ThumbDownIcon
+                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                    />
+                  }
                 />
               </Stack>
             </Box>
