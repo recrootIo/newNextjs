@@ -71,7 +71,8 @@ const initialState = {
   navbar:false,
   rejectCount:0,
   shortlistCount:0,
-  totalCount:0
+  totalCount:0,
+  selectedRoute:'Dashboard'
 };
 
 export const cmpLogo = createAsyncThunk("logo", async (data11) => {
@@ -300,6 +301,12 @@ export const matchJid = createAsyncThunk(
     return value;
   }
 );
+export const selectRoute = createAsyncThunk(
+  "selectRoute/ids",
+  async (value) => {
+    return value;
+  }
+);
 const cmpSlice = createSlice({
   name: "company",
   initialState,
@@ -454,6 +461,9 @@ const cmpSlice = createSlice({
     },
     [candidatesIdreq.fulfilled]: (state, action) => {
       state.cadidatesId = action.payload;
+    },
+    [selectRoute.fulfilled]: (state, action) => {
+      state.selectedRoute = action.payload;
     },
     [updateSearchData.fulfilled]: (state, action) => {
       state.srdata = { ...state.srdata, ...action.payload };

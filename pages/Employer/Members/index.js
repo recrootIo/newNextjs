@@ -43,6 +43,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import Employer from "..";
 uuidv4()
 const Members = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -351,133 +352,8 @@ dispatch(getCompanyDetails())
   const {push} = useRouter()
   return (
     <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Hello User
-                </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
-                    height: "42px",
-                  }}
-                >
-                  Post New Job
-                </Button>
-              </Box>
-              <Stack direction="row" spacing={7}>
+     <Employer>
+     <Stack direction="row" spacing={7}>
                 <Card
                   sx={{
                     width: "100%",
@@ -491,6 +367,8 @@ dispatch(getCompanyDetails())
                     backgroundSize: "cover",
                     borderRadius: "15px",
                   }}
+                  onClick={()=>{push('/Employer/CompanyProfile')}}
+                  
                 >
                   <Box
                     sx={{
@@ -528,6 +406,8 @@ dispatch(getCompanyDetails())
                     backgroundSize: "cover",
                     borderRadius: "15px",
                   }}
+                  onClick={()=>{push('/Employer/Members')}}
+                  
                 >
                   <Box
                     sx={{
@@ -564,7 +444,10 @@ dispatch(getCompanyDetails())
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     borderRadius: "15px",
+                    cursor:'pointer'
                   }}
+                  onClick={()=>{push('/Employer/CompanyPreview')}}
+                  
                 >
                   <Box
                     sx={{
@@ -988,10 +871,7 @@ dispatch(getCompanyDetails())
                   </Stack>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
+     </Employer>
     </>
   );
 };

@@ -31,6 +31,7 @@ export const register = createAsyncThunk(
       Cookies.set("token",response.data?.token,{expires:1})
       Cookies.set("userType",response.data?.User?.recrootUserType,{expires:1})
       Cookies.set("companyId",response.data?.User?.companyId,{expires:1})
+      Cookies.set("firstName",response.data?.User?.firstName,{expires:1})
       localStorage.setItem("User", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
