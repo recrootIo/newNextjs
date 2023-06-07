@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class CompanyData {
+class companyservice {
   editExper(value, compId) {
     return http.post(`updateCompanyDetails/${compId}`, value);
   }
@@ -19,7 +19,11 @@ class CompanyData {
     const formData = new FormData();
     const compLogos = value;
     formData.append("logo", compLogos);
-    return http.post(`updateCompanyLogo/${compId}`, formData);
+    return http.post(`updateCompanyLogo/${compId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
   getBillings() {
     const rs = JSON.parse(localStorage.getItem("User"));
@@ -45,7 +49,6 @@ class CompanyData {
     return http.post(`/addFreePlan/${rs?.User?.companyId}`);
   }
   getMatchingCandidates(value) {
-    console.log(value);
     return http.get(`/matchCandidate/${value?.id}?page=${value?.page}`);
   }
 
@@ -59,6 +62,9 @@ class CompanyData {
   getCompanies() {
     return http.get(`/getCompanies`);
   }
+  getApplCounts(value) {
+    return http.get(`/getApplCounts/${value}`);
+  }
 }
 
-export default CompanyData;
+export default companyservice;

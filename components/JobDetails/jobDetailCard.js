@@ -16,8 +16,11 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 // import dynamic from "next/dynamic";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { CANDIDATE } from "@/utils/constants";
+import { useEffect } from "react";
+import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -31,15 +34,43 @@ const JobDetailCard = ({ ...props }) => {
     _id,
   } = props;
 
-  const { appliedJobs = [] } = useSelector((state) => state?.personal);
-  const appliedIds = appliedJobs.map((i) => i.jobId[0]);
-  const isApplied = appliedIds.includes(_id);
+  const { appliedJobs = [], data } = useSelector((state) => state?.personal);
 
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const appliedIds = appliedJobs.map((i) => i.jobId[0]);
+  const isApplied = appliedIds.includes(_id);
+  const isUserType = data?.recrootUserType === CANDIDATE;
 
   const gotApply = () => {
-    router.push(`/applyJob?jobid=${_id}`);
+    if (data.profilePercentage < 70) {
+      localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+      router.push(`/uploadResume`);
+
+      dispatch(
+        setJobID({
+          companyId: company?._id,
+          jobId: _id,
+          question: question,
+          name: jobRole,
+          show: queshow,
+        })
+      );
+    } else {
+      router.push(`/applyJob?jobid=${_id}`);
+    }
   };
+
+  const goToLogin = () => {
+    router.push(`/signin`);
+    localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+  };
+
+  useEffect(() => {
+    dispatch(fetchAppliedJobs());
+    dispatch(retrievePersonal());
+  }, [dispatch]);
 
   return (
     <Box
@@ -290,19 +321,28 @@ const JobDetailCard = ({ ...props }) => {
                     >
                       <ShareIcon />
                     </IconButton>
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      sx={{
-                        ml: "8px",
-                        bgcolor: "#02A9F7 !important",
-                        fontSize: "15px",
-                      }}
-                      disabled={isApplied}
-                      onClick={() => gotApply()}
-                    >
-                      {isApplied ? "applied" : " Apply now"}
-                    </Button>
+                    {isUserType ? (
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        className={
+                          isApplied ? "disabledButtons" : "activeButton"
+                        }
+                        disabled={isApplied}
+                        onClick={() => gotApply()}
+                      >
+                        {isApplied ? "applied" : " Apply now"}
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        className="activeButton"
+                        onClick={() => goToLogin()}
+                      >
+                        Login
+                      </Button>
+                    )}
                   </Stack>
                 </Box>
               </Grid>

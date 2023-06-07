@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import CloudDownloadOutlinedIcon from "@mui/icons-material/Upload";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import download from "downloadjs";
 import {
@@ -24,7 +20,6 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
-// import { Link } from "react-router-dom";
 import Link from "next/link";
 import moment from "moment";
 import { NEUTRAL, PRIMARY, DANGER } from "@/theme/colors";
@@ -38,6 +33,8 @@ import {
 } from "@/redux/slices/personal";
 import { BOLD } from "@/theme/fonts";
 import styles from "./applyJobs.module.css";
+import DownloadIcon from "@mui/icons-material/Download";
+import { useRouter } from "next/router";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -82,7 +79,9 @@ const StyledProjectBoxed = styled(Box)({
 const lightTheme = createTheme({ palette: { mode: "light" } });
 
 function ReviewAppication({ ...props }) {
-  const { setCurrentScreen, submit, jobTitle } = props;
+  const router = useRouter();
+
+  const { setCurrentScreen, submit, jobTitle, hasQuestions } = props;
 
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -94,6 +93,8 @@ function ReviewAppication({ ...props }) {
   const CoverSin = useSelector((state) => state.personal.cover);
   const salary = useSelector((state) => state.apply);
   const ids = useSelector((state) => state.personal.ids);
+
+  console.log(details, "details");
 
   const [opena, setOpena] = React.useState(false);
   const [did, setDid] = useState("");
@@ -133,6 +134,10 @@ function ReviewAppication({ ...props }) {
     dispatch(updateAndThenGet(delResume));
   };
 
+  const goToProfile = () => {
+    router.push("/Candidate/Dashboard");
+  };
+
   return (
     <div
       style={{
@@ -154,7 +159,7 @@ function ReviewAppication({ ...props }) {
           alignItems: "center",
         }}
       ></Box>
-      <Container>
+      <Container sx={{ width: { md: "50%", sm: "100%", xs: "100%" } }}>
         <Stack
           sx={{
             justifyContent: "center",
@@ -197,7 +202,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        settingIndex(0);
+                        goToProfile();
                       }}
                     >
                       <CreateIcon />
@@ -284,7 +289,7 @@ function ReviewAppication({ ...props }) {
                             <span
                               style={{
                                 fontWeight: 600,
-                                fontSize: "18px",
+                                fontSize: "16px",
                                 marginLeft: "20px",
 
                                 color: "#fe7171",
@@ -327,14 +332,19 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        settingIndex(0);
+                        goToProfile();
                       }}
                     >
                       <CreateIcon />
                     </Button>
                   </StyledBoxed>
                   <CardContent>
-                    <Stack direction={"row"} spacing={2} width="100%">
+                    <Stack
+                      direction={"row"}
+                      spacing={2}
+                      width="100%"
+                      sx={{ pl: "20px" }}
+                    >
                       <Box sx={{ flex: 1, display: "flex" }}>
                         <PictureAsPdfIcon
                           sx={{
@@ -363,7 +373,7 @@ function ReviewAppication({ ...props }) {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` http://localhost:3000/api/downloadResume?resume=${resumeSin.resume.replace(
+                              ` https://preprod.recroot.au/api/downloadResume?resume=${resumeSin.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`
@@ -372,18 +382,11 @@ function ReviewAppication({ ...props }) {
                             download(blob, `${resumeSin.resumeName}`);
                           }}
                         >
-                          <CloudDownloadOutlinedIcon
+                          <DownloadIcon
                             className="iconPointers"
                             sx={{ color: "#00339B" }}
                           />
                         </IconButton>
-                        <DeleteIcon
-                          sx={{ color: DANGER }}
-                          className="iconPointers"
-                          onClick={() => {
-                            handleClickOpenDeleteResume(resumeSin?._id);
-                          }}
-                        />
                       </Box>
                     </Stack>
                   </CardContent>
@@ -405,7 +408,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        settingIndex(0);
+                        goToProfile();
                       }}
                     >
                       <CreateIcon />
@@ -416,7 +419,7 @@ function ReviewAppication({ ...props }) {
                       <span
                         style={{
                           fontWeight: 600,
-                          fontSize: "18px",
+                          fontSize: "16px",
                           marginTop: "10px",
                           marginLeft: "20px",
                           color: "#fe7171",
@@ -468,7 +471,7 @@ function ReviewAppication({ ...props }) {
                       <span
                         style={{
                           fontWeight: 600,
-                          fontSize: "18px",
+                          fontSize: "16px",
                           marginLeft: "20px",
                           color: "#fe7171",
                         }}
@@ -481,13 +484,18 @@ function ReviewAppication({ ...props }) {
                           paddingInlineStart: "0px",
                         }}
                       >
-                        {/* {details?.resume?.workExperience &&
-                          details?.resume?.workExperience.map((experience) => (
-                            <li style={{ margin: "10px", color: "#034275" }}>
-                              {bull}&nbsp;
-                              {`${experience?.role} at  ${experience?.companyName} for ${experience?.experience} years `}
-                            </li>
-                          ))} */}
+                        {details?.resume?.workExperience &&
+                          details?.resume?.workExperience.map(
+                            (experience, index) => (
+                              <li
+                                style={{ margin: "10px", color: "#034275" }}
+                                key={index}
+                              >
+                                {bull}&nbsp;
+                                {`${experience?.role} at  ${experience?.companyName} for ${experience?.experience} years `}
+                              </li>
+                            )
+                          )}
                       </ul>
                     )}
                   </CardContent>
@@ -523,7 +531,7 @@ function ReviewAppication({ ...props }) {
                       <span
                         style={{
                           fontWeight: 600,
-                          fontSize: "18px",
+                          fontSize: "16px",
                           marginLeft: "20px",
                           color: "#fe7171",
                         }}
@@ -599,7 +607,7 @@ function ReviewAppication({ ...props }) {
                       <span
                         style={{
                           fontWeight: 600,
-                          fontSize: "18px",
+                          fontSize: "16px",
                           marginLeft: "20px",
                           color: "#fe7171",
                         }}
@@ -667,7 +675,7 @@ function ReviewAppication({ ...props }) {
                         <span
                           style={{
                             fontWeight: 600,
-                            fontSize: "18px",
+                            fontSize: "16px",
                             marginLeft: "20px",
                             color: "#fe7171",
                           }}
@@ -737,7 +745,7 @@ function ReviewAppication({ ...props }) {
                       <span
                         style={{
                           fontWeight: 600,
-                          fontSize: "18px",
+                          fontSize: "16px",
                           marginLeft: "20px",
                           color: "#fe7171",
                         }}
@@ -781,7 +789,11 @@ function ReviewAppication({ ...props }) {
           <Button
             variant="outlined"
             onClick={() => {
-              setCurrentScreen("upload");
+              if (hasQuestions) {
+                setCurrentScreen("quiz");
+              } else {
+                setCurrentScreen("upload");
+              }
             }}
             sx={{
               width: "100%",

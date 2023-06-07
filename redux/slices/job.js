@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import jobsService from "../services/job.service";
-
+import jobsS from "../services/job.service";
+const jobsService = new jobsS();
 const initialState = {
-  details: { salary: {}, requiredSkill: [] },
+  details: { salary: {}, requiredSkill: []},
   essential: {
     careerlevel: "",
     experience: "",
@@ -17,6 +17,7 @@ const initialState = {
   jobDescription: "",
   jobTitle: "",
   jobRole: "",
+  packageType:'',
   featureType: false,
   latejob: [],
   roleType: [],
@@ -104,6 +105,7 @@ export const jobId = createAsyncThunk("jobId/jobs", async (data) => {
   return data;
 });
 
+
 export const addJobs = createAsyncThunk("add/jobs", async (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   const res = await jobsService.addJobss(value, user.User.companyId);
@@ -117,7 +119,6 @@ export const updateJobs = createAsyncThunk(
     return res.data;
   }
 );
-
 export const companyJobs = createAsyncThunk(
   "company/gjobs",
   async () => {
@@ -133,6 +134,10 @@ export const singleJobs = createAsyncThunk(
     return res.data;
   }
 );
+
+export const jobPackType = createAsyncThunk("set/jobPackType", async (data) => {
+  return data;
+});
 
 const jobsSlice = createSlice({
   name: "jobs",
@@ -189,6 +194,9 @@ const jobsSlice = createSlice({
     [jobssSet.fulfilled]: (state, action) => {
       state.latejob = action.payload;
     },
+    [jobPackType.fulfilled]: (state, action) => {
+      state.packageType = action.payload;
+    },
     [featureSet.fulfilled]: (state, action) => {
       state.featureType = action.payload;
     },
@@ -231,6 +239,7 @@ const jobsSlice = createSlice({
       state.details.jobApplyType = action.payload.jobApplyType;
       state.featureType = action.payload.featureType;
       state.immediate = action.payload.immediate;
+      state.packageType = action?.payload?.packageType;
       state.details.applicationDeadline = action.payload.applicationDeadline;
       state.essential =
         action.payload.essentialInformation === undefined

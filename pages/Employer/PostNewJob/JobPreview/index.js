@@ -12,6 +12,8 @@ import {
   Stack,
   Divider,
   Chip,
+  IconButton,
+  Typography,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
@@ -22,6 +24,10 @@ import ScreeningQuestions from "@/components/Employers/ScreeningQuestions/Screen
 import styled from "styled-components";
 import styles from "./postNewJobPreview.module.css";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import moment from "moment";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const bull = (
   <Box
@@ -53,146 +59,20 @@ const style = {
 };
 
 const JobPreview = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [apiAddress, setapiAddress] = useState("");
-  //   const member = useSelector((state) => state.company.members);
-  //   const [memberrole, setMemberrole] = React.useState(member);
+  const details = useSelector((state) => state.jobs.details);
+  const essen = useSelector((state) => state.jobs.essential);
+  const addres = useSelector((state) => state.jobs.location);
+  const quiz = useSelector((state) => state.jobs.question);
+  const descript = useSelector((state) => state.jobs.jobDescription);
+  const level = useSelector((state) => state.jobs.jobRole);
+  const showq = useSelector((state) => state.jobs.queshow);
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const settingIndex = (index) => {
+    props.Pages(index);
   };
-
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
-
   return (
     <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Create New Job
-                </CustomTypography>
-              </Box>
-              <Card
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#F2F8FD",
-                  mt: "40px",
-                  p: "25px 25px 80px 25px",
-                }}
-              >
-                <CardContent>
+      <CardContent>
                   <Box>
                     <Box
                       sx={{
@@ -237,7 +117,11 @@ const JobPreview = () => {
                       >
                         Basic Information
                       </CustomTypography>
-                      <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+                      <IconButton    onClick={() => {
+              settingIndex(0);
+            }}>
+        <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+            </IconButton>
                     </Box>
                     <Box sx={{ p: "20px 15px 0px 15px" }}>
                       <Stack spacing={3}>
@@ -246,20 +130,18 @@ const JobPreview = () => {
                             Job Title :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            Lorem Ipsum
+                          {level}
                           </CustomTypography>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Job Description :
                           </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                            Are you looking for the next professional
-                            opportunity that will challenge you and advance your
-                            career? Join our team now!
-                          </CustomTypography>
+                         <Box>
+                <ReactQuill value={descript} readOnly={true} theme={"bubble"} />
+                         </Box>
                         </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
+                        {/* <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Requirements :
                           </CustomTypography>
@@ -282,7 +164,7 @@ const JobPreview = () => {
                             Job Requirements :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            {bull} Bachelor's degree
+                            {bull} Bachelor&apos;s degree
                             <br></br>
                             {bull} At least 1+ years of prior experience in a
                             similar area<br></br>
@@ -293,17 +175,21 @@ const JobPreview = () => {
                             skills<br></br>
                             {bull} Great attention to detail<br></br>
                           </CustomTypography>
-                        </Box>
+                        </Box> */}
                         <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Required Skills :
                           </CustomTypography>
                           <Stack direction="row" spacing={2}>
+                          {details &&
+                  details.requiredSkill.map((skill)=>(
+                    <>
                             <Chip
-                              label="Deletable"
-                              onDelete={handleDelete}
+                              label={skill.skill}
                               sx={{ bgcolor: "#D4F0FC" }}
                             />
+                    </>
+                  ))}
                           </Stack>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
@@ -311,11 +197,78 @@ const JobPreview = () => {
                             Job Location :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            Lorem Ipsum
+                          {addres?.join(" | ")}
                           </CustomTypography>
                         </Box>
                       </Stack>
                     </Box>
+                    {showq === "true" || showq === undefined ? (
+              <>
+                <Box sx={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    p: "20px",
+  }}>
+                  <Typography variant="h5" sx={{
+    fontWeight: 700,
+    fontSize: "16px",
+    lineHeight: "18px",
+  }}>
+                    Screening Questions
+                  </Typography>
+                </Box>
+                {quiz.map((qiz, index) => (
+                  <>
+                  <Box
+                    sx={{
+                      backgroundColor: "white",
+                      p: "10px",
+                      m: "0px 20px 15px 20px",
+                      borderRadius: "16px",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{ ml: "26px", color: "#4fa9ff" }}
+                    >
+                      Question {index + 1}
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontSize: "16px",
+                        lineHeight: "18px",
+                        ml: "26px",
+                      }}
+                    >
+                      {qiz.questions}
+                    </Typography>
+                    <br></br>
+                    <Typography
+                      variant="body1"
+                      sx={{ ml: "26px", color: "#4fa9ff" }}
+                    >
+                      Prefered Answer
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontSize: "16px",
+                        lineHeight: "18px",
+                        ml: "26px",
+                      }}
+                    >
+                      {qiz.preferedAns}
+                    </Typography>
+                  </Box>
+                  </>
+                ))}
+                <Divider />
+              </>
+            ) : (
+              ""
+            )}        
                     <Box
                       sx={{
                         bgcolor: "#2699FF",
@@ -335,7 +288,11 @@ const JobPreview = () => {
                       >
                         Essential Information
                       </CustomTypography>
+                      <IconButton  onClick={() => {
+              settingIndex(1);
+            }}>
                       <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+                      </IconButton>
                     </Box>
                     <Box sx={{ p: "20px 15px 0px 15px" }}>
                       <Stack spacing={3}>
@@ -344,7 +301,7 @@ const JobPreview = () => {
                             Career Level :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            Lorem Ipsum
+                          {essen && essen.careerlevel}
                           </CustomTypography>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
@@ -352,7 +309,7 @@ const JobPreview = () => {
                             Experience :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            3+ Years
+                          {essen && essen.experience}
                           </CustomTypography>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
@@ -360,7 +317,7 @@ const JobPreview = () => {
                             Qualifications :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            Postgraduate Diploma
+                          {essen && essen.qualification}
                           </CustomTypography>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
@@ -368,7 +325,7 @@ const JobPreview = () => {
                             Application Deadline :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            05/26/2023
+                          {details && moment(details.applicationDeadline).format("L")}
                           </CustomTypography>
                         </Box>
                         <Box sx={{ display: "flex", gap: "10px" }}>
@@ -384,53 +341,40 @@ const JobPreview = () => {
                             Job Type :
                           </CustomTypography>
                           <CustomTypography className={styles.JobPreviewData}>
-                            Remote
+                          {details && details?.notice === undefined ? 'Not Provided' : details?.notice}
                           </CustomTypography>
                         </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Salary :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                            Negotiable
-                          </CustomTypography>
-                        </Box>
-                      </Stack>
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          mt: "40px",
-                        }}
-                      >
-                        <Button
-                          variant="outlined"
-                          sx={{ width: "50%", height: "55px" }}
-                        >
-                          Previous
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            width: "50%",
-                            bgcolor: "#015FB1 !important",
-                            height: "55px",
-                          }}
-                        >
-                          Submit
-                        </Button>
+                        {details?.salary?.salaryType !== undefined &&
+            details?.salary?.salaryType !== "noprovide" ? (
+              <>
+                 <Box sx={{ display: "flex", gap: "10px" }}>
+                  <Typography>Salary :</Typography>
+                  <Typography sx={styles.contentprv}>
+                    {details && details.salary.salaryType} (
+                    {details && details.salary.minSalary} to{" "}
+                    {details && details.salary.maxSalary})
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", gap: "10px" }}>
+                  <Typography>Salary Currency : </Typography>
+                  <Typography sx={styles.contentprv}>
+                    {details && details.salary.salaryCrrancy}
+                  </Typography>
+                </Box>
+              </>
+            ) : (
+              <>
+                 <Box sx={{ display: "flex", gap: "10px" }}>
+                  <Typography>Salary :</Typography>
+                  <Typography sx={styles.contentprv}>Negotiable</Typography>
+                </Box>
+             
+              </>
+            )}
                       </Stack>
                     </Box>
                   </Box>
                 </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
     </>
   );
 };

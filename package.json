@@ -20,9 +20,12 @@
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.2",
+    "@mui/x-data-grid": "^6.5.0",
     "@mui/x-date-pickers": "^6.3.1",
     "@react-spring/parallax": "^9.7.2",
     "@reduxjs/toolkit": "^1.9.5",
+    "@stripe/react-stripe-js": "^2.1.0",
+    "@stripe/stripe-js": "^1.54.0",
     "aos": "^2.3.4",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
@@ -31,6 +34,7 @@
     "downloadjs": "^1.4.7",
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.0",
+    "formik": "^2.4.1",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
@@ -53,6 +57,8 @@
     "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.10",
     "swiper": "^9.2.4",
-    "tailwindcss": "3.3.2"
+    "tailwindcss": "3.3.2",
+    "uuid": "^9.0.0",
+    "yup": "^1.2.0"
   }
 }

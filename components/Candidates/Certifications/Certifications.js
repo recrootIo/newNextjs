@@ -41,6 +41,8 @@ import {
   retrieveGetSinProject,
   retrieveGetSinTrain,
 } from "@/redux/slices/personal";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -102,11 +104,27 @@ const Certifications = () => {
   };
 
   const handleDeleteProject = () => {
-    dispatch(deleteProjectAndGet(delProject));
+    dispatch(deleteProjectAndGet(delProject)).then(() => {
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Project is deleted",
+        })
+      );
+    });
   };
 
   const handleDelTraining = () => {
-    dispatch(deleteTrainAndGet(delTraining));
+    dispatch(deleteTrainAndGet(delTraining))
+      .then(() => {
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Training is deleted",
+          })
+        );
+      })
+      .catch(() => {});
   };
 
   const handleDelCert = () => {
@@ -126,33 +144,20 @@ const Certifications = () => {
   };
 
   const handleGetSingleCer = (id) => {
-    dispatch(retrieveGetSinCertificate(id));
-    gotToAddCertifications();
+    dispatch(retrieveGetSinCertificate(id)).then(() => {
+      gotToAddCertifications();
+    });
   };
 
   const handleGetSingle = (id) => {
-    dispatch(retrieveGetSinProject(id));
-    gotToAddProject();
+    dispatch(retrieveGetSinProject(id)).then(() => gotToAddProject());
   };
 
   const openEditTraining = (id) => {
-    dispatch(retrieveGetSinTrain(id));
-    gotToAddTraining();
+    dispatch(retrieveGetSinTrain(id)).then(() => {
+      gotToAddTraining();
+    });
   };
-
-  const notify3T = () =>
-    toast.error(
-      "Your training information has been deleted from your profile ",
-      {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
 
   return (
     <Stack sx={{ gap: "10px", mt: "10px" }}>
@@ -566,13 +571,6 @@ const Certifications = () => {
             onClick={() => {
               handleCloseDeleteProject();
               handleDeleteProject();
-              dispatch(
-                openAlert({
-                  type: ERROR,
-                  message:
-                    '"Your project information has been deleted from your profile"',
-                })
-              );
             }}
           >
             Yes

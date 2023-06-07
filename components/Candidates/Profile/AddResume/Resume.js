@@ -23,6 +23,8 @@ import download from "downloadjs";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { updateAndThenGet } from "@/redux/slices/personal";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -39,7 +41,14 @@ const Resume = ({ ...resume }) => {
   };
 
   const handleDelete = () => {
-    dispatch(updateAndThenGet(selectedId));
+    dispatch(updateAndThenGet(selectedId)).then(() => {
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Resume has been deleted",
+        })
+      );
+    });
   };
 
   const closeMessage = () => {

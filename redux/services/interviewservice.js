@@ -6,4 +6,6 @@ class InterviewData {
   }
 }
 
+
 export default  InterviewData;
+

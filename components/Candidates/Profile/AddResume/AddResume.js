@@ -30,7 +30,7 @@ const AddResume = () => {
 
   const gotToResume = () => {
     dispatch(updateCurrentScreen(""));
-    setPdf("")
+    setPdf("");
   };
 
   const handleChange = (file) => {
@@ -46,16 +46,14 @@ const AddResume = () => {
     personalService
       .addResume(formData)
       .then((res) => {
-        if (res?.status === 200) {          
-          dispatch(
-            openAlert({
-              type: SUCCESS,
-              message: "Resume is Updated",
-            })
-          );
-          dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
-        }
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Resume is Updated",
+          })
+        );
+        dispatch(updateCurrentScreen(""));
+        dispatch(retrievePersonal());
       })
       .catch((error) => {
         dispatch(
@@ -89,7 +87,12 @@ const AddResume = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               variant="h4"
@@ -107,11 +110,9 @@ const AddResume = () => {
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
+                  className={pdf ? "activeButton" : "disabledButtons"}
+                  disabled={!pdf}
+                  sx={{ width: "50%" }}
                   onClick={() => send(pdf)}
                 >
                   Add

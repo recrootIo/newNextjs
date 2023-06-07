@@ -77,7 +77,6 @@ const NoticePeriodInputs = ({ ...props }) => {
   return (
     <>
       <Container>
-        
         <Box className="logoContainer">
           <Image
             className="logoImage"
@@ -98,7 +97,7 @@ const NoticePeriodInputs = ({ ...props }) => {
           <Button
             onClick={() => scroll(position - 1)}
             startIcon={<KeyboardBackspaceIcon />}
-            sx={{ color: 'black', textDecoration: "underline" }}
+            sx={{ color: "black", textDecoration: "underline" }}
             variant="text"
           >
             Back
@@ -227,7 +226,14 @@ const NoticePeriodInputs = ({ ...props }) => {
               }}
             >
               <Button
-                className="nextBtn"
+                className={!hasPeriodOffer ? "disabledButtons" : "nextBtn"}
+                sx={{
+                  height: "50px",
+                  width: "30%",
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                  marginBottom: "50px",
+                }}
                 variant="contained"
                 onClick={() => actionNext()}
                 disabled={!hasPeriodOffer}

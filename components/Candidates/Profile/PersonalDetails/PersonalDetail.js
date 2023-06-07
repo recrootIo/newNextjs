@@ -19,6 +19,7 @@ const PersonalDetail = ({ ...data }) => {
     dispatch(updateCurrentScreen("personalDetails"));
   };
 
+  console.log(data, "data");
   return (
     <StyledCard variant="outlined">
       <Stack
@@ -100,8 +101,16 @@ const PersonalDetail = ({ ...data }) => {
                 </CustomTypography>
                 <CustomTypography>{resume?.currentOffer}</CustomTypography>
               </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Notice Period:
+                </CustomTypography>
+                <CustomTypography>{resume?.notice}</CustomTypography>
+              </Stack>
             </Stack>
           </Grid>
+
           <Grid item md={6} xs={12}>
             <Stack sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
@@ -132,7 +141,8 @@ const PersonalDetail = ({ ...data }) => {
                   Current Salary:
                 </CustomTypography>
                 <CustomTypography>
-                  {resume?.currentSalary?.salary}  {resume?.currentSalary?.denomination} 
+                  {resume?.currentSalary?.salary}{" "}
+                  {resume?.currentSalary?.denomination}
                 </CustomTypography>
               </Stack>
               <Stack direction={"row"} sx={{ gap: MID }}>
@@ -140,11 +150,21 @@ const PersonalDetail = ({ ...data }) => {
                   Expected Salary:
                 </CustomTypography>
                 <CustomTypography>
-                  {resume?.expectedSalary?.salary}  {resume?.expectedSalary?.denomination} 
+                  {resume?.expectedSalary?.salary}{" "}
+                  {resume?.expectedSalary?.denomination}
                 </CustomTypography>
               </Stack>
 
-          
+              <Stack direction={"row"} sx={{ gap: MID }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Work Preference:
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.workPrefence.map((pre, index) => (
+                    <CustomTypography key={index}>{pre}</CustomTypography>
+                  ))}
+                </Stack>
+              </Stack>
             </Stack>
           </Grid>
         </Grid>

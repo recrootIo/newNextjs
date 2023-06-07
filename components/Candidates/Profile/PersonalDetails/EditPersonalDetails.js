@@ -16,6 +16,9 @@ import {
   IconButton,
   Card,
   CardContent,
+  OutlinedInput,
+  Checkbox,
+  ListItemText,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { useState } from "react";
@@ -41,7 +44,8 @@ import { NEUTRAL } from "@/theme/colors";
 import {
   // EditPersonalandGet,
   // editPersonalsName,
-  getCandsPrefInfo, retrievePersonal,
+  getCandsPrefInfo,
+  retrievePersonal,
 } from "@/redux/slices/personal";
 import { BOLD } from "@/theme/fonts";
 // import personalService from "@/redux/services/personal.service";
@@ -49,32 +53,63 @@ import { BOLD } from "@/theme/fonts";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
 
+import { Form, Formik, useFormikContext } from "formik";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import CustomSelect from "@/components/Forms/CustomSelect";
+import { FORM_VALIDATION } from "./personalValidators";
+
+const jobs = ["Remote", "Onsite", "Hybrid"];
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+export const NoticePeriod = [
+  "Immediate Joiner",
+  "15 Days",
+  "30 days",
+  "45 Days",
+  "60 Days",
+  "90 Days",
+];
+
 const EditPersonalDetails = () => {
   const { data = {} } = useSelector((state) => state?.personal);
+
   const { firstName, jobTitle, lastName, mobile, about, resume } = data;
   const user = JSON.parse(localStorage.getItem("User"));
 
-  const dispatch = useDispatch();
-
-  const [titleLoading, setTitleLoading] = useState(false);
-  const [personal, setPersonal] = useState({
-    firstName: firstName,
-    lastName: lastName,
-    jobTitle: jobTitle,
-    languages: resume?.languages,
-    currentOffer: resume.currentOffer,
-    notice: resume.notice,
+  const INITIAL_VALUES = {
+    firstName,
+    lastName,
+    jobTitle,
+    mobile,
     salaryCurrency: resume.salaryCurrency,
-    currentSalary: resume?.currentSalary,
-    expectedSalary: resume?.expectedSalary,
-    workPrefence: resume?.resume,
-    mobile: mobile,
+    currentSalary: resume?.currentSalary.salary,
+    currentSalaryDenomination: resume?.currentSalary.denomination,
+    expectedSalary: resume?.expectedSalary.salary,
+    expectedSalaryDenomination: resume?.expectedSalary.denomination,
     country: resume.location.country,
     state: resume.location.state,
     city: resume.location.city,
     totalWorkExperience: resume?.totalWorkExperience,
-    about: about,
-  });
+    about,
+    currentOffer: resume.currentOffer,
+    workPrefence: resume.workPrefence,
+    languages: resume?.languages,
+    notice: resume?.notice,
+  };
+
+  const dispatch = useDispatch();
+
+  const [titleLoading, setTitleLoading] = useState(false);
 
   const [type, setType] = useState([]);
   const [timetoLoad, setTimeTLoad] = useState(null);
@@ -82,21 +117,6 @@ const EditPersonalDetails = () => {
 
   const gotToPersonalDetails = () => {
     dispatch(updateCurrentScreen(""));
-  };
-
-  const handleChangeName = (e) => {
-    let { name, value } = e.target;
-    setPersonal({
-      ...personal,
-      [name]: value,
-    });
-  };
-
-  const handleTitle = (e) => {
-    setPersonal({
-      ...personal,
-      jobTitle: e,
-    });
   };
 
   const requestTitles = (e) => {
@@ -119,65 +139,16 @@ const EditPersonalDetails = () => {
     debounce(requestTitles, null, timetoLoad, setTimeTLoad, e);
   };
 
-  const handlePhoneNumber = (e, count) => {
-    console.log(count);
-    setPersonal({
-      ...personal,
-      mobile: parseInt(e),
-    });
-  };
-
-  const addTitle = () => {
-    if (language) {
-      setPersonal((state) => ({
-        ...state,
-        languages: [...state.languages, language],
-      }));
-      setLanguage("");
-    }
-  };
-
-  const handleSelect = async (selected) => {
-    const results = await geocodeByAddress(selected.label);
-    setPersonal({
-      ...personal,
-      country: results[0].address_components.find((c) =>
-        c.types.includes("country")
-      )?.long_name,
-      state: results[0].address_components.find((c) =>
-        c.types.includes("administrative_area_level_1")
-      )?.long_name,
-      city: results[0].address_components.find((c) =>
-        c.types.includes("locality")
-      )?.long_name,
-    });
-  };
-
   const changeLanguages = (e) => {
     setLanguage(e);
   };
 
-  const handleDelete = (e) => {
-    let array = personal.languages.filter((l) => l != e);
-    setPersonal((state) => ({
-      ...state,
-      languages: [...array],
-    }));
-  };
-
-  const changeOffers = (e, a) => {
-    setPersonal((state) => ({
-      ...state,
-      currentOffer: a,
-    }));
-  };
-
-  const handleEdit = () => {
+  const handleEdit = (updatedValues) => {
     candidateServices
-      .editMyPersonalDetails(personal)
+      .editMyPersonalDetails(updatedValues)
       .then((res) => {
-        console.log(res,'resp')
-        if (res?.status === 201) {        
+        console.log(res, "resp");
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
@@ -186,7 +157,7 @@ const EditPersonalDetails = () => {
           );
           dispatch(updateCurrentScreen(""));
           dispatch(getCandsPrefInfo());
-          dispatch(retrievePersonal())
+          dispatch(retrievePersonal());
         }
       })
       .catch(() => {
@@ -197,51 +168,6 @@ const EditPersonalDetails = () => {
           })
         );
       });
-  };
-
-  const changeSalaries = (e, a) => {
-    console.log(a);
-    const { name, value } = e.target;
-    const salary = personal.currentSalary.salary;
-    const denomination = personal.currentSalary.denomination;
-
-    let currentSalary = {
-      salary,
-      denomination,
-    };
-
-    if (name === "salary") {
-      currentSalary.salary = value;
-    } else {
-      currentSalary.denomination = value;
-    }
-
-    setPersonal((state) => ({
-      ...state,
-      currentSalary: currentSalary,
-    }));
-  };
-  const changeSalariesexpec = (e, a) => {
-    console.log(a);
-    const { name, value } = e.target;
-    const salary = personal.expectedSalary.salary;
-    const denomination = personal.expectedSalary.denomination;
-
-    let expectedSalary = {
-      salary,
-      denomination,
-    };
-
-    if (name === "salary") {
-      expectedSalary.salary = value;
-    } else {
-      expectedSalary.denomination = value;
-    }
-
-    setPersonal((state) => ({
-      ...state,
-      expectedSalary: expectedSalary,
-    }));
   };
 
   return (
@@ -263,7 +189,12 @@ const EditPersonalDetails = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               variant="h4"
@@ -277,406 +208,516 @@ const EditPersonalDetails = () => {
             >
               Edit Personal Details
             </CustomTypography>
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                console.log(values, "values");
+                let currentSalary = {
+                  salary: values.currentSalary,
+                  denomination: values.currentSalaryDenomination,
+                };
+                let expectedSalary = {
+                  salary: values.expectedSalary,
+                  denomination: values.expectedSalaryDenomination,
+                };
 
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <Stack
-                sx={{
-                  gap: "10px",
-                  flexDirection: { md: "row", sm: "column", xs: "column" },
-                }}
-              >
-                <TextField
-                  required
-                  id="outlined-basic"
-                  label="First Name"
-                  name="firstName"
-                  variant="outlined"
-                  value={personal.firstName}
-                  autoComplete="user-name"
-                  onChange={handleChangeName}
-                  sx={{ width: "100%" }}
-                />
+                let updatedValues = {
+                  currentSalary,
+                  expectedSalary,
+                  salaryCurrency: values.salaryCurrency,
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  jobTitle: values.jobTitle,
+                  mobile: values.mobile,
+                  country: values.country,
+                  state: values.state,
+                  city: values.city,
+                  totalWorkExperience: values?.totalWorkExperience,
+                  about: values.about,
+                  currentOffer: values.currentOffer,
+                  workPrefence: values.workPrefence,
+                  languages: values?.languages,
+                  notice: values?.notice,
+                };
+                handleEdit(updatedValues);
+              }}
+            >
+              {({ errors, values, setFieldValue, submitForm }) => {
+                console.log(values.languages, "values.languages");
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <Stack
+                        sx={{
+                          gap: "10px",
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                        }}
+                      >
+                        <CustomTextField name="firstName" label="First Name" />
+                        <CustomTextField label="Last Name" name="lastName" />
+                      </Stack>
 
-                <TextField
-                  required
-                  id="outlined-basic"
-                  label="Last Name"
-                  name="lastName"
-                  variant="outlined"
-                  value={personal.lastName}
-                  autoComplete="user-name"
-                  onChange={handleChangeName}
-                  sx={{ width: "100%" }}
-                />
-              </Stack>
+                      <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        fullWidth
+                        name="jobTitle"
+                        value={values.jobTitle}
+                        disablePortal={true}
+                        options={type.map((option) => option)}
+                        onChange={(e, a) => {
+                          setFieldValue("jobTitle", a);
+                        }}
+                        required
+                        loading={titleLoading}
+                        sx={{ display: "flex", justifyContent: "center" }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Job Title"
+                            name="jobTitle"
+                            loading={titleLoading}
+                            InputProps={{
+                              ...params.InputProps,
+                              type: "search",
+                            }}
+                            onChange={(e) => {
+                              getJobTitles(e.target.value);
+                              console.log(e.target.value, "a");
+                              if (!e.target.value) {
+                                setFieldValue("jobTitle", null);
+                              }
+                            }}
+                            error={errors.jobTitle}
+                            helperText={errors.jobTitle}
+                          />
+                        )}
+                      />
 
-              <Autocomplete
-                freeSolo
-                id="free-solo-2-demo"
-                disableClearable
-                fullWidth
-                name="jobTitle"
-                value={personal.jobTitle}
-                disablePortal={true}
-                options={type.map((option) => option)}
-                onChange={(e, a) => {
-                  handleTitle(a);
-                }}
-                required
-                loading={titleLoading}
-                sx={{ display: "flex", justifyContent: "center" }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Job Title"
-                    name="jobTitle"
-                    InputProps={{
-                      ...params.InputProps,
-                      type: "search",
-                    }}
-                    onChange={(e) => {
-                      getJobTitles(e.target.value);
-                    }}
-                    loading={titleLoading}
-                    required
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-              />
+                      <CustomTextField
+                        name="about"
+                        label="About"
+                        multiline
+                        rows={4}
+                        required
+                      />
 
-              <TextField
-                autoComplete="given-name"
-                name="about"
-                fullWidth
-                id="about"
-                label="About"
-                autoFocus
-                multiline
-                rows={4}
-                required
-                value={personal.about}
-                onChange={handleChangeName}
-              />
-
-              <ReactPhoneInput
-                inputExtraProps={{
-                  name: "phoneNumber",
-                  required: true,
-                  autoFocus: true,
-                }}
-                id="phoneNumber"
-                name="phoneNumber"
-                specialLabel="Mobile Number"
-                defaultCountry={"au"}
-                value={`+${personal.mobile}`}
-                onChange={handlePhoneNumber}
-                inputStyle={{
-                  width: "100%",
-                  height: "3.7375em",
-                  fontSize: "16px",
-                }}
-              />
-
-              <Box sx={{ width: "100%" }}>
-                <GooglePlacesAutocomplete
-                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                  selectProps={{
-                    isClearable: true,
-                    placeholder: "Enter Your Location",
-                    value: personal.country,
-                    onChange: (val) => {
-                      handleSelect(val);
-                    },
-                    styles: {
-                      input: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        height: "40px",
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                    },
-                  }}
-                />
-              </Box>
-
-              {personal?.country === "" ? (
-                ""
-              ) : (
-                <Stack
-                  sx={{
-                    flexDirection: { md: "row", sm: "column", xs: "column" },
-                    gap:'5px'
-                  }}
-                  spacing={2}
-                  marginTop={2}
-                >
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">Country</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="country"
-                      fullWidth
-                      id="about"
-                      placeholder="Country"
-                      value={personal?.country}
-                      onChange={handleChangeName}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth sx={{m:'0 !important'}}>
-                    <CustomTypography variant="body2">State</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="state"
-                      fullWidth
-                      id="about"
-                      placeholder="State"
-                      value={personal?.state}
-                      onChange={handleChangeName}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth  sx={{m:'0 !important'}}>
-                    <CustomTypography variant="body2">City</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="city"
-                      fullWidth
-                      id="about"
-                      placeholder="City"
-                      value={personal?.city}
-                      onChange={handleChangeName}
-                    />
-                  </FormControl>
-                </Stack>
-              )}
-
-              <Stack gap={1}>
-                <Stack
-                  sx={{
-                    flexDirection: "row",
-                    gap: "10px",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Autocomplete
-                    id="free-solo-2-demo"
-                    fullWidth
-                    disablePortal={true}
-                    name="language"
-                    onChange={(event, newValue) => {
-                      changeLanguages(newValue);
-                    }}
-                    value={language}
-                    options={LANGUAGES}
-                    getOptionLabel={(option) => option}
-                    required
-                    renderInput={(params) => (
-                      <TextField
-                        variant="outlined"
-                        {...params}
-                        label="Languages"
-                        name="language"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: "search",
+                      <ReactPhoneInput
+                        inputExtraProps={{
+                          name: "phoneNumber",
+                          required: true,
+                          autoFocus: true,
+                        }}
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        specialLabel="Mobile Number"
+                        defaultCountry={"au"}
+                        value={`+${values.mobile}`}
+                        onChange={(a) => {
+                          setFieldValue("mobile", parseInt(a));
+                        }}
+                        inputStyle={{
+                          width: "100%",
+                          height: "3.7375em",
+                          fontSize: "16px",
+                          border: errors.mobile
+                            ? "1px solid red"
+                            : "1px solid hsl(0, 0%, 80%)",
                         }}
                       />
-                    )}
-                  />
 
-                  <IconButton onClick={() => addTitle()}>
-                    <AddIcon sx={{ color: "#1976d2" }} />
-                  </IconButton>
-                </Stack>
+                      <Box sx={{ width: "100%" }}>
+                        <GooglePlacesAutocomplete
+                          apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                          selectProps={{
+                            isClearable: true,
+                            placeholder: "Enter Your Location",
+                            value: values.country,
+                            onChange: async (selected) => {
+                              const results = await geocodeByAddress(
+                                selected.label
+                              );
+                              setFieldValue(
+                                "country",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("country")
+                                )?.long_name
+                              );
 
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                  {personal.languages.map((l, index) => (
-                    <Chip
-                      key={index}
-                      label={l}
-                      deleteIcon={<CloseIcon />}
-                      onDelete={() => handleDelete(l)}
-                      sx={{
-                        fontSize: "17px",
-                        bgcolor: "#D4F0FC",
-                        padding: "3px",
-                      }}
-                    />
-                  ))}
-                </Box>
-              </Stack>
+                              setFieldValue(
+                                "state",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes(
+                                    "administrative_area_level_1"
+                                  )
+                                )?.long_name
+                              );
 
-              <TextField
-                autoComplete="given-name"
-                name="totalWorkExperience"
-                fullWidth
-                label="Experience"
-                required
-                value={personal.totalWorkExperience}
-                onChange={handleChangeName}
-              />
+                              setFieldValue(
+                                "state",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("locality")
+                                )?.long_name
+                              );
+                            },
+                            styles: {
+                              input: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                height: "40px",
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                              }),
+                            },
+                          }}
+                        />
+                      </Box>
 
-              <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-simple-select-label">
-                  Salary Currency
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={personal.salaryCurrency}
-                  name="salaryCurrency"
-                  label="Salary Currency"
-                  onChange={handleChangeName}
-                  required
-                >
-                  {CURRENCY.map((data, ind) => (
-                    <MenuItem key={ind} value={data.country}>
-                      {data.country} {data.symbol}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                      {values?.country === "" ? (
+                        ""
+                      ) : (
+                        <Stack
+                          sx={{
+                            flexDirection: {
+                              md: "row",
+                              sm: "column",
+                              xs: "column",
+                            },
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                          marginTop={2}
+                        >
+                          <CustomTextField name="country" label="country" />
+                          <CustomTextField name="state" label="State" />
+                          <CustomTextField name="city" label="city" />
+                        </Stack>
+                      )}
 
-              <Stack
-                sx={{
-                  flexDirection: { md: "row", sm: "column", xs: "column" },
-                  gap:'5px'
-                }}
-                spacing={2}
-              >
-                <TextField
-                  variant="outlined"
-                  value={personal?.currentSalary?.salary}
-                  name="salary"
-                  label="Current Salary(Per Annum)"
-                  type="number"
-                  onChange={changeSalaries}
-                  sx={{ width: "100%" }}
-                  required
-                />
+                      <Stack gap={1}>
+                        <Stack
+                          sx={{
+                            flexDirection: "row",
+                            gap: "10px",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Autocomplete
+                            id="free-solo-2-demo"
+                            fullWidth
+                            disablePortal={true}
+                            name="language"
+                            onChange={(event, newValue) => {
+                              changeLanguages(newValue);
+                            }}
+                            value={language}
+                            options={LANGUAGES}
+                            getOptionLabel={(option) => option}
+                            required
+                            renderInput={(params) => (
+                              <TextField
+                                variant="outlined"
+                                {...params}
+                                label="Languages"
+                                name="language"
+                                InputProps={{
+                                  ...params.InputProps,
+                                  type: "search",
+                                }}
+                                error={errors.languages}
+                              />
+                            )}
+                          />
 
-                {/* DENOMINATIONS */}
-                <FormControl sx={{ width: "100%" ,m:'0 !important'}}>
-                  <InputLabel id="demo-simple-select-label">
-                    Denomination *
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={personal?.currentSalary?.denomination}
-                    name="denomination"
-                    label="Denomination *"
-                    sx={{ backgroundColor: NEUTRAL, width: "100%" }}
-                    onChange={changeSalaries}
-                    required
-                  >
-                    {DENOMINATIONS.map((data, ind) => (
-                      <MenuItem key={ind} value={data}>
-                        {data}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Stack>
-              <Stack
-                sx={{
-                  flexDirection: { md: "row", sm: "column", xs: "column" },
-                  gap:'5px'
-                }}
-                spacing={2}
-              >
-                <TextField
-                  variant="outlined"
-                  value={personal?.expectedSalary?.salary}
-                  name="salary"
-                  label="Expected Salary(Per Annum)"
-                  type="number"
-                  onChange={changeSalariesexpec}
-                  sx={{ width: "100%" }}
-                  required
-                />
+                          <IconButton
+                            onClick={() => {
+                              if (language) {
+                                let newLanguage = [...values.languages];
+                                newLanguage.push(language);
+                                changeLanguages("");
+                                setFieldValue("languages", newLanguage);
+                              }
+                            }}
+                          >
+                            <AddIcon sx={{ color: "#1976d2" }} />
+                          </IconButton>
+                        </Stack>
 
-                {/* DENOMINATIONS */}
-                <FormControl sx={{ width: "100%" ,m:'0 !important'}}>
-                  <InputLabel id="demo-simple-select-label">
-                    Denomination *
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={personal?.expectedSalary?.denomination}
-                    name="denomination"
-                    label="Denomination *"
-                    sx={{ backgroundColor: NEUTRAL, width: "100%" }}
-                    onChange={changeSalariesexpec}
-                    required
-                  >
-                    {DENOMINATIONS.map((data, ind) => (
-                      <MenuItem key={ind} value={data}>
-                        {data}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Stack>
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: "5px" }}
+                        >
+                          {values?.languages?.map((lang, index) => (
+                            <Chip
+                              key={index}
+                              label={lang}
+                              deleteIcon={<CloseIcon />}
+                              onDelete={() => {
+                                let array = values?.languages.filter(
+                                  (l) => l != lang
+                                );
+                                setFieldValue("languages", array);
+                              }}
+                              sx={{
+                                fontSize: "17px",
+                                bgcolor: "#D4F0FC",
+                                padding: "3px",
+                              }}
+                            />
+                          ))}
+                        </Box>
+                      </Stack>
 
-              <FormControl>
-                <FormLabel sx={{color:'black'}} id="demo-row-radio-buttons-group-label">
-                  Do you already have an offer?*
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                  sx={{ gap: "100px", mt: "12px" }}
-                  value={personal?.currentOffer}
-                  onChange={changeOffers}
-                  required
-                >
-                  <FormControlLabel
-                    value="yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="no" control={<Radio />} label="No" />
-                </RadioGroup>
-              </FormControl>
+                      <CustomTextField
+                        name="totalWorkExperience"
+                        label="Experience"
+                      />
 
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={gotToPersonalDetails}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => handleEdit()}
-                >
-                  Save
-                </Button>
-              </Stack>
-            </Stack>
+                      <FormControl sx={{ width: "100%" }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Salary Currency
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={values.salaryCurrency}
+                          name="salaryCurrency"
+                          label="Salary Currency"
+                          onChange={(e, a) => {
+                            console.log(e.target.value, "e");
+                            setFieldValue("salaryCurrency", e.target.value);
+                          }}
+                          required
+                          error={errors.salaryCurrency}
+                        >
+                          {CURRENCY.map((data, ind) => (
+                            <MenuItem key={ind} value={data.country}>
+                              {data.country} {data.symbol}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <Stack
+                        sx={{
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                          gap: "5px",
+                        }}
+                        spacing={2}
+                      >
+                        <CustomTextField
+                          name="currentSalary"
+                          label="Current Salary(Per Annum)"
+                        />
+
+                        {/* DENOMINATIONS */}
+                        <FormControl sx={{ width: "100%", m: "0 !important" }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Denomination *
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={values.currentSalaryDenomination}
+                            name="denomination"
+                            label="Denomination *"
+                            sx={{ backgroundColor: NEUTRAL, width: "100%" }}
+                            onChange={(e) => {
+                              setFieldValue(
+                                "currentSalaryDenomination",
+                                e.target.value
+                              );
+                            }}
+                            required
+                            error={errors.currentSalaryDenomination}
+                          >
+                            {DENOMINATIONS.map((data, ind) => (
+                              <MenuItem key={ind} value={data}>
+                                {data}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Stack>
+
+                      <Stack
+                        sx={{
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                          gap: "5px",
+                        }}
+                        spacing={2}
+                      >
+                        <CustomTextField
+                          name="expectedSalary"
+                          label="Expected Salary(Per Annum)"
+                        />
+
+                        {/* DENOMINATIONS */}
+                        <FormControl sx={{ width: "100%", m: "0 !important" }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Denomination *
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={values.expectedSalaryDenomination}
+                            name="denomination"
+                            label="Denomination *"
+                            sx={{ backgroundColor: NEUTRAL, width: "100%" }}
+                            onChange={(a) => {
+                              setFieldValue(
+                                "expectedSalaryDenomination",
+                                a.target.value
+                              );
+                            }}
+                            error={errors.expectedSalaryDenomination}
+                            required
+                          >
+                            {DENOMINATIONS.map((data, ind) => (
+                              <MenuItem key={ind} value={data}>
+                                {data}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Stack>
+
+                      <FormControl>
+                        <FormLabel
+                          sx={{ color: "black" }}
+                          id="demo-row-radio-buttons-group-label"
+                        >
+                          Do you already have an offer?*
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          sx={{ gap: "100px", mt: "12px" }}
+                          value={values?.currentOffer}
+                          onChange={(e, a) => {
+                            setFieldValue("currentOffer", e.target.value);
+                          }}
+                        >
+                          <FormControlLabel
+                            value="yes"
+                            control={<Radio />}
+                            label="Yes"
+                          />
+                          <FormControlLabel
+                            value="no"
+                            control={<Radio />}
+                            label="No"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Work Preference
+                        </InputLabel>
+                        <Select
+                          labelId="demo-multiple-checkbox-label"
+                          id="demo-multiple-checkbox"
+                          multiple
+                          sx={{
+                            backgroundColor: NEUTRAL,
+                            width: "100%",
+                            textTransform: "capitalize",
+                          }}
+                          value={values.workPrefence}
+                          onChange={(e) => {
+                            setFieldValue("workPrefence", e.target.value);
+                          }}
+                          input={<OutlinedInput label="Work Preference *" />}
+                          renderValue={(selected) => selected.join(", ")}
+                          MenuProps={MenuProps}
+                          name="workPrefence"
+                          required
+                          error={errors.workPrefence}
+                        >
+                          {jobs.map((data, ind) => (
+                            <MenuItem key={ind} value={data}>
+                              <Checkbox
+                                checked={values?.workPrefence.includes(data)}
+                              />
+                              <ListItemText primary={data} />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Notice Period
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={values?.notice}
+                          label="Notice Period"
+                          name="notice"
+                          required
+                          onChange={(e, a) =>
+                            setFieldValue("notice", e.target.value)
+                          }
+                          error={errors.notice}
+                        >
+                          {NoticePeriod.map((data, ind) => (
+                            <MenuItem key={ind} value={data}>
+                              {data}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Stack>
+                    <Stack direction="row" spacing={2} sx={{ mt: "10px" }}>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          bgcolor: "#015FB1 !important",
+                          width: "50%",
+                          borderRadius: "8px",
+                        }}
+                        onClick={gotToPersonalDetails}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="contained"
+                        sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                        type={"submit"}
+                        onClick={() => submitForm()}
+                      >
+                        Save
+                      </Button>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

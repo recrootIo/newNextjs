@@ -365,3 +365,143 @@ export const SECTORS = [
   "Wireless",
   "Writing / Editing",
 ];
+
+export const CAREER_LEVEL = [
+  "Board",
+  "Co-founder/partner",
+  "Executives/C-suites",
+  "Director/VP",
+  "Manager/Senior Manager",
+  "Architects/Senior Architects",
+  "Tech Lead/Team Leader",
+  "Senior Professional",
+  "Junior Professional",
+  "Fresher",
+  "Intern",
+];
+
+export const NoticePeriod = [
+  "Immediate Joiner",
+  "15 Days",
+  "30 days",
+  "45 Days",
+  "60 Days",
+  "90 Days",
+];
+
+//Packages
+export const FREE = "Free";
+export const PRO = "Pro Plan";
+export const PREMIUM = "Premium";
+export const CONTACT = "Contact Us";
+export const GROWTH = "Growth";
+export const GOLD = "Gold";
+export const JOB_POST = "job post";
+export const JOB_SLOT = "job slot";
+
+export const FREE_PACKAGE = {
+  name: FREE,
+  packageList: [
+    "3 Free job posts",
+    "Up to 3 candidates from candidate database",
+    "Job expires in 1 month",
+  ],
+  pricing: {
+    rs: null,
+    us: null,
+  },
+  type: JOB_POST,
+};
+
+export const PRO_PLAN = {
+  name: PRO,
+  packageList: [
+    "1 Job post",
+    "Unlimited job applicants",
+    "10 relevant profiles from the candidate database",
+    "Job expires in 1 month",
+    "10% off for more than 5 job posts",
+  ],
+  pricing: {
+    rs: 600,
+    us: 15,
+  },
+  type: JOB_POST,
+};
+
+export const PREMIUM_PACKAGE = {
+  name: PREMIUM,
+  packageList: [
+    "1 Featured job post",
+    "Unlimited job applicants",
+    "Priority in job searches",
+    "Marketing on Recroot social media handles",
+    "20 relevant profiles from the candidate database",
+    "Dedicated candidate manager",
+    "Job expires in 1 month",
+    "10% off for more than 5 job posts",
+  ],
+  pricing: {
+    rs: 1600,
+    us: 35,
+  },
+  type: JOB_POST,
+};
+
+export const GROWTH_PACKAGE = {
+  name: GROWTH,
+  packageList: [
+    "1 Job slot",
+    "1 Job active at a time",
+    "Any number of job posts in draft status",
+    "Guaranteed candidate selection",
+    "Access to the candidate database",
+    "Billed monthly",
+  ],
+  pricing: {
+    rs: null,
+    us: 1062,
+  },
+  type: JOB_SLOT,
+};
+
+export const GOLD_PACKAGE = {
+  name: GOLD,
+  packageList: [
+    "5 Job slots",
+    "5 Job active at a time",
+    "2 Featured job slots",
+    "Any number of job posts in draft status",
+    "Dedicated candidate manager",
+    "Access to the candidate database",
+    "Billed monthly",
+  ],
+  pricing: {
+    rs: null,
+    us: 4956,
+  },
+  type: JOB_SLOT,
+};
+
+export const CONTACT_PACKAGE = {
+  name: CONTACT,
+  packageList: [
+    "End to end recruitment service by Recroot.",
+    "With dedicated technical recruiters, we recruit the right professionals as per your requirements on your behalf.",
+    "Contact Us to know more. grow@arinnovate.io",
+  ],
+  pricing: {
+    rs: null,
+    us: null,
+  },
+};
+
+export const NEW_PRICING_PLAN = {
+  [FREE]: FREE_PACKAGE,
+  [PRO]: PRO_PLAN,
+  [PREMIUM]: PREMIUM_PACKAGE,
+  [GROWTH]: GROWTH_PACKAGE,
+  [GOLD]: GOLD_PACKAGE,
+};
+
+export const CANDIDATE = "Candidate";

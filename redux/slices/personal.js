@@ -158,7 +158,7 @@ export const addResume = createAsyncThunk("add/resume", async (pdf) => {
   const formData = new FormData();
   formData.append("resume", pdf);
   const res = await personalService.addResume(formData);
-  dispatch(retrievePersonal());
+
   return res.data;
 });
 
@@ -633,8 +633,27 @@ export const insertNewPlace = createAsyncThunk("set/Place", async (data) => {
 });
 
 export const updateUser = createAsyncThunk("set/Password", async (data) => {
-  return await userService.updateService(data);
+  return await userService.updateUser(data);
 });
+
+export const clearSkill = createAsyncThunk("set/clearSkill", async (data) => {
+  return;
+});
+
+export const clearSinEduca = createAsyncThunk("educa/clear", async (id) => {
+  return;
+});
+
+export const clearTraining = createAsyncThunk("training/clear", async (id) => {
+  return;
+});
+
+export const clearCertificate = createAsyncThunk(
+  "certificate/clear",
+  async (id) => {
+    return;
+  }
+);
 
 const personalSlice = createSlice({
   name: "personal",
@@ -721,6 +740,10 @@ const personalSlice = createSlice({
       state.resLoad = false;
       // notifySuccess("Resume Was Added Succesfully");
     },
+    [addResume.rejected]: (state, action) => {
+      state.resLoad = false;
+      // notifySuccess("Resume Was Added Succesfully");
+    },
     [addCover.pending]: (state) => {
       state.covLoad = true;
     },
@@ -781,6 +804,18 @@ const personalSlice = createSlice({
     },
     [getCandsPrefInfo.fulfilled]: (state, action) => {
       state.myPreferenceInfo = action.payload;
+    },
+    [clearSinEduca.fulfilled]: (state, action) => {
+      state.education = {};
+    },
+    [clearSkill.fulfilled]: (state, action) => {
+      state.skill = {};
+    },
+    [clearTraining.fulfilled]: (state, action) => {
+      state.training = {};
+    },
+    [clearCertificate.fulfilled]: (state, action) => {
+      state.certOne = {};
     },
   },
 });

@@ -5,6 +5,9 @@ const nextConfig = {
   },
   reactStrictMode: false,
   transpilePackages: ["@mui/material/css"],
+  images: {
+    domains: ["localhost", "preprod.recroot.au"],
+  },
 };
 
 module.exports = nextConfig;

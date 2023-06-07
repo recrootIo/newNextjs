@@ -16,161 +16,116 @@ import {
   // Select,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { useState } from "react";
-// import { Theme, useTheme } from "@mui/material/styles";
-// import OutlinedInput from "@mui/material/OutlinedInput";
-// import MenuItem from "@mui/material/MenuItem";
-// import { SelectChangeEvent } from "@mui/material/Select";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { useState } from "react";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { EDUCATION_LEVELS, ERROR, SUCCESS } from "@/utils/constants";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { MobileDatePicker } from "@mui/x-date-pickers";
-// import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// import moment from "moment";
-import dayjs from "dayjs";
-// import { AddEducaAndThenGet, EditEducaAndGet } from "@/redux/slices/personal";
+// import { MobileDatePicker } from "@mui/x-date-pickers";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { geocodeByAddress } from "react-google-places-autocomplete";
-import { convertDate } from "@/utils/HelperFunctions";
-// import personalService from "@/redux/services/personal.service";
+// import { convertDate } from "@/utils/HelperFunctions";
 import { openAlert } from "@/redux/slices/alert";
 import candidateServices from "@/redux/services/candidate.services";
-import { retrievePersonal } from "@/redux/slices/personal";
+import {
+  clearSinEduca,
+  GetCandsPrefInfo,
+  retrievePersonal,
+} from "@/redux/slices/personal";
+import { Form, Formik, useFormik } from "formik";
+import * as Yup from "yup";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import CustomPickers from "@/components/Forms/CustomPickers";
+
+const FORM_VALIDATION = Yup.object().shape({
+  graduate: Yup.string().required("Graduate field is required"),
+  degreeName: Yup.string().required("Degree Name field is required"),
+  country: Yup.string().required("Country field is required"),
+  state: Yup.string().required("State field is required"),
+  city: Yup.string().required("City field is required"),
+  experience: Yup.number().required("Experience field is required"),
+  collegeName: Yup.string().required("College Name field is required"),
+  fromDate: Yup.date()
+    .required("From Date field is required")
+    .max(Yup.ref("toDate"), "From Date cannot exceed To Date")
+    .test("future-date", "From Date cannot be a future date", function (value) {
+      const toDate = this.resolve(Yup.ref("toDate"));
+      if (!value || !toDate) {
+        return true;
+      }
+      return new Date(value) <= new Date(toDate);
+    }),
+  toDate: Yup.date()
+    .required("To Date field is required")
+    .min(Yup.ref("fromDate"), "To Date cannot be less than From Date")
+    .test("future-date", "To Date cannot be a future date", function (value) {
+      const fromDate = this.resolve(Yup.ref("fromDate"));
+      if (!value || !fromDate) {
+        return true;
+      }
+      return new Date(value) >= new Date(fromDate);
+    }),
+});
 
 const AddEducation = () => {
   const education = useSelector((state) => state.personal.education);
   const dispatch = useDispatch();
 
-  const [value, setValue] = React.useState("");
-  const [value2, setValue2] = React.useState("");
-
-  const [educationDetails, setEducationDetails] = useState({
-    graduate: "",
-    degreeName: "",
-    country: "",
-    state: "",
-    city: "",
-    experience: "",
-    collegeName: "",
-    fromDate: "",
-    toDate: "",
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
+    graduate: education?.graduate || "",
+    degreeName: education?.degreeName,
+    country: education?.country || "",
+    state: education?.state || "",
+    city: education?.city || "",
+    experience: education?.experience || "",
+    collegeName: education?.collegeName || "",
+    fromDate: education?.fromDate || "",
+    toDate: education?.toDate || "",
+    _id: education?._id,
   });
-
-  React.useEffect(() => {
-    setEducationDetails(() => ({
-      graduate: education?.graduate,
-      degreeName: education?.degreeName,
-      country: education?.country,
-      state: education?.state,
-      city: education?.city,
-      experience: education?.experience,
-      collegeName: education?.collegeName,
-      fromDate: education?.fromDate,
-      toDate: education?.toDate,
-      _id: education?._id,
-    }));
-    setValue(() => dayjs(education?.fromDate));
-    setValue2(() => dayjs(education?.toDate));
-  }, [education]);
-
-  const handleChange = (newValue) => {
-    let val = convertDate(newValue);
-    setValue(() => newValue);
-    setEducationDetails((state) => ({
-      ...state,
-      fromDate: val,
-    }));
-  };
-
-  const handleChangeto = (newValue2) => {
-    let val = convertDate(newValue2);
-    setValue2(() => newValue2);
-    setEducationDetails((state) => ({
-      ...state,
-      toDate: val,
-    }));
-  };
-
-  const onChange = (e, n) => {
-    console.log(n);
-    let { name, value } = e.target;
-
-    setEducationDetails({
-      ...educationDetails,
-      [name]: value,
-    });
-  };
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
-    setEducationDetails({
-      graduate: "",
-      degreeName: "",
-      country: "",
-      state: "",
-      city: "",
-      experience: "",
-      collegeName: "",
-      fromDate: "",
-      toDate: "",
-    })
+    dispatch(clearSinEduca());
   };
 
-  const handleSelect = async (selected) => {
-    const results = await geocodeByAddress(selected.label);
-    setEducationDetails({
-      ...educationDetails,
-      country: results[0].address_components.find((c) =>
-        c.types.includes("country")
-      )?.long_name,
-      state: results[0].address_components.find((c) =>
-        c.types.includes("administrative_area_level_1")
-      )?.long_name,
-      city: results[0].address_components.find((c) =>
-        c.types.includes("locality")
-      )?.long_name,
-    });
-  };
-
-  const handleAdd = () => {
+  const handleAdd = (educationDetails) => {
     if (educationDetails?._id) {
-      editEducation();
+      editEducation(educationDetails);
     } else {
-      addEducation();
+      addEducation(educationDetails);
     }
   };
 
-  const addEducation = () => {
+  const addEducation = (educationDetails) => {
     candidateServices
       .addPersonalEducation(educationDetails)
       .then((res) => {
-        if (res.status === 201) {        
+        if (res.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "User Education is Updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(GetCandsPrefInfo());
-          dispatch(retrievePersonal())
+          dispatch(retrievePersonal());
         }
       })
       .catch((error) => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data.message || "Something went wrong",
           })
         );
       });
   };
 
-  const editEducation = () => {
+  const editEducation = (educationDetails) => {
     candidateServices
       .editPersonalEducation(educationDetails, educationDetails?._id)
       .then((res) => {
@@ -181,20 +136,25 @@ const AddEducation = () => {
               message: "User Preferences Updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(GetCandsPrefInfo());
-          dispatch(retrievePersonal())
+          dispatch(retrievePersonal());
         }
       })
       .catch((error) => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data.message || "Something went wrong",
           })
         );
       });
   };
+
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setInitialValues(() => education);
+  }, []);
 
   return (
     <div>
@@ -214,7 +174,12 @@ const AddEducation = () => {
               Back
             </Button>
           </Box>
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", sm: "22px", xs: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               sx={{
@@ -226,203 +191,201 @@ const AddEducation = () => {
             >
               Add Education
             </CustomTypography>
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={EDUCATION_LEVELS}
-                name="graduate"
-                sx={{ display: "flex", justifyContent: "center" }}
-                value={educationDetails.graduate}
-                onChange={(event, education) => {
-                  setEducationDetails({
-                    ...educationDetails,
-                    graduate: education,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    label="Degree*"
-                    value={educationDetails.graduate}
-                    sx={{
-                      background: "#FFFFFF",
-                      borderColor: "#949494",
-                      borderRadius: "8px",
-                    }}
-                  />
-                )}
-              />
 
-              <TextField
-                fullWidth
-                id="degree"
-                label="Degree"
-                name="degreeName"
-                value={educationDetails.degreeName}
-                onChange={onChange}
-              />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                handleAdd(values);
+                console.log(values, "values");
+              }}
+            >
+              {({ values, setFieldValue, submitForm, errors }) => {
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        options={EDUCATION_LEVELS}
+                        sx={{ display: "flex", justifyContent: "center" }}
+                        value={values.graduate}
+                        name="graduate"
+                        onChange={(e, a) => {
+                          setFieldValue("graduate", a);
+                        }}
+                        renderInput={(params) => (
+                          <CustomTextField
+                            {...params}
+                            name="graduate"
+                            label="Graduation"
+                          />
+                        )}
+                      />
 
-              <Box sx={{ width: "100%" }}>
-                <GooglePlacesAutocomplete
-                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                  selectProps={{
-                    isClearable: true,
-                    placeholder: "Enter Your Location",
-                    value: educationDetails.country,
-                    onChange: (val) => {
-                      handleSelect(val);
-                    },
-                    styles: {
-                      input: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        height: "40px",
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        boxShadow: 0,
-                        "&:hover": {
-                          border: "1px solid purple",
-                        },
-                      }),
-                    },
-                  }}
-                />
-              </Box>
+                      <CustomTextField label="Degree" name="degreeName" />
 
-              {educationDetails?.country === "" ? (
-                ""
-              ) : (
-                <Stack
-                  sx={{
-                    flexDirection: { md: "row", sm: "column", xs: "column" },
-                    alignItems: "baseline",
-                    gap: "10px",
-                  }}
-                  spacing={2}
-                  marginTop={2}
-                >
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">Country</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="country"
-                      fullWidth
-                      id="about"
-                      placeholder="Country"
-                      value={educationDetails?.country}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">State</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="state"
-                      fullWidth
-                      id="about"
-                      placeholder="State"
-                      value={educationDetails?.state}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                  <FormControl fullWidth>
-                    <CustomTypography variant="body2">City</CustomTypography>
-                    <TextField
-                      autoComplete="given-name"
-                      name="city"
-                      fullWidth
-                      id="about"
-                      placeholder="City"
-                      value={educationDetails?.city}
-                      onChange={onChange}
-                    />
-                  </FormControl>
-                </Stack>
-              )}
+                      <Box sx={{ width: "100%" }}>
+                        <GooglePlacesAutocomplete
+                          apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                          selectProps={{
+                            isClearable: true,
+                            placeholder: "Enter Your Location",
+                            value: values.country,
+                            onChange: async (selected) => {
+                              const results = await geocodeByAddress(
+                                selected.label
+                              );
 
-              <TextField
-                fullWidth
-                id="duaration"
-                label="Duration(Years)"
-                name="experience"
-                type="number"
-                value={educationDetails?.experience}
-                autoComplete="user-name"
-                onChange={onChange}
-              />
+                              setFieldValue(
+                                "country",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("country")
+                                )?.long_name
+                              );
 
-              <TextField
-                fullWidth
-                id="institute"
-                label="Institute"
-                name="collegeName"
-                value={educationDetails.collegeName}
-                autoComplete="user-name"
-                onChange={onChange}
-              />
+                              setFieldValue(
+                                "state",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes(
+                                    "administrative_area_level_1"
+                                  )
+                                )?.long_name
+                              );
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "20px",
-                  width: "100%",
-                }}
-              >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MobileDatePicker
-                    label="From"
-                    // inputFormat="MM/dd/YYYY"
-                    name="fromDate"
-                    sx={{ width: "100%" }}
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
+                              setFieldValue(
+                                "city",
+                                results[0].address_components.find((c) =>
+                                  c.types.includes("locality")
+                                )?.long_name
+                              );
+                            },
+                            styles: {
+                              textInputContainer: (provided) => ({
+                                ...provided,
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
+                              }),
+                              input: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                height: "40px",
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
+                              }),
+                              singleValue: (provided) => ({
+                                ...provided,
+                                boxShadow: 0,
+                                color: errors.city
+                                  ? "red 1px red"
+                                  : "rgba(0, 0, 0, 0.23)",
+                                "&:hover": {
+                                  border: "1px solid purple",
+                                },
+                              }),
+                            },
+                          }}
+                        />
+                      </Box>
 
-                  <MobileDatePicker
-                    label="To"
-                    // inputFormat="MM/dd/YYYY"
-                    name="toDate"
-                    sx={{ width: "100%" }}
-                    value={value2}
-                    onChange={handleChangeto}
-                    renderInput={(params) => (
-                      <TextField {...params} sx={{ width: "100%" }} />
-                    )}
-                  />
-                </LocalizationProvider>
-              </Box>
+                      {values?.country === "" ? (
+                        ""
+                      ) : (
+                        <Stack
+                          sx={{
+                            flexDirection: {
+                              md: "row",
+                              sm: "column",
+                              xs: "column",
+                            },
+                            gap: "5px",
+                            alignItems: "center",
+                          }}
+                          marginTop={2}
+                        >
+                          <CustomTextField name="country" label="country" />
+                          <CustomTextField name="state" label="State" />
+                          <CustomTextField name="city" label="city" />
+                        </Stack>
+                      )}
 
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => gotoHome()}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => handleAdd()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                      <CustomTextField
+                        label="Duration(Years)"
+                        name="experience"
+                      />
+
+                      <CustomTextField label="Institute" name="collegeName" />
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: {
+                            md: "row",
+                            sm: "column",
+                            xs: "column",
+                          },
+                          gap: "20px",
+                          width: "100%",
+                        }}
+                      >
+                        <CustomPickers name="fromDate" label="From" />
+                        <CustomPickers name="toDate" label="To" />
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <MobileDatePicker
+                            label="From"
+                            name="fromDate"
+                            sx={{ width: "100%" }}
+                            value={value}
+                            onChange={handleChange}
+                            renderInput={(params) => (
+                              <TextField {...params} sx={{ width: "100%" }} />
+                            )}
+                          />
+
+                          <MobileDatePicker
+                            label="To"
+                            name="toDate"
+                            sx={{ width: "100%" }}
+                            value={value2}
+                            onChange={handleChangeto}
+                            renderInput={(params) => (
+                              <TextField {...params} sx={{ width: "100%" }} />
+                            )}
+                          />
+                        </LocalizationProvider> */}
+                      </Box>
+
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={() => gotoHome()}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

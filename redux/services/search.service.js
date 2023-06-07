@@ -8,10 +8,12 @@ const getLatestJObs = (
   address,
   jobVariant,
   selectedCompanies,
-  selectedSector
+  selectedSector,
+  selectedCategory,
+  limit = 10
 ) => {
   return http
-    .post(`getLatestJobs?page=${value}&limit=10`, {
+    .post(`getLatestJobs?page=${value}&limit=${limit}`, {
       names,
       exper,
       title,
@@ -19,6 +21,7 @@ const getLatestJObs = (
       jobVariant,
       selectedCompanies,
       selectedSector,
+      selectedCategory,
     })
     .then((response) => {
       return response;

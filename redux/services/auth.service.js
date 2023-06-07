@@ -13,6 +13,18 @@ const register = (
   companyId,
   immediate
 ) => {
+  console.log(
+    email,
+    password,
+    firstName,
+    lastName,
+    sector,
+    organization,
+    recrootUserType,
+    companyId,
+    immediate,
+    "serciv"
+  );
   return axios.post(API_URL + "register", {
     email,
     password,
@@ -53,20 +65,30 @@ const login = (email, password) => {
     .then((response) => {
       if (response.data.token) {
         localStorage.setItem("User", JSON.stringify(response.data));
-        Cookies.set("userID",response.data?.User?._id,{expires:1})
-        Cookies.set("verifyCode",response.data?.User?.referral_code,{expires:1})
-        Cookies.set("token",response.data?.token,{expires:1})
-        Cookies.set("userType",response.data?.User?.recrootUserType,{expires:1})
+        Cookies.set("userID", response.data?.User?._id, { expires: 1 });
+        Cookies.set("verifyCode", response.data?.User?.referral_code, {
+          expires: 1,
+        });
+        Cookies.set("token", response.data?.token, { expires: 1 });
+        Cookies.set("userType", response.data?.User?.recrootUserType, {
+          expires: 1,
+        });
+        Cookies.set("companyId", response.data?.User?.companyId, {
+          expires: 1,
+        });
+        Cookies.set("memberType", response.data?.User?.memberType, {
+          expires: 1,
+        });
       }
       return response;
     });
 };
 
 const logout = () => {
-  const allcook = Cookies.get()
-  Object.keys(allcook).map((cook)=>{
-    Cookies.remove(cook)
-  })
+  const allcook = Cookies.get();
+  Object.keys(allcook).map((cook) => {
+    Cookies.remove(cook);
+  });
   localStorage.removeItem("User");
 };
 

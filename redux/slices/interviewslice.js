@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import interviewss from "../services/interviewservice";
 const interviewservice = new interviewss()
+
 const initialState = {
   scheduleinterview: { search: [] },
   schedules: [],

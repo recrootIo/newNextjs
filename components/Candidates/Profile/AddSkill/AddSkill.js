@@ -18,69 +18,64 @@ import Select from "@mui/material/Select";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
-import { LEVELS, SUCCESS } from "@/utils/constants";
+import { ERROR, LEVELS, SUCCESS } from "@/utils/constants";
 import candidateServices from "@/redux/services/candidate.services";
 import { openAlert } from "@/redux/slices/alert";
 import {
+  clearSkill,
   // GetCandsPrefInfo,
   retrievePersonal,
 } from "@/redux/slices/personal";
+import { Form, Formik } from "formik";
+import CustomTextField from "@/components/Forms/CustomTextField";
+import * as Yup from "yup";
+
+const FORM_VALIDATION = Yup.object().shape({
+  skillName: Yup.string().required("Skill Name field is required"),
+  Experience: Yup.number().required("Experience field is required"),
+  Compitance: Yup.string().required("Compitance field is required"),
+});
 
 const AddSkill = () => {
   const dispatch = useDispatch();
   const { skill } = useSelector((state) => state?.personal);
 
-  const [skillSet, setSkillSet] = React.useState({
+  const [INITIAL_VALUES, setInitialValues] = React.useState({
     skillName: skill?.skillName,
     Experience: skill?.Experience,
     Compitance: skill?.Compitance,
+    _id: skill?._id,
   });
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
-    setSkillSet({
-      skillName: '',
-      Experience: '',
-      Compitance: '',
-    })
+    dispatch(clearSkill());
   };
 
-  const handleLevelChange = (e) => {
-    const { value } = e.target;
-    setSkillSet((state) => ({
-      ...state,
-      Compitance: value,
-    }));
-  };
-
-  const submitSkill = () => {
-    if (skillSet?.id) {
-      editNewSkill();
+  const submitSkill = (values) => {
+    if (values?._id) {
+      editNewSkill(values);
     } else {
-      addNewSkill();
+      addNewSkill(values);
     }
   };
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setSkillSet((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
+  React.useEffect(() => {
+    setInitialValues(() => skill);
+  }, [skill]);
 
-  const addNewSkill = () => {
+  const addNewSkill = (values) => {
     candidateServices
-      .addSkill(skillSet)
+      .addSkill(values)
       .then((res) => {
         if (res.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "New Skill added",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(retrievePersonal());
         }
       })
@@ -88,32 +83,32 @@ const AddSkill = () => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data?.message || "Something went wrong",
           })
         );
       });
   };
 
-  const editNewSkill = () => {
+  const editNewSkill = (values) => {
     candidateServices
-      .editSkills(skillSet, skillSet?.id)
+      .editSkills(values, values?.id)
       .then((res) => {
-        if (res?.status === 201) {         
+        if (res?.status === 201) {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "Skill is updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotoHome();
           dispatch(retrievePersonal());
         }
       })
-      .catch(() => {
+      .catch((error) => {
         dispatch(
           openAlert({
             type: ERROR,
-            message: error.response.data.message || "Something went wrong",
+            message: error?.response?.data.message || "Something went wrong",
           })
         );
       });
@@ -138,7 +133,12 @@ const AddSkill = () => {
             </Button>
           </Box>
 
-          <CardContent sx={{ p: "50px", paddingBottom: "100px !important" }}>
+          <CardContent
+            sx={{
+              p: { md: "50px", xs: "22px", sm: "22px" },
+              paddingBottom: "100px !important",
+            }}
+          >
             <CustomTypography
               className="personalDetailTitle"
               sx={{
@@ -151,63 +151,75 @@ const AddSkill = () => {
               Add Skill
             </CustomTypography>
 
-            <Stack spacing={2} sx={{ mt: "50px" }}>
-              <TextField
-                id="outlined-basic"
-                label="skill"
-                variant="outlined"
-                value={skillSet.skillName}
-                name="skillName"
-                onChange={onChange}
-              />
+            <Formik
+              initialValues={{ ...INITIAL_VALUES }}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={(values) => {
+                submitSkill(values);
+              }}
+            >
+              {({ errors, values, setFieldValue, submitForm }) => {
+                return (
+                  <Form>
+                    <Stack spacing={2} sx={{ mt: "50px" }}>
+                      <CustomTextField
+                        id="outlined-basic"
+                        label="Skill"
+                        name="skillName"
+                      />
 
-              <TextField
-                id="outlined-basic"
-                label="Experience(Years)"
-                type="number"
-                variant="outlined"
-                value={skillSet.Experience}
-                name="Experience"
-                onChange={onChange}
-              />
+                      <CustomTextField
+                        label="Experience(Years)"
+                        name="Experience"
+                      />
 
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Level</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={skillSet.Compitance}
-                  label="Level"
-                  onChange={handleLevelChange}
-                >
-                  {LEVELS.map((l, index) => (
-                    <MenuItem key={index} value={l}>
-                      {l}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "50%",
-                    borderRadius: "8px",
-                  }}
-                  onClick={() => gotoHome()}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                  onClick={() => submitSkill()}
-                >
-                  Add
-                </Button>
-              </Stack>
-            </Stack>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          Level
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={values.Compitance}
+                          label="Level"
+                          onChange={(e, a) => {
+                            console.log(e.target.value, "e");
+                            setFieldValue("Compitance", e.target.value);
+                          }}
+                          error={errors.Compitance}
+                        >
+                          {LEVELS.map((l, index) => (
+                            <MenuItem key={index} value={l}>
+                              {l}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <Stack direction="row" spacing={2}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#015FB1 !important",
+                            width: "50%",
+                            borderRadius: "8px",
+                          }}
+                          onClick={() => gotoHome()}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          onClick={() => submitForm()}
+                        >
+                          Add
+                        </Button>
+                      </Stack>
+                    </Stack>
+                  </Form>
+                );
+              }}
+            </Formik>
           </CardContent>
         </Card>
       </Container>

@@ -272,7 +272,7 @@ export const BootstrapDialogTitle = (props) => {
 };
 
 const SearchSection = ({ ...props }) => {
-  const { sectors, companies } = props;
+  const { sectors, companies, categories, category } = props;
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const loading = useSelector((state) => state.searchJobs.loading);
@@ -287,6 +287,7 @@ const SearchSection = ({ ...props }) => {
   const [jobVariant, setJobVariant] = useState("");
   const [selectedCompanies, setSelectedCompanies] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(category || "");
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -314,6 +315,8 @@ const SearchSection = ({ ...props }) => {
         jobVariant: variant,
         selectedCompanies,
         selectedSector,
+        selectedCategory,
+        limit: 10,
       })
     )
       .then(() => {})
@@ -376,8 +379,6 @@ const SearchSection = ({ ...props }) => {
   useEffect(() => {
     getJobs();
   }, []);
-
-  console.log(selectedCompanies, "selectedCompanies");
 
   return (
     <div>
@@ -450,6 +451,9 @@ const SearchSection = ({ ...props }) => {
                     setSelectedCompanies={setSelectedCompanies}
                     selectedSector={selectedSector}
                     setSelectedSector={setSelectedSector}
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
                   />
                 </CardContent>
               </Card>
@@ -542,13 +546,14 @@ const SearchSection = ({ ...props }) => {
                           aria-label="Vertical tabs example"
                           sx={{ borderRight: 1, borderColor: "divider" }}
                         >
-                          <Tab label="Professional Level" {...a11yProps(0)} />
-                          <Tab label="Industry" {...a11yProps(1)} />
+                          {/* <Tab label="Professional Level" {...a11yProps(0)} /> */}
+                          <Tab label="Industry" {...a11yProps(0)} />
+                          <Tab label="Category" {...a11yProps(1)} />
                           <Tab label="Companies" {...a11yProps(2)} />
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
-                        <TabPanel
+                        {/* <TabPanel
                           value={value}
                           index={0}
                           style={{ p: "0px !important" }}
@@ -569,13 +574,29 @@ const SearchSection = ({ ...props }) => {
                               // onChange={handleCheckBoxChange}
                             />
                           </FormGroup>
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
+                        </TabPanel> */}
+                        <TabPanel value={value} index={0}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedSector(a)}
                             value={selectedSector}
                           >
                             {sectors.map((sec, index) => (
+                              <StyledFormLabel
+                                key={index}
+                                control={<BpRadio size="small" />}
+                                label={sec}
+                                value={sec}
+                                name={sec}
+                              />
+                            ))}
+                          </RadioGroup>
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                          <RadioGroup
+                            onChange={(e, a) => setSelectedCategory(a)}
+                            value={selectedCategory}
+                          >
+                            {categories.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
                                 control={<BpRadio size="small" />}
@@ -675,14 +696,14 @@ const SearchSection = ({ ...props }) => {
                   direction="row"
                   spacing={1}
                 >
-                  {/* <Chip
-                    className="categoryChip"
-                    label="Experienced"
-                    size="medium"
-                    onClick={handleCategoryChipClick}
-                  />
+                  {selectedCategory && (
+                    <Chip
+                      className="categoryChip"
+                      label={selectedCategory}
+                      size="medium"
+                    />
+                  )}
 
-                  */}
                   {selectedSector && (
                     <Chip
                       className="categoryChip"

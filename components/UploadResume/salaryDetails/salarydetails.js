@@ -43,12 +43,13 @@ const steps = [
 ];
 
 const Salary = ({ ...props }) => {
-  const { setCreateResume, saveAllData ,scroll , position} = props;
+  const { setCreateResume, saveAllData, scroll, position, url } = props;
   const [currency, setCurrency] = React.useState(INDIAN_CURRENCY.country);
   const [currentSalary, setCurrentSalary] = React.useState({
     denomination: THOUSAND,
     salary: "",
   });
+
   const [expectedSalary, setExpectedSalary] = React.useState({
     denomination: THOUSAND,
     salary: null,
@@ -89,7 +90,8 @@ const Salary = ({ ...props }) => {
       currentSalary,
     }));
     // scroll(position + 1);
-    saveAllData();
+    saveAllData(expectedSalary, currentSalary, currency);
+    // console.log(expectedSalary, "expectedSalary");
   };
 
   const getSalary = (salary) => {
@@ -134,7 +136,7 @@ const Salary = ({ ...props }) => {
           <Button
             onClick={() => scroll(position - 1)}
             startIcon={<KeyboardBackspaceIcon />}
-            sx={{ color: 'black', textDecoration: "underline" }}
+            sx={{ color: "black", textDecoration: "underline" }}
             variant="text"
           >
             Back
@@ -270,11 +272,18 @@ const Salary = ({ ...props }) => {
             >
               <Button
                 onClick={() => actionNext()}
-                className="searchJobsBtn"
+                className={!enableNext ? "disabledButtons" : "nextBtn"}
+                sx={{
+                  height: "50px",
+                  width: "30%",
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                  marginBottom: "50px",
+                }}
                 variant="contained"
                 disabled={!enableNext}
               >
-                Search For Jobs
+                {url ? "Apply" : " Search For Jobs"}
               </Button>
             </Box>
           </Stack>

@@ -148,7 +148,10 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           </div>
         </CustomTypography>
 
-        <Stack direction={"row"} sx={{ padding: "7px 0" }}>
+        <Stack
+          direction={"row"}
+          sx={{ padding: "7px 0", flexWrap: "wrap", gap: "5px" }}
+        >
           {lateJob?.requiredSkill?.map((skill, index) => (
             <Chip
               key={index}

@@ -12,31 +12,48 @@ import {
   Stack,
   Divider,
   Avatar,
+  Typography,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+// import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import FactoryOutlinedIcon from "@mui/icons-material/FactoryOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import BoyIcon from "@mui/icons-material/Boy";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+// import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import styles from "./companyPreview.module.css";
 import Image from "next/image";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
+import { useEffect } from "react";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { isEmpty } from "lodash";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
+  const dispatch = useDispatch();
+  useEffect(() => {
+dispatch(getCompanyDetails())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+  const final = useSelector((state) => state.company?.companyDetl);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-
+  const logo = isEmpty(final?.companyLogo?.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo?.logo;
   return (
     <>
       <EmployerNavbar />
@@ -337,8 +354,8 @@ const CompanyPreview = () => {
                         }}
                       >
                         <Avatar
-                          alt="Remy Sharp"
-                          src=""
+                          alt=""
+                          src={`https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`}
                           sx={{ height: "228px", width: "228px" }}
                         />
                       </Box>
@@ -346,7 +363,7 @@ const CompanyPreview = () => {
                         className={styles.comapnyNameTypo}
                         variant="h5"
                       >
-                        Lorem Ipsum Pvt. Ltd
+                        {final?.basicInformation?.cmpname}
                       </CustomTypography>
                     </Box>
                     <Box className={styles.PreviewTypoBox}>
@@ -355,11 +372,12 @@ const CompanyPreview = () => {
                         variant="subtitle2"
                         className={styles.PreviewTypo}
                       >
-                        &nbsp;&nbsp;loremIpsum@lorem.com
+                        &nbsp;&nbsp;{final?.basicInformation?.cmpemail}
+
                       </CustomTypography>
                     </Box>
                     <Divider />
-                    <Box className={styles.PreviewTypoBox}>
+                    {/* <Box className={styles.PreviewTypoBox}>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.PreviewTypo}
@@ -367,16 +385,22 @@ const CompanyPreview = () => {
                         <PhoneOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;+91 00000-00000
                       </CustomTypography>
-                    </Box>
+                    </Box> */}
                     <Divider />
                     <Box className={styles.PreviewTypoBox}>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.PreviewTypo}
-                      >
+                      <Box sx={{display:'flex'}}>
                         <PlaceOutlinedIcon className={styles.PreviewIcon} />
-                        &nbsp;&nbsp;Location
-                      </CustomTypography>
+                        &nbsp;&nbsp;
+                        {
+                          final.address?.length !== 0 ?
+                          final.address?.map((addd,index)=>(
+                            <>
+                           <CustomTypography>{ (index ? '| ' : '') + addd?.address?.label }{}</CustomTypography> 
+                            </>
+                          )) 
+                          : 'No Provided'
+                        }
+                      </Box>
                     </Box>
                     <Divider />
                     <Box className={styles.PreviewTypoBox}>
@@ -385,7 +409,7 @@ const CompanyPreview = () => {
                         className={styles.PreviewTypo}
                       >
                         <LanguageOutlinedIcon className={styles.PreviewIcon} />
-                        &nbsp;&nbsp;www.loremipsum.com
+                        &nbsp;&nbsp;{final?.basicInformation?.cmpwebsite}
                       </CustomTypography>
                     </Box>
                   </Box>
@@ -396,7 +420,7 @@ const CompanyPreview = () => {
                         variant="subtitle2"
                         className={styles.PreviewTypo}
                       >
-                        &nbsp;&nbsp;&nbsp;Industry
+                        &nbsp;&nbsp;&nbsp;{final?.companyInformation?.infosector}
                       </CustomTypography>
                     </Box>
                     <Divider />
@@ -404,91 +428,85 @@ const CompanyPreview = () => {
                       <ErrorOutlineOutlinedIcon
                         className={styles.PreviewIcon}
                       />
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.PreviewCompanyDescriptionTypo}
-                      >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.loremIpsum@lorem.com
-                      </CustomTypography>
+                      <Box sx={{mt:2}}>
+                         <ReactQuill
+                        value={final?.companyInformation?.infodes}
+                        readOnly={true}
+                        theme={"bubble"}
+                      />
+                      </Box>
                     </Box>
                   </Box>
                   <Box className={styles.PreviewTypoContainer}>
+                   {final?.members?.map((mem,index)=>(
+                    <>
                     <Box className={styles.PreviewTypoBox}>
-                      <BoyIcon className={styles.PreviewIcon} />
+                    <BoyIcon className={styles.PreviewIcon} />
+                    <CustomTypography
+                      variant="subtitle2"
+                      className={styles.PreviewTypo}
+                      sx={{ width: "50%" }}
+                    >
+                      &nbsp;&nbsp;{mem?.fname}
+                    </CustomTypography>
+                    <Divider
+                      orientation="vertical"
+                      variant="middle"
+                      flexItem
+                    />
+                    <CustomTypography
+                      variant="subtitle2"
+                      className={styles.PreviewTypo}
+                    >
+                      &nbsp;&nbsp;{mem?.role}
+                    </CustomTypography>
+                  </Box>
+                  <Divider />
+                    </>
+                    )) 
+                    }
+                  </Box>
+                  <Box className={styles.PreviewTypoContainer}>
+                    <Box className={styles.PreviewTypoBox}>
+                     <LinkedInIcon sx={{color:'#00339b'}}/>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.PreviewTypo}
-                        sx={{ width: "50%" }}
                       >
-                        &nbsp;&nbsp;Member Name
-                      </CustomTypography>
-                      <Divider
-                        orientation="vertical"
-                        variant="middle"
-                        flexItem
-                      />
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.PreviewTypo}
-                      >
-                        &nbsp;&nbsp;Role
+                      &nbsp;&nbsp;  {final?.links?.linkin !== undefined || final?.links?.linkin !== null ? final?.links?.linkin : 'No Provided' }
                       </CustomTypography>
                     </Box>
                     <Divider />
                     <Box className={styles.PreviewTypoBox}>
-                      <BoyIcon className={styles.PreviewIcon} />
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.PreviewTypo}
-                        sx={{ width: "50%" }}
-                      >
-                        &nbsp;&nbsp;Member Name
-                      </CustomTypography>
-                      <Divider
-                        orientation="vertical"
-                        variant="middle"
-                        flexItem
+                      <FacebookIcon sx={{color:'#00339b'}}
                       />
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.PreviewTypo}
                       >
-                        &nbsp;&nbsp;Role
-                      </CustomTypography>
-                    </Box>
-                  </Box>
-                  <Box className={styles.PreviewTypoContainer}>
-                    <Box className={styles.PreviewTypoBox}>
-                      <Image
-                        src="/outlined-linkedin.png"
-                        alt=""
-                        height="18"
-                        width="20"
-                      />
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.PreviewTypo}
-                      >
-                        &nbsp;&nbsp;&nbsp;loremIpsum@lorem.com
+                        &nbsp;&nbsp;{final?.links?.fb !== undefined || final?.links?.fb !== null ? final?.links?.fb : 'No Provided' }
                       </CustomTypography>
                     </Box>
                     <Divider />
                     <Box className={styles.PreviewTypoBox}>
-                      <Image
-                        src="/outlined-insta.png"
-                        alt=""
-                        height="28"
-                        width="30"
+                      <TwitterIcon sx={{color:'#00339b'}}
                       />
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.PreviewTypo}
                       >
-                        &nbsp;&nbsp;loremIpsum@lorem.com
+                        &nbsp;&nbsp;{final?.links?.twitter !== undefined || final?.links?.twitter !== null ? final?.links?.twitter : 'No Provided' }
+                      </CustomTypography>
+                    </Box>
+                    <Divider />
+                    <Box className={styles.PreviewTypoBox}>
+                      <YouTubeIcon sx={{color:'#00339b'}}
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;{final?.links?.utube !== undefined || final?.links?.utube !== null ? final?.links?.utube : 'No Provided' }
                       </CustomTypography>
                     </Box>
                   </Box>
