@@ -29,6 +29,7 @@ import {
   ListItemIcon,
   Checkbox,
   ListItemText,
+  Pagination,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import WorkIcon from "@mui/icons-material/Work";
@@ -403,15 +404,33 @@ const AllApplicants = () => {
                         sx={{ bgcolor: "#D4F0FC" }}
                       />
                     </Stack>
-                    <Stack spacing={2} sx={{ mt: "20px" }}>
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                      <AllApplicantsCard />
-                    </Stack>
+                    <Box
+                      className={styles.scrollbar}
+                      id="style-5"
+                      sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
+                    >
+                      <Stack spacing={2}>
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                        <AllApplicantsCard />
+                      </Stack>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <Pagination count={4} hidePrevButton hideNextButton />
+                    </Box>
                   </Box>
                 </CardContent>
               </Card>
