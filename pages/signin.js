@@ -143,6 +143,7 @@ function Signin() {
   return (
     <section className="signInMain">
       <Container
+        maxWidth="sm"
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
       >
         <Stack className="signInContent">
@@ -157,7 +158,7 @@ function Signin() {
             />
             <CustomTypography
               sx={{
-                fontSize: "40px",
+                fontSize: "30px",
                 color: "white",
                 fontFamily: "Inter-Bold",
               }}
@@ -172,7 +173,7 @@ function Signin() {
               sx={{
                 background: "white",
                 borderRadius: "20px",
-                padding: { md: "30px", sm: "5px", xs: "2px" },
+                padding: { md: "5px", sm: "5px", xs: "2px" },
               }}
             >
               <CardContent>

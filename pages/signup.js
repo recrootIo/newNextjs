@@ -682,7 +682,6 @@ function Signup() {
           </Grid>
         </Grid>
       </Container>
-      <p className={inter.className}>klsnfdgksdvv</p>
     </Box>
   );
 }
