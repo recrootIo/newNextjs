@@ -5,6 +5,7 @@ const interviewservice = new interviewss()
 const initialState = {
   scheduleinterview: { search: [] },
   schedules: [],
+  partcInt:[]
 };
 
 export const interview = createAsyncThunk(
@@ -25,6 +26,10 @@ export const getSchedules = createAsyncThunk("get/train", async () => {
   const res = await interviewservice.getAll(user.User.companyId);
   return res.data;
 });
+export const getSchedulesInterview = createAsyncThunk("get/scheduled", async ({cid,jid}) => {
+  const res = await interviewservice.getScheduleInt(cid,jid);
+  return res.data;
+});
 
 const intSlice = createSlice({
   name: "sinterview",
@@ -38,6 +43,9 @@ const intSlice = createSlice({
     },
     [setinterview.fulfilled]: (state, action) => {
       state.scheduleinterview = action.payload;
+    },
+    [getSchedulesInterview.fulfilled]: (state, action) => {
+      state.partcInt = action.payload;
     },
   },
 });

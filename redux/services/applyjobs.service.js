@@ -29,6 +29,9 @@ class applyJobService {
   updateEmailTemplapes(id, data) {
     return http.post(`/updateEmailTemplapes/${id}`, data);
   }
+  updateAppStatus(id, data) {
+    return http.put(`/updateStatus/${id}`, data);
+  }
 }
 
 export default applyJobService;
