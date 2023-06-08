@@ -225,11 +225,11 @@ export const a11yProps = (index) => {
 
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
-    width: "20px",
-    height: "20px",
+    width: "25px",
+    height: "25px",
   },
-  height: "40px",
-  width: "40px",
+  height: "100px",
+  width: "100px",
 }));
 
 export const StyledFormLabel = styled(FormControlLabel)(({}) => ({

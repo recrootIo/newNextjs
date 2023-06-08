@@ -8,6 +8,7 @@ import {
   Chip,
   Stack,
   styled,
+  Avatar,
 } from "@mui/material";
 import { bull, getImageLogo, getSalary, StyledAvatar } from "./SearchSection";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -30,19 +31,20 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const extractFirstTwoTags = (data) => {
     const container = document.createElement("div");
     container.innerHTML = data;
-    const firstPTag = container.querySelector("p");
-    return firstPTag ? firstPTag.textContent : "";
+    // const firstPTag = container.querySelector("p");
+    const firstPTag = data.replace(/<\/?[^>]+(>|$)/g, "");
+    console.log(firstPTag);
+    return firstPTag;
   };
 
   return (
     <Card className="jobCard">
       <CardHeader
         avatar={
-          <StyledAvatar
-            className="recentAvatar"
+          <Avatar
             alt="logo"
             src={getImageLogo(lateJob?.company?.companyLogo?.logo)}
-            size={100}
+            sx={{ width: 65, height: 65 }}
           />
         }
         titleTypographyProps={{
@@ -133,9 +135,9 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           <div
             style={{
               overflow: "hidden",
-              maxHeight: "100px",
+              maxHeight: "68px",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
+              // whiteSpace: "nowrap",
             }}
           >
             {extractFirstTwoTags(lateJob?.jobDescription)}
