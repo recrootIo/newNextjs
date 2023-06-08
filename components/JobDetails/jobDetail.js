@@ -337,7 +337,7 @@ const JobDetail = ({ ...props }) => {
                   sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
                 />
                 <CardContent>
-                  <Box>
+                  {/* <Box>
                     <Grid container spacing={1}>
                       <Grid
                         item
@@ -393,7 +393,7 @@ const JobDetail = ({ ...props }) => {
                         </CustomTypography>
                       </Grid>
                     </Grid>
-                  </Box>
+                  </Box> */}
                   {/* <CustomTypography
                     variant="body2"
                     // color="text.secondary"
