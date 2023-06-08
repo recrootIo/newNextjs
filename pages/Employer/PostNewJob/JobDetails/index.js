@@ -303,11 +303,11 @@ const JobDetails = () => {
                   <MenuItem  value="premium" disabled={preCOunt === 0 || preCOunt === undefined} >
                     <Typography textAlign="center">Premium Job Post  - Jobs Left : {preCOunt}</Typography>
                   </MenuItem>
-               <MenuItem  disabled={! (companyDet.package?.subType === 'jSlot' && companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Growth') } value="jSlot" >
+               <MenuItem  disabled={! (companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Growth') } value="jSlot" >
                     <Typography textAlign="center">Growth Plan  - Job Slot</Typography>
                   </MenuItem> 
              
-               <MenuItem  value="jSlot" disabled={! (companyDet.package?.subType === 'jSlot' && companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Gold')} >
+               <MenuItem  value="jSlot" disabled={! (companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Gold')} >
                     <Typography textAlign="center">Gold Plan  - Job Slot</Typography>
                   </MenuItem> 
               </Select>
