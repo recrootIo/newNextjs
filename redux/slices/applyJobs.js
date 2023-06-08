@@ -180,7 +180,7 @@ const applySlice = createSlice({
     },
     [getSinDetails.fulfilled]: (state, action) => {
       state.single = action.payload;
-      state.selectedId = action.payload._id;
+      state.selectedId = action?.payload?._id;
     },
     [seeAll.fulfilled]: (state, action) => {
       state.seeCand = action.payload;

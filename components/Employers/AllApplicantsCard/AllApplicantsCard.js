@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
-import React from "react";
+import React, { useEffect } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
@@ -26,6 +26,10 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import { useDispatch, useSelector } from "react-redux";
+import download from "downloadjs";
+import { getSinResume } from "@/redux/slices/applyJobs";
+import { useRouter } from "next/navigation";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -38,7 +42,27 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
   width: "40px",
 }));
 
-const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
+const AllApplicantsCard = ({users}) => {
+  const getImageUrl = (candi) => {
+    return candi?.candidateId?.profpicFileLocation?.photo
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
+  };
+  const dispatch = useDispatch();
+  const resume = useSelector((state) => state.apply.resume);
+  useEffect(() => {
+     dispatch(getSinResume(users?.resumeId));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users])
+  console.log(resume?.resume,'res')
+  const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+    /\\/g,
+    "/"
+  )}`;
+const {push} = useRouter();
+  const navigate = (id)=>{
+  push(`/Employer/CandiProfileFullView?appId=${id}`)
+  }
   return (
     <Card
       sx={{
@@ -56,8 +80,7 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
               width: "60px",
               border: "1px solid #2699ff",
             }}
-            alt="logo"
-            src="/applicant-img.png"
+            src={getImageUrl(users)}
             size={300}
           />
         }
@@ -70,8 +93,8 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
           fontSize: 16,
           color: "#034275",
         }}
-        title="Candidate Name"
-        subheader="Graphic Designer"
+        title={`${users?.candidateId?.firstName} ${users?.candidateId?.lastName}`}
+        subheader={users?.candidateId?.jobTitle}
         action={
           <>
             <Box
@@ -138,6 +161,11 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
             size="large"
             variant="outlined"
             bgcolor="#02A9F7 !important"
+            onClick={async () => {
+              const res = await fetch(recroot);
+              const blob = await res.blob();
+              download(blob, `${resume.resumeName}`);
+            }}
           >
             <DownloadIcon sx={{ fontSize: "35px" }} />
           </Button>
@@ -151,6 +179,7 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
               bgcolor: "#02A9F7 !important",
               fontSize: "18px",
             }}
+            onClick={()=>navigate(users?._id)}
           >
             View Details
           </Button>
@@ -166,7 +195,7 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
                 color: "#1097CD",
               }}
             >
-              Creative Director
+            {users?.jobId?.jobRole}
             </CustomTypography>
           </Box>
           <Box sx={{ display: "flex" }}>
@@ -179,7 +208,7 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
                 color: "rgba(1, 49, 63, 0.8)",
               }}
             >
-              Notice Period - 15 Days
+              Notice Period -  {users?.candidateId?.resume?.notice}
             </CustomTypography>
           </Box>
         </Stack>
@@ -194,24 +223,26 @@ const AllApplicantsCard = ({ handleNavigate, ...lateJob }) => {
                 color: "rgba(1, 49, 63, 0.8)",
               }}
             >
-              Experience - 3 Years
+              Experience - {users?.candidateId?.resume?.totalWorkExperience} Years
             </CustomTypography>
           </Box>
         </Stack>
-        <CustomTypography
+        <Box
           color="rgba(1, 49, 63, 0.8)"
-          sx={{ mt: "25px", fontSize: "16px" }}
+          sx={{ mt: "25px", fontSize: "16px",     overflow: 'hidden',
+          maxHeight: '100px',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+      }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad
-          minim veniamUt enim ad minim veniam...
-        </CustomTypography>
+      {users?.candidateId?.about}
+        </Box>
         <CustomTypography
           sx={{ textAlign: "right", fontStyle: "italic", fontSize: "11px" }}
           variant="body2"
           color="text.secondary"
         >
-          Applied 10 days ago
+           Applied {moment(users?.createdAt).fromNow()}
         </CustomTypography>
       </CardContent>
     </Card>

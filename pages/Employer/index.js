@@ -5,10 +5,12 @@ import { CustomTypography } from '@/ui-components/CustomTypography/CustomTypogra
 import { Box, Button, Container, Grid } from '@mui/material'
 import Cookies from 'js-cookie'
 import Head from 'next/head'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 function Employer({children}) {
     const user = Cookies.get()
+    const {push} = useRouter()
   return (
     <div>
         <Head>
@@ -54,6 +56,7 @@ function Employer({children}) {
                     color: "#01313F",
                     height: "42px",
                   }}
+                  onClick={()=>{push('/Employer/PostNewJob')}}
                 >
                   Post New Job
                 </Button>

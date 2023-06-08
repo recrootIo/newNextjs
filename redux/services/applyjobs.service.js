@@ -19,6 +19,9 @@ class applyJobService {
   getAll(id) {
     return http.get(`/getExperience/${id}`);
   }
+  getAppliedOnly(id) {
+    return http.get(`/getAppliedJob/${id}`);
+  }
   getEmailTemplapes(value) {
     console.log(value, "service");
     return http.get(`/getEmailTemplates/${value.id}/${value.type}`);
