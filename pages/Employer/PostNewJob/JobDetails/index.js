@@ -32,7 +32,6 @@ import EditorToolbar, {
   modules,
   formats,
 } from "@/components/EditorToolbar/EditorToolbar";
-// import ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import ScreeningQuestions from "@/components/Employers/ScreeningQuestions/ScreeningQuestions";
