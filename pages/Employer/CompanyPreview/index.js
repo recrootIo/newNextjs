@@ -40,7 +40,6 @@ import dynamic from "next/dynamic";
 import Employer from "..";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
   const dispatch = useDispatch();
@@ -50,10 +49,6 @@ dispatch(getCompanyDetails())
   }, [])
   
   const final = useSelector((state) => state.company?.companyDetl);
-
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
   const logo = isEmpty(final?.companyLogo?.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo?.logo;
   return (
     <>

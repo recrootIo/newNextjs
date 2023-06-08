@@ -20,6 +20,8 @@ import {
   InputAdornment,
   IconButton,
   LinearProgress,
+  useMediaQuery,
+  Typography,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -49,6 +51,18 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import styles from "./candiProfileFullView.module.css";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import applyJobService from "@/redux/services/applyjobs.service";
+import { useState } from "react";
+import moment from "moment";
+import download from "downloadjs";
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
+import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
+import { useDispatch, useSelector } from "react-redux";
+import { getSinResume } from "@/redux/slices/applyJobs";
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -92,6 +106,59 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
 }));
 
 const CandiFullProfileView = () => {
+  const router = useRouter()
+  const {appId} = router.query;
+  const [appdata, setappdata] = useState({});
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (appId !== undefined) {      
+      setLoading(true);
+     new applyJobService()
+        .getAppliedOnly(appId)
+        .then((res) => {
+          setappdata(res.data);
+          dispatch(getSinResume(res.data?.resumeId))
+          setLoading(false);
+        })
+    }
+      // .then((res) => console.log(res));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appId]);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+  }
+
+  function changePage(offSet) {
+    setPageNumber((prevPageNumber) => prevPageNumber + offSet);
+  }
+
+  function changePageBack() {
+    changePage(-1);
+  }
+
+  function changePageNext() {
+    changePage(+1);
+  }
+  const matches = useMediaQuery("(max-width:600px)");
+  const match = useMediaQuery("(max-width:1050px)");
+  const candidate = appdata?.candidateId;
+  const resume = useSelector((state) => state.apply.resume);
+  const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+    /\\/g,
+    "/"
+  )}`;
+  const isItPdfFile = recroot.includes("pdf");
+  const getImageUrl = (candi) => {
+    return candi?.profpicFileLocation?.photo
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      : `data:image/jpeg;base64,${candi?.headShot}`;
+  };
+  console.log(resume,'cand')
   return (
     <>
       <EmployerNavbar />
@@ -108,14 +175,15 @@ const CandiFullProfileView = () => {
       >
         <Container>
           <Button
-            variant="text"
             sx={{
               color: "white",
               fontWeight: "500",
               fontSize: "20px",
               textTransform: "capitalize",
+              zIndex:'100'
             }}
             startIcon={<ArrowBackIcon />}
+            onClick={()=>{router.push('/Employer/AllApplicants')}}
           >
             Back
           </Button>
@@ -170,8 +238,8 @@ const CandiFullProfileView = () => {
                   }}
                 >
                   <StyledAvatar
-                    alt="Remy Sharp"
-                    src="/candi-details-view--img.png"
+                    alt=""
+                    src={getImageUrl(candidate)}
                     sx={{
                       objectFit: "contain",
                       height: "180px",
@@ -201,7 +269,17 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    Candidate Name
+                   {candidate?.firstName} {candidate?.lastName}
+                   </CustomTypography>
+                  <CustomTypography
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: 500,
+                      color: "white",
+                    }}
+                    gutterBottom
+                  >
+                    {candidate?.jobTitle}
                   </CustomTypography>
                   <CustomTypography
                     sx={{
@@ -211,7 +289,7 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    Designation
+                    +{candidate?.mobile}
                   </CustomTypography>
                   <CustomTypography
                     sx={{
@@ -221,7 +299,7 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    +91 00000-00000
+                    {candidate?.email}
                   </CustomTypography>
                   <CustomTypography
                     sx={{
@@ -231,17 +309,7 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    loremipsum@lorem.com
-                  </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Location
+                    {candidate?.resume?.location?.country}
                   </CustomTypography>
                 </Grid>
                 <Grid
@@ -273,7 +341,39 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    Country : United States
+                    Country :  {candidate?.resume?.location?.country}
+                  </CustomTypography>
+          {candidate?.resume?.nationality?.length > 0 ?
+                  <CustomTypography
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: 500,
+                      color: "white",
+                    }}
+                    gutterBottom
+                  >
+                    Nationality :  {candidate?.resume?.nationality?.country}
+                  </CustomTypography> : ''}
+    {candidate?.resume?.countrieswithworkingRights?.length > 0 ?              
+                  <CustomTypography
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: 500,
+                      color: "white",
+                    }}
+                    gutterBottom
+                  >
+                    Working rights :  {candidate?.resume?.countrieswithworkingRights?.country}
+                  </CustomTypography> : ''}
+                  <CustomTypography
+                    sx={{
+                      fontSize: "18px",
+                      fontWeight: 500,
+                      color: "white",
+                    }}
+                    gutterBottom
+                  >
+                   Notice Period :{candidate?.resume?.notice}
                   </CustomTypography>
                   <CustomTypography
                     sx={{
@@ -283,37 +383,7 @@ const CandiFullProfileView = () => {
                     }}
                     gutterBottom
                   >
-                    Nationality : Indian
-                  </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Working rights : India
-                  </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Times of available to work :
-                  </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Total Work Experience : 4 Years
+                    Total Work Experience : {candidate?.resume?.totalWorkExperience} Years
                   </CustomTypography>
                 </Grid>
                 <Grid
@@ -398,16 +468,14 @@ const CandiFullProfileView = () => {
                     About
                   </CustomTypography>
                   <CustomTypography className={styles.FullProfileSectionData}>
-                    Professional Python Developer with more than two years of
-                    experience in software industry. Involved in product
-                    requirement, testing and development of various solutions
+                   {candidate?.about}
                   </CustomTypography>
                   <Box className={styles.FullProfilePersonalDetailsTypoBox}>
                     <CustomTypography className={styles.FullProfileSectionTypo}>
                       Current Salary :
                     </CustomTypography>
                     <CustomTypography className={styles.FullProfileSectionData}>
-                      4 LPA
+                      {candidate?.resume?.currentSalary?.salary}  {candidate?.resume?.currentSalary?.denomination}
                     </CustomTypography>
                   </Box>
                   <Box className={styles.FullProfilePersonalDetailsTypoBox}>
@@ -415,7 +483,7 @@ const CandiFullProfileView = () => {
                       Expected Salary :
                     </CustomTypography>
                     <CustomTypography className={styles.FullProfileSectionData}>
-                      6 LPA
+                    {candidate?.resume?.expectedSalary?.salary}  {candidate?.resume?.expectedSalary?.denomination}
                     </CustomTypography>
                   </Box>
                   <Box className={styles.FullProfilePersonalDetailsTypoBox}>
@@ -423,7 +491,7 @@ const CandiFullProfileView = () => {
                       Notice Period :
                     </CustomTypography>
                     <CustomTypography className={styles.FullProfileSectionData}>
-                      15 Days
+                     {candidate?.resume?.notice}
                     </CustomTypography>
                   </Box>
                   <Box className={styles.FullProfilePersonalDetailsTypoBox}>
@@ -431,7 +499,7 @@ const CandiFullProfileView = () => {
                       Work Preference :
                     </CustomTypography>
                     <CustomTypography className={styles.FullProfileSectionData}>
-                      Remote
+                     {candidate?.resume?.workPrefence.join('| ')}
                     </CustomTypography>
                   </Box>
                 </Stack>
@@ -472,7 +540,8 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileCard}>
+                  {candidate?.resume?.workExperience?.map((wrk,index)=>(
+                  <Box key={index} className={styles.ViewFullCandiProfileCard}>
                     <BeenhereOutlinedIcon
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
@@ -481,47 +550,23 @@ const CandiFullProfileView = () => {
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                        Lorem Ipsum
+                       {wrk?.role}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        Lorem Ipsum company
+                        {wrk?.companyName}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
+                       {moment(wrk?.fromDate).format('LL')} - {moment(wrk?.toDate).format('LL')} {bull} {wrk?.experience} Years
                       </CustomTypography>
                     </Stack>
                   </Box>
-                  <Box className={styles.ViewFullCandiProfileCard}>
-                    <BeenhereOutlinedIcon
-                      sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                    />
-                    <Stack spacing={1}>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoMainText}
-                      >
-                        Lorem Ipsum
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        Lorem Ipsum company
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
-                      </CustomTypography>
-                    </Stack>
-                  </Box>
+                  ))}
                 </Box>
               </Box>
             </Box>
@@ -560,7 +605,8 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileCard}>
+                  {candidate?.resume?.education?.map((edu,index)=>(
+                  <Box key={index} className={styles.ViewFullCandiProfileCard}>
                     <BeenhereOutlinedIcon
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
@@ -569,59 +615,29 @@ const CandiFullProfileView = () => {
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                        Lorem Ipsum
+                       {edu?.degreeName}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        Master’s
+                          {edu?.graduate}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        Lorem Ipsum company
+                         {edu?.degreeName}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
+                          {moment(edu?.fromDate).format('LL')} -   {moment(edu?.toDate).format('LL')} {bull} {edu?.experience} Years
                       </CustomTypography>
                     </Stack>
                   </Box>
-                  <Box className={styles.ViewFullCandiProfileCard}>
-                    <BeenhereOutlinedIcon
-                      sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                    />
-                    <Stack spacing={1}>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoMainText}
-                      >
-                        Lorem Ipsum
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        Master’s
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        Lorem Ipsum company
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
-                      </CustomTypography>
-                    </Stack>
-                  </Box>
+                  ))}
                 </Box>
               </Box>
             </Box>
@@ -660,7 +676,8 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileSkillCard}>
+                    {candidate?.resume?.skills?.map((skil,index)=>(
+                  <Box   key={index} className={styles.ViewFullCandiProfileSkillCard}>
                     <Box
                       sx={{
                         display: "flex",
@@ -668,18 +685,19 @@ const CandiFullProfileView = () => {
                         gap: "10px",
                         width: "100%",
                       }}
+                    
                     >
                       <Box sx={{ width: "30%" }}>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoMainText}
                         >
-                          Lorem Ipsum
+                          {skil?.skillName}
                         </CustomTypography>
                       </Box>
                       <LinearProgress
                         variant="determinate"
-                        value={50}
+                        value={skil?.Compitance === 'intermediate' ? 75 : skil?.Compitance === 'expert' ? 100 : skil?.Compitance === 'beginner' ? 25 : ''} 
                         sx={{
                           width: "70%",
                           height: "10px",
@@ -688,38 +706,12 @@ const CandiFullProfileView = () => {
                       />
                     </Box>
                   </Box>
-                  <Box className={styles.ViewFullCandiProfileSkillCard}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        width: "100%",
-                      }}
-                    >
-                      <Box sx={{ width: "30%" }}>
-                        <CustomTypography
-                          variant="subtitle2"
-                          className={styles.ViewFullInfoMainText}
-                        >
-                          Lorem Ipsum
-                        </CustomTypography>
-                      </Box>
-                      <LinearProgress
-                        variant="determinate"
-                        value={50}
-                        sx={{
-                          width: "70%",
-                          height: "10px",
-                          borderRadius: "5px",
-                        }}
-                      />
-                    </Box>
-                  </Box>
+                    ))
+                    }
                 </Box>
               </Box>
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 width: "100%",
                 height: "auto",
@@ -794,7 +786,7 @@ const CandiFullProfileView = () => {
                   </Box>
                 </Box>
               </Box>
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 width: "100%",
@@ -830,7 +822,9 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileCard}>
+                  {
+                    candidate?.resume?.projects?.map((pro,index)=>(
+                  <Box key={index} className={styles.ViewFullCandiProfileCard}>
                     <BeenhereOutlinedIcon
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
@@ -839,22 +833,31 @@ const CandiFullProfileView = () => {
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                        Lorem Ipsum
+                        {pro?.ProjectName}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        Lorem Ipsum company
+                       {pro?.Organization}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
+                       {pro?.Description}
+                      </CustomTypography>
+                      <CustomTypography
+                        component="a"
+                        href={pro?.portafolioLink}
+                        className={styles.ViewFullInfoText}
+                      >
+                        {pro?.portafolioLink}
                       </CustomTypography>
                     </Stack>
                   </Box>
+                    ))
+                  }
                 </Box>
               </Box>
             </Box>
@@ -893,7 +896,8 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileCard}>
+                  {candidate?.resume?.certificateFileLocation?.map((cert,index)=>(
+                  <Box key={index} className={styles.ViewFullCandiProfileCard}>
                     <Box sx={{ flex: "1", display: "flex", gap: "10px" }}>
                       <BeenhereOutlinedIcon
                         sx={{ color: "rgba(3, 66, 117, 0.8)" }}
@@ -903,24 +907,32 @@ const CandiFullProfileView = () => {
                           variant="subtitle2"
                           className={styles.ViewFullInfoMainText}
                         >
-                          Lorem Ipsum
+                          {cert?.title}
                         </CustomTypography>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoText}
                         >
-                          Lorem Ipsum company
+                         {cert?.organization}
                         </CustomTypography>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoText}
                         >
-                          June 2000 - July 2001 {bull} 1 Year, 1 Month
+                         {moment(cert?.issueDate).format('LL')} - {moment(cert?.expireDate).format('LL')}
                         </CustomTypography>
                       </Stack>
                     </Box>
+                    <IconButton    onClick={async () => {
+              const res = await fetch(`https://preprod.recroot.au/api/downloadResume?resume=${cert?.certificatepath?.replace(/\\/g,"/")}`);
+              const blob = await res.blob();
+              download(blob, `${cert.certificateName}`);
+            }}
+           >
                     <FileDownloadOutlinedIcon sx={{ cursor: "pointer" }} />
+                    </IconButton>
                   </Box>
+                  ))}
                 </Box>
               </Box>
             </Box>
@@ -959,7 +971,9 @@ const CandiFullProfileView = () => {
                     justifyContent: "flex-start",
                   }}
                 >
-                  <Box className={styles.ViewFullCandiProfileCard}>
+                  {
+                    candidate?.resume?.traning?.map((trn,index)=>(
+                  <Box key={index} className={styles.ViewFullCandiProfileCard}>
                     <BeenhereOutlinedIcon
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
@@ -968,22 +982,24 @@ const CandiFullProfileView = () => {
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                        Lorem Ipsum
+                       {trn?.title}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        Lorem Ipsum company
+                       {trn?.instituete}
                       </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
+                       {moment(trn?.fromDate).format('LL')} - {moment(trn?.toDate).format('LL')} 
                       </CustomTypography>
                     </Stack>
                   </Box>
+                    ))
+                  }
                 </Box>
               </Box>
             </Box>
@@ -1013,6 +1029,11 @@ const CandiFullProfileView = () => {
                 </CustomTypography>
               </Box>
               <Box sx={{ p: "25px" }}>
+              {isItPdfFile === false ? (
+              <Typography>To view this file needs to be download.</Typography>
+            ) : (
+              ""
+            )}
                 <Box
                   sx={{
                     display: "flex",
@@ -1029,10 +1050,58 @@ const CandiFullProfileView = () => {
                       textTransform: "capitalize",
                       borderRadius: "10px",
                     }}
+                    onClick={async () => {
+                      const res = await fetch(recroot);
+                      const blob = await res.blob();
+                      download(blob, `${resume.resumeName}`);
+                    }}
                   >
                     Download
                   </Button>
                 </Box>
+                {isItPdfFile === false ? (
+            ""
+          ) : (
+            <Box sx={{display: "flex",
+            alignItems:"center",
+            flexDirection: "column",mt:4}}>
+              <p>
+                Page {pageNumber} of {numPages}
+              </p>
+              {pageNumber > 1 && (
+                <IconButton onClick={changePageBack}>
+                  <SkipPreviousRoundedIcon
+                    sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                  />
+                </IconButton>
+              )}
+              {pageNumber < numPages && (
+                <IconButton onClick={changePageNext}>
+                  <SkipNextRoundedIcon
+                    sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                  />
+                </IconButton>
+              )}
+              <center>
+                <header className="App-header">
+                  <Document file={recroot} onLoadSuccess={onDocumentLoadSuccess}>
+                    <Page
+                      width={
+                        matches === true
+                          ? 300
+                          : 700 && match === true
+                          ? 500
+                          : 700
+                      }
+                      pageNumber={pageNumber}
+                      renderTextLayer={false}
+                      renderAnnotationLayer={false}
+                    />
+                  </Document>
+                </header>
+              </center>
+            </Box>
+          )}
               </Box>
             </Box>
           </Stack>

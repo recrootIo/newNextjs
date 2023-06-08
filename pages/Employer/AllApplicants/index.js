@@ -43,12 +43,202 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 import Employer from "..";
+import { useDispatch, useSelector } from "react-redux";
+import { EMPLOYEE_STATUS, REJECTED, SHORT_LISTED } from "@/utils/constants";
+import { useEffect } from "react";
+import { getCompanyDetails, getMachingAppl, matchShow } from "@/redux/slices/companyslice";
+import { applyJobsdet, applyJobsdetFilter, getEmailTemplapes, getJobsfil, getSinDetails, updateEmailTemplapes } from "@/redux/slices/applyJobs";
+import { logout } from "@/redux/slices/auth";
+import { isEmpty } from "lodash";
+import { useRef } from "react";
 
 const AllApplicants = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
+
+  const [isShown, setIsShown] = useState(true);
+  // const classes = useStyles();
+  const dispatch = useDispatch();
+  // const { jid } = useParams();
+  const { names, single } = useSelector((state) => state.apply);
+  const {
+    details,
+    currentPage,
+    totalPage,
+    count,
+    loading,
+    unview,
+    rejectcount,
+    shortCount,
+    selectedId,
+    rejectedEmail,
+    selectedEmail,
+  } = useSelector((state) => state.apply);
+  const [user, setUser] = useState(details);
+  const [titles, setTitles] = useState([]);
+  const [ids, setids] = useState([]);
+  const [selectedStatus, setSelected] = useState([]);
+  const match = useSelector((state) => state.company.matchingAppl);
+  const loading2 = useSelector((data) => data.company.loading);
+  const company = useSelector((data) => data.company?.companyDetl?.basicInformation);
+  // eslint-disable-next-line no-unused-vars
+  const [filteredStatuses, setFilteredStatuses] = useState([]);
+  const [rejectedTemp, setRejectedTemp] = useState({
+    jobTitle: "",
+    type: REJECTED,
+    subject: "",
+    emailBody: "",
+    date: "",
+    setting: "As_soon_as_reject",
+    cand:'Hi'
+  });
+  const [selectedTemp, setSelectedTemp] = useState({
+    jobTitle: "",
+    type: SHORT_LISTED,
+    subject: "",
+    emailBody: "",
+    date: "",
+    setting: "Do_not_send",
+    cand:'Hi' 
+  });
+  // const filteredTitle = names.filter(
+  //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
+  //   );
+  var name = [...names];
+  // var output = [];
+
+  var output = name.reduce(function (o, cur) {
+    // Get the index of the key-value pair.
+    var occurs = o.reduce(function (n, item, i) {
+      return item.jobRole === cur.jobRole ? i : n;
+    }, -1);
+
+    // If the name is found,
+    if (occurs >= 0) {
+      // append the current value to its list of values.
+      o[occurs]._id = [o[occurs]._id.concat(cur._id)];
+
+      // Otherwise,
+    } else {
+      // add the current item to o (but make sure the value is an array).
+      var obj = {
+        jobRole: cur.jobRole,
+        _id: [cur._id],
+      };
+      o = o.concat([obj]);
+    }
+
+    return o;
+  }, []);
+
+  // let mergedArray = names.reduce((accumulator, currentValue) => {
+  //   let existingObject = accumulator.find(item => item.jobRole === currentValue.jobRole);
+
+  //   if (!existingObject) {
+  //     accumulator.push(currentValue);
+  //   } else {
+  //     console.log(existingObject,'exist')
+  //     existingObject.jobTitle = Math.max(existingObject.jobTitle, currentValue.jobTitle);
+  //     existingObject._id += `, ${currentValue._id}`;
+  //   }
+
+  //   return accumulator;
+  // }, []);
+  // console.log(rejectedEmail, "rejectedEmail");
+
+  // const filteredTitle = names.filter(
+  //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
+  // );
+  // const navigate = useNavigate()
+  const jid = undefined;
+  const matching = jid !== undefined;
+  useEffect(() => {
+    if (matching) {
+      const value = {
+        id: jid,
+        page: 1,
+      };
+      dispatch(getMachingAppl(value));
+      return;
+    }
+    dispatch(applyJobsdet("")) 
+    .then((res) => {
+            if (res.error !== undefined) {
+              res.error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+                ? dispatch(logout()).then(() => {
+                    navigate("/signin", { state: true });
+                  })
+                : console.log("error");
+            }
+          })
+          .catch((error) => {
+            if (
+              error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+            ) {
+              dispatch(logout()).then(() => {
+                navigate("/signin", { state: true });
+              });
+            }
+          });;
+    dispatch(getJobsfil());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, jid]);
+
+  const type = useSelector((state) => state.company.matchType);
+
+  const handleClear = (val) => {
+    dispatch(matchShow(val));
+    const value = {
+      id: jid,
+      page: 1,
+    };
+    if (cuurpage > 1) {
+      dispatch(getMachingAppl(value)).then(setcuurpage(1));
+    }
+  };
+
+  useEffect(() => {
+    if (!matching) {
+      setUser(details);
+    }
+  }, [details, matching]);
+
+  const getDetaulUser = () => {
+    const defaultUser = user[0];
+    const isUserAvailable = user.find((usr) => usr._id === selectedId);
+    if (isUserAvailable) return isUserAvailable;
+
+    return defaultUser;
+  };
+
+  useEffect(() => {
+    dispatch(getSinDetails(getDetaulUser()));
+    dispatch(getCompanyDetails())
+    dispatch(getEmailTemplapes());
+    if (!isEmpty(user)) dispatch(getSinDetails(getDetaulUser()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  useEffect(() => {
+    if (single?.resumeId && single?.coverId) {
+      dispatch(getSinResume(single?.resumeId));
+      dispatch(getSinCover(single?.coverId));
+    }
+  }, [dispatch, single]);
+  const strongCount = isEmpty(match?.strongCount)
+    ? 0
+    : match?.strongCount[0]?.count;
+  const goodCount = isEmpty(match?.goodCount) ? 0 : match?.goodCount[0]?.count;
+  const minCount = isEmpty(match?.minCount) ? 0 : match?.minCount[0]?.count;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,14 +256,290 @@ const AllApplicants = () => {
     setAnchorEl1(null);
   };
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+  const seeAll = useSelector((state) => state.apply.seeCand);
+  const handleChange = (e, value) => {
+    const onlyTitles = titles.map((o) => o.jobRole);
+    let data = names.filter((item) => onlyTitles.includes(item.jobRole));
+    const arr = data.map((object) => object._id);
+
+    const reqObject = {
+      page: value,
+      data: { status: selectedStatus, job: arr },
+      jobid: seeAll?.jobId,
+    };
+
+    if (seeAll?.state === true) {
+      dispatch(applyJobsdetFilter(reqObject));
+    } else {
+      dispatch(applyJobsdet(reqObject));
+    }
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+  const handleName = (value) => {
+    const hasbeenSelected = titles.some(
+      (item) => item.jobRole === value?.jobRole
+    );
+    const result = value._id.some((item) => Array.isArray(item))
+      ? ids.some((str) => value._id[0].includes(str))
+      : ids.some((str) => value._id.includes(str));
+    let newArray = [...titles];
+    let arr3 = [...ids];
+    if (hasbeenSelected) {
+      newArray = newArray.filter((f) => f.jobRole !== value.jobRole);
+    } else {
+      newArray.push(value);
+    }
+    if (value._id.some((item) => Array.isArray(item))) {
+      if (result === true) {
+        arr3 = arr3.filter((str) => !value._id[0].includes(str));
+      } else {
+        value._id[0].forEach((item) => {
+          if (!arr3.includes(item)) {
+            arr3.push(item);
+          }
+        });
+      }
+    } else {
+      if (result === true) {
+        arr3 = arr3.filter((str) => !value._id.includes(str));
+      } else {
+        value._id.forEach((item) => {
+          if (!arr3.includes(item)) {
+            arr3.push(item);
+          }
+        });
+      }
+    }
+
+    setTitles(() => [...newArray]);
+    setids(() => [...arr3]);
+    if (newArray?.length === 1) {
+      if (newArray[0]._id.some((item) => Array.isArray(item))) {
+        setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id[0] });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id[0] });
+      } else {
+        setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
+      }
+    }
+    // const reqObject = {
+    //   page: 1,
+    //   data: { status: selectedStatus, job: arr3 || [] },
+    // };
+    // dispatch(applyJobsdet(reqObject));
+  };
+  useEffect(() => {
+    const reqObject = {
+      page: 1,
+      data: { status: selectedStatus, job: titles || [] },
+    };
+    dispatch(applyJobsdet(reqObject));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [titles,selectedStatus])
+  
+  useEffect(() => {
+    if (titles.length === 1) {
+      setIsShown(false);
+    } else {
+      setSelectedTemp({ ...selectedTemp, jobTitle: "" });
+      setIsShown(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [titles]);
+
+  const handleNameStatus = (e, value) => {
+    let newArray = [...selectedStatus];
+    if (e.target.checked) {
+      newArray.push(value);
+    } else {
+      newArray = newArray.filter((res) => res !== value);
+    }
+    setSelected(() => [...newArray]);
+    const onlyTitles = titles.map((o) => o.jobRole);
+    let data = names.filter((item) => onlyTitles.includes(item.jobRole));
+    const arr = data.map((object) => object._id);
+
+    const reqObject = {
+      page: 1,
+      data: { status: newArray, job: arr },
+      jobid: seeAll?.jobId,
+    };
+    if (seeAll?.state === true) {
+      dispatch(applyJobsdetFilter(reqObject));
+    } else {
+      dispatch(applyJobsdet(reqObject));
+    }
   };
 
+  function roundAndIncrease(decimalNumber) {
+    let roundedNumber = Math.round(decimalNumber);
+    if (
+      decimalNumber - roundedNumber < 0.5 &&
+      decimalNumber - roundedNumber > 0
+    ) {
+      roundedNumber++;
+    }
+    return roundedNumber;
+  }
+
+  const [cuurpage, setcuurpage] = useState(1);
+  const handleChangePage = (e, page) => {
+    const value = {
+      id: jid,
+      page: page,
+    };
+    dispatch(getMachingAppl(value)).then(setcuurpage(page));
+  };
+
+  const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl1);
+  const id1 = open2 ? "simple-popover" : undefined;
+
+  // Rejected email content modal
+  const [Modelopen, setModelopen] = React.useState(false);
+  const handleDialogAction = () => {
+    setModelopen(!Modelopen);
+    const value = {
+      id: rejectedTemp?.jobTitle[0],
+      type: "rejected",
+    };
+    dispatch(getEmailTemplapes(value)).then((res) => {
+      if (res?.payload?.data === null) {
+        setRejectedTemp({
+          jobTitle: rejectedTemp?.jobTitle,
+          type: REJECTED,
+          subject: 'Status of Your Job Application',
+          emailBody: defaultRej,
+          date: "",
+          setting: "As_soon_as_reject",
+          cand:"Hi"
+        });
+      }
+    });
+  };
+  const  defaultRej = `<p> We hope this email finds you well. We appreciate the time and effort you put into applying for the <span style="font-weight: 600">${titles[0]?.jobRole}</span> position at <span style="font-weight: 600">${company?.cmpname}</span>. We carefully reviewed your application and qualifications, after thorough consideration, we regret to inform you that we have decided not to move forward with your application at this time. We received a large number of qualified candidates, and the selection process was highly competitive. Although your qualifications and experience are commendable, we have chosen to proceed with other candidates whose skills and expertise more closely align with our current needs.</p></br>
+  <p>We understand that this news may be disappointing, and we want to assure you that this decision was not a reflection of your abilities or potential. The selection process is a challenging one, and we are compelled to make difficult choices based on the specific requirements of the role and the overall fit within our organization.</p></br>
+  <p>Please note that we will keep your application on file for future reference should any suitable opportunities arise. We encourage you to continue to explore our career opportunities and submit applications for roles that match your skills and interests.</p></br>
+  <p>We sincerely appreciate your interest in our company and wish you every success in your job search. Should you have any questions or require further feedback regarding your application, please feel free to reach out to us. We would be more than happy to provide any assistance or insights that may be helpful.</p></br>
+  <p>Once again, thank you for your time and consideration. 
+   </p>`
+  useEffect(() => {
+    setRejectedTemp({
+      ...rejectedTemp,
+      emailBody: rejectedEmail?.emailBody === undefined ? defaultRej  : rejectedEmail?.emailBody,
+      type: rejectedEmail?.type || REJECTED,
+      setting: rejectedEmail?.setting === undefined ? 'As_soon_as_reject' : rejectedEmail?.setting,
+      subject: rejectedEmail?.subject === undefined ? 'Status of Your Job Application' : rejectedEmail?.subject,
+      date: rejectedEmail?.date,
+      cand:rejectedEmail?.cand === undefined ? 'Hi' : rejectedEmail?.cand
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rejectedEmail,Modelopen]);
+  useEffect(() => {
+    setSelectedTemp({
+      ...rejectedTemp,
+      emailBody: selectedEmail?.emailBody,
+      type: selectedEmail?.type || SHORT_LISTED,
+      setting: selectedEmail?.setting || "",
+      subject: selectedEmail?.subject,
+      date: selectedEmail?.date,
+      cand:selectedEmail?.cand === undefined ? 'Hi' : selectedEmail?.cand
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEmail]);
+
+  const [emailAction, setemailAction] = React.useState(null);
+  const emailActionOpen = Boolean(emailAction);
+  const emailActionHandleClick = (event) => {
+    setemailAction(event.currentTarget);
+  };
+  const emailActionHandleClose = () => {
+    setemailAction(null);
+  };
+
+  //Shortlisted email content modal
+  const [ShortlistedModelopen, setShortlistedModelopen] = React.useState(false);
+
+  const handleShortlistedDialogAction = () => {
+    setShortlistedModelopen(!ShortlistedModelopen);
+    const value = {
+      id: rejectedTemp?.jobTitle[0],
+      type: "shortlist",
+    };
+    dispatch(getEmailTemplapes(value)).then((res) => {
+      if (res?.payload?.data === null) {
+        setSelectedTemp({
+          jobTitle: selectedTemp?.jobTitle,
+          type: SHORT_LISTED,
+          subject: "",
+          emailBody: "",
+          date: "",
+          setting: "Do_not_send",
+          cand:'Hi'
+        });
+      }
+    });
+  };
+
+  //zoom in function
+  const wrapperRef = useRef(null);
+
+  // useEffect(() => {
+  //   wrapperRef.current.style.zoom = "80%";
+  // }, []);
+  const updateRejectedEmails = () => {
+    dispatch(updateEmailTemplapes(rejectedTemp));
+    setRejectedTemp({
+      jobTitle: rejectedTemp?.jobTitle,
+      type: REJECTED,
+      subject: "",
+      emailBody: "",
+      date: "",
+      setting: "Do_not_send",
+      cand:'Hi'
+    });
+    handleDialogAction();
+  };
+
+  const updateShortlistedEmails = () => {
+    dispatch(updateEmailTemplapes(selectedTemp));
+    handleShortlistedDialogAction();
+    setSelectedTemp({
+      jobTitle: selectedTemp?.jobTitle,
+      type: SHORT_LISTED,
+      subject: "",
+      emailBody: "",
+      date: "",
+      setting: "Do_not_send",
+      cand:'Hi'
+    });
+  };
+
+  //date time picker
+
+  useEffect(() => {
+    if (matching) {
+      if (type === "strong") {
+        setUser(match?.strongData);
+      }
+      if (type === "good") {
+        setUser(match?.goodData);
+      }
+      if (type === "minimum") {
+        setUser(match?.minData);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matching, type, loading2]);
+
+  const handleDelete = (indexToRemove,typ) => {
+    console.info(indexToRemove,"You clicked the delete icon.");
+    if (typ === 'titl') {
+      setTitles(titles.filter((_, index) => index !== indexToRemove))
+    }else{
+      setSelected(selectedStatus.filter((_, index) => index !== indexToRemove))
+    }
+  };
   return (
     <>
     <Employer>
@@ -100,7 +566,7 @@ const AllApplicants = () => {
                             className={styles.allApplicantsCardNum}
                             variant="h5"
                           >
-                            23
+                            {count}
                           </CustomTypography>
                         </CardContent>
                       </Card>
@@ -116,7 +582,7 @@ const AllApplicants = () => {
                             className={styles.allApplicantsCardNum}
                             variant="h5"
                           >
-                            23
+                            {shortCount}
                           </CustomTypography>
                         </CardContent>
                       </Card>
@@ -132,7 +598,7 @@ const AllApplicants = () => {
                             className={styles.allApplicantsCardNum}
                             variant="h5"
                           >
-                            23
+                            {unview}
                           </CustomTypography>
                         </CardContent>
                       </Card>
@@ -148,7 +614,7 @@ const AllApplicants = () => {
                             className={styles.allApplicantsCardNum}
                             variant="h5"
                           >
-                            23
+                            {rejectcount}
                           </CustomTypography>
                         </CardContent>
                       </Card>
@@ -170,7 +636,7 @@ const AllApplicants = () => {
                         aria-expanded={open ? "true" : undefined}
                         variant="contained"
                         disableElevation
-                        // onClick={handleClick}
+                        onClick={handleClick}
                         endIcon={<WorkIcon />}
                         sx={{ bgcolor: "#1097CD !important", width: "50%" }}
                       >
@@ -194,54 +660,54 @@ const AllApplicants = () => {
                             bgcolor: "background.paper",
                           }}
                         >
-                          {/* {output.map((variant) => { */}
-                          {/* const labelId = `checkbox-list-label-$
-                          {variant.jobRole}`; return ( */}
+                          {output.map((variant) => {
+                          const labelId = `checkbox-list-label-$
+                          {variant.jobRole}`; return (
                           <ListItem
-                            //key={variant.jobRole}
+                            key={variant.jobRole}
                             disablePadding
                           >
                             <ListItemButton
                               role={undefined}
-                              //onClick={() => handleName(variant)}
+                              onClick={() => handleName(variant)}
                               dense
                             >
                               <ListItemIcon>
                                 <Checkbox
                                   edge="start"
-                                  // checked={
-                                  //   titles.findIndex(
-                                  //     (item) => item.jobRole === variant.jobRole
-                                  //   ) >= 0
-                                  // }
+                                  checked={
+                                    titles.findIndex(
+                                      (item) => item.jobRole === variant.jobRole
+                                    ) >= 0
+                                  }
                                   disableRipple
-                                  // inputProps={{
-                                  //   "aria-labelledby": labelId,
-                                  // }}
+                                  inputProps={{
+                                    "aria-labelledby": labelId,
+                                  }}
                                 />
                               </ListItemIcon>
                               <ListItemText
-                              // id={labelId}
-                              //primary={variant?.jobRole}
+                              id={labelId}
+                              primary={variant?.jobRole}
                               />
                             </ListItemButton>
                           </ListItem>
-                          {/* ); */}
-                          {/* })} */}
+                           ); 
+                           })} 
                         </List>
                       </Menu>
                       <Button
                         endIcon={<BeenhereIcon />}
-                        //onClick={handleClickStatus}
+                        onClick={handleClickStatus}
                         id="demo-customized-button"
-                        // aria-controls={
-                        //   open2 ? "demo-customized-menu" : undefined
-                        // }
+                        aria-controls={
+                          open2 ? "demo-customized-menu" : undefined
+                        }
                         aria-haspopup="true"
-                        //aria-expanded={open2 ? "true" : undefined}
+                        aria-expanded={open2 ? "true" : undefined}
                         variant="contained"
                         disableElevation
-                        //aria-describedby={id1}
+                        aria-describedby={id1}
                         sx={{ bgcolor: "#1097CD !important", width: "50%" }}
                       >
                         Filter By status
@@ -252,43 +718,55 @@ const AllApplicants = () => {
                           "aria-labelledby": "demo-customized-button",
                         }}
                         anchorEl={anchorEl1}
-                        //open={open2}
+                        open={open2}
                         onClose={handleClose1}
                         disablePortal={true}
                       >
-                        {/* {EMPLOYEE_STATUS.map((variant) => ( */}
+                        {EMPLOYEE_STATUS.map((variant) => (
                         <MenuItem
-                          //key={variant}
+                          key={variant}
                           sx={{ zIndex: 10001, width: "200px" }}
                         >
                           <Checkbox
-                          // checked={
-                          //   selectedStatus.findIndex(
-                          //     (item) => item === variant
-                          //   ) >= 0
-                          // }
-                          // onClick={(e) => handleNameStatus(e, variant)}
+                          checked={
+                            selectedStatus.findIndex(
+                              (item) => item === variant
+                            ) >= 0
+                          }
+                          onClick={(e) => handleNameStatus(e, variant)}
                           />
                           <ListItemText
-                            //primary={variant}
+                            primary={variant}
                             sx={{ textTransform: "capitalize" }}
                           />
                         </MenuItem>
-                        {/* ))} */}
+                         ))} 
                       </Menu>
                     </Stack>
 
-                    <Stack direction="row" spacing={2}>
-                      <Chip
-                        label="Deletable"
-                        onDelete={handleDelete}
-                        sx={{ bgcolor: "#1097CD", color: "white" }}
-                      />
-                      <Chip
-                        label="Deletable"
-                        onDelete={handleDelete}
-                        sx={{ bgcolor: "#D4F0FC" }}
-                      />
+                    <Stack direction="row" sx={{flexWrap:'wrap'}} spacing={2}>
+                        {
+                          titles.map((tit,index)=>(
+                            <Chip
+                              key={index}
+                              label={tit?.jobRole}
+                              onDelete={()=>{handleDelete(index,'titl')}}
+                              sx={{ bgcolor: "#1097CD", color: "white" }}
+                            />
+                          ))
+                        }
+                    </Stack>
+                    <Stack direction="row" sx={{mt:1,flexWrap:'wrap'}} spacing={2}>
+                      {
+                        selectedStatus?.map((sts,index)=>(
+                          <Chip
+                            key={index}
+                            label={sts}
+                            onDelete={()=>{handleDelete(index,'sts')}}
+                            sx={{ bgcolor: "#D4F0FC", color: "#01313F" }}
+                          />
+                        ))
+                      }
                     </Stack>
                     <Box
                       className={styles.scrollbar}
@@ -296,15 +774,9 @@ const AllApplicants = () => {
                       sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
                     >
                       <Stack spacing={2}>
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
-                        <AllApplicantsCard />
+                        {user.map((usr,index)=>(
+                        <AllApplicantsCard key={index} users={usr}/>
+                        ))}
                       </Stack>
                     </Box>
                     <Box
@@ -315,7 +787,12 @@ const AllApplicants = () => {
                         width: "100%",
                       }}
                     >
-                      <Pagination count={4} hidePrevButton hideNextButton />
+                      <Pagination   
+                      count={Number(totalPage) || 1}
+                  page={Number(currentPage) || 1}
+                  color="primary"
+                  onChange={handleChange}
+                  hidePrevButton hideNextButton />
                     </Box>
                   </Box>
                 </CardContent>

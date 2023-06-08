@@ -505,3 +505,9 @@ export const NEW_PRICING_PLAN = {
 };
 
 export const CANDIDATE = "Candidate";
+
+export const SHORT_LISTED = "shortlist";
+export const REJECTED = "rejected";
+export const UNVIEW = "unview";
+export const VIEWED = "viewed";
+export const EMPLOYEE_STATUS = [SHORT_LISTED, REJECTED, UNVIEW, VIEWED];
