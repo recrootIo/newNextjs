@@ -11,14 +11,37 @@ import { useRouter } from 'next/router'
 export default function EmployerSidebar() {
 const background = 'linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);'  
 const dispatch = useDispatch()  
-    const handleListItemClick = (val) =>{
-        dispatch(selectRoute(val))
-    }
 // const select = useSelector(data => data.company.selectedRoute)
 const router = useRouter();
 const { pathname } = router;
 const pathSegments = pathname.split('/');
 const select = pathSegments[2];
+const handleListItemClick = (val) =>{
+    dispatch(selectRoute(val))
+    if (val === '/Employer/PostNewJob') {
+        dispatch(
+            setEditJob({
+              salary: {},
+              question: [
+                {
+                  id: new Date().getTime(),
+                  questions: "",
+                  answer: "",
+                  preferedAns: "",
+                },
+              ],
+              requiredSkill: [],
+              address: [],
+              featureType: false,
+              queshow: "",
+            })
+          ).then(
+            setTimeout(() => {
+              router.push('/Employer/PostNewJob');
+            }, 500)
+          );   
+    }
+}
     return <Box
         sx={{
             width: "100%",
@@ -52,14 +75,14 @@ const select = pathSegments[2];
                 <Image src="/profile.png" alt="" width="40" height="40" />
             </ListItemButton>
             </Link>
-            <Link href={'/Employer/PostNewJob'}>
+            {/* <Link href={'/Employer/PostNewJob'}> */}
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'PostNewJob' ? background : "" }}
                 onClick={() => handleListItemClick('PostNewJob')}
             >
                 <Image src="/jobs.png" alt="" width="40" height="40" />
             </ListItemButton>
-            </Link>
+            {/* </Link> */}
             <Link href={'/Employer/AllApplicants'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'AllApplicants' ? background : ""}}

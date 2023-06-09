@@ -24,6 +24,7 @@ import {
   Typography,
   Backdrop,
   CircularProgress,
+  Dialog,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -39,6 +40,12 @@ import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PropTypes from "prop-types";
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import EditorToolbar, {
+  modules,
+  formats,
+} from "@/components/EditorToolbar/EditorToolbar";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 // import styles from "./candidateView.module.css";
 import Image from "next/image";
 import styled from "styled-components";
@@ -64,12 +71,17 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
 import { useDispatch, useSelector } from "react-redux";
-import { getSinResume } from "@/redux/slices/applyJobs";
+import { getSinResume, updateNote } from "@/redux/slices/applyJobs";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
 import DvrIcon from '@mui/icons-material/Dvr';
 import Addinterview from "@/components/Employers/Addinterview/Addinterview";
 import { getSchedulesInterview, setinterview } from "@/redux/slices/interviewslice";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import dynamic from "next/dynamic";
+import axios from "axios";
+import Cookies from "js-cookie";
+
 
 const bull = (
   <Box
@@ -115,6 +127,7 @@ const CandiFullProfileView = () => {
     .getAppliedOnly(appId)
     .then((res) => {
       setappdata(res.data);
+      setNote(res.data?.notes)
       setstatus(res.data.status)
       dispatch(getSinResume(res.data?.resumeId))
       const ids = {
@@ -188,6 +201,39 @@ useEffect(() => {
   dispatch(getSchedulesInterview(ids))
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [interviewshow])
+const [cvshow, setcvshow] = useState(false)
+const [open, setOpen] = React.useState(false);
+const enableCvAction =()=>{
+  setcvshow(!cvshow)
+}
+const onChange = (e) => {
+  setNote(() => e);
+};
+const oldNotes = useSelector((data) => data.apply.single?.notes);
+React.useEffect(() => {
+  setNote(() => oldNotes);
+}, [oldNotes]);
+const [notes, setNote] = React.useState("");
+const user = Cookies.get();
+const saveNote = () => {
+  axios
+    .post(
+      `https://preprod.recroot.au/api/postNote/${appdata._id}`,
+      { notes: notes },
+      { headers: { "x-access-token": `${user.token}` } }
+    )
+    .then((res) => {
+      handleDialogAction();
+      // dispatch(updateNote({ notes, _id: appdata._id }));
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:'Note has been saved'
+      }))
+    });
+};
+const handleDialogAction = () => {
+  setOpen(!open);
+};
   return (
     <>
       <EmployerNavbar />
@@ -212,7 +258,7 @@ useEffect(() => {
               zIndex:'100'
             }}
             startIcon={<ArrowBackIcon />}
-            onClick={()=>{router.push('/Employer/AllApplicants')}}
+            onClick={() => router.back()}
           >
             Back
           </Button>
@@ -464,9 +510,33 @@ useEffect(() => {
                     </CustomTypography>
                   </Box>
                 </Grid>
+                <Box sx={{ml:'auto',display:'flex',gap:'30px'}}>
+                <Button    sx={{  color: "#black !important",
+  padding: "5px !important",
+  borderRadius: "10px!important",
+  background:'#ffff !important',
+  textTransform: "capitalize !important",
+  maxHeight:'40px',
+  minWidth:'100px',
+  width: "100% !important", }}
+              variant="outlined"
+              onClick={() => enableCvAction()}
+              endIcon={<PersonOutlineIcon />}>View Cv</Button>
+                <Button    sx={{  color: "#black !important",
+  padding: "5px !important",
+  borderRadius: "10px!important",
+  background:'#ffff !important',
+  textTransform: "capitalize !important",
+  maxHeight:'40px',
+  minWidth:'100px',
+  width: "100% !important", }}
+              variant="outlined"
+              onClick={() => handleDialogAction()}
+              endIcon={<EventNoteIcon />}>Add Note</Button>
+                </Box>
               </Grid>
             </Box>
-            <Box
+            {cvshow === false ?  <Box
               sx={{
                 width: "100%",
                 border: "1px solid #D3EAFF",
@@ -539,9 +609,11 @@ onClick={handleEditInterview}
                   </Grid>
                 {/* </Stack> */}
               </Box>
-            </Box>
+            </Box> : ''}
         {interviewshow === false ?
          <>
+{cvshow === false ?
+     <>
             <Box
               sx={{
                 width: "100%",
@@ -1211,6 +1283,109 @@ onClick={handleEditInterview}
           )}
               </Box>
             </Box>
+      </> :
+
+            <Box
+              sx={{
+                width: "100%",
+                height: "auto",
+                border: "1px solid #D3EAFF",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: "#D3EAFF",
+                  width: "100%",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "0 25px 0 25px",
+                }}
+              >
+                <CustomTypography className={styles.FullProfileSectionTitle}>
+                  Resume
+                </CustomTypography>
+              </Box>
+              <Box sx={{ p: "25px" }}>
+              {isItPdfFile === false ? (
+              <Typography>To view this file needs to be download.</Typography>
+            ) : (
+              ""
+            )}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    startIcon={<FileDownloadOutlinedIcon />}
+                    sx={{
+                      bgcolor: "#00339B !important",
+                      height: "50px",
+                      width: "200px",
+                      textTransform: "capitalize",
+                      borderRadius: "10px",
+                    }}
+                    onClick={async () => {
+                      const res = await fetch(recroot);
+                      const blob = await res.blob();
+                      download(blob, `${resume.resumeName}`);
+                    }}
+                  >
+                    Download
+                  </Button>
+                </Box>
+                {isItPdfFile === false ? (
+            ""
+          ) : (
+            <Box sx={{display: "flex",
+            alignItems:"center",
+            flexDirection: "column",mt:4}}>
+              <p>
+                Page {pageNumber} of {numPages}
+              </p>
+              {pageNumber > 1 && (
+                <IconButton onClick={changePageBack}>
+                  <SkipPreviousRoundedIcon
+                    sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                  />
+                </IconButton>
+              )}
+              {pageNumber < numPages && (
+                <IconButton onClick={changePageNext}>
+                  <SkipNextRoundedIcon
+                    sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                  />
+                </IconButton>
+              )}
+              <center>
+                <header className="App-header">
+                  <Document file={recroot} onLoadSuccess={onDocumentLoadSuccess}>
+                    <Page
+                      width={
+                        matches === true
+                          ? 300
+                          : 700 && match === true
+                          ? 500
+                          : 700
+                      }
+                      pageNumber={pageNumber}
+                      renderTextLayer={false}
+                      renderAnnotationLayer={false}
+                    />
+                  </Document>
+                </header>
+              </center>
+            </Box>
+          )}
+              </Box>
+            </Box>}
          </>   
          :
            <Box
@@ -1241,6 +1416,58 @@ onClick={handleEditInterview}
               </Box>}
 
           </Stack>
+          <Dialog fullWidth open={open} onClose={handleDialogAction}>
+            <Box sx={{ p: "40px" }}>
+              <Typography variant="h5" sx={{ textAlign: "center" }}>
+                Add a Note
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  mt: "15px",
+                }}
+              >
+                <EditorToolbar />
+                <ReactQuill
+                  value={notes}
+                  onChange={onChange}
+                  theme={"snow"}
+                  className="textareaQuestion"
+                  modules={modules}
+                  formats={formats}
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "10px",
+                  gap: "5px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#4fa9ff !important" }}
+                  type="submit"
+                  onClick={() => saveNote()}
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    handleDialogAction();
+                  }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Box>
+          </Dialog>
         </div>
         <Backdrop
   sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
