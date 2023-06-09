@@ -63,7 +63,8 @@ const UploadResume = () => {
   const saveAllData = (
     expectedSalary = null,
     currentSalary = null,
-    currency = null
+    currency = null,
+    apply = false
   ) => {
     const loggedInUser = JSON.parse(localStorage.getItem("User"));
     loggedInUser.User.profilePercentage = 70;
@@ -101,14 +102,14 @@ const UploadResume = () => {
           })
         );
 
-        if (url.current) {
+        if (url.current && apply) {
           dispatch(retrievePersonal()).then(() => {
             applyFirstJob();
           });
         } else {
           setOpen(false);
-          router.push("/uploadResume/success");
         }
+        router.push("/");
       })
       .catch(() => {
         setOpen(false);
@@ -200,7 +201,7 @@ const UploadResume = () => {
       .then(() => {
         setOpen(false);
         localStorage.removeItem("redirect");
-        router.push("/uploadResume/success");
+        router.push("/");
       })
       .catch(() => {
         setOpen(false);
