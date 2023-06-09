@@ -202,7 +202,7 @@ function Subpayment() {
                         : "Monthly"}
                     
                   </Typography>
-                  <BasicButton> Change Plan</BasicButton>
+                  <BasicButton onClick={()=>{ push("/Pricing")}}> Change Plan</BasicButton>
             </Box>
             <Box sx={{p:3,}}>
             {clientSecret && (

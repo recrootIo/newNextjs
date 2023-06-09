@@ -67,7 +67,7 @@ const VerifyEmail = () => {
         if (redirect === null) {
           push("/Pricing");
         } else {
-          push(redirect);
+          push("/Pricing");
         }
       } else if (loggedInUser.User.resume.resumeFileLocation.length === 0) {
         push("/uploadResume");

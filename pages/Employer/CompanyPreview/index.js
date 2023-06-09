@@ -38,6 +38,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { isEmpty } from "lodash";
 import dynamic from "next/dynamic";
 import Employer from "..";
+import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
   //   const member = useSelector((state) => state.company.members);
@@ -47,7 +48,8 @@ const CompanyPreview = () => {
 dispatch(getCompanyDetails())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+  const {push} = useRouter()
+
   const final = useSelector((state) => state.company?.companyDetl);
   const logo = isEmpty(final?.companyLogo?.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo?.logo;
   return (
@@ -67,6 +69,7 @@ dispatch(getCompanyDetails())
                     backgroundSize: "cover",
                     borderRadius: "15px",
                   }}
+                  onClick={()=>{push('/Employer/CompanyProfile')}}
                 >
                   <Box
                     sx={{
@@ -104,6 +107,7 @@ dispatch(getCompanyDetails())
                     backgroundSize: "cover",
                     borderRadius: "15px",
                   }}
+                  onClick={()=>{push('/Employer/Members')}}
                 >
                   <Box
                     sx={{
@@ -176,7 +180,7 @@ dispatch(getCompanyDetails())
                   width: "100%",
                   textAlign: "center",
                   mt: "80px",
-                  mb: "160px",
+                  mb: "50px",
                   fontFamily: BOLD,
                 }}
                 variant="h5"
@@ -208,9 +212,9 @@ dispatch(getCompanyDetails())
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
-                        position: "relative",
-                        top: "-220px",
-                        mt: "80px",
+                        // position: "relative",
+                        // top: "-220px",
+                        // mt: "80px",
                       }}
                     >
                       <Box
@@ -299,7 +303,7 @@ dispatch(getCompanyDetails())
                       <ErrorOutlineOutlinedIcon
                         className={styles.PreviewIcon}
                       />
-                      <Box sx={{mt:2}}>
+                      <Box sx={{mt:2,ml:2}}>
                          <ReactQuill
                         value={final?.companyInformation?.infodes}
                         readOnly={true}

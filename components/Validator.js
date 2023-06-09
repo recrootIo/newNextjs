@@ -30,6 +30,9 @@
       case "address":
         validateAddress(item[1], errors);
         break;
+      case "salary":
+        validateSalry(item[1], errors);
+        break;
       case "salaryType":
         validateSalryTypee(item[1], errors);
         break;
@@ -91,7 +94,7 @@ function validateTypee(jobType, errors) {
 function validateNotice(notice, errors) {
   let result = true;
 
-  if (!notice) {
+  if (!notice || notice === undefined) {
     errors.notice = "Notice Period is Required";
     result = false;
   }
@@ -120,6 +123,15 @@ function validateScurrn(salaryCrrancy, errors) {
 
   if (!salaryCrrancy) {
     errors.salaryCrrancy = "Salary Currency is Required";
+    result = false;
+  }
+  return result;
+}
+function validateSalry(salaryType, errors) {
+  let result = true;
+
+  if (!salaryType.salaryType) {
+    errors.salaryType = "Salary Type is Required";
     result = false;
   }
   return result;

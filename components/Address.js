@@ -15,9 +15,8 @@ uuidv4();
 
 export default function Address() {
   const dispatch = useDispatch();
-  const addrss = useSelector((state) => state.jobs?.location);
+  const addrss = useSelector((state) => state.jobs?.location) || [];
   const [gaddres, setgaddres] = useState('')
-
   const handleChange2 = (val) => {
     setgaddres(val)
     dispatch(addressSet([...addrss,val.label])).then(
