@@ -22,6 +22,8 @@ import {
   LinearProgress,
   useMediaQuery,
   Typography,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -63,24 +65,11 @@ import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinResume } from "@/redux/slices/applyJobs";
-const style = {
-  txtinput: {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "white",
-        width: { md: "100%", xs: "100%" },
-        height: "60px",
-        color: "#BAD4DF",
-      },
-      "&:hover fieldset": {
-        borderColor: "#BAD4DF",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#BAD4DF",
-      },
-    },
-  },
-};
+import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
+import DvrIcon from '@mui/icons-material/Dvr';
+import Addinterview from "@/components/Employers/Addinterview/Addinterview";
+import { getSchedulesInterview, setinterview } from "@/redux/slices/interviewslice";
 
 const bull = (
   <Box
@@ -109,22 +98,33 @@ const CandiFullProfileView = () => {
   const router = useRouter()
   const {appId} = router.query;
   const [appdata, setappdata] = useState({});
+  const [status, setstatus] = useState('');
   const [loading, setLoading] = useState(true);
+  const [interviewshow, setinterviewshow] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
     if (appId !== undefined) {      
       setLoading(true);
-     new applyJobService()
-        .getAppliedOnly(appId)
-        .then((res) => {
-          setappdata(res.data);
-          dispatch(getSinResume(res.data?.resumeId))
-          setLoading(false);
-        })
+  getCand()
     }
       // .then((res) => console.log(res));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appId]);
+  const getCand = () =>{
+    new applyJobService()
+    .getAppliedOnly(appId)
+    .then((res) => {
+      setappdata(res.data);
+      setstatus(res.data.status)
+      dispatch(getSinResume(res.data?.resumeId))
+      const ids = {
+        cid:res.data?.candidateId?._id,
+        jid:res.data?.jobId
+      }
+      dispatch(getSchedulesInterview(ids))
+      setLoading(false);
+    })
+  }
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -148,6 +148,7 @@ const CandiFullProfileView = () => {
   const match = useMediaQuery("(max-width:1050px)");
   const candidate = appdata?.candidateId;
   const resume = useSelector((state) => state.apply.resume);
+  const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
@@ -158,7 +159,35 @@ const CandiFullProfileView = () => {
       ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
-  console.log(resume,'cand')
+  const handleChange = (e) =>{
+    if (e.target.value === status) {
+      return
+    }
+  new applyJobService().updateAppStatus(appdata?._id,{status:e.target.value}).then((res)=>{
+    if (res?.status === 200) {
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:'Application status was updated'
+      }))
+      getCand()
+    }
+  })
+  }
+  const handleInterview = () => {
+    setinterviewshow(true)
+  }
+  const handleEditInterview = () => {
+    dispatch(setinterview(scheduleinterview[0]))
+    setinterviewshow(true)
+  }
+useEffect(() => {
+  const ids = {
+    cid:appdata?.candidateId?._id,
+    jid:appdata?.jobId
+  }
+  dispatch(getSchedulesInterview(ids))
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [interviewshow])
   return (
     <>
       <EmployerNavbar />
@@ -440,6 +469,82 @@ const CandiFullProfileView = () => {
             <Box
               sx={{
                 width: "100%",
+                border: "1px solid #D3EAFF",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: "#D3EAFF",
+                  width: "100%",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "0 25px 0 25px",
+                }}
+              >
+                <CustomTypography className={styles.FullProfileSectionTitle}>
+                 Action
+                </CustomTypography>
+              </Box>
+              <Box sx={{ p: "25px" }}>
+                {/* <Stack spacing={1}> */}
+                  <Grid container spacing={2} alignItems={'center'}>
+                    <Grid item xs={6}>
+                <FormControl fullWidth> 
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+               <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Status"
+                onChange={handleChange}
+              >
+                <MenuItem disabled value={'viewed'}>Viewed</MenuItem>
+                <MenuItem value={'shortlist'}>Shortlist</MenuItem>
+                <MenuItem value={'rejected'}>Reject</MenuItem>
+              </Select>
+            </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+        {
+        scheduleinterview?.length > 0 ?
+            <Button sx={{
+  color: "#ffff !important",
+  padding: "15px !important",
+  borderRadius: "10px!important",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize !important",
+  width: "100% !important",
+  // marginBottom: "10px",
+}} variant="contained" 
+onClick={handleEditInterview}
+>
+            <DvrIcon />  Edit Interview
+            </Button > :         <Button sx={{
+  color: "#ffff !important",
+  padding: "15px !important",
+  borderRadius: "10px!important",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize !important",
+  width: "100% !important",
+  // marginBottom: "10px",
+}} variant="contained" onClick={handleInterview}>
+            <DvrIcon />  Schedule Interview
+            </Button >}
+                    </Grid>
+                  </Grid>
+                {/* </Stack> */}
+              </Box>
+            </Box>
+        {interviewshow === false ?
+         <>
+            <Box
+              sx={{
+                width: "100%",
                 height: "310px",
                 border: "1px solid #D3EAFF",
                 borderRadius: "15px",
@@ -711,82 +816,6 @@ const CandiFullProfileView = () => {
                 </Box>
               </Box>
             </Box>
-            {/* <Box
-              sx={{
-                width: "100%",
-                height: "auto",
-                border: "1px solid #D3EAFF",
-                borderRadius: "15px",
-              }}
-            >
-              <Box
-                sx={{
-                  bgcolor: "#D3EAFF",
-                  width: "100%",
-                  borderTopLeftRadius: "10px",
-                  borderTopRightRadius: "10px",
-                  height: "50px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  p: "0 25px 0 25px",
-                }}
-              >
-                <CustomTypography className={styles.FullProfileSectionTitle}>
-                  Industry
-                </CustomTypography>
-              </Box>
-              <Box sx={{ p: "25px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "15px",
-                    flexWrap: "wrap",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <Box className={styles.ViewFullCandiProfileCard}>
-                    <BeenhereOutlinedIcon
-                      sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                    />
-                    <Stack spacing={1}>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoMainText}
-                      >
-                        IT
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
-                      </CustomTypography>
-                    </Stack>
-                  </Box>
-                  <Box className={styles.ViewFullCandiProfileCard}>
-                    <BeenhereOutlinedIcon
-                      sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                    />
-                    <Stack spacing={1}>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoMainText}
-                      >
-                        Media
-                      </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                        June 2000 - July 2001 {bull} 1 Year, 1 Month
-                      </CustomTypography>
-                    </Stack>
-                  </Box>
-                </Box>
-              </Box>
-            </Box> */}
             <Box
               sx={{
                 width: "100%",
@@ -1104,8 +1133,43 @@ const CandiFullProfileView = () => {
           )}
               </Box>
             </Box>
+         </>   
+         :
+           <Box
+              sx={{
+                width: "100%",
+                border: "1px solid #D3EAFF",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: "#D3EAFF",
+                  width: "100%",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "0 25px 0 25px",
+                }}
+              >
+                <CustomTypography className={styles.FullProfileSectionTitle}>
+                 Schedule Interview
+                </CustomTypography>
+              </Box>
+              <Addinterview setinterviewshow={setinterviewshow} users={appdata} />
+              </Box>}
+
           </Stack>
         </div>
+        <Backdrop
+  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={loading}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
       </Container>
     </>
   );

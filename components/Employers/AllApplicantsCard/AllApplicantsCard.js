@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import download from "downloadjs";
 import { getSinResume } from "@/redux/slices/applyJobs";
 import { useRouter } from "next/navigation";
+import applyJobService from "@/redux/services/applyjobs.service";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -60,8 +61,16 @@ const AllApplicantsCard = ({users}) => {
     "/"
   )}`;
 const {push} = useRouter();
-  const navigate = (id)=>{
-  push(`/Employer/CandiProfileFullView?appId=${id}`)
+  const navigate = (id,status)=>{
+    if (status === 'unview') {      
+      new applyJobService().updateAppStatus(id,{status:'viewed'}).then((res)=>{
+  if (res.status === 200) {
+    push(`/Employer/CandiProfileFullView?appId=${id}`)
+  }
+      })
+    } else {
+    push(`/Employer/CandiProfileFullView?appId=${id}`)
+    }
   }
   return (
     <Card
@@ -117,30 +126,20 @@ const {push} = useRouter();
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 /> */}
+           
+             {users?.status === 'shortlist' || users?.status === 'rejected' ?
                 <Checkbox
                   {...label}
                   icon={
-                    <ThumbUpOffAltIcon
-                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                    />
-                  }
-                  checkedIcon={
                     <ThumbUpIcon sx={{ color: "#7AC1DA", fontSize: "30px" }} />
                   }
-                />
-                <Checkbox
-                  {...label}
-                  icon={
-                    <ThumbDownOffAltIcon
-                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                    />
-                  }
+                  checked={users?.status === 'rejected'}
                   checkedIcon={
                     <ThumbDownIcon
                       sx={{ color: "#7AC1DA", fontSize: "30px" }}
                     />
                   }
-                />
+                /> : ''}
               </Stack>
             </Box>
           </>
@@ -179,7 +178,7 @@ const {push} = useRouter();
               bgcolor: "#02A9F7 !important",
               fontSize: "18px",
             }}
-            onClick={()=>navigate(users?._id)}
+            onClick={()=>navigate(users?._id,users?.status)}
           >
             View Details
           </Button>
