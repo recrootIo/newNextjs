@@ -66,6 +66,7 @@ const EssentialInformation = () => {
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
+  console.log(errors,'err')
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 30);
   const [value, setValue] = useState(full === 'jSlot' ? new Date() :futureDate);
@@ -388,8 +389,8 @@ const EssentialInformation = () => {
                               handleChangesChild(e);
                             }}
                           name="notice"
-                            error={errors.notice ? true : false}
-                            helperText={errors.notice}
+                          error={errors.notice ? true : false}
+                          helperText={errors.notice}
                           label="notice period"
                           sx={styles.naminput2}
                         >
@@ -462,6 +463,11 @@ const EssentialInformation = () => {
                           <MenuItem value={"monthly"}>Monthly</MenuItem>
                           <MenuItem value={"hourly"}>Hourly</MenuItem>
                         </Select>
+                        {!!errors.salaryType && (
+                          <FormHelperText error id="accountId-error">
+                            {errors.salaryType}
+                          </FormHelperText>
+                        )}
                       </FormControl>
                       {jobs?.salary?.salaryType === "noprovide" ||
           jobs?.salary?.salaryType === undefined ? (

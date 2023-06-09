@@ -607,6 +607,14 @@ onClick={handleEditInterview}
                      {candidate?.resume?.workPrefence.join('| ')}
                     </CustomTypography>
                   </Box>
+                  <Box className={styles.FullProfilePersonalDetailsTypoBox}>
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Current Offer :
+                    </CustomTypography>
+                    <CustomTypography className={styles.FullProfileSectionData}>
+                     {candidate?.resume?.currentOffer}
+                    </CustomTypography>
+                  </Box>
                 </Stack>
               </Box>
             </Box>
@@ -651,18 +659,29 @@ onClick={handleEditInterview}
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
                     <Stack spacing={1}>
+                      <Stack direction={'row'} >
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Role :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
                        {wrk?.role}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Organization :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
                         {wrk?.companyName}
                       </CustomTypography>
+                      </Stack>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
@@ -716,24 +735,32 @@ onClick={handleEditInterview}
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
                     <Stack spacing={1}>
+                      <Stack direction={'row'} >
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.ViewFullInfoMainText}
+                      >
+                       Degree Name : 
+                      </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
                        {edu?.degreeName}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+                        
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                    Graduate :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
                           {edu?.graduate}
                       </CustomTypography>
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoText}
-                      >
-                         {edu?.degreeName}
-                      </CustomTypography>
+                      </Stack>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
@@ -797,7 +824,7 @@ onClick={handleEditInterview}
                           variant="subtitle2"
                           className={styles.ViewFullInfoMainText}
                         >
-                          {skil?.skillName}
+                        Skill :  {skil?.skillName}
                         </CustomTypography>
                       </Box>
                       <LinearProgress
@@ -858,31 +885,51 @@ onClick={handleEditInterview}
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
                     <Stack spacing={1}>
+                    <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Title :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                        {pro?.ProjectName}
+                        &nbsp;{pro?.ProjectName}
                       </CustomTypography>
+                    </Stack>
+                    <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Organization :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                       {pro?.Organization}
+                      &nbsp; {pro?.Organization}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Description :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                       {pro?.Description}
+                       &nbsp;{pro?.Description}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Link :
+                    </CustomTypography>
                       <CustomTypography
                         component="a"
                         href={pro?.portafolioLink}
                         className={styles.ViewFullInfoText}
                       >
-                        {pro?.portafolioLink}
+                      &nbsp;  {pro?.portafolioLink}
                       </CustomTypography>
+                    </Stack>
                     </Stack>
                   </Box>
                     ))
@@ -932,24 +979,40 @@ onClick={handleEditInterview}
                         sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                       />
                       <Stack spacing={1}>
+                      <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Title :
+                    </CustomTypography>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoMainText}
                         >
-                          {cert?.title}
+                         &nbsp; {cert?.title}
                         </CustomTypography>
+                        </Stack>
+                        <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Organization :
+                    </CustomTypography>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoText}
                         >
-                         {cert?.organization}
+                       &nbsp;  {cert?.organization}
                         </CustomTypography>
+                        </Stack>
+                        <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Duration :
+                    </CustomTypography>
                         <CustomTypography
                           variant="subtitle2"
                           className={styles.ViewFullInfoText}
                         >
-                         {moment(cert?.issueDate).format('LL')} - {moment(cert?.expireDate).format('LL')}
+                        &nbsp; {moment(cert?.issueDate).format('LL')} - {moment(cert?.expireDate).format('LL')}
                         </CustomTypography>
+
+                      </Stack>
                       </Stack>
                     </Box>
                     <IconButton    onClick={async () => {
@@ -1007,24 +1070,39 @@ onClick={handleEditInterview}
                       sx={{ color: "rgba(3, 66, 117, 0.8)" }}
                     />
                     <Stack spacing={1}>
+                    <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Title :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                       {trn?.title}
+                       &nbsp;{trn?.title}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Organization :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                       {trn?.instituete}
+                      &nbsp; {trn?.instituete}
                       </CustomTypography>
+                      </Stack>
+                      <Stack direction={'row'} >
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Duration :
+                    </CustomTypography>
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                       {moment(trn?.fromDate).format('LL')} - {moment(trn?.toDate).format('LL')} 
+                       &nbsp;{moment(trn?.fromDate).format('LL')} - {moment(trn?.toDate).format('LL')} 
                       </CustomTypography>
+                    </Stack>
                     </Stack>
                   </Box>
                     ))

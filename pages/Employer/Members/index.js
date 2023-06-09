@@ -132,6 +132,10 @@ dispatch(getCompanyDetails())
     dispatch(registerMember({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
+        dispatch(openAlert({
+          type:SUCCESS,
+          message:"New Account Member Added Successfully"
+        }))
         // toastySucessFunction("New Account Member Added Successfully");
         getMember();
         handleClose();
@@ -139,6 +143,10 @@ dispatch(getCompanyDetails())
         setconfirmP("");
       })
       .catch((error) => {
+        dispatch(openAlert({
+          type:ERROR,
+          message:"The User Already Exists"
+        }))
         // toastyErrorFunction("The User Already Exists");
         console.warn(error);
       });
@@ -852,6 +860,9 @@ dispatch(getCompanyDetails())
                     <Button
                       variant="outlined"
                       sx={{ width: "50%", height: "55px" }}
+                      onClick={()=>{
+                        push('/Employer/CompanyProfile')
+                      }}
                     >
                       Previous
                     </Button>

@@ -15,10 +15,13 @@ export default function Location(props) {
   const final = useSelector((state) => state.company);
 
   const dispatch = useDispatch();
-  const [location, setLocation] = useState([]);
-
+  const [location, setLocation] = useState([
+    { id: uuidv4(), address: { label: "", value: {} } },
+  ]);
   useEffect(() => {
-    setLocation(coun);
+    if (coun.length > 0) {
+      setLocation(coun);
+    }
   }, [coun]);
 
   const handleAddInput = () => {

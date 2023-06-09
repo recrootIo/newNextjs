@@ -71,13 +71,13 @@ const style = {
         borderColor: "white",
         width: { md: "100%", xs: "100%" },
         height: "60px",
-        color: "#BAD4DF",
+        color: "black",
       },
       "&:hover fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
     },
   },
@@ -90,14 +90,14 @@ const selectstyle = {
         borderColor: "white",
         width: { md: "100%", xs: "100%" },
         height: "60px",
-        color: "#BAD4DF",
+        color: "black",
         backgroundColor: "white",
       },
       "&:hover fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
     },
   },
@@ -315,7 +315,14 @@ const {push} = useRouter()
                     borderRadius: "15px",
                     cursor:'pointer'
                   }}
-                  onClick={()=>{push('/Employer/Members')}}
+                  onClick={()=>{
+                    if (basicin?.email === null && basicin?.email === undefined) {
+                      dispatch(openAlert({
+                        type:ERROR,
+                        message:'Please Provide Company Email'
+                      }))
+                      return
+                    }push('/Employer/Members')}}
                 >
                   <Box
                     sx={{
@@ -354,7 +361,14 @@ const {push} = useRouter()
                     borderRadius: "15px",
                     cursor:'pointer'
                   }}
-                  onClick={()=>{push('/Employer/CompanyPreview')}}
+                  onClick={()=>{if (basicin?.email === null && basicin?.email === undefined) {
+                    dispatch(openAlert({
+                      type:ERROR,
+                      message:'Please Provide Company Email'
+                    }))
+                    return
+                  }
+                  push('/Employer/CompanyPreview')}}
                 >
                   <Box
                     sx={{
@@ -546,7 +560,7 @@ const {push} = useRouter()
                   </Box>
                   <Stack spacing={2}>
                     <TextField
-                      InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                      InputLabelProps={{ style: { color: "black" } }}
                       sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Company Name"
@@ -560,7 +574,7 @@ const {push} = useRouter()
                       helperText={errors.cmpname}
                     />
                     <TextField
-                      InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                      InputLabelProps={{ style: { color: "black" } }}
                       sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Email"
@@ -580,7 +594,7 @@ const {push} = useRouter()
                       helperText={errors.cmpemail}
                     />
                     <TextField
-                      InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                      InputLabelProps={{ style: { color: "black" } }}
                       sx={{ ...style.naminput, bgcolor: "white" }}
                       id="outlined-basic"
                       label="Website(Optional)"
@@ -613,7 +627,7 @@ const {push} = useRouter()
                     <FormControl sx={{ ...style.naminput, bgcolor: "white" }}>
                       <InputLabel
                         id="demo-simple-select-label"
-                        sx={{ color: "#BAD4DF" }}
+                        sx={{ color: "black" }}
                       >
                         Sector
                       </InputLabel>
@@ -682,7 +696,7 @@ const {push} = useRouter()
                       }}
                     >
                       <TextField
-                        InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                         sx={{
                           ...style.naminput,
                           bgcolor: "white",
@@ -709,7 +723,7 @@ const {push} = useRouter()
                       />
 
                       <TextField
-                        InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                         sx={{
                           ...style.naminput,
                           bgcolor: "white",
@@ -827,6 +841,13 @@ const {push} = useRouter()
                         height: "55px",
                       }}
                       onClick={()=>{
+                        if (basicin?.email === null && basicin?.email === undefined) {
+                          dispatch(openAlert({
+                            type:ERROR,
+                            message:'Please Provide Company Email'
+                          }))
+                          return
+                        }
                         push('/Employer/Members')
                       }}
                     >

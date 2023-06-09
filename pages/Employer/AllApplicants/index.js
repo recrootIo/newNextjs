@@ -51,6 +51,7 @@ import { applyJobsdet, applyJobsdetFilter, getEmailTemplapes, getJobsfil, getSin
 import { logout } from "@/redux/slices/auth";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const AllApplicants = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -154,7 +155,8 @@ const AllApplicants = () => {
   // const filteredTitle = names.filter(
   //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
   // );
-  // const navigate = useNavigate()
+  // const push = useNavigate()
+  const {push} = useRouter()
   const jid = undefined;
   const matching = jid !== undefined;
   useEffect(() => {
@@ -172,7 +174,7 @@ const AllApplicants = () => {
               res.error.message === "Request failed with status code 401" ||
               "Request failed with status code 403"
                 ? dispatch(logout()).then(() => {
-                    navigate("/signin", { state: true });
+                    push("/signin", { state: true });
                   })
                 : console.log("error");
             }
@@ -183,7 +185,7 @@ const AllApplicants = () => {
               "Request failed with status code 403"
             ) {
               dispatch(logout()).then(() => {
-                navigate("/signin", { state: true });
+                push("/signin", { state: true });
               });
             }
           });;
@@ -276,6 +278,13 @@ const AllApplicants = () => {
   };
 
   const handleName = (value) => {
+    // const value = val 
+        if (Array.isArray(value._id[0])) {
+          value = {
+            jobRole:value?.jobRole,
+            _id:value._id[0]
+          }
+        }
     const hasbeenSelected = titles.some(
       (item) => item.jobRole === value?.jobRole
     );
@@ -310,7 +319,6 @@ const AllApplicants = () => {
         });
       }
     }
-
     setTitles(() => [...newArray]);
     setids(() => [...arr3]);
     if (newArray?.length === 1) {
@@ -322,20 +330,20 @@ const AllApplicants = () => {
         setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
       }
     }
-    // const reqObject = {
-    //   page: 1,
-    //   data: { status: selectedStatus, job: arr3 || [] },
-    // };
-    // dispatch(applyJobsdet(reqObject));
+    const reqObject = {
+      page: 1,
+      data: { status: selectedStatus, job: arr3 || [] },
+    };
+    dispatch(applyJobsdet(reqObject));
   };
   useEffect(() => {
     const reqObject = {
       page: 1,
-      data: { status: selectedStatus, job: titles || [] },
+      data: { status: selectedStatus, job: ids },
     };
     dispatch(applyJobsdet(reqObject));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titles,selectedStatus])
+  }, [ids,selectedStatus])
   
   useEffect(() => {
     if (titles.length === 1) {
@@ -532,9 +540,10 @@ const AllApplicants = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matching, type, loading2]);
 
-  const handleDelete = (indexToRemove,typ) => {
-    console.info(indexToRemove,"You clicked the delete icon.");
+  const handleDelete = (indexToRemove,typ,idds) => {
+    console.info(idds,"You clicked the delete icon.");
     if (typ === 'titl') {
+      setids(ids.filter((element) => !idds.includes(element)))
       setTitles(titles.filter((_, index) => index !== indexToRemove))
     }else{
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove))
@@ -750,7 +759,7 @@ const AllApplicants = () => {
                             <Chip
                               key={index}
                               label={tit?.jobRole}
-                              onDelete={()=>{handleDelete(index,'titl')}}
+                              onDelete={()=>{handleDelete(index,'titl',tit?._id)}}
                               sx={{ bgcolor: "#1097CD", color: "white" }}
                             />
                           ))

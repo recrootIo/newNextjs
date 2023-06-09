@@ -686,7 +686,9 @@ const EmpoyerDashboard = () => {
   const enableFeaturedJobs =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
-    company?.jobCounts?.premiumPayment === "Completed";
+    company?.jobCounts?.premiumPayment === "Completed" ||
+    company?.package?.subscription_package === "Gold" ||
+    company?.jobSlotGold === true;
   const enableFeaturedJobs2 =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
