@@ -1,33 +1,13 @@
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import {
-  Box,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Stack,
-  styled,
-} from "@mui/material";
+import { Box, Card, CardContent, Container, Grid, Stack } from "@mui/material";
 import Image from "next/image";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import SubscribHome from "@/components/Home/SubscribHome";
 import FooterHome from "@/components/Home/FooterHome";
 import styles from "./aboutus.module.css";
-// import styled from "styled-components";
-
-// const StyledCardA = styled(Card)({
-//   width: "230px",
-//   height: "120px",
-//   borderRadius: "8px",
-//   bgcolor: "#D4F0FC",
-//   boxShadow: "none",
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-// });
 
 const AboutUs = () => {
   return (
@@ -35,7 +15,7 @@ const AboutUs = () => {
       <Navbar />
       <Box
         sx={{
-          backgroundImage: 'url("/JobListingPageBG.svg")',
+          backgroundImage: 'url("/aboutus_images/JobListingPageBG.svg")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           height: "400px",
@@ -678,7 +658,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/mongodb-img.svg"}
+                  src={"/aboutus_images/mongodb-img.svg"}
                   alt=""
                   height={110}
                   width={200}
@@ -688,7 +668,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/laravel-logo-img.svg"}
+                  src={"/aboutus_images/laravel-logo-img.svg"}
                   alt=""
                   height={110}
                   width={200}
@@ -698,7 +678,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/mysql-logo-img.svg"}
+                  src={"/aboutus_images/mysql-logo-img.svg"}
                   alt=""
                   height={110}
                   width={200}
@@ -708,7 +688,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/react-logo.svg"}
+                  src={"/aboutus_images/react-logo.svg"}
                   alt=""
                   height={110}
                   width={200}
@@ -718,7 +698,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/react-native-logo.svg"}
+                  src={"/aboutus_images/react-native-logo.svg"}
                   alt=""
                   height={40}
                   width={80}
@@ -728,7 +708,7 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/intelligence-logo.svg"}
+                  src={"/aboutus_images/intelligence-logo.svg"}
                   alt=""
                   height={40}
                   width={80}
@@ -737,48 +717,38 @@ const AboutUs = () => {
             </Card>
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
-                <Image src={"/api-logo.svg"} alt="" height={50} width={100} />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image src={"/seo-logo.svg"} alt="" height={50} width={100} />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image src={"/nginx-logo.svg"} alt="" height={60} width={120} />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/docker-logo.svg"}
+                  src={"/aboutus_images/api-logo.svg"}
                   alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image src={"/aws-logo.svg"} alt="" height={50} width={100} />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/node-js-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
+                  height={50}
+                  width={100}
                 />
               </CardContent>
             </Card>
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/flutter-logo.svg"}
+                  src={"/aboutus_images/seo-logo.svg"}
+                  alt=""
+                  height={50}
+                  width={100}
+                />
+              </CardContent>
+            </Card>
+            <Card className={styles.technologiesCard}>
+              <CardContent className={styles.technologiesCardcontent}>
+                <Image
+                  src={"/aboutus_images/nginx-logo.svg"}
+                  alt=""
+                  height={60}
+                  width={120}
+                />
+              </CardContent>
+            </Card>
+            <Card className={styles.technologiesCard}>
+              <CardContent className={styles.technologiesCardcontent}>
+                <Image
+                  src={"/aboutus_images/docker-logo.svg"}
                   alt=""
                   height={110}
                   width={200}
@@ -788,7 +758,37 @@ const AboutUs = () => {
             <Card className={styles.technologiesCard}>
               <CardContent className={styles.technologiesCardcontent}>
                 <Image
-                  src={"/firebase-logo.svg"}
+                  src={"/aboutus_images/aws-logo.svg"}
+                  alt=""
+                  height={50}
+                  width={100}
+                />
+              </CardContent>
+            </Card>
+            <Card className={styles.technologiesCard}>
+              <CardContent className={styles.technologiesCardcontent}>
+                <Image
+                  src={"/aboutus_images/node-js-logo.svg"}
+                  alt=""
+                  height={110}
+                  width={200}
+                />
+              </CardContent>
+            </Card>
+            <Card className={styles.technologiesCard}>
+              <CardContent className={styles.technologiesCardcontent}>
+                <Image
+                  src={"/aboutus_images/flutter-logo.svg"}
+                  alt=""
+                  height={110}
+                  width={200}
+                />
+              </CardContent>
+            </Card>
+            <Card className={styles.technologiesCard}>
+              <CardContent className={styles.technologiesCardcontent}>
+                <Image
+                  src={"/aboutus_images/firebase-logo.svg"}
                   alt=""
                   height={110}
                   width={200}
