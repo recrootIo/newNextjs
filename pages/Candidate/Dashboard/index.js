@@ -100,30 +100,63 @@ const Index = () => {
   const containerRef = useRef(null);
   const scrollToElement = (section) => {
     let element = null;
+
     if (section === "resume_section") {
       element = document.getElementById("resume_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "personal_details_section") {
       element = document.getElementById("personal_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "education_details_section") {
       element = document.getElementById("education_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "experience_details_section") {
       element = document.getElementById("experience_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "skills_details_section") {
       element = document.getElementById("skills_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "projects_details_section") {
       element = document.getElementById("projects_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "traning_details_section") {
       element = document.getElementById("traning_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "certificate_details_section") {
       element = document.getElementById("certificate_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "appliedJob_details_section") {
       element = document.getElementById("appliedJob_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     } else if (section === "savedJob_details_section") {
       element = document.getElementById("savedJob_details_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+    } else {
+      element = document.getElementById("resume_section");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
     }
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
   };
   const getPages = () => {
     if (currentScreen === "resume") {
