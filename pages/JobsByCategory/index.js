@@ -24,18 +24,28 @@ const JobsByCategory = () => {
           backgroundImage: 'url("/JobListingPageBG.svg")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "400px",
-          pt: "30px",
+          height: { xs: "200px", md: "400px" },
+          pt: { xs: "0px", md: "30px" },
           display: "flex",
           alignItems: "center",
         }}
       >
         <Container>
           <Grid container spacing={2}>
-            <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: { xs: "center", md: "flex-start" },
+                textAlign: { xs: "center", md: "left" },
+              }}
+            >
               <CustomTypography
                 sx={{
-                  fontSize: "45px",
+                  fontSize: { xs: "35px", md: "45px" },
                   fontWeight: 700,
                   color: "white",
                 }}
@@ -43,7 +53,7 @@ const JobsByCategory = () => {
                 Jobs By Category
               </CustomTypography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} sx={{ display: { xs: "none", md: "block" } }}>
               <Box sx={{ marginTop: "auto" }}>
                 <Image
                   src={"/jobs-by-category-img.png"}
@@ -81,7 +91,7 @@ const JobsByCategory = () => {
             jobs!
           </CustomTypography>
           <Grid container spacing={2} sx={{ mt: "50px" }}>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <Card
                 sx={{
                   height: "180px",
@@ -96,7 +106,7 @@ const JobsByCategory = () => {
                   <CustomTypography
                     sx={{
                       color: "#FFFFFF",
-                      fontSize: "22px",
+                      fontSize: { xs: "20px", md: "22px" },
                       fontWeight: 600,
                     }}
                   >
@@ -106,22 +116,20 @@ const JobsByCategory = () => {
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
-                      position: "absolute",
-                      top: "755px",
-                      left: "577px",
+                      position: { xs: "static", md: "relative" },
                     }}
                   >
                     <Image
                       src={"/jobs-fulltime-img.png"}
                       alt=""
-                      height={140}
-                      width={100}
+                      height={130}
+                      width={90}
                     />
                   </Box>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <Card
                 sx={{
                   height: "180px",
@@ -136,7 +144,7 @@ const JobsByCategory = () => {
                   <CustomTypography
                     sx={{
                       color: "#FFFFFF",
-                      fontSize: "22px",
+                      fontSize: { xs: "20px", md: "22px" },
                       fontWeight: 600,
                     }}
                   >
@@ -146,22 +154,22 @@ const JobsByCategory = () => {
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
-                      position: "absolute",
-                      top: "735px",
-                      left: "828px",
+                      position: { xs: "static", md: "relative" },
+                      top: "0px",
+                      left: "0px",
                     }}
                   >
                     <Image
-                      src={"/jobs-category-parttime-compass-img.png"}
+                      src={"/explorer-dynamic-colorx.png"}
                       alt=""
-                      height={200}
-                      width={200}
+                      height={95}
+                      width={95}
                     />
                   </Box>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <Card
                 sx={{
                   height: "180px",
@@ -176,7 +184,7 @@ const JobsByCategory = () => {
                   <CustomTypography
                     sx={{
                       color: "#FFFFFF",
-                      fontSize: "22px",
+                      fontSize: { xs: "20px", md: "22px" },
                       fontWeight: 600,
                     }}
                   >
@@ -186,9 +194,7 @@ const JobsByCategory = () => {
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
-                      position: "absolute",
-                      top: "785px",
-                      left: "1148px",
+                      position: { xs: "static", md: "relative" },
                     }}
                   >
                     <Image
@@ -201,7 +207,7 @@ const JobsByCategory = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6} md={3}>
               <Card
                 sx={{
                   height: "180px",
@@ -216,7 +222,7 @@ const JobsByCategory = () => {
                   <CustomTypography
                     sx={{
                       color: "#FFFFFF",
-                      fontSize: "22px",
+                      fontSize: { xs: "20px", md: "22px" },
                       fontWeight: 600,
                     }}
                   >
@@ -226,9 +232,7 @@ const JobsByCategory = () => {
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
-                      position: "absolute",
-                      top: "775px",
-                      left: "1428px",
+                      position: { xs: "static", md: "relative" },
                     }}
                   >
                     <Image
@@ -268,8 +272,8 @@ const JobsByCategory = () => {
           </CustomTypography>
           <Box
             sx={{
-              mt: "250px",
-              p: "70px",
+              mt: { xs: "100px", md: "250px" },
+              p: { xs: "20px", md: "70px" },
               height: "auto",
               bgcolor:
                 "linear-gradient(129.78deg, #40B7F0 -0.01%, #2290ED 105.74%)",
@@ -280,7 +284,7 @@ const JobsByCategory = () => {
             }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -322,7 +326,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -364,7 +368,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -406,7 +410,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -448,7 +452,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -490,7 +494,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -532,7 +536,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
@@ -574,7 +578,7 @@ const JobsByCategory = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
