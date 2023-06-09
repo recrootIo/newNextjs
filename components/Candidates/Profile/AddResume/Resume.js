@@ -57,7 +57,7 @@ const Resume = ({ ...resume }) => {
 
   return (
     <>
-      <StyledCard variant="outlined">
+      <StyledCard variant="outlined" id="resume_section">
         <Stack
           direction={"row"}
           sx={{

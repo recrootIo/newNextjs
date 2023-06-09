@@ -38,7 +38,7 @@ const AppliedJobs = ({ appliedJobs }) => {
   };
 
   return (
-    <StyledCard variant="outlined">
+    <StyledCard variant="outlined" id="appliedJob_details_section">
       <Stack
         direction={"row"}
         sx={{

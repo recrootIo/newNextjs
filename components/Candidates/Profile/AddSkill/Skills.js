@@ -70,7 +70,7 @@ const Skills = ({ skills }) => {
 
   return (
     <>
-      <StyledCard variant="outlined">
+      <StyledCard variant="outlined" id="skills_details_section">
         <Stack
           direction={"row"}
           sx={{

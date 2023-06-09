@@ -73,7 +73,7 @@ const Experience = ({ ...experience }) => {
 
   return (
     <>
-      <StyledCard variant="outlined">
+      <StyledCard variant="outlined" id="experience_details_section">
         <Stack
           direction={"row"}
           sx={{

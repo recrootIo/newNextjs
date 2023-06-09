@@ -9,7 +9,7 @@ import { NEUTRAL } from "@/theme/colors";
 
 const SavedJobs = () => {
   return (
-    <StyledCard variant="outlined">
+    <StyledCard variant="outlined" id="savedJob_details_section">
       <Stack
         direction={"row"}
         sx={{
