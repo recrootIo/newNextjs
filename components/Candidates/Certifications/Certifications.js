@@ -190,7 +190,7 @@ const Certifications = () => {
         </Stack>
       </Box>
 
-      <Collapse in={open} timeout="auto">
+      <Collapse in={open} timeout="auto" id="projects_details_section">
         <Stack sx={{ gap: "30px" }}>
           {/* Project */}
           <StyledCard variant="outlined">
@@ -302,7 +302,7 @@ const Certifications = () => {
           </StyledCard>
 
           {/* Training */}
-          <StyledCard variant="outlined">
+          <StyledCard variant="outlined" id="traning_details_section">
             <Stack
               direction={"row"}
               sx={{
@@ -410,7 +410,7 @@ const Certifications = () => {
           </StyledCard>
 
           {/* Certificate */}
-          <StyledCard variant="outlined">
+          <StyledCard variant="outlined" id="certificate_details_section">
             <Stack
               direction={"row"}
               sx={{

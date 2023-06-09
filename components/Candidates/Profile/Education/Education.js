@@ -71,7 +71,7 @@ const Education = ({ ...resume }) => {
   };
 
   return (
-    <StyledCard variant="outlined">
+    <StyledCard variant="outlined" id="education_details_section">
       <Stack
         direction={"row"}
         sx={{

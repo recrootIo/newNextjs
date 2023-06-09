@@ -21,7 +21,7 @@ const PersonalDetail = ({ ...data }) => {
 
   console.log(data, "data");
   return (
-    <StyledCard variant="outlined">
+    <StyledCard variant="outlined" id="personal_details_section">
       <Stack
         direction={"row"}
         sx={{

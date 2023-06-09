@@ -98,20 +98,32 @@ const Index = () => {
   };
   const handleTop = () => {};
   const containerRef = useRef(null);
-  const scrollToElement = (id) => {
-    // const container = containerRef.current;
-    // const element = document.getElementById(elementId);
-    // console.log(container,element,'checkincei')
-
-    // if (container && element) {
-    //   const containerTop = container.getBoundingClientRect().top;
-    //   const elementTop = element.getBoundingClientRect().top;
-    //   console.log(containerTop,elementTop,'checkincei')
-    //   container.scrollTop = elementTop - containerTop;
-    // }
-    const container = containerRef.current;
-    const offsetTop = ref.current.offsetTop;
-    container.scrollTop = offsetTop;
+  const scrollToElement = (section) => {
+    let element = null;
+    if (section === "resume_section") {
+      element = document.getElementById("resume_section");
+    } else if (section === "personal_details_section") {
+      element = document.getElementById("personal_details_section");
+    } else if (section === "education_details_section") {
+      element = document.getElementById("education_details_section");
+    } else if (section === "experience_details_section") {
+      element = document.getElementById("experience_details_section");
+    } else if (section === "skills_details_section") {
+      element = document.getElementById("skills_details_section");
+    } else if (section === "projects_details_section") {
+      element = document.getElementById("projects_details_section");
+    } else if (section === "traning_details_section") {
+      element = document.getElementById("traning_details_section");
+    } else if (section === "certificate_details_section") {
+      element = document.getElementById("certificate_details_section");
+    } else if (section === "appliedJob_details_section") {
+      element = document.getElementById("appliedJob_details_section");
+    } else if (section === "savedJob_details_section") {
+      element = document.getElementById("savedJob_details_section");
+    }
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
   };
   const getPages = () => {
     if (currentScreen === "resume") {
@@ -190,21 +202,33 @@ const Index = () => {
             <Collapse in={profile} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
-                  onClick={() => scrollToElement("child1")}
+                  onClick={() => scrollToElement("resume_section")}
                   sx={{ pl: 4 }}
                 >
                   <ListItemText primary="Resume" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("personal_details_section")}
+                >
                   <ListItemText primary="Personal details" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("education_details_section")}
+                >
                   <ListItemText primary="Education" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("experience_details_section")}
+                >
                   <ListItemText primary="Experience" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("skills_details_section")}
+                >
                   <ListItemText primary="Skills" />
                 </ListItemButton>
               </List>
@@ -216,13 +240,22 @@ const Index = () => {
             </ListItemButton>
             <Collapse in={certification} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("projects_details_section")}
+                >
                   <ListItemText primary="Projects" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("traning_details_section")}
+                >
                   <ListItemText primary="Trainings" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("certificate_details_section")}
+                >
                   <ListItemText primary="Certification" />
                 </ListItemButton>
               </List>
@@ -233,10 +266,16 @@ const Index = () => {
             </ListItemButton>
             <Collapse in={jobs} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("appliedJob_details_section")}
+                >
                   <ListItemText primary="Applied Jobs" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => scrollToElement("savedJob_details_section")}
+                >
                   <ListItemText primary="Saved Jobs" />
                 </ListItemButton>
               </List>
