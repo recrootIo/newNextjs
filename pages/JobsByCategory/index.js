@@ -5,17 +5,15 @@ import {
   Box,
   Card,
   CardContent,
+  Chip,
   Container,
   Grid,
-  Stack,
-  styled,
+  Pagination,
 } from "@mui/material";
 import Image from "next/image";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import SubscribHome from "@/components/Home/SubscribHome";
 import FooterHome from "@/components/Home/FooterHome";
-// import styles from "./aboutus.module.css";
+import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 
 const JobsByCategory = () => {
   return (
@@ -66,7 +64,7 @@ const JobsByCategory = () => {
               fontSize: "35px",
               fontWeight: 600,
               textAlign: "center",
-              mt: "60px",
+              mt: "80px",
             }}
           >
             Jobs
@@ -82,7 +80,7 @@ const JobsByCategory = () => {
             Apply for full-time & part-time in-office, work-from-home & hybrid
             jobs!
           </CustomTypography>
-          <Grid container spacing={2} sx={{ mt: "30px" }}>
+          <Grid container spacing={2} sx={{ mt: "50px" }}>
             <Grid item xs={3}>
               <Card
                 sx={{
@@ -109,7 +107,7 @@ const JobsByCategory = () => {
                       display: "flex",
                       justifyContent: "flex-end",
                       position: "absolute",
-                      top: "715px",
+                      top: "755px",
                       left: "577px",
                     }}
                   >
@@ -149,7 +147,7 @@ const JobsByCategory = () => {
                       display: "flex",
                       justifyContent: "flex-end",
                       position: "absolute",
-                      top: "696px",
+                      top: "735px",
                       left: "828px",
                     }}
                   >
@@ -189,15 +187,15 @@ const JobsByCategory = () => {
                       display: "flex",
                       justifyContent: "flex-end",
                       position: "absolute",
-                      top: "715px",
+                      top: "785px",
                       left: "1148px",
                     }}
                   >
                     <Image
                       src={"/jobs-category-office-img.png"}
                       alt=""
-                      height={150}
-                      width={150}
+                      height={130}
+                      width={130}
                     />
                   </Box>
                 </CardContent>
@@ -229,15 +227,15 @@ const JobsByCategory = () => {
                       display: "flex",
                       justifyContent: "flex-end",
                       position: "absolute",
-                      top: "708px",
+                      top: "775px",
                       left: "1428px",
                     }}
                   >
                     <Image
                       src={"/jobs-category-from-office-img.png"}
                       alt=""
-                      height={170}
-                      width={170}
+                      height={150}
+                      width={150}
                     />
                   </Box>
                 </CardContent>
@@ -249,7 +247,8 @@ const JobsByCategory = () => {
       <Box
         sx={{
           mt: "100px",
-          height: "1000px",
+          pb: "80px",
+          height: "auto",
           backgroundImage: 'url("/explore-jobs-by-cat-wave-bg.svg")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -271,7 +270,7 @@ const JobsByCategory = () => {
             sx={{
               mt: "250px",
               p: "70px",
-              height: "500px",
+              height: "auto",
               bgcolor:
                 "linear-gradient(129.78deg, #40B7F0 -0.01%, #2290ED 105.74%)",
               backgroundImage: 'url("/explore-jobs-by-cat-card-bg.png")',
@@ -282,7 +281,7 @@ const JobsByCategory = () => {
           >
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Card sx={{ borderRadius: "20px" }}>
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
                   <CardContent>
                     <CustomTypography
                       sx={{
@@ -293,32 +292,343 @@ const JobsByCategory = () => {
                     >
                       Software Engineer
                     </CustomTypography>
-                    <Box></Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={6}>
-                b
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                c
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                d
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                e
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                f
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                g
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
               <Grid item xs={6}>
-                h
+                <Card sx={{ borderRadius: "20px", p: "10px" }}>
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "#01313F",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Software Engineer
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: "20px",
+                      }}
+                    >
+                      <Chip
+                        label="851+ Jobs"
+                        sx={{
+                          bgcolor: "rgba(188, 234, 253, 0.4)",
+                          color: "#1565C0",
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          height: "40px",
+                          p: "10px",
+                        }}
+                      />
+                      <ArrowCircleRightOutlinedIcon
+                        sx={{
+                          color: "#1565C0",
+                          fontSize: "40px",
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  </CardContent>
+                </Card>
               </Grid>
             </Grid>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: "50px" }}>
+              <Pagination
+                count={8}
+                hidePrevButton
+                hideNextButton
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color: "white",
+                  },
+                }}
+              />
+            </Box>
           </Box>
         </Container>
       </Box>
