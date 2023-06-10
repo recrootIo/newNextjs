@@ -29,8 +29,8 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useDispatch, useSelector } from "react-redux";
 import download from "downloadjs";
 import { getSinResume } from "@/redux/slices/applyJobs";
-import { useRouter } from "next/navigation";
 import applyJobService from "@/redux/services/applyjobs.service";
+import { useRouter } from "next/router";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -55,23 +55,33 @@ const AllApplicantsCard = ({users}) => {
      dispatch(getSinResume(users?.resumeId));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users])
-  console.log(resume?.resume,'res')
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
-const {push} = useRouter();
+
+const router = useRouter()
+const {jid} = router.query;
   const navigate = (id,status)=>{
     if (status === 'unview') {      
       new applyJobService().updateAppStatus(id,{status:'viewed'}).then((res)=>{
   if (res.status === 200) {
-    push(`/Employer/CandiProfileFullView?appId=${id}`)
+    router.push(`/Employer/CandiProfileFullView?appId=${id}`)
   }
       })
     } else {
-    push(`/Employer/CandiProfileFullView?appId=${id}`)
+    router.push(`/Employer/CandiProfileFullView?appId=${id}`)
     }
   }
+  const type = useSelector((state) => state.company.matchType);
+  const color =
+  type === "strong"
+    ? "green"
+    : type === "good"
+    ? "orange"
+    : type === "minimum"
+    ? "red"
+    : "";
   return (
     <Card
       sx={{
@@ -80,6 +90,21 @@ const {push} = useRouter();
         borderRadius: "10px",
       }}
     >
+              {jid !== undefined ? (
+                        <Box
+                          sx={{
+                            padding: "5px 15px 3px 0",
+                            direction: "rtl",
+                            fontWeight: 600,
+                            textTransform: "capitalize",
+                            color: color,
+                          }}
+                        >
+                          {type} Match
+                        </Box>
+                      ) : (
+                        ""
+                      )}
       <CardHeader
         avatar={
           <StyledAvatar
@@ -126,7 +151,7 @@ const {push} = useRouter();
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 /> */}
-           
+        
              {users?.status === 'shortlist' || users?.status === 'rejected' ?
                 <Checkbox
                   {...label}
@@ -144,7 +169,7 @@ const {push} = useRouter();
             </Box>
           </>
         }
-        sx={{ pb: 0 }}
+        sx={{ p: '0 16px 0 16px' }}
       />
       <CardContent sx={{ pt: 0 }}>
         <Box sx={{ mb: "7px", display: "flex", justifyContent: "flex-end" }}>

@@ -353,7 +353,7 @@ const EssentialInformation = () => {
                               inputFormat="dd/MM/yyyy"
                               minDate={new Date()}
                               maxDate={full === 'jSlot' ? '' : futureDate}
-                              value={(jobs.applicationDeadline === undefined ? value : jobs.applicationDeadline) || new Date()}
+                              value={(jobs.applicationDeadline === undefined ? value : new Date(jobs.applicationDeadline)) || new Date()}
                               disabled={_id !== undefined }
                               onChange={handleChangeDate}
                               renderInput={(params) => (

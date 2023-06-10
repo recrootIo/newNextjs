@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { getCompanyDetails } from "../slices/companyslice";
 import { useEffect } from "react";
 import { isEmpty } from "lodash";
-import { addJobs, companyJobs, errorJobs, setEditJob, updateJobs } from "@/redux/slices/job";
+import { addJobs, companyJobs, errorJobs, setEditJob, singleJobs, updateJobs } from "@/redux/slices/job";
 // import JobDetails from "./JobDetails/jobDetails";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
@@ -23,24 +23,34 @@ import JobPreview from "./JobPreview";
 import { BOLD } from "@/theme/fonts";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import { logout } from "@/redux/slices/auth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
 import validator from "@/components/Validator";
 import Employer from "..";
+import { useRouter } from "next/router";
 
 function PostnewJob() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [apiAddress, setapiAddress] = useState("");
     //   const member = useSelector((state) => state.company.members);
     //   const [memberrole, setMemberrole] = React.useState(member);
-  const  { push } = useRouter();
+  // const  { router.push } = useRouter();
+  const router = useRouter()
+  const {jid} = router.query;
+  useEffect(() => {
+    if (jid) {
+      dispatch(singleJobs(jid))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jid])
+  
     const handleListItemClick = (event, index) => {
       setSelectedIndex(index);
     };
   let dispatch = useDispatch();
-
+ 
   const final = useSelector((state) => state?.jobs);
   const showq = useSelector((state) => state?.jobs?.queshow);
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
@@ -54,11 +64,11 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
-            : push(1);
+            : '';
         } else {
-          push(1);
+          '';
         }
       })
       .catch((error) => {
@@ -67,7 +77,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -82,7 +92,7 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
             : "";
         } else {
@@ -92,7 +102,7 @@ function PostnewJob() {
                     type:ERROR,
                     message:res.payload.message
                 }))
-              push("/Pricing");
+              router.push("/Pricing");
               return;
             }
             dispatch(openAlert({
@@ -103,7 +113,7 @@ function PostnewJob() {
               res.payload.message ===
               "Subscribe for a pricing plan to activate the job!"
             ) {
-              push("/Pricing");
+              router.push("/Pricing");
             }
           } else {
             dispatch(openAlert({
@@ -111,7 +121,7 @@ function PostnewJob() {
                 message:"Your job has been posted successfully"
             }))
             setTimeout(() => {
-              dispatch(getJobsfil()).then(push("/Employer/Dashboard"));
+              dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
             }, 500);
           }
         }
@@ -122,7 +132,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -135,7 +145,7 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
             : "";
         } else {
@@ -146,7 +156,7 @@ function PostnewJob() {
             }))
             return;
           }
-          push("/Employer/Dashboard");
+          router.push("/Employer/Dashboard");
           dispatch(openAlert({
             type:SUCCESS,
             message:"Your job has been updated successfully"
@@ -159,7 +169,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -280,6 +290,12 @@ function PostnewJob() {
 //       setProfiletab({ index: 0, page: <JobDetails /> });
 //     }
 //   }, [location]);
+useEffect(() => {
+setProfiletab( final?.details?.applicationDeadline !== undefined
+  ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
+  : { index: 0, page: <JobDetails /> })
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [final])
 
   const [profiletab, setProfiletab] = useState(
     final?.details?.applicationDeadline !== undefined
