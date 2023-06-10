@@ -555,28 +555,6 @@ const SearchSection = ({ ...props }) => {
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
-                        {/* <TabPanel
-                          value={value}
-                          index={0}
-                          style={{ p: "0px !important" }}
-                        >
-                          <FormGroup>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Experienced"
-                              value="Experienced"
-                              checked={selectedValues.includes("Experienced")}
-                              // onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Fresher"
-                              value="Fresher"
-                              checked={selectedValues.includes("Fresher")}
-                              // onChange={handleCheckBoxChange}
-                            />
-                          </FormGroup>
-                        </TabPanel> */}
                         <TabPanel value={value} index={0}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedSector(a)}
