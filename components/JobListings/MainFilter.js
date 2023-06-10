@@ -93,7 +93,7 @@ function BpCheckbox({ ...props }) {
 }
 
 const ExpandMore = styled((props) => {
-  const { ...other } = props;
+  const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -170,7 +170,6 @@ const MainFilter = ({ ...props }) => {
   };
 
   const selectTheCate = (re, a) => {
-    console.log(a, "selectTheCate");
     setSelectedCategory(() => a);
   };
 
@@ -235,7 +234,6 @@ const MainFilter = ({ ...props }) => {
           Categories
         </Typography>
         <ExpandMore
-          expand={cateExpanded}
           onClick={handleCateExpandClick}
           aria-expanded={cateExpanded}
           aria-label="show more"
@@ -269,7 +267,6 @@ const MainFilter = ({ ...props }) => {
           Companies
         </Typography>
         <ExpandMore
-          expand={roleExpanded}
           onClick={handleRoleExpandClick}
           aria-expanded={roleExpanded}
           aria-label="show more"
@@ -302,7 +299,6 @@ const MainFilter = ({ ...props }) => {
           Experience
         </Typography>
         <ExpandMore
-          expand={expExpanded}
           onClick={handleExpExpandClick}
           aria-expanded={expExpanded}
           aria-label="show more"
@@ -331,7 +327,6 @@ const MainFilter = ({ ...props }) => {
           Job Type
         </Typography>
         <ExpandMore
-          expand={typeExpanded}
           onClick={handleTypeExpandClick}
           aria-expanded={typeExpanded}
           aria-label="show more"
