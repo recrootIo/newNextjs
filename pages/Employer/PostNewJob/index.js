@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { getCompanyDetails } from "../slices/companyslice";
 import { useEffect } from "react";
 import { isEmpty } from "lodash";
-import { addJobs, companyJobs, errorJobs, setEditJob, updateJobs } from "@/redux/slices/job";
+import { addJobs, companyJobs, errorJobs, setEditJob, singleJobs, updateJobs } from "@/redux/slices/job";
 // import JobDetails from "./JobDetails/jobDetails";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
@@ -23,24 +23,34 @@ import JobPreview from "./JobPreview";
 import { BOLD } from "@/theme/fonts";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import { logout } from "@/redux/slices/auth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
 import validator from "@/components/Validator";
 import Employer from "..";
+import { useRouter } from "next/router";
 
 function PostnewJob() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const [apiAddress, setapiAddress] = useState("");
     //   const member = useSelector((state) => state.company.members);
     //   const [memberrole, setMemberrole] = React.useState(member);
-  const  { push } = useRouter();
+  // const  { router.push } = useRouter();
+  const router = useRouter()
+  const {jid} = router.query;
+  useEffect(() => {
+    if (jid) {
+      dispatch(singleJobs(jid))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jid])
+  
     const handleListItemClick = (event, index) => {
       setSelectedIndex(index);
     };
   let dispatch = useDispatch();
-
+ 
   const final = useSelector((state) => state?.jobs);
   const showq = useSelector((state) => state?.jobs?.queshow);
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
@@ -54,11 +64,11 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
-            : push(1);
+            : '';
         } else {
-          push(1);
+          '';
         }
       })
       .catch((error) => {
@@ -67,7 +77,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -82,7 +92,7 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
             : "";
         } else {
@@ -92,7 +102,7 @@ function PostnewJob() {
                     type:ERROR,
                     message:res.payload.message
                 }))
-              push("/Pricing");
+              router.push("/Pricing");
               return;
             }
             dispatch(openAlert({
@@ -103,7 +113,7 @@ function PostnewJob() {
               res.payload.message ===
               "Subscribe for a pricing plan to activate the job!"
             ) {
-              push("/Pricing");
+              router.push("/Pricing");
             }
           } else {
             dispatch(openAlert({
@@ -111,7 +121,7 @@ function PostnewJob() {
                 message:"Your job has been posted successfully"
             }))
             setTimeout(() => {
-              dispatch(getJobsfil()).then(push("/Employer/Dashboard"));
+              dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
             }, 500);
           }
         }
@@ -122,7 +132,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -135,7 +145,7 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                router.push("/signin", { state: true });
               })
             : "";
         } else {
@@ -146,7 +156,7 @@ function PostnewJob() {
             }))
             return;
           }
-          push("/Employer/Dashboard");
+          router.push("/Employer/Dashboard");
           dispatch(openAlert({
             type:SUCCESS,
             message:"Your job has been updated successfully"
@@ -159,7 +169,7 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            router.push("/signin", { state: true });
           });
         }
       });
@@ -227,10 +237,15 @@ function PostnewJob() {
             return;
           }
           const obj2 = validator(final.details);
+          console.log(final.details)
           dispatch(errorJobs(validator(final.details)));
           if (Object.keys(obj2).length > 0) {
             return;
           }
+          // if (final.details.notice === undefined) {
+
+          //   return
+          // }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
           }
@@ -275,6 +290,12 @@ function PostnewJob() {
 //       setProfiletab({ index: 0, page: <JobDetails /> });
 //     }
 //   }, [location]);
+useEffect(() => {
+setProfiletab( final?.details?.applicationDeadline !== undefined
+  ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
+  : { index: 0, page: <JobDetails /> })
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [final])
 
   const [profiletab, setProfiletab] = useState(
     final?.details?.applicationDeadline !== undefined
@@ -369,233 +390,7 @@ function PostnewJob() {
           )}
                     </Stack>
       </Card>
-    {/* <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-         <Container>
-         <div style={{ position: "relative", top: "-150px" }}>
-         <Grid container spacing={2} sx={{ pb: "50px" }}>
-         <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-    
-            </Grid>
-         </Grid>
-         </div>
-         </Container> */}
-      {/* <Container> */}
-        {/* <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  Create New Job
-                </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
-                    height: "42px",
-                  }}
-                >
-                  Post New Job
-                </Button>
-              </Box>    
-  
-            </Grid>
-          </Grid>
-        </div> */}
-      {/* </Container> */}
+   
     </Box>
     </Employer>
   );

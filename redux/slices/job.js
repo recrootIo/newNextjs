@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jobsS from "../services/job.service";
 const jobsService = new jobsS();
 const initialState = {
-  details: { salary: {}, requiredSkill: []},
+  details: { salary: {}, requiredSkill: [] ,notice:''},
   essential: {
     careerlevel: "",
     experience: "",
@@ -131,7 +131,7 @@ export const singleJobs = createAsyncThunk(
   "single/gjobs",
   async (id) => {
     const res = await jobsService.getSingleJob(id);
-    return res.data;
+    return res.data.data;
   }
 );
 
@@ -223,6 +223,49 @@ const jobsSlice = createSlice({
     },
 
     [setEditJob.fulfilled]: (state, action) => {
+      state.queshow = action.payload.queshow;
+      state.details.requiredSkill = action.payload.requiredSkill;
+      state.jobDescription = action.payload.jobDescription;
+      state.jobTitle = action.payload.jobTitle;
+      state.jobRole = action.payload.jobRole;
+      state.details.salary =
+        action.payload?.salary?.salaryType === undefined
+          ? (state.details.salary = {
+              salaryType: "noprovide",
+            })
+          : action.payload.salary;
+      state.details.jobType = action.payload.jobType;
+      state.details.notice = action.payload?.notice;
+      state.details.jobApplyType = action.payload.jobApplyType;
+      state.featureType = action.payload.featureType;
+      state.immediate = action.payload.immediate;
+      state.packageType = action?.payload?.packageType;
+      state.details.applicationDeadline = action.payload.applicationDeadline;
+      state.essential =
+        action.payload.essentialInformation === undefined
+          ? {
+              careerlevel: "",
+              experience: "",
+              qualification: "",
+              preferdCandidateLocation: [],
+              typeWorks: "",
+            }
+          : action.payload.essentialInformation;
+      state.question =
+        action.payload.queshow === "true"
+          ? action.payload.question
+          : [
+              {
+                id: new Date().getTime(),
+                questions: "",
+                answer: "",
+                preferedAns: "",
+              },
+            ];
+      state.location = action.payload.address;
+      state._id = action.payload._id;
+    },
+    [singleJobs.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
       state.details.requiredSkill = action.payload.requiredSkill;
       state.jobDescription = action.payload.jobDescription;

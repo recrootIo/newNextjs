@@ -324,7 +324,7 @@ const EmpoyerDashboard = () => {
   const handleEdit = () => {
     dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
       setTimeout(() => {
-        push("/employerhome/newjob");
+        push(`/Employer/PostNewJob?jid=${jobid}`);
       }, 500)
     );
   };
@@ -340,7 +340,7 @@ const EmpoyerDashboard = () => {
     // dispatch(seeAll({ jobId: jobid, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/employerhome/matchingApplicants/${jobid}`, { state: true });
+    push(`/Employer/AllApplicants?jid=${jobid}`, { state: true });
     // }, 500)
     // );
   };
@@ -686,7 +686,9 @@ const EmpoyerDashboard = () => {
   const enableFeaturedJobs =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
-    company?.jobCounts?.premiumPayment === "Completed";
+    company?.jobCounts?.premiumPayment === "Completed" ||
+    company?.package?.subscription_package === "Gold" ||
+    company?.jobSlotGold === true;
   const enableFeaturedJobs2 =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||

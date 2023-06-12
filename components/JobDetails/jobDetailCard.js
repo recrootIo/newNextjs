@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { CANDIDATE } from "@/utils/constants";
 import { useEffect } from "react";
 import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
+import Cookies from "js-cookie";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -71,7 +72,7 @@ const JobDetailCard = ({ ...props }) => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
   }, [dispatch]);
-
+  const userType = Cookies.get('userType')
   return (
     <Box
       sx={{
@@ -333,7 +334,7 @@ const JobDetailCard = ({ ...props }) => {
                       >
                         {isApplied ? "applied" : " Apply now"}
                       </Button>
-                    ) : (
+                    ) : userType === 'Employer' ? '': (
                       <Button
                         variant="contained"
                         size="medium"

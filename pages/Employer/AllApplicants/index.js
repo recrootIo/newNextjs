@@ -39,7 +39,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { CleaningServicesOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 import Employer from "..";
@@ -51,7 +51,9 @@ import { applyJobsdet, applyJobsdetFilter, getEmailTemplapes, getJobsfil, getSin
 import { logout } from "@/redux/slices/auth";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
-
+import { useRouter } from "next/router";
+const shadow =
+  "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
 const AllApplicants = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -140,7 +142,7 @@ const AllApplicants = () => {
   //   let existingObject = accumulator.find(item => item.jobRole === currentValue.jobRole);
 
   //   if (!existingObject) {
-  //     accumulator.push(currentValue);
+  //     accumulator.router.push(currentValue);
   //   } else {
   //     console.log(existingObject,'exist')
   //     existingObject.jobTitle = Math.max(existingObject.jobTitle, currentValue.jobTitle);
@@ -154,8 +156,11 @@ const AllApplicants = () => {
   // const filteredTitle = names.filter(
   //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
   // );
-  // const navigate = useNavigate()
-  const jid = undefined;
+  // const router.push = useNavigate()
+  // const {router.push} = useRouter()
+  const router = useRouter()
+  const {jid} = router.query;
+  // const jid = undefined;
   const matching = jid !== undefined;
   useEffect(() => {
     if (matching) {
@@ -172,7 +177,7 @@ const AllApplicants = () => {
               res.error.message === "Request failed with status code 401" ||
               "Request failed with status code 403"
                 ? dispatch(logout()).then(() => {
-                    navigate("/signin", { state: true });
+                    router.push("/signin", { state: true });
                   })
                 : console.log("error");
             }
@@ -183,7 +188,7 @@ const AllApplicants = () => {
               "Request failed with status code 403"
             ) {
               dispatch(logout()).then(() => {
-                navigate("/signin", { state: true });
+                router.push("/signin", { state: true });
               });
             }
           });;
@@ -203,12 +208,12 @@ const AllApplicants = () => {
       dispatch(getMachingAppl(value)).then(setcuurpage(1));
     }
   };
-
   useEffect(() => {
     if (!matching) {
       setUser(details);
     }
-  }, [details, matching]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matching,details]);
 
   const getDetaulUser = () => {
     const defaultUser = user[0];
@@ -276,6 +281,13 @@ const AllApplicants = () => {
   };
 
   const handleName = (value) => {
+    // const value = val 
+        if (Array.isArray(value._id[0])) {
+          value = {
+            jobRole:value?.jobRole,
+            _id:value._id[0]
+          }
+        }
     const hasbeenSelected = titles.some(
       (item) => item.jobRole === value?.jobRole
     );
@@ -310,7 +322,6 @@ const AllApplicants = () => {
         });
       }
     }
-
     setTitles(() => [...newArray]);
     setids(() => [...arr3]);
     if (newArray?.length === 1) {
@@ -322,20 +333,20 @@ const AllApplicants = () => {
         setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
       }
     }
-    // const reqObject = {
-    //   page: 1,
-    //   data: { status: selectedStatus, job: arr3 || [] },
-    // };
-    // dispatch(applyJobsdet(reqObject));
+    const reqObject = {
+      page: 1,
+      data: { status: selectedStatus, job: arr3 || [] },
+    };
+    dispatch(applyJobsdet(reqObject));
   };
   useEffect(() => {
     const reqObject = {
       page: 1,
-      data: { status: selectedStatus, job: titles || [] },
+      data: { status: selectedStatus, job: ids },
     };
     dispatch(applyJobsdet(reqObject));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titles,selectedStatus])
+  }, [ids,selectedStatus])
   
   useEffect(() => {
     if (titles.length === 1) {
@@ -532,9 +543,10 @@ const AllApplicants = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matching, type, loading2]);
 
-  const handleDelete = (indexToRemove,typ) => {
-    console.info(indexToRemove,"You clicked the delete icon.");
+  const handleDelete = (indexToRemove,typ,idds) => {
+    console.info(idds,"You clicked the delete icon.");
     if (typ === 'titl') {
+      setids(ids.filter((element) => !idds.includes(element)))
       setTitles(titles.filter((_, index) => index !== indexToRemove))
     }else{
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove))
@@ -553,6 +565,43 @@ const AllApplicants = () => {
               >
                 <CardContent>
                   <Box>
+                   {matching
+                    ?(
+                      <Stack direction="row" spacing={2}>
+                      <Card onClick={() => handleClear("strong")} className={styles.allApplicantsCardstrong}style={{ boxShadow: type === "strong" ? shadow : "",}}>
+                        <CardContent sx={{ pb: "16px !important" }}>
+                          <CustomTypography
+                            className={styles.allApplicantsCardTypo}
+                            variant="h5"
+                          >
+                            Strong Match 
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.allApplicantsCardNum}
+                            variant="h5"
+                          >
+                            {strongCount}
+                          </CustomTypography>
+                        </CardContent>
+                      </Card>
+                      <Card onClick={() => handleClear("good")} className={styles.allApplicantsCardgood} style={{ boxShadow: type === "good" ? shadow : "",}}>
+                        <CardContent sx={{ pb: "16px !important" }}>
+                          <CustomTypography
+                            className={styles.allApplicantsCardTypo}
+                            variant="h5"
+                          >
+                            Good Match 
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.allApplicantsCardNum}
+                            variant="h5"
+                          >
+                            {goodCount}
+                          </CustomTypography>
+                        </CardContent>
+                      </Card>
+                      </Stack>
+                    ):(
                     <Stack direction="row" spacing={2}>
                       <Card className={styles.allApplicantsCard}>
                         <CardContent sx={{ pb: "16px !important" }}>
@@ -618,10 +667,11 @@ const AllApplicants = () => {
                           </CustomTypography>
                         </CardContent>
                       </Card>
-                    </Stack>
+                    </Stack>)}
                     <Divider
                       sx={{ mt: "30px", mb: "30px", borderColor: "#D4F0FC" }}
                     />
+                  {matching ? "" :
                     <Stack
                       direction="row"
                       spacing={2}
@@ -742,21 +792,21 @@ const AllApplicants = () => {
                         </MenuItem>
                          ))} 
                       </Menu>
-                    </Stack>
+                    </Stack>}
 
-                    <Stack direction="row" sx={{flexWrap:'wrap'}} spacing={2}>
+                    <Stack direction="row" sx={{flexWrap:'wrap',gap:'10px'}} spacing={2}>
                         {
                           titles.map((tit,index)=>(
                             <Chip
                               key={index}
                               label={tit?.jobRole}
-                              onDelete={()=>{handleDelete(index,'titl')}}
+                              onDelete={()=>{handleDelete(index,'titl',tit?._id)}}
                               sx={{ bgcolor: "#1097CD", color: "white" }}
                             />
                           ))
                         }
                     </Stack>
-                    <Stack direction="row" sx={{mt:1,flexWrap:'wrap'}} spacing={2}>
+                    <Stack direction="row" sx={{mt:1,flexWrap:'wrap',gap:'10px'}} spacing={2}>
                       {
                         selectedStatus?.map((sts,index)=>(
                           <Chip
@@ -787,12 +837,41 @@ const AllApplicants = () => {
                         width: "100%",
                       }}
                     >
+                        {matching ? (
+              <Stack sx={{ mt: "25px" }}>
+                {type === "strong" ? (
+                  <Pagination
+                    count={Number(roundAndIncrease(strongCount / 10)) || 1}
+                    page={Number(cuurpage) || 1}
+                    color="primary"
+                    onChange={handleChangePage}
+                  />
+                ) : type === "good" ? (
+                  <Pagination
+                    count={Number(roundAndIncrease(goodCount / 10)) || 1}
+                    page={Number(cuurpage) || 1}
+                    color="primary"
+                    onChange={handleChangePage}
+                  />
+                ) : type === "minimum" ? (
+                  <Pagination
+                    count={roundAndIncrease(minCount / 10) || 1}
+                    page={cuurpage || 1}
+                    color="primary"
+                    onChange={handleChangePage}
+                  />
+                ) : (
+                  ""
+                )}
+              </Stack>
+            ) : (
                       <Pagination   
                       count={Number(totalPage) || 1}
                   page={Number(currentPage) || 1}
                   color="primary"
                   onChange={handleChange}
                   hidePrevButton hideNextButton />
+            )}
                     </Box>
                   </Box>
                 </CardContent>

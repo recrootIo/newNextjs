@@ -1,5 +1,6 @@
 import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar'
 import EmployerSidebar from '@/components/Employers/Sidebar'
+import { setEditJob } from '@/redux/slices/job'
 import { BOLD } from '@/theme/fonts'
 import { CustomTypography } from '@/ui-components/CustomTypography/CustomTypography'
 import { Box, Button, Container, Grid } from '@mui/material'
@@ -7,10 +8,35 @@ import Cookies from 'js-cookie'
 import Head from 'next/head'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 function Employer({children}) {
     const user = Cookies.get()
     const {push} = useRouter()
+    const dispatch = useDispatch()
+    const handleEdit = () =>{
+      dispatch(
+        setEditJob({
+          salary: {},
+          question: [
+            {
+              id: new Date().getTime(),
+              questions: "",
+              answer: "",
+              preferedAns: "",
+            },
+          ],
+          requiredSkill: [],
+          address: [],
+          featureType: false,
+          queshow: "",
+        })
+      ).then(
+        setTimeout(() => {
+          push("/Employer/PostNewJob");
+        }, 500)
+      );
+    }
   return (
     <div>
         <Head>
@@ -56,7 +82,7 @@ function Employer({children}) {
                     color: "#01313F",
                     height: "42px",
                   }}
-                  onClick={()=>{push('/Employer/PostNewJob')}}
+                  onClick={()=>{handleEdit()}}
                 >
                   Post New Job
                 </Button>

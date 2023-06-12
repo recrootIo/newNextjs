@@ -717,7 +717,6 @@ const SearchSection = ({ ...props }) => {
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
-
                         <TabPanel value={value} index={0}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedSector(a)}

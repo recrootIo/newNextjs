@@ -424,8 +424,6 @@ const JobDetails = () => {
                               sx={style.txtinput}
                               {...params}
                               label="Skills"
-                              error={errors?.jobRole ? true : false}
-                              helperText={errors?.jobRole}
                               onChange={(e) => {
                                 inputChanged(e);
                               }}

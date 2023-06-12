@@ -58,7 +58,7 @@ const StyledButton = styled(Button)({
   "&:hover": {
     background: "#fff",
     borderColor: "#ff3e66",
-    color: "black",
+    color: "#ffff",
   },
 });
 const BasicButton = styled(Button)({
@@ -71,7 +71,7 @@ const BasicButton = styled(Button)({
   "&:hover": {
     background: "#fff",
     borderColor: "#ff3e66",
-    color: "black",
+    color: "#ffff",
   },
 });
 const planHead = {
