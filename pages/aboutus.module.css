@@ -1,5 +1,5 @@
 .technologiesCard {
-  width: 223px;
+  width: 100%;
   height: 120px;
   border-radius: 8px;
   background-color: #d4f0fc;
@@ -21,7 +21,7 @@
   justify-content: flex-start;
   align-items: center;
   text-align: center;
-  height: 300px;
+  min-height: 300px;
   padding: 20px;
   background-image: url("/discover-the-features-card-bg.png");
   background-repeat: no-repeat;
@@ -58,6 +58,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: "100%";
 }
 
 .ourTeamTypo {
@@ -95,18 +96,20 @@
   background-position: center;
 }
 
-.ourTeamImgTwo {
-  mask-image: url(data:image/svg+xml;base64,PCEtLT94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/LS0+CiAgICAgICAgICAgICAgPHN2ZyBpZD0ic3ctanMtYmxvYi1zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+IAogICAgICAgICAgICAgICAgICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9InN3LWdyYWRpZW50IiB4MT0iMCIgeDI9IjEiIHkxPSIxIiB5Mj0iMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3RvcCBpZD0ic3RvcDEiIHN0b3AtY29sb3I9InJnYmEoMjQ4LCAxMTcsIDU1LCAxKSIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN0b3AgaWQ9InN0b3AyIiBzdG9wLWNvbG9yPSJyZ2JhKDI1MSwgMTY4LCAzMSwgMSkiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgICAgICAgICAgICAgIDwvZGVmcz4KICAgICAgICAgICAgICAgIDxwYXRoIGZpbGw9InVybCgjc3ctZ3JhZGllbnQpIiBkPSJNMjIuMSwtMTEuOEMyNi43LC00LjgsMjcuMiw1LjYsMjIuOCwxNi4zQzE4LjQsMjcsOS4yLDM4LC0wLjQsMzguMkMtMTAsMzguNCwtMTkuOSwyNy44LC0yNy4xLDE1LjVDLTM0LjIsMy4yLC0zOC42LC0xMC44LC0zMy42LC0xOEMtMjguNiwtMjUuMywtMTQuMywtMjUuOSwtMi44LC0yNC4zQzguNywtMjIuNywxNy41LC0xOC45LDIyLjEsLTExLjhaIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCA1MCkiIHN0cm9rZS13aWR0aD0iMCIgc3R5bGU9InRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2UgMHM7Ij48L3BhdGg+CiAgICAgICAgICAgICAgPC9zdmc+);
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  height: 350px;
-  width: 650px;
-}
-
 .ourTeamImgOne {
   mask-image: url(data:image/svg+xml;base64,PCEtLT94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/LS0+CiAgICAgICAgICAgICAgPHN2ZyBpZD0ic3ctanMtYmxvYi1zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+IAogICAgICAgICAgICAgICAgICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9InN3LWdyYWRpZW50IiB4MT0iMCIgeDI9IjEiIHkxPSIxIiB5Mj0iMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3RvcCBpZD0ic3RvcDEiIHN0b3AtY29sb3I9InJnYmEoMjQ4LCAxMTcsIDU1LCAxKSIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN0b3AgaWQ9InN0b3AyIiBzdG9wLWNvbG9yPSJyZ2JhKDI1MSwgMTY4LCAzMSwgMSkiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgICAgICAgICAgICAgIDwvZGVmcz4KICAgICAgICAgICAgICAgIDxwYXRoIGZpbGw9InVybCgjc3ctZ3JhZGllbnQpIiBkPSJNMjYuOSwtNy42QzMxLjYsNS44LDMwLDIyLjUsMjEuOCwyNy45QzEzLjYsMzMuNCwtMS4zLDI3LjgsLTEyLjEsMTkuM0MtMjMsMTAuOCwtMjkuOSwtMC42LC0yNy4yLC0xMS4yQy0yNC41LC0yMS44LC0xMi4zLC0zMS43LC0wLjYsLTMxLjVDMTEuMSwtMzEuMywyMi4xLC0yMSwyNi45LC03LjZaIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCA1MCkiIHN0cm9rZS13aWR0aD0iMCIgc3R5bGU9InRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2UgMHM7Ij48L3BhdGg+CiAgICAgICAgICAgICAgPC9zdmc+);
   mask-repeat: no-repeat;
   mask-size: contain;
+  mask-position: center;
+  height: 350px;
+  width: 650px;
+}
+
+.ourTeamImgTwo {
+  mask-image: url(data:image/svg+xml;base64,PCEtLT94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/LS0+CiAgICAgICAgICAgICAgPHN2ZyBpZD0ic3ctanMtYmxvYi1zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+IAogICAgICAgICAgICAgICAgICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9InN3LWdyYWRpZW50IiB4MT0iMCIgeDI9IjEiIHkxPSIxIiB5Mj0iMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3RvcCBpZD0ic3RvcDEiIHN0b3AtY29sb3I9InJnYmEoMjQ4LCAxMTcsIDU1LCAxKSIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN0b3AgaWQ9InN0b3AyIiBzdG9wLWNvbG9yPSJyZ2JhKDI1MSwgMTY4LCAzMSwgMSkiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgICAgICAgICAgICAgIDwvZGVmcz4KICAgICAgICAgICAgICAgIDxwYXRoIGZpbGw9InVybCgjc3ctZ3JhZGllbnQpIiBkPSJNMjIuMSwtMTEuOEMyNi43LC00LjgsMjcuMiw1LjYsMjIuOCwxNi4zQzE4LjQsMjcsOS4yLDM4LC0wLjQsMzguMkMtMTAsMzguNCwtMTkuOSwyNy44LC0yNy4xLDE1LjVDLTM0LjIsMy4yLC0zOC42LC0xMC44LC0zMy42LC0xOEMtMjguNiwtMjUuMywtMTQuMywtMjUuOSwtMi44LC0yNC4zQzguNywtMjIuNywxNy41LC0xOC45LDIyLjEsLTExLjhaIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCA1MCkiIHN0cm9rZS13aWR0aD0iMCIgc3R5bGU9InRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2UgMHM7Ij48L3BhdGg+CiAgICAgICAgICAgICAgPC9zdmc+);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
   height: 350px;
   width: 650px;
 }
@@ -115,6 +118,126 @@
   mask-image: url(data:image/svg+xml;base64,PCEtLT94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/LS0+CiAgICAgICAgICAgICAgPHN2ZyBpZD0ic3ctanMtYmxvYi1zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+IAogICAgICAgICAgICAgICAgICAgICAgICA8bGluZWFyR3JhZGllbnQgaWQ9InN3LWdyYWRpZW50IiB4MT0iMCIgeDI9IjEiIHkxPSIxIiB5Mj0iMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3RvcCBpZD0ic3RvcDEiIHN0b3AtY29sb3I9InJnYmEoMjQ4LCAxMTcsIDU1LCAxKSIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHN0b3AgaWQ9InN0b3AyIiBzdG9wLWNvbG9yPSJyZ2JhKDI1MSwgMTY4LCAzMSwgMSkiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgICAgICAgICAgICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgICAgICAgICAgICAgICAgIDwvZGVmcz4KICAgICAgICAgICAgICAgIDxwYXRoIGZpbGw9InVybCgjc3ctZ3JhZGllbnQpIiBkPSJNMjcuMywtOS43QzMxLjEsMywyNy4xLDE3LjMsMTYuOSwyNS4yQzYuNywzMy4xLC05LjcsMzQuNSwtMTcuNSwyNy45Qy0yNS4zLDIxLjMsLTI0LjYsNi44LC0yMC4zLC02LjZDLTE1LjksLTE5LjksLTgsLTMyLjEsMS45LC0zMi43QzExLjcsLTMzLjMsMjMuNCwtMjIuNCwyNy4zLC05LjdaIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MCA1MCkiIHN0cm9rZS13aWR0aD0iMCIgc3R5bGU9InRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2UgMHM7Ij48L3BhdGg+CiAgICAgICAgICAgICAgPC9zdmc+);
   mask-repeat: no-repeat;
   mask-size: contain;
+  mask-position: center;
   height: 350px;
   width: 650px;
+}
+
+.aboutusOurvisionEclipseImg {
+  position: relative;
+  top: 107px;
+}
+
+.aboutusOurvisionBlueborderImg {
+  position: relative;
+  top: -78px;
+  z-index: -1;
+}
+
+.ourvisionArrowImg {
+  position: relative;
+  top: -235px;
+  left: 16px;
+}
+
+.aboutusOurmissionEclipseImg {
+  position: relative;
+  top: 145px;
+}
+
+.aboutusOurmissionBlueborderImg {
+  position: relative;
+  top: -276px;
+  z-index: -1;
+}
+
+.aboutusOurmissionBlueborderImg {
+  position: relative;
+  top: -41px;
+  z-index: -1;
+}
+
+.ourmissionManImg {
+  position: relative;
+  top: -254px;
+}
+
+.CompanyOverviewPersonImg {
+  position: absolute;
+  top: 944px;
+  left: 989px;
+}
+
+@media only screen and (max-width: 300px) {
+  .CompanyOverviewPersonImg {
+    top: 1169px;
+    left: -43px;
+  }
+}
+
+@media only screen and (min-width: 301px) and (max-width: 380px) {
+  .CompanyOverviewPersonImg {
+    top: 1104px;
+    left: -17px;
+  }
+}
+
+@media only screen and (min-width: 381px) and (max-width: 400px) {
+  .CompanyOverviewPersonImg {
+    top: 1080px;
+    left: -17px;
+  }
+}
+
+@media only screen and (min-width: 401px) and (max-width: 450px) {
+  .CompanyOverviewPersonImg {
+    top: 1082px;
+    left: -4px;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 580px) {
+  .CompanyOverviewPersonImg {
+    top: 1135px;
+    left: 57px;
+  }
+}
+
+@media only screen and (min-width: 580px) and (max-width: 720px) {
+  .CompanyOverviewPersonImg {
+    top: 1078px;
+    left: -1px;
+  }
+}
+
+@media only screen and (min-width: 720px) and (max-width: 900px) {
+  .CompanyOverviewPersonImg {
+    top: 1062px;
+    left: 183px;
+  }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 980px) {
+  .CompanyOverviewPersonImg {
+    top: 1025px;
+    left: 472px;
+  }
+
+  .discovertheFeaturesTypoBox {
+    min-height: 350px;
+  }
+}
+
+@media only screen and (min-width: 981px) and (max-width: 1040px) {
+  .CompanyOverviewPersonImg {
+    top: 1007px;
+    left: 561px;
+  }
+}
+
+@media only screen and (min-width: 1041px) and (max-width: 1300px) {
+  .CompanyOverviewPersonImg {
+    top: 944px;
+    left: 763px;
+  }
 }

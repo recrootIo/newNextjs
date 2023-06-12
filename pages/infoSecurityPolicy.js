@@ -61,7 +61,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -95,7 +95,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -144,7 +144,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
               lineHeight: "40px",
             }}
             gutterBottom
@@ -181,7 +181,7 @@ const InformationSecurityPolicy = () => {
               color: "#034275",
               mt: "20px",
               mb: "20px",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -193,7 +193,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -212,7 +212,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
               lineHeight: "40px",
             }}
             gutterBottom
@@ -252,7 +252,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
               lineHeight: "30px",
             }}
             gutterBottom
@@ -331,7 +331,7 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
