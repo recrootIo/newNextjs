@@ -161,9 +161,9 @@ const BlogDetails = () => {
               <StyledSecondTypo gutterBottom>
                 Recruitment is a complex and time-consuming process that
                 involves multiple stages, from sourcing and screening candidates
-                to interviewing and onboarding. In today's digital age,
+                to interviewing and onboarding. In today&apos;s digital age,
                 recruitment software has emerged as a powerful tool that can
-                greatly streamline and enhance the hiring process. Let's explore
+                greatly streamline and enhance the hiring process. Let&apos;s explore
                 the numerous benefits of using recruitment software, ranging
                 from automating administrative tasks to improving the overall
                 candidate experience.
@@ -268,7 +268,7 @@ const BlogDetails = () => {
                 feature set, Recroot.io simplifies the hiring process and
                 maximizes efficiency. Its customizable workflows, tailored
                 reporting, and seamless integrations ensure that recruiters can
-                adapt the platform to their specific needs. Recroot.io's
+                adapt the platform to their specific needs. Recroot.io&apos;s
                 commitment to providing fast hiring within 24 hours, data
                 security, compliance, and dedicated customer support further
                 reinforces its position as a trusted recruitment software
