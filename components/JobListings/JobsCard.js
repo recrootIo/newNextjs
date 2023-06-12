@@ -99,8 +99,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
         }
       />
       <CardContent sx={{ pt: 0 }} className="searchCard">
-        {lateJob?.featureType ||
-          (lateJob?.immediate && (
+        {(lateJob?.featureType || lateJob?.immediate) && (
+          <>
             <Stack direction={"row"} sx={{ gap: "15px", margin: "10px 0" }}>
               {lateJob?.featureType && (
                 <StyledIconWrapper>
@@ -108,6 +108,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
                   <TurnedInNotOutlinedIcon color="primary" fontSize="medium" />
                 </StyledIconWrapper>
               )}
+
               {lateJob?.immediate && (
                 <StyledIconWrapper>
                   <span style={{ color: PRIMARY }}>Immediate</span>
@@ -115,7 +116,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
                 </StyledIconWrapper>
               )}
             </Stack>
-          ))}
+          </>
+        )}
 
         <CustomTypography
           variant="body2"
