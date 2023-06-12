@@ -60,7 +60,7 @@ export const getSalary = (salary) => {
         fontSize={15}
         mb={1}
       >
-        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary} /{" "}
+        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
         {salary?.salaryType === "hourly" ? "Per Hour" : ""}
         {salary?.salaryType === "yearly" ? "Yearly" : ""}
@@ -338,8 +338,18 @@ const SearchSection = ({ ...props }) => {
   };
 
   const handleChange = (event) => {
-    setJobVariant(event.target.value);
-    getJobs(1, event.target.value);
+    setJobVariant(() => event.target.value);
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      variant: event.target.value,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const handleTabChange = (event, newValue) => {
@@ -441,6 +451,70 @@ const SearchSection = ({ ...props }) => {
       pathname: router.pathname,
       query: updatedQueryParams,
     });
+  };
+
+  const deleteQueries = (query) => {
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      [query]: "",
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+  };
+
+  const handleDeleteSector = () => {
+    setSelectedSector(() => "");
+    deleteQueries("sector");
+  };
+
+  const handleDeleteCategory = () => {
+    setSelectedCategory(() => "");
+    deleteQueries("category");
+  };
+
+  const handleDeleteCompany = () => {
+    setSelectedCompanies(() => "");
+    deleteQueries("company");
+  };
+
+  const handleDeleteExp = () => {
+    setExper(() => []);
+    deleteQueries("experience");
+  };
+
+  const handleDeleteNames = (e) => {
+    const newNames = names.filter((n) => e !== n);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      jobType: newNames,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+
+    setNames(() => [...newNames]);
+  };
+
+  const handleDeleteTitle = () => {
+    deleteQueries("title");
+    setTitle(() => "");
+  };
+
+  const handleDeleteAddress = () => {
+    deleteQueries("address");
+    setAddress(() => "");
   };
 
   useEffect(() => {
@@ -597,6 +671,7 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
+                            onDelete={handleDeleteTitle}
                           />
                         )}
 
@@ -611,6 +686,7 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
+                            onDelete={handleDeleteAddress}
                           />
                         )}
 
@@ -625,6 +701,7 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
+                            onDelete={handleDeleteSector}
                           />
                         )}
 
@@ -636,6 +713,7 @@ const SearchSection = ({ ...props }) => {
                               )[0]?.company_name
                             }
                             color="primary"
+                            onDelete={handleDeleteCompany}
                             style={{
                               fontWeight: 500,
                               marginTop: "10px",
@@ -649,6 +727,7 @@ const SearchSection = ({ ...props }) => {
                         {!isEmpty(exper) &&
                           exper.map((ex, index) => (
                             <Chip
+                              onDelete={handleDeleteExp}
                               key={exper}
                               label={ex}
                               color="primary"
@@ -673,6 +752,7 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
+                            onDelete={handleDeleteCategory}
                           />
                         )}
 
@@ -682,6 +762,7 @@ const SearchSection = ({ ...props }) => {
                               key={j}
                               label={j}
                               color="primary"
+                              onDelete={() => handleDeleteNames(j)}
                               style={{
                                 fontWeight: 500,
                                 marginTop: "10px",
@@ -839,6 +920,7 @@ const SearchSection = ({ ...props }) => {
                       key={title}
                       label={title}
                       color="primary"
+                      onDelete={handleDeleteTitle}
                       style={{
                         fontWeight: 500,
                         marginTop: "10px",
@@ -860,6 +942,7 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
+                      onDelete={handleDeleteAddress}
                     />
                   )}
 
@@ -874,6 +957,7 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
+                      onDelete={handleDeleteSector}
                     />
                   )}
 
@@ -891,6 +975,7 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
+                      onDelete={handleDeleteCompany}
                     />
                   )}
 
@@ -898,6 +983,7 @@ const SearchSection = ({ ...props }) => {
                     <Chip
                       key={e}
                       label={exper}
+                      onDelete={handleDeleteExp}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -920,6 +1006,7 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
+                      onDelete={handleDeleteCategory}
                     />
                   )}
 
@@ -928,6 +1015,7 @@ const SearchSection = ({ ...props }) => {
                       <Chip
                         key={j}
                         label={j}
+                        onDelete={() => handleDeleteNames(j)}
                         color="primary"
                         style={{
                           fontWeight: 500,
