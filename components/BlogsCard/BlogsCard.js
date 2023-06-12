@@ -54,7 +54,7 @@ const BlogsCard = () => {
           How to Use Social Media to Find the Best
         </CustomTypography>
         <CustomTypography sx={{ color: "#01313F", fontSize: "17px" }}>
-          In today's digital age, social media platforms have become a powerful
+          In today&apos;s digital age, social media platforms have become a powerful
           tool for recruiters to find top talent.{" "}
           <span style={{ color: "#1097CD", textDecoration: "underline" }}>
             Read more
