@@ -94,8 +94,6 @@ function ReviewAppication({ ...props }) {
   const salary = useSelector((state) => state.apply);
   const ids = useSelector((state) => state.personal.ids);
 
-  console.log(details, "details");
-
   const [opena, setOpena] = React.useState(false);
   const [did, setDid] = useState("");
   const [diaDel, setDiaDel] = useState("");
@@ -783,7 +781,7 @@ function ReviewAppication({ ...props }) {
             alignItems: "center",
             m: "65px 0 45px 0",
             gap: "15px",
-            width: { md: "100%", xs: "200px" },
+            width: "100%",
           }}
         >
           <Button

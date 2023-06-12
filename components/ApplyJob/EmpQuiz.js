@@ -10,16 +10,12 @@ import {
   Stack,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { setJobID } from "@/redux/slices/personal";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import ApplyJobStepper from "../ApplyJobStepper/ApplyJobStepper";
 import { BOLD } from "@/theme/fonts";
 import styles from "./applyJobs.module.css";
 
 const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
-  console.log(questions, "questions");
-
   const handleRadio = (e, id) => {
     const newMemChange = questions.map((i) => {
       if (id === i.id) {
@@ -29,6 +25,16 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
       return i;
     });
     setFinal((state) => ({ ...state, question: newMemChange }));
+  };
+
+  const checkAnswers = () => {
+    for (let answerObj of questions) {
+      let answer = answerObj.answer.toLowerCase(); // Convert the answer to lowercase for case-insensitive comparison
+      if (answer !== "yes" && answer !== "no") {
+        return false; // Return false if the answer is neither "yes" nor "no"
+      }
+    }
+    return true; // Return true if all answers are either "yes" or "no"
   };
 
   return (
@@ -138,7 +144,7 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
                 alignItems: "center",
                 m: "65px 0 45px 0",
                 gap: "15px",
-                width: { md: "100%", xs: "200px" },
+                width: { md: "100%" },
               }}
             >
               <Button
@@ -161,7 +167,12 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
                 onClick={() => {
                   setCurrentScreen("review");
                 }}
-                className={styles.nextButton}
+                disabled={!checkAnswers()}
+                className={
+                  !checkAnswers()
+                    ? styles.nextButtonDisabled
+                    : styles.nextButton
+                }
               >
                 NEXT
               </button>
