@@ -20,6 +20,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BpRadio } from "./SearchSection";
+import { useRouter } from "next/router";
 
 const StyledFormLabel = styled(FormControlLabel)(({}) => ({
   color: "#01313F",
@@ -119,6 +120,7 @@ const MainFilter = ({ ...props }) => {
     categories,
     selectedCategory,
     setSelectedCategory,
+    getJobs,
   } = props;
 
   const [industryExpanded, setIndustryExpanded] = React.useState(false);
@@ -126,6 +128,8 @@ const MainFilter = ({ ...props }) => {
   const [cateExpanded, setCateExpanded] = React.useState(false);
   const [expExpanded, setExpExpanded] = React.useState(false);
   const [typeExpanded, setTypeExpanded] = React.useState(false);
+
+  const router = useRouter();
 
   const handleIndustryExpandClick = () => {
     setIndustryExpanded(!industryExpanded);
@@ -145,33 +149,101 @@ const MainFilter = ({ ...props }) => {
 
   const handleName = (re) => {
     const { name, checked } = re.target;
+
+    let newJobs = names;
+
     if (checked) {
       setNames((state) => [...state, name]);
+      newJobs.push(name);
     } else {
-      let newJobs = names.filter((arr) => name != arr);
+      newJobs = names.filter((arr) => name != arr);
       setNames(() => [...newJobs]);
     }
+
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      jobType: newJobs,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const handleExperience = (re, a) => {
     setExper(() => [a]);
+
+    setSelectedCompanies(() => a);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      experience: [a],
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const selectCompanies = (re, a) => {
     setSelectedCompanies(() => a);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      company: a,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const selectTheSector = (re, a) => {
     setSelectedSector(() => a);
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      sector: a,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const handleCateExpandClick = () => {
     setCateExpanded(!cateExpanded);
   };
 
-  const selectTheCate = (re, a) => {
-    console.log(a, "selectTheCate");
-    setSelectedCategory(() => a);
+  const selectTheCate = (re, category) => {
+    setSelectedCategory(() => category);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      category: category,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   return (

@@ -29,11 +29,11 @@ const StyledIconWrapper = styled(Box)({
 
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const extractFirstTwoTags = (data) => {
-    const container = document.createElement("div");
+    const container = document?.createElement("div");
     container.innerHTML = data;
     // const firstPTag = container.querySelector("p");
     const firstPTag = data.replace(/<\/?[^>]+(>|$)/g, "");
-    console.log(firstPTag);
+    // console.log(firstPTag);
     return firstPTag;
   };
 

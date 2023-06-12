@@ -49,6 +49,7 @@ import LoadingSearchCards from "./LoadingSearchCards";
 import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
+import { isEmpty } from "lodash";
 
 export const getSalary = (salary) => {
   if (salary?.salaryType !== "noprovide") {
@@ -272,21 +273,32 @@ export const BootstrapDialogTitle = (props) => {
 };
 
 const SearchSection = ({ ...props }) => {
-  const { sectors, companies, categories, category } = props;
+  const {
+    sectors,
+    companies,
+    categories,
+    category,
+    sector,
+    company,
+    experience,
+    jobType,
+    page,
+    variant,
+  } = props;
+
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const loading = useSelector((state) => state.searchJobs.loading);
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [selectedValues] = useState([]);
-  const [names, setNames] = useState([]);
-  const [exper, setExper] = useState([]);
+  const [names, setNames] = useState(jobType || []);
+  const [exper, setExper] = useState(experience || []);
   const [title, setTitle] = useState(props.title || "");
   const [address, setAddress] = useState(props.address || "");
-  const [jobVariant, setJobVariant] = useState("");
-  const [selectedCompanies, setSelectedCompanies] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
+  const [jobVariant, setJobVariant] = useState(variant || "");
+  const [selectedCompanies, setSelectedCompanies] = useState(company || "");
+  const [selectedSector, setSelectedSector] = useState(sector || "");
   const [selectedCategory, setSelectedCategory] = useState(category || "");
 
   const theme = useTheme();
@@ -304,15 +316,15 @@ const SearchSection = ({ ...props }) => {
     setOpen(false);
   };
 
-  const getJobs = (page = 1, variant = "") => {
+  const getJobs = () => {
     dispatch(
       searchJobs({
         value: page,
         names,
-        exper,
+        exper: exper,
         title,
         address,
-        jobVariant: variant,
+        jobVariant: jobVariant,
         selectedCompanies,
         selectedSector,
         selectedCategory,
@@ -336,12 +348,15 @@ const SearchSection = ({ ...props }) => {
 
   const handleName = (re) => {
     const { name, checked } = re.target;
+    let newJobs = names;
+
     if (checked) {
-      setNames((state) => [...state, name]);
+      newJobs.push(name);
     } else {
-      let newJobs = names.filter((arr) => name != arr);
-      setNames(() => [...newJobs]);
+      newJobs = names.filter((arr) => name != arr);
     }
+
+    setNames(() => [...newJobs]);
   };
 
   const updateTitle = (e) => {
@@ -355,7 +370,16 @@ const SearchSection = ({ ...props }) => {
   };
 
   const changePage = (e, page) => {
-    getJobs(page);
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      page: page,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   const handleNavigate = (jobTitle, jobRole, _id) => {
@@ -374,11 +398,56 @@ const SearchSection = ({ ...props }) => {
     setJobVariant("");
     setAddress("");
     setTitle("");
+    setSelectedCategory("");
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        page: 1,
+      },
+    });
+  };
+
+  const setSearchFields = () => {
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      address,
+      title,
+      category,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+  };
+
+  const mobileSearch = () => {
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      address,
+      title,
+      selectedCategory: category,
+      sector: selectedSector,
+      company: selectedCompanies,
+      experience: exper,
+      jobType: names,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
   };
 
   useEffect(() => {
     getJobs();
-  }, []);
+  }, [category, sector, company, experience, jobType, page]);
+
+  console.log(jobType, "names");
 
   return (
     <div>
@@ -419,7 +488,7 @@ const SearchSection = ({ ...props }) => {
               <Button
                 variant="contained"
                 className="searchButton"
-                onClick={() => getJobs()}
+                onClick={() => setSearchFields()}
               >
                 Search
               </Button>
@@ -515,11 +584,11 @@ const SearchSection = ({ ...props }) => {
                           </CustomTypography>
                         </Button>
                       </Box>
-                      <Box>
-                        {selectedValues.map((value) => (
+                      <Stack direction={"row"} sx={{ flexWrap: "wrap" }}>
+                        {title && (
                           <Chip
-                            key={value}
-                            label={value}
+                            key={title}
+                            label={title}
                             color="primary"
                             style={{
                               fontWeight: 500,
@@ -529,8 +598,100 @@ const SearchSection = ({ ...props }) => {
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
                           />
-                        ))}
-                      </Box>
+                        )}
+
+                        {address && (
+                          <Chip
+                            label={address}
+                            color="primary"
+                            style={{
+                              fontWeight: 500,
+                              marginTop: "10px",
+                              marginRight: "10px",
+                              backgroundColor: "#D4F0FC",
+                              color: "rgba(3, 66, 117, 0.69)",
+                            }}
+                          />
+                        )}
+
+                        {selectedSector && (
+                          <Chip
+                            label={selectedSector}
+                            color="primary"
+                            style={{
+                              fontWeight: 500,
+                              marginTop: "10px",
+                              marginRight: "10px",
+                              backgroundColor: "#D4F0FC",
+                              color: "rgba(3, 66, 117, 0.69)",
+                            }}
+                          />
+                        )}
+
+                        {selectedCompanies && (
+                          <Chip
+                            label={
+                              companies.filter(
+                                (f) => f.id === selectedCompanies
+                              )[0]?.company_name
+                            }
+                            color="primary"
+                            style={{
+                              fontWeight: 500,
+                              marginTop: "10px",
+                              marginRight: "10px",
+                              backgroundColor: "#D4F0FC",
+                              color: "rgba(3, 66, 117, 0.69)",
+                            }}
+                          />
+                        )}
+
+                        {!isEmpty(exper) &&
+                          exper.map((ex, index) => (
+                            <Chip
+                              key={exper}
+                              label={ex}
+                              color="primary"
+                              style={{
+                                fontWeight: 500,
+                                marginTop: "10px",
+                                marginRight: "10px",
+                                backgroundColor: "#D4F0FC",
+                                color: "rgba(3, 66, 117, 0.69)",
+                              }}
+                            />
+                          ))}
+
+                        {selectedCategory && (
+                          <Chip
+                            label={selectedCategory}
+                            color="primary"
+                            style={{
+                              fontWeight: 500,
+                              marginTop: "10px",
+                              marginRight: "10px",
+                              backgroundColor: "#D4F0FC",
+                              color: "rgba(3, 66, 117, 0.69)",
+                            }}
+                          />
+                        )}
+
+                        {!isEmpty(names) &&
+                          names.map((j) => (
+                            <Chip
+                              key={j}
+                              label={j}
+                              color="primary"
+                              style={{
+                                fontWeight: 500,
+                                marginTop: "10px",
+                                marginRight: "10px",
+                                backgroundColor: "#D4F0FC",
+                                color: "rgba(3, 66, 117, 0.69)",
+                              }}
+                            />
+                          ))}
+                      </Stack>
                       <Divider className="divider" />
                       <Box
                         sx={{
@@ -538,6 +699,7 @@ const SearchSection = ({ ...props }) => {
                           bgcolor: "background.paper",
                           display: "flex",
                           height: 300,
+                          overflow: "auto",
                         }}
                       >
                         <Tabs
@@ -555,28 +717,7 @@ const SearchSection = ({ ...props }) => {
                           <Tab label="Experience" {...a11yProps(3)} />
                           <Tab label="Job Type" {...a11yProps(4)} />
                         </Tabs>
-                        {/* <TabPanel
-                          value={value}
-                          index={0}
-                          style={{ p: "0px !important" }}
-                        >
-                          <FormGroup>
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Experienced"
-                              value="Experienced"
-                              checked={selectedValues.includes("Experienced")}
-                              // onChange={handleCheckBoxChange}
-                            />
-                            <StyledFormLabel
-                              control={<BpCheckbox size="small" />}
-                              label="Fresher"
-                              value="Fresher"
-                              checked={selectedValues.includes("Fresher")}
-                              // onChange={handleCheckBoxChange}
-                            />
-                          </FormGroup>
-                        </TabPanel> */}
+
                         <TabPanel value={value} index={0}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedSector(a)}
@@ -679,7 +820,7 @@ const SearchSection = ({ ...props }) => {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            getJobs();
+                            mobileSearch();
                             handleClose();
                           }}
                           sx={{
@@ -693,24 +834,47 @@ const SearchSection = ({ ...props }) => {
                     </DialogActions>
                   </BootstrapDialog>
                 </div>
-                <Stack
-                  className="categoryChipStack"
-                  direction="row"
-                  spacing={1}
-                >
-                  {selectedCategory && (
+                <Stack className="categoryChipStack" direction="row">
+                  {title && (
                     <Chip
-                      className="categoryChip"
-                      label={selectedCategory}
-                      size="medium"
+                      key={title}
+                      label={title}
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
+                    />
+                  )}
+
+                  {address && (
+                    <Chip
+                      label={address}
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
                     />
                   )}
 
                   {selectedSector && (
                     <Chip
-                      className="categoryChip"
                       label={selectedSector}
-                      size="medium"
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
                     />
                   )}
 
@@ -720,28 +884,61 @@ const SearchSection = ({ ...props }) => {
                         companies.filter((f) => f.id === selectedCompanies)[0]
                           ?.company_name
                       }
-                      size="medium"
-                      className="categoryChip"
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
                     />
                   )}
 
-                  {exper.map((na, index) => (
+                  {exper.map((e) => (
                     <Chip
-                      key={index}
-                      className="categoryChip"
-                      label={na}
-                      size="medium"
+                      key={e}
+                      label={exper}
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
                     />
                   ))}
 
-                  {names.map((na, index) => (
+                  {selectedCategory && (
                     <Chip
-                      key={index}
-                      className="categoryChip"
-                      label={na}
-                      size="medium"
+                      label={selectedCategory}
+                      color="primary"
+                      style={{
+                        fontWeight: 500,
+                        marginTop: "10px",
+                        marginRight: "10px",
+                        backgroundColor: "#D4F0FC",
+                        color: "rgba(3, 66, 117, 0.69)",
+                      }}
                     />
-                  ))}
+                  )}
+
+                  {!isEmpty(names) &&
+                    names.map((j) => (
+                      <Chip
+                        key={j}
+                        label={j}
+                        color="primary"
+                        style={{
+                          fontWeight: 500,
+                          marginTop: "10px",
+                          marginRight: "10px",
+                          backgroundColor: "#D4F0FC",
+                          color: "rgba(3, 66, 117, 0.69)",
+                        }}
+                      />
+                    ))}
                 </Stack>
               </Box>
               <Box
@@ -839,6 +1036,7 @@ const SearchSection = ({ ...props }) => {
                   classes={{ ul: classes.ul }}
                   count={totalPage}
                   onChange={changePage}
+                  page={Number(page)}
                   renderItem={(item) => (
                     <PaginationItem
                       slots={{

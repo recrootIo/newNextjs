@@ -284,7 +284,7 @@ const JobDetail = ({ ...props }) => {
                       }}
                       gutterBottom
                     >
-                      <AccessTimeIcon fontSize="16px" /> Expires
+                      <AccessTimeIcon fontSize="16px" /> Expires{" "}
                       {moment(applicationDeadline).endOf("day").fromNow()}
                     </CustomTypography>
                   </Stack>
