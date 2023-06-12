@@ -51,10 +51,15 @@ const CorporateInfo = () => {
       </Box>
       <Container>
         <Box sx={{ mb: "100px" }}>
-          <Grid container spacing={2} sx={{ mt: "50px" }}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ mt: "50px", width: "100%", marginLeft: 0 }}
+          >
             <Grid
               item
-              xs={4}
+              xs={12}
+              md={4}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -70,7 +75,15 @@ const CorporateInfo = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={8} sx={{ bgcolor: "#F2FBFF", p: "45px" }}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              sx={{
+                bgcolor: "#F2FBFF",
+                p: { xs: 0, md: "45px" },
+              }}
+            >
               <Stack spacing={2}>
                 <Box sx={{ display: "flex", gap: "10px" }}>
                   <StyledMainTypo variant="h6" gutterBottom>
@@ -163,7 +176,8 @@ const CorporateInfo = () => {
           <Grid container spacing={2}>
             <Grid
               item
-              xs={6}
+              xs={12}
+              md={6}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -209,11 +223,13 @@ const CorporateInfo = () => {
             </Grid>
             <Grid
               item
-              xs={6}
+              xs={12}
+              md={6}
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                mt: { xs: "60px", md: "0px" },
               }}
             >
               <Box sx={{ height: "250px" }}>

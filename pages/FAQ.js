@@ -168,7 +168,7 @@ const FAQ = () => {
                 sx={{
                   backgroundColor: "#00339B",
                   borderRadius: "10px",
-                  height: "80px",
+                  minHeight: "80px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",

@@ -74,7 +74,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -129,7 +129,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
               lineHeight: "30px",
             }}
             gutterBottom
@@ -199,7 +199,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -234,7 +234,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -271,7 +271,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -306,7 +306,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -341,7 +341,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -375,7 +375,7 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >

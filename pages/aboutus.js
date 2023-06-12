@@ -1,15 +1,29 @@
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Card, CardContent, Container, Grid, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Stack,
+} from "@mui/material";
 import Image from "next/image";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import SubscribHome from "@/components/Home/SubscribHome";
 import FooterHome from "@/components/Home/FooterHome";
 import styles from "./aboutus.module.css";
+import { useState } from "react";
 
 const AboutUs = () => {
+  const [isShown, setIsShown] = useState(false);
+
+  const handleViewMoreFeaturesClick = (event) => {
+    setIsShown((current) => !current);
+  };
   return (
     <>
       <Navbar />
@@ -18,7 +32,7 @@ const AboutUs = () => {
           backgroundImage: 'url("/aboutus_images/JobListingPageBG.svg")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "400px",
+          minHeight: "400px",
           pt: "30px",
           display: "flex",
           alignItems: "center",
@@ -26,19 +40,35 @@ const AboutUs = () => {
       >
         <Container>
           <Grid container spacing={2}>
-            <Grid item xs={5} sx={{ display: "flex", alignItems: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={5}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: { xs: "center", md: "center" },
+              }}
+            >
               <CustomTypography
                 sx={{
                   fontSize: "45px",
                   fontWeight: 700,
                   color: "white",
+                  textAlign: { xs: "center", md: "center" },
                 }}
               >
                 Who We Are
               </CustomTypography>
             </Grid>
-            <Grid item xs={7}>
-              <Box sx={{ marginTop: "auto" }}>
+            <Grid item xs={12} md={7}>
+              <Box
+                sx={{
+                  marginTop: "auto",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <Image
                   src={"/aboutus-who-we-arepeople-img.png"}
                   alt=""
@@ -52,12 +82,12 @@ const AboutUs = () => {
       </Box>
       <Box
         sx={{
-          height: "250px",
+          height: "autopx",
           bgcolor: "rgba(212, 240, 252, 0.5)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          p: "40px",
+          p: { xs: "60px 0px", md: "40px" },
         }}
       >
         <Container>
@@ -74,7 +104,7 @@ const AboutUs = () => {
                 fontSize: "30px",
                 fontWeight: 600,
                 color: "#01313F",
-                //textAlign: "center",
+                textAlign: { xs: "center", md: "left" },
               }}
             >
               Unlock your career potential with{" "}
@@ -91,7 +121,7 @@ const AboutUs = () => {
                 fontSize: "19px",
                 fontWeight: 600,
                 color: "rgba(1, 49, 63, 0.8)",
-                width: "50%",
+                width: { xs: "100%", md: "50%" },
                 textAlign: "center",
                 mt: "15px",
               }}
@@ -103,16 +133,18 @@ const AboutUs = () => {
           </Box>
         </Container>
       </Box>
-      <Box sx={{ p: "50px" }}>
+      <Box sx={{ p: { xs: "50px 0px 100px 0px", md: "50px 50px 100px 50px" } }}>
         <Container>
           <Grid container spacing={2}>
             <Grid
               item
-              xs={7}
+              xs={12}
+              md={7}
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
+                order: { xs: "2", md: "1" },
               }}
             >
               <CustomTypography
@@ -120,6 +152,7 @@ const AboutUs = () => {
                   fontSize: "30px",
                   fontWeight: 600,
                   color: "#01313F",
+                  display: { xs: "none", md: "block" },
                 }}
               >
                 Company{" "}
@@ -158,16 +191,36 @@ const AboutUs = () => {
             </Grid>
             <Grid
               item
-              xs={5}
+              xs={12}
+              md={5}
               sx={{
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+                order: { xs: "1", md: "2" },
               }}
             >
+              <CustomTypography
+                sx={{
+                  fontSize: "30px",
+                  fontWeight: 600,
+                  color: "#01313F",
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                Company{" "}
+                <span
+                  style={{
+                    color: "#2699FF",
+                  }}
+                >
+                  Overview
+                </span>
+              </CustomTypography>
               <Box
                 sx={{
-                  bgcolor: "#D9D9D9",
+                  bgcolor: { xs: "none", md: "#D9D9D9" },
                   width: "100%",
                   display: "flex",
                   justifyContent: "center",
@@ -181,15 +234,11 @@ const AboutUs = () => {
                   width={310}
                 />
                 <Image
+                  className={styles.CompanyOverviewPersonImg}
                   src={"/aboutus-company-overview-person-img.png"}
                   alt=""
                   height={391}
                   width={159}
-                  style={{
-                    position: "absolute",
-                    top: "962px",
-                    left: "1157px",
-                  }}
                 />
               </Box>
             </Grid>
@@ -198,17 +247,22 @@ const AboutUs = () => {
       </Box>
       <Box
         sx={{
-          p: "40px",
+          p: { xs: "40px 0px 40px 0px", md: "130px 0px 40px 0px" },
           bgcolor: "rgba(212, 240, 252, 0.5)",
-          height: "480px",
+          height: "auto",
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-end",
         }}
       >
         <Container>
-          <Grid container spacing={2} sx={{}}>
-            <Grid item xs={6}>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ marginTop: { xs: "100px", md: 0 } }}
+            >
               <Box
                 sx={{
                   bgcolor: "#2699FF",
@@ -216,42 +270,40 @@ const AboutUs = () => {
                   borderRadius: "20px",
                   pl: "40px",
                   pr: "40px",
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
                 }}
               >
-                <Box sx={{ height: "90px" }}>
+                <Box
+                  sx={{
+                    height: "90px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
                   <Image
+                    className={styles.aboutusOurvisionEclipseImg}
                     src={"/aboutus-ourvision-eclipse-img.png"}
                     alt=""
                     height={180}
                     width={180}
-                    style={{
-                      position: "relative",
-                      top: "-89px",
-                      left: "173px",
-                    }}
                   />
                   <Image
+                    className={styles.aboutusOurvisionBlueborderImg}
                     src={"/aboutus-ourvision-blueboder-img.png"}
                     alt=""
                     height={180}
                     width={180}
-                    style={{
-                      position: "relative",
-                      top: "-276px",
-                      left: "173px",
-                      zIndex: "-1",
-                    }}
                   />
                   <Image
+                    className={styles.ourvisionArrowImg}
                     src={"/ourvision-arrow-img.png"}
                     alt=""
                     height={190}
                     width={228}
-                    style={{
-                      position: "relative",
-                      top: "-436px",
-                      left: "172px",
-                    }}
                   />
                 </Box>
                 <CustomTypography
@@ -279,50 +331,50 @@ const AboutUs = () => {
                 </CustomTypography>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ marginTop: { xs: "130px", md: 0 } }}
+            >
               <Box
                 sx={{
                   bgcolor: "#2699FF",
-                  height: "300px",
+                  minHeight: "300px",
                   borderRadius: "20px",
                   pl: "40px",
                   pr: "40px",
                 }}
               >
-                <Box sx={{ height: "90px" }}>
+                <Box
+                  sx={{
+                    height: "90px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
                   <Image
+                    className={styles.aboutusOurmissionEclipseImg}
                     src={"/aboutus-ourvision-eclipse-img.png"}
                     alt=""
                     height={180}
                     width={180}
-                    style={{
-                      position: "relative",
-                      top: "-89px",
-                      left: "173px",
-                    }}
                   />
                   <Image
+                    className={styles.aboutusOurmissionBlueborderImg}
                     src={"/aboutus-ourvision-blueboder-img.png"}
                     alt=""
                     height={180}
                     width={180}
-                    style={{
-                      position: "relative",
-                      top: "-276px",
-                      left: "173px",
-                      zIndex: "-1",
-                    }}
                   />
                   <Image
+                    className={styles.ourmissionManImg}
                     src={"/ourmission-man-img.png"}
                     alt=""
                     height={240}
                     width={278}
-                    style={{
-                      position: "relative",
-                      top: "-485px",
-                      left: "128px",
-                    }}
                   />
                 </Box>
                 <CustomTypography
@@ -375,252 +427,543 @@ const AboutUs = () => {
               Features
             </span>
           </CustomTypography>
-          <Box
-          // sx={{
-          //   display: "flex",
-          //   justifyContent: "center",
-          //   alignItems: "center",
-          //   height: "auto",
-          //   width: "100%",
-          //   borderRadius: "25px",
-          // }}
-          >
-            <Grid container spacing={2} sx={{ width: "100%" }}>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/candidate-database-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
+          <Box>
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              <Grid container spacing={2} sx={{ width: "100%" }}>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/candidate-database-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Candidate Database
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Our candidate database is filled with pre-screened
+                        candidates actively seeking employment.
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Candidate Database
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Our candidate database is filled with pre-screened
-                      candidates actively seeking employment.
-                    </CustomTypography>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/AI-engine-img.png"}
+                        alt=""
+                        height={80}
+                        width={108}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        AI Engine
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Use AI algorithms to find candidates automatically and
+                        match job descriptions with the most suitable candidates
+                        based on their skills, experience, education, and other
+                        relevant factors.
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/quick&easy-regis-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Quick and Easy Registration
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        With Recroot, setting up an account for employers and
+                        candidates is a breeze - all it takes is a few clicks.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/resume-parsing-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Resume Parsing
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Once a candidate uploads a CV to the portal, we
+                        automatically extract information from it that’s
+                        important to recruiters and store them in a secured
+                        database.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/quick-discovery-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Quick Discovery
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        With Recroot, job seekers have the ability to quickly
+                        and easily find relevant job opportunities based on
+                        their preferences, qualifications, and search criteria.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/job-posting-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Job Posting
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Allows employers to advertise job openings including
+                        details about the position, such as job title, location,
+                        job description, qualifications, and requirements.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/quick-apply-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Quick Apply
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        After completing the profile up to 70%, job seekers can
+                        quickly apply for job openings using their stored
+                        profile information
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/application-tracking-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Application Tracking
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Allow employers to manage job applications, track
+                        applicant status, and communicate with job seekers.  For
+                        candidates, it allows them to track the status of their
+                        job applications.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/blogs&- videos-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Blogs and Videos
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Includes blog posts, articles, and videos that provide
+                        information and resources tailored to the needs of both
+                        job seekers and employers.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/AI-engine-img.png"}
-                      alt=""
-                      height={80}
-                      width={108}
-                    />
+            </Box>
+            <Box sx={{ display: { xs: "block", md: "none" } }}>
+              <Grid container spacing={2} sx={{ width: "100%", ml: 0 }}>
+                <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/candidate-database-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Candidate Database
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Our candidate database is filled with pre-screened
+                        candidates actively seeking employment.
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      AI Engine
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Use AI algorithms to find candidates automatically and
-                      match job descriptions with the most suitable candidates
-                      based on their skills, experience, education, and other
-                      relevant factors.
-                    </CustomTypography>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/AI-engine-img.png"}
+                        alt=""
+                        height={80}
+                        width={108}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        AI Engine
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        Use AI algorithms to find candidates automatically and
+                        match job descriptions with the most suitable candidates
+                        based on their skills, experience, education, and other
+                        relevant factors.
+                      </CustomTypography>
+                    </Box>
                   </Box>
-                </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box className={styles.discovertheFeaturesCard}>
+                    <Box className={styles.discovertheFeaturesImgBox}>
+                      <Image
+                        src={"/quick&easy-regis-img.png"}
+                        alt=""
+                        height={130}
+                        width={158}
+                      />
+                    </Box>
+                    <Box className={styles.discovertheFeaturesTypoBox}>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypo}
+                      >
+                        Quick and Easy Registration
+                      </CustomTypography>
+                      <CustomTypography
+                        className={styles.discovertheFeaturesTypoContent}
+                      >
+                        With Recroot, setting up an account for employers and
+                        candidates is a breeze - all it takes is a few clicks.
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/quick&easy-regis-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Quick and Easy Registration
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      With Recroot, setting up an account for employers and
-                      candidates is a breeze - all it takes is a few clicks.
-                    </CustomTypography>
-                  </Box>
+              {!isShown && (
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: "30px",
+                    mb: "30px",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#02A9F7 !important",
+                      borderRadius: "8px",
+                      width: "168px",
+                      height: "52px",
+                    }}
+                    onClick={handleViewMoreFeaturesClick}
+                  >
+                    VIEW MORE
+                  </Button>
                 </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className="discovertheFeaturesImgBox">
-                    <Image
-                      src={"/resume-parsing-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
+              )}
+              {isShown && (
+                <>
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ width: "100%", mt: "3px", ml: 0 }}
+                  >
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className="discovertheFeaturesImgBox">
+                          <Image
+                            src={"/resume-parsing-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Resume Parsing
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            Once a candidate uploads a CV to the portal, we
+                            automatically extract information from it that’s
+                            important to recruiters and store them in a secured
+                            database.
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className={styles.discovertheFeaturesImgBox}>
+                          <Image
+                            src={"/quick-discovery-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Quick Discovery
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            With Recroot, job seekers have the ability to
+                            quickly and easily find relevant job opportunities
+                            based on their preferences, qualifications, and
+                            search criteria.
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className={styles.discovertheFeaturesImgBox}>
+                          <Image
+                            src={"/job-posting-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Job Posting
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            Allows employers to advertise job openings including
+                            details about the position, such as job title,
+                            location, job description, qualifications, and
+                            requirements.
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className={styles.discovertheFeaturesImgBox}>
+                          <Image
+                            src={"/quick-apply-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Quick Apply
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            After completing the profile up to 70%, job seekers
+                            can quickly apply for job openings using their
+                            stored profile information
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className={styles.discovertheFeaturesImgBox}>
+                          <Image
+                            src={"/application-tracking-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Application Tracking
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            Allow employers to manage job applications, track
+                            applicant status, and communicate with job seekers. 
+                            For candidates, it allows them to track the status
+                            of their job applications.
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ pl: 0 }}>
+                      <Box className={styles.discovertheFeaturesCard}>
+                        <Box className={styles.discovertheFeaturesImgBox}>
+                          <Image
+                            src={"/blogs&- videos-img.png"}
+                            alt=""
+                            height={130}
+                            width={158}
+                          />
+                        </Box>
+                        <Box className={styles.discovertheFeaturesTypoBox}>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypo}
+                          >
+                            Blogs and Videos
+                          </CustomTypography>
+                          <CustomTypography
+                            className={styles.discovertheFeaturesTypoContent}
+                          >
+                            Includes blog posts, articles, and videos that
+                            provide information and resources tailored to the
+                            needs of both job seekers and employers.
+                          </CustomTypography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: "30px",
+                      mb: "30px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#02A9F7 !important",
+                        borderRadius: "8px",
+                        width: "168px",
+                        height: "52px",
+                      }}
+                      onClick={handleViewMoreFeaturesClick}
                     >
-                      Resume Parsing
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Once a candidate uploads a CV to the portal, we
-                      automatically extract information from it that’s important
-                      to recruiters and store them in a secured database.
-                    </CustomTypography>
+                      VIEW LESS
+                    </Button>
                   </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/quick-discovery-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Quick Discovery
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      With Recroot, job seekers have the ability to quickly and
-                      easily find relevant job opportunities based on their
-                      preferences, qualifications, and search criteria.
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/job-posting-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Job Posting
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Allows employers to advertise job openings including
-                      details about the position, such as job title, location,
-                      job description, qualifications, and requirements.
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/quick-apply-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Quick Apply
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      After completing the profile up to 70%, job seekers can
-                      quickly apply for job openings using their stored profile
-                      information
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/application-tracking-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Application Tracking
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Allow employers to manage job applications, track
-                      applicant status, and communicate with job seekers.  For
-                      candidates, it allows them to track the status of their
-                      job applications.
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box className={styles.discovertheFeaturesCard}>
-                  <Box className={styles.discovertheFeaturesImgBox}>
-                    <Image
-                      src={"/blogs&- videos-img.png"}
-                      alt=""
-                      height={130}
-                      width={158}
-                    />
-                  </Box>
-                  <Box className={styles.discovertheFeaturesTypoBox}>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypo}
-                    >
-                      Blogs and Videos
-                    </CustomTypography>
-                    <CustomTypography
-                      className={styles.discovertheFeaturesTypoContent}
-                    >
-                      Includes blog posts, articles, and videos that provide
-                      information and resources tailored to the needs of both
-                      job seekers and employers.
-                    </CustomTypography>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
+                </>
+              )}
+            </Box>
           </Box>
         </Container>
       </Box>
@@ -645,156 +988,185 @@ const AboutUs = () => {
               Used
             </span>
           </CustomTypography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "15px",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/mongodb-img.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/laravel-logo-img.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/mysql-logo-img.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/react-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/react-native-logo.svg"}
-                  alt=""
-                  height={40}
-                  width={80}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/intelligence-logo.svg"}
-                  alt=""
-                  height={40}
-                  width={80}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/api-logo.svg"}
-                  alt=""
-                  height={50}
-                  width={100}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/seo-logo.svg"}
-                  alt=""
-                  height={50}
-                  width={100}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/nginx-logo.svg"}
-                  alt=""
-                  height={60}
-                  width={120}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/docker-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/aws-logo.svg"}
-                  alt=""
-                  height={50}
-                  width={100}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/node-js-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/flutter-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
-            <Card className={styles.technologiesCard}>
-              <CardContent className={styles.technologiesCardcontent}>
-                <Image
-                  src={"/aboutus_images/firebase-logo.svg"}
-                  alt=""
-                  height={110}
-                  width={200}
-                />
-              </CardContent>
-            </Card>
+          <Box>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/mongodb-img.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/laravel-logo-img.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/mysql-logo-img.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/react-logo.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/react-native-logo.svg"}
+                      alt=""
+                      height={40}
+                      width={80}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/intelligence-logo.svg"}
+                      alt=""
+                      height={40}
+                      width={80}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/api-logo.svg"}
+                      alt=""
+                      height={50}
+                      width={100}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/seo-logo.svg"}
+                      alt=""
+                      height={50}
+                      width={100}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/nginx-logo.svg"}
+                      alt=""
+                      height={60}
+                      width={120}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/docker-logo.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/aws-logo.svg"}
+                      alt=""
+                      height={50}
+                      width={100}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/node-js-logo.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/flutter-logo.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={6} md={2.4}>
+                <Card className={styles.technologiesCard}>
+                  <CardContent className={styles.technologiesCardcontent}>
+                    <Image
+                      src={"/aboutus_images/firebase-logo.svg"}
+                      alt=""
+                      height={110}
+                      width={200}
+                    />
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
       </Box>
@@ -823,11 +1195,12 @@ const AboutUs = () => {
             <Grid container spacing={2}>
               <Grid
                 item
-                xs={4}
+                xs={12}
+                md={4}
                 sx={{
-                  height: "520px",
+                  height: { xs: "455px", md: "520px" },
                   display: "flex",
-                  alignItems: "flex-end",
+                  alignItems: { xs: "center", md: "flex-end" },
                 }}
               >
                 <Card
@@ -857,9 +1230,10 @@ const AboutUs = () => {
               </Grid>
               <Grid
                 item
-                xs={4}
+                xs={12}
+                md={4}
                 sx={{
-                  height: "520px",
+                  height: { xs: "455px", md: "520px" },
                   display: "flex",
                   alignItems: "flex-start",
                 }}
@@ -896,11 +1270,12 @@ const AboutUs = () => {
               </Grid>
               <Grid
                 item
-                xs={4}
+                xs={12}
+                md={4}
                 sx={{
-                  height: "520px",
+                  height: { xs: "455px", md: "520px" },
                   display: "flex",
-                  alignItems: "flex-end",
+                  alignItems: { xs: "center", md: "flex-end" },
                 }}
               >
                 <Card
@@ -910,11 +1285,11 @@ const AboutUs = () => {
                   <CardContent className={styles.ourTeamCardContent}>
                     <Box className={styles.ourTeamImgBox}>
                       <Image
-                        className={styles.ourTeamImgThree}
+                        className={styles.ourTeamImgOne}
                         src={"/person-one-img.jpg"}
                         alt=""
-                        height={291}
-                        width={221}
+                        height={191}
+                        width={121}
                       />
                     </Box>
                     <CustomTypography className={styles.ourTeamTypo}>
@@ -954,7 +1329,7 @@ const AboutUs = () => {
             </span>
           </CustomTypography>
           <Grid container spacing={2} sx={{ mb: "90px" }}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ border: "1px solid #D4F0FC", borderRadius: "20px" }}>
                 <Box
                   sx={{
@@ -1038,7 +1413,7 @@ const AboutUs = () => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ border: "1px solid #D4F0FC", borderRadius: "20px" }}>
                 <Box
                   sx={{
@@ -1112,7 +1487,9 @@ const AboutUs = () => {
           </Grid>
         </Container>
       </Box>
-      <Box sx={{ bgcolor: "#1097CD", p: "50px" }}>
+      <Box
+        sx={{ bgcolor: "#1097CD", p: { xs: "50px 0px 50px 0px", md: "50px" } }}
+      >
         <Container>
           <Stack spacing={2}>
             <CustomTypography
@@ -1130,7 +1507,7 @@ const AboutUs = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "10px",
-                marginLeft: "20px !important",
+                marginLeft: { xs: "0px", md: "20px !important" },
               }}
             >
               <MailOutlineIcon sx={{ color: "#FFFFFF", fontSize: "26px" }} />
@@ -1147,9 +1524,9 @@ const AboutUs = () => {
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
+                alignItems: { xs: "flex-start", md: "center" },
                 gap: "10px",
-                marginLeft: "20px !important",
+                marginLeft: { xs: "0px", md: "20px !important" },
               }}
             >
               <SupervisorAccountIcon
