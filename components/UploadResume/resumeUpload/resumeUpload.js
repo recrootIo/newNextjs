@@ -16,10 +16,13 @@ import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Upload } from "@/ui-components/Uploads/Uploads";
 import { isEmpty } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uplodeResumeFiles } from "@/redux/slices/uploadingResume";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR } from "@/utils/constants";
+import http from "@/redux/http-common";
+import { retrievePersonal } from "@/redux/slices/personal";
+import Cookies from "js-cookie";
 
 const steps = [
   "Select master blaster campaign settings",
@@ -32,6 +35,7 @@ const steps = [
 const AddResume = ({ ...props }) => {
   const dispatch = useDispatch();
   const { scroll, position } = props;
+  const user = Cookies.get("userID");
   const [open, setOpen] = React.useState(false);
   const [uplodeResumeFile, setuplodeResumeFile] = React.useState([]);
 
@@ -65,26 +69,23 @@ const AddResume = ({ ...props }) => {
             setOpen(false);
             return;
           }
-          scroll(position + 1);
-          // const userObject = {
-          //   userId: currentUser.User._id,
-          //   file: originalPromiseResult.Data[0].Location,
-          // };
-          // await axios
-          //   .post("https://preprod.recroot.au/api/updateResume", userObject)
-          //   .then(
-          //     (res) => {
-          //       setOpen(false);
-          //       dispatch(retrievePersonal());
-          //       scroll(position + 1);
-          //     },
-          //     (error) => {
-          //       console.warn(error, "error");
-          //       setOpen(false);
-          //     }
-          //   );
 
-          setOpen(false);
+          const userObject = {
+            userId: user,
+            file: originalPromiseResult.Data[0].Location,
+          };
+
+          await http
+            .post("updateResume", userObject)
+            .then((res) => {
+              setOpen(false);
+              dispatch(retrievePersonal());
+              scroll(position + 1);
+            })
+            .catch(() => {
+              console.warn(error, "error");
+              setOpen(false);
+            });
         })
         .catch((error) => {
           console.log(error);

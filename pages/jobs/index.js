@@ -85,7 +85,6 @@ export const getServerSideProps = async (context) => {
     })
     .catch((res) => console.log(res));
 
-  console.log(jobType, "jobType");
   return {
     props: {
       sectors,

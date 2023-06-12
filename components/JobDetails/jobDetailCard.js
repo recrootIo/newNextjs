@@ -72,7 +72,8 @@ const JobDetailCard = ({ ...props }) => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
   }, [dispatch]);
-  const userType = Cookies.get('userType')
+  const userType = Cookies.get("userType");
+
   return (
     <Box
       sx={{
@@ -96,20 +97,23 @@ const JobDetailCard = ({ ...props }) => {
               <Grid item xs={12} sm={8}>
                 <Stack spacing={1}>
                   <Box
-                    className="mobileLogo"
+                    // className="mobileLogo"
                     sx={{ display: "flex", justifyContent: "flex-start" }}
                   >
-                    <Image
-                      src="/logo 8.png"
-                      alt=""
-                      width={120}
-                      height={35}
-                      style={{
-                        maxWidth: "160px",
-                        maxHeight: "40px",
-                      }}
-                    />
+                    {company.companyLogo?.logo && (
+                      <Image
+                        src={getImageLogo(company.companyLogo?.logo)}
+                        alt=""
+                        width={120}
+                        height={35}
+                        style={{
+                          maxWidth: "160px",
+                          maxHeight: "160px",
+                        }}
+                      />
+                    )}
                   </Box>
+
                   <Box>
                     <CustomTypography
                       variant="h6"
@@ -334,14 +338,16 @@ const JobDetailCard = ({ ...props }) => {
                       >
                         {isApplied ? "applied" : " Apply now"}
                       </Button>
-                    ) : userType === 'Employer' ? '': (
+                    ) : userType === "Employer" ? (
+                      ""
+                    ) : (
                       <Button
                         variant="contained"
                         size="medium"
                         className="activeButton"
                         onClick={() => goToLogin()}
                       >
-                        Login
+                        Sign In
                       </Button>
                     )}
                   </Stack>

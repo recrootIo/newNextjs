@@ -1105,7 +1105,7 @@ a {
   width: 100%;
   /* box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
    */
-   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
   border-radius: 10px;
 }
 
@@ -1324,7 +1324,7 @@ a {
     display: none;
   }
   .categoryChipStack {
-    display: none;
+    display: none !important;
   }
   .recentCard {
     margin-right: 20px;
@@ -1820,6 +1820,6 @@ a {
   background-color: #97d9f4;
 }
 
-.ql-tooltip{
+.ql-tooltip {
   display: none !important;
 }
