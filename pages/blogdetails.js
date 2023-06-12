@@ -82,9 +82,13 @@ const BlogDetails = () => {
               borderTopRightRadius: "20px",
               pb: "30px",
               pt: "20px",
+              pl: { xs: "10px", md: 0 },
+              pr: { xs: "10px", md: 0 },
             }}
           >
-            <Box sx={{ ml: "130px", mr: "130px" }}>
+            <Box
+              sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" } }}
+            >
               <Box
                 sx={{
                   display: "flex",
@@ -126,7 +130,7 @@ const BlogDetails = () => {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: "20px",
+                  gap: { xs: "5px", sm: "20px" },
                 }}
               >
                 <CustomTypography
@@ -134,6 +138,7 @@ const BlogDetails = () => {
                     fontWeight: 500,
                     fontSize: "16px",
                     color: "#01313F",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   Tags :
@@ -150,7 +155,9 @@ const BlogDetails = () => {
                 sx={{ mt: "20px", bgcolor: "rgba(175, 209, 237, 0.69)" }}
               />
             </Box>
-            <Box sx={{ ml: "130px", mr: "130px" }}>
+            <Box
+              sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" } }}
+            >
               <StyledSecondTypo gutterBottom>
                 Recruitment is a complex and time-consuming process that
                 involves multiple stages, from sourcing and screening candidates
@@ -274,7 +281,9 @@ const BlogDetails = () => {
           sx={{ bgcolor: "#EBF9FF", height: "auto", pb: "100px", pt: "30px" }}
         >
           <Container>
-            <Box sx={{ ml: "130px", mr: "130px" }}>
+            <Box
+              sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" } }}
+            >
               <StyledMainTypo sx={{ textDecoration: "underline" }} gutterBottom>
                 FAQs
               </StyledMainTypo>

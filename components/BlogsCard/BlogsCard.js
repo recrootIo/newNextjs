@@ -15,7 +15,7 @@ const BlogsCard = () => {
     <Card
       variant="outlined"
       sx={{
-        width: "381px",
+        width: { xs: "100%", sm: "100%", md: "100%", lg: "381px" },
         borderRadius: "20px",
         borderColor: "#D4F0FC",
         pb: "20px",

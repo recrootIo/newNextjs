@@ -66,7 +66,14 @@ const Blogs = () => {
         </Container>
       </Box>
       <Container>
-        <Box sx={{ display: "flex", gap: "10px", mt: "40px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: "10px",
+            mt: "40px",
+          }}
+        >
           <Search>
             <Box
               sx={{
@@ -76,7 +83,7 @@ const Blogs = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: "70px",
-                width: "100%",
+                width: { xs: "100%", md: "100%" },
                 paddingLeft: "10px",
                 paddingRight: "10px",
                 border: "1px solid rgba(118, 118, 118, 0.3)",
@@ -92,7 +99,10 @@ const Blogs = () => {
               />
             </Box>
           </Search>
-          <FormControl fullWidth sx={{ height: "70px", width: "30%" }}>
+          <FormControl
+            fullWidth
+            sx={{ height: "70px", width: { xs: "100%", md: "30%" } }}
+          >
             <InputLabel id="demo-simple-select-label">Age</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -112,7 +122,7 @@ const Blogs = () => {
           sx={{
             mt: "40px",
             display: "flex",
-            flexDirection: "row",
+            flexDirection: { xs: "column", sm: "row", md: "row" },
             gap: "20px",
             flexWrap: "wrap",
           }}
