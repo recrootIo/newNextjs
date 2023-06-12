@@ -43,7 +43,7 @@ const SearchHome = () => {
   };
 
   const searchData = () => {
-    router.push(`/jobListings?title=${title}&address=${address}`);
+    router.push(`/jobs?title=${title}&address=${address}`);
   };
 
   return (
