@@ -69,23 +69,24 @@ function Signin() {
       .unwrap()
       .then((originalPromiseResult) => {
         if (originalPromiseResult.User.email_is_verified === false) {
-          push("/verifymobile");
+          push("/verifyMobile");
           return;
         }
+
         if (originalPromiseResult.User.recrootUserType === "Candidate") {
           if (originalPromiseResult?.User?.profilePercentage > 69) {
             if (redirect.current) {
               push(redirect.current);
-              return;
             } else {
               push("/");
-              return;
             }
           } else {
             push("/uploadResume");
           }
-        }
-        else if (originalPromiseResult.User.recrootUserType === "Employer" ||originalPromiseResult.User.recrootUserType === "Member") {
+        } else if (
+          originalPromiseResult.User.recrootUserType === "Employer" ||
+          originalPromiseResult.User.recrootUserType === "Member"
+        ) {
           push("/");
         }
         // if (originalPromiseResult.User.email_is_verified === false) {

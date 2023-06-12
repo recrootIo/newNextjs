@@ -6,7 +6,12 @@ const nextConfig = {
   reactStrictMode: false,
   transpilePackages: ["@mui/material/css"],
   images: {
-    domains: ["localhost", "preprod.recroot.au", "arinnovate"],
+    domains: [
+      "localhost",
+      "preprod.recroot.au",
+      "arinnovate",
+      "extraordinary-melba-a931eb.netlify.app",
+    ],
   },
 };
 

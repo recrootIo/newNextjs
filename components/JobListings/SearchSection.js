@@ -562,6 +562,7 @@ const SearchSection = ({ ...props }) => {
               <Button
                 variant="contained"
                 className="searchButton"
+                sx={{ mt: "20px !important" }}
                 onClick={() => setSearchFields()}
               >
                 Search

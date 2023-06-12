@@ -199,7 +199,7 @@ const JobDetail = ({ ...props }) => {
                     className="activeButton"
                     onClick={() => goToLogin()}
                   >
-                    Login
+                    Sign In
                   </Button>
                 )}
 
