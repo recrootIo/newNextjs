@@ -58,7 +58,7 @@ const style = {
   },
 };
 
-const JobPreview = () => {
+const JobPreview = (props) => {
   const details = useSelector((state) => state.jobs.details);
   const essen = useSelector((state) => state.jobs.essential);
   const addres = useSelector((state) => state.jobs.location);
@@ -180,7 +180,7 @@ const JobPreview = () => {
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Required Skills :
                           </CustomTypography>
-                          <Stack direction="row" spacing={2}>
+                          <Stack direction="row" flexWrap={'wrap'} gap={'10px'} spacing={2}>
                           {details &&
                   details.requiredSkill.map((skill)=>(
                     <>

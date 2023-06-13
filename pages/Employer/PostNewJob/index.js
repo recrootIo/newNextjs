@@ -237,7 +237,6 @@ function PostnewJob() {
             return;
           }
           const obj2 = validator(final.details);
-          console.log(final.details)
           dispatch(errorJobs(validator(final.details)));
           if (Object.keys(obj2).length > 0) {
             return;
@@ -290,12 +289,12 @@ function PostnewJob() {
 //       setProfiletab({ index: 0, page: <JobDetails /> });
 //     }
 //   }, [location]);
-useEffect(() => {
-setProfiletab( final?.details?.applicationDeadline !== undefined
-  ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
-  : { index: 0, page: <JobDetails /> })
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [final])
+// useEffect(() => {
+// setProfiletab( jid  !== undefined 
+//   ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
+//   : { index: 0, page: <JobDetails /> })
+// // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [final])
 
   const [profiletab, setProfiletab] = useState(
     final?.details?.applicationDeadline !== undefined
