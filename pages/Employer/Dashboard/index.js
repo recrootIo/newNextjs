@@ -181,7 +181,7 @@ const EmpoyerDashboard = () => {
     return array.some((obj) => obj.jobId === value);
   }
   const cjobs = useSelector((state) => state?.jobs?.companyJobs) || [];
-
+console.log(cjobs,'cjobs');
   names.map((nam) => {
     if (
       moment(nam.applicationDeadline).format() < moment(new Date()).format() ||

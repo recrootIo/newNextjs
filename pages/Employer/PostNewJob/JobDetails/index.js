@@ -178,7 +178,7 @@ const JobDetails = () => {
   const [deletedSkills, setdeletedSkills] = useState([]);
   const loading = open && arrskills.length === 0;
   const freePack = companyDet.package?.subscription_package === "Free"
-  const freeCount = freePack === true ? (3-cjobs.length  ) : 0  
+  const freeCount = freePack === true ? (cjobs !== undefined ? (3 - cjobs?.length) : 0 ): 0;
   const proCOunt = companyDet?.jobCounts?.proCount 
   const preCOunt = companyDet?.jobCounts?.premiumCount 
   const inputChanged = (e) => {

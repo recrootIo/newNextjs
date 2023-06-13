@@ -2,7 +2,7 @@ import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar'
 import EmployerSidebar from '@/components/Employers/Sidebar'
 import { openAlert } from '@/redux/slices/alert'
 import { getCompanyDetails } from '@/redux/slices/companyslice'
-import { setEditJob } from '@/redux/slices/job'
+import { setEditJob ,companyJobs } from '@/redux/slices/job'
 import { BOLD } from '@/theme/fonts'
 import { CustomTypography } from '@/ui-components/CustomTypography/CustomTypography'
 import { ERROR } from '@/utils/constants'
@@ -20,10 +20,12 @@ function Employer({children}) {
     const dispatch = useDispatch()
     useEffect(() => {
       dispatch(getCompanyDetails())
+      dispatch(companyJobs()) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     const company = useSelector((state) => state.company?.companyDetl);
+    const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
     const freePack = company.package?.subscription_package === "Free"
     const freeCount = freePack === true ? (2-cjobs.length  ) : 0  
     const proCOunt = company?.jobCounts?.proCount 
