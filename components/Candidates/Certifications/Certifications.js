@@ -282,6 +282,18 @@ const Certifications = () => {
                           </Stack>
                         </Stack>
                       </Grid>
+                      <Grid item md={6}>
+                        <Stack sx={{ gap: LAZY }}>
+                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                            <CustomTypography sx={{ fontWeight: "700" }}>
+                              Organization:
+                            </CustomTypography>
+                            <CustomTypography>
+                              {prj?.Organization}
+                            </CustomTypography>
+                          </Stack>
+                        </Stack>
+                      </Grid>
                       <Grid item md={12}>
                         <Stack sx={{ gap: LAZY }}>
                           <Stack direction={"row"} sx={{ gap: "10px" }}>

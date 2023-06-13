@@ -216,6 +216,7 @@ function Signin() {
                         Log in with LinkedIn
                       </span>
                     </button>
+
                     <button
                       onClick={() => {
                         handleClick("google");

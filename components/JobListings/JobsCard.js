@@ -38,8 +38,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     return firstPTag;
   };
 
-  const compImage = lateJob?.company?.companyLogo?.logo
-    ? getImageLogo(lateJob?.company?.companyLogo?.logo)
+  const compImage = lateJob?.company[0]?.companyLogo?.logo
+    ? getImageLogo(lateJob?.company[0]?.companyLogo?.logo)
     : "/defaultCompany.svg";
 
   return (

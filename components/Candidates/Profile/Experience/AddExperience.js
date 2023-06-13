@@ -28,6 +28,7 @@ import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import {
   AddExperinceAndThenGet,
+  clearExperience,
   retrievePersonal,
   // EditExperinceAndGet,
   // GetCandsPrefInfo,
@@ -88,6 +89,7 @@ const AddExperience = () => {
   });
 
   const gotoHome = () => {
+    dispatch(clearExperience());
     dispatch(updateCurrentScreen(""));
   };
 
@@ -107,7 +109,7 @@ const AddExperience = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "User Experience Updated",
             })
           );
           dispatch(updateCurrentScreen(""));
@@ -136,7 +138,7 @@ const AddExperience = () => {
           dispatch(
             openAlert({
               type: SUCCESS,
-              message: "User Preferences Updated",
+              message: "User Experience saved",
             })
           );
           dispatch(updateCurrentScreen(""));

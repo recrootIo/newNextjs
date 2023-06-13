@@ -28,6 +28,8 @@ import {
 import { UploadPhoto } from "@/utils/UploadPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { NEUTRAL } from "@/theme/colors";
+import { openAlert } from "@/redux/slices/alert";
+import { SUCCESS } from "@/utils/constants";
 
 const bull = (
   <Box
@@ -39,7 +41,6 @@ const bull = (
 );
 
 const CandidateProfileHeader = (data) => {
-  console.log(data, "data");
   const photoss = useSelector(
     (state) => state.personal?.data?.profpicFileLocation
   );
@@ -73,14 +74,16 @@ const CandidateProfileHeader = (data) => {
     setFileNames(file.name);
   };
 
-  const Edit = (photo) => {
-    setloadimg(true);
+  const Edit = () => {
     dispatch(addProfphoto(photo)).then((res) => {
-      if (res?.payload === "photo save succesfully") {
-        setTimeout(() => {
-          dispatch(retrievePersonal()).then(setloadimg(false));
-        }, 1500);
-      }
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Success",
+        })
+      );
+      dispatch(retrievePersonal());
+      setloadimg(false);
     });
     setFullWidth(true);
     setMaxWidth("sm");
@@ -192,6 +195,8 @@ const CandidateProfileHeader = (data) => {
     addPercent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finalPercent]);
+
+  console.log(imageUrl, "imageUrl");
 
   return (
     <Box
@@ -520,20 +525,19 @@ const CandidateProfileHeader = (data) => {
                 gap: "10px",
               }}
             >
-              <button
+              <Button
                 style={{
                   backgroundColor: "#4fa9ff",
                   color: NEUTRAL,
                   minWidth: "64px",
-
                   borderRadius: "4px",
                 }}
                 onClick={() => {
-                  Edit(photo);
+                  Edit();
                 }}
               >
                 save
-              </button>
+              </Button>
               <Button
                 variant="outlined"
                 sx={{ color: "#4fa9ff" }}

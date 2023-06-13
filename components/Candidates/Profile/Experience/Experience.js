@@ -42,8 +42,9 @@ const Experience = ({ ...experience }) => {
   };
 
   const handleGetSingle = (id) => {
-    dispatch(retrieveGetSinExperience(id));
-    gotToExperience();
+    dispatch(retrieveGetSinExperience(id)).then(() => {
+      gotToExperience();
+    });
   };
 
   const handleDelete = () => {

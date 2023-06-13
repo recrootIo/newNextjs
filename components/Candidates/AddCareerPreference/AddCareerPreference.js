@@ -123,11 +123,13 @@ const AddCareerPreference = () => {
   };
 
   const addPreference = () => {
-    let preferences = careerPre.workPlaces;
-    preferences = [...preferences, preference];
-    preferences = Array.from(new Set(preferences));
-    setCareerPre((state) => ({ ...state, workPlaces: preferences }));
-    setPreference("");
+    if (preference) {
+      let preferences = careerPre.workPlaces;
+      preferences = [...preferences, preference];
+      preferences = Array.from(new Set(preferences));
+      setCareerPre((state) => ({ ...state, workPlaces: preferences }));
+      setPreference("");
+    }
   };
 
   const removePreferences = (e) => {
