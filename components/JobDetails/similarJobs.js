@@ -5,7 +5,6 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import searchService from "@/redux/services/search.service";
@@ -84,7 +83,7 @@ const SimilarJobs = () => {
           </Carousel>
         </Stack>
 
-        <Box
+        {/* <Box
           sx={{
             mt: "30px",
             display: "flex",
@@ -92,8 +91,7 @@ const SimilarJobs = () => {
             alignItems: "center",
           }}
         >
-          <img src="./Frame 93.png" alt="" />
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   );

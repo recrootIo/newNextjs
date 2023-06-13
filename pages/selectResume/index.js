@@ -30,6 +30,7 @@ import Slide from "@mui/material/Slide";
 import download from "downloadjs";
 import AddIcon from "@mui/icons-material/Add";
 // import { notifySuccess } from "../../helpers/Toast";
+import Image from "next/image";
 import {
   AddCoverAndThenGet,
   AddResumeAndThenGet,
@@ -197,7 +198,12 @@ const SelectResume = () => {
       <Box>
         <Container>
           <Box sx={{ display: "flex", justifyContent: "center", mt: "60px" }}>
-            <img src="/selectResumeStepper.png" alt="" />
+            <Image
+              src={"/selectResumeStepper.png"}
+              alt=""
+              height={30}
+              width={180}
+            />
           </Box>
           <Stack
             sx={{ marginTop: "60px" }}
