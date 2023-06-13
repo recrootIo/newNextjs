@@ -194,15 +194,21 @@ const UploadResume = ({ ...props }) => {
   const send = (pdf) => {
     dispatch(addResume(pdf))
       .unwrap()
-      .then(() => {
+      .then((res) => {
         dispatch(
           openAlert({
             type: SUCCESS,
             message: "Resume has been saved successfully",
           })
         );
+
+        console.log(res, "res");
+
         dispatch(retrievePersonal());
         dispatch(removeResume({}));
+        setPdf(null);
+        setChecked(false);
+
         setSelectedResume({
           resume: undefined,
           id: undefined,
@@ -430,17 +436,6 @@ const UploadResume = ({ ...props }) => {
                           onChange={handleChange}
                           value={resume?._id}
                         />
-                        {/* <RadioGroup
-                          aria-labelledby="demo-customized-radios"
-                          name="customized-radios"
-                          value={selectedResume?._id}
-                          onChange={handleChange}
-                        >
-                          <FormControlLabel
-                            value={resume._id}
-                            control={<BpRadio />}
-                          />
-                        </RadioGroup> */}
                       </Grid>
                     </Grid>
                   ))}

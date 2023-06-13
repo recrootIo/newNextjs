@@ -138,20 +138,32 @@ ColorlibStepIcon.propTypes = {
 };
 
 const steps = ["Applied", "Viewed", "Shortlisted", "Interviewed"];
+const stepsRejected = ["Applied", "Viewed", "Rejected"];
 
-export default function CustomizedSteppers({ activeStep }) {
+export default function CustomizedSteppers({ activeStep, currentStep }) {
+  console.log(currentStep, "currentStep");
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper
         alternativeLabel
-        activeStep={activeStep}
+        activeStep={currentStep === "rejected" ? 2 : activeStep}
         connector={<QontoConnector />}
       >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
+        {currentStep === "rejected"
+          ? stepsRejected.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  {label}
+                </StepLabel>
+              </Step>
+            ))
+          : steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
       </Stepper>
     </Stack>
   );
