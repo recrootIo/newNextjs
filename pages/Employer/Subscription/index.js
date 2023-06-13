@@ -487,7 +487,7 @@ const county = state?.countryCurrecy === 'INR'
                             }}
                           >
                             <Image
-                              src="/current-sub-card-thumb-up-img.png"
+                              src="/thumbup.png"
                               alt=""
                               width="130"
                               height="130"
