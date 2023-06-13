@@ -15,7 +15,7 @@ const BlogsCard = () => {
     <Card
       variant="outlined"
       sx={{
-        width: { xs: "100%", sm: "100%", md: "100%", lg: "381px" },
+        width: { xs: "100%", sm: "100%", md: "100%", lg: "370px" },
         borderRadius: "20px",
         borderColor: "#D4F0FC",
         pb: "20px",
@@ -54,8 +54,8 @@ const BlogsCard = () => {
           How to Use Social Media to Find the Best
         </CustomTypography>
         <CustomTypography sx={{ color: "#01313F", fontSize: "17px" }}>
-          In today&apos;s digital age, social media platforms have become a powerful
-          tool for recruiters to find top talent.{" "}
+          In today&apos;s digital age, social media platforms have become a
+          powerful tool for recruiters to find top talent.{" "}
           <span style={{ color: "#1097CD", textDecoration: "underline" }}>
             Read more
           </span>
