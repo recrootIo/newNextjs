@@ -179,7 +179,10 @@ const AppliedJobs = ({ appliedJobs }) => {
                 <CustomTypography sx={{ fontFamily: BOLD }}>
                   Application Status
                 </CustomTypography>
-                <CustomizedSteppers activeStep={getActive(applied.status)} />
+                <CustomizedSteppers
+                  activeStep={getActive(applied.status)}
+                  currentStep={applied.status}
+                />
                 <Stack
                   sx={{
                     justifyContent: "space-between",
