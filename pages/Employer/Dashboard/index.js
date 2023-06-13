@@ -180,7 +180,7 @@ const EmpoyerDashboard = () => {
   function isValuePresentInArray(array, value) {
     return array.some((obj) => obj.jobId === value);
   }
-  const cjobs = useSelector((state) => state?.jobs?.companyJobs);
+  const cjobs = useSelector((state) => state?.jobs?.companyJobs) || [];
 
   names.map((nam) => {
     if (

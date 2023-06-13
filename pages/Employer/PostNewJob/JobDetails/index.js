@@ -170,7 +170,7 @@ const JobDetails = () => {
     redirect: "follow",
     headers: myHeaders,
   };
-  const cjobs = useSelector((state) => state.jobs?.companyJobs);
+  const cjobs = useSelector((state) => state.jobs?.companyJobs) || [];
   const [timer, setTimer] = useState(null);
   const [arrskills, setArrskills] = useState([]);
   const [open, setOpen] = React.useState(false);
