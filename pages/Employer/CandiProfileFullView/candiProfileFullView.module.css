@@ -57,3 +57,36 @@
   font-weight: 400;
   color: #000000;
 }
+
+.header {
+  font-family: "Lobster", cursive;
+  text-align: center;
+  font-size: 25px;
+}
+
+#info {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.a {
+  color: #074e8c;
+}
+
+.scrollbar {
+  margin-left: 15px;
+  float: left;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.force-overflow {
+  min-height: 450px;
+}
+
+#wrapper {
+  text-align: center;
+  width: 500px;
+  margin: auto;
+}
