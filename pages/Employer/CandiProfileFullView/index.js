@@ -242,24 +242,6 @@ const CandiFullProfileView = () => {
     setOpen(!open);
   };
 
-  const boxRef = useRef(null);
-
-  useEffect(() => {
-    const boxElement = boxRef.current;
-
-    // Calculate the number of lines in the text
-    const lineHeight = parseInt(window.getComputedStyle(boxElement).lineHeight);
-    const textHeight = boxElement.scrollHeight;
-    const numberOfLines = Math.floor(textHeight / lineHeight);
-
-    // Apply CSS class based on the number of lines
-    if (numberOfLines > 5) {
-      boxElement.classList.add("scrollbar");
-    } else {
-      boxElement.classList.remove("scrollbar");
-    }
-  }, []);
-
   return (
     <>
       <EmployerNavbar />
@@ -711,10 +693,12 @@ const CandiFullProfileView = () => {
                             About
                           </CustomTypography>
                           <Box
-                            ref={boxRef}
                             className={styles.scrollbar}
                             id="style-5"
-                            sx={{ height: "40px" }}
+                            sx={{
+                              height: candidate?.about ? "80px" : "0px",
+                              overflow: "auto",
+                            }}
                           >
                             <CustomTypography
                               className={styles.FullProfileSectionData}
@@ -1128,15 +1112,27 @@ const CandiFullProfileView = () => {
                                 <Stack direction={"row"}>
                                   <CustomTypography
                                     className={styles.FullProfileSectionTypo}
+                                    sx={{ whiteSpace: "nowrap" }}
                                   >
                                     Description :
                                   </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
+                                  <Box
+                                    className={styles.scrollbar}
+                                    id="style-5"
+                                    sx={{
+                                      height: pro?.Description
+                                        ? "150px"
+                                        : "0px",
+                                      overflow: "auto",
+                                    }}
                                   >
-                                    &nbsp;{pro?.Description}
-                                  </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp;{pro?.Description}
+                                    </CustomTypography>
+                                  </Box>
                                 </Stack>
                                 <Stack direction={"row"}>
                                   <CustomTypography
