@@ -47,7 +47,6 @@ import {
   updateAndThenGet,
 } from "@/redux/slices/personal";
 import { Uploader } from "@/components/Uploader/Uploader";
-import Navbar from "@/components/Navbar/Navbar";
 import { DANGER, NEUTRAL, PRIMARY } from "@/theme/colors";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { openAlert } from "@/redux/slices/alert";

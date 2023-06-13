@@ -82,7 +82,7 @@ const Blogs = () => {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                height: "70px",
+                height: "50px",
                 width: { xs: "100%", md: "100%" },
                 paddingLeft: "10px",
                 paddingRight: "10px",
@@ -101,7 +101,7 @@ const Blogs = () => {
           </Search>
           <FormControl
             fullWidth
-            sx={{ height: "70px", width: { xs: "100%", md: "30%" } }}
+            sx={{ height: "50px", width: { xs: "100%", md: "30%" } }}
           >
             <InputLabel id="demo-simple-select-label">Age</InputLabel>
             <Select
@@ -110,7 +110,7 @@ const Blogs = () => {
               value={age}
               label="Age"
               onChange={handleChange}
-              sx={{ height: "70px" }}
+              sx={{ height: "50px" }}
             >
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
