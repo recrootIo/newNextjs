@@ -40,6 +40,7 @@
     "moment": "^2.29.4",
     "next": "13.4.0",
     "next-auth": "^4.22.1",
+    "next-share": "^0.20.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-calendar": "^4.2.1",

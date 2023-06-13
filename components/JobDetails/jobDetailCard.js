@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Box,
   Grid,
@@ -19,9 +18,17 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { CANDIDATE } from "@/utils/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
 import Cookies from "js-cookie";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import EventRepeatIcon from "@mui/icons-material/EventRepeat";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SchoolIcon from "@mui/icons-material/School";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import ShareForm from "../ShareForm/ShareForm";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -32,6 +39,7 @@ const JobDetailCard = ({ ...props }) => {
     salary,
     jobType,
     address = [],
+    notice,
     _id,
   } = props;
 
@@ -43,6 +51,12 @@ const JobDetailCard = ({ ...props }) => {
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
   const isUserType = data?.recrootUserType === CANDIDATE;
+
+  const [loginCallBackURL, setLoginCallBackURL] = useState("");
+
+  useEffect(() => {
+    setLoginCallBackURL(`${window.location}`);
+  }, []);
 
   const gotApply = () => {
     if (data.profilePercentage < 70) {
@@ -72,7 +86,39 @@ const JobDetailCard = ({ ...props }) => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
   }, [dispatch]);
+
   const userType = Cookies.get("userType");
+
+  const handleBookmark = () => {
+    const currentPage = window.location.href;
+
+    // Check if localStorage is supported by the browser
+    if (typeof localStorage !== "undefined") {
+      let bookmarks = localStorage.getItem("bookmarks");
+
+      if (bookmarks) {
+        // Parse existing bookmarks from localStorage
+        bookmarks = JSON.parse(bookmarks);
+
+        // Add current page to the bookmarks if it doesn't already exist
+        if (!bookmarks.includes(currentPage)) {
+          bookmarks.push(currentPage);
+        }
+      } else {
+        // Create a new array with the current page as the bookmark
+        bookmarks = [currentPage];
+      }
+
+      // Save the updated bookmarks to localStorage
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    } else {
+      console.log("localStorage is not available.");
+    }
+  };
+
+  const compImage = company?.companyLogo?.logo
+    ? getImageLogo(company?.companyLogo?.logo)
+    : "/defaultCompany.svg";
 
   return (
     <Box
@@ -100,18 +146,16 @@ const JobDetailCard = ({ ...props }) => {
                     // className="mobileLogo"
                     sx={{ display: "flex", justifyContent: "flex-start" }}
                   >
-                    {company.companyLogo?.logo && (
-                      <Image
-                        src={getImageLogo(company.companyLogo?.logo)}
-                        alt=""
-                        width={120}
-                        height={35}
-                        style={{
-                          maxWidth: "160px",
-                          maxHeight: "160px",
-                        }}
-                      />
-                    )}
+                    <Image
+                      src={compImage}
+                      alt=""
+                      width={120}
+                      height={35}
+                      style={{
+                        maxWidth: "160px",
+                        maxHeight: "160px",
+                      }}
+                    />
                   </Box>
 
                   <Box>
@@ -137,147 +181,131 @@ const JobDetailCard = ({ ...props }) => {
                       {company?.basicInformation?.cmpname}
                     </CustomTypography>
                   </Box>
-                  <Stack
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      marginRight: { xs: "10px", md: "0px" },
-                      flexWrap: "wrap",
-                    }}
-                    spacing={1}
-                  >
-                    <Box className="imgTypo" sx={{ alignItems: "center" }}>
-                      <Image
-                        className="firsticonImg"
-                        src="/currency.png"
-                        alt=""
-                        height={14}
-                        width={14}
-                      />
-                      <CustomTypography
-                        variant="body2"
-                        sx={{
-                          fontSize: 17,
-                          color: "#034275",
-                          marginTop: "8px",
-                        }}
-                        gutterBottom
-                      >
-                        {getSalary(salary)}
-                      </CustomTypography>
-                    </Box>
-                    <Box className="imgTypo">
-                      <Image
-                        className="iconImg"
-                        src="/bag.png"
-                        alt=""
-                        height={14}
-                        width={14}
-                      />
-                      <CustomTypography
-                        variant="body2"
-                        sx={{
-                          fontSize: 17,
-                          color: "#034275",
-                        }}
-                        gutterBottom
-                      >
-                        {jobType}
-                      </CustomTypography>
-                    </Box>
-                    <Box className="imgTypo">
-                      <Image
-                        className="iconImg"
-                        src="/hourglass.png"
-                        alt=""
-                        height={14}
-                        width={14}
-                      />
-                      <CustomTypography
-                        variant="body2"
-                        sx={{
-                          fontSize: 17,
-                          color: "#034275",
-                        }}
-                        gutterBottom
-                      >
-                        {essentialInformation?.experience}
-                      </CustomTypography>
-                    </Box>
-                  </Stack>
+
                   <Box>
-                    <Stack
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        gap: { xs: "0px", md: "0px" },
-                        flexWrap: "wrap",
-                      }}
-                      spacing={1}
-                    >
-                      <Box className="imgTypo" sx={{ alignItems: "center" }}>
-                        <Image
-                          className="iconImg"
-                          src="/location.png"
-                          alt=""
-                          height={14}
-                          width={14}
-                        />
-                        <CustomTypography
-                          variant="body2"
+                    <Grid container spacing={2}>
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
                           sx={{
-                            fontSize: 17,
-                            color: "#034275",
-                            marginTop: "8px",
+                            alignItems: "center",
+                            gap: "10px",
+                            color: "#034275 !important",
                           }}
-                          gutterBottom
                         >
-                          {address[0]}
-                        </CustomTypography>
-                      </Box>
-                      <Box className="imgTypo">
-                        <Image
-                          className="iconImg"
-                          src="/professional.png"
-                          alt=""
-                          height={14}
-                          width={14}
-                        />
-                        <CustomTypography
-                          variant="body2"
-                          sx={{
-                            fontSize: 17,
-                            color: "#034275",
-                          }}
-                          gutterBottom
+                          <CurrencyExchangeIcon color="primary" />
+                          {getSalary(salary, false)}
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          {essentialInformation?.careerlevel}
-                        </CustomTypography>
-                      </Box>
-                      <Box className="imgTypo">
-                        <Image
-                          className="iconImg"
-                          src="/degree.png"
-                          alt=""
-                          height={14}
-                          width={14}
-                        />
-                        <CustomTypography
-                          variant="body2"
-                          sx={{
-                            fontSize: 17,
-                            color: "#034275",
-                          }}
-                          gutterBottom
+                          <AddBusinessIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {jobType}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          {essentialInformation?.qualification}
-                        </CustomTypography>
-                      </Box>
-                    </Stack>
+                          <EventRepeatIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {essentialInformation?.experience}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
+                        >
+                          <AddLocationAltIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {address[0]}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
+                        >
+                          <AccountBoxIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {essentialInformation?.careerlevel}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
+                        >
+                          <SchoolIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {essentialInformation?.qualification}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
+                        >
+                          <CampaignIcon color="primary" />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {notice}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Stack>
               </Grid>
@@ -308,7 +336,15 @@ const JobDetailCard = ({ ...props }) => {
                     alignItems: "flex-end",
                   }}
                 >
-                  <Stack direction="row" spacing={1}>
+                  <Stack
+                    direction="row"
+                    sx={{
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      gap: "10px",
+                      width: "100%",
+                    }}
+                  >
                     <IconButton
                       aria-label="share"
                       size="large"
@@ -317,15 +353,13 @@ const JobDetailCard = ({ ...props }) => {
                         fontSize: "14px",
                         padding: 0,
                       }}
+                      onClick={() => handleBookmark()}
                     >
                       <BookmarkBorderIcon />
                     </IconButton>
-                    <IconButton
-                      aria-label="share"
-                      sx={{ color: "#02a9f7", fontSize: "14px" }}
-                    >
-                      <ShareIcon />
-                    </IconButton>
+
+                    <ShareForm url={loginCallBackURL} title={jobRole} />
+
                     {isUserType ? (
                       <Button
                         variant="contained"

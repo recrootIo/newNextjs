@@ -116,7 +116,7 @@ const SubscribHome = () => {
                     bgcolor: "#034275 !important",
                   }}
                 >
-                  Know More
+                  Submit
                 </Button>
               </Grid>
             </Grid>

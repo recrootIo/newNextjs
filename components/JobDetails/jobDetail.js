@@ -36,8 +36,9 @@ import {
   retrievePersonal,
   setJobID,
 } from "@/redux/slices/personal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CANDIDATE } from "@/utils/constants";
+import ShareForm from "../ShareForm/ShareForm";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -90,6 +91,39 @@ const JobDetail = ({ ...props }) => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
   }, [dispatch]);
+
+  const [loginCallBackURL, setLoginCallBackURL] = useState("");
+
+  useEffect(() => {
+    setLoginCallBackURL(`${window.location}`);
+  }, []);
+
+  const handleBookmark = () => {
+    const currentPage = window.location.href;
+
+    // Check if localStorage is supported by the browser
+    if (typeof localStorage !== "undefined") {
+      let bookmarks = localStorage.getItem("bookmarks");
+
+      if (bookmarks) {
+        // Parse existing bookmarks from localStorage
+        bookmarks = JSON.parse(bookmarks);
+
+        // Add current page to the bookmarks if it doesn't already exist
+        if (!bookmarks.includes(currentPage)) {
+          bookmarks.push(currentPage);
+        }
+      } else {
+        // Create a new array with the current page as the bookmark
+        bookmarks = [currentPage];
+      }
+
+      // Save the updated bookmarks to localStorage
+      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    } else {
+      console.log("localStorage is not available.");
+    }
+  };
 
   return (
     <Box
@@ -203,19 +237,14 @@ const JobDetail = ({ ...props }) => {
                   </Button>
                 )}
 
+                <ShareForm url={loginCallBackURL} title={jobRole} />
+
                 <Button
                   className="bookmarkBtn"
                   size="small"
                   variant="outlined"
                   bgcolor="#02A9F7 !important"
-                >
-                  <ShareIcon sx={{ fontSize: "21px" }} />
-                </Button>
-                <Button
-                  className="bookmarkBtn"
-                  size="small"
-                  variant="outlined"
-                  bgcolor="#02A9F7 !important"
+                  onClick={() => handleBookmark()}
                 >
                   <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                 </Button>
@@ -252,7 +281,7 @@ const JobDetail = ({ ...props }) => {
                       }}
                       gutterBottom
                     >
-                      <CalendarMonthIcon fontSize="16px" />
+                      <CalendarMonthIcon fontSize="16px" />{" "}
                       {moment(createdAt).fromNow()}
                     </CustomTypography>
                     <CustomTypography
