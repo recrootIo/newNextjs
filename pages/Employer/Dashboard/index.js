@@ -695,7 +695,7 @@ const EmpoyerDashboard = () => {
     company?.package?.subscription_package === "Gold" ||
     company?.jobSlotGold === true;
   const freePack = company?.package?.subscription_package === "Free";
-  const freeCount = freePack === true ? 3 - cjobs.length : 0;
+  const freeCount = freePack === true ? (cjobs !== undefined ? (3 - cjobs?.length) : 0 ): 0;
   const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
