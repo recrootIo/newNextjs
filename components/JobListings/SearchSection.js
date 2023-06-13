@@ -51,7 +51,7 @@ import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
 
-export const getSalary = (salary) => {
+export const getSalary = (salary, defaults = true) => {
   if (salary?.salaryType !== "noprovide") {
     return (
       <CustomTypography
@@ -73,7 +73,7 @@ export const getSalary = (salary) => {
           fontWeight: "400",
           fontSize: "16px",
           lineHeight: "24px",
-          color: "rgb(115, 115, 115)",
+          color: defaults ? "rgb(115, 115, 115)" : "#034275",
         }}
         variant="p"
       >
@@ -562,9 +562,6 @@ const SearchSection = ({ ...props }) => {
               <Button
                 variant="contained"
                 className="searchButton"
-                // sx={{
-                //   mt: { md: "0", xs: "20px !important", sm: "20px !important" },
-                // }}
                 onClick={() => setSearchFields()}
               >
                 Search

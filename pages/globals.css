@@ -332,14 +332,6 @@ body {
   }
 }
 
-.imgTypo {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 0;
-  margin-right: 30px !important;
-  min-width: 25%;
-}
-
 .iconImg {
   width: 14px;
   height: 14px;

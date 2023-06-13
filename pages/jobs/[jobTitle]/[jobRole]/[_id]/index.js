@@ -45,6 +45,7 @@ export const getServerSideProps = async (context) => {
       jobTitle,
       jobRole,
       job,
+      // fullPath,
     },
   };
 };

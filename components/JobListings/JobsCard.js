@@ -18,6 +18,7 @@ import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
 import React from "react";
+import Link from "next/link";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const StyledIconWrapper = styled(Box)({
@@ -37,15 +38,15 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     return firstPTag;
   };
 
+  const compImage = lateJob?.company?.companyLogo?.logo
+    ? getImageLogo(lateJob?.company?.companyLogo?.logo)
+    : "/defaultCompany.svg";
+
   return (
     <Card className="jobCard">
       <CardHeader
         avatar={
-          <Avatar
-            alt="logo"
-            src={getImageLogo(lateJob?.company?.companyLogo?.logo)}
-            sx={{ width: 65, height: 65 }}
-          />
+          <Avatar alt="logo" src={compImage} sx={{ width: 65, height: 65 }} />
         }
         titleTypographyProps={{
           fontSize: 18,
@@ -57,7 +58,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           color: "#034275",
         }}
         title={lateJob?.jobRole}
-        subheader={lateJob?.company?.company_name}
+        subheader={<Link href={""}>{lateJob?.company[0]?.company_name}</Link>}
         action={
           <>
             <Box className="searchRstBtn" sx={{ mb: "7px" }}>
@@ -125,10 +126,10 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           fontSize={15}
           mb={1}
         >
-          {lateJob?.jobType}&nbsp;{bull}&nbsp;Part Time&nbsp;
+          {bull} {lateJob?.jobType}&nbsp;
           {bull}
           &nbsp;{lateJob?.essentialInformation?.experience}
-          s&nbsp;
+          &nbsp;
           {bull}
           &nbsp;{getSalary(lateJob?.salary)}
         </CustomTypography>
