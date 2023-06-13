@@ -84,7 +84,148 @@ const CorporateInfo = () => {
                 p: { xs: 0, md: "45px" },
               }}
             >
-              <Stack spacing={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={4} md={5}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Company
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Overview
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Headquarters
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Management
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Founded
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Website
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      Email Id:
+                    </StyledMainTypo>
+                    <StyledMainTypo variant="h6" gutterBottom>
+                      :
+                    </StyledMainTypo>
+                  </Box>
+                </Grid>
+                <Grid item xs={8} md={7}>
+                  <StyledSecondTypo variant="h6" gutterBottom>
+                    Recroot is a business of{" "}
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "20px",
+                        color: "#034275",
+                      }}
+                    >
+                      AR Innovations Pty Ltd (ABN: 58652722337)
+                    </span>
+                  </StyledSecondTypo>
+                  <StyledSecondTypo variant="h6" gutterBottom>
+                    Recroot is a specialised recruitment platform connecting
+                    organisations with remote tech professionals through
+                    temporary, contract and permanent recruitment solutions
+                  </StyledSecondTypo>
+                  <Box>
+                    <StyledSecondTypo variant="h6" gutterBottom>
+                      Sydney, Australia
+                    </StyledSecondTypo>
+                  </Box>
+                  <Box>
+                    <StyledSecondTypo variant="h6" gutterBottom>
+                      Gokul Srinivasan, CEO Suji Gokul, COO
+                    </StyledSecondTypo>
+                  </Box>
+                  <Box>
+                    <StyledSecondTypo variant="h6" gutterBottom>
+                      2022
+                    </StyledSecondTypo>
+                  </Box>
+                  <Box>
+                    <StyledSecondTypo variant="h6" gutterBottom>
+                      Recroot.io
+                    </StyledSecondTypo>
+                  </Box>
+                  <StyledSecondTypo
+                    variant="h6"
+                    gutterBottom
+                    sx={{ textDecoration: "underline" }}
+                  >
+                    grow@arinnovate.io
+                  </StyledSecondTypo>
+                </Grid>
+              </Grid>
+              {/* <Stack spacing={2}>
                 <Box sx={{ display: "flex", gap: "10px" }}>
                   <StyledMainTypo variant="h6" gutterBottom>
                     Company :
@@ -156,7 +297,7 @@ const CorporateInfo = () => {
                     grow@arinnovate.io
                   </StyledSecondTypo>
                 </Box>
-              </Stack>
+              </Stack> */}
             </Grid>
           </Grid>
           <CustomTypography
