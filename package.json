@@ -36,6 +36,8 @@
     "eslint-config-next": "13.4.0",
     "formik": "^2.4.1",
     "js-cookie": "^3.0.5",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.29",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "13.4.0",
