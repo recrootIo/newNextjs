@@ -1200,14 +1200,17 @@ const AboutUs = () => {
                 xs={12}
                 md={4}
                 sx={{
-                  height: { xs: "455px", md: "520px" },
+                  height: { xs: "auto", md: "520px" },
                   display: "flex",
                   alignItems: { xs: "center", md: "flex-end" },
                 }}
               >
                 <Card
                   variant="outlined"
-                  sx={{ height: "455px", borderColor: "#D4F0FC" }}
+                  sx={{
+                    height: { xs: "auto", md: "455px" },
+                    borderColor: "#D4F0FC",
+                  }}
                 >
                   <CardContent className={styles.ourTeamCardContent}>
                     <Box className={styles.ourTeamImgBox}>
@@ -1235,7 +1238,7 @@ const AboutUs = () => {
                 xs={12}
                 md={4}
                 sx={{
-                  height: { xs: "455px", md: "520px" },
+                  height: { xs: "auto", md: "520px" },
                   display: "flex",
                   alignItems: "flex-start",
                 }}
@@ -1243,7 +1246,7 @@ const AboutUs = () => {
                 <Card
                   variant="outlined"
                   sx={{
-                    height: "455px",
+                    height: { xs: "auto", md: "455px" },
                     borderColor: "#D4F0FC",
                     bgcolor: "#F8FDFF",
                     boxShadow: "3px 3px 10px #D4F0FC",
@@ -1275,14 +1278,17 @@ const AboutUs = () => {
                 xs={12}
                 md={4}
                 sx={{
-                  height: { xs: "455px", md: "520px" },
+                  height: { xs: "auto", md: "520px" },
                   display: "flex",
                   alignItems: { xs: "center", md: "flex-end" },
                 }}
               >
                 <Card
                   variant="outlined"
-                  sx={{ height: "455px", borderColor: "#D4F0FC" }}
+                  sx={{
+                    height: { xs: "auto", md: "455px" },
+                    borderColor: "#D4F0FC",
+                  }}
                 >
                   <CardContent className={styles.ourTeamCardContent}>
                     <Box className={styles.ourTeamImgBox}>
