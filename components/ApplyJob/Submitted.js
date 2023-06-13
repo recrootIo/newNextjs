@@ -91,7 +91,7 @@ const Submitted = () => {
           onClick={() => goBack()}
           sx={{
             bgcolor: "#015FB1 !important",
-            width: "40%",
+            width: { md: "40%", sm: "100%", xs: "100%" },
             height: "40px",
             textTransform: "capitalize",
             mt: "50px",
