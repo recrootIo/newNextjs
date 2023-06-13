@@ -1188,6 +1188,7 @@ const CandidatePage = () => {
                   p: "10px",
                   width: "auto",
                   height: "45px",
+                  fontSize: "12px",
                 }}
               >
                 Schedule a Meeting
