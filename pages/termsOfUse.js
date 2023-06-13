@@ -129,40 +129,38 @@ const TermsOfUse = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: { xs: "10px", sm: "90px" },
+              ml: { xs: "30px", sm: "107px" },
               lineHeight: "30px",
             }}
             gutterBottom
           >
-            <ul>
-              <li>1. publishing any Website material in any media;</li>
+            <ol style={{ listStyleType: "decimal" }}>
+              <li>Publishing any Website material in any media;</li>
               <li>
-                2. selling, sublicensing and/or otherwise commercializing any
+                Selling, sublicensing and/or otherwise commercializing any
                 Website material;
               </li>
+              <li>Publicly performing and/or showing any Website material;</li>
               <li>
-                3. publicly performing and/or showing any Website material;
-              </li>
-              <li>
-                4. using this Website in any way that is, or may be, damaging to
+                Using this Website in any way that is, or may be, damaging to
                 this Website;
               </li>
               <li>
-                5. using this Website in any way that impacts user access to
-                this Website;
+                Using this Website in any way that impacts user access to this
+                Website;
               </li>
               <li>
-                6. using this Website contrary to applicable laws and
-                regulations, or in a way that causes, or may cause, harm to the
-                Website, or to any person or business entity;
+                Using this Website contrary to applicable laws and regulations,
+                or in a way that causes, or may cause, harm to the Website, or
+                to any person or business entity;
               </li>
               <li>
-                7. engaging in any data mining, data harvesting, data extracting
-                or any other similar activity in relation to this Website, or
-                while using this Website;
+                Engaging in any data mining, data harvesting, data extracting or
+                any other similar activity in relation to this Website, or while
+                using this Website;
               </li>
               <li>
-                8. using this Website to engage in any advertising or marketing;
+                Using this Website to engage in any advertising or marketing;
               </li>
               <li>
                 Certain areas of this Website are restricted from access by you
@@ -172,7 +170,7 @@ const TermsOfUse = () => {
                 confidential and you must maintain confidentiality of such
                 information.
               </li>
-            </ul>
+            </ol>
           </CustomTypography>
         </Container>
       </Box>

@@ -154,24 +154,38 @@ const InformationSecurityPolicy = () => {
                 Information Security is the shared responsibility of Recroot,
                 clients and candidates. Recroot is responsible for
               </li>
+            </ul>
+          </CustomTypography>
+          <CustomTypography
+            variant="h6"
+            sx={{
+              fontWeight: 400,
+              fontSize: "16px",
+              color: "rgba(1, 49, 63, 0.8)",
+              ml: { xs: "30px", sm: "108px" },
+              lineHeight: "40px",
+            }}
+            gutterBottom
+          >
+            <ol style={{ listStyleType: "decimal" }}>
               <li>
-                1) Establishing and implementing reasonable measures to protect
+                Establishing and implementing reasonable measures to protect
                 client and candidate information stored within Recroot network
               </li>
               <li>
-                2) Provide periodic information security awareness training for
-                our staff
+                Provide periodic information security awareness training for our
+                staff
               </li>
-              <li>3) Conduct appropriate background checks for our staff</li>
+              <li>Conduct appropriate background checks for our staff</li>
               <li>
-                4) Ensure the staff devices are patched and secured using
+                Ensure the staff devices are patched and secured using
                 appropriate anti-virus software
               </li>
               <li>
-                5) Ensure that third parties employed by Recroot comply with
+                Ensure that third parties employed by Recroot comply with
                 Recroot’s information security policy
               </li>
-            </ul>
+            </ol>
           </CustomTypography>
           <CustomTypography
             variant="h6"
@@ -212,25 +226,23 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: { xs: "10px", sm: "90px" },
+              ml: { xs: "30px", sm: "108px" },
               lineHeight: "40px",
             }}
             gutterBottom
           >
-            <ul>
+            <ol style={{ listStyleType: "decimal" }}>
               <li>
-                1) Implementing appropriate and reasonable measures to protect
+                Implementing appropriate and reasonable measures to protect
                 their information and personal information belonging to Recroot
               </li>
+              <li>Securing the software installed on Recroot staff devices</li>
               <li>
-                2) Securing the software installed on Recroot staff devices
-              </li>
-              <li>
-                3) Clearly articulating their information security policies to
+                Clearly articulating their information security policies to
                 Recroot our staff
               </li>
-              <li>4) Complying with appropriate cyber regulations</li>
-            </ul>
+              <li>Complying with appropriate cyber regulations</li>
+            </ol>
           </CustomTypography>
           <CustomTypography
             variant="h6"
@@ -240,7 +252,7 @@ const InformationSecurityPolicy = () => {
               color: "#034275",
               mt: "20px",
               mb: "20px",
-              ml: "90px",
+              ml: { xs: "10px", sm: "90px" },
             }}
             gutterBottom
           >
@@ -252,28 +264,28 @@ const InformationSecurityPolicy = () => {
               fontWeight: 400,
               fontSize: "16px",
               color: "rgba(1, 49, 63, 0.8)",
-              ml: { xs: "10px", sm: "90px" },
+              ml: { xs: "30px", sm: "108px" },
               lineHeight: "30px",
             }}
             gutterBottom
           >
-            <ul>
+            <ol style={{ listStyleType: "decimal" }}>
               <li>
-                1. Cybersecurity is largely a matter of mitigating cyber-risks
+                Cybersecurity is largely a matter of mitigating cyber-risks
                 through conventional information security controls, especially
                 ICT security controls intended to prevent or mitigate (reduce)
                 cyber-incidents.
               </li>
               <li>
-                2. While conventional information security controls to prevent
-                or mitigate cyber-incidents take priority, we must not neglect
+                While conventional information security controls to prevent or
+                mitigate cyber-incidents take priority, we must not neglect
                 detective and corrective controls since cyber-incidents cannot
                 be entirely negated. We are unlikely to identify and fully
                 comprehend, mitigate or avoid all our cyber-risks in this
                 dynamic area, hence cyber-incidents are almost inevitable.
               </li>
               <li>
-                3. Detective cybersecurity controls include:
+                Detective cybersecurity controls include:
                 <ul sx={{ ml: "10px" }}>
                   <li>
                     • Maintaining a widespread awareness of cybersecurity,
@@ -294,7 +306,7 @@ const InformationSecurityPolicy = () => {
                 </ul>
               </li>
               <li>
-                4. Corrective cybersecurity controls include:
+                Corrective cybersecurity controls include:
                 <ul sx={{ ml: "10px" }}>
                   <li>
                     • Business continuity management involving the adoption of
@@ -304,7 +316,7 @@ const InformationSecurityPolicy = () => {
                   </li>
                 </ul>
               </li>
-            </ul>
+            </ol>
           </CustomTypography>
         </Container>
       </Box>
