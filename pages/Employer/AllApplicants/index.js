@@ -641,7 +641,7 @@ const AllApplicants = () => {
                             className={styles.allApplicantsCardTypo}
                             variant="h5"
                           >
-                            Total Not Viewed
+                            Total Unviewed
                           </CustomTypography>
                           <CustomTypography
                             className={styles.allApplicantsCardNum}

@@ -88,6 +88,8 @@ const {jid} = router.query;
         width: "100%",
         boxShadow: "4px 4px 10px rgba(3, 66, 117, 0.1) !important",
         borderRadius: "10px",
+        background: users?.status === 'unview' ? 'rgb(240, 242, 245)' : '',
+        p:'15px'
       }}
     >
               {jid !== undefined ? (

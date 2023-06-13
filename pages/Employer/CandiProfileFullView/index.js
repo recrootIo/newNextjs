@@ -617,7 +617,6 @@ onClick={handleEditInterview}
             <Box
               sx={{
                 width: "100%",
-                height: "310px",
                 border: "1px solid #D3EAFF",
                 borderRadius: "15px",
               }}
@@ -690,6 +689,56 @@ onClick={handleEditInterview}
                 </Stack>
               </Box>
             </Box>
+        {appdata?.jobId?.queshow === 'true' ?    <Box
+              sx={{
+                width: "100%",
+                border: "1px solid #D3EAFF",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: "#D3EAFF",
+                  width: "100%",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "0 25px 0 25px",
+                }}
+              >
+                <CustomTypography className={styles.FullProfileSectionTitle}>
+                  Questions
+                </CustomTypography>
+              </Box>
+              <Box sx={{ p: "25px" }}>
+                {appdata?.question?.map((ques)=>(
+                 <>
+                 {console.log(ques,'eee')}
+                <Stack spacing={1}>
+                  <Box className={styles.FullProfilePersonalDetailsTypoBox}>
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                     Question:
+                    </CustomTypography>
+                    <CustomTypography className={styles.FullProfileSectionData}>
+                      {ques?.questions}
+                    </CustomTypography>
+                  </Box>
+                  <Box className={styles.FullProfilePersonalDetailsTypoBox}>
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                      Answer:
+                    </CustomTypography>
+                    <CustomTypography className={styles.FullProfileSectionData}>
+                    {ques?.answer}
+                    </CustomTypography>
+                  </Box>
+                </Stack>
+                 </>
+                ))}
+              </Box>
+            </Box> : ''}
             <Box
               sx={{
                 width: "100%",
@@ -754,6 +803,30 @@ onClick={handleEditInterview}
                         {wrk?.companyName}
                       </CustomTypography>
                       </Stack>
+                      {wrk?.city !== '' ?
+                      <Stack direction={'row'} >  
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                    Location :
+                    </CustomTypography>
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.ViewFullInfoText}
+                      >
+                         &nbsp; {wrk?.city},{wrk?.state},{wrk?.country}
+                      </CustomTypography>
+                      </Stack> : ''}
+                      {wrk?.jobProfile !== '' ?
+                      <Stack direction={'row'} >  
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                    Job Profile :
+                    </CustomTypography>
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.ViewFullInfoText}
+                      >
+                         &nbsp; {wrk?.jobProfile}
+                      </CustomTypography>
+                      </Stack> : ''}
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
@@ -818,7 +891,7 @@ onClick={handleEditInterview}
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                       {edu?.degreeName}
+                       &nbsp;{edu?.degreeName}
                       </CustomTypography>
                       </Stack>
                       <Stack direction={'row'} >
@@ -830,9 +903,21 @@ onClick={handleEditInterview}
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                          {edu?.graduate}
+                         &nbsp;{edu?.graduate}
                       </CustomTypography>
                       </Stack>
+                  {edu?.city !== '' ?
+                      <Stack direction={'row'} >  
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                    Location :
+                    </CustomTypography>
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.ViewFullInfoText}
+                      >
+                         &nbsp; {edu?.city},{edu?.state},{edu?.country}
+                      </CustomTypography>
+                      </Stack> : ''}
                       <CustomTypography
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}

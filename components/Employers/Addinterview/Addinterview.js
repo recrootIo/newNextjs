@@ -241,7 +241,8 @@ function Addinterview({users,setinterviewshow}) {
                   <DesktopDatePicker
                     label="Date"
                     inputFormat="MM/dd/yyyy"
-                    value={Time.day}
+                    value={Time.day || new Date()}
+                    minDate={new Date()}
                     name="day"
                     onChange={handleChange}
                     renderInput={(params) => (

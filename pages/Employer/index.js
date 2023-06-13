@@ -1,20 +1,67 @@
 import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar'
 import EmployerSidebar from '@/components/Employers/Sidebar'
+import { openAlert } from '@/redux/slices/alert'
+import { getCompanyDetails } from '@/redux/slices/companyslice'
 import { setEditJob } from '@/redux/slices/job'
 import { BOLD } from '@/theme/fonts'
 import { CustomTypography } from '@/ui-components/CustomTypography/CustomTypography'
+import { ERROR } from '@/utils/constants'
 import { Box, Button, Container, Grid } from '@mui/material'
 import Cookies from 'js-cookie'
 import Head from 'next/head'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Employer({children}) {
     const user = Cookies.get()
     const {push} = useRouter()
     const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(getCompanyDetails())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
+    const company = useSelector((state) => state.company?.companyDetl);
+    const freePack = company.package?.subscription_package === "Free"
+    const freeCount = freePack === true ? (2-cjobs.length  ) : 0  
+    const proCOunt = company?.jobCounts?.proCount 
+    const preCOunt = company?.jobCounts?.premiumCount 
     const handleEdit = () =>{
+      if (company.package?.subType === 'jSlot' && company.package?.paymentStatus === 'Completed') {
+        dispatch(
+          setEditJob({
+            salary: {},
+            question: [
+              {
+                id: new Date().getTime(),
+                questions: "",
+                answer: "",
+                preferedAns: "",
+              },
+            ],
+            requiredSkill: [],
+            address: [],
+            featureType: false,
+            queshow: "",
+          })
+        ).then(
+          setTimeout(() => {
+            push("/Employer/PostNewJob");
+          }, 500)
+        );
+      }
+        // eslint-disable-next-line no-mixed-operators
+        if (freeCount === 0 && preCOunt === 0 && proCOunt === 0 || freeCount === 0 && preCOunt === undefined && proCOunt === undefined) {
+          dispatch(openAlert({
+            type:ERROR,
+            message:"Your Job Limit Was Reached!"
+          }))
+          push('/Pricing')
+          return;
+      }
+  
       dispatch(
         setEditJob({
           salary: {},
@@ -29,7 +76,8 @@ function Employer({children}) {
           requiredSkill: [],
           address: [],
           featureType: false,
-          queshow: "",
+          queshow: "true",
+          packageType:''
         })
       ).then(
         setTimeout(() => {
