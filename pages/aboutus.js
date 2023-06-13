@@ -70,7 +70,7 @@ const AboutUs = () => {
                 }}
               >
                 <Image
-                  src={"/aboutus-who-we-arepeople-img.png"}
+                  src={"/aboutus_images/aboutus-who-we-arepeople-img.png"}
                   alt=""
                   height={300}
                   width={500}
@@ -228,14 +228,16 @@ const AboutUs = () => {
                 }}
               >
                 <Image
-                  src={"/aboutus-company-overview-img.png"}
+                  src={"/aboutus_images/aboutus-company-overview-img.png"}
                   alt=""
                   height={400}
                   width={310}
                 />
                 <Image
                   className={styles.CompanyOverviewPersonImg}
-                  src={"/aboutus-company-overview-person-img.png"}
+                  src={
+                    "/aboutus_images/aboutus-company-overview-person-img.png"
+                  }
                   alt=""
                   height={391}
                   width={159}
@@ -286,21 +288,21 @@ const AboutUs = () => {
                 >
                   <Image
                     className={styles.aboutusOurvisionEclipseImg}
-                    src={"/aboutus-ourvision-eclipse-img.png"}
+                    src={"/aboutus_images/aboutus-ourvision-eclipse-img.png"}
                     alt=""
                     height={180}
                     width={180}
                   />
                   <Image
                     className={styles.aboutusOurvisionBlueborderImg}
-                    src={"/aboutus-ourvision-blueboder-img.png"}
+                    src={"/aboutus_images/aboutus-ourvision-blueboder-img.png"}
                     alt=""
                     height={180}
                     width={180}
                   />
                   <Image
                     className={styles.ourvisionArrowImg}
-                    src={"/ourvision-arrow-img.png"}
+                    src={"/aboutus_images/ourvision-arrow-img.png"}
                     alt=""
                     height={190}
                     width={228}
@@ -357,21 +359,21 @@ const AboutUs = () => {
                 >
                   <Image
                     className={styles.aboutusOurmissionEclipseImg}
-                    src={"/aboutus-ourvision-eclipse-img.png"}
+                    src={"/aboutus_images/aboutus-ourvision-eclipse-img.png"}
                     alt=""
                     height={180}
                     width={180}
                   />
                   <Image
                     className={styles.aboutusOurmissionBlueborderImg}
-                    src={"/aboutus-ourvision-blueboder-img.png"}
+                    src={"/aboutus_images/aboutus-ourvision-blueboder-img.png"}
                     alt=""
                     height={180}
                     width={180}
                   />
                   <Image
                     className={styles.ourmissionManImg}
-                    src={"/ourmission-man-img.png"}
+                    src={"/aboutus_images/ourmission-man-img.png"}
                     alt=""
                     height={240}
                     width={278}
@@ -434,7 +436,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/candidate-database-img.png"}
+                        src={"/aboutus_images/candidate-database-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -459,7 +461,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/AI-engine-img.png"}
+                        src={"/aboutus_images/AI-engine-img.png"}
                         alt=""
                         height={80}
                         width={108}
@@ -486,7 +488,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/quick&easy-regis-img.png"}
+                        src={"/aboutus_images/quick&easy-regis-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -511,7 +513,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/resume-parsing-img.png"}
+                        src={"/aboutus_images/resume-parsing-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -538,7 +540,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/quick-discovery-img.png"}
+                        src={"/aboutus_images/quick-discovery-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -564,7 +566,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/job-posting-img.png"}
+                        src={"/aboutus_images/job-posting-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -590,7 +592,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/quick-apply-img.png"}
+                        src={"/aboutus_images/quick-apply-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -616,7 +618,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/application-tracking-img.png"}
+                        src={"/aboutus_images/application-tracking-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -643,7 +645,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/blogs&- videos-img.png"}
+                        src={"/aboutus_images/blogs&- videos-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -673,7 +675,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/candidate-database-img.png"}
+                        src={"/aboutus_images/candidate-database-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -698,7 +700,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/AI-engine-img.png"}
+                        src={"/aboutus_images/AI-engine-img.png"}
                         alt=""
                         height={80}
                         width={108}
@@ -725,7 +727,7 @@ const AboutUs = () => {
                   <Box className={styles.discovertheFeaturesCard}>
                     <Box className={styles.discovertheFeaturesImgBox}>
                       <Image
-                        src={"/quick&easy-regis-img.png"}
+                        src={"/aboutus_images/quick&easy-regis-img.png"}
                         alt=""
                         height={130}
                         width={158}
@@ -782,7 +784,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className="discovertheFeaturesImgBox">
                           <Image
-                            src={"/resume-parsing-img.png"}
+                            src={"/aboutus_images/resume-parsing-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -809,7 +811,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className={styles.discovertheFeaturesImgBox}>
                           <Image
-                            src={"/quick-discovery-img.png"}
+                            src={"/aboutus_images/quick-discovery-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -836,7 +838,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className={styles.discovertheFeaturesImgBox}>
                           <Image
-                            src={"/job-posting-img.png"}
+                            src={"/aboutus_images/job-posting-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -863,7 +865,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className={styles.discovertheFeaturesImgBox}>
                           <Image
-                            src={"/quick-apply-img.png"}
+                            src={"/aboutus_images/quick-apply-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -889,7 +891,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className={styles.discovertheFeaturesImgBox}>
                           <Image
-                            src={"/application-tracking-img.png"}
+                            src={"/aboutus_images/application-tracking-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -916,7 +918,7 @@ const AboutUs = () => {
                       <Box className={styles.discovertheFeaturesCard}>
                         <Box className={styles.discovertheFeaturesImgBox}>
                           <Image
-                            src={"/blogs&- videos-img.png"}
+                            src={"/aboutus_images/blogs&- videos-img.png"}
                             alt=""
                             height={130}
                             width={158}
@@ -1211,7 +1213,7 @@ const AboutUs = () => {
                     <Box className={styles.ourTeamImgBox}>
                       <Image
                         className={styles.ourTeamImgOne}
-                        src={"/person-one-img.jpg"}
+                        src={"/aboutus_images/person-one-img.jpg"}
                         alt=""
                         height={191}
                         width={121}
@@ -1251,7 +1253,7 @@ const AboutUs = () => {
                     <Box className={styles.ourTeamImgBox}>
                       <Image
                         className={styles.ourTeamImgTwo}
-                        src={"/person-one-img.jpg"}
+                        src={"/aboutus_images/person-one-img.jpg"}
                         alt=""
                         height={391}
                         width={221}
@@ -1286,7 +1288,7 @@ const AboutUs = () => {
                     <Box className={styles.ourTeamImgBox}>
                       <Image
                         className={styles.ourTeamImgOne}
-                        src={"/person-one-img.jpg"}
+                        src={"/aboutus_images/person-one-img.jpg"}
                         alt=""
                         height={191}
                         width={121}
@@ -1340,7 +1342,7 @@ const AboutUs = () => {
                   }}
                 >
                   <Image
-                    src={"/autralia-arinnovate-lication-img.png"}
+                    src={"/aboutus_images/autralia-arinnovate-lication-img.png"}
                     alt=""
                     height={221}
                     width={558}
@@ -1424,7 +1426,7 @@ const AboutUs = () => {
                   }}
                 >
                   <Image
-                    src={"/india-arinnovate-location-img.png"}
+                    src={"/aboutus_images/india-arinnovate-location-img.png"}
                     alt=""
                     height={221}
                     width={558}
