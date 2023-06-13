@@ -75,7 +75,6 @@
 }
 
 .scrollbar {
-  margin-left: 15px;
   float: left;
   overflow-y: auto;
   overflow-x: hidden;

@@ -69,7 +69,6 @@
 }
 
 .scrollbar {
-  margin-left: 15px;
   float: left;
   height: 1900px;
   overflow-y: scroll;
