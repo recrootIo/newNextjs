@@ -7,7 +7,7 @@ const getLatestJObs = (
   title,
   address,
   jobVariant,
-  selectedCompanies,
+  // selectedCompanies,
   selectedSector,
   selectedCategory,
   limit = 10
@@ -19,7 +19,7 @@ const getLatestJObs = (
       title,
       address,
       jobVariant,
-      selectedCompanies,
+      // selectedCompanies,
       selectedSector,
       selectedCategory,
     })

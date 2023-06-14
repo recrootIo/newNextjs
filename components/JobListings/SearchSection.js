@@ -285,7 +285,6 @@ const SearchSection = ({ ...props }) => {
     page,
     variant,
   } = props;
-
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const loading = useSelector((state) => state.searchJobs.loading);
@@ -297,9 +296,9 @@ const SearchSection = ({ ...props }) => {
   const [title, setTitle] = useState(props.title || "");
   const [address, setAddress] = useState(props.address || "");
   const [jobVariant, setJobVariant] = useState(variant || "");
-  const [selectedCompanies, setSelectedCompanies] = useState(company || "");
-  const [selectedSector, setSelectedSector] = useState(sector || "");
-  const [selectedCategory, setSelectedCategory] = useState(category || "");
+  // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
+  const [selectedSector, setSelectedSector] = useState(sector || []);
+  const [selectedCategory, setSelectedCategory] = useState([category] || []);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -325,7 +324,7 @@ const SearchSection = ({ ...props }) => {
         title,
         address,
         jobVariant: jobVariant,
-        selectedCompanies,
+        // selectedCompanies,
         selectedSector,
         selectedCategory,
         limit: 10,
@@ -355,7 +354,30 @@ const SearchSection = ({ ...props }) => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+const handleSector = (re)=>{
+  const { name, checked } = re.target;
+  let newJobs = selectedSector;
 
+  if (checked) {
+    newJobs.push(name);
+  } else {
+    newJobs = selectedSector.filter((arr) => name != arr);
+  }
+
+  setSelectedSector(() => [...newJobs]);
+}
+const handleCate = (re)=>{
+  const { name, checked } = re.target;
+  let newJobs = selectedCategory;
+
+  if (checked) {
+    newJobs.push(name);
+  } else {
+    newJobs = selectedCategory.filter((arr) => name != arr);
+  }
+
+  setSelectedCategory(() => [...newJobs]);
+}
   const handleName = (re) => {
     const { name, checked } = re.target;
     let newJobs = names;
@@ -396,19 +418,27 @@ const SearchSection = ({ ...props }) => {
     router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
   };
 
-  const handleExperience = (re, a) => {
-    setExper(() => [a]);
+  const handleExperience = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = exper;
+
+    if (checked) {
+      newJobs.push(name);
+    } else {
+      newJobs = exper.filter((arr) => name != arr);
+    }
+
+    setExper(() => [...newJobs]);
   };
 
   const clearSearch = () => {
     setExper(() => []);
     setNames(() => []);
-    setSelectedSector("");
-    setSelectedCompanies("");
+    setSelectedSector([]);
     setJobVariant("");
     setAddress("");
     setTitle("");
-    setSelectedCategory("");
+    setSelectedCategory([]);
 
     router.push({
       pathname: router.pathname,
@@ -437,16 +467,15 @@ const SearchSection = ({ ...props }) => {
     const { ...otherParams } = router.query;
     const updatedQueryParams = {
       ...otherParams,
-      address,
-      title,
-      selectedCategory: category,
+      // address,
+      // title,
+      category: selectedCategory,
       sector: selectedSector,
-      company: selectedCompanies,
+      // company: selectedCompanies,
       experience: exper,
       jobType: names,
       page: 1,
     };
-
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,
@@ -468,24 +497,66 @@ const SearchSection = ({ ...props }) => {
     });
   };
 
-  const handleDeleteSector = () => {
-    setSelectedSector(() => "");
-    deleteQueries("sector");
+  const handleDeleteSector = (e) => {
+    const newNames = selectedSector.filter((n) => e !== n);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      sector: newNames,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+
+    setSelectedSector(() => [...newNames]);
   };
 
-  const handleDeleteCategory = () => {
-    setSelectedCategory(() => "");
-    deleteQueries("category");
+  const handleDeleteCategory = (e) => {
+    const newNames = selectedCategory.filter((n) => e !== n);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      category: newNames,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+
+    setSelectedCategory(() => [...newNames]);
   };
 
-  const handleDeleteCompany = () => {
-    setSelectedCompanies(() => "");
-    deleteQueries("company");
-  };
+  // const handleDeleteCompany = () => {
+  //   setSelectedCompanies(() => "");
+  //   deleteQueries("company");
+  // };
 
-  const handleDeleteExp = () => {
-    setExper(() => []);
-    deleteQueries("experience");
+  const handleDeleteExp = (e) => {
+    const newNames = exper.filter((n) => e !== n);
+
+    const { ...otherParams } = router.query;
+
+    const updatedQueryParams = {
+      ...otherParams,
+      experience: newNames,
+      page: 1,
+    };
+
+    router.push({
+      pathname: router.pathname,
+      query: updatedQueryParams,
+    });
+
+    setExper(() => [...newNames]);
   };
 
   const handleDeleteNames = (e) => {
@@ -522,7 +593,6 @@ const SearchSection = ({ ...props }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, sector, company, experience, jobType, page]);
 
-  console.log(jobType, "names");
 
   return (
     <div>
@@ -596,9 +666,9 @@ const SearchSection = ({ ...props }) => {
                     setExper={setExper}
                     clearSearch={clearSearch}
                     sectors={sectors}
-                    companies={companies}
-                    selectedCompanies={selectedCompanies}
-                    setSelectedCompanies={setSelectedCompanies}
+                    // companies={companies}
+                    // selectedCompanies={selectedCompanies}
+                    // setSelectedCompanies={setSelectedCompanies}
                     selectedSector={selectedSector}
                     setSelectedSector={setSelectedSector}
                     categories={categories}
@@ -695,9 +765,10 @@ const SearchSection = ({ ...props }) => {
                           />
                         )}
 
-                        {selectedSector && (
+                        {selectedSector.map((sce)=>(
                           <Chip
-                            label={selectedSector}
+                            key={sce}
+                            label={sce}
                             color="primary"
                             style={{
                               fontWeight: 500,
@@ -706,11 +777,11 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
-                            onDelete={handleDeleteSector}
+                            onDelete={()=>handleDeleteSector(sce)}
                           />
-                        )}
+                        )) }
 
-                        {selectedCompanies && (
+                        {/* {selectedCompanies && (
                           <Chip
                             label={
                               companies.filter(
@@ -727,13 +798,13 @@ const SearchSection = ({ ...props }) => {
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
                           />
-                        )}
+                        )} */}
 
                         {!isEmpty(exper) &&
                           exper.map((ex, index) => (
                             <Chip
-                              onDelete={handleDeleteExp}
-                              key={exper}
+                              onDelete={(ex)=>handleDeleteExp(ex)}
+                              key={ex}
                               label={ex}
                               color="primary"
                               style={{
@@ -746,9 +817,10 @@ const SearchSection = ({ ...props }) => {
                             />
                           ))}
 
-                        {selectedCategory && (
+                        {selectedCategory.map((e)=>(
                           <Chip
-                            label={selectedCategory}
+                            label={e}
+                            key={e}
                             color="primary"
                             style={{
                               fontWeight: 500,
@@ -757,9 +829,9 @@ const SearchSection = ({ ...props }) => {
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
-                            onDelete={handleDeleteCategory}
+                            onDelete={()=>handleDeleteCategory(e)}
                           />
-                        )}
+                        ))}
 
                         {!isEmpty(names) &&
                           names.map((j) => (
@@ -799,43 +871,41 @@ const SearchSection = ({ ...props }) => {
                           {/* <Tab label="Professional Level" {...a11yProps(0)} /> */}
                           <Tab label="Industry" {...a11yProps(0)} />
                           <Tab label="Category" {...a11yProps(1)} />
-                          <Tab label="Companies" {...a11yProps(2)} />
-                          <Tab label="Experience" {...a11yProps(3)} />
-                          <Tab label="Job Type" {...a11yProps(4)} />
+                          {/* <Tab label="Companies" {...a11yProps(2)} /> */}
+                          <Tab label="Experience" {...a11yProps(2)} />
+                          <Tab label="Job Type" {...a11yProps(3)} />
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                          <RadioGroup
-                            onChange={(e, a) => setSelectedSector(a)}
-                            value={selectedSector}
-                          >
+                          <Box sx={{width:'100px'}}>
                             {sectors.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
-                                control={<BpRadio size="small" />}
+                                control={<BpCheckbox
+                                   size="small"
+                                   checked={selectedSector.includes(sec)}
+                                   name={sec}
+                                   onChange={handleSector} />}
                                 label={sec}
-                                value={sec}
-                                name={sec}
                               />
                             ))}
-                          </RadioGroup>
+                          </Box>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                          <RadioGroup
-                            onChange={(e, a) => setSelectedCategory(a)}
-                            value={selectedCategory}
-                          >
+<Box sx={{width:'100px'}}>
                             {categories.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
-                                control={<BpRadio size="small" />}
+                                control={<BpCheckbox
+                                   size="small"
+                                   checked={selectedCategory.includes(sec)}
+                                   name={sec}
+                                   onChange={handleCate} />}
                                 label={sec}
-                                value={sec}
-                                name={sec}
                               />
                             ))}
-                          </RadioGroup>
+</Box>
                         </TabPanel>
-                        <TabPanel value={value} index={2}>
+                        {/* <TabPanel value={value} index={2}>
                           <RadioGroup
                             onChange={(e, a) => setSelectedCompanies(a)}
                             value={selectedCompanies}
@@ -850,29 +920,24 @@ const SearchSection = ({ ...props }) => {
                               />
                             ))}
                           </RadioGroup>
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
+                        </TabPanel> */}
+                        <TabPanel value={value} index={2}>
                           <FormControl>
-                            <RadioGroup
-                              aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue=""
-                              name="radio-buttons-group"
-                              onChange={handleExperience}
-                              value={exper[0] || null}
-                            >
+
                               {USER_EXPERIENCES.map((ex, index) => (
-                                <FormControlLabel
+                                <StyledFormLabel
                                   key={index}
-                                  control={<BpRadio size="small" />}
-                                  label={ex}
-                                  value={ex}
+                                  control={<BpCheckbox size="small" 
+                                  checked={exper.includes(ex)}
                                   name={ex}
+                                  onChange={handleExperience}
+                                   />}
+                                  label={ex}
                                 />
                               ))}
-                            </RadioGroup>
                           </FormControl>
                         </TabPanel>
-                        <TabPanel value={value} index={4}>
+                        <TabPanel value={value} index={3}>
                           <FormGroup>
                             {WORK_PREFERENCE.map((work, index) => (
                               <StyledFormLabel
@@ -919,7 +984,7 @@ const SearchSection = ({ ...props }) => {
                     </DialogActions>
                   </BootstrapDialog>
                 </div>
-                <Stack className="categoryChipStack" direction="row">
+                <Stack className="categoryChipStack" flexWrap={'wrap'} direction="row">
                   {title && (
                     <Chip
                       key={title}
@@ -951,9 +1016,10 @@ const SearchSection = ({ ...props }) => {
                     />
                   )}
 
-                  {selectedSector && (
+                  {selectedSector.map((e)=>(
                     <Chip
-                      label={selectedSector}
+                      key={e}
+                      label={e}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -962,11 +1028,11 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
-                      onDelete={handleDeleteSector}
+                      onDelete={()=>handleDeleteSector(e)}
                     />
-                  )}
+                  )) }
 
-                  {selectedCompanies && (
+                  {/* {selectedCompanies && (
                     <Chip
                       label={
                         companies.filter((f) => f.id === selectedCompanies)[0]
@@ -982,13 +1048,13 @@ const SearchSection = ({ ...props }) => {
                       }}
                       onDelete={handleDeleteCompany}
                     />
-                  )}
+                  )} */}
 
                   {exper.map((e) => (
                     <Chip
                       key={e}
-                      label={exper}
-                      onDelete={handleDeleteExp}
+                      label={e}
+                      onDelete={()=>handleDeleteExp(e)}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1000,9 +1066,10 @@ const SearchSection = ({ ...props }) => {
                     />
                   ))}
 
-                  {selectedCategory && (
+                  {selectedCategory.map((e)=>(
                     <Chip
-                      label={selectedCategory}
+                      label={e}
+                      key={e}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1011,9 +1078,9 @@ const SearchSection = ({ ...props }) => {
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
-                      onDelete={handleDeleteCategory}
+                      onDelete={()=>handleDeleteCategory(e)}
                     />
-                  )}
+                  )) }
 
                   {!isEmpty(names) &&
                     names.map((j) => (
