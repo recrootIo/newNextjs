@@ -16,14 +16,12 @@ const breakPoints = [
   { width: 1200, itemsToShow: 6 },
 ];
 
-const SimilarJobs = () => {
-  const { data } = useSelector((state) => state?.personal);
-
+const SimilarJobs = ({ jobRole }) => {
   const [similar, setSimilar] = useState([]);
 
   const similarJobs = () => {
     searchService
-      .getLatestJObs(1, [], [], data.jobTitle, "", "", "", "", "", 10)
+      .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
       .then((res) => {
         console.log(res);
         setSimilar(res.data.posts);
@@ -32,7 +30,7 @@ const SimilarJobs = () => {
   };
 
   useEffect(() => {
-    if (data.jobTitle) {
+    if (jobRole) {
       similarJobs();
     }
   }, []);
@@ -66,7 +64,7 @@ const SimilarJobs = () => {
         >
           <Carousel
             breakPoints={breakPoints}
-            enableAutoPlay
+            // enableAutoPlay
             ref={carouselRef}
             showArrows={false}
             onNextEnd={({ index }) => {

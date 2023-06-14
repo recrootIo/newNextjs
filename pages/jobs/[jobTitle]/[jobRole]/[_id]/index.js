@@ -16,7 +16,7 @@ const JobDetails = ({ job, jobRole }) => {
       <BackBar />
       <JobDetailCard {...job} />
       <JobDetail {...job} />
-      <SimilarJobs />
+      <SimilarJobs jobRole={jobRole} />
       <SubscribHome />
       <FooterHome />
     </>

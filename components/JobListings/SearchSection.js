@@ -519,6 +519,7 @@ const SearchSection = ({ ...props }) => {
 
   useEffect(() => {
     getJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, sector, company, experience, jobType, page]);
 
   console.log(jobType, "names");
@@ -562,6 +563,10 @@ const SearchSection = ({ ...props }) => {
               <Button
                 variant="contained"
                 className="searchButton"
+                sx={{
+                  marginRight: "5px",
+                  marginTop: { md: "0", sm: "10px", xs: "10px" },
+                }}
                 onClick={() => setSearchFields()}
               >
                 Search

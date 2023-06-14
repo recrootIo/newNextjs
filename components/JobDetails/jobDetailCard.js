@@ -193,7 +193,7 @@ const JobDetailCard = ({ ...props }) => {
                             color: "#034275 !important",
                           }}
                         >
-                          <CurrencyExchangeIcon color="primary" />
+                          <CurrencyExchangeIcon sx={{ color: "#02A9F7" }} />
                           {getSalary(salary, false)}
                         </Stack>
                       </Grid>
@@ -203,7 +203,7 @@ const JobDetailCard = ({ ...props }) => {
                           direction={"row"}
                           sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          <AddBusinessIcon color="primary" />
+                          <AddBusinessIcon sx={{ color: "#02A9F7" }} />
                           <CustomTypography
                             variant="body2"
                             sx={{
@@ -221,7 +221,7 @@ const JobDetailCard = ({ ...props }) => {
                           direction={"row"}
                           sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          <EventRepeatIcon color="primary" />
+                          <EventRepeatIcon sx={{ color: "#02A9F7" }} />
                           <CustomTypography
                             variant="body2"
                             sx={{
@@ -239,25 +239,7 @@ const JobDetailCard = ({ ...props }) => {
                           direction={"row"}
                           sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          <AddLocationAltIcon color="primary" />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
-                          >
-                            {address[0]}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <AccountBoxIcon color="primary" />
+                          <AccountBoxIcon sx={{ color: "#02A9F7" }} />
                           <CustomTypography
                             variant="body2"
                             sx={{
@@ -275,7 +257,25 @@ const JobDetailCard = ({ ...props }) => {
                           direction={"row"}
                           sx={{ alignItems: "center", gap: "10px" }}
                         >
-                          <SchoolIcon color="primary" />
+                          <CampaignIcon sx={{ color: "#02A9F7" }} />
+                          <CustomTypography
+                            variant="body2"
+                            sx={{
+                              fontSize: 17,
+                              color: "#034275",
+                            }}
+                          >
+                            {notice}
+                          </CustomTypography>
+                        </Stack>
+                      </Grid>
+
+                      <Grid item md={4} xs={12}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center", gap: "10px" }}
+                        >
+                          <SchoolIcon sx={{ color: "#02A9F7" }} />
                           <CustomTypography
                             variant="body2"
                             sx={{
@@ -287,23 +287,28 @@ const JobDetailCard = ({ ...props }) => {
                           </CustomTypography>
                         </Stack>
                       </Grid>
+                    </Grid>
 
+                    <Grid container sx={{ mt: "20px" }}>
                       <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <CampaignIcon color="primary" />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
+                        {address.map((add, index) => (
+                          <Stack
+                            key={index}
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
                           >
-                            {notice}
-                          </CustomTypography>
-                        </Stack>
+                            <AddLocationAltIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {add}
+                            </CustomTypography>
+                          </Stack>
+                        ))}
                       </Grid>
                     </Grid>
                   </Box>
