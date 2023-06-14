@@ -26,6 +26,7 @@ import { deleteExperAndGet, retrievePersonal } from "@/redux/slices/personal";
 import { retrieveGetSinExperience } from "@/redux/slices/personal";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -56,7 +57,7 @@ const Experience = ({ ...experience }) => {
             message: "Experience is deleted",
           })
         );
-        dispatch(retrievePersonal());
+        CalculatePercentage();
       })
       .catch((error) => {
         dispatch(

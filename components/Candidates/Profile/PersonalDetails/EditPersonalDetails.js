@@ -57,6 +57,7 @@ import { Form, Formik, useFormikContext } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomSelect from "@/components/Forms/CustomSelect";
 import { FORM_VALIDATION } from "./personalValidators";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const jobs = ["Remote", "Onsite", "Hybrid"];
 
@@ -157,7 +158,7 @@ const EditPersonalDetails = () => {
           );
           dispatch(updateCurrentScreen(""));
           dispatch(getCandsPrefInfo());
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch(() => {

@@ -19,7 +19,6 @@ const PersonalDetail = ({ ...data }) => {
     dispatch(updateCurrentScreen("personalDetails"));
   };
 
-  console.log(data, "data");
   return (
     <StyledCard variant="outlined" id="personal_details_section">
       <Stack

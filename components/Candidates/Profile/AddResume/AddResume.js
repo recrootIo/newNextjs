@@ -21,6 +21,7 @@ import personalService from "@/redux/services/personal.service";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { retrievePersonal } from "@/redux/slices/personal";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const AddResume = () => {
   const [pdf, setPdf] = React.useState();
@@ -53,7 +54,7 @@ const AddResume = () => {
           })
         );
         dispatch(updateCurrentScreen(""));
-        dispatch(retrievePersonal());
+        CalculatePercentage();
       })
       .catch((error) => {
         dispatch(

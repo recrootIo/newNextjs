@@ -27,6 +27,7 @@ import {
 } from "@/redux/slices/personal";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -61,6 +62,7 @@ const Skills = ({ skills }) => {
           message: "Skill is deleted",
         })
       );
+      CalculatePercentage();
     });
   };
 

@@ -32,6 +32,7 @@ const initialState = {
   cards: [],
   appliedJobs: [],
   myPreferenceInfo: {},
+  section: "",
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -662,6 +663,10 @@ export const clearExperience = createAsyncThunk(
   }
 );
 
+export const setSection = createAsyncThunk("section/set", async (data) => {
+  return data;
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -826,6 +831,9 @@ const personalSlice = createSlice({
     },
     [clearExperience.fulfilled]: (state, action) => {
       state.exper = {};
+    },
+    [setSection.fulfilled]: (state, action) => {
+      state.section = action.payload;
     },
   },
 });

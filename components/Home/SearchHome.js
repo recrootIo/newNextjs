@@ -17,6 +17,7 @@ import { NEUTRAL } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import ProfileCompletion from "../Candidates/ProfileCompletion/ProfileCompletion";
 
 const StyledButton = styled("button")({
   height: "62px",
@@ -48,7 +49,8 @@ const SearchHome = () => {
 
   return (
     <div style={{ backgroundColor: "#D4F0FC" }}>
-      <Container>
+      <Container sx={{ pt: "10px" }}>
+        <ProfileCompletion />
         <Grid container>
           <Grid
             item

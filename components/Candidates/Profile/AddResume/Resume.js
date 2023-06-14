@@ -25,6 +25,7 @@ import { updateAndThenGet } from "@/redux/slices/personal";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -49,6 +50,7 @@ const Resume = ({ ...resume }) => {
         })
       );
     });
+    CalculatePercentage();
   };
 
   const closeMessage = () => {
