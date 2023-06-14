@@ -29,7 +29,7 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
 
   const checkAnswers = () => {
     for (let answerObj of questions) {
-      let answer = answerObj.answer.toLowerCase(); // Convert the answer to lowercase for case-insensitive comparison
+      let answer = answerObj?.answer?.toLowerCase(); // Convert the answer to lowercase for case-insensitive comparison
       if (answer !== "yes" && answer !== "no") {
         return false; // Return false if the answer is neither "yes" nor "no"
       }
@@ -37,6 +37,7 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
     return true; // Return true if all answers are either "yes" or "no"
   };
 
+  console.log(checkAnswers(), "checkAnswers");
   return (
     <div
       style={{

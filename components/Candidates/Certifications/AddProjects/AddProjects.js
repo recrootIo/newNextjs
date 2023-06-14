@@ -24,6 +24,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import * as Yup from "yup";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const FORM_VALIDATION = Yup.object().shape({
   Description: Yup.string().required("Description field is required"),
@@ -69,7 +70,7 @@ const AddProjects = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {
@@ -94,7 +95,7 @@ const AddProjects = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {

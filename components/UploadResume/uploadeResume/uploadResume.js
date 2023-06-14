@@ -83,7 +83,6 @@ const UploadResume = () => {
       newCreateResume.currentSalary = currentSalary;
     }
 
-    console.log(createResume, "createResume");
     dispatch(updatePercent(70));
     setOpen(true);
     dispatch(
@@ -106,6 +105,7 @@ const UploadResume = () => {
           dispatch(retrievePersonal()).then(() => {
             applyFirstJob();
           });
+          localStorage.removeItem("redirect");
         } else {
           setOpen(false);
         }

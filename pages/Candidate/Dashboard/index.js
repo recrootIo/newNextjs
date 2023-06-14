@@ -48,21 +48,17 @@ const StyledListItemText = styled(ListItemText)`
 
 const Index = () => {
   const router = useRouter();
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("User"));
-    if (user === null) {
-      router.push("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const containerRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const { data } = useSelector((state) => state?.personal);
+  const { currentScreen } = useSelector((state) => state?.candidate);
+  const { section } = useSelector((state) => state?.candidate);
+
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
   const [jobs, setJobs] = React.useState(true);
-  const { data } = useSelector((state) => state?.personal);
-  const { currentScreen } = useSelector((state) => state?.candidate);
-  // const { data = {} } = useSelector((state) => state?.personal);
-
-  const dispatch = useDispatch();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleClick = () => {
     setProfile(!profile);
@@ -80,11 +76,6 @@ const Index = () => {
     dispatch(updateCurrentScreen(screen));
   };
 
-  useEffect(() => {
-    dispatch(retrievePersonal());
-    dispatch(GetCandsPrefInfo());
-  }, [dispatch]);
-
   const logouts = () => {
     dispatch(logout()).then(() => {
       router.push("/signin", { state: true });
@@ -96,8 +87,7 @@ const Index = () => {
       );
     });
   };
-  const handleTop = () => {};
-  const containerRef = useRef(null);
+
   const scrollToElement = (section) => {
     let element = null;
 
@@ -158,6 +148,7 @@ const Index = () => {
       });
     }
   };
+
   const getPages = () => {
     if (currentScreen === "resume") {
       return <AddResume />;
@@ -328,11 +319,25 @@ const Index = () => {
     );
   };
 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handleTop = () => {};
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    dispatch(retrievePersonal());
+    dispatch(GetCandsPrefInfo());
+    scrollToElement(section);
+  }, [dispatch, section]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user === null) {
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

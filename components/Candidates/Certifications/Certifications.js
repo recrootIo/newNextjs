@@ -43,6 +43,7 @@ import {
 } from "@/redux/slices/personal";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -111,6 +112,7 @@ const Certifications = () => {
           message: "Project is deleted",
         })
       );
+      CalculatePercentage();
     });
   };
 
@@ -123,12 +125,21 @@ const Certifications = () => {
             message: "Training is deleted",
           })
         );
+        CalculatePercentage();
       })
       .catch(() => {});
   };
 
   const handleDelCert = () => {
-    dispatch(deleteCertifiAndGet(delCert));
+    dispatch(deleteCertifiAndGet(delCert)).then(() => {
+      dispatch(
+        openAlert({
+          type: SUCCESS,
+          message: "Certificate is deleted",
+        })
+      );
+      CalculatePercentage();
+    });
   };
 
   const handleCloseDeleteProject = () => {

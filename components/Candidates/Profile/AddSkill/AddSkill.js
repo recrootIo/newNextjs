@@ -29,6 +29,7 @@ import {
 import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import * as Yup from "yup";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const FORM_VALIDATION = Yup.object().shape({
   skillName: Yup.string().required("Skill Name field is required"),
@@ -76,7 +77,7 @@ const AddSkill = () => {
             })
           );
           gotoHome();
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch(() => {
@@ -101,7 +102,7 @@ const AddSkill = () => {
             })
           );
           gotoHome();
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {

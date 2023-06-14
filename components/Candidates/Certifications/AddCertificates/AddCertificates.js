@@ -27,6 +27,7 @@ import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import * as YUP from "yup";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 export const FORM_VALIDATION = YUP.object().shape({
   title: YUP.string().required("Title field Required"),
@@ -110,7 +111,7 @@ const AddCertificates = ({}) => {
           })
         );
         gotToCertificates();
-        dispatch(retrievePersonal());
+        CalculatePercentage();
       })
       .catch((error) => {
         dispatch(
@@ -134,7 +135,7 @@ const AddCertificates = ({}) => {
             })
           );
           gotToCertificates();
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {

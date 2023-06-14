@@ -289,13 +289,12 @@ const JobDetailCard = ({ ...props }) => {
                       </Grid>
                     </Grid>
 
-                    <Grid container sx={{ mt: "20px" }}>
-                      <Grid item md={4} xs={12}>
-                        {address.map((add, index) => (
+                    <Grid container spacing={2} sx={{ mt: "20px" }}>
+                      {address.map((add, index) => (
+                        <Grid item md={4} xs={12} key={index}>
                           <Stack
-                            key={index}
                             direction={"row"}
-                            sx={{ alignItems: "center", gap: "10px" }}
+                            sx={{ alignItems: "flex-start", gap: "10px" }}
                           >
                             <AddLocationAltIcon sx={{ color: "#02A9F7" }} />
                             <CustomTypography
@@ -308,8 +307,8 @@ const JobDetailCard = ({ ...props }) => {
                               {add}
                             </CustomTypography>
                           </Stack>
-                        ))}
-                      </Grid>
+                        </Grid>
+                      ))}
                     </Grid>
                   </Box>
                 </Stack>

@@ -38,6 +38,7 @@ import { Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const FORM_VALIDATION = Yup.object().shape({
   graduate: Yup.string().required("Graduate field is required"),
@@ -112,7 +113,7 @@ const AddEducation = () => {
           );
           gotoHome();
           dispatch(GetCandsPrefInfo());
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {
@@ -138,7 +139,7 @@ const AddEducation = () => {
           );
           gotoHome();
           dispatch(GetCandsPrefInfo());
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {

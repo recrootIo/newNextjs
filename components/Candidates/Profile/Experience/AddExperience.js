@@ -41,6 +41,7 @@ import * as Yup from "yup";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import { Form, Formik } from "formik";
 import CustomPickers from "@/components/Forms/CustomPickers";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const FORM_VALIDATION = Yup.object().shape({
   companyName: Yup.string().required("Company Name Required"),
@@ -113,7 +114,7 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {
@@ -142,7 +143,7 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          dispatch(retrievePersonal());
+          CalculatePercentage();
         }
       })
       .catch((error) => {

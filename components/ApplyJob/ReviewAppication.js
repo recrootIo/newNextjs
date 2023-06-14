@@ -29,6 +29,7 @@ import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import {
   deleteSkillAndGet,
   retrievePersonal,
+  setSection,
   updateAndThenGet,
 } from "@/redux/slices/personal";
 import { BOLD } from "@/theme/fonts";
@@ -91,8 +92,6 @@ function ReviewAppication({ ...props }) {
   const details = useSelector((state) => state.personal.data);
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
-  const salary = useSelector((state) => state.apply);
-  const ids = useSelector((state) => state.personal.ids);
 
   const [opena, setOpena] = React.useState(false);
   const [did, setDid] = useState("");
@@ -132,8 +131,9 @@ function ReviewAppication({ ...props }) {
     dispatch(updateAndThenGet(delResume));
   };
 
-  const goToProfile = () => {
+  const goToProfile = (section) => {
     router.push("/Candidate/Dashboard");
+    dispatch(setSection(section));
   };
 
   return (
@@ -200,7 +200,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        goToProfile();
+                        goToProfile("personal_details_section");
                       }}
                     >
                       <CreateIcon />
@@ -330,7 +330,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        goToProfile();
+                        goToProfile("resume_section");
                       }}
                     >
                       <CreateIcon />
@@ -406,7 +406,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        goToProfile();
+                        goToProfile("resume_section");
                       }}
                     >
                       <CreateIcon />
@@ -449,20 +449,22 @@ function ReviewAppication({ ...props }) {
                     >
                       Experience
                     </CustomTypography>
-                    <Link href="/Candidate/Dashboard">
-                      <Button
-                        variant="body1"
-                        className="iconPointers"
-                        color="initial"
-                        sx={{
-                          fontSize: "14px",
-                          float: "right",
-                          color: NEUTRAL,
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="body1"
+                      className="iconPointers"
+                      color="initial"
+                      sx={{
+                        fontSize: "14px",
+                        float: "right",
+                        color: NEUTRAL,
+                      }}
+                      onClick={() => {
+                        goToProfile("experience_details_section");
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
                   </StyledBoxed>
                   <CardContent>
                     {details.resume?.workExperience?.length === 0 ? (
@@ -509,20 +511,22 @@ function ReviewAppication({ ...props }) {
                     >
                       Skills
                     </CustomTypography>
-                    <Link href="/Candidate/Dashboard">
-                      <Button
-                        variant="body1"
-                        className="iconPointers"
-                        color="initial"
-                        sx={{
-                          fontSize: "14px",
-                          float: "right",
-                          color: NEUTRAL,
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="body1"
+                      className="iconPointers"
+                      color="initial"
+                      sx={{
+                        fontSize: "14px",
+                        float: "right",
+                        color: NEUTRAL,
+                      }}
+                      onClick={() => {
+                        goToProfile("skills_details_section");
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
                   </StyledBoxed>
                   <CardContent>
                     {details.resume?.skills?.length === 0 ? (
@@ -585,20 +589,22 @@ function ReviewAppication({ ...props }) {
                     >
                       Education
                     </CustomTypography>
-                    <Link href="/Candidate/Dashboard">
-                      <Button
-                        variant="body1"
-                        className="iconPointers"
-                        color="initial"
-                        sx={{
-                          fontSize: "14px",
-                          float: "right",
-                          color: NEUTRAL,
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="body1"
+                      className="iconPointers"
+                      color="initial"
+                      sx={{
+                        fontSize: "14px",
+                        float: "right",
+                        color: NEUTRAL,
+                      }}
+                      onClick={() => {
+                        goToProfile("education_details_section");
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
                   </StyledBoxed>
                   <CardContent>
                     {details.resume?.education?.length === 0 ? (
@@ -645,20 +651,22 @@ function ReviewAppication({ ...props }) {
                     >
                       Projects
                     </CustomTypography>
-                    <Link href="/Candidate/Dashboard">
-                      <Button
-                        variant="body1"
-                        className="iconPointers"
-                        color="initial"
-                        sx={{
-                          fontSize: "14px",
-                          float: "right",
-                          color: NEUTRAL,
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="body1"
+                      className="iconPointers"
+                      color="initial"
+                      sx={{
+                        fontSize: "14px",
+                        float: "right",
+                        color: NEUTRAL,
+                      }}
+                      onClick={() => {
+                        goToProfile("projects_details_section");
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
                   </StyledBoxed>
                   <CardContent>
                     <Stack
@@ -723,20 +731,22 @@ function ReviewAppication({ ...props }) {
                     >
                       Training
                     </CustomTypography>
-                    <Link href="/Candidate/Dashboard">
-                      <Button
-                        variant="body1"
-                        className="iconPointers"
-                        color="initial"
-                        sx={{
-                          fontSize: "14px",
-                          float: "right",
-                          color: NEUTRAL,
-                        }}
-                      >
-                        <CreateIcon />
-                      </Button>
-                    </Link>
+
+                    <Button
+                      variant="body1"
+                      className="iconPointers"
+                      color="initial"
+                      sx={{
+                        fontSize: "14px",
+                        float: "right",
+                        color: NEUTRAL,
+                      }}
+                      onClick={() => {
+                        goToProfile("traning_details_section");
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
                   </StyledBoxed>
                   <CardContent>
                     {details?.resume?.traning?.length === 0 ? (

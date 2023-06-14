@@ -30,6 +30,7 @@ import {
 import { useDispatch } from "react-redux";
 import { SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 // import { deleteEducaAndGet } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -60,8 +61,7 @@ const Education = ({ ...resume }) => {
             message: "Education is deleted",
           })
         );
-        gotoHome();
-        dispatch(retrievePersonal());
+        CalculatePercentage();
       })
       .catch(() => {});
   };
