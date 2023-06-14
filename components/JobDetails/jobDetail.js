@@ -157,65 +157,13 @@ const JobDetail = ({ ...props }) => {
                 }}
               />
               <CardContent sx={{ paddingLeft: "24px" }}>
-                {/* <CustomTypography
-                  variant="body2"
-                  color="text.secondary"
-                  lineHeight="27px"
-                  fontSize="16px"
-                  sx={{ color: "rgba(1, 49, 63, 0.8)" }}
-                  gutterBottom
-                >
-                  The UX designer creates satisfying and compelling experiences
-                  for users of a product, often drawing on results from user
-                  research and workflow analysis. Generally, UX designers need
-                  to possess strong creative, technical and problem-solving
-                  skills. Areas of focus may include content, controls, visual
-                  design and development, information architecture, user
-                  research, branding, and customer/technical support.
-                </CustomTypography> */}
-
                 <ReactQuill
                   value={jobDescription}
                   readOnly={true}
                   theme={"bubble"}
                 />
-
-                {/*                 
-                <CustomTypography
-                  variant="body2"
-                  color="text.secondary"
-                  lineHeight="27px"
-                  fontSize="16px"
-                  sx={{ mt: "15px", color: "rgba(1, 49, 63, 0.8)" }}
-                  gutterBottom
-                >
-                  {bull} Consulting with clients to understand their goals
-                  <br></br>
-                  {bull} Explaining user research results to internal and
-                  external stakeholders<br></br>
-                  {bull} Developing personas and usage scenarios<br></br>
-                  {bull} Conducting usability testing <br></br>
-                  {bull} Creating wireframes, storyboards, sitemaps and screen
-                  flows<br></br>
-                  {bull} Creating product prototypes<br></br>
-                  {bull} Analyzing user feedback and activity, and iterating to
-                  enhance the user experience<br></br>
-                  {bull} Assisting with content development<br></br>
-                  {bull} Conducting competitor and customer analysis.
-                </CustomTypography>
-                <CustomTypography
-                  variant="body1"
-                  sx={{
-                    mt: "20px",
-                    color: "#034275",
-                    fontSize: "17px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Requirements
-                </CustomTypography> */}
               </CardContent>
-              <CardActions sx={{ mb: "20px" }}>
+              <CardActions sx={{ mb: "20px", paddingLeft: "24px" }}>
                 {isUserType ? (
                   <Button
                     variant="contained"
