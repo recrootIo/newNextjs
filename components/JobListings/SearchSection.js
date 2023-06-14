@@ -519,6 +519,7 @@ const SearchSection = ({ ...props }) => {
 
   useEffect(() => {
     getJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, sector, company, experience, jobType, page]);
 
   console.log(jobType, "names");
