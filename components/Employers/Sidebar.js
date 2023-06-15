@@ -111,12 +111,14 @@ const handleListItemClick = (val) =>{
                     height="40" />
             </ListItemButton>
             </Link>
+            <Link href={'/Employer/MyAccount'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
                 onClick={() => handleListItemClick()}
             >
                 <Image src="/myAccount.png" alt="" width="40" height="40" />
             </ListItemButton>
+            </Link>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
                 onClick={() => handleListItemClick()}

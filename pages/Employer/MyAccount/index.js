@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -24,14 +24,13 @@ import {
   OutlinedInput,
   IconButton,
 } from "@mui/material";
-import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { BOLD } from "@/theme/fonts";
-import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
-import Image from "next/image";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Employer from "..";
+import { useDispatch } from "react-redux";
+import http from "@/redux/http-common";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import { retrievePersonal } from "@/redux/slices/personal";
 
 const style = {
   passinput: {
@@ -40,13 +39,13 @@ const style = {
         borderColor: "white",
         width: { md: "100%", xs: "100%" },
         height: "60px",
-        color: "#BAD4DF",
+        color: "black",
       },
       "&:hover fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
       "&.Mui-focused fieldset": {
-        borderColor: "#BAD4DF",
+        borderColor: "black",
       },
     },
   },
@@ -63,125 +62,154 @@ const MyAccount = () => {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
+  const [cand, setcand] = useState({})
+  useEffect(() => {
+setcand(JSON.parse(localStorage.getItem("User"))?.User)
+  }, [])
+  
+  const dispatch = useDispatch();
+
+  const [user, setUser] = useState({
+    _id: cand?._id,
+    firstName: cand?.firstName,
+    lastName: cand?.lastName,
+    email: cand?.email,
+    password: "",
+    newPassword: "",
+    mobile: "",
+    otp: "",
+    method:''
+  });
+
+
+
+  useEffect(() => {
+    setUser({
+      _id: cand?._id,
+      firstName: cand?.firstName,
+      lastName: cand?.lastName,
+      email: cand?.email,
+      password: "",
+      newPassword: "",
+      mobile: "",
+      otp: "",
+      method:cand?.method
+    });
+  }, [cand?._id, cand?.email, cand?.firstName, cand?.lastName, cand?.method]);
+
+  const [confrimp, setconfrimp] = useState("");
+
+
+  function validateEmail(email) {
+    let result = true;
+
+    const re =
+      /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    result = re.test(String(email).toLowerCase());
+    if (!result) {
+      dispatch(openAlert({ type: ERROR, message: "Invalid Email address" }));
+    }
+    return result;
+  }
+  /**
+   * Action to update the User
+   */
+  const updateUser = () => {
+    if (user.newPassword !== "") {
+      if (user.newPassword.length < 8) {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Password should be minimum 8 characters!",
+          })
+        );
+        return;
+      }
+      var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      if (re.test(user.newPassword) === false) {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message:
+              "Password must contain at least One uppercase character, One lowercase character ,One Special character and One number",
+          })
+        );
+        return;
+      } else {
+        if (user.newPassword !== confrimp) {
+          dispatch(
+            openAlert({
+              type: ERROR,
+              message: "New Password And Confirm Password Are Not Same",
+            })
+          );
+          return;
+        }
+      }
+    }
+    if (cand?.email !== user.email) {
+      validateEmail(user.email);
+      return;
+    }
+
+    http
+      .put("updateUser", user)
+      .then((res) => {
+        dispatch(openAlert({ type: SUCCESS, message: res?.data?.message }));
+        if (res.status === 200) {
+          dispatch(retrievePersonal())
+        }
+      })
+      .catch((res) =>
+        dispatch(
+          openAlert({ type: ERROR, message: res?.response?.data?.message })
+        )
+      );
+    if (
+      cand?.email !== user.email ||
+      cand?.firstName !== user.firstName ||
+      cand?.lastName !== user.lastName
+    ) {
+      const loggedInUser = JSON.parse(localStorage.getItem("User"));
+      loggedInUser.User.firstName = user.firstName;
+      loggedInUser.User.lastName = user.lastName;
+      localStorage.setItem("User", JSON.stringify(loggedInUser));
+    }
+  };
+
+  const onChange = (e) => {
+    const { id, value } = e.target;
+
+    setUser((state) => ({
+      ...state,
+      [id]: value,
+    }));
+  };
+
+  const handleMouseDownPasswordnew = (event) => {
+    event.preventDefault();
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleMouseDownPasswordcon = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClickShowPassword = () => {
+    setpasshow(!passhow);
+  };
+  const handleClickShowPasswordnew = () => {
+    setpasshownew(!passhownew);
+  };
+  const handleClickShowPasswordcon = () => {
+    setpasshowcon(!passhowcon);
+  };
+
 
   return (
     <>
-      <EmployerNavbar />
-      <Box
-        sx={{
-          backgroundImage: 'url("/EmployerDashboardBG.svg")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "250px",
-        }}
-      ></Box>
-
-      <Container>
-        <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  maxWidth: 110,
-                  bgcolor: "#034275",
-                  borderRadius: "10px",
-                  pb: "20px",
-                }}
-              >
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
-                  >
-                    <Image src="/empImg.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <Divider variant="middle" color="gray" />
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
-                  >
-                    <Image src="/home.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
-                  >
-                    <Image src="/profile.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 3}
-                    onClick={(event) => handleListItemClick(event, 3)}
-                  >
-                    <Image src="/jobs.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 4}
-                    onClick={(event) => handleListItemClick(event, 4)}
-                  >
-                    <Image src="/team.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 5}
-                    onClick={(event) => handleListItemClick(event, 5)}
-                  >
-                    <Image src="/convo.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 6}
-                    onClick={(event) => handleListItemClick(event, 6)}
-                  >
-                    <Image
-                      src="/subscription.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 7}
-                    onClick={(event) => handleListItemClick(event, 7)}
-                  >
-                    <Image src="/myAccount.png" alt="" width="40" height="40" />
-                  </ListItemButton>
-                  <ListItemButton
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    selected={selectedIndex === 8}
-                    onClick={(event) => handleListItemClick(event, 8)}
-                  >
-                    <Image
-                      src="/power-icon.png"
-                      alt=""
-                      width="40"
-                      height="40"
-                    />
-                  </ListItemButton>
-                </List>
-              </Box>
-            </Grid>
-            <Grid item xs={10}>
-              <Box sx={{ display: "flex", width: "100%", mb: "30px" }}>
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                  }}
-                  gutterBottom
-                >
-                  My Account
-                </CustomTypography>
-              </Box>
+<Employer>
               <Card
                 sx={{
                   width: "100%",
@@ -203,10 +231,10 @@ const MyAccount = () => {
                           label="First Name"
                           placeholder="Enter First Name"
                           autoFocus
-                          //   value={user?.firstName}
-                          //   onChange={onChange}
+                          value={user?.firstName || ''}
+                          onChange={onChange}
                           sx={{ ...style.passinput, bgcolor: "white" }}
-                          InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                          InputLabelProps={{ style: { color: "black" } }}
                         />
                         <TextField
                           required
@@ -216,10 +244,10 @@ const MyAccount = () => {
                           name="lastName"
                           autoComplete="family-name"
                           placeholder="Enter Last Name"
-                          // value={user?.lastName}
-                          // onChange={onChange}
+                          value={user?.lastName || ''}
+                          onChange={onChange}
                           sx={{ ...style.passinput, bgcolor: "white" }}
-                          InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                          InputLabelProps={{ style: { color: "black" } }}
                         />
                       </Stack>
                       <TextField
@@ -233,14 +261,14 @@ const MyAccount = () => {
                         required
                         //sx={style.txtinput}
                         sx={{ ...style.passinput, bgcolor: "white" }}
-                        InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                        //   value={user?.email}
-                        //   onChange={onChange}
+                        InputLabelProps={{ style: { color: "black" } }}
+                          value={user?.email || ''}
+                          onChange={onChange}
                       />
                       <FormControl sx={style.passinput}>
                         <InputLabel
                           htmlFor="password"
-                          sx={{ color: "#BAD4DF" }}
+                          sx={{ color: "black" }}
                         >
                           Old Password
                         </InputLabel>
@@ -255,14 +283,14 @@ const MyAccount = () => {
                           id="password"
                           label="Old Password"
                           placeholder="Enter Password"
-                          //value={user.password}
+                          value={user.password}
                           endAdornment={
                             <InputAdornment position="end">
                               <IconButton
                                 sx={{ bgcolor: "white" }}
                                 aria-label="toggle password visibility"
-                                // onClick={handleClickShowPassword}
-                                // onMouseDown={handleMouseDownPassword}
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
                                 edge="end"
                               >
                                 {passhow ? <VisibilityOff /> : <Visibility />}
@@ -270,7 +298,7 @@ const MyAccount = () => {
                             </InputAdornment>
                           }
                           type={passhow ? "text" : "password"}
-                          //onChange={onChange}
+                          onChange={onChange}
                         />
                       </FormControl>
                       <Stack direction="row" spacing={2}>
@@ -280,7 +308,7 @@ const MyAccount = () => {
                         >
                           <InputLabel
                             htmlFor="outlined-confirm-adornment-password"
-                            sx={{ color: "#BAD4DF" }}
+                            sx={{ color: "black" }}
                           >
                             New Password
                           </InputLabel>
@@ -293,14 +321,14 @@ const MyAccount = () => {
                             }}
                             id="newPassword"
                             label="newPassword"
-                            //onChange={onChange}
+                            onChange={onChange}
                             type={passhownew ? "text" : "password"}
                             endAdornment={
                               <InputAdornment position="end">
                                 <IconButton
                                   aria-label="toggle password visibility"
-                                  // onClick={handleClickShowPasswordnew}
-                                  // onMouseDown={handleMouseDownPasswordnew}
+                                  onClick={handleClickShowPasswordnew}
+                                  onMouseDown={handleMouseDownPasswordnew}
                                   edge="end"
                                 >
                                   {passhownew ? (
@@ -319,7 +347,7 @@ const MyAccount = () => {
                         >
                           <InputLabel
                             htmlFor="outlined-confirm-adornment-password"
-                            sx={{ color: "#BAD4DF" }}
+                            sx={{ color: "black" }}
                           >
                             Confirm Password
                           </InputLabel>
@@ -334,15 +362,15 @@ const MyAccount = () => {
                             label="Confirm Password"
                             placeholder="Confirm Password"
                             type={passhowcon ? "text" : "password"}
-                            // onChange={(e) => {
-                            //   setconfrimp(e.target.value);
-                            // }}
+                            onChange={(e) => {
+                              setconfrimp(e.target.value);
+                            }}
                             endAdornment={
                               <InputAdornment position="end">
                                 <IconButton
                                   aria-label="toggle password visibility"
-                                  //   onClick={handleClickShowPasswordcon}
-                                  //   onMouseDown={handleMouseDownPasswordcon}
+                                    onClick={handleClickShowPasswordcon}
+                                    onMouseDown={handleMouseDownPasswordcon}
                                   edge="end"
                                 >
                                   {passhowcon ? (
@@ -371,18 +399,16 @@ const MyAccount = () => {
                             height: "50px",
                             mt: "55px",
                           }}
+                          onClick={() => updateUser()}
                         >
-                          Update Password
+                          Update 
                         </Button>
                       </Box>
                     </Stack>
                   </Box>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
+</Employer>
     </>
   );
 };
