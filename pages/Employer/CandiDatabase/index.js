@@ -3,12 +3,17 @@ import FooterHome from "@/components/Home/FooterHome";
 import Navbar from "@/components/Navbar/Navbar";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Button, Chip, Container, InputBase, Stack } from "@mui/material";
+import { Box, Button, Chip, Container, InputBase, Stack, useMediaQuery } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import styled from "styled-components";
 import CandiDatabaseFilter from "@/components/Employers/CandiDatabaseFilter/CandiDatabaseFilter";
 import CandidateDatabaseListPage from "@/components/Employers/CandidateDatabaseListPage/CandidateDatabaseListPage";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { candidatesForrequest, candidatesIdreq, getSearchCandidate, jobCandidatesRequest } from "@/redux/slices/companyslice";
+import { getCandi } from "@/redux/slices/applyJobs";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -32,6 +37,98 @@ const CandiDatabase = () => {
   const handleDelete = () => {
     console.info("You clicked the delete icon.");
   };
+
+  const data = useSelector((data) => data.company.search);
+  const loading = useSelector((data) => data.company.loading);
+  const reqLoad = useSelector((data) => data.company.reqLoad);
+  const value = useSelector((data) => data.company.srdata);
+  const logos = useSelector((state) => state.company.companylogo);
+  const searchBar = useSelector((state) => state.company.searchBar);
+  const advanceSearch = useSelector((state) => state.company.advanceSearch);
+  const dispatch = useDispatch();
+
+  const loadingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  // const handleDrawerOpen = () => {
+  //   dispatch(updateSearch(!searchBar));
+  //   dispatch(updateAdvanceSearch(false));
+  // };
+const {push} = useRouter()
+  const handleProfile = (id) => {
+    // dispatch(getCandi(id))
+    //   .unwrap()
+    //   .then((originalPromiseResult) => {
+    //     dispatch(
+    //       getSinResumeLaid(originalPromiseResult?.resume?.resumeFileLocation[0])
+    //     );
+    //   });
+      push(`/Employer/CandiProfileFullView?canId=${id}`)
+    // Navigate(`/employerhome/applicant/${id}?rc`);
+  };
+
+  const rows = data?.candidates?.map((ele, index) => ({
+    id: ele?._id,
+    _id: index + 1,
+    jobTitle: ele?.jobTitle,
+    profession: ele?.profession,
+    name: ele.firstName + " " + ele.lastName,
+    pastEmployment: ele?.resume?.workExperience[0]?.companyName,
+    education: ele?.resume?.education,
+    skills: ele?.resume?.skills,
+    languages: ele?.resume?.languages[0],
+    workPrefence: ele?.resume?.workPrefence,
+    currentOffer: ele?.resume?.currentOffer,
+    notice: ele?.resume?.notice,
+    location: ele?.resume?.location,
+    nationality: ele?.resume?.nationality,
+    workingRights: ele?.resume?.countrieswithworkingRights,
+    expectation: ele?.resume?.currentSalary
+      ? ele?.resume?.currentSalary + `(${ele?.resume?.salaryCurrency})`
+      : "NA",
+    action: "Action",
+    experience: ele?.resume?.workExperience,
+    profileImage: ele?.profpicFileLocation?.photo,
+    cv: ele?.resume?.resumeFileLocation[0],
+    expectedSalery: ele?.resume?.expectedSalary,
+    currentSalery: ele?.resume?.currentSalary,
+    currency: ele?.resume?.salaryCurrency,
+    communication: ele?.resume?.customSkills?.communication,
+    immediate: ele?.immediate,
+    lastLogin: ele?.lastLogin,
+    type: null,
+  }));
+
+  const handleChange = (e, page) => {
+    const value = {
+      id: reqJob?.Candidates,
+      page:page
+    };
+    dispatch(candidatesForrequest(value));
+  };
+  const reqJob = useSelector((data) => data.company.taskbyjob);
+  const matches = useMediaQuery("(max-width:900px)");
+
+  const hasMoreData = rows.length < 1;
+  const router = useRouter()
+  const {id} = router.query;
+
+  useEffect(() => {
+    if (id) {
+      dispatch(jobCandidatesRequest(id));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  useEffect(() => {
+    if (reqJob?.stage === "completed") {
+      const value = {
+        id: reqJob?.Candidates,
+        page:1
+      };
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(value));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reqJob]);
 
   return (
     <div>
@@ -73,26 +170,7 @@ const CandiDatabase = () => {
           }}
         >
           <Stack direction="row" spacing={2}>
-            <Search>
-              <Box
-                sx={{
-                  display: "flex",
-                  bgcolor: "white",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  height: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                }}
-              >
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-                <SearchIcon />
-              </Box>
-            </Search>
+
             <Button
               variant="contained"
               sx={{
@@ -119,7 +197,7 @@ const CandiDatabase = () => {
               Reset Filter
             </Button>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ mt: "20px" }}>
+          {/* <Stack direction="row" spacing={2} sx={{ mt: "20px" }}>
             <Chip
               label="Graphic Designer"
               onDelete={handleDelete}
@@ -140,9 +218,13 @@ const CandiDatabase = () => {
                 fontSize: "15px",
               }}
             />
-          </Stack>
+          </Stack> */}
           {showComponent1 ? (
-            <CandidateDatabaseListPage />
+            <CandidateDatabaseListPage   {...data}
+            handleProfile={handleProfile}
+            key={data?.id} 
+            handleChange={handleChange}
+            />
           ) : (
             <CandiDatabaseFilter />
           )}

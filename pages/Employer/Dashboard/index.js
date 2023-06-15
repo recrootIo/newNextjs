@@ -21,8 +21,6 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { BOLD } from "@/theme/fonts";
-import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "next/image";
@@ -422,7 +420,7 @@ console.log(cjobs,'cjobs');
       );
       dispatch(addCandidatesRequest(jobid));
     } else {
-      push(`/requestCandidates/${jobid}`);
+      push(`/Employer/CandiDatabase?id=${jobid}`);
       // dispatch(jobCandidatesRequest(jobid));
     }
   };
