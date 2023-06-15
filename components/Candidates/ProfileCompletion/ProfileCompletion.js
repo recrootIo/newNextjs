@@ -123,7 +123,7 @@ const ProfileCompletion = () => {
         });
       }
 
-      if (Education < 16) {
+      if (Education < 15) {
         newDetailCard.push({
           title: "Add Education",
           buttonText: "Add Education More",

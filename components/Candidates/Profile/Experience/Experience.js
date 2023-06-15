@@ -138,38 +138,54 @@ const Experience = ({ ...experience }) => {
                 </Stack>
                 <Grid container spacing={2}>
                   <Grid item md={6} xs={12} sm={12}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Role:
+                      </CustomTypography>
+                      <CustomTypography>{ex?.role}</CustomTypography>
+                    </Stack>
+                  </Grid>
+
+                  <Grid item md={6} xs={12} sm={12}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        Location:
+                      </CustomTypography>
+                      <CustomTypography>
+                        {ex?.country} , {ex?.state} , {ex?.city}
+                      </CustomTypography>
+                    </Stack>
+                  </Grid>
+
+                  <Grid item md={6} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Role:
-                        </CustomTypography>
-                        <CustomTypography>{ex?.role}</CustomTypography>
-                      </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Location:
-                        </CustomTypography>
-                        <CustomTypography>
-                          {ex?.country} , {ex?.state} , {ex?.city}
-                        </CustomTypography>
-                      </Stack>
-
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
                         <CustomTypography sx={{ fontWeight: "700" }}>
                           Total Experience:
                         </CustomTypography>
                         <CustomTypography>{ex?.experience}</CustomTypography>
                       </Stack>
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          From:
-                        </CustomTypography>
-                        <CustomTypography>{ex?.fromDate}</CustomTypography>
-                      </Stack>
                     </Stack>
                   </Grid>
+
+                  <Grid item md={6} xs={12} sm={12}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        From:
+                      </CustomTypography>
+                      <CustomTypography>{ex?.fromDate}</CustomTypography>
+                    </Stack>
+                  </Grid>
+
+                  <Grid item md={6} xs={12} sm={12}>
+                    <Stack direction={"row"} sx={{ gap: "10px" }}>
+                      <CustomTypography sx={{ fontWeight: "700" }}>
+                        To:
+                      </CustomTypography>
+                      <CustomTypography>{ex?.toDate}</CustomTypography>
+                    </Stack>
+                  </Grid>
+
                   <Grid item md={6} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>
@@ -178,29 +194,9 @@ const Experience = ({ ...experience }) => {
                         </CustomTypography>
                         <CustomTypography>{ex?.companyName}</CustomTypography>
                       </Stack>
-                      {/* 
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Employement:
-                        </CustomTypography>
-                        <CustomTypography></CustomTypography>
-                      </Stack> */}
-
-                      {/* <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          Salary:
-                        </CustomTypography>
-                        <CustomTypography></CustomTypography>
-                      </Stack> */}
-
-                      <Stack direction={"row"} sx={{ gap: "10px" }}>
-                        <CustomTypography sx={{ fontWeight: "700" }}>
-                          To:
-                        </CustomTypography>
-                        <CustomTypography>{ex?.toDate}</CustomTypography>
-                      </Stack>
                     </Stack>
                   </Grid>
+
                   <Grid item md={12} xs={12} sm={12}>
                     <Stack sx={{ gap: LAZY }}>
                       <Stack direction={"row"} sx={{ gap: "10px" }}>

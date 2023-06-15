@@ -31,6 +31,7 @@ import { useDispatch } from "react-redux";
 import { SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { convertFormat } from "@/utils/HelperFunctions";
 // import { deleteEducaAndGet } from "@/redux/slices/personal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -132,58 +133,67 @@ const Education = ({ ...resume }) => {
               </Stack>
               <Grid container spacing={2}>
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack sx={{ gap: LAZY }}>
-                    <Stack
-                      direction={"row"}
-                      sx={{ gap: "10px", flexWrap: "wrap" }}
+                  <Stack
+                    direction={"row"}
+                    sx={{ gap: "10px", flexWrap: "wrap" }}
+                  >
+                    <CustomTypography
+                      sx={{ fontWeight: "700", flexWrap: "wrap" }}
                     >
-                      <CustomTypography
-                        sx={{ fontWeight: "700", flexWrap: "wrap" }}
-                      >
-                        Degree:
-                      </CustomTypography>
-                      <CustomTypography>{edi?.degreeName}</CustomTypography>
-                    </Stack>
-
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
-                        Institute:
-                      </CustomTypography>
-                      <CustomTypography>{edi?.collegeName}</CustomTypography>
-                    </Stack>
-
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
-                        From:
-                      </CustomTypography>
-                      <CustomTypography>{edi?.fromDate}</CustomTypography>
-                    </Stack>
+                      Degree:
+                    </CustomTypography>
+                    <CustomTypography>{edi?.degreeName}</CustomTypography>
                   </Stack>
                 </Grid>
+
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack sx={{ gap: LAZY }}>
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
-                        Specialization:
-                      </CustomTypography>
-                      <CustomTypography>{edi?.graduate}</CustomTypography>
-                    </Stack>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <CustomTypography sx={{ fontWeight: "700" }}>
+                      Institute:
+                    </CustomTypography>
+                    <CustomTypography>{edi?.collegeName}</CustomTypography>
+                  </Stack>
+                </Grid>
 
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
-                        Location:
-                      </CustomTypography>
-                      <CustomTypography>
-                        {edi?.country} , {edi?.state} , {edi?.city}
-                      </CustomTypography>
-                    </Stack>
+                <Grid item md={6} sm={12} xs={12}>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <CustomTypography sx={{ fontWeight: "700" }}>
+                      From:
+                    </CustomTypography>
+                    <CustomTypography>
+                      {convertFormat(edi?.fromDate)}
+                    </CustomTypography>
+                  </Stack>
+                </Grid>
 
-                    <Stack direction={"row"} sx={{ gap: "10px" }}>
-                      <CustomTypography sx={{ fontWeight: "700" }}>
-                        To:
-                      </CustomTypography>
-                      <CustomTypography>{edi?.toDate}</CustomTypography>
-                    </Stack>
+                <Grid item md={6} sm={12} xs={12}>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <CustomTypography sx={{ fontWeight: "700" }}>
+                      To:
+                    </CustomTypography>
+                    <CustomTypography>
+                      {convertFormat(edi?.toDate)}
+                    </CustomTypography>
+                  </Stack>
+                </Grid>
+
+                <Grid item md={6} sm={12} xs={12}>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <CustomTypography sx={{ fontWeight: "700" }}>
+                      Location:
+                    </CustomTypography>
+                    <CustomTypography>
+                      {edi?.country} , {edi?.state} , {edi?.city}
+                    </CustomTypography>
+                  </Stack>
+                </Grid>
+
+                <Grid item md={6} sm={12} xs={12}>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <CustomTypography sx={{ fontWeight: "700" }}>
+                      Specialization:
+                    </CustomTypography>
+                    <CustomTypography>{edi?.graduate}</CustomTypography>
                   </Stack>
                 </Grid>
               </Grid>
