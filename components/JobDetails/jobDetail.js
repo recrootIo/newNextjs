@@ -314,7 +314,7 @@ const JobDetail = ({ ...props }) => {
                   sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
                 />
                 <CardContent>
-                  {/* <Box>
+                  <Box>
                     <Grid container spacing={1}>
                       <Grid
                         item
@@ -370,8 +370,8 @@ const JobDetail = ({ ...props }) => {
                         </CustomTypography>
                       </Grid>
                     </Grid>
-                  </Box> */}
-                  {/* <CustomTypography
+                  </Box>
+                  <CustomTypography
                     variant="body2"
                     // color="text.secondary"
                     lineHeight="27px"
@@ -384,8 +384,8 @@ const JobDetail = ({ ...props }) => {
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat. .
-                  </CustomTypography> */}
-                  {/* <Stack spacing={1} sx={{ mt: "25px" }}>
+                  </CustomTypography>
+                  <Stack spacing={1} sx={{ mt: "25px" }}>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <CallIcon
                         fontSize="14px"
@@ -425,7 +425,7 @@ const JobDetail = ({ ...props }) => {
                         &nbsp;&nbsp;lorem@recroot.io
                       </CustomTypography>
                     </Box>
-                  </Stack> */}
+                  </Stack>
                 </CardContent>
               </Card>
             </Stack>

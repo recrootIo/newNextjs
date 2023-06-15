@@ -15,38 +15,13 @@ import React from "react";
 import Image from "next/image";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import moment from "moment";
+import styles from "./jobDetail.module.css";
 
 const SimilarJobCard = ({ ...props }) => {
   const { data } = props;
   return (
     <div>
-      <Card className="similarCard">
-        <CardContent sx={{ display: "flex", justifyContent: "flex-end" }}>
-          {data?.immediate && (
-            <Chip
-              label="Immediate"
-              sx={{
-                borderRadius: "8px",
-                backgroundColor: "#3771C8",
-                color: "white",
-                fontWeight: 600,
-                height: "25px",
-              }}
-            />
-          )}
-          {data?.featureType && (
-            <Chip
-              label="featured"
-              sx={{
-                borderRadius: "8px",
-                backgroundColor: "#3771C8",
-                color: "white",
-                fontWeight: 600,
-                height: "25px",
-              }}
-            />
-          )}
-        </CardContent>
+      <Card className={styles.similarCard}>
         <CardHeader
           avatar={
             <Avatar
@@ -76,15 +51,50 @@ const SimilarJobCard = ({ ...props }) => {
           subheader={data?.company.company_name}
           sx={{
             borderBottom: "1px solid rgba(3, 66, 117, 0.15)",
-            paddingTop: "0px",
+            // paddingTop: "0px",
           }}
         />
-        <CardContent className="similarCard" style={{ pb: 0 }}>
+        <CardContent className={styles.similarCard} style={{ pb: 0 }}>
           <Box>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "5px",
+                justifyContent: "flex-start",
+                minHeight: "25px",
+                mt: "10px",
+                ml: "8px",
+              }}
+            >
+              {data?.immediate && (
+                <Chip
+                  label="Immediate"
+                  sx={{
+                    borderRadius: "8px",
+                    backgroundColor: "#3771C8",
+                    color: "white",
+                    fontWeight: 600,
+                    height: "25px",
+                  }}
+                />
+              )}
+              {data?.featureType && (
+                <Chip
+                  label="featured"
+                  sx={{
+                    borderRadius: "8px",
+                    backgroundColor: "#3771C8",
+                    color: "white",
+                    fontWeight: 600,
+                    height: "25px",
+                  }}
+                />
+              )}
+            </Box>
             <Stack spacing={0.5}>
               <Box sx={{ display: "flex", mt: "25px" }}>
                 <Image
-                  className="similariconImg"
+                  className={styles.similariconImg}
                   src="/location.png"
                   alt=""
                   width={14}
@@ -92,22 +102,24 @@ const SimilarJobCard = ({ ...props }) => {
                 />
                 <CustomTypography
                   variant="body2"
-                  className="similarText"
+                  className={styles.similarText}
                   gutterBottom
                 >
                   Location
                 </CustomTypography>
                 <CustomTypography
                   variant="body2"
-                  className="similarInputText"
+                  className={styles.similarInputText}
                   gutterBottom
                 >
-                  {data?.address[0]}
+                  {data?.address[0]?.length > 20
+                    ? `${data?.address[0]?.substring(0, 20)}...`
+                    : data?.address[0]}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
                 <Image
-                  className="similariconImg"
+                  className={styles.similariconImg}
                   src="/currency.png"
                   alt=""
                   width={14}
@@ -115,14 +127,14 @@ const SimilarJobCard = ({ ...props }) => {
                 />
                 <CustomTypography
                   variant="body2"
-                  className="similarText"
+                  className={styles.similarText}
                   gutterBottom
                 >
                   Salary
                 </CustomTypography>
                 <CustomTypography
                   variant="body2"
-                  className="similarInputText"
+                  className={styles.similarInputText}
                   gutterBottom
                 >
                   {" "}
@@ -131,7 +143,7 @@ const SimilarJobCard = ({ ...props }) => {
               </Box>
               <Box sx={{ display: "flex" }}>
                 <Image
-                  className="similariconImg"
+                  className={styles.similariconImg}
                   src="/bag.png"
                   alt=""
                   width={14}
@@ -139,14 +151,14 @@ const SimilarJobCard = ({ ...props }) => {
                 />
                 <CustomTypography
                   variant="body2"
-                  className="similarText"
+                  className={styles.similarText}
                   gutterBottom
                 >
                   Job Type
                 </CustomTypography>
                 <CustomTypography
                   variant="body2"
-                  className="similarInputText"
+                  className={styles.similarInputText}
                   gutterBottom
                 >
                   {data?.jobType}
@@ -154,7 +166,7 @@ const SimilarJobCard = ({ ...props }) => {
               </Box>
               <Box sx={{ display: "flex" }}>
                 <Image
-                  className="similariconImg"
+                  className={styles.similariconImg}
                   src="/hourglass.png"
                   alt=""
                   width={14}
@@ -162,14 +174,14 @@ const SimilarJobCard = ({ ...props }) => {
                 />
                 <CustomTypography
                   variant="body2"
-                  className="similarText"
+                  className={styles.similarText}
                   gutterBottom
                 >
                   Exp
                 </CustomTypography>
                 <CustomTypography
                   variant="body2"
-                  className="similarInputText"
+                  className={styles.similarInputText}
                   gutterBottom
                 >
                   {data?.essentialInformation?.experience}
@@ -196,7 +208,7 @@ const SimilarJobCard = ({ ...props }) => {
                 View Details
               </Button>
             </Box>
-            <Box className="similarTypoBox">
+            <Box className={styles.similarTypoBox}>
               <CustomTypography
                 className="similarTypo"
                 variant="body2"
