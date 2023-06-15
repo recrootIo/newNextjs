@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NEUTRAL } from "@/theme/colors";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
+import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const bull = (
   <Box
@@ -105,6 +106,8 @@ const CandidateProfileHeader = (data) => {
   }, [photoss, dispatch]);
 
   const imageUrl = photoss?.photo ? srcsjjj : "";
+
+  console.log(data?.profilePercentage, "data?.profilePercentage");
 
   return (
     <Box

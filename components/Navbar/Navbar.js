@@ -70,6 +70,10 @@ const Navbar = () => {
     setAnchorEmp(null);
   };
 
+  const navigate = (path) => {
+    push(path);
+  };
+
   return (
     <nav>
       <div
@@ -98,16 +102,18 @@ const Navbar = () => {
               }}
             >
               <div className="flex items-center sm:justify-between ">
-                <img
-                  className="block h-8 w-auto lg:hidden"
-                  src="/logo.png"
-                  alt="Your Company"
-                />
-                <img
-                  className="hidden h-8 w-auto lg:block"
-                  src="/logo.png"
-                  alt="Your Company"
-                />
+                <Link href={"/"}>
+                  <img
+                    className="block h-8 w-auto lg:hidden"
+                    src="/logo.png"
+                    alt="Your Company"
+                  />
+                  <img
+                    className="hidden h-8 w-auto lg:block"
+                    src="/logo.png"
+                    alt="Your Company"
+                  />
+                </Link>
               </div>
 
               <IconButton
@@ -248,17 +254,8 @@ const Navbar = () => {
           <Box role="presentation" sx={{ width: 250 }}>
             <List>
               <ListItem disablePadding>
-                <ListItemButton>
-                  <Link
-                    href="/"
-                    style={{
-                      fontSize: "17px",
-                      color: "black",
-                      fontWeight: 600,
-                    }}
-                  >
-                    Home
-                  </Link>
+                <ListItemButton onClick={() => navigate("/")}>
+                  Home
                 </ListItemButton>
               </ListItem>
             </List>
@@ -266,17 +263,8 @@ const Navbar = () => {
             <Divider />
             <List>
               <ListItem disablePadding>
-                <ListItemButton>
-                  <Link
-                    href="/jobs"
-                    style={{
-                      fontSize: "17px",
-                      color: "black",
-                      fontWeight: 600,
-                    }}
-                  >
-                    Jobs
-                  </Link>
+                <ListItemButton onClick={() => navigate("/jobs")}>
+                  Jobs
                 </ListItemButton>
               </ListItem>
               <Divider />
@@ -284,34 +272,17 @@ const Navbar = () => {
 
             <List>
               {userType === "Candidate" ? (
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <Link
-                      href={"/Candidate/Dashboard"}
-                      style={{
-                        fontSize: "17px",
-                        color: "black",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Candidate
-                    </Link>
-                  </ListItemButton>
+                <ListItem
+                  disablePadding
+                  onClick={() => navigate("/Candidate/Dashboard")}
+                >
+                  <ListItemButton>Candidate</ListItemButton>
                 </ListItem>
               ) : (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton>
-                      <Link
-                        href={"/"}
-                        style={{
-                          fontSize: "17px",
-                          color: "black",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Pricing
-                      </Link>
+                    <ListItemButton onClick={() => navigate("/pricing")}>
+                      Pricing
                     </ListItemButton>
                   </ListItem>
                 </>
@@ -322,32 +293,14 @@ const Navbar = () => {
               {user === undefined ? (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton>
-                      <Link
-                        href="/signin"
-                        style={{
-                          fontSize: "17px",
-                          color: "black",
-                          fontWeight: 600,
-                        }}
-                      >
-                        SIGN IN
-                      </Link>
+                    <ListItemButton onClick={() => navigate("/signin")}>
+                      Sign In
                     </ListItemButton>
                   </ListItem>
 
                   <ListItem disablePadding>
-                    <ListItemButton>
-                      <Link
-                        href="/signup"
-                        style={{
-                          fontSize: "17px",
-                          color: "black",
-                          fontWeight: 600,
-                        }}
-                      >
-                        SIGN UP
-                      </Link>
+                    <ListItemButton onClick={() => navigate("/signup")}>
+                      Sign Up
                     </ListItemButton>
                   </ListItem>
                 </>

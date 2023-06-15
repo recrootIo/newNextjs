@@ -141,3 +141,16 @@ const capitalizeFirstLetter = (string) => {
 };
 
 export { capitalizeFirstLetter };
+
+export const convertFormat = (dateString) => {
+  const dateObject = new Date(dateString);
+
+  // Step 2: Extract year, month, and day from the Date object
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed, so add 1
+  const day = String(dateObject.getDate()).padStart(2, "0");
+
+  // Step 3: Format the values into the desired format
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+};

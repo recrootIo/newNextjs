@@ -439,7 +439,7 @@ const Certifications = () => {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "10px 30px",
+                padding: { md: "10px 30px", xs: "10px", sm: "10px" },
                 backgroundColor: "#5CA9E814",
               }}
             >

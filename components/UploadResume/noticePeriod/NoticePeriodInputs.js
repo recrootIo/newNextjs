@@ -141,7 +141,7 @@ const NoticePeriodInputs = ({ ...props }) => {
                 onChange={handleNoticePeriod}
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginTop: "10px",
                 }}
               >

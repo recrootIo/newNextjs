@@ -438,7 +438,7 @@ function Signup() {
                     <Stack
                       direction={{ sm: "row", xs: "column" }}
                       sx={{
-                        width: { md: "95%", sm: "100%", xs: "100%" },
+                        width: "95%",
                         gap: "10px",
                         alignItems: "center",
                       }}
@@ -471,6 +471,7 @@ function Signup() {
                         helperText={errors.lastName}
                       />
                     </Stack>
+
                     <StyledInput
                       fullWidth
                       id="email"

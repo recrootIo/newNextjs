@@ -74,7 +74,7 @@ function Signin() {
         }
 
         if (originalPromiseResult.User.recrootUserType === "Candidate") {
-          if (originalPromiseResult?.User?.profilePercentage > 69) {
+          if (originalPromiseResult.User.resume.resumeFileLocation.length > 0) {
             if (redirect.current) {
               push(redirect.current);
             } else {

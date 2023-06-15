@@ -616,7 +616,10 @@ const EditPersonalDetails = () => {
                           row
                           aria-labelledby="demo-row-radio-buttons-group-label"
                           name="row-radio-buttons-group"
-                          sx={{ gap: "100px", mt: "12px" }}
+                          sx={{
+                            gap: { md: "100px", sm: "10px", xs: "10px" },
+                            mt: "12px",
+                          }}
                           value={values?.currentOffer}
                           onChange={(e, a) => {
                             setFieldValue("currentOffer", e.target.value);
