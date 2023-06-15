@@ -13,7 +13,7 @@ export const searchJobs = createAsyncThunk(
       title,
       address,
       jobVariant,
-      selectedCompanies,
+      // selectedCompanies,
       selectedSector,
       selectedCategory,
     },
@@ -27,7 +27,7 @@ export const searchJobs = createAsyncThunk(
         title,
         address,
         jobVariant,
-        selectedCompanies,
+        // selectedCompanies,
         selectedSector,
         selectedCategory
       );

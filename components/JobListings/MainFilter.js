@@ -112,9 +112,9 @@ const MainFilter = ({ ...props }) => {
     names,
     clearSearch,
     sectors,
-    companies,
-    setSelectedCompanies,
-    selectedCompanies,
+    // companies,
+    // setSelectedCompanies,
+    // selectedCompanies,
     selectedSector,
     setSelectedSector,
     categories,
@@ -153,7 +153,7 @@ const MainFilter = ({ ...props }) => {
     let newJobs = names;
 
     if (checked) {
-      setNames((state) => [...state, name]);
+      setNames([...new Set([...names,name])]);
       newJobs.push(name);
     } else {
       newJobs = names.filter((arr) => name != arr);
@@ -163,7 +163,7 @@ const MainFilter = ({ ...props }) => {
     const { ...otherParams } = router.query;
     const updatedQueryParams = {
       ...otherParams,
-      jobType: newJobs,
+      jobType: [...new Set(newJobs)],
       page: 1,
     };
 
@@ -173,16 +173,21 @@ const MainFilter = ({ ...props }) => {
     });
   };
 
-  const handleExperience = (re, a) => {
-    setExper(() => [a]);
-
-    setSelectedCompanies(() => a);
-
+  const handleExperience = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = exper;
+    if (checked) {
+      setExper([...new Set([...exper, name])]);
+      newJobs.push(name);
+    } else {
+      newJobs = exper.filter((arr) => name != arr);
+      setExper(() => [...newJobs]);
+    }
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      experience: [a],
+      experience:[...new Set(newJobs)],
       page: 1,
     };
 
@@ -192,51 +197,66 @@ const MainFilter = ({ ...props }) => {
     });
   };
 
-  const selectCompanies = (re, a) => {
-    setSelectedCompanies(() => a);
+  // const selectCompanies = (re, a) => {
+  //   setSelectedCompanies(() => a);
 
+  //   const { ...otherParams } = router.query;
+
+  //   const updatedQueryParams = {
+  //     ...otherParams,
+  //     company: a,
+  //     page: 1,
+  //   };
+
+  //   router.push({
+  //     pathname: router.pathname,
+  //     query: updatedQueryParams,
+  //   });
+  // };
+
+  const selectTheSector = (re) => {
+    const { name, checked } = re.target;
+    // setSelectedSector(() => a);
+    let newJobs = selectedSector;
+    if (checked) {
+      setSelectedSector([...new Set([...selectedSector, name])]);
+      newJobs.push(name);
+    } else {
+      newJobs = selectedSector.filter((arr) => name != arr);
+      setSelectedSector(() => [...newJobs]);
+    }
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      company: a,
+      sector: [...new Set(newJobs)],
       page: 1,
     };
-
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
+      router.push({
+        pathname: router.pathname,
+        query: updatedQueryParams,
     });
-  };
-
-  const selectTheSector = (re, a) => {
-    setSelectedSector(() => a);
-    const { ...otherParams } = router.query;
-
-    const updatedQueryParams = {
-      ...otherParams,
-      sector: a,
-      page: 1,
-    };
-
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
-  };
+};
 
   const handleCateExpandClick = () => {
     setCateExpanded(!cateExpanded);
   };
 
-  const selectTheCate = (re, category) => {
-    setSelectedCategory(() => category);
-
+  const selectTheCate = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = selectedCategory;
+    if (checked) {
+      setSelectedCategory([...new Set([...selectedCategory, name])]);
+      newJobs.push(name);
+    } else {
+      newJobs = selectedCategory.filter((arr) => name != arr);
+      setSelectedCategory(() => [...newJobs]);
+    }
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      category: category,
+      category: [...new Set(newJobs)],
       page: 1,
     };
 
@@ -288,17 +308,20 @@ const MainFilter = ({ ...props }) => {
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
-          <RadioGroup onChange={selectTheSector} value={selectedSector}>
+          {/* <RadioGroup  value={selectedSector}> */}
             {sectors.map((sec, index) => (
-              <FormControlLabel
+              <StyledFormLabel
                 key={index}
-                control={<BpRadio size="small" />}
+                control={<BpCheckbox 
+                  onChange={(e)=>selectTheSector(e)}
+                  name={sec}
+                  size="small" 
+                  checked={selectedSector.includes(sec)}
+                  />}
                 label={sec}
-                value={sec}
-                name={sec}
               />
             ))}
-          </RadioGroup>
+          {/* </RadioGroup> */}
         </CardContent>
       </Collapse>
       <Divider className="divider" variant="middle" />
@@ -320,21 +343,22 @@ const MainFilter = ({ ...props }) => {
           id="style-1"
           sx={{ pt: 0, pb: "0px !important" }}
         >
-          <RadioGroup onChange={selectTheCate} value={selectedCategory}>
             {categories.map((sec, index) => (
-              <FormControlLabel
+              <StyledFormLabel
                 key={index}
-                control={<BpRadio size="small" />}
-                label={sec}
-                value={sec}
+                control={<BpCheckbox
+                size="small"
+                onChange={(e)=>selectTheCate(e)}
+                checked={selectedCategory.includes(sec)}
                 name={sec}
+                 />}
+                label={sec}
               />
             ))}
-          </RadioGroup>
         </CardContent>
       </Collapse>
 
-      <Divider className="divider" variant="middle" />
+      {/* <Divider className="divider" variant="middle" />
       <Box sx={{ display: "flex" }}>
         <Typography className="filterTopic" color="#034275" gutterBottom>
           Companies
@@ -365,7 +389,7 @@ const MainFilter = ({ ...props }) => {
             ))}
           </RadioGroup>
         </CardContent>
-      </Collapse>
+      </Collapse> */}
       <Divider variant="middle" className="divider" />
       <Box sx={{ display: "flex" }}>
         <Typography className="filterTopic" color="#034275" gutterBottom>
@@ -381,17 +405,22 @@ const MainFilter = ({ ...props }) => {
       </Box>
       <Collapse in={expExpanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ pt: 0, pb: "0px !important" }}>
-          <RadioGroup onChange={handleExperience} value={exper[0] || null}>
+          {/* <RadioGroup onChange={handleExperience} value={exper[0] || null}> */}
             {USER_EXPERIENCES.map((ex, index) => (
               <FormControlLabel
                 key={index}
-                control={<BpRadio size="small" />}
+                control={
+                <BpCheckbox
+                  size="small" 
+                  onChange={handleExperience}
+                  name={ex}
+                  checked={exper.includes(ex)}
+                  />
+                  }
                 label={ex}
-                value={ex}
-                name={ex}
               />
             ))}
-          </RadioGroup>
+          {/* </RadioGroup> */}
         </CardContent>
       </Collapse>
       <Divider className="divider" variant="middle" />

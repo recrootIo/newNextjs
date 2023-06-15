@@ -1315,9 +1315,6 @@ a {
   .viewmoreContainer {
     display: none;
   }
-  .categoryChipStack {
-    display: none !important;
-  }
   .recentCard {
     margin-right: 20px;
   }
