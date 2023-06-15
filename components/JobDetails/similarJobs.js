@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Box, Stack, Button, Container, Grid } from "@mui/material";
 import Carousel from "react-elastic-carousel";
@@ -10,6 +11,8 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import searchService from "@/redux/services/search.service";
 import styles from "./jobDetail.module.css";
+import dynamic from "next/dynamic";
+
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -34,6 +37,7 @@ const SimilarJobs = ({ jobRole }) => {
     if (jobRole) {
       similarJobs();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const carouselRef = useRef(null);
@@ -49,6 +53,7 @@ const SimilarJobs = ({ jobRole }) => {
       }}
     >
       <Container>
+        <>
         <CustomTypography
           className={styles.similarTopic}
           fontWeight={700}
@@ -57,7 +62,6 @@ const SimilarJobs = ({ jobRole }) => {
           <span style={{ color: "#034275" }}>Similar&nbsp;</span>
           <span style={{ color: "#02A9F7" }}>Jobs</span>
         </CustomTypography>
-
         <Grid container spacing={3}>
           {similar.slice(0, 9).map((simi, index) => (
             <Grid item xs={12} md={4} key={index}>
@@ -65,9 +69,10 @@ const SimilarJobs = ({ jobRole }) => {
             </Grid>
           ))}
         </Grid>
+
       </Container>
     </Box>
   );
 };
 
-export default SimilarJobs;
+export default dynamic (() => Promise.resolve(SimilarJobs), {ssr: false})

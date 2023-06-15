@@ -298,7 +298,7 @@ const SearchSection = ({ ...props }) => {
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
-  const [selectedCategory, setSelectedCategory] = useState([category] || []);
+  const [selectedCategory, setSelectedCategory] = useState( category !== null ? [category] : [] || []);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));

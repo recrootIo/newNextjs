@@ -69,7 +69,7 @@ function Subpayment() {
             oldTime: payment.packageEndDate,
             timePeriod: subscriptionTimePackage,
             companyId: subscriptioncompanyId,
-            subType: subscriptionTimePackage === "mothly" ? "jPost" : "jSlot",
+            subType: subscriptionpackage === "Gold" ||  subscriptionpackage === "Growth" ? "jSlot" : "jPost",
             count:countFin
             // date: moment().utc().format(),
           }),
@@ -87,7 +87,7 @@ function Subpayment() {
             timePeriod: subscriptionTimePackage,
             currency: Coutry,
             companyId: subscriptioncompanyId,
-            subType: subscriptionTimePackage === "mothly" ? "jPost" : "jSlot",
+            subType: subscriptionpackage === "Gold" ||  subscriptionpackage === "Growth" ? "jSlot" : "jPost",
             date: moment().utc().format(),
             count:countFin
           }),

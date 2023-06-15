@@ -61,7 +61,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{ p: "10px", objectFit: "contain" }}
                     size="cover"
@@ -72,7 +72,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -88,7 +88,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -104,7 +104,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -120,7 +120,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -136,7 +136,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -152,7 +152,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -168,7 +168,7 @@ const SearchByCompany = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/logo 7.png"
+                    image="/recroot-logo.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",

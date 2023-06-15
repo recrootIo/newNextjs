@@ -78,13 +78,11 @@ const CalculatePercentage = () => {
     countries +
     essential;
 
-  console.log(percent, "my persinal");
-
   Rstore.dispatch(updatePercent(finalPercent))
     .then(() => {
       Rstore.dispatch(retrievePersonal());
     })
-    .catch(() => console.log("weeoe"));
+    .catch(() => console.log("something went wrong"));
 };
 
 export default CalculatePercentage;

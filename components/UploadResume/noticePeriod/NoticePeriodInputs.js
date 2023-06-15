@@ -80,7 +80,7 @@ const NoticePeriodInputs = ({ ...props }) => {
         <Box className="logoContainer">
           <Image
             className="logoImage"
-            src="/logo 8.png"
+            src="/recroot-logo-sec.png"
             alt=""
             width="0"
             height="0"
@@ -141,7 +141,7 @@ const NoticePeriodInputs = ({ ...props }) => {
                 onChange={handleNoticePeriod}
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginTop: "10px",
                 }}
               >

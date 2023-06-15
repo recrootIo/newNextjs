@@ -24,7 +24,7 @@ const DreamJob = () => {
             <Box className="dreamjobImgBox">
               <Image
                 className="dreamJobImage"
-                src="/image head.png"
+                src="/man-with-pc-img.png"
                 alt=""
                 width="0"
                 height="0"

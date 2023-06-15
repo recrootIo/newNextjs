@@ -39,6 +39,7 @@ import * as Yup from "yup";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { convertFormat } from "@/utils/HelperFunctions";
 
 const FORM_VALIDATION = Yup.object().shape({
   graduate: Yup.string().required("Graduate field is required"),
@@ -82,8 +83,8 @@ const AddEducation = () => {
     city: education?.city || "",
     experience: education?.experience || "",
     collegeName: education?.collegeName || "",
-    fromDate: education?.fromDate || "",
-    toDate: education?.toDate || "",
+    fromDate: convertFormat(education?.fromDate || ""),
+    toDate: convertFormat(education?.toDate || ""),
     _id: education?._id,
   });
 
@@ -337,29 +338,6 @@ const AddEducation = () => {
                       >
                         <CustomPickers name="fromDate" label="From" />
                         <CustomPickers name="toDate" label="To" />
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <MobileDatePicker
-                            label="From"
-                            name="fromDate"
-                            sx={{ width: "100%" }}
-                            value={value}
-                            onChange={handleChange}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={{ width: "100%" }} />
-                            )}
-                          />
-
-                          <MobileDatePicker
-                            label="To"
-                            name="toDate"
-                            sx={{ width: "100%" }}
-                            value={value2}
-                            onChange={handleChangeto}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={{ width: "100%" }} />
-                            )}
-                          />
-                        </LocalizationProvider> */}
                       </Box>
 
                       <Stack direction="row" spacing={2}>

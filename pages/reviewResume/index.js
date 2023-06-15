@@ -120,7 +120,7 @@ function ReviewAppication(props) {
       <Box
         sx={{
           height: "100px",
-          backgroundImage: 'url("/Group 86.png")',
+          backgroundImage: 'url("/blue-background-bg.png")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           display: "flex",

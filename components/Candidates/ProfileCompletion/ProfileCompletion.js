@@ -123,7 +123,7 @@ const ProfileCompletion = () => {
         });
       }
 
-      if (Education < 16) {
+      if (Education < 15) {
         newDetailCard.push({
           title: "Add Education",
           buttonText: "Add Education More",
@@ -171,102 +171,101 @@ const ProfileCompletion = () => {
   useEffect(() => {
     dispatch(getPercentage());
     dispatch(retrievePersonal());
-  }, []);
+  }, [dispatch]);
 
-  if (personal?.profilePercentage > 69) return "";
+  if (personal?.profilePercentage < 70)
+    return (
+      <Container
+        sx={{
+          backgroundColor: "#E9F2FD",
+          borderRadius: "10px",
+          boxShadow: "-10px 12px 32px 0px rgba(0,0,0,0.31)",
+          mt: "10px",
+          pt: "20px",
+        }}
+      >
+        <Stack sx={{ gap: "20px", pb: "20px" }}>
+          <CustomTypography sx={{ fontWeight: "900", fontSize: "33px" }}>
+            Profile Completion
+          </CustomTypography>
+          <CustomTypography>
+            {" "}
+            Enhance your profile by adding more information to aim for a minimum
+            of 70%
+          </CustomTypography>
 
-  return (
-    <Container
-      sx={{
-        backgroundColor: "#E9F2FD",
-        borderRadius: "10px",
-        boxShadow: "-10px 12px 32px 0px rgba(0,0,0,0.31)",
-        mt: "10px",
-        pt: "20px",
-      }}
-    >
-      <Stack sx={{ gap: "20px", pb: "20px" }}>
-        <CustomTypography sx={{ fontWeight: "900", fontSize: "33px" }}>
-          Profile Completion
-        </CustomTypography>
-        <CustomTypography>
-          {" "}
-          Enhance your profile by adding more information to aim for a minimum
-          of 70%
-        </CustomTypography>
-
-        <Stack
-          sx={{
-            gap: "20px",
-            mt: "10px",
-            p: "20px",
-            flexDirection: { md: "row", sm: "column", xs: "column" },
-            justifyContent: { md: "flex-start", sm: "center", xs: "center" },
-            alignItems: "center",
-          }}
-        >
-          <Box
+          <Stack
             sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
+              gap: "20px",
+              mt: "10px",
+              p: "20px",
+              flexDirection: { md: "row", sm: "column", xs: "column" },
+              justifyContent: { md: "flex-start", sm: "center", xs: "center" },
               alignItems: "center",
-              backgroundImage: 'url("/profileprecentageborder.png")',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
-              height: "200px",
-              width: "220px",
             }}
           >
-            <CustomTypography
-              variant="h6"
+            <Box
               sx={{
-                fontFamily: "Inter-bold",
-                fontSize: "2rem",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundImage: 'url("/profileprecentageborder.png")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                height: "200px",
+                width: "220px",
               }}
             >
-              {personal?.profilePercentage}%
-            </CustomTypography>
-          </Box>
-
-          {getDetailCards()
-            .slice(0, 2)
-            .map((d, index) => (
-              <Box
-                key={index}
+              <CustomTypography
+                variant="h6"
                 sx={{
-                  backgroundColor: "white",
-                  borderRadius: "10px",
-                  p: "10px",
-                  width: { md: "50%", xs: "100%", sm: "100%" },
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
+                  fontFamily: "Inter-bold",
+                  fontSize: "2rem",
                 }}
               >
-                <Stack
+                {personal?.profilePercentage}%
+              </CustomTypography>
+            </Box>
+
+            {getDetailCards()
+              .slice(0, 2)
+              .map((d, index) => (
+                <Box
+                  key={index}
                   sx={{
-                    gap: "10px",
+                    backgroundColor: "white",
+                    borderRadius: "10px",
                     p: "10px",
-                    justifyContent: "space-between",
+                    width: { md: "50%", xs: "100%", sm: "100%" },
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
                 >
-                  <CustomTypography
-                    sx={{ fontWeight: "700", fontSize: "20px" }}
+                  <Stack
+                    sx={{
+                      gap: "10px",
+                      p: "10px",
+                      justifyContent: "space-between",
+                    }}
                   >
-                    {d.title}
-                  </CustomTypography>
-                  <CustomTypography>{d.description}</CustomTypography>
-                  <StyledButton onClick={() => setNewSection(d.id)}>
-                    NEXT
-                  </StyledButton>
-                </Stack>
-              </Box>
-            ))}
+                    <CustomTypography
+                      sx={{ fontWeight: "700", fontSize: "20px" }}
+                    >
+                      {d.title}
+                    </CustomTypography>
+                    <CustomTypography>{d.description}</CustomTypography>
+                    <StyledButton onClick={() => setNewSection(d.id)}>
+                      NEXT
+                    </StyledButton>
+                  </Stack>
+                </Box>
+              ))}
+          </Stack>
         </Stack>
-      </Stack>
-    </Container>
-  );
+      </Container>
+    );
 };
 
 export default ProfileCompletion;

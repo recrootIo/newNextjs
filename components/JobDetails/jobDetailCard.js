@@ -28,6 +28,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SchoolIcon from "@mui/icons-material/School";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import ShareForm from "../ShareForm/ShareForm";
+import dynamic from "next/dynamic";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -403,4 +404,4 @@ const JobDetailCard = ({ ...props }) => {
   );
 };
 
-export default JobDetailCard;
+export default dynamic (() => Promise.resolve(JobDetailCard), {ssr: false})
