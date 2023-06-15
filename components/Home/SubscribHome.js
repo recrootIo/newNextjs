@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import { PRIMARY } from "../../theme/colors";
 import { MAX } from "../../theme/spacings";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
@@ -127,4 +128,4 @@ const SubscribHome = () => {
   );
 };
 
-export default SubscribHome;
+export default dynamic (() => Promise.resolve(SubscribHome), {ssr: false})

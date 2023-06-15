@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectRoute } from '@/redux/slices/companyslice'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { setEditJob } from '@/redux/slices/job'
+import { openAlert } from '@/redux/slices/alert'
+import { ERROR } from '@/utils/constants'
 
 
 export default function EmployerSidebar() {
@@ -16,9 +19,49 @@ const router = useRouter();
 const { pathname } = router;
 const pathSegments = pathname.split('/');
 const select = pathSegments[2];
+const company = useSelector((state) => state.company?.companyDetl);
+const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
+const freePack = company.package?.subscription_package === "Free"
+const freeCount = freePack === true ? (2-cjobs.length  ) : 0  
+const proCOunt = company?.jobCounts?.proCount 
+const preCOunt = company?.jobCounts?.premiumCount 
 const handleListItemClick = (val) =>{
     dispatch(selectRoute(val))
-    if (val === '/Employer/PostNewJob') {
+    if (val === 'PostNewJob') {
+        console.log(company.jobSlot === true ,'side')
+        if (company.jobSlot === true && company.package?.paymentStatus === 'Completed') {
+            dispatch(
+              setEditJob({
+                salary: {},
+                question: [
+                  {
+                    id: new Date().getTime(),
+                    questions: "",
+                    answer: "",
+                    preferedAns: "",
+                  },
+                ],
+                requiredSkill: [],
+                address: [],
+                featureType: false,
+                queshow: "",
+              })
+            ).then(
+              setTimeout(() => {
+                router.push("/Employer/PostNewJob");
+              }, 500)
+            );
+            return
+          }
+            // eslint-disable-next-line no-mixed-operators
+            if (freeCount === 0 && preCOunt === 0 && proCOunt === 0 || freeCount === 0 && preCOunt === undefined && proCOunt === undefined) {
+              dispatch(openAlert({
+                type:ERROR,
+                message:"Your Job Limit Was Reached!"
+              }))
+              router.push('/Pricing')
+              return;
+          }
         dispatch(
             setEditJob({
               salary: {},
