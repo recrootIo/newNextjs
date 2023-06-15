@@ -53,7 +53,7 @@ const SimilarJobs = ({ jobRole }) => {
       }}
     >
       <Container>
-        <>
+
         <CustomTypography
           className={styles.similarTopic}
           fontWeight={700}
