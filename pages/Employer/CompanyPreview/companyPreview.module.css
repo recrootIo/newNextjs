@@ -19,8 +19,10 @@
 
 .PreviewTypoBox {
   display: flex;
+  gap: 10px;
   justify-content: flex-start;
   align-items: center;
+  min-height: 40px;
   /* height: 50px; */
 }
 
