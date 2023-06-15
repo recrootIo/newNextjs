@@ -82,7 +82,7 @@ const LocationInputDetails = ({ ...props }) => {
           <Box className="logoContainer">
             <Image
               className="logoImage"
-              src="/logo 8.png"
+              src="/recroot-logo-sec.png"
               alt=""
               width="0"
               height="0"
