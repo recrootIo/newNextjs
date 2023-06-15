@@ -31,7 +31,7 @@ function Employer({children}) {
     const proCOunt = company?.jobCounts?.proCount 
     const preCOunt = company?.jobCounts?.premiumCount 
     const handleEdit = () =>{
-      if (company.package?.subType === 'jSlot' && company.package?.paymentStatus === 'Completed') {
+      if (company.jobSlot === true && company.package?.paymentStatus === 'Completed') {
         dispatch(
           setEditJob({
             salary: {},
@@ -53,6 +53,7 @@ function Employer({children}) {
             push("/Employer/PostNewJob");
           }, 500)
         );
+        return
       }
         // eslint-disable-next-line no-mixed-operators
         if (freeCount === 0 && preCOunt === 0 && proCOunt === 0 || freeCount === 0 && preCOunt === undefined && proCOunt === undefined) {

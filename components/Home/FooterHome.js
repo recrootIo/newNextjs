@@ -1,6 +1,7 @@
 "use client";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Box, Stack, Container, styled } from "@mui/material";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 
 const StyledTypo = styled(CustomTypography)({
@@ -247,4 +248,5 @@ const FooterHome = () => {
   );
 };
 
-export default FooterHome;
+
+export default dynamic (() => Promise.resolve(FooterHome), {ssr: false})

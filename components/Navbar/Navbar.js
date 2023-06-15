@@ -25,6 +25,7 @@ import Link from "next/link";
 import Fade from "@mui/material/Fade";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
+import dynamic from "next/dynamic";
 
 const Navbar = () => {
   // const { data: session } = useSession()
@@ -365,4 +366,5 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+// export default Navbar;
+export default dynamic (() => Promise.resolve(Navbar), {ssr: false})

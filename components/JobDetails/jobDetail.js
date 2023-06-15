@@ -436,4 +436,5 @@ const JobDetail = ({ ...props }) => {
   );
 };
 
-export default JobDetail;
+
+export default dynamic (() => Promise.resolve(JobDetail), {ssr: false})
