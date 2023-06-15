@@ -104,7 +104,7 @@ const SearchByCategory = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/Other 17.png"
+                    image="/box-img.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -130,7 +130,7 @@ const SearchByCategory = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/Other 15.png"
+                    image="/calendar-img.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -156,7 +156,7 @@ const SearchByCategory = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/1 1.png"
+                    image="/man-with-mike-img.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
@@ -234,7 +234,7 @@ const SearchByCategory = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image="/Other 17.png"
+                    image="/box-img.png"
                     alt="green iguana"
                     sx={{
                       p: "10px",
