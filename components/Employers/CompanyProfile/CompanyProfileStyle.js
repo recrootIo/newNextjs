@@ -1,4 +1,12 @@
 export const styles = {
+  companyProfileCardImg: {
+    height: { md: "normal", xs: "20px !important" },
+    width: { md: "normal", xs: "20px !important" },
+  },
+  comProfileCardfirstImg: {
+    height: { md: "normal", xs: "20px !important" },
+    width: { md: "normal", xs: "20px !important" },
+  },
   tabbtn: {
     width: { md: "177px", xs: "120px" },
     height: "37px",

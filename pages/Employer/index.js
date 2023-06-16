@@ -142,8 +142,8 @@ function Employer({ children }) {
                 onClose={() => setIsDrawerOpen(false)}
                 PaperProps={{
                   sx: {
-                    height: "75%", // Adjust the height as per your requirement
-                    borderRadius: "10px", // Adjust the border radius as per your requirement
+                    height: "auto",
+                    borderRadius: "10px",
                   },
                 }}
               >
@@ -200,8 +200,8 @@ function Employer({ children }) {
                 <Button
                   variant="contained"
                   sx={{
-                    bgcolor: "white !important",
-                    color: "#01313F",
+                    bgcolor: "#03d3fc !important",
+                    color: "#FFFFF",
                     height: "42px",
                   }}
                   onClick={() => {

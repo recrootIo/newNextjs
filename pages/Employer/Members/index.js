@@ -368,17 +368,29 @@ const Members = () => {
 
   const { push } = useRouter();
   const theme = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
       <Employer>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={theme.breakpoints.down("xs") ? 2 : 6}
-        >
+        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -394,26 +406,48 @@ const Members = () => {
           >
             <Box
               sx={{
+                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                mt: "25px",
+                alignItems: "center",
               }}
             >
-              <Image src="/basic-info-img.png" alt="" width="60" height="42" />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {isMobile ? (
+                  <Image
+                    src="/basic-info-img.png"
+                    alt=""
+                    width="50"
+                    height="42"
+                  />
+                ) : (
+                  <Image
+                    src="/basic-info-img.png"
+                    alt=""
+                    width="60"
+                    height="42"
+                  />
+                )}
+              </Box>
             </Box>
-            <CardContent>
+            <Box sx={{ p: "16px" }}>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Basic Info
               </CustomTypography>
-            </CardContent>
+            </Box>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -431,24 +465,27 @@ const Members = () => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                mt: "25px",
               }}
             >
-              <Image src="/members-img.png" alt="" width="60" height="62" />
+              {isMobile ? (
+                <Image src="/members-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image src="/members-img.png" alt="" width="60" height="62" />
+              )}
             </Box>
-            <CardContent>
+            <Box sx={{ p: "16px" }}>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Members
               </CustomTypography>
-            </CardContent>
+            </Box>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -457,37 +494,45 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              push("/Employer/CompanyPreview");
             }}
           >
             <Box
               sx={{
+                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                mt: "25px",
+                alignItems: "center",
               }}
             >
-              <Image
-                src="/preview-img.png"
-                alt=""
-                width="70"
-                height="62"
-                style={{
-                  width: "60px",
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
                 }}
-              />
+              >
+                {isMobile ? (
+                  <Image src="/preview-img.png" alt="" width="42" height="50" />
+                ) : (
+                  <Image
+                    src="/preview-img.png"
+                    alt=""
+                    width="70"
+                    height="62"
+                    style={{
+                      width: "60px",
+                    }}
+                  />
+                )}
+              </Box>
             </Box>
-            <CardContent>
+            <Box sx={{ p: "16px" }}>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Preview
               </CustomTypography>
-            </CardContent>
+            </Box>
           </Card>
         </Stack>
         <Card
