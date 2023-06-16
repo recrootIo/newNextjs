@@ -223,7 +223,7 @@ function Signup() {
         height: { md: "100%", xs: "100%" },
         p: { sm: "50px", xs: "0px" },
         width: "100vw",
-        backgroundImage: "url(/SignUpBG.svg)",
+        backgroundImage: "url(https://api.arinnovate.io/api/openProfpic?photo=profilePictures/SignUpBG.svg)",
         overflow: "auto",
         display: "flex",
         alignItems: "center",
