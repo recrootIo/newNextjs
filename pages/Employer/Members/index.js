@@ -743,7 +743,7 @@ const Members = () => {
                             width: { xs: "100%", sm: "57%" },
                             display: "flex",
                             alignItems: "center",
-                            mr: { xs: 0, sm: "20px" },
+                            mr: { xs: 0, sm: "18px" },
                           }}
                         >
                           <FormControl sx={{ width: "100%", bgcolor: "white" }}>
