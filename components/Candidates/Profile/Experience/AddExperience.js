@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from "react-google-places-autocomplete";
-import { convertDate } from "@/utils/HelperFunctions";
+import { convertDate, convertFormat } from "@/utils/HelperFunctions";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { MobileDatePicker } from "@mui/x-date-pickers";
 import {
@@ -83,8 +83,8 @@ const AddExperience = () => {
     state: resume?.state,
     city: resume?.city,
     experience: resume?.experience,
-    fromDate: resume?.fromDate,
-    toDate: resume?.toDate,
+    fromDate: convertFormat(resume?.fromDate),
+    toDate: convertFormat(resume?.toDate),
     jobProfile: resume?.jobProfile,
     _id: resume?._id,
   });

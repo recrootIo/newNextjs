@@ -66,7 +66,7 @@ const JobDetail = ({ ...props }) => {
   const gotApply = () => {
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
-      router.push(`/uploadResume`);
+      router.push(`/Candidate/Dashboard`);
 
       dispatch(
         setJobID({
@@ -172,7 +172,11 @@ const JobDetail = ({ ...props }) => {
                     disabled={isApplied}
                     onClick={() => gotApply()}
                   >
-                    {isApplied ? "applied" : " Apply now"}
+                    {isApplied
+                      ? "applied"
+                      : data.profilePercentage < 70
+                      ? "Complete Profile"
+                      : " Apply now"}
                   </Button>
                 ) : (
                   <Button
@@ -436,5 +440,4 @@ const JobDetail = ({ ...props }) => {
   );
 };
 
-
-export default dynamic (() => Promise.resolve(JobDetail), {ssr: false})
+export default dynamic(() => Promise.resolve(JobDetail), { ssr: false });

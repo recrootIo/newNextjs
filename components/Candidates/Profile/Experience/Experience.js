@@ -27,13 +27,13 @@ import { retrieveGetSinExperience } from "@/redux/slices/personal";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { convertFormat } from "@/utils/HelperFunctions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Experience = ({ ...experience }) => {
-  console.log(experience, "experience");
   const dispatch = useDispatch();
   const [openDeleteScreen, setOpenDeleteScreen] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState("");
@@ -173,7 +173,9 @@ const Experience = ({ ...experience }) => {
                       <CustomTypography sx={{ fontWeight: "700" }}>
                         From:
                       </CustomTypography>
-                      <CustomTypography>{ex?.fromDate}</CustomTypography>
+                      <CustomTypography>
+                        {convertFormat(ex?.fromDate)}
+                      </CustomTypography>
                     </Stack>
                   </Grid>
 
@@ -182,7 +184,9 @@ const Experience = ({ ...experience }) => {
                       <CustomTypography sx={{ fontWeight: "700" }}>
                         To:
                       </CustomTypography>
-                      <CustomTypography>{ex?.toDate}</CustomTypography>
+                      <CustomTypography>
+                        {convertFormat(ex?.toDate)}
+                      </CustomTypography>
                     </Stack>
                   </Grid>
 

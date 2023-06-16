@@ -67,7 +67,10 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        if (originalPromiseResult.User.email_is_verified === false  && originalPromiseResult.User.recrootUserType === "Member") {
+        if (
+          originalPromiseResult.User.email_is_verified === false &&
+          originalPromiseResult.User.recrootUserType === "Member"
+        ) {
           push("/Verifymobile");
           return;
         }
@@ -209,8 +212,14 @@ function Signin() {
                   >
                     <button onClick={handleClick} className="linkedinButton">
                       <span>
-                        <Image src={"/linkedInLogo.png"} alt="" height="20" width="20" blurDataURL="URL"
-                placeholder="blur"/>
+                        <Image
+                          src={"/linkedInLogo.png"}
+                          alt=""
+                          height="20"
+                          width="20"
+                          blurDataURL="URL"
+                          placeholder="blur"
+                        />
                       </span>
                       <span style={{ marginTop: "6px" }}>
                         Log in with LinkedIn
@@ -224,8 +233,14 @@ function Signin() {
                       className="linkedinButton"
                     >
                       <span>
-                        <Image src={"/googleLogo.png"} alt="" height="20" width="20"  blurDataURL="URL"
-                placeholder="blur" />
+                        <Image
+                          src={"/googleLogo.png"}
+                          alt=""
+                          height="20"
+                          width="20"
+                          blurDataURL="URL"
+                          placeholder="blur"
+                        />
                       </span>
                       <span style={{ marginTop: "1px" }}>
                         Log in with Google

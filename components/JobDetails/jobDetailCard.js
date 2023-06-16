@@ -18,7 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { CANDIDATE } from "@/utils/constants";
 import { useEffect, useState } from "react";
-import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
+import {
+  fetchAppliedJobs,
+  retrievePersonal,
+  setJobID,
+} from "@/redux/slices/personal";
 import Cookies from "js-cookie";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
@@ -61,7 +65,7 @@ const JobDetailCard = ({ ...props }) => {
   const gotApply = () => {
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
-      router.push(`/uploadResume`);
+      router.push(`/Candidate/Dashboard`);
 
       dispatch(
         setJobID({
@@ -379,7 +383,11 @@ const JobDetailCard = ({ ...props }) => {
                         disabled={isApplied}
                         onClick={() => gotApply()}
                       >
-                        {isApplied ? "applied" : " Apply now"}
+                        {isApplied
+                          ? "applied"
+                          : data.profilePercentage < 70
+                          ? "Complete Profile"
+                          : "Apply now"}
                       </Button>
                     ) : userType === "Employer" ? (
                       ""
@@ -404,4 +412,4 @@ const JobDetailCard = ({ ...props }) => {
   );
 };
 
-export default dynamic (() => Promise.resolve(JobDetailCard), {ssr: false})
+export default dynamic(() => Promise.resolve(JobDetailCard), { ssr: false });

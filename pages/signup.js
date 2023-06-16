@@ -411,7 +411,7 @@ function Signup() {
                       />
                     </span>
                     <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
-                      Log in with LinkedIn
+                      Sign up with LinkedIn
                     </span>
                   </button>
                   <button
@@ -429,7 +429,7 @@ function Signup() {
                       />
                     </span>
                     <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
-                      Log in with Google
+                      sign up with Google
                     </span>
                   </button>
                   <Divider>OR</Divider>
