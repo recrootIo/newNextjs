@@ -56,9 +56,8 @@ export const getSalary = (salary, defaults = true) => {
     return (
       <CustomTypography
         variant="body2"
-        color="text.secondary"
+        sx={{ color: defaults ? "rgb(115, 115, 115)" : "#034275" }}
         fontSize={15}
-        mb={1}
       >
         {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
@@ -298,7 +297,9 @@ const SearchSection = ({ ...props }) => {
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
-  const [selectedCategory, setSelectedCategory] = useState( category !== null ? [category] : [] || []);
+  const [selectedCategory, setSelectedCategory] = useState(
+    category !== null ? [category] : [] || []
+  );
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -354,30 +355,30 @@ const SearchSection = ({ ...props }) => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
-const handleSector = (re)=>{
-  const { name, checked } = re.target;
-  let newJobs = selectedSector;
+  const handleSector = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = selectedSector;
 
-  if (checked) {
-    newJobs.push(name);
-  } else {
-    newJobs = selectedSector.filter((arr) => name != arr);
-  }
+    if (checked) {
+      newJobs.push(name);
+    } else {
+      newJobs = selectedSector.filter((arr) => name != arr);
+    }
 
-  setSelectedSector(() => [...newJobs]);
-}
-const handleCate = (re)=>{
-  const { name, checked } = re.target;
-  let newJobs = selectedCategory;
+    setSelectedSector(() => [...newJobs]);
+  };
+  const handleCate = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = selectedCategory;
 
-  if (checked) {
-    newJobs.push(name);
-  } else {
-    newJobs = selectedCategory.filter((arr) => name != arr);
-  }
+    if (checked) {
+      newJobs.push(name);
+    } else {
+      newJobs = selectedCategory.filter((arr) => name != arr);
+    }
 
-  setSelectedCategory(() => [...newJobs]);
-}
+    setSelectedCategory(() => [...newJobs]);
+  };
   const handleName = (re) => {
     const { name, checked } = re.target;
     let newJobs = names;
@@ -593,7 +594,6 @@ const handleCate = (re)=>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, sector, company, experience, jobType, page]);
 
-
   return (
     <div>
       <Box
@@ -765,7 +765,7 @@ const handleCate = (re)=>{
                           />
                         )}
 
-                        {selectedSector.map((sce)=>(
+                        {selectedSector.map((sce) => (
                           <Chip
                             key={sce}
                             label={sce}
@@ -777,9 +777,9 @@ const handleCate = (re)=>{
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
-                            onDelete={()=>handleDeleteSector(sce)}
+                            onDelete={() => handleDeleteSector(sce)}
                           />
-                        )) }
+                        ))}
 
                         {/* {selectedCompanies && (
                           <Chip
@@ -803,7 +803,7 @@ const handleCate = (re)=>{
                         {!isEmpty(exper) &&
                           exper.map((ex, index) => (
                             <Chip
-                              onDelete={(ex)=>handleDeleteExp(ex)}
+                              onDelete={(ex) => handleDeleteExp(ex)}
                               key={ex}
                               label={ex}
                               color="primary"
@@ -817,7 +817,7 @@ const handleCate = (re)=>{
                             />
                           ))}
 
-                        {selectedCategory.map((e)=>(
+                        {selectedCategory.map((e) => (
                           <Chip
                             label={e}
                             key={e}
@@ -829,7 +829,7 @@ const handleCate = (re)=>{
                               backgroundColor: "#D4F0FC",
                               color: "rgba(3, 66, 117, 0.69)",
                             }}
-                            onDelete={()=>handleDeleteCategory(e)}
+                            onDelete={() => handleDeleteCategory(e)}
                           />
                         ))}
 
@@ -876,34 +876,40 @@ const handleCate = (re)=>{
                           <Tab label="Job Type" {...a11yProps(3)} />
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                          <Box sx={{width:'100px'}}>
+                          <Box sx={{ width: "100px" }}>
                             {sectors.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
-                                control={<BpCheckbox
-                                   size="small"
-                                   checked={selectedSector.includes(sec)}
-                                   name={sec}
-                                   onChange={handleSector} />}
+                                control={
+                                  <BpCheckbox
+                                    size="small"
+                                    checked={selectedSector.includes(sec)}
+                                    name={sec}
+                                    onChange={handleSector}
+                                  />
+                                }
                                 label={sec}
                               />
                             ))}
                           </Box>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-<Box sx={{width:'100px'}}>
+                          <Box sx={{ width: "100px" }}>
                             {categories.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
-                                control={<BpCheckbox
-                                   size="small"
-                                   checked={selectedCategory.includes(sec)}
-                                   name={sec}
-                                   onChange={handleCate} />}
+                                control={
+                                  <BpCheckbox
+                                    size="small"
+                                    checked={selectedCategory.includes(sec)}
+                                    name={sec}
+                                    onChange={handleCate}
+                                  />
+                                }
                                 label={sec}
                               />
                             ))}
-</Box>
+                          </Box>
                         </TabPanel>
                         {/* <TabPanel value={value} index={2}>
                           <RadioGroup
@@ -923,18 +929,20 @@ const handleCate = (re)=>{
                         </TabPanel> */}
                         <TabPanel value={value} index={2}>
                           <FormControl>
-
-                              {USER_EXPERIENCES.map((ex, index) => (
-                                <StyledFormLabel
-                                  key={index}
-                                  control={<BpCheckbox size="small" 
-                                  checked={exper.includes(ex)}
-                                  name={ex}
-                                  onChange={handleExperience}
-                                   />}
-                                  label={ex}
-                                />
-                              ))}
+                            {USER_EXPERIENCES.map((ex, index) => (
+                              <StyledFormLabel
+                                key={index}
+                                control={
+                                  <BpCheckbox
+                                    size="small"
+                                    checked={exper.includes(ex)}
+                                    name={ex}
+                                    onChange={handleExperience}
+                                  />
+                                }
+                                label={ex}
+                              />
+                            ))}
                           </FormControl>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
@@ -984,7 +992,11 @@ const handleCate = (re)=>{
                     </DialogActions>
                   </BootstrapDialog>
                 </div>
-                <Stack className="categoryChipStack" flexWrap={'wrap'} direction="row">
+                <Stack
+                  className="categoryChipStack"
+                  flexWrap={"wrap"}
+                  direction="row"
+                >
                   {title && (
                     <Chip
                       key={title}
@@ -1016,7 +1028,7 @@ const handleCate = (re)=>{
                     />
                   )}
 
-                  {selectedSector.map((e)=>(
+                  {selectedSector.map((e) => (
                     <Chip
                       key={e}
                       label={e}
@@ -1028,9 +1040,9 @@ const handleCate = (re)=>{
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
-                      onDelete={()=>handleDeleteSector(e)}
+                      onDelete={() => handleDeleteSector(e)}
                     />
-                  )) }
+                  ))}
 
                   {/* {selectedCompanies && (
                     <Chip
@@ -1054,7 +1066,7 @@ const handleCate = (re)=>{
                     <Chip
                       key={e}
                       label={e}
-                      onDelete={()=>handleDeleteExp(e)}
+                      onDelete={() => handleDeleteExp(e)}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1066,7 +1078,7 @@ const handleCate = (re)=>{
                     />
                   ))}
 
-                  {selectedCategory.map((e)=>(
+                  {selectedCategory.map((e) => (
                     <Chip
                       label={e}
                       key={e}
@@ -1078,9 +1090,9 @@ const handleCate = (re)=>{
                         backgroundColor: "#D4F0FC",
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
-                      onDelete={()=>handleDeleteCategory(e)}
+                      onDelete={() => handleDeleteCategory(e)}
                     />
-                  )) }
+                  ))}
 
                   {!isEmpty(names) &&
                     names.map((j) => (

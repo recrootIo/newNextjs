@@ -2,7 +2,7 @@ import { Box, Button, Container } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/router";
 
-const BackBar = () => {
+const BackBar = ({ enableBack = true }) => {
   const router = useRouter();
 
   const handleGoBack = (e) => {
@@ -22,19 +22,21 @@ const BackBar = () => {
       }}
     >
       <Container>
-        <Button
-          variant="text"
-          sx={{
-            color: "white",
-            fontWeight: "500",
-            fontSize: "20px",
-            textTransform: "capitalize",
-          }}
-          onClick={handleGoBack}
-          startIcon={<ArrowBackIcon />}
-        >
-          Back
-        </Button>
+        {enableBack && (
+          <Button
+            variant="text"
+            sx={{
+              color: "white",
+              fontWeight: "500",
+              fontSize: "20px",
+              textTransform: "capitalize",
+            }}
+            onClick={handleGoBack}
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+        )}
       </Container>
     </Box>
   );
