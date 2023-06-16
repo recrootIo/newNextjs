@@ -250,7 +250,7 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
                           InputLabelProps={{ style: { color: "black" } }}
                         />
                       </Stack>
-                      <TextField
+                      {/* <TextField
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -264,7 +264,7 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
                         InputLabelProps={{ style: { color: "black" } }}
                           value={user?.email || ''}
                           onChange={onChange}
-                      />
+                      /> */}
                       <FormControl sx={style.passinput}>
                         <InputLabel
                           htmlFor="password"

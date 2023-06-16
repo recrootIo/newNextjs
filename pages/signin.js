@@ -67,8 +67,8 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        if (originalPromiseResult.User.email_is_verified === false) {
-          push("/verifyMobile");
+        if (originalPromiseResult.User.email_is_verified === false  && originalPromiseResult.User.recrootUserType === "Member") {
+          push("/Verifymobile");
           return;
         }
 

@@ -1170,11 +1170,11 @@ a {
 .searchButton {
   background-color: #00339b !important;
   color: "white";
+  margin-right: 5px;
   box-shadow: none;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-radius: 8px;
   width: 20%;
-  height: 62px;
+  height: 50px;
   font-size: 14px;
 }
 
@@ -1811,4 +1811,11 @@ a {
 
 .ql-tooltip {
   display: none !important;
+}
+
+.fc-button {
+  text-transform: capitalize !important;
+}
+.fc {
+  text-transform: capitalize !important;
 }

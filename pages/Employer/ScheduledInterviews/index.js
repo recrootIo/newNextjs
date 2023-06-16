@@ -285,7 +285,7 @@ const ScheduledInterviews = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={7}>
-                  <Box
+                  {/* <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
@@ -304,7 +304,7 @@ const ScheduledInterviews = () => {
                     >
                       New Interview
                     </Button>
-                  </Box>
+                  </Box> */}
                   <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
                   <InterviewCalendar date= {moment(date).format()} schedules={schedules} />
                 </Grid>

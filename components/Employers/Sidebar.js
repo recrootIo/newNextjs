@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import Image from 'next/image'
 import { Box, Divider, List, ListItemButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { setEditJob } from '@/redux/slices/job'
 import { openAlert } from '@/redux/slices/alert'
 import { ERROR } from '@/utils/constants'
+import { logout } from '@/redux/slices/auth'
 
 
 export default function EmployerSidebar() {
@@ -85,6 +86,12 @@ const handleListItemClick = (val) =>{
           );   
     }
 }
+const logOut = useCallback(() => {
+  dispatch(logout()).then(() => {
+    router.push("/");
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
     return <Box
         sx={{
             width: "100%",
@@ -164,7 +171,7 @@ const handleListItemClick = (val) =>{
             </Link>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
-                onClick={() => handleListItemClick()}
+                onClick={logOut}
             >
                 <Image
                     src="/power-icon.png"
