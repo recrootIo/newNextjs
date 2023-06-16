@@ -139,7 +139,13 @@ function Signup() {
   );
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    const field = event.target.name;
+    let value = event.target.value;
+
+    if (field === "email") {
+      value = value.toLowerCase();
+    }
+    setValues({ ...values, [field]: value });
   };
 
   const handleClickShowPassword = () => {
@@ -214,8 +220,6 @@ function Signup() {
       window.location.replace("https://preprod.recroot.au/auth/linkedin");
     }
   };
-
-  console.log(errors.email, "errors");
 
   return (
     <Box

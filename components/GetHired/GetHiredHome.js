@@ -23,7 +23,8 @@ import { useRouter } from "next/router";
 const GetHiredHome = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const latestJobs = useSelector((state) => state?.searchJobs?.searchDetails) || [];
+  const latestJobs =
+    useSelector((state) => state?.searchJobs?.searchDetails) || [];
 
   const [active, setActive] = useState(2);
 
@@ -61,8 +62,14 @@ const GetHiredHome = () => {
       });
   };
 
+  const replaceSlashes = (inputString) => {
+    return inputString.replace(/\//g, "%20");
+  };
+
   const handleNavigate = (jobTitle, jobRole, _id) => {
-    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
+    router.push(
+      `/jobs/${replaceSlashes(jobTitle)}/${replaceSlashes(jobRole)}/${_id}`
+    );
   };
 
   const extractFirstTwoTags = (data) => {
