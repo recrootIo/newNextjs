@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const response = await axios.get(
-      `http://localhost:3000/reset-password/${id}/${token}`
+      `https://preprod.recroot.au/reset-password/${id}/${token}`
     );
     if (response.data === "NotVerified") {
       context.res.writeHead(302, { Location: "/forgotPass" });
