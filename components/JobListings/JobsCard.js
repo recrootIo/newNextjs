@@ -19,6 +19,15 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
 import React from "react";
 import Link from "next/link";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import EventRepeatIcon from "@mui/icons-material/EventRepeat";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SchoolIcon from "@mui/icons-material/School";
+import CampaignIcon from "@mui/icons-material/Campaign";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const StyledIconWrapper = styled(Box)({
@@ -29,6 +38,7 @@ const StyledIconWrapper = styled(Box)({
 });
 
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
+  console.log(lateJob, "lateJob");
   const extractFirstTwoTags = (data) => {
     const container = document?.createElement("div");
     container.innerHTML = data;
@@ -89,13 +99,6 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
                 View Details
               </Button>
             </Box>
-            <CustomTypography
-              className="searchRstTypo"
-              variant="body2"
-              color="text.secondary"
-            >
-              {moment(lateJob.createdAt).fromNow()}
-            </CustomTypography>
           </>
         }
       />
@@ -120,19 +123,82 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           </>
         )}
 
-        <CustomTypography
-          variant="body2"
-          color="text.secondary"
-          fontSize={15}
-          mb={1}
+        <Stack
+          direction={"row"}
+          sx={{ flexWrap: "wrap", gap: "20px", m: "10px 0" }}
         >
-          {bull} {lateJob?.jobType}&nbsp;
-          {bull}
-          &nbsp;{lateJob?.essentialInformation?.experience}
-          &nbsp;
-          {bull}
-          &nbsp;{getSalary(lateJob?.salary)}
-        </CustomTypography>
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <AddBusinessIcon />
+            <CustomTypography variant="body2" fontSize={15} color={"#034275"}>
+              {lateJob?.jobType}
+            </CustomTypography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <GroupAddIcon />
+            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+              {lateJob?.essentialInformation?.experience}
+            </CustomTypography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{
+              gap: "10px",
+              color: "#034275 !important",
+              alignItems: "center",
+            }}
+          >
+            <CurrencyExchangeIcon />
+            {getSalary(lateJob?.salary, false)}
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <SchoolIcon />
+            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+              {lateJob?.essentialInformation?.qualification}
+            </CustomTypography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <EventRepeatIcon />
+            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+              {moment(lateJob.createdAt).fromNow()}
+            </CustomTypography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <CampaignIcon />
+            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+              {lateJob.notice}
+            </CustomTypography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+          >
+            <AccountBoxIcon />
+            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+              {lateJob.essentialInformation?.careerlevel}
+            </CustomTypography>
+          </Stack>
+        </Stack>
 
         <CustomTypography variant="body2" color="text.secondary" fontSize={15}>
           <div
