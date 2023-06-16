@@ -740,10 +740,10 @@ const Members = () => {
                       >
                         <Box
                           sx={{
-                            width: { xs: "100%", sm: "100%" },
+                            width: { xs: "100%", sm: "57%" },
                             display: "flex",
                             alignItems: "center",
-                            mr: { xs: 0, sm: "10px" },
+                            mr: { xs: 0, sm: "20px" },
                           }}
                         >
                           <FormControl sx={{ width: "100%", bgcolor: "white" }}>
@@ -782,7 +782,7 @@ const Members = () => {
                         </Box>
                         <Box
                           sx={{
-                            width: { xs: "100%", sm: "100%" },
+                            width: { xs: "100%", sm: "43%" },
                             display: "flex",
                             alignItems: "center",
                             mt: { xs: "normal", sm: "0px !important" },
