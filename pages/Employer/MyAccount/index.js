@@ -193,7 +193,11 @@ const MyAccount = () => {
                 <CardContent>
                   <Box>
                     <Stack spacing={3} sx={{ mt: "25px" }}>
-                      <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
+                      <Stack
+                        direction={{ xs: "column", md: "row" }}
+                        spacing={2}
+                        sx={{ width: "100%" }}
+                      >
                         <TextField
                           autoComplete="given-name"
                           name="firstName"
@@ -273,7 +277,10 @@ const MyAccount = () => {
                           //onChange={onChange}
                         />
                       </FormControl>
-                      <Stack direction="row" spacing={2}>
+                      <Stack
+                        direction={{ xs: "column", md: "row" }}
+                        spacing={2}
+                      >
                         <FormControl
                           variant="outlined"
                           sx={{ ...style.passinput, width: "100%" }}
@@ -367,9 +374,9 @@ const MyAccount = () => {
                           variant="contained"
                           sx={{
                             bgcolor: "#015FB1 !important",
-                            width: "360px",
+                            width: { xs: "100%", sm: "360px" },
                             height: "50px",
-                            mt: "55px",
+                            mt: { xs: "30px", md: "55px" },
                           }}
                         >
                           Update Password

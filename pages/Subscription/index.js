@@ -5,6 +5,7 @@ import { Button } from "@mui/base";
 import {
   Alert,
   Card,
+  Container,
   Divider,
   Grid,
   TextField,
@@ -62,7 +63,7 @@ const currencyConvert = (value, currency = "US Dollar", fractions = 0) => {
 function SubscribePrice() {
   const dispatch = useDispatch();
   const User = Cookies.get();
-  const  {push} = useRouter()
+  const { push } = useRouter();
   const [promo, setPromo] = useState(null);
   const [isValid, setIsValid] = useState(false);
   // const [discount, setDiscount] = useState(0);
@@ -128,10 +129,12 @@ function SubscribePrice() {
 
   const navigateToPaymentGateway = () => {
     if (value?.count === 0) {
-      dispatch(openAlert({
-        type:ERROR,
-        message:'Job Count Needs To Be Greater Than Zero'
-      }))
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "Job Count Needs To Be Greater Than Zero",
+        })
+      );
       return;
     }
     dispatch(updatePromotion({ price: subscriptionPrice }));
@@ -208,45 +211,80 @@ function SubscribePrice() {
           Subscription
         </Typography>
       </Box>
-      <Card
-        sx={{
-          background: "#F2F8FD",
-          borderRadius: "15px",
-          padding: "65px",
-          margin: "0 180px 0 180px",
-          position: "relative",
-          top: "-80px",
-        }}
-      >
-        <Card sx={{ padding: "20px" }}>
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={8}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                p:'10px'
-              }}
-            >
-              <Box
+      <Container>
+        <Card
+          sx={{
+            background: "#F2F8FD",
+            borderRadius: "15px",
+            padding: { xs: "10px", sm: "65px" },
+            position: "relative",
+            top: "-80px",
+          }}
+        >
+          <Card sx={{ padding: "20px" }}>
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                sm={8}
                 sx={{
-                  background: "#015FB1",
-                  p: "15px",
-                  borderRadius: "10px",
                   display: "flex",
-                  gap:'60px'
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "10px",
                 }}
               >
                 <Box
-                  variant="outlined"
-                  className="goldbutton1"
-                  sx={{ background: "#4fa9ff", borderRadius: "10px" ,display:'flex',p:'0 40px 0 40px'}}
+                  sx={{
+                    background: "#015FB1",
+                    p: "15px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    gap: { xs: "30px", sm: "40px", md: "60px" },
+                  }}
                 >
-                  <Box sx={{ display: "flex",alignItems: 'center',justifyContent: 'space-around' ,gap:'5px'}}>
-                    <img src="/thumbup.png" alt="vector" />
+                  <Box
+                    variant="outlined"
+                    className="goldbutton1"
+                    sx={{
+                      background: "#4fa9ff",
+                      borderRadius: "10px",
+                      display: "flex",
+                      p: "0 40px 0 40px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        gap: "5px",
+                      }}
+                    >
+                      <img src="/thumbup.png" alt="vector" />
+                      <Typography
+                        sx={{
+                          fontFamily: "'Inter'",
+                          fontStyle: "normal",
+                          fontWeight: 800,
+                          fontSize: "40px",
+                          lineHeight: "145%",
+                          color: "#fff",
+                        }}
+                      >
+                        {subscriptionpackage}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
                     <Typography
                       sx={{
                         fontFamily: "'Inter'",
@@ -257,263 +295,282 @@ function SubscribePrice() {
                         color: "#fff",
                       }}
                     >
-                      {subscriptionpackage}
+                      {subscriptionpackage === "Pro Plan" ||
+                      subscriptionpackage === "Premium"
+                        ? county
+                          ? currencyConvert(
+                              subscriptionPrice,
+                              "Indian Rupee",
+                              2
+                            )
+                          : currencyConvert(subscriptionPrice, "US Dollar", 2)
+                        : currencyConvert(
+                            subscriptionPrice,
+                            "US Dollar",
+                            2
+                          )}{" "}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: "'Inter'",
+                        fontStyle: "normal",
+                        fontWeight: 600,
+                        fontSize: "30px",
+                        lineHeight: "145%",
+                        color: "#fff",
+                      }}
+                    >
+                      {subscriptionpackage === "Pro Plan" ||
+                      subscriptionpackage === "Premium"
+                        ? "(monthly)"
+                        : subscriptionTimePackage}
                     </Typography>
                   </Box>
                 </Box>
-                <Box sx={{textAlign:'center',display:'flex',flexDirection:'column',}}>
-                  <Typography
-                    sx={{
-                      fontFamily: "'Inter'",
-                      fontStyle: "normal",
-                      fontWeight: 800,
-                      fontSize: "40px",
-                      lineHeight: "145%",
-                      color: "#fff",
+                <div className="pricig-body">
+                  <ul
+                    style={{
+                      marginBottom: "20px",
+                      ml: "-40px",
+                      marginTop: "20px",
                     }}
                   >
-                    {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium"
-                      ? county
-                        ? currencyConvert(subscriptionPrice, "Indian Rupee", 2)
-                        : currencyConvert(subscriptionPrice, "US Dollar", 2)
-                      : currencyConvert(subscriptionPrice, "US Dollar", 2)}{" "}
-                    {" "}
-                  </Typography>
-                  <Typography  sx={{
-                      fontFamily: "'Inter'",
-                      fontStyle: "normal",
-                      fontWeight: 600,
-                      fontSize: "30px",
-                      lineHeight: "145%",
-                      color: "#fff",
-                    }}>
-                    {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium" 
-                      ? "(monthly)"
-                      : subscriptionTimePackage}
-                  </Typography>
-                </Box>
-              </Box>
-              <div className="pricig-body">
-                <ul style={{ marginBottom: "20px", ml: "-40px" }}>
-                  {NEW_PRICING_PLAN[subscriptionpackage]?.packageList?.map(
-                    (de, id) => (
-                      <li key={id} style={{ listStyleType: "none" }}>
-                        <Stack
-                          direction={"row"}
-                          sx={{
-                            alignItems: "center",
-                          }}
-                          gap={2}
-                        >
-                          <CheckCircleOutlineTwoToneIcon
-                            fontSize="small"
-                            sx={{ color: "#1097CD" }}
-                          />
-                          <Typography fontSize={"20px"}>{de}</Typography>
-                        </Stack>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-              <StyledButton    onClick={() => navigateToPricing()}> Change Plan</StyledButton>
-            </Grid>
-            <Grid item xs={4} sx={{ display: "flex", padding: "10px" }}>
-              <Grid container spacing={2}>
-                <Grid item md={12}>
-                  <Stack direction={"column"} spacing={3}>
-                    <Stack direction={"row"} spacing={1}>
-                      <TextField
-                        sx={{ width: "80%" }}
-                        onChange={changeApply}
-                        label={"Promo Code"}
-                      />
-                      <BasicButton
-                        variant="contained"
-                        sx={{ width: "20%" }}
-                        onClick={() => validatePromo()}
-                      >
-                        Apply
-                      </BasicButton>
-                    </Stack>
-                    <Alert severity={getAlertType()}>{getAlertMessage()}</Alert>
-                    <Divider sx={{ mt: "10px" }} />
-                  </Stack>
-                </Grid>
-                {subscriptionpackage === "Pro Plan" ||
-                subscriptionpackage === "Premium" ? (
-                  <>
-                    <Grid
-                      item
-                      md={6}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        textAlign: "right",
-                      }}
-                    >
-                      <Typography fontSize={"20px"}>Job Count</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      md={6}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "right",
-                      }}
-                    >
-                      <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <Button onClick={() => handleCount("min")}>
-                          <RemoveCircleOutline />
-                        </Button>
+                    {NEW_PRICING_PLAN[subscriptionpackage]?.packageList?.map(
+                      (de, id) => (
+                        <li key={id} style={{ listStyleType: "none" }}>
+                          <Stack
+                            direction={"row"}
+                            sx={{
+                              alignItems: "center",
+                            }}
+                            gap={2}
+                          >
+                            <CheckCircleOutlineTwoToneIcon
+                              fontSize="small"
+                              sx={{ color: "#1097CD" }}
+                            />
+                            <Typography fontSize={"20px"}>{de}</Typography>
+                          </Stack>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+                <StyledButton onClick={() => navigateToPricing()}>
+                  {" "}
+                  Change Plan
+                </StyledButton>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                sx={{ display: "flex", padding: "10px" }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item md={12}>
+                    <Stack direction={"column"} spacing={3}>
+                      <Stack direction={"row"} spacing={1}>
                         <TextField
-                          sx={{ width: "70px" }}
-                          inputProps={{
-                            style: { textAlign: "center" },
-                          }}
-                          value={value?.count || ""}
-                          type="number"
-                          onChange={handleCount}
+                          sx={{ width: "80%" }}
+                          onChange={changeApply}
+                          label={"Promo Code"}
                         />
-                        <Button onClick={() => handleCount("add")}>
-                          <AddCircleOutlineRounded />
-                        </Button>
-                      </Box>
-                    </Grid>
-                  </>
-                ) : (
-                  ""
-                )}
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  <Typography fontSize={"20px"}>Sub Total</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  <Typography fontSize={"20px"}>
-                    {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium"
-                      ? county
-                        ? currencyConvert(subscriptionPrice, "Indian Rupee", 2)
-                        : currencyConvert(subscriptionPrice, "US Dollar", 2)
-                      : currencyConvert(subscriptionPrice, "US Dollar", 2)}
-                  </Typography>
-                </Grid>
-
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  {isValid && (
-                    <Typography fontSize={"20px"}>Discount</Typography>
+                        <BasicButton
+                          variant="contained"
+                          sx={{ width: "20%" }}
+                          onClick={() => validatePromo()}
+                        >
+                          Apply
+                        </BasicButton>
+                      </Stack>
+                      <Alert severity={getAlertType()}>
+                        {getAlertMessage()}
+                      </Alert>
+                      <Divider sx={{ mt: "10px" }} />
+                    </Stack>
+                  </Grid>
+                  {subscriptionpackage === "Pro Plan" ||
+                  subscriptionpackage === "Premium" ? (
+                    <>
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          textAlign: "right",
+                        }}
+                      >
+                        <Typography fontSize={"20px"}>Job Count</Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "right",
+                        }}
+                      >
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                          <Button onClick={() => handleCount("min")}>
+                            <RemoveCircleOutline />
+                          </Button>
+                          <TextField
+                            sx={{ width: "70px" }}
+                            inputProps={{
+                              style: { textAlign: "center" },
+                            }}
+                            value={value?.count || ""}
+                            type="number"
+                            onChange={handleCount}
+                          />
+                          <Button onClick={() => handleCount("add")}>
+                            <AddCircleOutlineRounded />
+                          </Button>
+                        </Box>
+                      </Grid>
+                    </>
+                  ) : (
+                    ""
                   )}
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  {isValid && (
-                    <Typography fontSize={"20px"}>
-                      {currencyConvert(
-                        subscriptionPrice - newTotal,
-                        "US Dollar",
-                        2
-                      )}
-                    </Typography>
-                  )}
-                </Grid>
-                <Grid item md={12}>
-                  <Divider />
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  <Typography fontSize={"30px"}>Total</Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  <Typography fontSize={"30px"}>
-                    {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium"
-                      ? county
-                        ? currencyConvert(subscriptionPrice, "Indian Rupee", 2)
-                        : currencyConvert(subscriptionPrice, "US Dollar", 2)
-                      : currencyConvert(subscriptionPrice, "US Dollar", 2)}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  md={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    textAlign: "right",
-                  }}
-                >
-                  <StyledButton
-                    variant="contained"
-                    // endIcon={}
-                    sx={{ width: "100%" }}
-                    color="success"
-                    onClick={() => navigateToPaymentGateway()}
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
                   >
-                    Card <AddCardIcon />
-                  </StyledButton>
+                    <Typography fontSize={"20px"}>Sub Total</Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    <Typography fontSize={"20px"}>
+                      {subscriptionpackage === "Pro Plan" ||
+                      subscriptionpackage === "Premium"
+                        ? county
+                          ? currencyConvert(
+                              subscriptionPrice,
+                              "Indian Rupee",
+                              2
+                            )
+                          : currencyConvert(subscriptionPrice, "US Dollar", 2)
+                        : currencyConvert(subscriptionPrice, "US Dollar", 2)}
+                    </Typography>
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    {isValid && (
+                      <Typography fontSize={"20px"}>Discount</Typography>
+                    )}
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    {isValid && (
+                      <Typography fontSize={"20px"}>
+                        {currencyConvert(
+                          subscriptionPrice - newTotal,
+                          "US Dollar",
+                          2
+                        )}
+                      </Typography>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    <Typography fontSize={"30px"}>Total</Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    <Typography fontSize={"30px"}>
+                      {subscriptionpackage === "Pro Plan" ||
+                      subscriptionpackage === "Premium"
+                        ? county
+                          ? currencyConvert(
+                              subscriptionPrice,
+                              "Indian Rupee",
+                              2
+                            )
+                          : currencyConvert(subscriptionPrice, "US Dollar", 2)
+                        : currencyConvert(subscriptionPrice, "US Dollar", 2)}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      textAlign: "right",
+                    }}
+                  >
+                    <StyledButton
+                      variant="contained"
+                      // endIcon={}
+                      sx={{ width: "100%" }}
+                      color="success"
+                      onClick={() => navigateToPaymentGateway()}
+                    >
+                      Card <AddCardIcon />
+                    </StyledButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          </Card>
         </Card>
-      </Card>
+      </Container>
     </div>
   );
 }

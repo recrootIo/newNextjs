@@ -37,6 +37,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { isEmpty } from "lodash";
 import dynamic from "next/dynamic";
+import { useTheme } from "@mui/material/styles";
 import Employer from "..";
 import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -55,10 +56,14 @@ const CompanyPreview = () => {
     isEmpty(final?.companyLogo?.logo) === true
       ? "companyLogo/logo-default.svg"
       : final?.companyLogo?.logo;
+  const theme = useTheme();
   return (
     <>
       <Employer>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={7}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={theme.breakpoints.down("xs") ? 2 : 6}
+        >
           <Card
             sx={{
               width: "100%",

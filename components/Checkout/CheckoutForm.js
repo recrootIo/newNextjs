@@ -6,15 +6,15 @@ import {
 } from "@stripe/react-stripe-js";
 import { Box, Button, styled } from "@mui/material";
 const BasicButton = styled(Button)({
-    color: "#ffff",
-    padding: "10px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#4fa9ff !important",
-    textTransform: "capitalize",
-    // width: "50%",
-    marginBottom: "10px",
-  });
+  color: "#ffff",
+  padding: "10px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  width: { xs: "100%", sm: "auto" },
+  marginBottom: "10px",
+});
 export default function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
@@ -52,7 +52,7 @@ export default function CheckoutForm(props) {
       }
     });
   }, [stripe]);
-console.log(stripe,elements)
+  console.log(stripe, elements);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -66,8 +66,7 @@ console.log(stripe,elements)
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-       return_url: `https://extraordinary-melba-a931eb.netlify.app/Subscription/SuccessPayment?pack=${props.options.subscriptionpackage}&count=${props.options.countFin}&name=${props.options.clientSecret}`,
-
+        return_url: `https://extraordinary-melba-a931eb.netlify.app/Subscription/SuccessPayment?pack=${props.options.subscriptionpackage}&count=${props.options.countFin}&name=${props.options.clientSecret}`,
       },
     });
 
@@ -89,16 +88,20 @@ console.log(stripe,elements)
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
       <Box sx={{ direction: "rtl", marginTop: "20px" }}>
-      <BasicButton
-        className="pay-button"
-        disabled={isLoading || !stripe || !elements}
-        id="submit"
-        type="submit"
-      >
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </BasicButton>
+        <BasicButton
+          className="pay-button"
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+          type="submit"
+        >
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              "Pay now"
+            )}
+          </span>
+        </BasicButton>
       </Box>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}

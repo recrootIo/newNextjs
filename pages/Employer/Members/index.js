@@ -51,6 +51,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import { useTheme } from "@mui/material/styles";
 import Employer from "..";
 uuidv4();
 const Members = () => {
@@ -366,10 +367,14 @@ const Members = () => {
   }, [dispatch, memberrole]);
 
   const { push } = useRouter();
+  const theme = useTheme();
   return (
     <>
       <Employer>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={6}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={theme.breakpoints.down("xs") ? 2 : 6}
+        >
           <Card
             sx={{
               width: "100%",
@@ -719,103 +724,129 @@ const Members = () => {
               >
                 {mems.map((member, index) => (
                   <Box sx={styles.membox} key={index}>
-                    <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
-                      <Box
+                    <Stack
+                      direction={"row"}
+                      spacing={2}
+                      sx={{ width: "100%", display: "flex" }}
+                    >
+                      <Stack
+                        spacing={2}
                         sx={{
-                          width: "45%",
                           display: "flex",
+                          flexDirection: { xs: "column", sm: "row" },
+                          width: "90%",
                           alignItems: "center",
                         }}
                       >
-                        <FormControl sx={{ width: "100%", bgcolor: "white" }}>
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Member Name
-                          </InputLabel>
-                          <Select
-                            name="memberId"
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={member.memberId}
-                            onChange={(e) => {
-                              handleMemChange(member.id, e);
-                            }}
-                            label="Account Members"
-                            sx={styles.naminput2}
-                            // error={errors.cmpemail ? true : false}
-                            // helperText={errors.cmpemail}
-                          >
-                            {result.map((res) => (
-                              <MenuItem
-                                key={res.firstName}
-                                value={res._id}
-                                hidden={mems.some(
-                                  (vendor) => vendor["memberId"] === res._id
-                                )}
+                        <Box
+                          sx={{
+                            width: { xs: "100%", sm: "100%" },
+                            display: "flex",
+                            alignItems: "center",
+                            mr: { xs: 0, sm: "10px" },
+                          }}
+                        >
+                          <FormControl sx={{ width: "100%", bgcolor: "white" }}>
+                            <InputLabel
+                              id="demo-simple-select-label"
+                              sx={{ color: "#BAD4DF" }}
+                            >
+                              Member Name
+                            </InputLabel>
+                            <Select
+                              name="memberId"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={member.memberId}
+                              onChange={(e) => {
+                                handleMemChange(member.id, e);
+                              }}
+                              label="Account Members"
+                              sx={styles.naminput2}
+                              // error={errors.cmpemail ? true : false}
+                              // helperText={errors.cmpemail}
+                            >
+                              {result.map((res) => (
+                                <MenuItem
+                                  key={res.firstName}
+                                  value={res._id}
+                                  hidden={mems.some(
+                                    (vendor) => vendor["memberId"] === res._id
+                                  )}
+                                >
+                                  {res.firstName} {res.lastName}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        <Box
+                          sx={{
+                            width: { xs: "100%", sm: "100%" },
+                            display: "flex",
+                            alignItems: "center",
+                            mt: { xs: "normal", sm: "0px !important" },
+                          }}
+                        >
+                          <FormControl sx={{ width: "100%", bgcolor: "white" }}>
+                            <InputLabel
+                              id="demo-simple-select-label"
+                              sx={{ color: "#BAD4DF" }}
+                            >
+                              Roles
+                            </InputLabel>
+                            {user?.memberType === "jobsAdmin" ? (
+                              <Select
+                                name="role"
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={member && member.role}
+                                label="Roles"
+                                sx={styles.naminput2}
+                                onChange={(e) => {
+                                  handleMemChange(member.id, e);
+                                }}
                               >
-                                {res.firstName} {res.lastName}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
+                                <MenuItem value="HiringManager">
+                                  Hiring Manager
+                                </MenuItem>
+                              </Select>
+                            ) : (
+                              <Select
+                                name="role"
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={member && member.role}
+                                label="Roles"
+                                sx={styles.naminput2}
+                                onChange={(e) => {
+                                  handleMemChange(member.id, e);
+                                }}
+                              >
+                                <MenuItem value="SuperAdmin">
+                                  {" "}
+                                  Super Admin{" "}
+                                </MenuItem>
+                                <MenuItem value="jobsAdmin">
+                                  Jobs Admin
+                                </MenuItem>
+                                <MenuItem value="HiringManager">
+                                  Hiring Manager
+                                </MenuItem>
+                              </Select>
+                            )}
+                          </FormControl>
+                        </Box>
+                      </Stack>
                       <Box
                         sx={{
-                          width: "45%",
                           display: "flex",
+                          width: "10%",
+                          flexDirection: { xs: "column", sm: "row" },
                           alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        <FormControl sx={{ width: "100%", bgcolor: "white" }}>
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Roles
-                          </InputLabel>
-                          {user?.memberType === "jobsAdmin" ? (
-                            <Select
-                              name="role"
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              value={member && member.role}
-                              label="Roles"
-                              sx={styles.naminput2}
-                              onChange={(e) => {
-                                handleMemChange(member.id, e);
-                              }}
-                            >
-                              <MenuItem value="HiringManager">
-                                Hiring Manager
-                              </MenuItem>
-                            </Select>
-                          ) : (
-                            <Select
-                              name="role"
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              value={member && member.role}
-                              label="Roles"
-                              sx={styles.naminput2}
-                              onChange={(e) => {
-                                handleMemChange(member.id, e);
-                              }}
-                            >
-                              <MenuItem value="SuperAdmin">
-                                {" "}
-                                Super Admin{" "}
-                              </MenuItem>
-                              <MenuItem value="jobsAdmin">Jobs Admin</MenuItem>
-                              <MenuItem value="HiringManager">
-                                Hiring Manager
-                              </MenuItem>
-                            </Select>
-                          )}
-                        </FormControl>
-                      </Box>
-                      <Box sx={{ display: "flex", ml: "20px" }}>
                         {memberrole.length === index + 1 ? (
                           <IconButton
                             variant="contained"

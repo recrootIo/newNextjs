@@ -14,6 +14,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
 
 function Employer({ children }) {
   const user = Cookies.get();
@@ -96,6 +97,8 @@ function Employer({ children }) {
       }, 500)
     );
   };
+
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   return (
     <div>
       <Head>
@@ -123,14 +126,30 @@ function Employer({ children }) {
               width: "100%",
             }}
           >
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon sx={{ color: "white", fontSize: "35px" }} />
-            </IconButton>
+            <>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={() => setIsDrawerOpen(true)}
+              >
+                <MenuIcon sx={{ color: "white", fontSize: "35px" }} />
+              </IconButton>
+              <Drawer
+                anchor="left"
+                open={isDrawerOpen}
+                onClose={() => setIsDrawerOpen(false)}
+                PaperProps={{
+                  sx: {
+                    height: "75%", // Adjust the height as per your requirement
+                    borderRadius: "10px", // Adjust the border radius as per your requirement
+                  },
+                }}
+              >
+                <EmployerSidebar />
+              </Drawer>
+            </>
             <CustomTypography
               variant="h6"
               sx={{

@@ -70,6 +70,7 @@ import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
+import { useTheme } from "@mui/material/styles";
 import Employer from "..";
 
 const style = {
@@ -262,10 +263,16 @@ const CompanyProfile = () => {
     );
     handleClick();
   };
+
+  const theme = useTheme();
+
   return (
     <>
       <Employer>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={6}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={theme.breakpoints.down("xs") ? 2 : 6}
+        >
           <Card
             sx={{
               width: "100%",
@@ -340,7 +347,10 @@ const CompanyProfile = () => {
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{
+                  color: "white",
+                  fontSize: "30px",
+                }}
                 variant="h5"
               >
                 Members
