@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
     experience = [],
     variant = "",
     company = "",
-    sector = "",
+    sector = [],
     limit = 10,
   } = context.query;
 
