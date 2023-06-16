@@ -101,8 +101,16 @@ const ScheduledInterviews = () => {
     dispatch(getSchedules());
     dispatch(getJobsfil());
   }, [dispatch]);
-  const sear = useSelector((state) => state?.sinterview?.schedules);
-
+  const inters = useSelector((state) => state?.sinterview?.schedules);
+  const [sear, setsear] = useState([])
+  const [seared, setseared] = useState([])
+  useEffect(() => {
+  if (inters) {
+setsear(inters)
+setseared(inters)
+  }
+  }, [inters])
+  
   const [arry, setArry] = useState([]);
   useEffect(() => {
     var arrras = [];
@@ -141,47 +149,18 @@ const ScheduledInterviews = () => {
     const {
       target: { value },
     } = event;
-
-    let duplicateRemoved = [];
-
-    value.forEach((item) => {
-      if (duplicateRemoved.findIndex((o) => o === item) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x) => x === item);
-      } else {
-        duplicateRemoved.push(item);
-      }
-    });
-
-    setNames(duplicateRemoved);
+    setNames(value);
+    setsear(seared.filter((it)=>it.jobId === value))
   };
 
-  const filterObjectArray = (arr, filterArr) => {
-    return arr.filter((el) =>
-      filterArr.some((f) => f === el.jobDetail.jobTitle)
-    );
-  };
 
   const handleClose = () => {
     setAnchorEl(null);
-    if (names.length > 0) {
-      setArry(filterObjectArray(arry, names));
-    }
-    if (names.length === 0) {
-      setArry(user);
-    }
   };
 
   const mark = [];
   sear.map((dat) => mark.push(moment(dat.day).format("DD-MM-YYYY")));
 
-  const handleSetint = (id) => {
-    dispatch(setinterview(sear.filter((job) => job._id === id)[0])).then(
-      setTimeout(() => {
-        navigate("/employerhome/interview");
-      }, 500)
-    );
-  };
-  console.log(names,'nam')
   return (
     <>
       <Employer>
@@ -224,37 +203,26 @@ const ScheduledInterviews = () => {
                         horizontal: "left",
                       }}
                     >
-                      <FormControl sx={{ m: 1, width: 330 }}>
+                      <FormControl sx={{ m: 1, width: '500px'}}>
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
                         </InputLabel>
                         <Select
                           labelId="demo-multiple-checkbox-label"
                           id="demo-multiple-checkbox"
-                          multiple
                           variant="outlined"
                           value={names}
                           onChange={handleName}
                           input={<OutlinedInput label="Filter By Jobs" />}
-                          renderValue={(selected) =>
-                            selected.map((x) => x).join(", ")
-                          }
                           MenuProps={MenuProps}
-                          sx={{ width: "328px" }}
+                          sx={{ width: "500px" }}
                         >
                   {jobs.map((variant) => ( 
                           <MenuItem
                                   key={variant._id}
-                                  value={variant.jobRole}
+                                  value={variant._id}
                                 >
-                                  <Checkbox
-                                    checked={
-                                      names.findIndex(
-                                        (item) => item === variant.jobRole
-                                      ) >= 0
-                                    }
-                                  />
-                                  <ListItemText primary={variant.jobRole} />
+                                  <ListItemText primary={`${variant.jobRole} (${moment(variant.createdAt).format('LL')})`} />
                                 </MenuItem>
                           ))}
                         </Select>

@@ -85,7 +85,7 @@ function validateDead(applicationDeadline, errors) {
 function validateTypee(jobType, errors) {
   let result = true;
 
-  if (!jobType) {
+  if (!jobType || jobType === undefined) {
     errors.jobType = "Job Type is Required";
     result = false;
   }

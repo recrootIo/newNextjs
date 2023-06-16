@@ -172,7 +172,7 @@ const EssentialInformation = () => {
   const handleImmediateType = (event) => {
     dispatch(immediateSet(event.target.checked));
   };
-
+console.log(errors,'err')
   return (
     <>
    <Box>
