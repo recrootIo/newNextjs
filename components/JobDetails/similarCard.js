@@ -92,7 +92,7 @@ const SimilarJobCard = ({ ...props }) => {
               )}
             </Box>
             <Stack spacing={0.5}>
-              <Box sx={{ display: "flex", mt: "25px" }}>
+              <Box sx={{ display: "flex", mt: "10px" }}>
                 <Image
                   className={styles.similariconImg}
                   src="/location.png"
@@ -221,7 +221,7 @@ const SimilarJobCard = ({ ...props }) => {
                 variant="body2"
                 color="text.secondary"
               >
-                Expires
+                Expires{" "}
                 {moment(data.applicationDeadline).endOf("day").fromNow()}
               </CustomTypography>
             </Box>
