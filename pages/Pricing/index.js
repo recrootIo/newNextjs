@@ -363,7 +363,8 @@ const {push} = useRouter()
         </Box>
       </Box>
       <Box>
-    {jobSwitch === 'jPost'  ? (  <Grid
+    {jobSwitch === 'jPost'  ? (  
+    <Grid
           container
           sx={{
             gap: "13px",
@@ -372,7 +373,9 @@ const {push} = useRouter()
             m:'35px 0 50px 0'
           }}
         >
-          <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+   {freePres ? (
+                        ""
+                      ) : (   <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
             <Box
               sx={{
                 background: "#F4FBFE",
@@ -428,7 +431,7 @@ const {push} = useRouter()
                 </StyledButton>
               </Box>
             </Box>
-          </Grid>
+          </Grid>)}
           <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
             <Box
               sx={{

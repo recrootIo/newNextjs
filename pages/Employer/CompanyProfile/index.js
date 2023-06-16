@@ -34,6 +34,7 @@ import {
   Avatar,
   useMediaQuery,
   FormHelperText,
+  styled,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -258,6 +259,11 @@ const {push} = useRouter()
     );
     handleClick();
   };
+  const StyledAvatar = styled(Avatar)(({}) => ({
+    "& .MuiAvatar-img": {
+      objectFit:'contain'
+    }
+  }));
   return (
     <>
 <Employer>
@@ -416,7 +422,7 @@ const {push} = useRouter()
                   >
                     <Box sx={styles.logosec}>
                       <Box sx={styles.companylogo}>
-                        <Avatar
+                        <StyledAvatar
                           src={
                             logo && logo.logo !== undefined
                               ? `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo.logo}`

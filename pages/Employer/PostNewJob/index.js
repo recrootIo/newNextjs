@@ -176,7 +176,7 @@ function PostnewJob() {
   };
 
  
-
+console.log(showq,'quest')
   function Pages(index, cal) {
     if (cal === "add" && index <= 2) {
       if (index === 0) {
@@ -205,6 +205,13 @@ function PostnewJob() {
                 message:"Please Provide Job Location"
             }))
           return;
+        }
+        if(showq === ""){
+          dispatch(openAlert({
+            type:ERROR,
+            message:"Please Select An Option For Screening Questions"
+        }))
+      return;
         }
         if (showq === "true") {
           var arryMem = final.question.map((mem) => {

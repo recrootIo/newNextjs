@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
+import FullCalendar from "globa"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick

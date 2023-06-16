@@ -36,7 +36,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
-// import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 require("jspdf-autotable");
@@ -371,6 +371,8 @@ const county = state?.countryCurrecy === 'INR'
                           'url("/Subscription card with white top sectionBG.svg")',
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
+                        backgroundColor:"#fff0 !important",
+                        boxShadow:'#fff0 !important'
                       }}
                     >
                       <Box
@@ -393,8 +395,8 @@ const county = state?.countryCurrecy === 'INR'
                       </Box>
                       <Box
                         sx={{
-                          height: "210px",
-                          p: "0px 15px 0px 15px",
+                          height: "auto",
+                          p: "15px",
                         }}
                       >
                         <Grid container spacing={2}>
@@ -517,7 +519,7 @@ const county = state?.countryCurrecy === 'INR'
                         }}
                       >
                         <Grid container spacing={2}>
-                          <Grid item xs={8}>
+                          <Grid item xs={15} sx={{justifyContent:'center'}}>
                             <Stack spacing={2}>
                               <Box
                                 sx={{
@@ -579,7 +581,7 @@ const county = state?.countryCurrecy === 'INR'
                               </Box>
                             </Stack>
                           </Grid>
-                          <Grid
+                          {/* <Grid
                             item
                             xs={4}
                             sx={{
@@ -600,7 +602,7 @@ const county = state?.countryCurrecy === 'INR'
                             >
                               Manage Payments
                             </Button>
-                          </Grid>
+                          </Grid> */}
                         </Grid>
                       </Box>
                       }
