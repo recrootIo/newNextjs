@@ -25,7 +25,7 @@ const Index = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url("/bg.svg")`,
+        backgroundImage: `url("/bg.webp")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: "100%",
@@ -82,7 +82,7 @@ const Index = () => {
         <StyledButton
           variant="contained"
           onClick={() => {
-            push('/');
+            push("/");
           }}
         >
           {searchText}
