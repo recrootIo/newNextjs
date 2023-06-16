@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import {
   Card,
@@ -210,7 +209,8 @@ function Signin() {
                   >
                     <button onClick={handleClick} className="linkedinButton">
                       <span>
-                        <img src={"/linkedInLogo.png"} alt="" height={"30px"} />
+                        <Image src={"/linkedInLogo.png"} alt="" height="20" width="20" blurDataURL="URL"
+                placeholder="blur"/>
                       </span>
                       <span style={{ marginTop: "6px" }}>
                         Log in with LinkedIn
@@ -224,7 +224,8 @@ function Signin() {
                       className="linkedinButton"
                     >
                       <span>
-                        <img src={"/googleLogo.png"} alt="" height={"30px"} />
+                        <Image src={"/googleLogo.png"} alt="" height="20" width="20"  blurDataURL="URL"
+                placeholder="blur" />
                       </span>
                       <span style={{ marginTop: "1px" }}>
                         Log in with Google

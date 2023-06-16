@@ -144,6 +144,7 @@ const Navbar = () => {
                       color: "black",
                       fontWeight: 600,
                     }}
+                    prefetch
                   >
                     Jobs
                   </Link>
@@ -203,6 +204,7 @@ const Navbar = () => {
                           color: "black",
                           fontWeight: 600,
                         }}
+                        prefetch
                       >
                         Sign In
                       </Link>
@@ -213,6 +215,7 @@ const Navbar = () => {
                           color: "black",
                           fontWeight: 600,
                         }}
+                        prefetch
                       >
                         Sign Up
                       </Link>
