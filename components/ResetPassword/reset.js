@@ -17,7 +17,7 @@ export const styles = {
   },
   resin: {
     fontWeight: 700,
-    fontSize: "48px",
+    fontSize: "30px",
     lineHeight: "70px",
     letterSpacing: "1.5px",
     marginTop: { md: "112px", xs: "20px" },

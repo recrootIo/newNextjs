@@ -81,7 +81,7 @@ const ForgotPassword = () => {
                 >
                   <Box
                     sx={{
-                      width: { md: "70%", sm: "100%", xs: "100%" },
+                      width: { md: "50%", sm: "100%", xs: "100%" },
                       flexDirection: "column",
                       gap: "30px",
                       display: "flex",
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
                     }}
                   >
                     <CustomTypography
-                      sx={{ fontWeight: "600", fontSize: "40px" }}
+                      sx={{ fontWeight: "600", fontSize: "30px" }}
                     >
                       Reset Password Link
                     </CustomTypography>
