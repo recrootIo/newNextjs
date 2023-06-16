@@ -26,7 +26,7 @@
 }
 
 .similarCard {
-  width: 340px;
+  width: 100%;
   box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
   padding-top: 0;
@@ -52,6 +52,7 @@
   line-height: 27px;
   font-weight: 300;
   margin-left: 20px;
+  width: 75%;
 }
 
 .btnBox {
@@ -80,6 +81,7 @@
   padding-top: 50px;
   text-align: center;
   font-size: 30px;
+  font-family: "Inter-Bold";
 }
 
 .similarTypoBox {
@@ -87,7 +89,7 @@
   justify-content: space-between;
   width: 100%;
   margin-top: 10px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
 .similarTypo {
@@ -126,9 +128,6 @@
 @media only screen and (max-width: 600px) {
   .similarCard {
     width: 100%;
-  }
-  .carouselstack {
-    display: none;
   }
   .logo {
     display: none;

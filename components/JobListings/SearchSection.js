@@ -281,13 +281,13 @@ const SearchSection = ({ ...props }) => {
     company,
     experience,
     jobType,
-    page,
+    // page,
     variant,
   } = props;
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const loading = useSelector((state) => state.searchJobs.loading);
-
+  // console.log(page,'pagessss')
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [names, setNames] = useState(jobType || []);
@@ -297,9 +297,8 @@ const SearchSection = ({ ...props }) => {
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
-  const [selectedCategory, setSelectedCategory] = useState(
-    category !== null ? [category] : [] || []
-  );
+
+  const [selectedCategory, setSelectedCategory] = useState(category || []);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -315,7 +314,8 @@ const SearchSection = ({ ...props }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  console.log(category, "exper", selectedCategory);
+  const { page = 1 } = router.query;
   const getJobs = () => {
     dispatch(
       searchJobs({
@@ -409,10 +409,14 @@ const SearchSection = ({ ...props }) => {
       page: page,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const handleNavigate = (jobTitle, jobRole, _id) => {
@@ -441,12 +445,16 @@ const SearchSection = ({ ...props }) => {
     setTitle("");
     setSelectedCategory([]);
 
-    router.push({
-      pathname: router.pathname,
-      query: {
-        page: 1,
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          page: 1,
+        },
       },
-    });
+      undefined,
+      { shallow: true }
+    );
   };
 
   const setSearchFields = () => {
@@ -492,10 +500,14 @@ const SearchSection = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const handleDeleteSector = (e) => {
@@ -509,10 +521,14 @@ const SearchSection = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
 
     setSelectedSector(() => [...newNames]);
   };
@@ -528,10 +544,14 @@ const SearchSection = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
 
     setSelectedCategory(() => [...newNames]);
   };
@@ -552,10 +572,14 @@ const SearchSection = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
 
     setExper(() => [...newNames]);
   };
@@ -571,10 +595,14 @@ const SearchSection = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
 
     setNames(() => [...newNames]);
   };
@@ -592,7 +620,16 @@ const SearchSection = ({ ...props }) => {
   useEffect(() => {
     getJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, sector, company, experience, jobType, page]);
+  }, [
+    category,
+    sector,
+    company,
+    page,
+    names,
+    exper,
+    selectedCategory,
+    selectedSector,
+  ]);
 
   return (
     <div>
@@ -634,7 +671,6 @@ const SearchSection = ({ ...props }) => {
                 variant="contained"
                 className="searchButton"
                 sx={{
-                  marginRight: "5px",
                   marginTop: { md: "0", sm: "10px", xs: "10px" },
                 }}
                 onClick={() => setSearchFields()}
@@ -666,9 +702,6 @@ const SearchSection = ({ ...props }) => {
                     setExper={setExper}
                     clearSearch={clearSearch}
                     sectors={sectors}
-                    // companies={companies}
-                    // selectedCompanies={selectedCompanies}
-                    // setSelectedCompanies={setSelectedCompanies}
                     selectedSector={selectedSector}
                     setSelectedSector={setSelectedSector}
                     categories={categories}

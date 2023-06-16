@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { Box, Stack, Button, Container } from "@mui/material";
+import { Box, Stack, Button, Container, Grid } from "@mui/material";
 import Carousel from "react-elastic-carousel";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import React, { useEffect, useRef } from "react";
@@ -10,7 +10,9 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import searchService from "@/redux/services/search.service";
+import styles from "./jobDetail.module.css";
 import dynamic from "next/dynamic";
+
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -51,52 +53,23 @@ const SimilarJobs = ({ jobRole }) => {
       }}
     >
       <Container>
-        <>
+
         <CustomTypography
-          className="similarTopic"
+          className={styles.similarTopic}
           fontWeight={700}
           gutterBottom
         >
           <span style={{ color: "#034275" }}>Similar&nbsp;</span>
           <span style={{ color: "#02A9F7" }}>Jobs</span>
         </CustomTypography>
+        <Grid container spacing={3}>
+          {similar.slice(0, 9).map((simi, index) => (
+            <Grid item xs={12} md={4} key={index}>
+              <SimilarJobCard data={simi} />
+            </Grid>
+          ))}
+        </Grid>
 
-        <Stack
-          className="carouselstack"
-          direction={{ xs: "column", md: "row" }}
-          spacing={2}
-        >
-          <Carousel
-            breakPoints={breakPoints}
-            // enableAutoPlay
-            ref={carouselRef}
-            showArrows={false}
-            onNextEnd={({ index }) => {
-              clearTimeout(resetTimeout);
-              if (index + 1 === totalPages) {
-                resetTimeout = setTimeout(() => {
-                  carouselRef?.current?.goTo(0);
-                }, 1500); // same time
-              }
-            }}
-          >
-            {similar.map((simi, index) => (
-              <SimilarJobCard key={index} data={simi} />
-            ))}
-          </Carousel>
-        </Stack>
-
-        <Box
-          sx={{
-            mt: "30px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img src="./Frame 93.png" alt="" />
-        </Box>
-        </>
       </Container>
     </Box>
   );

@@ -10,7 +10,6 @@ import {
   Container,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import ShareIcon from "@mui/icons-material/Share";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 // import dynamic from "next/dynamic";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
@@ -133,7 +132,7 @@ const JobDetailCard = ({ ...props }) => {
           sx={{
             minWidth: 275,
             border: 0,
-            backgroundImage: `url("/Job detail page Background.svg")`,
+            backgroundImage: `url("/jobdetail-card-bg.png")`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: "8px 16px",
@@ -144,7 +143,7 @@ const JobDetailCard = ({ ...props }) => {
               <Grid item xs={12} sm={8}>
                 <Stack spacing={1}>
                   <Box
-                    // className="mobileLogo"
+                    className="mobileLogo"
                     sx={{ display: "flex", justifyContent: "flex-start" }}
                   >
                     <Image
@@ -314,25 +313,30 @@ const JobDetailCard = ({ ...props }) => {
                   </Box>
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={4} style={{ display: "grid" }}>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box
                   className="logo"
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  {/* <Image
-                    src={`${
-                      getImageLogo(company?.companyLogo?.logo) ||
-                      "/service2.png"
-                    }`}
+                  <Image
+                    src={compImage}
                     alt=""
-                    height={14}
-                    width={14}
+                    width={120}
+                    height={35}
                     style={{
-                      width: "100px !important",
-                      height: "100px !important",
-                      marginTop: "5px !important",
+                      maxWidth: "160px",
+                      maxHeight: "160px",
                     }}
-                  /> */}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -360,7 +364,7 @@ const JobDetailCard = ({ ...props }) => {
                       }}
                       onClick={() => handleBookmark()}
                     >
-                      <BookmarkBorderIcon />
+                      <BookmarkBorderIcon sx={{ fontSize: "38px" }} />
                     </IconButton>
 
                     <ShareForm url={loginCallBackURL} title={jobRole} />

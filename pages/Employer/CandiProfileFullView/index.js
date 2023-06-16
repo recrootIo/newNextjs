@@ -71,7 +71,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
 import { useDispatch, useSelector } from "react-redux";
-import { getSinResume, updateNote } from "@/redux/slices/applyJobs";
+import { getCandi, getSinResume, updateNote } from "@/redux/slices/applyJobs";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
 import DvrIcon from '@mui/icons-material/Dvr';
@@ -109,6 +109,7 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
 const CandiFullProfileView = () => {
   const router = useRouter()
   const {appId} = router.query;
+  const {canId} = router.query;
   const [appdata, setappdata] = useState({});
   const [status, setstatus] = useState('');
   const [loading, setLoading] = useState(true);
@@ -117,11 +118,26 @@ const CandiFullProfileView = () => {
   useEffect(() => {
     if (appId !== undefined) {      
       setLoading(true);
-  getCand()
+      getCand()
+    }
+    if(canId){
+      setLoading(true);
+   getCanddet()
     }
       // .then((res) => console.log(res));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appId]);
+  }, [appId,canId]);
+  const getCanddet = ()=>{
+      dispatch(getCandi(canId))
+      .unwrap()
+      .then((originalPromiseResult) => {
+        setcandidate(originalPromiseResult)
+        dispatch(
+          getSinResume(originalPromiseResult?.resume?.resumeFileLocation[0]?._id)
+        );
+      setLoading(false);
+      });
+  }
   const getCand = () =>{
     new applyJobService()
     .getAppliedOnly(appId)
@@ -129,6 +145,7 @@ const CandiFullProfileView = () => {
       setappdata(res.data);
       setNote(res.data?.notes)
       setstatus(res.data.status)
+      setcandidate(res.data?.candidateId)
       dispatch(getSinResume(res.data?.resumeId))
       const ids = {
         cid:res.data?.candidateId?._id,
@@ -138,6 +155,7 @@ const CandiFullProfileView = () => {
       setLoading(false);
     })
   }
+  const [candidate, setcandidate] = useState({})
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -159,7 +177,6 @@ const CandiFullProfileView = () => {
   }
   const matches = useMediaQuery("(max-width:600px)");
   const match = useMediaQuery("(max-width:1050px)");
-  const candidate = appdata?.candidateId;
   const resume = useSelector((state) => state.apply.resume);
   const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
@@ -522,6 +539,7 @@ const handleDialogAction = () => {
               variant="outlined"
               onClick={() => enableCvAction()}
               endIcon={<PersonOutlineIcon />}>View Cv</Button>
+               {canId ? '' :
                 <Button    sx={{  color: "#black !important",
   padding: "5px !important",
   borderRadius: "10px!important",
@@ -532,11 +550,13 @@ const handleDialogAction = () => {
   width: "100% !important", }}
               variant="outlined"
               onClick={() => handleDialogAction()}
-              endIcon={<EventNoteIcon />}>Add Note</Button>
+              endIcon={<EventNoteIcon />}>Add Note</Button>}
                 </Box>
               </Grid>
             </Box>
-            {cvshow === false ?  <Box
+            {cvshow === false ?  
+          canId ? '' :
+            <Box
               sx={{
                 width: "100%",
                 border: "1px solid #D3EAFF",

@@ -224,6 +224,8 @@ function Signup() {
         p: { sm: "50px", xs: "0px" },
         width: "100vw",
         backgroundImage: "url(/SignUpBG.svg)",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
         overflow: "auto",
         display: "flex",
         alignItems: "center",
@@ -268,6 +270,8 @@ function Signup() {
                 height="0"
                 sizes="100vw"
                 className="loginLogo"
+                blurDataURL="URL"
+                placeholder="blur"
               />
             </Stack>
             <Stack
@@ -310,6 +314,8 @@ function Signup() {
                     width="0"
                     height="0"
                     sizes="100vw"
+                    blurDataURL="URL"
+                    placeholder="blur"
                   />
                   <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
                     Candidate
@@ -348,6 +354,8 @@ function Signup() {
                     width="0"
                     height="0"
                     sizes="100vw"
+                      blurDataURL="URL"
+                     placeholder="blur"
                   />
                   <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
                     Employer

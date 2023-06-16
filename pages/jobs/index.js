@@ -42,13 +42,13 @@ export const getServerSideProps = async (context) => {
   const {
     title = null,
     address = null,
-    category = null,
+    category = [],
     page = 1,
     jobType = [],
     experience = [],
     variant = "",
     company = "",
-    sector = "",
+    sector = [],
     limit = 10,
   } = context.query;
 
@@ -92,7 +92,7 @@ export const getServerSideProps = async (context) => {
       address,
       title,
       categories,
-      category,
+      category: Array.isArray(category) ? category : [category],
       page,
       variant,
       sector,
