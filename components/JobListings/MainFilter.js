@@ -170,7 +170,10 @@ const MainFilter = ({ ...props }) => {
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,
-    });
+    }, 
+      undefined,
+    { shallow: true }
+    );
   };
 
   const handleExperience = (re) => {
@@ -194,7 +197,9 @@ const MainFilter = ({ ...props }) => {
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,
-    });
+    },
+        undefined,
+    { shallow: true });
   };
 
   // const selectCompanies = (re, a) => {
@@ -211,7 +216,9 @@ const MainFilter = ({ ...props }) => {
   //   router.push({
   //     pathname: router.pathname,
   //     query: updatedQueryParams,
-  //   });
+  //   },
+    //   undefined,
+    // { shallow: true });
   // };
 
   const selectTheSector = (re) => {
@@ -235,7 +242,9 @@ const MainFilter = ({ ...props }) => {
       router.push({
         pathname: router.pathname,
         query: updatedQueryParams,
-    });
+    },
+        undefined,
+    { shallow: true });
 };
 
   const handleCateExpandClick = () => {
@@ -263,7 +272,9 @@ const MainFilter = ({ ...props }) => {
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,
-    });
+    },
+        undefined,
+    { shallow: true });
   };
 
   return (
