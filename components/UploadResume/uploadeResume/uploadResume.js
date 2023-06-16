@@ -216,7 +216,7 @@ const UploadResume = () => {
     <Box>
       <Box
         style={{
-          backgroundImage: `url("/bg.svg")`,
+          backgroundImage: `url("/bg.webp")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           height: "950px",

@@ -875,7 +875,7 @@ body {
 .signInMain {
   min-height: 100vh;
   width: 100vw;
-  background-image: url("/SignUpBG.svg");
+  background-image: url("/SignUpBg.webp");
   overflow: auto;
   background-repeat: no-repeat !important;
   background-size: cover;

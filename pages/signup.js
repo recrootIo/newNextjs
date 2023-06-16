@@ -223,9 +223,9 @@ function Signup() {
         height: { md: "100%", xs: "100%" },
         p: { sm: "50px", xs: "0px" },
         width: "100vw",
-        backgroundImage: "url(/SignUpBG.svg)",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        backgroundImage: "url(/SignUpBg.webp)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
         overflow: "auto",
         display: "flex",
         alignItems: "center",
@@ -354,8 +354,8 @@ function Signup() {
                     width="0"
                     height="0"
                     sizes="100vw"
-                      blurDataURL="URL"
-                     placeholder="blur"
+                    blurDataURL="URL"
+                    placeholder="blur"
                   />
                   <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
                     Employer
