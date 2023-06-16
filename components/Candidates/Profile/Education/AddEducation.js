@@ -294,6 +294,17 @@ const AddEducation = () => {
                             },
                           }}
                         />
+                        {errors?.country && !values.country && (
+                          <CustomTypography
+                            sx={{
+                              color: " #f44336;",
+                              fontSize: "0.75rem",
+                              ml: "14px",
+                            }}
+                          >
+                            Locations are missing
+                          </CustomTypography>
+                        )}
                       </Box>
 
                       {values?.country === "" ? (
