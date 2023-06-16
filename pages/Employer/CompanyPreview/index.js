@@ -13,6 +13,7 @@ import {
   Divider,
   Avatar,
   Typography,
+  styled,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -52,6 +53,11 @@ dispatch(getCompanyDetails())
 
   const final = useSelector((state) => state.company?.companyDetl);
   const logo = isEmpty(final?.companyLogo?.logo) === true ? 'companyLogo/logo-default.svg' : final?.companyLogo?.logo;
+  const StyledAvatar = styled(Avatar)(({}) => ({
+    "& .MuiAvatar-img": {
+      objectFit:'contain'
+    }
+  }));
   return (
     <>
     <Employer>
@@ -68,6 +74,7 @@ dispatch(getCompanyDetails())
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     borderRadius: "15px",
+                    cursor:'pointer'
                   }}
                   onClick={()=>{push('/Employer/CompanyProfile')}}
                 >
@@ -106,6 +113,7 @@ dispatch(getCompanyDetails())
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     borderRadius: "15px",
+                    cursor:'pointer'
                   }}
                   onClick={()=>{push('/Employer/Members')}}
                 >
@@ -144,6 +152,7 @@ dispatch(getCompanyDetails())
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     borderRadius: "15px",
+                    cursor:'pointer'
                   }}
                 >
                   <Box
@@ -228,7 +237,7 @@ dispatch(getCompanyDetails())
                           backgroundColor: "white",
                         }}
                       >
-                        <Avatar
+                        <StyledAvatar
                           alt=""
                           src={`https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`}
                           sx={{ height: "228px", width: "228px" }}
@@ -385,7 +394,32 @@ dispatch(getCompanyDetails())
                       </CustomTypography>
                     </Box>
                   </Box>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      mt: "40px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      sx={{
+                        width: "50%",
+                        bgcolor: "#015FB1 !important",
+                        height: "55px",
+                      }}
+                      onClick={()=>{
+                        push('/Employer/Dashboard')
+                      }}
+                    >
+                      Go To Dashboard
+                    </Button>
+                  </Stack>
                 </CardContent>
+                
               </Card>
     </Employer>
     </>

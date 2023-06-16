@@ -81,6 +81,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { isEmpty } from "lodash";
 
 
 const bull = (
@@ -251,6 +252,13 @@ const saveNote = () => {
 const handleDialogAction = () => {
   setOpen(!open);
 };
+const back = () =>{
+  if(canId){
+    router.back()
+  }else{
+    router.push(`/Employer/AllApplicants?aid=${appdata?._id}`)
+  }
+}
   return (
     <>
       <EmployerNavbar />
@@ -275,7 +283,7 @@ const handleDialogAction = () => {
               zIndex:'100'
             }}
             startIcon={<ArrowBackIcon />}
-            onClick={() => router.back()}
+            onClick={() => back()}
           >
             Back
           </Button>
@@ -554,6 +562,40 @@ const handleDialogAction = () => {
                 </Box>
               </Grid>
             </Box>
+            {console.log(notes)}
+            {
+           isEmpty(notes) ? "" :
+            <Box
+              sx={{
+                width: "100%",
+                border: "1px solid #D3EAFF",
+                borderRadius: "15px",
+              }}
+            >
+              <Box
+                sx={{
+                  bgcolor: "#D3EAFF",
+                  width: "100%",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "0 25px 0 25px",
+                }}
+              >
+                <CustomTypography className={styles.FullProfileSectionTitle}>
+                 Notes
+                </CustomTypography>
+              </Box>
+              <Box sx={{ p: "25px" }}>
+                {/* <Stack spacing={1}> */}
+                <ReactQuill value={notes} readOnly={true} theme={"bubble"} />
+                {/* </Stack> */}
+              </Box>
+            </Box>
+            }
             {cvshow === false ?  
           canId ? '' :
             <Box
@@ -660,12 +702,18 @@ onClick={handleEditInterview}
               </Box>
               <Box sx={{ p: "25px" }}>
                 <Stack spacing={1}>
-                  <CustomTypography className={styles.FullProfileSectionTypo}>
-                    About
-                  </CustomTypography>
-                  <CustomTypography className={styles.FullProfileSectionData}>
-                   {candidate?.about}
-                  </CustomTypography>
+                  
+                  <Box className={styles.FullProfilePersonalDetailsTypoBox}>
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                      About
+                    </CustomTypography>
+                    <CustomTypography className={styles.FullProfileSectionTypo}>
+                      :
+                    </CustomTypography>
+                    <CustomTypography className={styles.FullProfileSectionData}>
+                      {candidate?.about}
+                    </CustomTypography>
+                  </Box>
                   <Box className={styles.FullProfilePersonalDetailsTypoBox}>
                     <CustomTypography className={styles.FullProfileSectionTypo}>
                       Current Salary :
@@ -808,7 +856,7 @@ onClick={handleEditInterview}
                         variant="subtitle2"
                         className={styles.ViewFullInfoMainText}
                       >
-                       {wrk?.role}
+                       &nbsp;{wrk?.role}
                       </CustomTypography>
                       </Stack>
                       <Stack direction={'row'} >
@@ -820,7 +868,7 @@ onClick={handleEditInterview}
                         variant="subtitle2"
                         className={styles.ViewFullInfoText}
                       >
-                        {wrk?.companyName}
+                       &nbsp; {wrk?.companyName}
                       </CustomTypography>
                       </Stack>
                       {wrk?.city !== '' ?
@@ -926,6 +974,19 @@ onClick={handleEditInterview}
                          &nbsp;{edu?.graduate}
                       </CustomTypography>
                       </Stack>
+                      {console.log(edu)}
+                  {edu?.collegeName !== '' ?
+                      <Stack direction={'row'} >  
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+                    College Name : 
+                    </CustomTypography>
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.ViewFullInfoText}
+                      >
+                         &nbsp; {edu?.collegeName}
+                      </CustomTypography>
+                      </Stack> : ''}
                   {edu?.city !== '' ?
                       <Stack direction={'row'} >  
                       <CustomTypography className={styles.FullProfileSectionTypo}>

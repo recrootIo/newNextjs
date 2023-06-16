@@ -63,6 +63,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
 import Employer from "..";
+import { isEmpty } from "lodash";
 
 
 const style = {
@@ -210,6 +211,8 @@ const {push} = useRouter()
     /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleBlur = (e, msg) => {
+    console.log('object1')
+    e.preventDefault()
     if (e.target.name === "cmpemail") {
       let result = re.test(String(e.target.value).toLowerCase());
       if (!result) {
@@ -222,11 +225,11 @@ const {push} = useRouter()
     if (e.target.value === "") {
       return;
     }
-    dispatch(updateFinaldetails(final));
-    dispatch(
-      openAlert({ type: SUCCESS, message: msg})
-    );
-    handleClick();
+    dispatch(updateFinaldetails(final)).then(
+      dispatch(
+        openAlert({ type: SUCCESS, message: msg})
+      )
+    )
   };
   const handleBlurDes = (value) => {
     if (value.index === 0) {
@@ -241,9 +244,7 @@ const {push} = useRouter()
   const [open1, setOpen1] = React.useState(false);
   const [message, setmessage] = React.useState("");
 
-  const handleClick = () => {
-    setOpen1(true);
-  };
+
 
   const handleClose1 = (event, reason) => {
     if (reason === "clickaway") {
@@ -257,13 +258,13 @@ const {push} = useRouter()
     dispatch(
       openAlert({ type: SUCCESS, message: "Basic Info Privacy Was Updated"})
     );
-    handleClick();
   };
   const StyledAvatar = styled(Avatar)(({}) => ({
     "& .MuiAvatar-img": {
       objectFit:'contain'
     }
   }));
+  console.log(basicin.cmpemail,'email')
   return (
     <>
 <Employer>
@@ -322,7 +323,7 @@ const {push} = useRouter()
                     cursor:'pointer'
                   }}
                   onClick={()=>{
-                    if (basicin?.email === null && basicin?.email === undefined) {
+                    if (isEmpty(basicin?.cmpemail)) {
                       dispatch(openAlert({
                         type:ERROR,
                         message:'Please Provide Company Email'
@@ -367,7 +368,7 @@ const {push} = useRouter()
                     borderRadius: "15px",
                     cursor:'pointer'
                   }}
-                  onClick={()=>{if (basicin?.email === null && basicin?.email === undefined) {
+                  onClick={()=>{if (isEmpty(basicin?.cmpemail)) {
                     dispatch(openAlert({
                       type:ERROR,
                       message:'Please Provide Company Email'
@@ -595,7 +596,7 @@ const {push} = useRouter()
                           ? basicin.cmpemail
                           : ""
                       }
-                      
+                      required
                       error={errors.cmpemail ? true : false}
                       helperText={errors.cmpemail}
                     />
@@ -847,7 +848,7 @@ const {push} = useRouter()
                         height: "55px",
                       }}
                       onClick={()=>{
-                        if (basicin?.email === null && basicin?.email === undefined) {
+                        if (isEmpty(basicin?.cmpemail)) {
                           dispatch(openAlert({
                             type:ERROR,
                             message:'Please Provide Company Email'

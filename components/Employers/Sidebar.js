@@ -1,7 +1,7 @@
 
 import React, { useCallback } from 'react'
 import Image from 'next/image'
-import { Box, Divider, List, ListItemButton } from '@mui/material'
+import { Box, Divider, List, ListItemButton, Tooltip } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectRoute } from '@/redux/slices/companyslice'
 import Link from 'next/link'
@@ -56,10 +56,17 @@ const handleListItemClick = (val) =>{
           }
             // eslint-disable-next-line no-mixed-operators
             if (freeCount === 0 && preCOunt === 0 && proCOunt === 0 || freeCount === 0 && preCOunt === undefined && proCOunt === undefined) {
-              dispatch(openAlert({
-                type:ERROR,
-                message:"Your Job Limit Was Reached!"
-              }))
+              if(company.package?.subscription_package === undefined){
+                dispatch(openAlert({
+                  type:ERROR,
+                  message:"Subscribe A Plan To Post A job"
+                }))
+              }else{
+                dispatch(openAlert({
+                  type:ERROR,
+                  message:"Your Job Limit Was Reached!"
+                }))
+              }
               router.push('/Pricing')
               return;
           }
@@ -110,13 +117,16 @@ const logOut = useCallback(() => {
             </ListItemButton>
             <Divider variant="middle" color="gray" />
             <Link href={'/Employer/Dashboard'}>
+            <Tooltip title="dashboard" placement="right">
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" ,background:select === 'Dashboard' ? background : "" }}
                 onClick={() => handleListItemClick('Dashboard')}
             >
                 <Image src="/home.png" alt="" width="40" height="40" />
             </ListItemButton>
+            </Tooltip>
             </Link>
+            <Tooltip title="Company Profile" placement="right">
             <Link href={'/Employer/CompanyProfile'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'CompanyProfile' || select === 'Members' || select === 'CompanyPreview'? background : "" }}
@@ -125,14 +135,18 @@ const logOut = useCallback(() => {
                 <Image src="/profile.png" alt="" width="40" height="40" />
             </ListItemButton>
             </Link>
+            </Tooltip>
             {/* <Link href={'/Employer/PostNewJob'}> */}
+            <Tooltip title="Post New Job" placement="right">    
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'PostNewJob' ? background : "" }}
                 onClick={() => handleListItemClick('PostNewJob')}
             >
                 <Image src="/jobs.png" alt="" width="40" height="40" />
             </ListItemButton>
+            </Tooltip>
             {/* </Link> */}
+            <Tooltip title="All Applicants" placement="right">        
             <Link href={'/Employer/AllApplicants'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'AllApplicants' ? background : ""}}
@@ -141,6 +155,8 @@ const logOut = useCallback(() => {
                 <Image src="/team.png" alt="" width="40" height="40" />
             </ListItemButton>
             </Link>
+            </Tooltip>
+            <Tooltip title="Scheduled Interviews" placement="right">
             <Link href={'/Employer/ScheduledInterviews'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" , background:select === 'ScheduledInterviews' ? background : "" }}
@@ -149,6 +165,8 @@ const logOut = useCallback(() => {
                 <Image src="/convo.png" alt="" width="40" height="40" />
             </ListItemButton>
             </Link>
+            </Tooltip>
+            <Tooltip title="Subscription" placement="right">
             <Link href={'/Employer/Subscription'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
@@ -161,6 +179,8 @@ const logOut = useCallback(() => {
                     height="40" />
             </ListItemButton>
             </Link>
+            </Tooltip>
+            <Tooltip title="My Account" placement="right">
             <Link href={'/Employer/MyAccount'}>
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
@@ -169,6 +189,8 @@ const logOut = useCallback(() => {
                 <Image src="/myAccount.png" alt="" width="40" height="40" />
             </ListItemButton>
             </Link>
+            </Tooltip>
+            <Tooltip title="Logout" placement="right">
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" }}
                 onClick={logOut}
@@ -179,6 +201,7 @@ const logOut = useCallback(() => {
                     width="40"
                     height="40" />
             </ListItemButton>
+            </Tooltip>
         </List>
     </Box>
 }
