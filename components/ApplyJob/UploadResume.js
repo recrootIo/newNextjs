@@ -226,6 +226,7 @@ const UploadResume = ({ ...props }) => {
 
   const sendC = async (pdfC) => {
     await dispatch(addCover(pdfC))
+      .unwrap()
       .then(() => {
         dispatch(
           openAlert({
@@ -235,6 +236,8 @@ const UploadResume = ({ ...props }) => {
         );
         dispatch(retrievePersonal());
         dispatch(removeCover({}));
+        setCheckedcov(false);
+        setPdfC("");
         setCovers({
           cover: undefined,
           id: undefined,
@@ -253,6 +256,7 @@ const UploadResume = ({ ...props }) => {
   const handleDelete = (id) => {
     dispatch(updateAndThenGet(id));
     dispatch(removeResume({}));
+    dispatch(retrievePersonal());
     setSelectedResume({
       resume: undefined,
       id: undefined,
@@ -262,6 +266,7 @@ const UploadResume = ({ ...props }) => {
   const handleDeleteC = (id) => {
     dispatch(deleteCoverAndGet(id));
     dispatch(removeCover({}));
+
     setCovers({
       cover: undefined,
       id: undefined,
@@ -284,8 +289,6 @@ const UploadResume = ({ ...props }) => {
 
   const coverDisabled = !show || covers?.id;
   const buttonDisable = selectedResume?.id && coverDisabled;
-
-  console.log(selectedResume?.id, "selectedResume");
 
   return (
     <div
@@ -534,6 +537,7 @@ const UploadResume = ({ ...props }) => {
                 />
               </FormGroup>
             </Grid>
+
             {show ? (
               <div>
                 <Grid
@@ -669,6 +673,7 @@ const UploadResume = ({ ...props }) => {
                     label="Add New Cover Letter"
                   />
                 </Grid>
+
                 {covers._id !== undefined ? (
                   <Grid
                     item

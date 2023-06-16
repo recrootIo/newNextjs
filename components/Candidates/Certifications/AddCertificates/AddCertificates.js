@@ -192,7 +192,8 @@ const AddCertificates = ({}) => {
                 console.log(values, "values");
               }}
             >
-              {({ submitForm, setFieldValue }) => {
+              {({ submitForm, setFieldValue, errors, values }) => {
+                console.log(values, "values");
                 return (
                   <Form>
                     <Stack spacing={2} sx={{ mt: "50px" }}>
@@ -215,31 +216,6 @@ const AddCertificates = ({}) => {
                       >
                         <CustomPickers name="issueDate" label="From" />
                         <CustomPickers name="expireDate" label="To" />
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          <MobileDatePicker
-                            sx={{ width: "100%" }}
-                            label="From"
-                            // inputFormat="MM/dd/YYYY"
-                            name="fromDate"
-                            value={value}
-                            onChange={handleChangeForm}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={{ width: "100%" }} />
-                            )}
-                          />
-
-                          <MobileDatePicker
-                            label="To"
-                            sx={{ width: "100%" }}
-                            // inputFormat="MM/dd/YYYY"
-                            name="toDate"
-                            value={value2}
-                            onChange={handleChangeto}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={{ width: "100%" }} />
-                            )}
-                          />
-                        </LocalizationProvider> */}
                       </Stack>
                       <Stack direction="row" spacing={2}>
                         <CustomTextField
@@ -272,6 +248,17 @@ const AddCertificates = ({}) => {
                           />
                         </Button>
                       </Stack>
+                      {values.certificate.name && (
+                        <Stack
+                          direction={"row"}
+                          sx={{ justifyContent: "flex-end" }}
+                        >
+                          <CustomTypography>
+                            {values.certificate.name}
+                          </CustomTypography>
+                        </Stack>
+                      )}
+
                       <Stack direction="row" spacing={2}>
                         <Button
                           variant="contained"

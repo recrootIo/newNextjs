@@ -32,6 +32,7 @@ const StyledButton = styled("button")({
 const SearchHome = () => {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
+  const [types, setJobTypes] = useState("");
 
   const router = useRouter();
 
@@ -44,7 +45,11 @@ const SearchHome = () => {
   };
 
   const searchData = () => {
-    router.push(`/jobs?title=${title}&address=${address}`);
+    router.push(`/jobs?title=${title}&address=${address}&jobType=${types}`);
+  };
+
+  const selectType = (a, type) => {
+    setJobTypes(type);
   };
 
   return (
@@ -130,9 +135,8 @@ const SearchHome = () => {
                   }}
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
-                  defaultValue="Permanent"
-                  //   onChange={typeChange}
-                  //   value={search.type}
+                  onChange={selectType}
+                  value={types}
                 >
                   <FormControlLabel
                     style={{ color: "#034275", fontSize: "20px" }}

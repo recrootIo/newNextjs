@@ -66,8 +66,6 @@ const ProfileCard = ({ ...props }) => {
       });
   };
 
-  console.log(question, "upload");
-
   const hasQuestions = question.length > 0;
 
   const getScreens = () => {

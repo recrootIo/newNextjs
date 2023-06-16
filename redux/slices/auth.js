@@ -6,9 +6,7 @@ import Cookies from "js-cookie";
 //   // Perform localStorage action
 //   const item = localStorage.getItem('key')
 
-
-const user = Cookies.get('userID');
-
+const user = Cookies.get("userID");
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -26,12 +24,16 @@ export const register = createAsyncThunk(
         values.immediate
       );
       thunkAPI.dispatch(setMessage(response.data.message));
-      Cookies.set("userID",response.data?.User?._id,{expires:1})
-      Cookies.set("verifyCode",response.data?.User?.referral_code,{expires:1})
-      Cookies.set("token",response.data?.token,{expires:1})
-      Cookies.set("userType",response.data?.User?.recrootUserType,{expires:1})
-      Cookies.set("companyId",response.data?.User?.companyId,{expires:1})
-      Cookies.set("firstName",response.data?.User?.firstName,{expires:1})
+      Cookies.set("userID", response.data?.User?._id, { expires: 1 });
+      Cookies.set("verifyCode", response.data?.User?.referral_code, {
+        expires: 1,
+      });
+      Cookies.set("token", response.data?.token, { expires: 1 });
+      Cookies.set("userType", response.data?.User?.recrootUserType, {
+        expires: 1,
+      });
+      Cookies.set("companyId", response.data?.User?.companyId, { expires: 1 });
+      Cookies.set("firstName", response.data?.User?.firstName, { expires: 1 });
       localStorage.setItem("User", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
@@ -128,6 +130,7 @@ export const setUserFromGoogle = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
+  localStorage.removeItem("Redirect");
   await AuthService.logout();
 });
 const initialState = user
@@ -138,40 +141,49 @@ const authSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(
-      setUserFromGoogle.fulfilled, (state, { payload }) => {
-        state.user = payload
-    },
-      register.fulfilled, (state, { payload }) => {
+      setUserFromGoogle.fulfilled,
+      (state, { payload }) => {
+        state.user = payload;
+      },
+      register.fulfilled,
+      (state, { payload }) => {
         state.isLoggedIn = true;
         state.user = payload;
-    },
-     register.rejected,(state, action) => {
-      state.isLoggedIn = false;
-    },
-    reRegister.rejected,(state, action) => {
-      state.isLoggedIn = false;
-    },
-    reRegister.fulfilled, (state, action) => {
-      state.isLoggedIn = true;
-      state.user = action.payload;
-    },
-   login.fulfilled,(state, action) => {
-      state.isLoggedIn = true;
-      state.user = action.payload;
-    },
-    login.rejected, (state, action) => {
-      state.isLoggedIn = false;
-      state.user = null;
-    },
-    logout.fulfilled,(state, action) => {
-      state.isLoggedIn = false;
-      state.user = null;
-    },
-    setUserFromGoogle.fulfilled, (state, action) => {
-      state.user = action.payload;
-    },
-    ) // <------- HERE
- }, 
+      },
+      register.rejected,
+      (state, action) => {
+        state.isLoggedIn = false;
+      },
+      reRegister.rejected,
+      (state, action) => {
+        state.isLoggedIn = false;
+      },
+      reRegister.fulfilled,
+      (state, action) => {
+        state.isLoggedIn = true;
+        state.user = action.payload;
+      },
+      login.fulfilled,
+      (state, action) => {
+        state.isLoggedIn = true;
+        state.user = action.payload;
+      },
+      login.rejected,
+      (state, action) => {
+        state.isLoggedIn = false;
+        state.user = null;
+      },
+      logout.fulfilled,
+      (state, action) => {
+        state.isLoggedIn = false;
+        state.user = null;
+      },
+      setUserFromGoogle.fulfilled,
+      (state, action) => {
+        state.user = action.payload;
+      }
+    ); // <------- HERE
+  },
   // extraReducers:  {
   //   [register.fulfilled]: (state, action) => {
   //     state.isLoggedIn = true;

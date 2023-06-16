@@ -143,10 +143,12 @@ const AddCareerPreference = () => {
 
   const addWordType = () => {
     let work = careerPre.jobTypes;
-    work = [...work, jobTypes];
-    work = Array.from(new Set(work));
-    setCareerPre((state) => ({ ...state, jobTypes: work }));
-    setJobTypes(() => "");
+    if (jobTypes) {
+      work = [...work, jobTypes];
+      work = Array.from(new Set(work));
+      setCareerPre((state) => ({ ...state, jobTypes: work }));
+      setJobTypes(() => "");
+    }
   };
 
   const removeJobs = (e) => {

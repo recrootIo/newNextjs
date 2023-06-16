@@ -46,8 +46,6 @@ const ProfileCompletion = () => {
       ? percent?.education?.percent / 2
       : 0;
 
-  console.log(percent?.education?.length, "Education");
-
   const Certificate =
     percent?.certificate?.length <= users?.certificateFileLocation?.length
       ? percent?.certificate?.percent
@@ -189,7 +187,6 @@ const ProfileCompletion = () => {
             Profile Completion
           </CustomTypography>
           <CustomTypography>
-            {" "}
             Enhance your profile by adding more information to aim for a minimum
             of 70%
           </CustomTypography>
