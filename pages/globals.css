@@ -1170,11 +1170,11 @@ a {
 .searchButton {
   background-color: #00339b !important;
   color: "white";
-  margin-right: 5px;
   box-shadow: none;
-  border-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
   width: 20%;
-  height: 50px;
+  height: 62px;
   font-size: 14px;
 }
 
