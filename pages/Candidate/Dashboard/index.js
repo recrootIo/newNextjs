@@ -91,8 +91,6 @@ const Index = () => {
   const scrollToElement = (section) => {
     let element = null;
 
-    console.log(section, "section");
-
     if (section === "resume_section") {
       element = document.getElementById("resume_section");
       element.scrollIntoView({
@@ -167,14 +165,6 @@ const Index = () => {
 
     if (section === "savedJob_details_section") {
       element = document.getElementById("savedJob_details_section");
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-      return;
-    }
-
-    if (section) {
-      element = document.getElementById("resume_section");
       element.scrollIntoView({
         behavior: "smooth",
       });
