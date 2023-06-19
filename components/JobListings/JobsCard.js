@@ -51,12 +51,16 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const compImage = lateJob?.company[0]?.companyLogo?.logo
     ? getImageLogo(lateJob?.company[0]?.companyLogo?.logo)
     : "/defaultCompany.svg";
-
+    const StyledAvatar = styled(Avatar)(({}) => ({
+      "& .MuiAvatar-img": {
+        objectFit:'contain'
+      }
+    }));
   return (
     <Card className="jobCard">
       <CardHeader
         avatar={
-          <Avatar alt="logo" src={compImage} sx={{ width: 65, height: 65 }} />
+          <StyledAvatar alt="logo" src={compImage} sx={{ width: 65, height: 65 }} />
         }
         titleTypographyProps={{
           fontSize: 18,
