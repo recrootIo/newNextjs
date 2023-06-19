@@ -7,8 +7,10 @@ import { Avatar, Box, Stack } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const EmployerNavbar = () => {
+  const { push } = useRouter();
   return (
     <nav>
       <div
@@ -23,7 +25,15 @@ const EmployerNavbar = () => {
       >
         <Container>
           <Stack direction="row" spacing={3}>
-            <Image src="/logo.png" alt="Your Company" width="143" height="31" />
+            <Image
+              src="/logo.png"
+              alt="Your Company"
+              width="143"
+              height="31"
+              onClick={() => {
+                push("/");
+              }}
+            />
             <Box sx={{ flex: 1 }}>
               <Stack
                 direction="row"
