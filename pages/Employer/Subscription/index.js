@@ -38,6 +38,7 @@ import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useTheme } from "@mui/material/styles";
 
 require("jspdf-autotable");
 
@@ -357,11 +358,13 @@ const Subscriptions = () => {
   var company = useSelector((state) => state.company);
   const county = state?.countryCurrecy === "INR";
 
+  const theme = useTheme();
+
   return (
     <>
       <Employer>
         <Grid container spacing={2}>
-          <Grid item xs={7}>
+          <Grid item xs={12} md={7}>
             <Stack spacing={2} sx={{ height: "100%" }}>
               <Card
                 sx={{
@@ -401,13 +404,19 @@ const Subscriptions = () => {
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
-                      <Stack spacing={3}>
+                      <Stack
+                        spacing={3}
+                        sx={{
+                          display: "flex",
+                          [theme.breakpoints.down("sm")]: {
+                            spacing: 2,
+                          },
+                        }}
+                      >
                         <Box
                           sx={{
-                            width: "40%",
+                            width: { xs: "100%", md: "40%" },
                             display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
                             borderRadius: "6px",
                           }}
                         >
@@ -429,7 +438,7 @@ const Subscriptions = () => {
                         </Box>
                         <Box
                           sx={{
-                            width: "30%",
+                            width: { xs: "100%", sm: "30%" },
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -485,7 +494,7 @@ const Subscriptions = () => {
                               color: "#01313F",
                               textTransform: "capitalize",
                               fontSize: "16px",
-                              width: "50%",
+                              width: { xs: "100%", sm: "50%", md: "50%" },
                             }}
                             onClick={handleNavigate}
                           >
@@ -643,7 +652,7 @@ const Subscriptions = () => {
               </Card>
             </Stack>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={12} md={5}>
             <Card sx={{ borderRadius: "10px" }}>
               <Box
                 sx={{
@@ -796,7 +805,7 @@ const Subscriptions = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: { xs: "center", md: "flex-end" },
           }}
         >
           <Button
@@ -804,7 +813,7 @@ const Subscriptions = () => {
             sx={{
               bgcolor: "#015FB1 !important",
               height: "54px",
-              width: "40%",
+              width: { xs: "100%", md: "40%" },
               borderRadius: "8px",
               mt: "10px",
             }}
@@ -813,7 +822,7 @@ const Subscriptions = () => {
             Download Invoice
           </Button>
         </Box>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ mt: { xs: "30px", md: "0px" } }}>
           <Box sx={{ width: "100%" }}>
             <CustomTypography
               sx={{

@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
   Button,
+  Container,
 } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
 import Link from "next/link";
@@ -294,50 +295,52 @@ function Pricing() {
           Job Package
         </Typography>
       </Box>
-      <Card
-        sx={{
-          background: "#F2F8FD",
-          borderRadius: "15px",
-          margin: "0 100px 0 100px",
-          padding: "65px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "12px",
-          position: "relative",
-          top: "-110px",
-        }}
-      >
-        <Typography
+      <Container>
+        <Card
           sx={{
-            fontWeight: 600,
-            fontSize: "30px",
-            lineHeight: "36px",
-            color: "#034275",
+            background: "#F2F8FD",
+            borderRadius: "15px",
+            margin: { xs: "0px", sm: "0 100px 0 100px" },
+            padding: "65px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: { xs: "18px", sm: "12px" },
+            position: "relative",
+            top: "-110px",
           }}
         >
-          Choose a plan based on your hiring needs
-        </Typography>
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: "16px",
-            lineHeight: "36px",
-          }}
-        >
-          Thanks for trying Recroot! Select a pricing plan that offers the most
-          beneficial recruitment features for your organization.
-        </Typography>
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            fontSize: "16px",
-            lineHeight: "20px",
-          }}
-        >
-          {`Let's get started today and take your recruitment journey to the next level!`}
-        </Typography>
-      </Card>
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: "30px",
+              lineHeight: "36px",
+              color: "#034275",
+            }}
+          >
+            Choose a plan based on your hiring needs
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 400,
+              fontSize: "16px",
+              lineHeight: "36px",
+            }}
+          >
+            Thanks for trying Recroot! Select a pricing plan that offers the
+            most beneficial recruitment features for your organization.
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontSize: "16px",
+              lineHeight: "20px",
+            }}
+          >
+            {`Let's get started today and take your recruitment journey to the next level!`}
+          </Typography>
+        </Card>
+      </Container>
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
