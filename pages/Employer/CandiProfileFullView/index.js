@@ -84,6 +84,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { isEmpty } from "lodash";
 
 const bull = (
   <Box
@@ -259,6 +260,13 @@ const CandiFullProfileView = () => {
   const handleDialogAction = () => {
     setOpen(!open);
   };
+  const back = () => {
+    if (canId) {
+      router.back();
+    } else {
+      router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
+    }
+  };
   return (
     <>
       <EmployerNavbar />
@@ -270,7 +278,7 @@ const CandiFullProfileView = () => {
           height: "250px",
           display: "flex",
           justifyContent: "flex-start",
-          alignItems: { xs: "flex-start", md: "center" },
+          alignItems: "center",
         }}
       >
         <Container>
@@ -283,7 +291,7 @@ const CandiFullProfileView = () => {
               zIndex: "100",
             }}
             startIcon={<ArrowBackIcon />}
-            onClick={() => router.back()}
+            onClick={() => back()}
           >
             Back
           </Button>
@@ -316,7 +324,7 @@ const CandiFullProfileView = () => {
             <Box
               sx={{
                 width: "100%",
-                height: "auto",
+                height: "310px",
                 borderRadius: "15px",
                 backgroundImage:
                   'url("/candidate-full-profile-view-card-bg.svg")',
@@ -330,8 +338,7 @@ const CandiFullProfileView = () => {
               <Grid container spacing={2}>
                 <Grid
                   item
-                  xs={12}
-                  sm={4}
+                  xs={4}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -353,10 +360,9 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={12}
-                  sm={4}
+                  xs={4}
                   sx={{
-                    borderRight: { xs: "none", sm: "1px solid white" },
+                    borderRight: "1px solid white",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -416,13 +422,12 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={12}
-                  sm={4}
+                  xs={4}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    paddingLeft: { xs: 0, md: "60px !important" },
+                    paddingLeft: "60px !important",
                   }}
                 >
                   <CustomTypography
@@ -502,17 +507,17 @@ const CandiFullProfileView = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    flexDirection: { xs: "column", sm: "row" },
-                    alignItems: { xs: "flex-start", sm: "flex-end" },
+                    flexDirection: "row",
+                    alignItems: "flex-end",
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      width: { xs: "100%", sm: "33%" },
+                      width: "33%",
                       justifyContent: "center",
                       gap: "10px",
-                      borderRight: { xs: "none", sm: "1px solid white" },
+                      borderRight: "1px solid white",
                     }}
                   >
                     <LinkedInIcon sx={{ color: "white" }} />
@@ -529,7 +534,7 @@ const CandiFullProfileView = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      width: { xs: "100%", sm: "33%" },
+                      width: "33%",
                       justifyContent: "center",
                       gap: "10px",
                     }}
@@ -588,6 +593,41 @@ const CandiFullProfileView = () => {
                 </Box>
               </Grid>
             </Box>
+            {console.log(notes)}
+            {isEmpty(notes) ? (
+              ""
+            ) : (
+              <Box
+                sx={{
+                  width: "100%",
+                  border: "1px solid #D3EAFF",
+                  borderRadius: "15px",
+                }}
+              >
+                <Box
+                  sx={{
+                    bgcolor: "#D3EAFF",
+                    width: "100%",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    p: "0 25px 0 25px",
+                  }}
+                >
+                  <CustomTypography className={styles.FullProfileSectionTitle}>
+                    Notes
+                  </CustomTypography>
+                </Box>
+                <Box sx={{ p: "25px" }}>
+                  {/* <Stack spacing={1}> */}
+                  <ReactQuill value={notes} readOnly={true} theme={"bubble"} />
+                  {/* </Stack> */}
+                </Box>
+              </Box>
+            )}
             {cvshow === false ? (
               canId ? (
                 ""
@@ -716,16 +756,25 @@ const CandiFullProfileView = () => {
                       </Box>
                       <Box sx={{ p: "25px" }}>
                         <Stack spacing={1}>
-                          <CustomTypography
-                            className={styles.FullProfileSectionTypo}
+                          <Box
+                            className={styles.FullProfilePersonalDetailsTypoBox}
                           >
-                            About
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.FullProfileSectionData}
-                          >
-                            {candidate?.about}
-                          </CustomTypography>
+                            <CustomTypography
+                              className={styles.FullProfileSectionTypo}
+                            >
+                              About
+                            </CustomTypography>
+                            <CustomTypography
+                              className={styles.FullProfileSectionTypo}
+                            >
+                              :
+                            </CustomTypography>
+                            <CustomTypography
+                              className={styles.FullProfileSectionData}
+                            >
+                              {candidate?.about}
+                            </CustomTypography>
+                          </Box>
                           <Box
                             className={styles.FullProfilePersonalDetailsTypoBox}
                           >
@@ -930,7 +979,7 @@ const CandiFullProfileView = () => {
                                       variant="subtitle2"
                                       className={styles.ViewFullInfoMainText}
                                     >
-                                      {wrk?.role}
+                                      &nbsp;{wrk?.role}
                                     </CustomTypography>
                                   </Stack>
                                   <Stack direction={"row"}>
@@ -943,7 +992,7 @@ const CandiFullProfileView = () => {
                                       variant="subtitle2"
                                       className={styles.ViewFullInfoText}
                                     >
-                                      {wrk?.companyName}
+                                      &nbsp; {wrk?.companyName}
                                     </CustomTypography>
                                   </Stack>
                                   {wrk?.city !== "" ? (
@@ -967,9 +1016,7 @@ const CandiFullProfileView = () => {
                                     ""
                                   )}
                                   {wrk?.jobProfile !== "" ? (
-                                    <Stack
-                                      direction={{ xs: "column", md: "row" }}
-                                    >
+                                    <Stack direction={"row"}>
                                       <CustomTypography
                                         className={
                                           styles.FullProfileSectionTypo
@@ -1075,11 +1122,26 @@ const CandiFullProfileView = () => {
                                     &nbsp;{edu?.graduate}
                                   </CustomTypography>
                                 </Stack>
+                                {console.log(edu)}
+                                {edu?.collegeName !== "" ? (
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      College Name :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp; {edu?.collegeName}
+                                    </CustomTypography>
+                                  </Stack>
+                                ) : (
+                                  ""
+                                )}
                                 {edu?.city !== "" ? (
-                                  <Stack
-                                    direction={"row"}
-                                    sx={{ display: "block" }}
-                                  >
+                                  <Stack direction={"row"}>
                                     <CustomTypography
                                       className={styles.FullProfileSectionTypo}
                                     >
@@ -1666,7 +1728,7 @@ const CandiFullProfileView = () => {
                       <Box
                         sx={{
                           display: "flex",
-                          justifyContent: { xs: "center", sm: "flex-end" },
+                          justifyContent: "flex-end",
                         }}
                       >
                         <Button

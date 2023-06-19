@@ -13,6 +13,12 @@ import {
   Stack,
   Container,
 } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR, SUCCESS } from "@/utils/constants";
+import http from "@/redux/http-common";
 
 const CssTextField = styled(TextField)({
   width: "100%",
@@ -37,6 +43,41 @@ const CssTextField = styled(TextField)({
 });
 
 const SubscribHome = () => {
+  const [userEmail, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+  const subscribeNow = async () => {
+    if (emailRegex.test(userEmail)) {
+      await http
+        .post("addSubscribers", { userEmail })
+        .then((res) => {
+          console.log(res, "res");
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: res.data,
+            })
+          );
+        })
+        .catch((res) => {
+          dispatch(
+            openAlert({
+              type: ERROR,
+              message: res.data,
+            })
+          );
+        });
+    } else {
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "invalid Email",
+        })
+      );
+    }
+  };
+
   return (
     <div className="subscribe">
       <Box
@@ -101,11 +142,13 @@ const SubscribHome = () => {
                   label="Email"
                   variant="outlined"
                   size="small"
+                  type={"email"}
                   sx={{
                     width: { md: "60%", sm: "100%", xs: "100%" },
                     backgroundColor: "white",
                     borderRadius: "10px",
                   }}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <Button
                   variant="contained"
@@ -116,6 +159,7 @@ const SubscribHome = () => {
                     width: { md: "20%", sm: "100%", xs: "100%" },
                     bgcolor: "#034275 !important",
                   }}
+                  onClick={() => subscribeNow()}
                 >
                   Submit
                 </Button>
@@ -128,4 +172,4 @@ const SubscribHome = () => {
   );
 };
 
-export default dynamic (() => Promise.resolve(SubscribHome), {ssr: false})
+export default dynamic(() => Promise.resolve(SubscribHome), { ssr: false });

@@ -72,7 +72,7 @@ const AddTraining = () => {
 
   React.useEffect(() => {
     setInitialValues(INITIAL_VALUES);
-  }, [training]);
+  }, [training, INITIAL_VALUES]);
 
   const gotToTraining = () => {
     dispatch(updateCurrentScreen(""));

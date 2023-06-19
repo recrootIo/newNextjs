@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
   Button,
-  Container,
 } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
 import Link from "next/link";
@@ -295,114 +294,99 @@ function Pricing() {
           Job Package
         </Typography>
       </Box>
-      <Container>
-        <Card
+      <Card
+        sx={{
+          background: "#F2F8FD",
+          borderRadius: "15px",
+          margin: "0 100px 0 100px",
+          padding: "65px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "12px",
+          position: "relative",
+          top: "-110px",
+        }}
+      >
+        <Typography
           sx={{
-            background: "#F2F8FD",
-            borderRadius: "15px",
-            // margin: { xs: "0px", sm: "0 100px 0 100px" },
-            padding: "65px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: { xs: "18px", sm: "12px" },
-            position: "relative",
-            top: "-110px",
+            fontWeight: 600,
+            fontSize: "30px",
+            lineHeight: "36px",
+            color: "#034275",
           }}
         >
-          <Typography
-            sx={{
-              fontWeight: 600,
-              fontSize: "30px",
-              lineHeight: "36px",
-              color: "#034275",
-              textAlign: "center",
-            }}
-          >
-            Choose a plan based on your hiring needs
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "36px",
-              textAlign: "center",
-            }}
-          >
-            Thanks for trying Recroot! Select a pricing plan that offers the
-            most beneficial recruitment features for your organization.
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              fontSize: "16px",
-              lineHeight: "20px",
-              textAlign: "center",
-            }}
-          >
-            {`Let's get started today and take your recruitment journey to the next level!`}
-          </Typography>
-        </Card>
-      </Container>
-      <Container>
+          Choose a plan based on your hiring needs
+        </Typography>
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: "16px",
+            lineHeight: "36px",
+          }}
+        >
+          Thanks for trying Recroot! Select a pricing plan that offers the most
+          beneficial recruitment features for your organization.
+        </Typography>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            lineHeight: "20px",
+          }}
+        >
+          {`Let's get started today and take your recruitment journey to the next level!`}
+        </Typography>
+      </Card>
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         <Box
           sx={{
+            border: "1px solid #034275",
+            borderRadius: "40px",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            cursor: "pointer",
           }}
         >
-          <Box
-            sx={{
-              border: "1px solid #034275",
-              borderRadius: "40px",
-              display: "flex",
-              cursor: "pointer",
-            }}
-          >
-            <Box>
-              <Typography
-                sx={jobSwitch === "jPost" ? active : normal}
-                onClick={() => {
-                  setjobSwitch("jPost");
-                }}
-              >
-                Job Post
-              </Typography>{" "}
-            </Box>{" "}
-            <Box>
-              {" "}
-              <Typography
-                sx={jobSwitch === "jSlot" ? active : normal}
-                onClick={() => {
-                  setjobSwitch("jSlot");
-                }}
-              >
-                Job Slot
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-        <Box>
-          {jobSwitch === "jPost" ? (
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                // gap: "13px",
-                // padding: "12px",
-                display: "flex",
-                justifyContent: "center",
-                m: "35px 0 50px 0",
+          <Box>
+            <Typography
+              sx={jobSwitch === "jPost" ? active : normal}
+              onClick={() => {
+                setjobSwitch("jPost");
               }}
             >
-              <Grid
-                item
-                md={3}
-                sm={6}
-                xs={12}
-                //sx={{ pl: { xs: "normal", sm: "0px !important" } }}
-              >
+              Job Post
+            </Typography>{" "}
+          </Box>{" "}
+          <Box>
+            {" "}
+            <Typography
+              sx={jobSwitch === "jSlot" ? active : normal}
+              onClick={() => {
+                setjobSwitch("jSlot");
+              }}
+            >
+              Job Slot
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+      <Box>
+        {jobSwitch === "jPost" ? (
+          <Grid
+            container
+            sx={{
+              gap: "13px",
+              padding: "12px",
+              justifyContent: "center",
+              m: "35px 0 50px 0",
+            }}
+          >
+            {freePres ? (
+              ""
+            ) : (
+              <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
                 <Box
                   sx={{
                     background: "#F4FBFE",
@@ -412,7 +396,6 @@ function Pricing() {
                     transition: "all .3s ease-out 0s",
                     display: "flex",
                     flexDirection: "column",
-                    width: "100%",
                   }}
                 >
                   <Box
@@ -462,296 +445,55 @@ function Pricing() {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item md={3} sm={6} xs={12}>
+            )}
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Box
                   sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
                     display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
+                    borderBottom: "1px solid #e1e4ea",
                   }}
                 >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHead}>{PRO}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      p: "30px",
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
-                    {counCheck ? (
-                      <>
-                        <sup style={{ fontSize: "30px" }}></sup>
-                        <Typography
-                          sx={{
-                            fontFamily: "'Inter'",
-                            fontStyle: "normal",
-                            fontWeight: 600,
-                            fontSize: "35px",
-                            lineHeight: "40px",
-                            color: "#034275",
-                            m: "auto",
-                          }}
-                        >
-                          &#8377; <span>{PRO_PLAN.pricing.rs}</span>
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <Typography
-                          sx={{
-                            fontFamily: "'Inter'",
-                            fontStyle: "normal",
-                            fontWeight: 600,
-                            fontSize: "35px",
-                            lineHeight: "40px",
-                            color: "#034275",
-                            m: "auto",
-                          }}
-                        >
-                          $ <span>{PRO_PLAN.pricing.us}</span>
-                        </Typography>
-                      </>
-                    )}
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {PRO_PLAN.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleSubmit(PRO_PLAN)}>
-                      Choose plan
-                    </StyledButton>
-                  </Box>
+                  <Typography sx={planHead}>{PRO}</Typography>
                 </Box>
-              </Grid>
-              <Grid item md={3} sm={6} xs={12}>
                 <Box
                   sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
+                    p: "30px",
                     display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
+                    borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHead}>{PREMIUM}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      p: "30px",
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
-                    {counCheck ? (
-                      <>
-                        <Typography
-                          sx={{
-                            fontFamily: "'Inter'",
-                            fontStyle: "normal",
-                            fontWeight: 600,
-                            fontSize: "35px",
-                            lineHeight: "40px",
-                            color: "#034275",
-                            m: "auto",
-                          }}
-                        >
-                          &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <Typography
-                          sx={{
-                            fontFamily: "'Inter'",
-                            fontStyle: "normal",
-                            fontWeight: 600,
-                            fontSize: "35px",
-                            lineHeight: "40px",
-                            color: "#034275",
-                            m: "auto",
-                          }}
-                        >
-                          $ <span>{PREMIUM_PACKAGE.pricing.us}</span>
-                        </Typography>
-                      </>
-                    )}
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {PREMIUM_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleSubmit(PREMIUM_PACKAGE)}>
-                      Choose plan
-                    </StyledButton>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item md={3} sm={6} xs={12}>
-                <Box
-                  sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHead}>{CONTACT}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {CONTACT_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleClickOpen()}>
-                      Contact Us
-                    </StyledButton>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-          ) : (
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                // gap: "13px",
-                // padding: "12px",
-                m: "35px 0 50px 0",
-                justifyContent: "center",
-              }}
-            >
-              <Grid item md={4} xs={12}>
-                <Box
-                  sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHeadSlot}>{GROWTH}</Typography>
-                    <Typography sx={{ color: "white" }}>
-                      (Annual commitment)
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      p: "30px",
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
+                  {counCheck ? (
+                    <>
+                      <sup style={{ fontSize: "30px" }}></sup>
+                      <Typography
+                        sx={{
+                          fontFamily: "'Inter'",
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          fontSize: "35px",
+                          lineHeight: "40px",
+                          color: "#034275",
+                          m: "auto",
+                        }}
+                      >
+                        &#8377; <span>{PRO_PLAN.pricing.rs}</span>
+                      </Typography>
+                    </>
+                  ) : (
                     <>
                       <Typography
                         sx={{
@@ -764,73 +506,69 @@ function Pricing() {
                           m: "auto",
                         }}
                       >
-                        $ <span>{GROWTH_PACKAGE.pricing.us}</span>
+                        $ <span>{PRO_PLAN.pricing.us}</span>
                       </Typography>
                     </>
-
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {GROWTH_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleSubmit(GROWTH_PACKAGE)}>
-                      Choose plan
-                    </StyledButton>
-                  </Box>
+                  )}
+                  <Divider />
                 </Box>
-              </Grid>
-              <Grid item md={4} xs={12}>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {PRO_PLAN.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleSubmit(PRO_PLAN)}>
+                    Choose plan
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Box
                   sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
                     display: "flex",
-                    flexDirection: "column",
+                    borderBottom: "1px solid #e1e4ea",
                   }}
                 >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHeadSlot}>{GOLD}</Typography>
-                    <Typography sx={{ color: "white" }}>
-                      (Annual commitment)
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      p: "30px",
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
+                  <Typography sx={planHead}>{PREMIUM}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    p: "30px",
+                    display: "flex",
+                    borderBottom: "1px dashed #A9A9AA",
+                  }}
+                >
+                  {counCheck ? (
                     <>
                       <Typography
                         sx={{
@@ -843,99 +581,341 @@ function Pricing() {
                           m: "auto",
                         }}
                       >
-                        $ <span>{GOLD_PACKAGE.pricing.us}</span>
+                        &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
                       </Typography>
                     </>
-
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {GOLD_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleSubmit(GOLD_PACKAGE)}>
-                      Choose plan
-                    </StyledButton>
-                  </Box>
+                  ) : (
+                    <>
+                      <Typography
+                        sx={{
+                          fontFamily: "'Inter'",
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          fontSize: "35px",
+                          lineHeight: "40px",
+                          color: "#034275",
+                          m: "auto",
+                        }}
+                      >
+                        $ <span>{PREMIUM_PACKAGE.pricing.us}</span>
+                      </Typography>
+                    </>
+                  )}
+                  <Divider />
                 </Box>
-              </Grid>
-              <Grid item md={4} xs={12}>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {PREMIUM_PACKAGE.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleSubmit(PREMIUM_PACKAGE)}>
+                    Choose plan
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Box
                   sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
                     display: "flex",
-                    flexDirection: "column",
+                    borderBottom: "1px solid #e1e4ea",
                   }}
                 >
-                  <Box
-                    sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      borderBottom: "1px solid #e1e4ea",
-                    }}
-                  >
-                    <Typography sx={planHead}>{CONTACT}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {CONTACT_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton onClick={() => handleClickOpen()}>
-                      Contact Us
-                    </StyledButton>
-                  </Box>
+                  <Typography sx={planHead}>{CONTACT}</Typography>
                 </Box>
-              </Grid>
+                <Box
+                  sx={{
+                    display: "flex",
+                    borderBottom: "1px dashed #A9A9AA",
+                  }}
+                >
+                  <Divider />
+                </Box>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {CONTACT_PACKAGE.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleClickOpen()}>
+                    Contact Us
+                  </StyledButton>
+                </Box>
+              </Box>
             </Grid>
-          )}
-        </Box>
-      </Container>
+          </Grid>
+        ) : (
+          <Grid
+            container
+            sx={{
+              gap: "13px",
+              padding: "12px",
+              m: "35px 0 50px 0",
+              justifyContent: "center",
+            }}
+          >
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderBottom: "1px solid #e1e4ea",
+                  }}
+                >
+                  <Typography sx={planHeadSlot}>{GROWTH}</Typography>
+                  <Typography sx={{ color: "white" }}>
+                    (Annual commitment)
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    p: "30px",
+                    display: "flex",
+                    borderBottom: "1px dashed #A9A9AA",
+                  }}
+                >
+                  <>
+                    <Typography
+                      sx={{
+                        fontFamily: "'Inter'",
+                        fontStyle: "normal",
+                        fontWeight: 600,
+                        fontSize: "35px",
+                        lineHeight: "40px",
+                        color: "#034275",
+                        m: "auto",
+                      }}
+                    >
+                      $ <span>{GROWTH_PACKAGE.pricing.us}</span>
+                    </Typography>
+                  </>
+
+                  <Divider />
+                </Box>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {GROWTH_PACKAGE.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleSubmit(GROWTH_PACKAGE)}>
+                    Choose plan
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    borderBottom: "1px solid #e1e4ea",
+                  }}
+                >
+                  <Typography sx={planHeadSlot}>{GOLD}</Typography>
+                  <Typography sx={{ color: "white" }}>
+                    (Annual commitment)
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    p: "30px",
+                    display: "flex",
+                    borderBottom: "1px dashed #A9A9AA",
+                  }}
+                >
+                  <>
+                    <Typography
+                      sx={{
+                        fontFamily: "'Inter'",
+                        fontStyle: "normal",
+                        fontWeight: 600,
+                        fontSize: "35px",
+                        lineHeight: "40px",
+                        color: "#034275",
+                        m: "auto",
+                      }}
+                    >
+                      $ <span>{GOLD_PACKAGE.pricing.us}</span>
+                    </Typography>
+                  </>
+
+                  <Divider />
+                </Box>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {GOLD_PACKAGE.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleSubmit(GOLD_PACKAGE)}>
+                    Choose plan
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Box
+                sx={{
+                  background: "#F4FBFE",
+                  borderRadius: "20px",
+                  minHeight: "520px",
+                  position: "relative",
+                  transition: "all .3s ease-out 0s",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "80px",
+                    background: "#02A9F7",
+                    borderRadius: "20px 20px 0px 0px",
+                    display: "flex",
+                    borderBottom: "1px solid #e1e4ea",
+                  }}
+                >
+                  <Typography sx={planHead}>{CONTACT}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    borderBottom: "1px dashed #A9A9AA",
+                  }}
+                >
+                  <Divider />
+                </Box>
+                <Box sx={{ mt: "10px", pt: "5px" }}>
+                  <ul style={{ marginBottom: "20px" }}>
+                    {CONTACT_PACKAGE.packageList.map((de, id) => (
+                      <li key={id}>
+                        <Stack
+                          direction={"row"}
+                          sx={{ alignItems: "center" }}
+                          gap={2}
+                        >
+                          <CheckCircleRoundedIcon
+                            fontSize="small"
+                            sx={{ color: "#31B9F8" }}
+                          />
+                          {de}
+                        </Stack>
+                      </li>
+                    ))}
+                  </ul>
+                </Box>
+                <Box sx={{ m: "auto 0 5px 0" }}>
+                  <StyledButton onClick={() => handleClickOpen()}>
+                    Contact Us
+                  </StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        )}
+      </Box>
+
       <Dialog fullWidth open={open} onClose={handleClose}>
         <Box sx={{ p: "40px" }}>
           <Typography variant="h5" sx={{ textAlign: "center" }}>

@@ -18,7 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { CANDIDATE } from "@/utils/constants";
 import { useEffect, useState } from "react";
-import { fetchAppliedJobs, retrievePersonal } from "@/redux/slices/personal";
+import {
+  fetchAppliedJobs,
+  retrievePersonal,
+  setJobID,
+} from "@/redux/slices/personal";
 import Cookies from "js-cookie";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
@@ -61,7 +65,7 @@ const JobDetailCard = ({ ...props }) => {
   const gotApply = () => {
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
-      router.push(`/uploadResume`);
+      router.push(`/Candidate/Dashboard`);
 
       dispatch(
         setJobID({
@@ -184,109 +188,117 @@ const JobDetailCard = ({ ...props }) => {
 
                   <Box>
                     <Grid container spacing={2}>
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{
-                            alignItems: "center",
-                            gap: "10px",
-                            color: "#034275 !important",
-                          }}
-                        >
-                          <CurrencyExchangeIcon sx={{ color: "#02A9F7" }} />
-                          {getSalary(salary, false)}
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <AddBusinessIcon sx={{ color: "#02A9F7" }} />
-                          <CustomTypography
-                            variant="body2"
+                      {salary && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
                             sx={{
-                              fontSize: 17,
-                              color: "#034275",
+                              alignItems: "center",
+                              gap: "10px",
+                              color: "#034275 !important",
                             }}
                           >
-                            {jobType}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <EventRepeatIcon sx={{ color: "#02A9F7" }} />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
+                            <CurrencyExchangeIcon sx={{ color: "#02A9F7" }} />
+                            {getSalary(salary, false)}
+                          </Stack>
+                        </Grid>
+                      )}
+                      {jobType && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
                           >
-                            {essentialInformation?.experience}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <AccountBoxIcon sx={{ color: "#02A9F7" }} />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
+                            <AddBusinessIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {jobType}
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      )}
+                      {essentialInformation?.experience && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
                           >
-                            {essentialInformation?.careerlevel}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <CampaignIcon sx={{ color: "#02A9F7" }} />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
+                            <EventRepeatIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {essentialInformation?.experience}
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      )}
+                      {essentialInformation?.careerlevel && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
                           >
-                            {notice}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
-
-                      <Grid item md={4} xs={12}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "center", gap: "10px" }}
-                        >
-                          <SchoolIcon sx={{ color: "#02A9F7" }} />
-                          <CustomTypography
-                            variant="body2"
-                            sx={{
-                              fontSize: 17,
-                              color: "#034275",
-                            }}
+                            <AccountBoxIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {essentialInformation?.careerlevel}
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      )}
+                      {notice && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
                           >
-                            {essentialInformation?.qualification}
-                          </CustomTypography>
-                        </Stack>
-                      </Grid>
+                            <CampaignIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {notice}
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      )}
+
+                      {essentialInformation?.qualification && (
+                        <Grid item md={4} xs={12}>
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center", gap: "10px" }}
+                          >
+                            <SchoolIcon sx={{ color: "#02A9F7" }} />
+                            <CustomTypography
+                              variant="body2"
+                              sx={{
+                                fontSize: 17,
+                                color: "#034275",
+                              }}
+                            >
+                              {essentialInformation?.qualification}
+                            </CustomTypography>
+                          </Stack>
+                        </Grid>
+                      )}
                     </Grid>
 
                     <Grid container spacing={2} sx={{ mt: "20px" }}>
@@ -379,7 +391,11 @@ const JobDetailCard = ({ ...props }) => {
                         disabled={isApplied}
                         onClick={() => gotApply()}
                       >
-                        {isApplied ? "applied" : " Apply now"}
+                        {isApplied
+                          ? "applied"
+                          : data.profilePercentage < 70
+                          ? "Complete Profile"
+                          : "Apply now"}
                       </Button>
                     ) : userType === "Employer" ? (
                       ""
@@ -404,4 +420,4 @@ const JobDetailCard = ({ ...props }) => {
   );
 };
 
-export default dynamic (() => Promise.resolve(JobDetailCard), {ssr: false})
+export default dynamic(() => Promise.resolve(JobDetailCard), { ssr: false });

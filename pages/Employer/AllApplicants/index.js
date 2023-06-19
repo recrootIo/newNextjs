@@ -576,6 +576,21 @@ const AllApplicants = () => {
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
     }
   };
+  const { aid } = router.query;
+  useEffect(() => {
+    if (aid) {
+      scrollToDiv(aid);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aid]);
+  function scrollToDiv(div) {
+    // Get the target div element
+    const targetElement = document.getElementById(div);
+
+    // Scroll to the target element
+    targetElement.scrollIntoView({ behavior: "smooth" });
+    router.push("/Employer/AllApplicants", undefined, { shallow: true });
+  }
   return (
     <>
       <Employer>
@@ -847,6 +862,22 @@ const AllApplicants = () => {
               </Stack>
               <Stack
                 direction="row"
+                sx={{ flexWrap: "wrap", gap: "10px" }}
+                spacing={2}
+              >
+                {titles.map((tit, index) => (
+                  <Chip
+                    key={index}
+                    label={tit?.jobRole}
+                    onDelete={() => {
+                      handleDelete(index, "titl", tit?._id);
+                    }}
+                    sx={{ bgcolor: "#1097CD", color: "white" }}
+                  />
+                ))}
+              </Stack>
+              <Stack
+                direction="row"
                 sx={{ mt: 1, flexWrap: "wrap", gap: "10px" }}
                 spacing={2}
               >
@@ -868,7 +899,9 @@ const AllApplicants = () => {
               >
                 <Stack spacing={2}>
                   {user.map((usr, index) => (
-                    <AllApplicantsCard key={index} users={usr} />
+                    <div id={usr?._id} key={index}>
+                      <AllApplicantsCard key={index} users={usr} />
+                    </div>
                   ))}
                 </Stack>
               </Box>

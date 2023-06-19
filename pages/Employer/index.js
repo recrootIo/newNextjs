@@ -65,12 +65,21 @@ function Employer({ children }) {
       (freeCount === 0 && preCOunt === 0 && proCOunt === 0) ||
       (freeCount === 0 && preCOunt === undefined && proCOunt === undefined)
     ) {
-      dispatch(
-        openAlert({
-          type: ERROR,
-          message: "Your Job Limit Was Reached!",
-        })
-      );
+      if (company.package?.subscription_package === undefined) {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Subscribe A Plan To Post A job",
+          })
+        );
+      } else {
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Your Job Limit Was Reached!",
+          })
+        );
+      }
       push("/Pricing");
       return;
     }

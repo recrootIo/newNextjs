@@ -176,7 +176,7 @@ function PostnewJob() {
   };
 
  
-
+console.log(final.details,'quest')
   function Pages(index, cal) {
     if (cal === "add" && index <= 2) {
       if (index === 0) {
@@ -205,6 +205,13 @@ function PostnewJob() {
                 message:"Please Provide Job Location"
             }))
           return;
+        }
+        if(showq === ""){
+          dispatch(openAlert({
+            type:ERROR,
+            message:"Please Select An Option For Screening Questions"
+        }))
+      return;
         }
         if (showq === "true") {
           var arryMem = final.question.map((mem) => {
@@ -241,10 +248,17 @@ function PostnewJob() {
           if (Object.keys(obj2).length > 0) {
             return;
           }
+     
           // if (final.details.notice === undefined) {
 
           //   return
           // }
+          if (final.details.notice === undefined) {
+            dispatch(openAlert({
+              type:ERROR,
+              message:"Provide Notice Period"
+            }));
+          }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
           }

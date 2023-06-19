@@ -34,6 +34,7 @@ import {
   Avatar,
   useMediaQuery,
   FormHelperText,
+  styled,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -70,8 +71,8 @@ import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
-import { useTheme } from "@mui/material/styles";
 import Employer from "..";
+import { isEmpty } from "lodash";
 
 const style = {
   naminput: {
@@ -218,6 +219,8 @@ const CompanyProfile = () => {
     /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleBlur = (e, msg) => {
+    console.log("object1");
+    e.preventDefault();
     if (e.target.name === "cmpemail") {
       let result = re.test(String(e.target.value).toLowerCase());
       if (!result) {
@@ -228,9 +231,9 @@ const CompanyProfile = () => {
     if (e.target.value === "") {
       return;
     }
-    dispatch(updateFinaldetails(final));
-    dispatch(openAlert({ type: SUCCESS, message: msg }));
-    handleClick();
+    dispatch(updateFinaldetails(final)).then(
+      dispatch(openAlert({ type: SUCCESS, message: msg }))
+    );
   };
   const handleBlurDes = (value) => {
     if (value.index === 0) {
@@ -245,10 +248,6 @@ const CompanyProfile = () => {
   const [open1, setOpen1] = React.useState(false);
   const [message, setmessage] = React.useState("");
 
-  const handleClick = () => {
-    setOpen1(true);
-  };
-
   const handleClose1 = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -261,32 +260,21 @@ const CompanyProfile = () => {
     dispatch(
       openAlert({ type: SUCCESS, message: "Basic Info Privacy Was Updated" })
     );
-    handleClick();
   };
-  const theme = useTheme();
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
-    };
-
-    // Initial check on component mount
-    handleResize();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on component unmount
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const StyledAvatar = styled(Avatar)(({}) => ({
+    "& .MuiAvatar-img": {
+      objectFit: "contain",
+    },
+  }));
+  console.log(basicin.cmpemail, "email");
   return (
     <>
       <Employer>
-        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
+        <Stack direction="row" spacing={7}>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -295,6 +283,7 @@ const CompanyProfile = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
             }}
             onClick={() => {
               push("/Employer/CompanyProfile");
@@ -302,48 +291,26 @@ const CompanyProfile = () => {
           >
             <Box
               sx={{
-                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                mt: "25px",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {isMobile ? (
-                  <Image
-                    src="/basic-info-img.png"
-                    alt=""
-                    width="50"
-                    height="42"
-                  />
-                ) : (
-                  <Image
-                    src="/basic-info-img.png"
-                    alt=""
-                    width="60"
-                    height="42"
-                  />
-                )}
-              </Box>
+              <Image src="/basic-info-img.png" alt="" width="60" height="42" />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Basic Info
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -352,8 +319,18 @@ const CompanyProfile = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
             }}
             onClick={() => {
+              if (isEmpty(basicin?.cmpemail)) {
+                dispatch(
+                  openAlert({
+                    type: ERROR,
+                    message: "Please Provide Company Email",
+                  })
+                );
+                return;
+              }
               push("/Employer/Members");
             }}
           >
@@ -361,27 +338,24 @@ const CompanyProfile = () => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                mt: "25px",
               }}
             >
-              {isMobile ? (
-                <Image src="/members-img.png" alt="" width="42" height="50" />
-              ) : (
-                <Image src="/members-img.png" alt="" width="60" height="62" />
-              )}
+              <Image src="/members-img.png" alt="" width="60" height="62" />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Members
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -390,45 +364,46 @@ const CompanyProfile = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              if (isEmpty(basicin?.cmpemail)) {
+                dispatch(
+                  openAlert({
+                    type: ERROR,
+                    message: "Please Provide Company Email",
+                  })
+                );
+                return;
+              }
+              push("/Employer/CompanyPreview");
             }}
           >
             <Box
               sx={{
-                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                mt: "25px",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
+              <Image
+                src="/preview-img.png"
+                alt=""
+                width="70"
+                height="62"
+                style={{
+                  width: "60px",
                 }}
-              >
-                {isMobile ? (
-                  <Image src="/preview-img.png" alt="" width="42" height="50" />
-                ) : (
-                  <Image
-                    src="/preview-img.png"
-                    alt=""
-                    width="70"
-                    height="62"
-                    style={{
-                      width: "60px",
-                    }}
-                  />
-                )}
-              </Box>
+              />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Preview
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
         </Stack>
         <Card
@@ -450,7 +425,7 @@ const CompanyProfile = () => {
             >
               <Box sx={styles.logosec}>
                 <Box sx={styles.companylogo}>
-                  <Avatar
+                  <StyledAvatar
                     src={
                       logo && logo.logo !== undefined
                         ? `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo.logo}`
@@ -556,14 +531,7 @@ const CompanyProfile = () => {
               </Box>
             </Box>
             <Divider />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                mt: "20px",
-                mb: "35px",
-              }}
-            >
+            <Box sx={{ display: "flex", mt: "20px", mb: "35px" }}>
               <CustomTypography
                 sx={{
                   color: "#034275",
@@ -628,6 +596,7 @@ const CompanyProfile = () => {
                     ? basicin.cmpemail
                     : ""
                 }
+                required
                 error={errors.cmpemail ? true : false}
                 helperText={errors.cmpemail}
               />
@@ -864,7 +833,7 @@ const CompanyProfile = () => {
                   height: "55px",
                 }}
                 onClick={() => {
-                  if (basicin?.email === null && basicin?.email === undefined) {
+                  if (isEmpty(basicin?.cmpemail)) {
                     dispatch(
                       openAlert({
                         type: ERROR,

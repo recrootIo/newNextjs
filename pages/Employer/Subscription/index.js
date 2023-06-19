@@ -36,8 +36,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
-import { useTheme } from "@mui/material/styles";
-// import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 require("jspdf-autotable");
@@ -358,13 +357,11 @@ const Subscriptions = () => {
   var company = useSelector((state) => state.company);
   const county = state?.countryCurrecy === "INR";
 
-  const theme = useTheme();
-
   return (
     <>
       <Employer>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={7}>
             <Stack spacing={2} sx={{ height: "100%" }}>
               <Card
                 sx={{
@@ -374,6 +371,8 @@ const Subscriptions = () => {
                     'url("/Subscription card with white top sectionBG.svg")',
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
+                  backgroundColor: "#fff0 !important",
+                  boxShadow: "#fff0 !important",
                 }}
               >
                 <Box
@@ -396,18 +395,18 @@ const Subscriptions = () => {
                 </Box>
                 <Box
                   sx={{
-                    height: "210px",
-                    p: "0px 15px 0px 15px",
+                    height: "auto",
+                    p: "15px",
                   }}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={8}>
-                      <Stack spacing={theme.breakpoints.down("xs") ? 2 : 3}>
+                      <Stack spacing={3}>
                         <Box
                           sx={{
-                            width: { xs: "100%", md: "40%" },
+                            width: "40%",
                             display: "flex",
-                            // justifyContent: "center",
+                            justifyContent: "center",
                             alignItems: "center",
                             borderRadius: "6px",
                           }}
@@ -486,7 +485,7 @@ const Subscriptions = () => {
                               color: "#01313F",
                               textTransform: "capitalize",
                               fontSize: "16px",
-                              width: { xs: "80%", md: "50%" },
+                              width: "50%",
                             }}
                             onClick={handleNavigate}
                           >
@@ -536,7 +535,7 @@ const Subscriptions = () => {
                     }}
                   >
                     <Grid container spacing={2}>
-                      <Grid item xs={8}>
+                      <Grid item xs={15} sx={{ justifyContent: "center" }}>
                         <Stack spacing={2}>
                           <Box
                             sx={{
@@ -616,35 +615,35 @@ const Subscriptions = () => {
                           </Box>
                         </Stack>
                       </Grid>
-                      <Grid
-                        item
-                        xs={4}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          sx={{
-                            bgcolor: "white !important",
-                            color: "#01313F",
-                            textTransform: "capitalize",
-                            fontSize: "15px",
-                            width: "100%",
-                          }}
-                        >
-                          Manage Payments
-                        </Button>
-                      </Grid>
+                      {/* <Grid
+                            item
+                            xs={4}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Button
+                              variant="contained"
+                              sx={{
+                                bgcolor: "white !important",
+                                color: "#01313F",
+                                textTransform: "capitalize",
+                                fontSize: "15px",
+                                width: "100%",
+                              }}
+                            >
+                              Manage Payments
+                            </Button>
+                          </Grid> */}
                     </Grid>
                   </Box>
                 )}
               </Card>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={5}>
             <Card sx={{ borderRadius: "10px" }}>
               <Box
                 sx={{
@@ -797,8 +796,7 @@ const Subscriptions = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: { xs: "center", md: "flex-end" },
-            mt: { xs: "20px", md: "0px" },
+            justifyContent: "flex-end",
           }}
         >
           <Button
@@ -806,8 +804,8 @@ const Subscriptions = () => {
             sx={{
               bgcolor: "#015FB1 !important",
               height: "54px",
+              width: "40%",
               borderRadius: "8px",
-              width: { xs: "auto", md: "40%" },
               mt: "10px",
             }}
             onClick={() => generatePDF(company, invoiceInfo)}
@@ -815,7 +813,7 @@ const Subscriptions = () => {
             Download Invoice
           </Button>
         </Box>
-        <Grid item xs={12} sx={{ mt: { xs: "20px", md: "0px" } }}>
+        <Grid item xs={12}>
           <Box sx={{ width: "100%" }}>
             <CustomTypography
               sx={{

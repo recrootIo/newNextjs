@@ -91,7 +91,6 @@ const Index = () => {
   const scrollToElement = (section) => {
     let element = null;
 
-    console.log(section, "section");
     if (section === "resume_section") {
       element = document.getElementById("resume_section");
       element.scrollIntoView({
@@ -171,12 +170,6 @@ const Index = () => {
       });
       return;
     }
-
-    element = document.getElementById("resume_section");
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
-    return;
   };
 
   const getPages = () => {

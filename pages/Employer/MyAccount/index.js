@@ -250,21 +250,21 @@ const MyAccount = () => {
                     InputLabelProps={{ style: { color: "black" } }}
                   />
                 </Stack>
-                <TextField
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  type="email"
-                  placeholder="Enter E-mail"
-                  required
-                  //sx={style.txtinput}
-                  sx={{ ...style.passinput, bgcolor: "white" }}
-                  InputLabelProps={{ style: { color: "black" } }}
-                  value={user?.email || ""}
-                  onChange={onChange}
-                />
+                {/* <TextField
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        type="email"
+                        placeholder="Enter E-mail"
+                        required
+                        //sx={style.txtinput}
+                        sx={{ ...style.passinput, bgcolor: "white" }}
+                        InputLabelProps={{ style: { color: "black" } }}
+                          value={user?.email || ''}
+                          onChange={onChange}
+                      /> */}
                 <FormControl sx={style.passinput}>
                   <InputLabel htmlFor="password" sx={{ color: "black" }}>
                     Old Password

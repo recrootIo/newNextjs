@@ -367,7 +367,9 @@ const JobPreview = (props) => {
                   Notice Period :
                 </CustomTypography>
                 <CustomTypography className={styles.JobPreviewData}>
-                  15 Days
+                  {details && details?.notice === undefined
+                    ? "Not Provided"
+                    : details?.notice}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>
@@ -375,9 +377,9 @@ const JobPreview = (props) => {
                   Job Type :
                 </CustomTypography>
                 <CustomTypography className={styles.JobPreviewData}>
-                  {details && details?.notice === undefined
+                  {details && details?.jobType === undefined
                     ? "Not Provided"
-                    : details?.notice}
+                    : details?.jobType}
                 </CustomTypography>
               </Box>
               {details?.salary?.salaryType !== undefined &&

@@ -169,7 +169,7 @@ const {push} = useRouter()
             p: "30px",
           }}
         >
-          <Stack direction="row" spacing={2}>
+          {/* <Stack direction="row" spacing={2}>
 
             <Button
               variant="contained"
@@ -196,7 +196,7 @@ const {push} = useRouter()
             >
               Reset Filter
             </Button>
-          </Stack>
+          </Stack> */}
           {/* <Stack direction="row" spacing={2} sx={{ mt: "20px" }}>
             <Chip
               label="Graphic Designer"

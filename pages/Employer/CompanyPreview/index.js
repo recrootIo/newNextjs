@@ -13,6 +13,7 @@ import {
   Divider,
   Avatar,
   Typography,
+  styled,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -37,7 +38,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { isEmpty } from "lodash";
 import dynamic from "next/dynamic";
-import { useTheme } from "@mui/material/styles";
 import Employer from "..";
 import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -56,15 +56,19 @@ const CompanyPreview = () => {
     isEmpty(final?.companyLogo?.logo) === true
       ? "companyLogo/logo-default.svg"
       : final?.companyLogo?.logo;
-  const theme = useTheme();
+  const StyledAvatar = styled(Avatar)(({}) => ({
+    "& .MuiAvatar-img": {
+      objectFit: "contain",
+    },
+  }));
   return (
     <>
       <Employer>
-        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
+        <Stack direction="row" spacing={7}>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -73,6 +77,7 @@ const CompanyPreview = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
             }}
             onClick={() => {
               push("/Employer/CompanyProfile");
@@ -80,40 +85,26 @@ const CompanyPreview = () => {
           >
             <Box
               sx={{
-                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                mt: "25px",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  className={styles.comProfileCardfirstImg}
-                  src="/basic-info-img.png"
-                  alt=""
-                  width="60"
-                  height="42"
-                />
-              </Box>
+              <Image src="/basic-info-img.png" alt="" width="60" height="42" />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Basic Info
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -122,6 +113,7 @@ const CompanyPreview = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
             }}
             onClick={() => {
               push("/Employer/Members");
@@ -131,29 +123,24 @@ const CompanyPreview = () => {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                mt: "25px",
               }}
             >
-              <Image
-                className={styles.companyProfileCardImg}
-                src="/members-img.png"
-                alt=""
-                width="60"
-                height="62"
-              />
+              <Image src="/members-img.png" alt="" width="60" height="62" />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Members
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
           <Card
             sx={{
               width: "100%",
-              height: { xs: "150px", sm: "190px" },
+              height: "190px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -162,42 +149,34 @@ const CompanyPreview = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor: "pointer",
             }}
           >
             <Box
               sx={{
-                height: "61px",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                mt: "25px",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
+              <Image
+                src="/preview-img.png"
+                alt=""
+                width="70"
+                height="62"
+                style={{
+                  width: "60px",
                 }}
-              >
-                <Image
-                  className={styles.companyProfileCardImg}
-                  src="/preview-img.png"
-                  alt=""
-                  width="70"
-                  height="62"
-                  style={{
-                    width: "60px",
-                  }}
-                />
-              </Box>
+              />
             </Box>
-            <Box sx={{ p: "16px" }}>
+            <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                sx={{ color: "white", fontSize: "30px" }}
                 variant="h5"
               >
                 Preview
               </CustomTypography>
-            </Box>
+            </CardContent>
           </Card>
         </Stack>
         <CustomTypography
@@ -255,7 +234,7 @@ const CompanyPreview = () => {
                     backgroundColor: "white",
                   }}
                 >
-                  <Avatar
+                  <StyledAvatar
                     alt=""
                     src={`https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`}
                     sx={{ height: "228px", width: "228px" }}
@@ -288,28 +267,22 @@ const CompanyPreview = () => {
                       </CustomTypography>
                     </Box> */}
               <Divider />
-              {final.address?.length !== 0
-                ? final.address?.map((addd, index) => (
-                    <Box className={styles.PreviewTypoBox}>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <PlaceOutlinedIcon className={styles.PreviewIcon} />
-                        &nbsp;&nbsp;
+              <Box className={styles.PreviewTypoBox}>
+                <Box sx={{ display: "flex" }}>
+                  <PlaceOutlinedIcon className={styles.PreviewIcon} />
+                  &nbsp;&nbsp;
+                  {final.address?.length !== 0
+                    ? final.address?.map((addd, index) => (
                         <>
                           <CustomTypography>
-                            {addd?.address?.label}
+                            {(index ? "| " : "") + addd?.address?.label}
                             {}
                           </CustomTypography>
                         </>
-                      </Box>
-                    </Box>
-                  ))
-                : "No Provided"}
+                      ))
+                    : "No Provided"}
+                </Box>
+              </Box>
               <Divider />
               <Box className={styles.PreviewTypoBox}>
                 <CustomTypography
@@ -423,6 +396,30 @@ const CompanyPreview = () => {
                 </CustomTypography>
               </Box>
             </Box>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                mt: "40px",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  width: "50%",
+                  bgcolor: "#015FB1 !important",
+                  height: "55px",
+                }}
+                onClick={() => {
+                  push("/Employer/Dashboard");
+                }}
+              >
+                Go To Dashboard
+              </Button>
+            </Stack>
           </CardContent>
         </Card>
       </Employer>

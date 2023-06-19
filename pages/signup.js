@@ -139,7 +139,13 @@ function Signup() {
   );
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    const field = event.target.name;
+    let value = event.target.value;
+
+    if (field === "email") {
+      value = value.toLowerCase();
+    }
+    setValues({ ...values, [field]: value });
   };
 
   const handleClickShowPassword = () => {
@@ -215,17 +221,15 @@ function Signup() {
     }
   };
 
-  console.log(errors.email, "errors");
-
   return (
     <Box
       sx={{
         height: { md: "100%", xs: "100%" },
         p: { sm: "50px", xs: "0px" },
         width: "100vw",
-        backgroundImage: "url(/SignUpBG.svg)",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        backgroundImage: "url(/SignUpBg.webp)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
         overflow: "auto",
         display: "flex",
         alignItems: "center",
@@ -354,8 +358,8 @@ function Signup() {
                     width="0"
                     height="0"
                     sizes="100vw"
-                      blurDataURL="URL"
-                     placeholder="blur"
+                    blurDataURL="URL"
+                    placeholder="blur"
                   />
                   <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
                     Employer
@@ -411,7 +415,7 @@ function Signup() {
                       />
                     </span>
                     <span style={{ marginTop: "6px", fontFamily: "Inter" }}>
-                      Log in with LinkedIn
+                      Sign up with LinkedIn
                     </span>
                   </button>
                   <button
@@ -429,7 +433,7 @@ function Signup() {
                       />
                     </span>
                     <span style={{ marginTop: "1px", fontFamily: "Inter" }}>
-                      Log in with Google
+                      sign up with Google
                     </span>
                   </button>
                   <Divider>OR</Divider>

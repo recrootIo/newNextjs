@@ -55,7 +55,13 @@ function Signin() {
   };
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    const field = event.target.name;
+    let value = event.target.value;
+
+    if (field === "email") {
+      value = value.toLowerCase();
+    }
+    setValues({ ...values, [field]: value });
   };
 
   useEffect(() => {
@@ -67,8 +73,11 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        if (originalPromiseResult.User.email_is_verified === false) {
-          push("/verifyMobile");
+        if (
+          originalPromiseResult.User.email_is_verified === false &&
+          originalPromiseResult.User.recrootUserType === "Member"
+        ) {
+          push("/Verifymobile");
           return;
         }
 
@@ -209,8 +218,14 @@ function Signin() {
                   >
                     <button onClick={handleClick} className="linkedinButton">
                       <span>
-                        <Image src={"/linkedInLogo.png"} alt="" height="20" width="20" blurDataURL="URL"
-                placeholder="blur"/>
+                        <Image
+                          src={"/linkedInLogo.png"}
+                          alt=""
+                          height="20"
+                          width="20"
+                          blurDataURL="URL"
+                          placeholder="blur"
+                        />
                       </span>
                       <span style={{ marginTop: "6px" }}>
                         Log in with LinkedIn
@@ -224,8 +239,14 @@ function Signin() {
                       className="linkedinButton"
                     >
                       <span>
-                        <Image src={"/googleLogo.png"} alt="" height="20" width="20"  blurDataURL="URL"
-                placeholder="blur" />
+                        <Image
+                          src={"/googleLogo.png"}
+                          alt=""
+                          height="20"
+                          width="20"
+                          blurDataURL="URL"
+                          placeholder="blur"
+                        />
                       </span>
                       <span style={{ marginTop: "1px" }}>
                         Log in with Google
@@ -270,6 +291,7 @@ function Signin() {
                       id="email"
                       placeholder="Enter Email ID"
                       onChange={handleChange}
+                      value={values.email}
                     />
                     <OutlinedInput
                       id="outlined-adornment-password"
@@ -322,9 +344,11 @@ function Signin() {
                           label={<p>Remember Me</p>}
                         />
                       </FormControl>
-                      <CustomTypography>
-                        Forgot Your Password ?
-                      </CustomTypography>
+                      <Link href={"/forgotPassword"}>
+                        <CustomTypography>
+                          Forgot Your Password ?
+                        </CustomTypography>
+                      </Link>
                     </Stack>
                     <button
                       style={{
