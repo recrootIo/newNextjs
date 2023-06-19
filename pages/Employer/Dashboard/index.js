@@ -50,6 +50,11 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 
+const DatagridClient = dynamic(
+  () => import("../../../components/Employers/DatagridClient"),
+  { ssr: false }
+);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -1221,14 +1226,13 @@ const EmpoyerDashboard = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
-              <div style={{ height: "550px", width: "100%" }}>
-                <DataGrid
-                  sx={{ display: "flex", justifyContent: "center" }}
-                  getRowId={handleGetRowId}
-                  rows={rows2}
-                  columns={columns}
-                />
-              </div>
+              <DatagridClient
+                value={value}
+                index={1}
+                getRowId={handleGetRowId}
+                rows={rows2}
+                columns={columns}
+              />
             ) : (
               <Box
                 sx={{
@@ -1240,7 +1244,6 @@ const EmpoyerDashboard = () => {
                 }}
               >
                 <Typography>
-                  {" "}
                   Subscribe Gold/Premium package to get Featured jobs
                 </Typography>
               </Box>

@@ -17,6 +17,15 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 
 function Employer({ children }) {
+  const company = useSelector((state) => state.company?.companyDetl);
+  const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
+  const [getUser, setUser] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const freePack = company.package?.subscription_package === "Free";
+  const freeCount = freePack === true ? 2 - cjobs.length : 0;
+  const proCOunt = company?.jobCounts?.proCount;
+  const preCOunt = company?.jobCounts?.premiumCount;
+
   const user = Cookies.get();
   const { push } = useRouter();
   const dispatch = useDispatch();
@@ -26,12 +35,6 @@ function Employer({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const company = useSelector((state) => state.company?.companyDetl);
-  const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
-  const freePack = company.package?.subscription_package === "Free";
-  const freeCount = freePack === true ? 2 - cjobs.length : 0;
-  const proCOunt = company?.jobCounts?.proCount;
-  const preCOunt = company?.jobCounts?.premiumCount;
   const handleEdit = () => {
     if (
       company.jobSlot === true &&
@@ -108,7 +111,13 @@ function Employer({ children }) {
     );
   };
 
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  useEffect(() => {
+    dispatch(getCompanyDetails());
+    dispatch(companyJobs());
+    setUser(() => user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <Head>
@@ -160,17 +169,22 @@ function Employer({ children }) {
                 <EmployerSidebar />
               </Drawer>
             </>
-            <CustomTypography
-              variant="h6"
-              sx={{
-                fontFamily: BOLD,
-                fontSize: "22px",
-                color: "white",
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              Hello {user?.firstName}
-            </CustomTypography>
+            {getUser && (
+              <CustomTypography
+                variant="h6"
+                sx={{
+                  fontFamily: BOLD,
+                  fontSize: "28px",
+                  flex: 1,
+                  color: "white",
+                }}
+                gutterBottom
+                className="tourConfig"
+              >
+                Hello
+                {getUser?.firstName}
+              </CustomTypography>
+            )}
           </Box>
         </Container>
       </Box>
@@ -189,19 +203,22 @@ function Employer({ children }) {
                   mb: "30px",
                 }}
               >
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    fontFamily: BOLD,
-                    fontSize: "28px",
-                    flex: 1,
-                    color: "white",
-                    display: { xs: "none", md: "block" },
-                  }}
-                  gutterBottom
-                >
-                  Hello {user?.firstName}
-                </CustomTypography>
+                {getUser && (
+                  <CustomTypography
+                    variant="h6"
+                    sx={{
+                      fontFamily: BOLD,
+                      fontSize: "28px",
+                      flex: 1,
+                      color: "white",
+                    }}
+                    gutterBottom
+                    className="tourConfig"
+                  >
+                    Hello
+                    {getUser?.firstName}
+                  </CustomTypography>
+                )}
                 <Button
                   variant="contained"
                   sx={{
