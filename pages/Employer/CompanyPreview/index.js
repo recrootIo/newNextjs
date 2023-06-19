@@ -37,6 +37,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { isEmpty } from "lodash";
+import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import Employer from "..";
 import { useRouter } from "next/navigation";
@@ -61,10 +62,28 @@ const CompanyPreview = () => {
       objectFit: "contain",
     },
   }));
+
+  const theme = useTheme();
+  const [isMobile, setIsMobile] = React.useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Employer>
-        <Stack direction="row" spacing={7}>
+        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
           <Card
             sx={{
               width: "100%",
@@ -90,11 +109,25 @@ const CompanyPreview = () => {
                 mt: "25px",
               }}
             >
-              <Image src="/basic-info-img.png" alt="" width="60" height="42" />
+              {isMobile ? (
+                <Image
+                  src="/basic-info-img.png"
+                  alt=""
+                  width="50"
+                  height="42"
+                />
+              ) : (
+                <Image
+                  src="/basic-info-img.png"
+                  alt=""
+                  width="60"
+                  height="42"
+                />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Basic Info
@@ -126,11 +159,15 @@ const CompanyPreview = () => {
                 mt: "25px",
               }}
             >
-              <Image src="/members-img.png" alt="" width="60" height="62" />
+              {isMobile ? (
+                <Image src="/members-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image src="/members-img.png" alt="" width="60" height="62" />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Members
@@ -159,19 +196,23 @@ const CompanyPreview = () => {
                 mt: "25px",
               }}
             >
-              <Image
-                src="/preview-img.png"
-                alt=""
-                width="70"
-                height="62"
-                style={{
-                  width: "60px",
-                }}
-              />
+              {isMobile ? (
+                <Image src="/preview-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image
+                  src="/preview-img.png"
+                  alt=""
+                  width="70"
+                  height="62"
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Preview
@@ -267,22 +308,22 @@ const CompanyPreview = () => {
                       </CustomTypography>
                     </Box> */}
               <Divider />
-              <Box className={styles.PreviewTypoBox}>
-                <Box sx={{ display: "flex" }}>
-                  <PlaceOutlinedIcon className={styles.PreviewIcon} />
-                  &nbsp;&nbsp;
-                  {final.address?.length !== 0
-                    ? final.address?.map((addd, index) => (
+              {final.address?.length !== 0
+                ? final.address?.map((addd, index) => (
+                    <Box className={styles.PreviewTypoBox}>
+                      <Box sx={{ display: "flex" }}>
+                        <PlaceOutlinedIcon className={styles.PreviewIcon} />
+                        &nbsp;&nbsp;
                         <>
                           <CustomTypography>
-                            {(index ? "| " : "") + addd?.address?.label}
+                            {addd?.address?.label}
                             {}
                           </CustomTypography>
                         </>
-                      ))
-                    : "No Provided"}
-                </Box>
-              </Box>
+                      </Box>
+                    </Box>
+                  ))
+                : "No Provided"}
               <Divider />
               <Box className={styles.PreviewTypoBox}>
                 <CustomTypography

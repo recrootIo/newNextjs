@@ -72,6 +72,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
 import Employer from "..";
+import { useTheme } from "@mui/material/styles";
 import { isEmpty } from "lodash";
 
 const style = {
@@ -267,10 +268,26 @@ const CompanyProfile = () => {
     },
   }));
   console.log(basicin.cmpemail, "email");
+  const theme = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
       <Employer>
-        <Stack direction="row" spacing={7}>
+        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
           <Card
             sx={{
               width: "100%",
@@ -296,11 +313,25 @@ const CompanyProfile = () => {
                 mt: "25px",
               }}
             >
-              <Image src="/basic-info-img.png" alt="" width="60" height="42" />
+              {isMobile ? (
+                <Image
+                  src="/basic-info-img.png"
+                  alt=""
+                  width="50"
+                  height="42"
+                />
+              ) : (
+                <Image
+                  src="/basic-info-img.png"
+                  alt=""
+                  width="60"
+                  height="42"
+                />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Basic Info
@@ -341,11 +372,15 @@ const CompanyProfile = () => {
                 mt: "25px",
               }}
             >
-              <Image src="/members-img.png" alt="" width="60" height="62" />
+              {isMobile ? (
+                <Image src="/members-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image src="/members-img.png" alt="" width="60" height="62" />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Members
@@ -386,19 +421,23 @@ const CompanyProfile = () => {
                 mt: "25px",
               }}
             >
-              <Image
-                src="/preview-img.png"
-                alt=""
-                width="70"
-                height="62"
-                style={{
-                  width: "60px",
-                }}
-              />
+              {isMobile ? (
+                <Image src="/preview-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image
+                  src="/preview-img.png"
+                  alt=""
+                  width="70"
+                  height="62"
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              )}
             </Box>
             <CardContent>
               <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
                 Preview
@@ -531,7 +570,14 @@ const CompanyProfile = () => {
               </Box>
             </Box>
             <Divider />
-            <Box sx={{ display: "flex", mt: "20px", mb: "35px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                mt: "20px",
+                mb: "35px",
+              }}
+            >
               <CustomTypography
                 sx={{
                   color: "#034275",
