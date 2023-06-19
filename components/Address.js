@@ -1,46 +1,42 @@
-import {
-  Box,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { addressSet } from "../slices/job";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { v4 as uuidv4 } from "uuid";
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { addressSet } from "@/redux/slices/job";
 uuidv4();
-
 
 export default function Address() {
   const dispatch = useDispatch();
   const addrss = useSelector((state) => state.jobs?.location) || [];
-  const [gaddres, setgaddres] = useState('')
+  const [gaddres, setgaddres] = useState("");
   const handleChange2 = (val) => {
-    setgaddres(val)
-    dispatch(addressSet([...addrss,val.label])).then(
-    setgaddres('')
-    )
+    setgaddres(val);
+    dispatch(addressSet([...addrss, val.label])).then(setgaddres(""));
   };
 
   function removeElementByIndex(array, indexToRemove) {
     return array.slice(0, indexToRemove).concat(array.slice(indexToRemove + 1));
   }
- const handleRemove = (ind) =>{
-  dispatch(addressSet(removeElementByIndex(addrss,ind)))
- }  
+  const handleRemove = (ind) => {
+    dispatch(addressSet(removeElementByIndex(addrss, ind)));
+  };
 
   return (
-    <Box sx={{ p: "20px" }}>
-      <Typography variant="p" sx={{
-         fontWeight: "700",
-         fontSize: "16px",
-         lineHeight: "30px",
-         mb: "8px",
-         mt: "20px",
-         color: "#4a4a4a",
-      }}>
+    <Box sx={{ p: 0 }}>
+      <Typography
+        variant="p"
+        sx={{
+          fontWeight: "700",
+          fontSize: "16px",
+          lineHeight: "30px",
+          mb: "8px",
+          mt: "20px",
+          color: "#4a4a4a",
+        }}
+      >
         Add Location
       </Typography>
       <Box
@@ -58,7 +54,7 @@ export default function Address() {
             selectProps={{
               isClearable: true,
               placeholder: "Enter Location",
-              value:gaddres || "",
+              value: gaddres || "",
               onChange: (val) => {
                 handleChange2(val);
               },
@@ -83,26 +79,40 @@ export default function Address() {
           />
         </Box>
       </Box>
-      <Box sx={{display:'flex',gap:'10px',flexWrap:'wrap',mt:'15px'}}>
-        {addrss?.map((addd,index)=>(
-          <Box key={index} sx={{background: "#EFF6FF",
-          width:"fit-content",
-          p: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "16px",
-          cursor: "pointer",}}>
-        <Typography sx={{  fontWeight: 700,
-    fontSize: "16px",
-    lineHeight: "18px",
-    color: "#4fa9ff",}}>{addd}</Typography> 
-        <IconButton onClick={()=>{handleRemove(index)}}>
-        <CloseRoundedIcon />
-        </IconButton>
+      <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap", mt: "15px" }}>
+        {addrss?.map((addd, index) => (
+          <Box
+            key={index}
+            sx={{
+              background: "#EFF6FF",
+              width: "fit-content",
+              p: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "16px",
+              cursor: "pointer",
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: "16px",
+                lineHeight: "18px",
+                color: "#4fa9ff",
+              }}
+            >
+              {addd}
+            </Typography>
+            <IconButton
+              onClick={() => {
+                handleRemove(index);
+              }}
+            >
+              <CloseRoundedIcon />
+            </IconButton>
           </Box>
-        ))
-        }
+        ))}
       </Box>
     </Box>
   );

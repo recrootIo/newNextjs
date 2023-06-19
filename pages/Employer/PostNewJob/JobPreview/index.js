@@ -73,75 +73,88 @@ const JobPreview = (props) => {
   return (
     <>
       <CardContent>
-                  <Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        mt: "30px",
-                        mb: "100px",
-                      }}
-                    >
-                      <Image
-                        src="/post-newjob-thirdstep-img.png"
-                        alt=""
-                        width="320"
-                        height="20"
-                      />
-                    </Box>
-                    <CustomTypography
-                      sx={{
-                        color: "#034275",
-                        fontFamily: BOLD,
-                        fontSize: "28px",
-                        mb: "25px",
-                      }}
-                    >
-                      Preview
-                    </CustomTypography>
-                    <Box
-                      sx={{
-                        bgcolor: "#2699FF",
-                        height: "55px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: "0px 15px 0px 15px",
-                      }}
-                    >
-                      <CustomTypography
-                        sx={{
-                          color: "white",
-                          fontSize: "16px",
-                        }}
-                      >
-                        Basic Information
-                      </CustomTypography>
-                      <IconButton    onClick={() => {
-              settingIndex(0);
-            }}>
-        <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              mt: "30px",
+              mb: "100px",
+            }}
+          >
+            <Image
+              src="/post-newjob-thirdstep-img.png"
+              alt=""
+              width="320"
+              height="20"
+            />
+          </Box>
+          <CustomTypography
+            sx={{
+              color: "#034275",
+              fontFamily: BOLD,
+              fontSize: "28px",
+              mb: "25px",
+            }}
+          >
+            Preview
+          </CustomTypography>
+          <Box
+            sx={{
+              bgcolor: "#2699FF",
+              height: "55px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              p: "0px 15px 0px 15px",
+            }}
+          >
+            <CustomTypography
+              sx={{
+                color: "white",
+                fontSize: "16px",
+              }}
+            >
+              Basic Information
+            </CustomTypography>
+            <IconButton
+              onClick={() => {
+                settingIndex(0);
+              }}
+            >
+              <EditOutlinedIcon color="white" sx={{ color: "white" }} />
             </IconButton>
-                    </Box>
-                    <Box sx={{ p: "20px 15px 0px 15px" }}>
-                      <Stack spacing={3}>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Job Title :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {level}
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Job Description :
-                          </CustomTypography>
-                         <Box>
-                <ReactQuill value={descript} readOnly={true} theme={"bubble"} />
-                         </Box>
-                        </Box>
-                        {/* <Box sx={{ display: "flex", gap: "10px" }}>
+          </Box>
+          <Box sx={{ p: "20px 15px 0px 15px" }}>
+            <Stack spacing={3}>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Job Title :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {level}
+                </CustomTypography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: "10px",
+                }}
+              >
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Job Description :
+                </CustomTypography>
+                <Box>
+                  <ReactQuill
+                    value={descript}
+                    readOnly={true}
+                    theme={"bubble"}
+                    style={{ m: 0 }}
+                  />
+                </Box>
+              </Box>
+              {/* <Box sx={{ display: "flex", gap: "10px" }}>
                           <CustomTypography className={styles.JobPreviewTypo}>
                             Requirements :
                           </CustomTypography>
@@ -176,50 +189,69 @@ const JobPreview = (props) => {
                             {bull} Great attention to detail<br></br>
                           </CustomTypography>
                         </Box> */}
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Required Skills :
-                          </CustomTypography>
-                          <Stack direction="row" flexWrap={'wrap'} gap={'10px'} spacing={2}>
-                          {details &&
-                  details.requiredSkill.map((skill)=>(
-                    <>
-                            <Chip
-                              label={skill.skill}
-                              sx={{ bgcolor: "#D4F0FC" }}
-                            />
-                    </>
-                  ))}
-                          </Stack>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Job Location :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {addres?.join(" | ")}
-                          </CustomTypography>
-                        </Box>
-                      </Stack>
-                    </Box>
-                    {showq === "true" || showq === undefined ? (
-              <>
-                <Box sx={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    p: "20px",
-  }}>
-                  <Typography variant="h5" sx={{
-    fontWeight: 700,
-    fontSize: "16px",
-    lineHeight: "18px",
-  }}>
-                    Screening Questions
-                  </Typography>
-                </Box>
-                {quiz.map((qiz, index) => (
-                  <>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  gap: "10px",
+                }}
+              >
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Required Skills :
+                </CustomTypography>
+                <Stack
+                  direction="row"
+                  flexWrap={"wrap"}
+                  gap={"10px"}
+                  spacing={2}
+                >
+                  {details &&
+                    details.requiredSkill.map((skill) => (
+                      <>
+                        <Chip
+                          label={skill.skill}
+                          sx={{
+                            bgcolor: "#D4F0FC",
+                            marginLeft: "0px !important",
+                          }}
+                        />
+                      </>
+                    ))}
+                </Stack>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Job Location :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {addres?.join(" | ")}
+                </CustomTypography>
+              </Box>
+            </Stack>
+          </Box>
+          {showq === "true" || showq === undefined ? (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  p: "20px",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    lineHeight: "18px",
+                  }}
+                >
+                  Screening Questions
+                </Typography>
+              </Box>
+              {quiz.map((qiz, index) => (
+                <>
                   <Box
                     sx={{
                       backgroundColor: "white",
@@ -262,119 +294,122 @@ const JobPreview = (props) => {
                       {qiz.preferedAns}
                     </Typography>
                   </Box>
-                  </>
-                ))}
-                <Divider />
-              </>
-            ) : (
-              ""
-            )}        
-                    <Box
-                      sx={{
-                        bgcolor: "#2699FF",
-                        height: "55px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: "0px 15px 0px 15px",
-                        mt: "25px",
-                      }}
-                    >
-                      <CustomTypography
-                        sx={{
-                          color: "white",
-                          fontSize: "16px",
-                        }}
-                      >
-                        Essential Information
-                      </CustomTypography>
-                      <IconButton  onClick={() => {
-              settingIndex(1);
-            }}>
-                      <EditOutlinedIcon color="white" sx={{ color: "white" }} />
-                      </IconButton>
-                    </Box>
-                    <Box sx={{ p: "20px 15px 0px 15px" }}>
-                      <Stack spacing={3}>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Career Level :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {essen && essen.careerlevel}
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Experience :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {essen && essen.experience}
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Qualifications :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {essen && essen.qualification}
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Application Deadline :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {details && moment(details.applicationDeadline).format("L")}
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Notice Period :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                            15 Days
-                          </CustomTypography>
-                        </Box>
-                        <Box sx={{ display: "flex", gap: "10px" }}>
-                          <CustomTypography className={styles.JobPreviewTypo}>
-                            Job Type :
-                          </CustomTypography>
-                          <CustomTypography className={styles.JobPreviewData}>
-                          {details && details?.notice === undefined ? 'Not Provided' : details?.notice}
-                          </CustomTypography>
-                        </Box>
-                        {details?.salary?.salaryType !== undefined &&
-            details?.salary?.salaryType !== "noprovide" ? (
-              <>
-                 <Box sx={{ display: "flex", gap: "10px" }}>
-                  <Typography>Salary :</Typography>
-                  <Typography sx={styles.contentprv}>
-                    {details && details.salary.salaryType} (
-                    {details && details.salary.minSalary} to{" "}
-                    {details && details.salary.maxSalary})
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex", gap: "10px" }}>
-                  <Typography>Salary Currency : </Typography>
-                  <Typography sx={styles.contentprv}>
-                    {details && details.salary.salaryCrrancy}
-                  </Typography>
-                </Box>
-              </>
-            ) : (
-              <>
-                 <Box sx={{ display: "flex", gap: "10px" }}>
-                  <Typography>Salary :</Typography>
-                  <Typography sx={styles.contentprv}>Negotiable</Typography>
-                </Box>
-             
-              </>
-            )}
-                      </Stack>
-                    </Box>
+                </>
+              ))}
+              <Divider />
+            </>
+          ) : (
+            ""
+          )}
+          <Box
+            sx={{
+              bgcolor: "#2699FF",
+              height: "55px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              p: "0px 15px 0px 15px",
+              mt: "25px",
+            }}
+          >
+            <CustomTypography
+              sx={{
+                color: "white",
+                fontSize: "16px",
+              }}
+            >
+              Essential Information
+            </CustomTypography>
+            <IconButton
+              onClick={() => {
+                settingIndex(1);
+              }}
+            >
+              <EditOutlinedIcon color="white" sx={{ color: "white" }} />
+            </IconButton>
+          </Box>
+          <Box sx={{ p: "20px 15px 0px 15px" }}>
+            <Stack spacing={3}>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Career Level :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {essen && essen.careerlevel}
+                </CustomTypography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Experience :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {essen && essen.experience}
+                </CustomTypography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Qualifications :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {essen && essen.qualification}
+                </CustomTypography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Application Deadline :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {details && moment(details.applicationDeadline).format("L")}
+                </CustomTypography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Notice Period :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  15 Days
+                </CustomTypography>
+              </Box>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <CustomTypography className={styles.JobPreviewTypo}>
+                  Job Type :
+                </CustomTypography>
+                <CustomTypography className={styles.JobPreviewData}>
+                  {details && details?.notice === undefined
+                    ? "Not Provided"
+                    : details?.notice}
+                </CustomTypography>
+              </Box>
+              {details?.salary?.salaryType !== undefined &&
+              details?.salary?.salaryType !== "noprovide" ? (
+                <>
+                  <Box sx={{ display: "flex", gap: "10px" }}>
+                    <Typography>Salary :</Typography>
+                    <Typography sx={styles.contentprv}>
+                      {details && details.salary.salaryType} (
+                      {details && details.salary.minSalary} to{" "}
+                      {details && details.salary.maxSalary})
+                    </Typography>
                   </Box>
-                </CardContent>
+                  <Box sx={{ display: "flex", gap: "10px" }}>
+                    <Typography>Salary Currency : </Typography>
+                    <Typography sx={styles.contentprv}>
+                      {details && details.salary.salaryCrrancy}
+                    </Typography>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box sx={{ display: "flex", gap: "10px" }}>
+                    <Typography>Salary :</Typography>
+                    <Typography sx={styles.contentprv}>Negotiable</Typography>
+                  </Box>
+                </>
+              )}
+            </Stack>
+          </Box>
+        </Box>
+      </CardContent>
     </>
   );
 };

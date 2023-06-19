@@ -36,11 +36,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
+import { useTheme } from "@mui/material/styles";
 // import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
 require("jspdf-autotable");
-
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -78,10 +78,9 @@ const columns = [
     width: "150",
     renderCell: (parms) => (
       <>
-      <p>{moment(parms?.value).format('L')}</p>
+        <p>{moment(parms?.value).format("L")}</p>
       </>
-    )
-    
+    ),
   },
   {
     field: "packageEndDate",
@@ -89,9 +88,9 @@ const columns = [
     width: "150",
     renderCell: (parms) => (
       <>
-      <p>{moment(parms?.value).format('L')}</p>
+        <p>{moment(parms?.value).format("L")}</p>
       </>
-    )
+    ),
   },
   // {
   //   field: "action",
@@ -291,10 +290,8 @@ const generatePDF = (company, invoiceInfo) => {
   doc.save("Invoice.pdf");
 };
 
-
-
 const Subscriptions = () => {
- const {push} = useRouter()
+  const { push } = useRouter();
   const [invoiceInfo, setInvoiceInfo] = useState({
     currancyType: "",
     id: "",
@@ -336,119 +333,141 @@ const Subscriptions = () => {
   const handleRowClick = (params) => {
     setInvoiceInfo(params.row);
   };
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios.get('https://ipapi.co/json/').then((response) => {
+    axios
+      .get("https://ipapi.co/json/")
+      .then((response) => {
         let data = response.data;
-        dispatch(userCountry({
-          countryName: data.country_name,
-          countryCurrecy: data.currency
-      }));
-    }).catch((error) => {
+        dispatch(
+          userCountry({
+            countryName: data.country_name,
+            countryCurrecy: data.currency,
+          })
+        );
+      })
+      .catch((error) => {
         console.warn(error);
-    });
-  }, [dispatch])
-  const state = useSelector(state => state.personal.userCountry)
+      });
+  }, [dispatch]);
+  const state = useSelector((state) => state.personal.userCountry);
 
   const handleNavigate = () => {
     push(`/Pricing`);
   };
   var company = useSelector((state) => state.company);
-const county = state?.countryCurrecy === 'INR'
+  const county = state?.countryCurrecy === "INR";
+
+  const theme = useTheme();
 
   return (
     <>
-<Employer>
-      
-              <Grid container spacing={2}>
-                <Grid item xs={7}>
-                  <Stack spacing={2} sx={{ height: "100%" }}>
-                    <Card
-                      sx={{
-                        width: "100%",
-                        borderRadius: "10px",
-                        backgroundImage:
-                          'url("/Subscription card with white top sectionBG.svg")',
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          height: "67px",
-                          display: "flex",
-                          alignItems: "center",
-                          p: "0px 15px 0px 15px",
-                        }}
-                      >
-                        <CustomTypography
+      <Employer>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={7}>
+            <Stack spacing={2} sx={{ height: "100%" }}>
+              <Card
+                sx={{
+                  width: "100%",
+                  borderRadius: "10px",
+                  backgroundImage:
+                    'url("/Subscription card with white top sectionBG.svg")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "67px",
+                    display: "flex",
+                    alignItems: "center",
+                    p: "0px 15px 0px 15px",
+                  }}
+                >
+                  <CustomTypography
+                    sx={{
+                      color: "#01313F",
+                      fontWeight: 600,
+                      fontSize: "20px",
+                    }}
+                  >
+                    Current subscription Plan
+                  </CustomTypography>
+                </Box>
+                <Box
+                  sx={{
+                    height: "210px",
+                    p: "0px 15px 0px 15px",
+                  }}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                      <Stack spacing={theme.breakpoints.down("xs") ? 2 : 3}>
+                        <Box
                           sx={{
-                            color: "#01313F",
-                            fontWeight: 600,
-                            fontSize: "20px",
+                            width: { xs: "100%", md: "40%" },
+                            display: "flex",
+                            // justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: "6px",
                           }}
                         >
-                          Current subscription Plan
-                        </CustomTypography>
-                      </Box>
-                      <Box
-                        sx={{
-                          height: "210px",
-                          p: "0px 15px 0px 15px",
-                        }}
-                      >
-                        <Grid container spacing={2}>
-                          <Grid item xs={8}>
-                            <Stack spacing={3}>
-                              <Box
-                                sx={{
-                                  width: "40%",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  borderRadius: "6px",
-                                }}
-                              >
-                                <CustomTypography
-                                  sx={{
-                                    color: "#00339B",
-                                    fontWeight: 600,
-                                    fontSize: "24px",
-                                   background: "#03E7F4", padding: "5px", borderRadius: "5px" ,
-                                   mt:'5px'
-                                  }}
-                                >
-                                  {/* <b>/ */}
-                        {paymentInfo.package.subscription_package} Plan
-                      {/* </b> */}
-                                </CustomTypography>
-                              </Box>
-                              <Box
-                                sx={{
-                                  width: "30%",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  border: "1px solid #CEF4F6",
-                                  borderRadius: "6px",
-                                }}
-                              >
-                                <CustomTypography
-                                  sx={{
-                                    color: "#85F8FF",
-                                    fontWeight: 600,
-                                    fontSize: "24px",
-                                  }}
-                                >
-                                  {
-            paymentInfo.package.subscription_package === 'Pro Plan' || paymentInfo.package.subscription_package === 'Premium' ?  
-            county ?    <b>&#8377; {paymentInfo.package.currant_package_price}</b> :  <b>$ {paymentInfo.package.currant_package_price}</b> : 
-            <b>$ {paymentInfo.package.currant_package_price}</b>
-           }
-                                </CustomTypography>
-                              </Box>
-                              <Stack direction="row" spacing={2}>
-                                {/* <Button
+                          <CustomTypography
+                            sx={{
+                              color: "#00339B",
+                              fontWeight: 600,
+                              fontSize: "24px",
+                              background: "#03E7F4",
+                              padding: "5px",
+                              borderRadius: "5px",
+                              mt: "5px",
+                            }}
+                          >
+                            {/* <b>/ */}
+                            {paymentInfo.package.subscription_package} Plan
+                            {/* </b> */}
+                          </CustomTypography>
+                        </Box>
+                        <Box
+                          sx={{
+                            width: "30%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            border: "1px solid #CEF4F6",
+                            borderRadius: "6px",
+                          }}
+                        >
+                          <CustomTypography
+                            sx={{
+                              color: "#85F8FF",
+                              fontWeight: 600,
+                              fontSize: "24px",
+                            }}
+                          >
+                            {paymentInfo.package.subscription_package ===
+                              "Pro Plan" ||
+                            paymentInfo.package.subscription_package ===
+                              "Premium" ? (
+                              county ? (
+                                <b>
+                                  &#8377;{" "}
+                                  {paymentInfo.package.currant_package_price}
+                                </b>
+                              ) : (
+                                <b>
+                                  $ {paymentInfo.package.currant_package_price}
+                                </b>
+                              )
+                            ) : (
+                              <b>
+                                $ {paymentInfo.package.currant_package_price}
+                              </b>
+                            )}
+                          </CustomTypography>
+                        </Box>
+                        <Stack direction="row" spacing={2}>
+                          {/* <Button
                                   variant="contained"
                                   sx={{
                                     bgcolor: "white !important",
@@ -460,261 +479,277 @@ const county = state?.countryCurrecy === 'INR'
                                 >
                                   View Detail
                                 </Button> */}
-                                <Button
-                                  variant="contained"
-                                  sx={{
-                                    bgcolor: "white !important",
-                                    color: "#01313F",
-                                    textTransform: "capitalize",
-                                    fontSize: "16px",
-                                    width: "50%",
-                                  }}
-                        onClick={handleNavigate}
-                                >
-                                  Change Plan
-                                </Button>
-                              </Stack>
-                            </Stack>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
+                          <Button
+                            variant="contained"
                             sx={{
-                              backgroundImage:
-                                'url("/thubs-up-bg-vector.svg.svg")',
-                              backgroundRepeat: "no-repeat",
-                              backgroundSize: "contain",
+                              bgcolor: "white !important",
+                              color: "#01313F",
+                              textTransform: "capitalize",
+                              fontSize: "16px",
+                              width: { xs: "80%", md: "50%" },
                             }}
+                            onClick={handleNavigate}
                           >
-                            <Image
-                              src="/thumbup.png"
-                              alt=""
-                              width="130"
-                              height="130"
-                            />
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    </Card>
-                    <Card
+                            Change Plan
+                          </Button>
+                        </Stack>
+                      </Stack>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={4}
                       sx={{
-                        width: "100%",
-                        borderRadius: "10px",
-                        p: "15px",
-                        backgroundImage: 'url("/Manage Payment card.svg")',
+                        backgroundImage: 'url("/thubs-up-bg-vector.svg.svg")',
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
+                        backgroundSize: "contain",
                       }}
                     >
-                     {
-    paymentInfo.package.subscription_package === 'Free' ? '' :
-      <Box
+                      <Image
+                        src="/thumbup.png"
+                        alt=""
+                        width="130"
+                        height="130"
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Card>
+              <Card
+                sx={{
+                  width: "100%",
+                  borderRadius: "10px",
+                  p: "15px",
+                  backgroundImage: 'url("/Manage Payment card.svg")',
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              >
+                {paymentInfo.package.subscription_package === "Free" ? (
+                  ""
+                ) : (
+                  <Box
+                    sx={{
+                      height: "160px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid item xs={8}>
+                        <Stack spacing={2}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                color: "white",
+                                fontWeight: 500,
+                                fontSize: "16px",
+                              }}
+                            >
+                              Next Payment
+                            </CustomTypography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                color: "#85F8FF",
+                                fontWeight: 600,
+                                fontSize: "24px",
+                              }}
+                            >
+                              {paymentInfo.package.subscription_package ===
+                                "Pro Plan" ||
+                              paymentInfo.package.subscription_package ===
+                                "Premium" ? (
+                                county ? (
+                                  <b>
+                                    &#8377;{" "}
+                                    {paymentInfo.package.currant_package_price}
+                                  </b>
+                                ) : (
+                                  <b>
+                                    ${" "}
+                                    {paymentInfo.package.currant_package_price}
+                                  </b>
+                                )
+                              ) : (
+                                <b>
+                                  $ {paymentInfo.package.currant_package_price}
+                                </b>
+                              )}
+                            </CustomTypography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "flex-start",
+                              alignItems: "center",
+                            }}
+                          >
+                            <CustomTypography
+                              sx={{
+                                color: "white",
+                                fontWeight: 500,
+                                fontSize: "16px",
+                              }}
+                            >
+                              On{" "}
+                              {moment(
+                                paymentInfo.package.package_end_date
+                              ).format(
+                                // "MMMM d YYYY"
+                                "L"
+                              )}
+                            </CustomTypography>
+                          </Box>
+                        </Stack>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={4}
                         sx={{
-                          height: "160px",
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
-                        <Grid container spacing={2}>
-                          <Grid item xs={8}>
-                            <Stack spacing={2}>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <CustomTypography
-                                  sx={{
-                                    color: "white",
-                                    fontWeight: 500,
-                                    fontSize: "16px",
-                                  }}
-                                >
-                                  Next Payment
-                                </CustomTypography>
-                              </Box>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <CustomTypography
-                                  sx={{
-                                    color: "#85F8FF",
-                                    fontWeight: 600,
-                                    fontSize: "24px",
-                                  }}
-                                >
-                                       {
-            paymentInfo.package.subscription_package === 'Pro Plan' || paymentInfo.package.subscription_package === 'Premium' ?  
-            county ?    <b>&#8377; {paymentInfo.package.currant_package_price}</b> :  <b>$ {paymentInfo.package.currant_package_price}</b> : 
-            <b>$ {paymentInfo.package.currant_package_price}</b>
-           }
-                                </CustomTypography>
-                              </Box>
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <CustomTypography
-                                  sx={{
-                                    color: "white",
-                                    fontWeight: 500,
-                                    fontSize: "16px",
-                                  }}
-                                >
-                                  On   {moment(paymentInfo.package.package_end_date).format(
-                          // "MMMM d YYYY"
-                          "L"
-                        )}
-                                </CustomTypography>
-                              </Box>
-                            </Stack>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={4}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <Button
-                              variant="contained"
-                              sx={{
-                                bgcolor: "white !important",
-                                color: "#01313F",
-                                textTransform: "capitalize",
-                                fontSize: "15px",
-                                width: "100%",
-                              }}
-                            >
-                              Manage Payments
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                      }
-                    </Card>
-                  </Stack>
-                </Grid>
-                <Grid item xs={5}>
-                  <Card sx={{ borderRadius: "10px" }}>
-                    <Box
-                      sx={{
-                        backgroundColor: "#02A9F7",
-                        height: "54px",
-                        display: "flex",
-                        alignItems: "center",
-                        p: "0px 15px 0px 15px",
-                      }}
-                    >
-                      <CustomTypography
-                        sx={{
-                          color: "white",
-                          fontWeight: 600,
-                          fontSize: "24px",
-                        }}
-                      >
-                        Invoice Information
-                      </CustomTypography>
-                    </Box>
-                    <Box
-                      sx={{
-                        backgroundColor: "#F2F8FD",
-                        height: "360px",
-                        display: "flex",
-                        alignItems: "center",
-                        p: "0px 15px 0px 15px",
-                      }}
-                    >
-                      <Stack spacing={2} sx={{ width: "100%" }}>
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Invoice Information
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                            {invoiceInfo.id}
-                          </CustomTypography>
-                        </Box>
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Date
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                              {moment(invoiceInfo.paymentDate).format("L")}
-                          </CustomTypography>
-                        </Box>
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Description
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                                               {invoiceInfo.paidPackage} Package
-                          </CustomTypography>
-                        </Box>
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Transaction
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                          {invoiceInfo.status}
-                          </CustomTypography>
-                        </Box>
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Amount
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                                {
-    paymentInfo.package.subscription_package === 'Free' ? 'Free' :
-            invoiceInfo.paidPackage=== 'Pro Plan' || invoiceInfo.paidPackage=== 'Premium' ?  
-            county ?    <b>&#8377; {invoiceInfo.paymentAmount}</b> :  <b>$ {invoiceInfo.paymentAmount}</b> : 
-            <b>$ {invoiceInfo.paymentAmount}</b>
-           }
-                          </CustomTypography>
-                        </Box>
-                        <Divider />
-                        <Box className={styles.SubsInvoiceTypoBox}>
-                          <CustomTypography className={styles.SubsInvoiceTypo}>
-                            Sub Total
-                          </CustomTypography>
-                          <CustomTypography
-                            className={styles.SubsInvoiceDataTypo}
-                          >
-                                 {invoiceInfo.status === "Incompleted" ? (
-                      <p>$ 0</p>
-                    ) : 
-                    
-                    paymentInfo.package.subscription_package === 'Free' ? 'Free' :(
-                      
-                        invoiceInfo.paidPackage=== 'Pro Plan' || invoiceInfo.paidPackage=== 'Premium' ?  
-                        county ?    <b>&#8377; {invoiceInfo.paymentAmount}</b> :  <b>$ {invoiceInfo.paymentAmount}</b> : 
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "white !important",
+                            color: "#01313F",
+                            textTransform: "capitalize",
+                            fontSize: "15px",
+                            width: "100%",
+                          }}
+                        >
+                          Manage Payments
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                )}
+              </Card>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Card sx={{ borderRadius: "10px" }}>
+              <Box
+                sx={{
+                  backgroundColor: "#02A9F7",
+                  height: "54px",
+                  display: "flex",
+                  alignItems: "center",
+                  p: "0px 15px 0px 15px",
+                }}
+              >
+                <CustomTypography
+                  sx={{
+                    color: "white",
+                    fontWeight: 600,
+                    fontSize: "24px",
+                  }}
+                >
+                  Invoice Information
+                </CustomTypography>
+              </Box>
+              <Box
+                sx={{
+                  backgroundColor: "#F2F8FD",
+                  height: "360px",
+                  display: "flex",
+                  alignItems: "center",
+                  p: "0px 15px 0px 15px",
+                }}
+              >
+                <Stack spacing={2} sx={{ width: "100%" }}>
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Invoice Information
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {invoiceInfo.id}
+                    </CustomTypography>
+                  </Box>
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Date
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {moment(invoiceInfo.paymentDate).format("L")}
+                    </CustomTypography>
+                  </Box>
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Description
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {invoiceInfo.paidPackage} Package
+                    </CustomTypography>
+                  </Box>
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Transaction
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {invoiceInfo.status}
+                    </CustomTypography>
+                  </Box>
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Amount
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {paymentInfo.package.subscription_package === "Free" ? (
+                        "Free"
+                      ) : invoiceInfo.paidPackage === "Pro Plan" ||
+                        invoiceInfo.paidPackage === "Premium" ? (
+                        county ? (
+                          <b>&#8377; {invoiceInfo.paymentAmount}</b>
+                        ) : (
+                          <b>$ {invoiceInfo.paymentAmount}</b>
+                        )
+                      ) : (
                         <b>$ {invoiceInfo.paymentAmount}</b>
-                      
-                    )}
-                          </CustomTypography>
-                        </Box>
-                        {/* <Box className={styles.SubsInvoiceTypoBox}>
+                      )}
+                    </CustomTypography>
+                  </Box>
+                  <Divider />
+                  <Box className={styles.SubsInvoiceTypoBox}>
+                    <CustomTypography className={styles.SubsInvoiceTypo}>
+                      Sub Total
+                    </CustomTypography>
+                    <CustomTypography className={styles.SubsInvoiceDataTypo}>
+                      {invoiceInfo.status === "Incompleted" ? (
+                        <p>$ 0</p>
+                      ) : paymentInfo.package.subscription_package ===
+                        "Free" ? (
+                        "Free"
+                      ) : invoiceInfo.paidPackage === "Pro Plan" ||
+                        invoiceInfo.paidPackage === "Premium" ? (
+                        county ? (
+                          <b>&#8377; {invoiceInfo.paymentAmount}</b>
+                        ) : (
+                          <b>$ {invoiceInfo.paymentAmount}</b>
+                        )
+                      ) : (
+                        <b>$ {invoiceInfo.paymentAmount}</b>
+                      )}
+                    </CustomTypography>
+                  </Box>
+                  {/* <Box className={styles.SubsInvoiceTypoBox}>
                           <CustomTypography className={styles.SubsInvoiceTypo}>
                             Tax
                           </CustomTypography>
@@ -724,92 +759,91 @@ const county = state?.countryCurrecy === 'INR'
                             ₹ 000
                           </CustomTypography>
                         </Box> */}
-                      </Stack>
-                    </Box>
-                    <Box
-                      sx={{
-                        backgroundColor: "#02A9F7",
-                        height: "54px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: "0px 15px 0px 15px",
-                      }}
-                    >
-                      <CustomTypography className={styles.SubsInvoiceTotalTypo}>
-                        Total
-                      </CustomTypography>
-                      <CustomTypography
-                        className={styles.SubsInvoiceTotalDataTypo}
-                      >
-                       {invoiceInfo.status === "Incompleted" ? (
-                      <p>$ 0</p>
-                    ) :
-                    paymentInfo.package.subscription_package === 'Free' ? 'Free' :
-                    (
-                      
-                        invoiceInfo.paidPackage=== 'Pro Plan' || invoiceInfo.paidPackage=== 'Premium' ?  
-                        county ?    <b>&#8377; {invoiceInfo.paymentAmount}</b> :  <b>$ {invoiceInfo.paymentAmount}</b> : 
-                        <b>$ {invoiceInfo.paymentAmount}</b>
-                      
-                    )
-                    }
-                      </CustomTypography>
-                    </Box>
-                  </Card>
-                </Grid>
-             
-            </Grid>
-            <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end'
-                }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    height: "54px",
-                    width: "40%",
-                    borderRadius: "8px",
-                    mt: "10px",
-                  }}
-                  onClick={() => generatePDF(company, invoiceInfo)}
-                >
-                  Download Invoice
-                </Button>
+                </Stack>
               </Box>
-          <Grid item xs={12}>
-            <Box sx={{ width: "100%" }}>
-              <CustomTypography
+              <Box
                 sx={{
-                  color: "#01313F",
-                  fontWeight: 600,
-                  fontSize: "24px",
+                  backgroundColor: "#02A9F7",
+                  height: "54px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  p: "0px 15px 0px 15px",
                 }}
               >
-                Billing History
-              </CustomTypography>
-            </Box>
-            <div
-              style={{ height: 400, width: "100%" }}
-              xs={12}
-              sm={12}
-              md={6}
-              className="tablebillingstyle"
-            >
-              <DataGrid
-                rows={paymentRows}
-                columns={columns}
-                hideFooterPagination={true}
-                onRowClick={handleRowClick}
-                {...paymentRows}
-              />
-            </div>
+                <CustomTypography className={styles.SubsInvoiceTotalTypo}>
+                  Total
+                </CustomTypography>
+                <CustomTypography className={styles.SubsInvoiceTotalDataTypo}>
+                  {invoiceInfo.status === "Incompleted" ? (
+                    <p>$ 0</p>
+                  ) : paymentInfo.package.subscription_package === "Free" ? (
+                    "Free"
+                  ) : invoiceInfo.paidPackage === "Pro Plan" ||
+                    invoiceInfo.paidPackage === "Premium" ? (
+                    county ? (
+                      <b>&#8377; {invoiceInfo.paymentAmount}</b>
+                    ) : (
+                      <b>$ {invoiceInfo.paymentAmount}</b>
+                    )
+                  ) : (
+                    <b>$ {invoiceInfo.paymentAmount}</b>
+                  )}
+                </CustomTypography>
+              </Box>
+            </Card>
           </Grid>
-</Employer>
-
+        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", md: "flex-end" },
+            mt: { xs: "20px", md: "0px" },
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#015FB1 !important",
+              height: "54px",
+              borderRadius: "8px",
+              width: { xs: "auto", md: "40%" },
+              mt: "10px",
+            }}
+            onClick={() => generatePDF(company, invoiceInfo)}
+          >
+            Download Invoice
+          </Button>
+        </Box>
+        <Grid item xs={12} sx={{ mt: { xs: "20px", md: "0px" } }}>
+          <Box sx={{ width: "100%" }}>
+            <CustomTypography
+              sx={{
+                color: "#01313F",
+                fontWeight: 600,
+                fontSize: "24px",
+              }}
+            >
+              Billing History
+            </CustomTypography>
+          </Box>
+          <div
+            style={{ height: 400, width: "100%" }}
+            xs={12}
+            sm={12}
+            md={6}
+            className="tablebillingstyle"
+          >
+            <DataGrid
+              rows={paymentRows}
+              columns={columns}
+              hideFooterPagination={true}
+              onRowClick={handleRowClick}
+              {...paymentRows}
+            />
+          </div>
+        </Grid>
+      </Employer>
     </>
   );
 };

@@ -62,11 +62,11 @@ const MyAccount = () => {
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
-  const [cand, setcand] = useState({})
+  const [cand, setcand] = useState({});
   useEffect(() => {
-setcand(JSON.parse(localStorage.getItem("User"))?.User)
-  }, [])
-  
+    setcand(JSON.parse(localStorage.getItem("User"))?.User);
+  }, []);
+
   const dispatch = useDispatch();
 
   const [user, setUser] = useState({
@@ -78,10 +78,8 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
     newPassword: "",
     mobile: "",
     otp: "",
-    method:''
+    method: "",
   });
-
-
 
   useEffect(() => {
     setUser({
@@ -93,12 +91,11 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
       newPassword: "",
       mobile: "",
       otp: "",
-      method:cand?.method
+      method: cand?.method,
     });
   }, [cand?._id, cand?.email, cand?.firstName, cand?.lastName, cand?.method]);
 
   const [confrimp, setconfrimp] = useState("");
-
 
   function validateEmail(email) {
     let result = true;
@@ -157,7 +154,7 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
       .then((res) => {
         dispatch(openAlert({ type: SUCCESS, message: res?.data?.message }));
         if (res.status === 200) {
-          dispatch(retrievePersonal())
+          dispatch(retrievePersonal());
         }
       })
       .catch((res) =>
@@ -206,209 +203,201 @@ setcand(JSON.parse(localStorage.getItem("User"))?.User)
     setpasshowcon(!passhowcon);
   };
 
-
   return (
     <>
-<Employer>
-              <Card
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#F2F8FD",
-                  mt: "40px",
-                  p: "25px 25px 80px 25px",
-                }}
-              >
-                <CardContent>
-                  <Box>
-                    <Stack spacing={3} sx={{ mt: "25px" }}>
-                      <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
-                        <TextField
-                          autoComplete="given-name"
-                          name="firstName"
-                          required
-                          fullWidth
-                          id="firstName"
-                          label="First Name"
-                          placeholder="Enter First Name"
-                          autoFocus
-                          value={user?.firstName || ''}
-                          onChange={onChange}
-                          sx={{ ...style.passinput, bgcolor: "white" }}
-                          InputLabelProps={{ style: { color: "black" } }}
-                        />
-                        <TextField
-                          required
-                          fullWidth
-                          id="lastName"
-                          label="Last Name"
-                          name="lastName"
-                          autoComplete="family-name"
-                          placeholder="Enter Last Name"
-                          value={user?.lastName || ''}
-                          onChange={onChange}
-                          sx={{ ...style.passinput, bgcolor: "white" }}
-                          InputLabelProps={{ style: { color: "black" } }}
-                        />
-                      </Stack>
-                      <TextField
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        type="email"
-                        placeholder="Enter E-mail"
-                        required
-                        //sx={style.txtinput}
-                        sx={{ ...style.passinput, bgcolor: "white" }}
-                        InputLabelProps={{ style: { color: "black" } }}
-                          value={user?.email || ''}
-                          onChange={onChange}
-                      />
-                      <FormControl sx={style.passinput}>
-                        <InputLabel
-                          htmlFor="password"
-                          sx={{ color: "black" }}
+      <Employer>
+        <Card
+          sx={{
+            width: "100%",
+            backgroundColor: "#F2F8FD",
+            mt: "40px",
+            p: "25px 25px 80px 25px",
+          }}
+        >
+          <CardContent>
+            <Box>
+              <Stack spacing={3} sx={{ mt: "25px" }}>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={2}
+                  sx={{ width: "100%" }}
+                >
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    placeholder="Enter First Name"
+                    autoFocus
+                    value={user?.firstName || ""}
+                    onChange={onChange}
+                    sx={{ ...style.passinput, bgcolor: "white" }}
+                    InputLabelProps={{ style: { color: "black" } }}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                    placeholder="Enter Last Name"
+                    value={user?.lastName || ""}
+                    onChange={onChange}
+                    sx={{ ...style.passinput, bgcolor: "white" }}
+                    InputLabelProps={{ style: { color: "black" } }}
+                  />
+                </Stack>
+                <TextField
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  type="email"
+                  placeholder="Enter E-mail"
+                  required
+                  //sx={style.txtinput}
+                  sx={{ ...style.passinput, bgcolor: "white" }}
+                  InputLabelProps={{ style: { color: "black" } }}
+                  value={user?.email || ""}
+                  onChange={onChange}
+                />
+                <FormControl sx={style.passinput}>
+                  <InputLabel htmlFor="password" sx={{ color: "black" }}>
+                    Old Password
+                  </InputLabel>
+                  <OutlinedInput
+                    inputProps={{
+                      style: {
+                        backgroundColor: "white",
+                        borderColor: "white",
+                      },
+                    }}
+                    required
+                    id="password"
+                    label="Old Password"
+                    placeholder="Enter Password"
+                    value={user.password}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          sx={{ bgcolor: "white" }}
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
                         >
-                          Old Password
-                        </InputLabel>
-                        <OutlinedInput
-                          inputProps={{
-                            style: {
-                              backgroundColor: "white",
-                              borderColor: "white",
-                            },
-                          }}
-                          required
-                          id="password"
-                          label="Old Password"
-                          placeholder="Enter Password"
-                          value={user.password}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                sx={{ bgcolor: "white" }}
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {passhow ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                          type={passhow ? "text" : "password"}
-                          onChange={onChange}
-                        />
-                      </FormControl>
-                      <Stack direction="row" spacing={2}>
-                        <FormControl
-                          variant="outlined"
-                          sx={{ ...style.passinput, width: "100%" }}
-                        >
-                          <InputLabel
-                            htmlFor="outlined-confirm-adornment-password"
-                            sx={{ color: "black" }}
+                          {passhow ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    type={passhow ? "text" : "password"}
+                    onChange={onChange}
+                  />
+                </FormControl>
+                <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+                  <FormControl
+                    variant="outlined"
+                    sx={{ ...style.passinput, width: "100%" }}
+                  >
+                    <InputLabel
+                      htmlFor="outlined-confirm-adornment-password"
+                      sx={{ color: "black" }}
+                    >
+                      New Password
+                    </InputLabel>
+                    <OutlinedInput
+                      inputProps={{
+                        style: {
+                          backgroundColor: "white",
+                          borderColor: "white",
+                        },
+                      }}
+                      id="newPassword"
+                      label="newPassword"
+                      onChange={onChange}
+                      type={passhownew ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPasswordnew}
+                            onMouseDown={handleMouseDownPasswordnew}
+                            edge="end"
                           >
-                            New Password
-                          </InputLabel>
-                          <OutlinedInput
-                            inputProps={{
-                              style: {
-                                backgroundColor: "white",
-                                borderColor: "white",
-                              },
-                            }}
-                            id="newPassword"
-                            label="newPassword"
-                            onChange={onChange}
-                            type={passhownew ? "text" : "password"}
-                            endAdornment={
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPasswordnew}
-                                  onMouseDown={handleMouseDownPasswordnew}
-                                  edge="end"
-                                >
-                                  {passhownew ? (
-                                    <VisibilityOff />
-                                  ) : (
-                                    <Visibility />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            }
-                          />
-                        </FormControl>
-                        <FormControl
-                          variant="outlined"
-                          sx={{ ...style.passinput, width: "100%" }}
-                        >
-                          <InputLabel
-                            htmlFor="outlined-confirm-adornment-password"
-                            sx={{ color: "black" }}
+                            {passhownew ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                  <FormControl
+                    variant="outlined"
+                    sx={{ ...style.passinput, width: "100%" }}
+                  >
+                    <InputLabel
+                      htmlFor="outlined-confirm-adornment-password"
+                      sx={{ color: "black" }}
+                    >
+                      Confirm Password
+                    </InputLabel>
+                    <OutlinedInput
+                      inputProps={{
+                        style: {
+                          backgroundColor: "white",
+                          borderColor: "white",
+                        },
+                      }}
+                      id="outlined-confirm-adornment-password"
+                      label="Confirm Password"
+                      placeholder="Confirm Password"
+                      type={passhowcon ? "text" : "password"}
+                      onChange={(e) => {
+                        setconfrimp(e.target.value);
+                      }}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPasswordcon}
+                            onMouseDown={handleMouseDownPasswordcon}
+                            edge="end"
                           >
-                            Confirm Password
-                          </InputLabel>
-                          <OutlinedInput
-                            inputProps={{
-                              style: {
-                                backgroundColor: "white",
-                                borderColor: "white",
-                              },
-                            }}
-                            id="outlined-confirm-adornment-password"
-                            label="Confirm Password"
-                            placeholder="Confirm Password"
-                            type={passhowcon ? "text" : "password"}
-                            onChange={(e) => {
-                              setconfrimp(e.target.value);
-                            }}
-                            endAdornment={
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                    onClick={handleClickShowPasswordcon}
-                                    onMouseDown={handleMouseDownPasswordcon}
-                                  edge="end"
-                                >
-                                  {passhowcon ? (
-                                    <VisibilityOff />
-                                  ) : (
-                                    <Visibility />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            }
-                          />
-                        </FormControl>
-                      </Stack>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          sx={{
-                            bgcolor: "#015FB1 !important",
-                            width: "360px",
-                            height: "50px",
-                            mt: "55px",
-                          }}
-                          onClick={() => updateUser()}
-                        >
-                          Update 
-                        </Button>
-                      </Box>
-                    </Stack>
-                  </Box>
-                </CardContent>
-              </Card>
-</Employer>
+                            {passhowcon ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                </Stack>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#015FB1 !important",
+                      width: { xs: "100%", sm: "360px" },
+                      height: "50px",
+                      mt: { xs: "30px", md: "55px" },
+                    }}
+                    onClick={() => updateUser()}
+                  >
+                    Update
+                  </Button>
+                </Box>
+              </Stack>
+            </Box>
+          </CardContent>
+        </Card>
+      </Employer>
     </>
   );
 };

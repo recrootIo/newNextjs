@@ -121,7 +121,9 @@ const ScheduledInterviews = () => {
   sear.map((set) => {
     schedules.push({
       title: `${set?.jobDetail?.jobRole}(${set.subject})`,
-      start: `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`,
+      start: `${set?.day.split("T")[0]}T${
+        set?.time.split("T")[1].split("+")[0]
+      }`,
       end: moment(
         `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`
       )
@@ -181,7 +183,7 @@ const ScheduledInterviews = () => {
       }, 500)
     );
   };
-  console.log(names,'nam')
+  console.log(names, "nam");
   return (
     <>
       <Employer>
@@ -196,11 +198,11 @@ const ScheduledInterviews = () => {
           <CardContent>
             <Box>
               <Grid container spacing={2}>
-                <Grid item xs={5}>
+                <Grid item xs={12} md={5}>
                   <Box
                     variant="outlined"
                     sx={{
-                      ml: "34px",
+                      ml: { xs: 0, md: "34px" },
                       mt: "20px",
                       display: "flex",
                       justifyContent: { xs: "center", lg: "none" },
@@ -242,28 +244,25 @@ const ScheduledInterviews = () => {
                           MenuProps={MenuProps}
                           sx={{ width: "328px" }}
                         >
-                  {jobs.map((variant) => ( 
-                          <MenuItem
-                                  key={variant._id}
-                                  value={variant.jobRole}
-                                >
-                                  <Checkbox
-                                    checked={
-                                      names.findIndex(
-                                        (item) => item === variant.jobRole
-                                      ) >= 0
-                                    }
-                                  />
-                                  <ListItemText primary={variant.jobRole} />
-                                </MenuItem>
+                          {jobs.map((variant) => (
+                            <MenuItem key={variant._id} value={variant.jobRole}>
+                              <Checkbox
+                                checked={
+                                  names.findIndex(
+                                    (item) => item === variant.jobRole
+                                  ) >= 0
+                                }
+                              />
+                              <ListItemText primary={variant.jobRole} />
+                            </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
                     </Popover>
                   </Box>
                   <Box
-                    style={{
-                      marginLeft: "32px",
+                    sx={{
+                      marginLeft: { xs: "0px", md: "32px" },
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -284,11 +283,16 @@ const ScheduledInterviews = () => {
                     />
                   </Box>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid
+                  item
+                  xs={12}
+                  md={7}
+                  sx={{ mt: { xs: "20px", md: "0px" } }}
+                >
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "flex-end",
+                      justifyContent: { xs: "center", md: "flex-end" },
                     }}
                   >
                     <Button
@@ -306,7 +310,10 @@ const ScheduledInterviews = () => {
                     </Button>
                   </Box>
                   <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
-                  <InterviewCalendar date= {moment(date).format()} schedules={schedules} />
+                  <InterviewCalendar
+                    date={moment(date).format()}
+                    schedules={schedules}
+                  />
                 </Grid>
               </Grid>
             </Box>
