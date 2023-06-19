@@ -554,6 +554,7 @@ const CandiFullProfileView = () => {
                     </CustomTypography>
                   </Box>
                 </Grid>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -672,6 +673,7 @@ const CandiFullProfileView = () => {
                   <Box sx={{ p: "25px" }}>
                     {/* <Stack spacing={1}> */}
                     <Grid container spacing={2} alignItems={"center"}>
+
                       <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
                           <InputLabel id="demo-simple-select-label">
@@ -1027,6 +1029,7 @@ const CandiFullProfileView = () => {
                                     ""
                                   )}
                                   {wrk?.jobProfile !== "" ? (
+
                                     <Stack
                                       direction={{ xs: "column", md: "row" }}
                                     >

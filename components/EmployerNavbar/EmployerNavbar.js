@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { Avatar, Box, Stack } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import Image from "next/image";
 
 const EmployerNavbar = () => {
   return (
@@ -22,11 +23,7 @@ const EmployerNavbar = () => {
       >
         <Container>
           <Stack direction="row" spacing={3}>
-            <img
-              className="hidden h-8 w-auto lg:block"
-              src="/logo.png"
-              alt="Your Company"
-            />
+            <Image src="/logo.png" alt="Your Company" width="143" height="31" />
             <Box sx={{ flex: 1 }}>
               <Stack
                 direction="row"

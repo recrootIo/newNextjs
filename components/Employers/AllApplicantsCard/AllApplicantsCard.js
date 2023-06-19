@@ -31,6 +31,7 @@ import download from "downloadjs";
 import { getSinResume } from "@/redux/slices/applyJobs";
 import applyJobService from "@/redux/services/applyjobs.service";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mui/material";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -43,7 +44,7 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
   width: "40px",
 }));
 
-const AllApplicantsCard = ({users}) => {
+const AllApplicantsCard = ({ users }) => {
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
       ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
@@ -52,61 +53,95 @@ const AllApplicantsCard = ({users}) => {
   const dispatch = useDispatch();
   const resume = useSelector((state) => state.apply.resume);
   useEffect(() => {
-     dispatch(getSinResume(users?.resumeId));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users])
+    dispatch(getSinResume(users?.resumeId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users]);
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
 
-const router = useRouter()
-const {jid} = router.query;
-  const navigate = (id,status)=>{
-    if (status === 'unview') {      
-      new applyJobService().updateAppStatus(id,{status:'viewed'}).then((res)=>{
-  if (res.status === 200) {
-    router.push(`/Employer/CandiProfileFullView?appId=${id}`)
-  }
-      })
+  const router = useRouter();
+  const { jid } = router.query;
+  const navigate = (id, status) => {
+    if (status === "unview") {
+      new applyJobService()
+        .updateAppStatus(id, { status: "viewed" })
+        .then((res) => {
+          if (res.status === 200) {
+            router.push(`/Employer/CandiProfileFullView?appId=${id}`);
+          }
+        });
     } else {
-    router.push(`/Employer/CandiProfileFullView?appId=${id}`)
+      router.push(`/Employer/CandiProfileFullView?appId=${id}`);
     }
-  }
+  };
   const type = useSelector((state) => state.company.matchType);
   const color =
-  type === "strong"
-    ? "green"
-    : type === "good"
-    ? "orange"
-    : type === "minimum"
-    ? "red"
-    : "";
+    type === "strong"
+      ? "green"
+      : type === "good"
+      ? "orange"
+      : type === "minimum"
+      ? "red"
+      : "";
+
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
     <Card
       sx={{
         width: "100%",
         boxShadow: "4px 4px 10px rgba(3, 66, 117, 0.1) !important",
         borderRadius: "10px",
-        background: users?.status === 'unview' ? 'rgb(240, 242, 245)' : '',
-        p:'15px'
+        background: users?.status === "unview" ? "rgb(240, 242, 245)" : "",
+        p: "15px",
       }}
     >
-              {jid !== undefined ? (
-                        <Box
-                          sx={{
-                            padding: "5px 15px 3px 0",
-                            direction: "rtl",
-                            fontWeight: 600,
-                            textTransform: "capitalize",
-                            color: color,
-                          }}
-                        >
-                          {type} Match
-                        </Box>
-                      ) : (
-                        ""
-                      )}
+      {jid !== undefined ? (
+        <Box
+          sx={{
+            padding: "5px 15px 3px 0",
+            direction: "rtl",
+            fontWeight: 600,
+            textTransform: "capitalize",
+            color: color,
+          }}
+        >
+          {type} Match
+        </Box>
+      ) : (
+        ""
+      )}
+      <Box
+        sx={{
+          display: { xs: "flex", sm: "none" },
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            mb: "10px",
+          }}
+        >
+          {users?.status === "shortlist" || users?.status === "rejected" ? (
+            <Checkbox
+              {...label}
+              icon={<ThumbUpIcon sx={{ color: "#7AC1DA", fontSize: "30px" }} />}
+              checked={users?.status === "rejected"}
+              checkedIcon={
+                <ThumbDownIcon sx={{ color: "#7AC1DA", fontSize: "30px" }} />
+              }
+            />
+          ) : (
+            ""
+          )}
+        </Stack>
+      </Box>
       <CardHeader
         avatar={
           <StyledAvatar
@@ -132,49 +167,67 @@ const {jid} = router.query;
         title={`${users?.candidateId?.firstName} ${users?.candidateId?.lastName}`}
         subheader={users?.candidateId?.jobTitle}
         action={
-          <>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-                mt: "16px",
-                paddingRight: "16px",
-              }}
-            >
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{ display: "flex", justifyContent: "flex-end", mb: "10px" }}
+          !isMobile && (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  mt: "16px",
+                  paddingRight: "16px",
+                }}
               >
-                {/* <ThumbUpOffAltIcon
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    mb: "10px",
+                  }}
+                >
+                  {/* <ThumbUpOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 />
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 /> */}
-        
-             {users?.status === 'shortlist' || users?.status === 'rejected' ?
-                <Checkbox
-                  {...label}
-                  icon={
-                    <ThumbUpIcon sx={{ color: "#7AC1DA", fontSize: "30px" }} />
-                  }
-                  checked={users?.status === 'rejected'}
-                  checkedIcon={
-                    <ThumbDownIcon
-                      sx={{ color: "#7AC1DA", fontSize: "30px" }}
+
+                  {users?.status === "shortlist" ||
+                  users?.status === "rejected" ? (
+                    <Checkbox
+                      {...label}
+                      icon={
+                        <ThumbUpIcon
+                          sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                        />
+                      }
+                      checked={users?.status === "rejected"}
+                      checkedIcon={
+                        <ThumbDownIcon
+                          sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                        />
+                      }
                     />
-                  }
-                /> : ''}
-              </Stack>
-            </Box>
-          </>
+                  ) : (
+                    ""
+                  )}
+                </Stack>
+              </Box>
+            </>
+          )
         }
-        sx={{ p: '0 16px 0 16px' }}
+        sx={{ p: "0 16px 0 16px" }}
       />
       <CardContent sx={{ pt: 0 }}>
-        <Box sx={{ mb: "7px", display: "flex", justifyContent: "flex-end" }}>
+        <Box
+          sx={{
+            mb: "7px",
+            display: { xs: "none", sm: "flex" },
+            justifyContent: "flex-end",
+          }}
+        >
           <Button
             sx={{
               minWidth: "10px !important",
@@ -205,13 +258,20 @@ const {jid} = router.query;
               bgcolor: "#02A9F7 !important",
               fontSize: "18px",
             }}
-            onClick={()=>navigate(users?._id,users?.status)}
+            onClick={() => navigate(users?._id, users?.status)}
           >
             View Details
           </Button>
         </Box>
-        <Stack direction={"row"} sx={{ gap: "59px", mb: "10px" }}>
-          <Box sx={{ display: "flex" }}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          sx={{
+            gap: { xs: "10px", md: "59px" },
+            mb: { xs: 0, sm: "10px" },
+            mt: { xs: "30px", sm: 0 },
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <AssignmentIndIcon sx={{ color: "#1097CD" }} />
             <CustomTypography
               sx={{
@@ -221,10 +281,10 @@ const {jid} = router.query;
                 color: "#1097CD",
               }}
             >
-            {users?.jobId?.jobRole}
+              {users?.jobId?.jobRole}
             </CustomTypography>
           </Box>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
             <CustomTypography
               sx={{
@@ -234,12 +294,12 @@ const {jid} = router.query;
                 color: "rgba(1, 49, 63, 0.8)",
               }}
             >
-              Notice Period -  {users?.candidateId?.resume?.notice}
+              Notice Period - {users?.candidateId?.resume?.notice}
             </CustomTypography>
           </Box>
         </Stack>
         <Stack direction={"row"} sx={{ gap: "15px", margin: "10px 0" }}>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <HourglassTopIcon sx={{ color: "#1097CD" }} />
             <CustomTypography
               sx={{
@@ -249,26 +309,74 @@ const {jid} = router.query;
                 color: "rgba(1, 49, 63, 0.8)",
               }}
             >
-              Experience - {users?.candidateId?.resume?.totalWorkExperience} Years
+              Experience - {users?.candidateId?.resume?.totalWorkExperience}{" "}
+              Years
             </CustomTypography>
           </Box>
         </Stack>
         <Box
           color="rgba(1, 49, 63, 0.8)"
-          sx={{ mt: "25px", fontSize: "16px",     overflow: 'hidden',
-          maxHeight: '100px',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap'
-      }}
+          sx={{
+            mt: "25px",
+            fontSize: "16px",
+            overflow: "hidden",
+            maxHeight: "100px",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
         >
-      {users?.candidateId?.about}
+          {users?.candidateId?.about}
+        </Box>
+        <Box
+          sx={{
+            mb: "7px",
+            display: { xs: "flex", sm: "none" },
+            justifyContent: "flex-end",
+            mt: "20px",
+          }}
+        >
+          <Button
+            sx={{
+              minWidth: "10px !important",
+              minHeight: "10px !important",
+              padding: "5px !important",
+              color: "#02a9f7",
+              borderColor: "#02a9f7",
+              fontSize: "18px",
+            }}
+            size="large"
+            variant="outlined"
+            bgcolor="#02A9F7 !important"
+            onClick={async () => {
+              const res = await fetch(recroot);
+              const blob = await res.blob();
+              download(blob, `${resume.resumeName}`);
+            }}
+          >
+            <DownloadIcon sx={{ fontSize: "35px" }} />
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            sx={{
+              ml: "8px",
+              height: "52px",
+              flexGrow: 1,
+              bgcolor: "#02A9F7 !important",
+              fontSize: { xs: "13px", md: "18px" },
+              whiteSpace: "nowrap",
+            }}
+            onClick={() => navigate(users?._id, users?.status)}
+          >
+            View Details
+          </Button>
         </Box>
         <CustomTypography
           sx={{ textAlign: "right", fontStyle: "italic", fontSize: "11px" }}
           variant="body2"
           color="text.secondary"
         >
-           Applied {moment(users?.createdAt).fromNow()}
+          Applied {moment(users?.createdAt).fromNow()}
         </CustomTypography>
       </CardContent>
     </Card>

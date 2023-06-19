@@ -30,9 +30,21 @@ import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import { styles } from "@/components/Employers/CompanyProfile/CompanyProfileStyle";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsSet, essentialSet, featureSet, immediateSet, salarySet, skillSet } from "@/redux/slices/job";
+import {
+  detailsSet,
+  essentialSet,
+  featureSet,
+  immediateSet,
+  salarySet,
+  skillSet,
+} from "@/redux/slices/job";
 import moment from "moment";
-import { CAREER_LEVEL, EDUCATION_LEVELS, NoticePeriod, USER_EXPERIENCES } from "@/utils/constants";
+import {
+  CAREER_LEVEL,
+  EDUCATION_LEVELS,
+  NoticePeriod,
+  USER_EXPERIENCES,
+} from "@/utils/constants";
 import { CURRENCY } from "@/utils/currency";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -66,11 +78,13 @@ const EssentialInformation = () => {
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
-  console.log(errors,'err')
+  console.log(errors, "err");
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 30);
-  const [value, setValue] = useState(full === 'jSlot' ? new Date() :futureDate);
- const dispatch = useDispatch();
+  const [value, setValue] = useState(
+    full === "jSlot" ? new Date() : futureDate
+  );
+  const dispatch = useDispatch();
 
   const [salary, setSalary] = useState({
     salaryType: jobs.salary && jobs.salary.salaryType,
@@ -79,18 +93,16 @@ const EssentialInformation = () => {
     salaryCrrancy: jobs.salary && jobs.salary.salaryCrrancy,
   });
   useEffect(() => {
-    if (full === 'jSlot') {
-      return
+    if (full === "jSlot") {
+      return;
     }
-  if (jobs?.applicationDeadline === undefined) {
-    const futureDate = new Date();
-   futureDate.setDate(futureDate.getDate() + 30);
-   setDatas({...datas,
-    applicationDeadline:futureDate,
-   })
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jobs])
+    if (jobs?.applicationDeadline === undefined) {
+      const futureDate = new Date();
+      futureDate.setDate(futureDate.getDate() + 30);
+      setDatas({ ...datas, applicationDeadline: futureDate });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobs]);
   const [datas, setDatas] = useState({
     jobType: jobs && jobs.jobType,
     applicationDeadline: jobs && jobs.applicationDeadline,
@@ -155,7 +167,6 @@ const EssentialInformation = () => {
     qualification: essen && essen.qualification,
   });
 
-
   const handleChangeLevel = (e) => {
     let { name, value } = e.target;
     setLevel({
@@ -175,440 +186,429 @@ const EssentialInformation = () => {
 console.log(errors,'err')
   return (
     <>
-   <Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        mt: "30px",
-                        mb: "100px",
-                      }}
-                    >
-                      <Image
-                        src="/post-newjob-secondstep-img.png"
-                        alt=""
-                        width="320"
-                        height="20"
-                      />
-                    </Box>
-                    <CustomTypography
-                      sx={{
-                        color: "#034275",
-                        fontFamily: BOLD,
-                        fontSize: "28px",
-                        mb: "25px",
-                      }}
-                    >
-                      Essential Information
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: "30px",
+            mb: "100px",
+          }}
+        >
+          <Image
+            src="/post-newjob-secondstep-img.png"
+            alt=""
+            width="320"
+            height="20"
+          />
+        </Box>
+        <CustomTypography
+          sx={{
+            color: "#034275",
+            fontFamily: BOLD,
+            fontSize: "28px",
+            mb: "25px",
+          }}
+        >
+          Essential Information
+        </CustomTypography>
+        <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
+        <Stack spacing={3}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+            <FormControl
+              sx={{
+                ...style.txtinput,
+                bgcolor: "white",
+                width: { xs: "100%", sm: "50%" },
+              }}
+            >
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ color: "#BAD4DF" }}
+              >
+                Career Level
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Career Level"
+                value={level.careerlevel}
+                name="careerlevel"
+                onChange={(e) => {
+                  handleChangeLevel(e);
+                }}
+                error={errors.careerlevel ? true : false}
+                helperText={errors.careerlevel}
+              >
+                {CAREER_LEVEL.map((CareerLevel) => (
+                  <MenuItem key={CareerLevel} value={CareerLevel}>
+                    <CustomTypography textAlign="center">
+                      {CareerLevel}
                     </CustomTypography>
-                    <Divider
-                      sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }}
+                  </MenuItem>
+                ))}
+              </Select>
+              {!!errors.careerlevel && (
+                <FormHelperText error id="accountId-error">
+                  {errors.careerlevel}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl
+              sx={{
+                ...style.txtinput,
+                bgcolor: "white",
+                width: { xs: "100%", sm: "50%" },
+              }}
+            >
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ color: "#BAD4DF" }}
+              >
+                Experience
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Experience"
+                sx={styles.naminput2}
+                value={level.experience}
+                name="experience"
+                onChange={(e) => {
+                  handleChangeLevel(e);
+                }}
+                error={errors.experience ? true : false}
+                helperText={errors.experience}
+              >
+                {USER_EXPERIENCES.map((Experiences) => (
+                  <MenuItem key={Experiences} value={Experiences}>
+                    <CustomTypography textAlign="center">
+                      {Experiences}
+                    </CustomTypography>
+                  </MenuItem>
+                ))}
+              </Select>
+              {!!errors.experience && (
+                <FormHelperText error id="accountId-error">
+                  {errors.experience}
+                </FormHelperText>
+              )}
+            </FormControl>
+          </Stack>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+            <FormControl
+              sx={{
+                ...style.txtinput,
+                bgcolor: "white",
+                width: { xs: "100%", sm: "50%" },
+              }}
+            >
+              <InputLabel
+                id="demo-simple-select-label"
+                sx={{ color: "#BAD4DF" }}
+              >
+                Qualifications
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Qualifications"
+                sx={styles.naminput2}
+                value={level.qualification}
+                name="qualification"
+                error={errors.qualification ? true : false}
+                helperText={errors.qualification}
+                onChange={(e) => {
+                  handleChangeLevel(e);
+                }}
+              >
+                {EDUCATION_LEVELS.map((Qualifications) => (
+                  <MenuItem key={Qualifications} value={Qualifications}>
+                    <CustomTypography textAlign="center">
+                      {Qualifications}
+                    </CustomTypography>
+                  </MenuItem>
+                ))}
+              </Select>
+              {!!errors.qualification && (
+                <FormHelperText error id="accountId-error">
+                  {errors.qualification}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <Box sx={{ width: "100%" }}>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                style={{ width: { xs: "100%", sm: "50%" }, bgcolor: "white" }}
+              >
+                <MobileDatePicker
+                  slotProps={{
+                    textField: {
+                      ...style.txtinput,
+                      bgcolor: "white",
+                      width: { xs: "100%", sm: "50%" },
+                    },
+                  }}
+                  style={{ width: { xs: "100%", sm: "50%" }, bgcolor: "white" }}
+                  label="Deadline"
+                  name="applicationDeadline"
+                  inputFormat="dd/MM/yyyy"
+                  minDate={new Date()}
+                  maxDate={full === "jSlot" ? "" : futureDate}
+                  value={
+                    (jobs.applicationDeadline === undefined
+                      ? value
+                      : new Date(jobs.applicationDeadline)) || new Date()
+                  }
+                  disabled={_id !== undefined}
+                  onChange={handleChangeDate}
+                  renderInput={(params) => (
+                    <TextField
+                      error={errors.applicationDeadline ? true : false}
+                      {...params}
+                      style={{ width: "100% !important" }}
                     />
-                    <Stack spacing={3}>
-                      <Stack direction="row" spacing={2}>
-                        <FormControl
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "50%",
-                          }}
-                        >
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Career Level
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Career Level"
-                            value={level.careerlevel}
-                            name="careerlevel"
-                            onChange={(e) => {
-                              handleChangeLevel(e);
-                            }}
-                            error={errors.careerlevel ? true : false}
-                            helperText={errors.careerlevel}
-                          >
-                            {CAREER_LEVEL.map((CareerLevel) => (
-                            <MenuItem
-                              key={CareerLevel} value={CareerLevel}
-                            >
-                              <CustomTypography textAlign="center">
-                                {CareerLevel}
-                              </CustomTypography>
-                            </MenuItem>
-                           ))}
-                          </Select>
-                          {!!errors.careerlevel && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.careerlevel}
-                          </FormHelperText>
-                         )}
-                        </FormControl>
-                        <FormControl
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "50%",
-                          }}
-                        >
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Experience
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Experience"
-                            sx={styles.naminput2}
-                            value={level.experience}
-                            name="experience"
-                            onChange={(e) => {
-                              handleChangeLevel(e);
-                            }}
-                            error={errors.experience ? true : false}
-                            helperText={errors.experience}
-                          >
-                            {USER_EXPERIENCES.map((Experiences) => (
-                            <MenuItem
-                            key={Experiences} value={Experiences}
-                            >
-                              <CustomTypography textAlign="center">
-                                {Experiences}
-                              </CustomTypography>
-                            </MenuItem>
-                         ))}
-                          </Select>
-                          {!!errors.experience && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.experience}
-                          </FormHelperText>
-                         )} 
-                        </FormControl>
-                      </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <FormControl
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "50%",
-                          }}
-                        >
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Qualifications
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Qualifications"
-                            sx={styles.naminput2}
-                            value={level.qualification}
-                            name="qualification"
-                            error={errors.qualification ? true : false}
-                            helperText={errors.qualification}
-                            onChange={(e) => {
-                              handleChangeLevel(e);
-                            }}
-                          >
-                            {EDUCATION_LEVELS.map((Qualifications) => (
-                            <MenuItem
-                            key={Qualifications}
-                            value={Qualifications}
-                            >
-                              <CustomTypography textAlign="center">
-                                {Qualifications}
-                              </CustomTypography>
-                            </MenuItem>
-                          ))}
-                          </Select>
-                          {!!errors.qualification && (
-                            <FormHelperText error id="accountId-error">
-                              {errors.qualification}
-                            </FormHelperText>
-                          )}
-                        </FormControl>
-                        <Box sx={{ width: "50%" }}>
-                          <LocalizationProvider
-                            dateAdapter={AdapterDateFns}
-                            style={{ width: "50%", bgcolor: "white" }}
-                          >
-                            <MobileDatePicker
-                              slotProps={{
-                                textField: {
-                                  ...style.txtinput,
-                                  bgcolor: "white",
-                                  width: "50%",
-                                },
-                              }}
-                              style={{ width: "50%", bgcolor: "white" }}
-                              label="Deadline"
-                              name="applicationDeadline"
-                              inputFormat="dd/MM/yyyy"
-                              minDate={new Date()}
-                              maxDate={full === 'jSlot' ? '' : futureDate}
-                              value={(jobs.applicationDeadline === undefined ? value : new Date(jobs.applicationDeadline)) || new Date()}
-                              disabled={_id !== undefined }
-                              onChange={handleChangeDate}
-                              renderInput={(params) => (
-                                <TextField
-                                  error={
-                                    errors.applicationDeadline ? true : false
-                                  }
-                                  {...params}
-                                  style={{ width: "100% !important" }}
-                                />
-                              )}
-                            />
-                          </LocalizationProvider>
-                          {!!errors.applicationDeadline && (
-                            <FormHelperText error id="accountId-error">
-                              {errors.applicationDeadline}
-                            </FormHelperText>
-                          )}
-                        </Box>
-                      </Stack>
-                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-                        <InputLabel
-                          id="demo-simple-select-label"
-                          sx={{ color: "#BAD4DF" }}
-                        >
-                          Notice Period
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                            value={jobs && jobs?.notice}
-                            onChange={(e) => {
-                              handleChangesChild(e);
-                            }}
-                          name="notice"
-                          error={errors.notice ? true : false}
-                          helperText={errors.notice}
-                          label="notice period"
-                          sx={styles.naminput2}
-                        >
-                          {NoticePeriod.map((not, ind) => (
-                            <MenuItem key={ind} value={not}>
-                              {not}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        {!!errors.notice && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.notice}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-                        <InputLabel
-                          id="demo-simple-select-label"
-                          sx={{ color: "#BAD4DF" }}
-                        >
-                          Job Type
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                            value={jobs && jobs.jobType}
-                            onChange={(e) => {
-                              handleChangesChild(e);
-                            }}
-                          name="jobType"
-                          error={errors.jobType ? true : false}
-                          helperText={errors.jobType}
-                          label="Job Type"
-                          sx={styles.naminput2}
-                        >
-                          <MenuItem value={"Remote"}>Remote</MenuItem>
-                          <MenuItem value={"Onsite"}>Onsite</MenuItem>
-                          <MenuItem value={"Hybrid"}>Hybrid</MenuItem>
-                        </Select>
-                        {!!errors.jobType && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.jobType}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                      <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-                        <InputLabel
-                          id="demo-simple-select-label"
-                          sx={{ color: "#BAD4DF" }}
-                        >
-                          Salary Type
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                            value={jobs?.salary?.salaryType}
-                            name={"salaryType"}
-                            onChange={(e) => {
-                              handleChangesSalary(e);
-                            }}
-                          label="Salary Type"
-                          error={errors.salaryType ? true : false}
-                          helperText={errors.salaryType}
-                          sx={styles.naminput2}
-                        >
-                          <MenuItem selected value={"noprovide"}>
-                            Negotiable
-                          </MenuItem>
-                          <MenuItem value={"yearly"}>Yearly</MenuItem>
-                          <MenuItem value={"monthly"}>Monthly</MenuItem>
-                          <MenuItem value={"hourly"}>Hourly</MenuItem>
-                        </Select>
-                        {!!errors.salaryType && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.salaryType}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                      {jobs?.salary?.salaryType === "noprovide" ||
+                  )}
+                />
+              </LocalizationProvider>
+              {!!errors.applicationDeadline && (
+                <FormHelperText error id="accountId-error">
+                  {errors.applicationDeadline}
+                </FormHelperText>
+              )}
+            </Box>
+          </Stack>
+          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
+              Notice Period
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={jobs && jobs?.notice}
+              onChange={(e) => {
+                handleChangesChild(e);
+              }}
+              name="notice"
+              error={errors.notice ? true : false}
+              helperText={errors.notice}
+              label="notice period"
+              sx={styles.naminput2}
+            >
+              {NoticePeriod.map((not, ind) => (
+                <MenuItem key={ind} value={not}>
+                  {not}
+                </MenuItem>
+              ))}
+            </Select>
+            {!!errors.notice && (
+              <FormHelperText error id="accountId-error">
+                {errors.notice}
+              </FormHelperText>
+            )}
+          </FormControl>
+          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
+              Job Type
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={jobs && jobs.jobType}
+              onChange={(e) => {
+                handleChangesChild(e);
+              }}
+              name="jobType"
+              error={errors.jobType ? true : false}
+              helperText={errors.jobType}
+              label="Job Type"
+              sx={styles.naminput2}
+            >
+              <MenuItem value={"Remote"}>Remote</MenuItem>
+              <MenuItem value={"Onsite"}>Onsite</MenuItem>
+              <MenuItem value={"Hybrid"}>Hybrid</MenuItem>
+            </Select>
+            {!!errors.jobType && (
+              <FormHelperText error id="accountId-error">
+                {errors.jobType}
+              </FormHelperText>
+            )}
+          </FormControl>
+          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
+              Salary Type
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={jobs?.salary?.salaryType}
+              name={"salaryType"}
+              onChange={(e) => {
+                handleChangesSalary(e);
+              }}
+              label="Salary Type"
+              error={errors.salaryType ? true : false}
+              helperText={errors.salaryType}
+              sx={styles.naminput2}
+            >
+              <MenuItem selected value={"noprovide"}>
+                Negotiable
+              </MenuItem>
+              <MenuItem value={"yearly"}>Yearly</MenuItem>
+              <MenuItem value={"monthly"}>Monthly</MenuItem>
+              <MenuItem value={"hourly"}>Hourly</MenuItem>
+            </Select>
+            {!!errors.salaryType && (
+              <FormHelperText error id="accountId-error">
+                {errors.salaryType}
+              </FormHelperText>
+            )}
+          </FormControl>
+          {jobs?.salary?.salaryType === "noprovide" ||
           jobs?.salary?.salaryType === undefined ? (
             ""
           ) : (
-                      <Stack direction="row" spacing={2}>
-                        <FormControl
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "50%",
-                          }}
-                        >
-                          <InputLabel
-                            id="demo-simple-select-label"
-                            sx={{ color: "#BAD4DF" }}
-                          >
-                            Salary Currency
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="salaryCrrancy"
-                            label="Salary Currency"
-                              value={jobs.salary && jobs.salary.salaryCrrancy}
-                              onChange={(e) => {
-                                handleChangesSalary(e);
-                              }}
-                              error={errors.salaryCrrancy ? true : false}
-                              helperText={errors.salaryCrrancy}
-                          >
-                            {CURRENCY.map((cur, ind) => (
-                            <MenuItem key={ind} value={cur.symbol}>
-                              {cur.country}-{cur.symbol}
-                            </MenuItem>
-                          ))}
-                          </Select>
-                          {!!errors.salaryCrrancy && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.salaryCrrancy}
-                          </FormHelperText>
-                        )}
-                        </FormControl>
-                        <TextField
-                          InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                          id="outlined-basic"
-                          label="Min Salary"
-                            value={jobs.salary && jobs.salary.minSalary}
-                            onChange={(e) => {
-                              handleChangesSalary(e);
-                            }}
-                          type="number"
-                          name="minSalary"
-                            error={errors.minSalary ? true : false}
-                            helperText={errors.minSalary}
-                          placeholder="Enter Min Salary"
-                          variant="outlined"
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "25%",
-                          }}
-                        />
-                        <TextField
-                          InputLabelProps={{ style: { color: "#BAD4DF" } }}
-                          id="outlined-basic"
-                            value={jobs.salary && jobs.salary.maxSalary}
-                            onChange={(e) => {
-                              handleChangesSalary(e);
-                            }}
-                          label="Max Salary"
-                          error={errors.maxSalary ? true : false}
-                          helperText={errors.maxSalary}
-                          type="number"
-                          name="maxSalary"
-                          placeholder="Enter Max Salary"
-                          variant="outlined"
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "25%",
-                          }}
-                        />
-                      </Stack> )}
-                      {(companyDet?.jobSlotGold === true && full === 'jSlot') || companyDet?.package?.subscription_package === 'SuperEmployer' ? (
-                       <Box>
-                        <FormGroup>
-                          <FormControlLabel
-                            sx={{ justifyContent: "flex-end", ml: 0 }}
-                            control={
-                              <Switch
-                                checked={feature}
-                                onChange={handleFeatureType}
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            }
-                            label={
-                              <CustomTypography
-                                sx={{
-                                  fontWeight: "300",
-                                  fontSize: "16px",
-                                  lineHeight: "30px",
-                                  color: "#01313F",
-                                }}
-                              >
-                                Make this job a featured job
-                              </CustomTypography>
-                            }
-                            labelPlacement="start"
-                          />
-                        </FormGroup>
-                      </Box> ) : ""}
-                      <Box>
-                        <FormGroup>
-                          <FormControlLabel
-                            sx={{ justifyContent: "flex-end", ml: 0 }}
-                            control={
-                              <Switch
-                                checked={immediate}
-                                onChange={handleImmediateType}
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            }
-                            label={
-                              <CustomTypography
-                                sx={{
-                                  fontWeight: "300",
-                                  fontSize: "16px",
-                                  lineHeight: "30px",
-                                  color: "#01313F",
-                                }}
-                              >
-                                Make this job an immediate job
-                              </CustomTypography>
-                            }
-                            labelPlacement="start"
-                          />
-                        </FormGroup>
-                      </Box>
-                    </Stack>
-                  </Box>
+            <Stack direction="row" spacing={2}>
+              <FormControl
+                sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: "50%",
+                }}
+              >
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ color: "#BAD4DF" }}
+                >
+                  Salary Currency
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  name="salaryCrrancy"
+                  label="Salary Currency"
+                  value={jobs.salary && jobs.salary.salaryCrrancy}
+                  onChange={(e) => {
+                    handleChangesSalary(e);
+                  }}
+                  error={errors.salaryCrrancy ? true : false}
+                  helperText={errors.salaryCrrancy}
+                >
+                  {CURRENCY.map((cur, ind) => (
+                    <MenuItem key={ind} value={cur.symbol}>
+                      {cur.country}-{cur.symbol}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {!!errors.salaryCrrancy && (
+                  <FormHelperText error id="accountId-error">
+                    {errors.salaryCrrancy}
+                  </FormHelperText>
+                )}
+              </FormControl>
+              <TextField
+                InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                id="outlined-basic"
+                label="Min Salary"
+                value={jobs.salary && jobs.salary.minSalary}
+                onChange={(e) => {
+                  handleChangesSalary(e);
+                }}
+                type="number"
+                name="minSalary"
+                error={errors.minSalary ? true : false}
+                helperText={errors.minSalary}
+                placeholder="Enter Min Salary"
+                variant="outlined"
+                sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: "25%",
+                }}
+              />
+              <TextField
+                InputLabelProps={{ style: { color: "#BAD4DF" } }}
+                id="outlined-basic"
+                value={jobs.salary && jobs.salary.maxSalary}
+                onChange={(e) => {
+                  handleChangesSalary(e);
+                }}
+                label="Max Salary"
+                error={errors.maxSalary ? true : false}
+                helperText={errors.maxSalary}
+                type="number"
+                name="maxSalary"
+                placeholder="Enter Max Salary"
+                variant="outlined"
+                sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: "25%",
+                }}
+              />
+            </Stack>
+          )}
+          {(companyDet?.jobSlotGold === true && full === "jSlot") ||
+          companyDet?.package?.subscription_package === "SuperEmployer" ? (
+            <Box>
+              <FormGroup>
+                <FormControlLabel
+                  sx={{ justifyContent: "flex-end", ml: 0 }}
+                  control={
+                    <Switch
+                      checked={feature}
+                      onChange={handleFeatureType}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  }
+                  label={
+                    <CustomTypography
+                      sx={{
+                        fontWeight: "300",
+                        fontSize: "16px",
+                        lineHeight: "30px",
+                        color: "#01313F",
+                      }}
+                    >
+                      Make this job a featured job
+                    </CustomTypography>
+                  }
+                  labelPlacement="start"
+                />
+              </FormGroup>
+            </Box>
+          ) : (
+            ""
+          )}
+          <Box>
+            <FormGroup>
+              <FormControlLabel
+                sx={{ justifyContent: "flex-end", ml: 0 }}
+                control={
+                  <Switch
+                    checked={immediate}
+                    onChange={handleImmediateType}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label={
+                  <CustomTypography
+                    sx={{
+                      fontWeight: "300",
+                      fontSize: "16px",
+                      lineHeight: "30px",
+                      color: "#01313F",
+                    }}
+                  >
+                    Make this job an immediate job
+                  </CustomTypography>
+                }
+                labelPlacement="start"
+              />
+            </FormGroup>
+          </Box>
+        </Stack>
+      </Box>
     </>
   );
 };

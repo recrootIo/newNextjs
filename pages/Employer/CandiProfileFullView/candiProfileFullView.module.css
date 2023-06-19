@@ -9,6 +9,7 @@
   font-size: 17px;
   font-weight: 600;
   color: #01313f;
+  white-space: nowrap;
   align-items: center;
   /* font-family: "Inter-bold"; */
 }

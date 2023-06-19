@@ -34,17 +34,26 @@ import { useState } from "react";
 import { registerMember } from "@/redux/slices/auth";
 import axios from "axios";
 import { useEffect } from "react";
-import { getCompanyDetails, memberPosting, updateFinaldetails } from "@/redux/slices/companyslice";
+import {
+  getCompanyDetails,
+  memberPosting,
+  updateFinaldetails,
+} from "@/redux/slices/companyslice";
 import Cookies from "js-cookie";
-import { ControlPointDuplicateRounded, Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  ControlPointDuplicateRounded,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import ReactPhoneInput from "react-phone-input-2";
 import { validator } from "@/utils/Validator";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import { useTheme } from "@mui/material/styles";
 import Employer from "..";
-uuidv4()
+uuidv4();
 const Members = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
@@ -54,7 +63,7 @@ const Members = () => {
     setSelectedIndex(index);
   };
   const [errors, setErrors] = React.useState(true);
-  const user = Cookies.get()
+  const user = Cookies.get();
   // const user = JSON.parse(localStorage.getItem("User"));
 
   const companyId = user?.companyId;
@@ -77,11 +86,10 @@ const Members = () => {
     confirmPassword: "",
     showConfirmPassword: false,
   });
-useEffect(() => {
-dispatch(getCompanyDetails())
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
-
+  useEffect(() => {
+    dispatch(getCompanyDetails());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChanges = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -132,10 +140,12 @@ dispatch(getCompanyDetails())
     dispatch(registerMember({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        dispatch(openAlert({
-          type:SUCCESS,
-          message:"New Account Member Added Successfully"
-        }))
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "New Account Member Added Successfully",
+          })
+        );
         // toastySucessFunction("New Account Member Added Successfully");
         getMember();
         handleClose();
@@ -143,10 +153,12 @@ dispatch(getCompanyDetails())
         setconfirmP("");
       })
       .catch((error) => {
-        dispatch(openAlert({
-          type:ERROR,
-          message:"The User Already Exists"
-        }))
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "The User Already Exists",
+          })
+        );
         // toastyErrorFunction("The User Already Exists");
         console.warn(error);
       });
@@ -203,9 +215,9 @@ dispatch(getCompanyDetails())
 
   const [memberrole, setMemberrole] = useState(member);
   useEffect(() => {
-   setMemberrole(member)
-  }, [member])
-  
+    setMemberrole(member);
+  }, [member]);
+
   var mems = [];
 
   memberrole?.map((mem) => {
@@ -275,11 +287,11 @@ dispatch(getCompanyDetails())
         setMemberrole(newMemChange);
         dispatch(updateFinaldetails({ ...final, members: newMemChange }));
         dispatch(
-          openAlert(
-            {type:SUCCESS,
-            message:'Company Member Details Was Updated'}
-          )
-        )
+          openAlert({
+            type: SUCCESS,
+            message: "Company Member Details Was Updated",
+          })
+        );
       }
     }
     if (event.target.name === "role") {
@@ -320,11 +332,11 @@ dispatch(getCompanyDetails())
         });
       dispatch(updateFinaldetails({ ...final, members: newMemChange }));
       dispatch(
-        openAlert(
-          {type:SUCCESS,
-          message:'Company Member Details Was Updated'}
-        )
-      )
+        openAlert({
+          type: SUCCESS,
+          message: "Company Member Details Was Updated",
+        })
+      );
     }
   };
 
@@ -346,373 +358,438 @@ dispatch(getCompanyDetails())
     setMemberrole(updatedField);
     dispatch(updateFinaldetails({ ...final, members: updatedField }));
     dispatch(
-      openAlert(
-        {type:ERROR,
-        message:"Company Member Details Was Removed"}
-      )
-    )
+      openAlert({ type: ERROR, message: "Company Member Details Was Removed" })
+    );
   };
 
   useEffect(() => {
     dispatch(memberPosting(memberrole));
   }, [dispatch, memberrole]);
 
-  const {push} = useRouter()
+  const { push } = useRouter();
+
+  const theme = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    // Initial check on component mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <>
-     <Employer>
-     <Stack direction="row" spacing={7}>
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "190px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/activejob-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                  onClick={()=>{push('/Employer/CompanyProfile')}}
-                  
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
+      <Employer>
+        <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
+          <Card
+            sx={{
+              width: "100%",
+              height: { xs: "150px", sm: "190px" },
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
+              backgroundImage: 'url("/activejob-bg.svg")',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              borderRadius: "15px",
+            }}
+            onClick={() => {
+              push("/Employer/CompanyProfile");
+            }}
+          >
+            <Box
+              sx={{
+                height: "61px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {isMobile ? (
+                  <Image
+                    src="/basic-info-img.png"
+                    alt=""
+                    width="50"
+                    height="42"
+                  />
+                ) : (
+                  <Image
+                    src="/basic-info-img.png"
+                    alt=""
+                    width="60"
+                    height="42"
+                  />
+                )}
+              </Box>
+            </Box>
+            <Box sx={{ p: "16px" }}>
+              <CustomTypography
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                variant="h5"
+              >
+                Basic Info
+              </CustomTypography>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              width: "100%",
+              height: { xs: "150px", sm: "190px" },
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
+              backgroundImage: 'url("/inactivejobs-bg.svg")',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              borderRadius: "15px",
+            }}
+            onClick={() => {
+              push("/Employer/Members");
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {isMobile ? (
+                <Image src="/members-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image src="/members-img.png" alt="" width="60" height="62" />
+              )}
+            </Box>
+            <Box sx={{ p: "16px" }}>
+              <CustomTypography
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                variant="h5"
+              >
+                Members
+              </CustomTypography>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              width: "100%",
+              height: { xs: "150px", sm: "190px" },
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
+              backgroundImage: 'url("/interviews-bg.svg")',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              borderRadius: "15px",
+            }}
+          >
+            <Box
+              sx={{
+                height: "61px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {isMobile ? (
+                  <Image src="/preview-img.png" alt="" width="42" height="50" />
+                ) : (
+                  <Image
+                    src="/preview-img.png"
+                    alt=""
+                    width="70"
+                    height="62"
+                    style={{
+                      width: "60px",
                     }}
+                  />
+                )}
+              </Box>
+            </Box>
+            <Box sx={{ p: "16px" }}>
+              <CustomTypography
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                variant="h5"
+              >
+                Preview
+              </CustomTypography>
+            </Box>
+          </Card>
+        </Stack>
+        <Card
+          sx={{
+            width: "100%",
+            backgroundColor: "#F2F8FD",
+            mt: "40px",
+            pb: "80px",
+          }}
+        >
+          <Box sx={styles.infofld}>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <form onSubmit={handleRegister}>
+                <Box sx={style1}>
+                  <Typography
+                    variant="h5"
+                    style={{ fontWeight: "900", marginBottom: "15px" }}
                   >
-                    <Image
-                      src="/basic-info-img.png"
-                      alt=""
-                      width="60"
-                      height="42"
+                    ADD ACCOUNT MEMBER
+                  </Typography>
+                  <Box sx={style2}>
+                    <TextField
+                      autoComplete="given-name"
+                      name="firstName"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="First Name"
+                      placeholder="Enter First Name"
+                      autoFocus
+                      value={values.firstName}
+                      onChange={handleChanges("firstName")}
+                      error={errors.firstName ? true : false}
+                      helperText={errors.firstName}
                     />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      Basic Info
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "190px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/inactivejobs-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                  }}
-                  onClick={()=>{push('/Employer/Members')}}
-                  
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <Image
-                      src="/members-img.png"
-                      alt=""
-                      width="60"
-                      height="62"
+                    <TextField
+                      required
+                      fullWidth
+                      id="lastName"
+                      label="Last Name"
+                      name="lastName"
+                      autoComplete="family-name"
+                      placeholder="Enter Last Name"
+                      value={values.lastName}
+                      onChange={handleChanges("lastName")}
+                      error={errors.lastName ? true : false}
+                      helperText={errors.lastName}
                     />
-                  </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      Members
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "190px",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    textAlign: "center",
-                    backgroundImage: 'url("/interviews-bg.svg")',
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                    borderRadius: "15px",
-                    cursor:'pointer'
-                  }}
-                  onClick={()=>{push('/Employer/CompanyPreview')}}
-                  
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "25px",
-                    }}
-                  >
-                    <Image
-                      src="/preview-img.png"
-                      alt=""
-                      width="70"
-                      height="62"
-                      style={{
-                        width: "60px",
+
+                    <TextField
+                      fullWidth
+                      required
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      placeholder="Enter E-mail"
+                      value={values.email}
+                      onChange={handleChanges("email")}
+                      error={errors.email ? true : false}
+                      helperText={errors.email}
+                    />
+
+                    <FormControl sx={{ width: "100%" }} variant="outlined">
+                      <InputLabel htmlFor="outlined-adornment-password">
+                        Password
+                      </InputLabel>
+                      <OutlinedInput
+                        required
+                        id="outlined-adornment-password"
+                        type={values.showPassword ? "text" : "password"}
+                        value={values.password}
+                        onChange={handleChanges("password")}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {values.showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                        placeholder="Enter Password"
+                        error={errors.password ? true : false}
+                      />
+                      {!!errors.password && (
+                        <FormHelperText error id="accountId-error">
+                          {errors.password}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                    <FormControl sx={{ width: "100%" }} variant="outlined">
+                      <InputLabel htmlFor="outlined-confirm-adornment-password">
+                        Confirm Password
+                      </InputLabel>
+                      <OutlinedInput
+                        id="outlined-confirm-adornment-password"
+                        type={
+                          confirmP.showConfirmPassword ? "text" : "password"
+                        }
+                        value={confirmP.confirmPassword}
+                        name="confirmPassword"
+                        onChange={handleConfirmPasswordChange(
+                          "confirmPassword"
+                        )}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle confirm-password visibility"
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseConfirmDownPassword}
+                              edge="end"
+                            >
+                              {confirmP.showConfirmPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Confirm Password"
+                        placeholder="Confirm Password"
+                      />
+                      {!!errors.confirmPassword && (
+                        <FormHelperText error id="accountId-error">
+                          {errors.confirmPassword}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+
+                    <ReactPhoneInput
+                      inputExtraProps={{
+                        name: "phoneNumber",
+                        required: true,
+                        autoFocus: true,
+                      }}
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      defaultCountry={"au"}
+                      value={values.phoneNumber}
+                      onChange={handleChangeTWo}
+                      inputStyle={{
+                        width: "100%",
+                        height: "3.7375em",
+                        fontSize: "16px",
                       }}
                     />
                   </Box>
-                  <CardContent>
-                    <CustomTypography
-                      sx={{ color: "white", fontSize: "30px" }}
-                      variant="h5"
-                    >
-                      Preview
-                    </CustomTypography>
-                  </CardContent>
-                </Card>
-              </Stack>
-              <Card
+                  <Button
+                    size="medium"
+                    type="submit"
+                    align="center"
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      backgroundColor: "#4fa9ff !important",
+                    }}
+                  >
+                    Ok
+                  </Button>
+                  &nbsp;
+                  <Button
+                    sx={{
+                      mt: 3,
+                      backgroundColor: "#4fa9ff !important",
+                    }}
+                    variant="contained"
+                    size="medium"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </form>
+            </Modal>
+          </Box>
+          <CardContent>
+            <Box>
+              <Stack
+                direction="row"
+                spacing={2}
                 sx={{
-                  width: "100%",
-                  backgroundColor: "#F2F8FD",
-                  mt: "40px",
-                  pb: "80px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mt: "20px",
                 }}
               >
-                 <Box sx={styles.infofld}>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <form onSubmit={handleRegister}>
-              <Box sx={style1}>
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "900", marginBottom: "15px" }}
-                >
-                  ADD ACCOUNT MEMBER
-                </Typography>
-                <Box sx={style2}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    placeholder="Enter First Name"
-                    autoFocus
-                    value={values.firstName}
-                    onChange={handleChanges("firstName")}
-                    error={errors.firstName ? true : false}
-                    helperText={errors.firstName}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                    placeholder="Enter Last Name"
-                    value={values.lastName}
-                    onChange={handleChanges("lastName")}
-                    error={errors.lastName ? true : false}
-                    helperText={errors.lastName}
-                  />
-
-                  <TextField
-                    fullWidth
-                    required
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    placeholder="Enter E-mail"
-                    value={values.email}
-                    onChange={handleChanges("email")}
-                    error={errors.email ? true : false}
-                    helperText={errors.email}
-                  />
-
-                  <FormControl sx={{ width: "100%" }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">
-                      Password
-                    </InputLabel>
-                    <OutlinedInput
-                      required
-                      id="outlined-adornment-password"
-                      type={values.showPassword ? "text" : "password"}
-                      value={values.password}
-                      onChange={handleChanges("password")}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {values.showPassword ? (
-                              <VisibilityOff />
-                            ) : (
-                              <Visibility />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                      placeholder="Enter Password"
-                      error={errors.password ? true : false}
-                    />
-                    {!!errors.password && (
-                      <FormHelperText error id="accountId-error">
-                        {errors.password}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                  <FormControl sx={{ width: "100%" }} variant="outlined">
-                    <InputLabel htmlFor="outlined-confirm-adornment-password">
-                      Confirm Password
-                    </InputLabel>
-                    <OutlinedInput
-                      id="outlined-confirm-adornment-password"
-                      type={confirmP.showConfirmPassword ? "text" : "password"}
-                      value={confirmP.confirmPassword}
-                      name="confirmPassword"
-                      onChange={handleConfirmPasswordChange("confirmPassword")}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle confirm-password visibility"
-                            onClick={handleClickShowConfirmPassword}
-                            onMouseDown={handleMouseConfirmDownPassword}
-                            edge="end"
-                          >
-                            {confirmP.showConfirmPassword ? (
-                              <VisibilityOff />
-                            ) : (
-                              <Visibility />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Confirm Password"
-                      placeholder="Confirm Password"
-                    />
-                    {!!errors.confirmPassword && (
-                      <FormHelperText error id="accountId-error">
-                        {errors.confirmPassword}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-
-                  <ReactPhoneInput
-                    inputExtraProps={{
-                      name: "phoneNumber",
-                      required: true,
-                      autoFocus: true,
-                    }}
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    defaultCountry={"au"}
-                    value={values.phoneNumber}
-                    onChange={handleChangeTWo}
-                    inputStyle={{
-                      width: "100%",
-                      height: "3.7375em",
-                      fontSize: "16px",
-                    }}
-                  />
-                </Box>
-                <Button
-                  size="medium"
-                  type="submit"
-                  align="center"
-                  variant="contained"
+                <CustomTypography
                   sx={{
-                    mt: 3,
-                    backgroundColor:'#4fa9ff !important'
+                    color: "#034275",
+                    fontFamily: BOLD,
+                    fontSize: "28px",
                   }}
                 >
-                  Ok
-                </Button>
-                &nbsp;
+                  Members
+                </CustomTypography>
+                {/* {memberrole.length === index + 1 ? ( */}
                 <Button
+                  variant="text"
+                  // onClick={handleAddInput}
+                  onClick={handleOpen}
                   sx={{
-                    mt: 3,
-                    backgroundColor:'#4fa9ff !important'
+                    color: "#034275",
                   }}
-                  variant="contained"
-                  size="medium"
-                  onClick={handleClose}
                 >
-                  Cancel
+                  + Add New Member
                 </Button>
-              </Box>
-            </form>
-          </Modal>
-        </Box>
-                <CardContent>
-                  <Box>
+                {/* ) : (
+                        ""
+                      )} */}
+              </Stack>
+              <Box
+                sx={{
+                  display: "flex",
+                  mt: "20px",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                {mems.map((member, index) => (
+                  <Box sx={styles.membox} key={index}>
                     <Stack
                       direction="row"
                       spacing={2}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        mt: "20px",
-                      }}
+                      sx={{ width: "100%", display: "flex" }}
                     >
-                      <CustomTypography
+                      <Stack
+                        spacing={2}
                         sx={{
-                          color: "#034275",
-                          fontFamily: BOLD,
-                          fontSize: "28px",
+                          display: "flex",
+                          flexDirection: { xs: "column", sm: "row" },
+                          width: "90%",
+                          alignItems: "center",
                         }}
                       >
-                        Members
-                      </CustomTypography>
-                      {/* {memberrole.length === index + 1 ? ( */}
-                      <Button
-                        variant="text"
-                        // onClick={handleAddInput}
-                        onClick={handleOpen}
-                        sx={{
-                          color: "#034275",
-                        }}
-                      >
-                        + Add New Member
-                      </Button>
-                      {/* ) : (
-                        ""
-                      )} */}
-                    </Stack>
-                    <Box sx={{ display: "flex", mt: "20px",flexDirection:'column',gap:'20px' }}>
-                    {mems.map((member, index) => (
-                      <Box sx={styles.membox} key={index}>
-                      <Stack direction="row" spacing={2} sx={{ width: "100%" }}>
                         <Box
                           sx={{
-                            width: "45%",
+                            width: { xs: "100%", sm: "57%" },
                             display: "flex",
                             alignItems: "center",
+                            mr: { xs: 0, sm: "18px" },
                           }}
                         >
                           <FormControl sx={{ width: "100%", bgcolor: "white" }}>
@@ -736,24 +813,25 @@ dispatch(getCompanyDetails())
                               // helperText={errors.cmpemail}
                             >
                               {result.map((res) => (
-                          <MenuItem
-                            key={res.firstName}
-                            value={res._id}
-                            hidden={mems.some(
-                              (vendor) => vendor["memberId"] === res._id
-                            )}
-                          >
-                            {res.firstName} {res.lastName}
-                          </MenuItem>
-                        ))}
+                                <MenuItem
+                                  key={res.firstName}
+                                  value={res._id}
+                                  hidden={mems.some(
+                                    (vendor) => vendor["memberId"] === res._id
+                                  )}
+                                >
+                                  {res.firstName} {res.lastName}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         </Box>
                         <Box
                           sx={{
-                            width: "45%",
+                            width: { xs: "100%", sm: "43%" },
                             display: "flex",
                             alignItems: "center",
+                            mt: { xs: "normal", sm: "0px !important" },
                           }}
                         >
                           <FormControl sx={{ width: "100%", bgcolor: "white" }}>
@@ -764,71 +842,80 @@ dispatch(getCompanyDetails())
                               Roles
                             </InputLabel>
                             {user?.memberType === "jobsAdmin" ? (
-                            <Select
-                              name="role"
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              value={member && member.role}
-                              label="Roles"
-                              sx={styles.naminput2}
-                              onChange={(e) => {
-                                handleMemChange(member.id, e);
-                              }}
-                            >
-                              <MenuItem value="HiringManager">
-                                Hiring Manager
-                              </MenuItem>
-                            </Select>
-                          ) : (
-                          <Select
-                            name="role"
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={member && member.role}
-                            label="Roles"
-                            sx={styles.naminput2}
-                            onChange={(e) => {
-                              handleMemChange(member.id, e);
-                            }}
-                          >
-                            <MenuItem value="SuperAdmin">
-                              {" "}
-                              Super Admin{" "}
-                            </MenuItem>
-                            <MenuItem value="jobsAdmin">Jobs Admin</MenuItem>
-                            <MenuItem value="HiringManager">
-                              Hiring Manager
-                            </MenuItem>
-                          </Select>
-                        )} 
+                              <Select
+                                name="role"
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={member && member.role}
+                                label="Roles"
+                                sx={styles.naminput2}
+                                onChange={(e) => {
+                                  handleMemChange(member.id, e);
+                                }}
+                              >
+                                <MenuItem value="HiringManager">
+                                  Hiring Manager
+                                </MenuItem>
+                              </Select>
+                            ) : (
+                              <Select
+                                name="role"
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={member && member.role}
+                                label="Roles"
+                                sx={styles.naminput2}
+                                onChange={(e) => {
+                                  handleMemChange(member.id, e);
+                                }}
+                              >
+                                <MenuItem value="SuperAdmin">
+                                  {" "}
+                                  Super Admin{" "}
+                                </MenuItem>
+                                <MenuItem value="jobsAdmin">
+                                  Jobs Admin
+                                </MenuItem>
+                                <MenuItem value="HiringManager">
+                                  Hiring Manager
+                                </MenuItem>
+                              </Select>
+                            )}
                           </FormControl>
                         </Box>
-                        <Box
-                         sx={{ display: "flex", ml: "20px" }}
-                        >
-                              {memberrole.length === index + 1 ? (
-                        <IconButton
-                          variant="contained"
-                          sx={styles.addbtn}
-                          onClick={handleAddInput}
-                        >
-                          <ControlPointDuplicateRounded
-                            sx={{
-                              fontSize: { sm: "1.5rem", xs: "1.5rem" },
-                              color: "#4fa9ff",
-                            }}
-                          />
-                        </IconButton>
-                      ) : (
-                        ""
-                      )}
-                          {memberrole.length > 1 ? (
+                      </Stack>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "10%",
+                          flexDirection: { xs: "column", sm: "row" },
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {memberrole.length === index + 1 ? (
                           <IconButton
                             variant="contained"
                             sx={styles.addbtn}
-                              onClick={() => {
-                                handleMemRemove(member.id);
+                            onClick={handleAddInput}
+                          >
+                            <ControlPointDuplicateRounded
+                              sx={{
+                                fontSize: { sm: "1.5rem", xs: "1.5rem" },
+                                color: "#4fa9ff",
                               }}
+                            />
+                          </IconButton>
+                        ) : (
+                          ""
+                        )}
+                        {memberrole.length > 1 ? (
+                          <IconButton
+                            variant="contained"
+                            sx={styles.addbtn}
+                            onClick={() => {
+                              handleMemRemove(member.id);
+                            }}
                           >
                             <RemoveCircleIcon
                               sx={{
@@ -837,52 +924,51 @@ dispatch(getCompanyDetails())
                               }}
                             />
                           </IconButton>
-                           ) : (
-                        ""
-                      )} 
-                  
-                        </Box>
-                      </Stack>
+                        ) : (
+                          ""
+                        )}
                       </Box>
-                       ))}
-                    </Box>
+                    </Stack>
                   </Box>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      mt: "40px",
-                    }}
-                  >
-                    <Button
-                      variant="outlined"
-                      sx={{ width: "50%", height: "55px" }}
-                      onClick={()=>{
-                        push('/Employer/CompanyProfile')
-                      }}
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        width: "50%",
-                        bgcolor: "#015FB1 !important",
-                        height: "55px",
-                      }}
-                      onClick={()=>{
-                        push('/Employer/CompanyPreview')
-                      }}
-                    >
-                      Next
-                    </Button>
-                  </Stack>
-                </CardContent>
-              </Card>
-     </Employer>
+                ))}
+              </Box>
+            </Box>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                mt: "40px",
+              }}
+            >
+              <Button
+                variant="outlined"
+                sx={{ width: "50%", height: "55px" }}
+                onClick={() => {
+                  push("/Employer/CompanyProfile");
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "50%",
+                  bgcolor: "#015FB1 !important",
+                  height: "55px",
+                }}
+                onClick={() => {
+                  push("/Employer/CompanyPreview");
+                }}
+              >
+                Next
+              </Button>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Employer>
     </>
   );
 };

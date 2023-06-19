@@ -102,15 +102,15 @@ const ScheduledInterviews = () => {
     dispatch(getJobsfil());
   }, [dispatch]);
   const inters = useSelector((state) => state?.sinterview?.schedules);
-  const [sear, setsear] = useState([])
-  const [seared, setseared] = useState([])
+  const [sear, setsear] = useState([]);
+  const [seared, setseared] = useState([]);
   useEffect(() => {
-  if (inters) {
-setsear(inters)
-setseared(inters)
-  }
-  }, [inters])
-  
+    if (inters) {
+      setsear(inters);
+      setseared(inters);
+    }
+  }, [inters]);
+
   const [arry, setArry] = useState([]);
   useEffect(() => {
     var arrras = [];
@@ -129,7 +129,9 @@ setseared(inters)
   sear.map((set) => {
     schedules.push({
       title: `${set?.jobDetail?.jobRole}(${set.subject})`,
-      start: `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`,
+      start: `${set?.day.split("T")[0]}T${
+        set?.time.split("T")[1].split("+")[0]
+      }`,
       end: moment(
         `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`
       )
@@ -150,9 +152,8 @@ setseared(inters)
       target: { value },
     } = event;
     setNames(value);
-    setsear(seared.filter((it)=>it.jobId === value))
+    setsear(seared.filter((it) => it.jobId === value));
   };
-
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -175,11 +176,11 @@ setseared(inters)
           <CardContent>
             <Box>
               <Grid container spacing={2}>
-                <Grid item xs={5}>
+                <Grid item xs={12} md={5}>
                   <Box
                     variant="outlined"
                     sx={{
-                      ml: "34px",
+                      ml: { xs: 0, md: "34px" },
                       mt: "20px",
                       display: "flex",
                       justifyContent: { xs: "center", lg: "none" },
@@ -203,7 +204,7 @@ setseared(inters)
                         horizontal: "left",
                       }}
                     >
-                      <FormControl sx={{ m: 1, width: '500px'}}>
+                      <FormControl sx={{ m: 1, width: "500px" }}>
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
                         </InputLabel>
@@ -217,21 +218,22 @@ setseared(inters)
                           MenuProps={MenuProps}
                           sx={{ width: "500px" }}
                         >
-                  {jobs.map((variant) => ( 
-                          <MenuItem
-                                  key={variant._id}
-                                  value={variant._id}
-                                >
-                                  <ListItemText primary={`${variant.jobRole} (${moment(variant.createdAt).format('LL')})`} />
-                                </MenuItem>
+                          {jobs.map((variant) => (
+                            <MenuItem key={variant._id} value={variant._id}>
+                              <ListItemText
+                                primary={`${variant.jobRole} (${moment(
+                                  variant.createdAt
+                                ).format("LL")})`}
+                              />
+                            </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
                     </Popover>
                   </Box>
                   <Box
-                    style={{
-                      marginLeft: "32px",
+                    sx={{
+                      marginLeft: { xs: "0px", md: "32px" },
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -252,11 +254,16 @@ setseared(inters)
                     />
                   </Box>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid
+                  item
+                  xs={12}
+                  md={7}
+                  sx={{ mt: { xs: "20px", md: "0px" } }}
+                >
                   {/* <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "flex-end",
+                      justifyContent: { xs: "center", md: "flex-end" },
                     }}
                   >
                     <Button
@@ -274,7 +281,10 @@ setseared(inters)
                     </Button>
                   </Box> */}
                   <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
-                  <InterviewCalendar date= {moment(date).format()} schedules={schedules} />
+                  <InterviewCalendar
+                    date={moment(date).format()}
+                    schedules={schedules}
+                  />
                 </Grid>
               </Grid>
             </Box>
