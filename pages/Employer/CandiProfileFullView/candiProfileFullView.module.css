@@ -9,6 +9,7 @@
   font-size: 17px;
   font-weight: 600;
   color: #01313f;
+  white-space: nowrap;
   align-items: center;
   /* font-family: "Inter-bold"; */
 }
@@ -57,4 +58,22 @@
   font-size: 17px;
   font-weight: 400;
   color: #000000;
+}
+
+@media only screen and (max-width: 767px) {
+  .ViewFullCandiProfileCard {
+    width: 100%;
+    .ViewFullCandiProfileSkillCard {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1060px) {
+  .ViewFullCandiProfileCard {
+    width: 48%;
+  }
+  .ViewFullCandiProfileSkillCard {
+    width: 48%;
+  }
 }
