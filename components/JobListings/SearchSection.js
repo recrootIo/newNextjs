@@ -286,6 +286,7 @@ const SearchSection = ({ ...props }) => {
   } = props;
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
+  const count = useSelector((state) => state.searchJobs.count);
   const loading = useSelector((state) => state.searchJobs.loading);
   // console.log(page,'pagessss')
   const [open, setOpen] = useState(false);
@@ -314,7 +315,7 @@ const SearchSection = ({ ...props }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(category, "exper", selectedCategory);
+  console.log(latestJobs, "exper");
   const { page = 1 } = router.query;
   const getJobs = () => {
     dispatch(
@@ -1159,7 +1160,7 @@ const SearchSection = ({ ...props }) => {
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  {totalPage * 10} Jobs Result
+                  {count[0]?.count} Jobs Result
                 </CustomTypography>
                 <FormControl
                   className="sortBy"

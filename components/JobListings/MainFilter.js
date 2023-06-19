@@ -317,7 +317,7 @@ const MainFilter = ({ ...props }) => {
         <CardContent
           className="scrollbar"
           id="style-1"
-          sx={{ pt: 0, pb: "0px !important" }}
+          sx={{ pt: 0, pb: "0px !important",display:'flex',flexDirection:'column' }}
         >
           {/* <RadioGroup  value={selectedSector}> */}
             {sectors.map((sec, index) => (
@@ -352,7 +352,7 @@ const MainFilter = ({ ...props }) => {
         <CardContent
           className="scrollbar"
           id="style-1"
-          sx={{ pt: 0, pb: "0px !important" }}
+          sx={{ pt: 0, pb: "0px !important" ,display:'flex',flexDirection:'column'}}
         >
             {categories.map((sec, index) => (
               <StyledFormLabel
@@ -415,7 +415,7 @@ const MainFilter = ({ ...props }) => {
         </ExpandMore>
       </Box>
       <Collapse in={expExpanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{ pt: 0, pb: "0px !important" }}>
+        <CardContent sx={{display:'flex',flexDirection:'column', pt: 0, pb: "0px !important" }}>
           {/* <RadioGroup onChange={handleExperience} value={exper[0] || null}> */}
             {USER_EXPERIENCES.map((ex, index) => (
               <FormControlLabel
@@ -448,7 +448,7 @@ const MainFilter = ({ ...props }) => {
         </ExpandMore>
       </Box>
       <Collapse in={typeExpanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{ pt: 0, pb: "0px !important" }}>
+        <CardContent sx={{display:'flex',flexDirection:'column', pt: 0, pb: "0px !important" }}>
           <FormGroup>
             {WORK_PREFERENCE.map((reference, index) => (
               <StyledFormLabel
