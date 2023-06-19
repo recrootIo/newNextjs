@@ -127,77 +127,89 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           direction={"row"}
           sx={{ flexWrap: "wrap", gap: "20px", m: "10px 0" }}
         >
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <AddBusinessIcon />
-            <CustomTypography variant="body2" fontSize={15} color={"#034275"}>
-              {lateJob?.jobType}
-            </CustomTypography>
-          </Stack>
+          {lateJob?.jobType && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <AddBusinessIcon />
+              <CustomTypography variant="body2" fontSize={15} color={"#034275"}>
+                {lateJob?.jobType}
+              </CustomTypography>
+            </Stack>
+          )}
 
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <GroupAddIcon />
-            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-              {lateJob?.essentialInformation?.experience}
-            </CustomTypography>
-          </Stack>
+          {lateJob?.essentialInformation?.experience && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <GroupAddIcon />
+              <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+                {lateJob?.essentialInformation?.experience}
+              </CustomTypography>
+            </Stack>
+          )}
 
-          <Stack
-            direction={"row"}
-            sx={{
-              gap: "10px",
-              color: "#034275 !important",
-              alignItems: "center",
-            }}
-          >
-            <CurrencyExchangeIcon />
-            {getSalary(lateJob?.salary, false)}
-          </Stack>
+          {lateJob?.salary && (
+            <Stack
+              direction={"row"}
+              sx={{
+                gap: "10px",
+                color: "#034275 !important",
+                alignItems: "center",
+              }}
+            >
+              <CurrencyExchangeIcon />
+              {getSalary(lateJob?.salary, false)}
+            </Stack>
+          )}
 
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <SchoolIcon />
-            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-              {lateJob?.essentialInformation?.qualification}
-            </CustomTypography>
-          </Stack>
+          {lateJob?.essentialInformation?.qualification && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <SchoolIcon />
+              <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+                {lateJob?.essentialInformation?.qualification}
+              </CustomTypography>
+            </Stack>
+          )}
+          {lateJob.createdAt && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <EventRepeatIcon />
+              <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+                {moment(lateJob.createdAt).fromNow()}
+              </CustomTypography>
+            </Stack>
+          )}
+          {lateJob.notice && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <CampaignIcon />
+              <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+                {lateJob.notice}
+              </CustomTypography>
+            </Stack>
+          )}
 
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <EventRepeatIcon />
-            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-              {moment(lateJob.createdAt).fromNow()}
-            </CustomTypography>
-          </Stack>
-
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <CampaignIcon />
-            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-              {lateJob.notice}
-            </CustomTypography>
-          </Stack>
-
-          <Stack
-            direction={"row"}
-            sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
-          >
-            <AccountBoxIcon />
-            <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-              {lateJob.essentialInformation?.careerlevel}
-            </CustomTypography>
-          </Stack>
+          {lateJob.essentialInformation?.careerlevel && (
+            <Stack
+              direction={"row"}
+              sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
+            >
+              <AccountBoxIcon />
+              <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
+                {lateJob.essentialInformation?.careerlevel}
+              </CustomTypography>
+            </Stack>
+          )}
         </Stack>
 
         <CustomTypography variant="body2" color="text.secondary" fontSize={15}>
