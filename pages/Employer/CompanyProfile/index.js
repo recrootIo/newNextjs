@@ -500,7 +500,7 @@ const CompanyProfile = () => {
                   fullWidth={fullWidth}
                   maxWidth={maxWidth}
                   open={open}
-                  onClose={handleClose}
+                  onClose={()=>{setOpen(false)}}
                 >
                   <Box sx={{ p: "40px" }}>
                     <CustomTypography variant="h5" sx={{ textAlign: "center" }}>

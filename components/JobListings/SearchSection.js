@@ -291,14 +291,13 @@ const SearchSection = ({ ...props }) => {
   // console.log(page,'pagessss')
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [names, setNames] = useState(jobType || []);
+  const [names, setNames] = useState(isEmpty(jobType?.[0])? [] : jobType || []);
   const [exper, setExper] = useState(experience || []);
   const [title, setTitle] = useState(props.title || "");
   const [address, setAddress] = useState(props.address || "");
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
-
   const [selectedCategory, setSelectedCategory] = useState(category || []);
 
   const theme = useTheme();
