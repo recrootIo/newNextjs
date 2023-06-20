@@ -287,11 +287,14 @@ const SearchSection = ({ ...props }) => {
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
+
   const loading = useSelector((state) => state.searchJobs.loading);
   // console.log(page,'pagessss')
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [names, setNames] = useState(isEmpty(jobType?.[0])? [] : jobType || []);
+  const [names, setNames] = useState(
+    isEmpty(jobType?.[0]) ? [] : jobType || []
+  );
   const [exper, setExper] = useState(experience || []);
   const [title, setTitle] = useState(props.title || "");
   const [address, setAddress] = useState(props.address || "");
@@ -1159,7 +1162,7 @@ const SearchSection = ({ ...props }) => {
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  {count[0]?.count} Jobs Result
+                  {/* {count[0].count ?? 0} Jobs Result */}
                 </CustomTypography>
                 <FormControl
                   className="sortBy"
