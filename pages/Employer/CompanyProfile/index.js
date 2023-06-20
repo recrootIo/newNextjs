@@ -285,13 +285,13 @@ const CompanyProfile = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <>
+    <Box sx={{ p: "-100px" }}>
       <Employer>
         <Stack direction="row" spacing={theme.breakpoints.down("xs") ? 2 : 6}>
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -341,7 +341,7 @@ const CompanyProfile = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -390,7 +390,7 @@ const CompanyProfile = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -500,7 +500,9 @@ const CompanyProfile = () => {
                   fullWidth={fullWidth}
                   maxWidth={maxWidth}
                   open={open}
-                  onClose={()=>{setOpen(false)}}
+                  onClose={() => {
+                    setOpen(false);
+                  }}
                 >
                   <Box sx={{ p: "40px" }}>
                     <CustomTypography variant="h5" sx={{ textAlign: "center" }}>
@@ -897,7 +899,7 @@ const CompanyProfile = () => {
           </CardContent>
         </Card>
       </Employer>
-    </>
+    </Box>
   );
 };
 

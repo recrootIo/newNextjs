@@ -112,7 +112,7 @@ const AllApplicantsCard = ({ users }) => {
       ) : (
         ""
       )}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "flex", sm: "none" },
           alignItems: "center",
@@ -141,7 +141,7 @@ const AllApplicantsCard = ({ users }) => {
             ""
           )}
         </Stack>
-      </Box>
+      </Box> */}
       <CardHeader
         avatar={
           <StyledAvatar
@@ -167,60 +167,60 @@ const AllApplicantsCard = ({ users }) => {
         title={`${users?.candidateId?.firstName} ${users?.candidateId?.lastName}`}
         subheader={users?.candidateId?.jobTitle}
         action={
-          !isMobile && (
-            <>
-              <Box
+          // !isMobile && (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                mt: "16px",
+                paddingRight: "16px",
+              }}
+            >
+              <Stack
+                direction="row"
+                spacing={2}
                 sx={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "flex-end",
-                  mt: "16px",
-                  paddingRight: "16px",
+                  mb: "10px",
                 }}
               >
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    mb: "10px",
-                  }}
-                >
-                  {/* <ThumbUpOffAltIcon
+                {/* <ThumbUpOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 />
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 /> */}
 
-                  {users?.status === "shortlist" ||
-                  users?.status === "rejected" ? (
-                    <Checkbox
-                      {...label}
-                      icon={
-                        <ThumbUpIcon
-                          sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                        />
-                      }
-                      checked={users?.status === "rejected"}
-                      checkedIcon={
-                        <ThumbDownIcon
-                          sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                        />
-                      }
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Stack>
-              </Box>
-            </>
-          )
+                {users?.status === "shortlist" ||
+                users?.status === "rejected" ? (
+                  <Checkbox
+                    {...label}
+                    icon={
+                      <ThumbUpIcon
+                        sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                      />
+                    }
+                    checked={users?.status === "rejected"}
+                    checkedIcon={
+                      <ThumbDownIcon
+                        sx={{ color: "#7AC1DA", fontSize: "30px" }}
+                      />
+                    }
+                  />
+                ) : (
+                  ""
+                )}
+              </Stack>
+            </Box>
+          </>
+          // )
         }
-        sx={{ p: "0 16px 0 16px" }}
+        sx={{ p: "16px 0 0 0" }}
       />
-      <CardContent sx={{ pt: 0 }}>
+      <CardContent sx={{ p: 0, pb: "16px !important" }}>
         <Box
           sx={{
             mb: "7px",

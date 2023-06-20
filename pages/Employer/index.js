@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
+import FooterHome from "@/components/Home/FooterHome";
 
 function Employer({ children }) {
   const company = useSelector((state) => state.company?.companyDetl);
@@ -181,8 +182,7 @@ function Employer({ children }) {
                 gutterBottom
                 className="tourConfig"
               >
-                Hello
-                {getUser?.firstName}
+                Hello {getUser?.firstName}
               </CustomTypography>
             )}
           </Box>
@@ -190,7 +190,7 @@ function Employer({ children }) {
       </Box>
       <Container>
         <div style={{ position: "relative", top: "-150px" }}>
-          <Grid container spacing={2} sx={{ pb: "50px" }}>
+          <Grid container spacing={2}>
             <Grid item xs={2} sx={{ display: { xs: "none", md: "block" } }}>
               <EmployerSidebar />
             </Grid>
@@ -215,8 +215,7 @@ function Employer({ children }) {
                     gutterBottom
                     className="tourConfig"
                   >
-                    Hello
-                    {getUser?.firstName}
+                    Hello {getUser?.firstName}
                   </CustomTypography>
                 )}
                 <Button
@@ -238,6 +237,7 @@ function Employer({ children }) {
           </Grid>
         </div>
       </Container>
+      <FooterHome />
     </div>
   );
 }

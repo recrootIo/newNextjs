@@ -50,10 +50,10 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 
-const DatagridClient = dynamic(
-  () => import("../../../components/Employers/DatagridClient"),
-  { ssr: false }
-);
+// const DatagridClient = dynamic(
+//   () => import("/../../components/Employers/DataGridClient"),
+//   { ssr: false }
+// );
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -1224,7 +1224,7 @@ const EmpoyerDashboard = () => {
               />
             </Box>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          {/* <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
               <DatagridClient
                 value={value}
@@ -1248,7 +1248,7 @@ const EmpoyerDashboard = () => {
                 </Typography>
               </Box>
             )}
-          </TabPanel>
+          </TabPanel> */}
         </Box>
         {/* </Grid> */}
       </Employer>

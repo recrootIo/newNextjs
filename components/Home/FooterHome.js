@@ -248,5 +248,4 @@ const FooterHome = () => {
   );
 };
 
-
-export default dynamic (() => Promise.resolve(FooterHome), {ssr: false})
+export default dynamic(() => Promise.resolve(FooterHome), { ssr: false });
