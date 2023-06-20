@@ -25,7 +25,7 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
 import { openAlert } from "@/redux/slices/alert";
-import { ERROR } from "@/utils/constants";
+import { ERROR, SUCCESS } from "@/utils/constants";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -96,6 +96,12 @@ function Signin() {
           originalPromiseResult.User.recrootUserType === "Member"
         ) {
           push("/");
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "You're logged in successfully!",
+            })
+          );
         }
         // if (originalPromiseResult.User.email_is_verified === false) {
 
