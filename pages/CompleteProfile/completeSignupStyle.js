@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   blue: {
     backgroundColor: "#4F9AFF",
     // height:'100vh',
@@ -81,3 +81,5 @@ export const styles = {
     marginLeft: "10px",
   },
 };
+
+export default styles;
