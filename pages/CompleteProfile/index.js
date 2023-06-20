@@ -8,12 +8,12 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ReactPhoneInput from "react-phone-input-2";
-import { styles } from './completeSignupStyle';
+import { styles } from '../../components/CompleteProfile/completeSignupStyle';
 import { ERROR, SECTORS } from '@/utils/constants';
 import { isEmpty } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { openAlert } from '@/redux/slices/alert';
-import { validator } from "./Validator";
+import { validator } from "../../components/CompleteProfile/Validator";
 import Cookies from 'js-cookie';
 
 const ColorButton = styled(Button)(({ theme }) => ({

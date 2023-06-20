@@ -1,4 +1,4 @@
- const validator = (values) => {
+export const validator = (values) => {
   let errors = {};
   Object.entries(values).map((item) => {
     switch (item[0]) {
@@ -133,6 +133,3 @@ function agreeTermas(term, errors) {
   return result;
 }
 // ******************************
-
-
-export default validator;
