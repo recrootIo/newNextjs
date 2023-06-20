@@ -1162,7 +1162,7 @@ const SearchSection = ({ ...props }) => {
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  {/* {count[0].count ?? 0} Jobs Result */}
+                  {Array.isArray(count) ? count[0].count : 0 ?? 0} Jobs Result
                 </CustomTypography>
                 <FormControl
                   className="sortBy"
