@@ -1,65 +1,78 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Select } from '@material-ui/core';
-import { Box, ButtonBase, Checkbox, Container, FormControl, FormControlLabel, FormHelperText, Grid, InputLabel, MenuItem, TextField, Typography } from '@mui/material';
-import { makeStyles, styled, withStyles } from '@mui/styles';
-import axios from 'axios';
-import Link from 'next/link';
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { Button, Select } from "@material-ui/core";
+import {
+  Box,
+  ButtonBase,
+  Checkbox,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { makeStyles, styled, withStyles } from "@mui/styles";
+import axios from "axios";
+import Link from "next/link";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import ReactPhoneInput from "react-phone-input-2";
-import { styles } from './completeSignupStyle';
-import { ERROR, SECTORS } from '@/utils/constants';
-import { isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
-import { openAlert } from '@/redux/slices/alert';
+import { styles } from "./completeSignupStyle";
+import { ERROR, SECTORS } from "@/utils/constants";
+import { isEmpty } from "lodash";
+import { useDispatch } from "react-redux";
+import { openAlert } from "@/redux/slices/alert";
 import { validator } from "./Validator";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const ColorButton = styled(Button)(({ theme }) => ({
-    // "&:focus": {
-    //   backgroundColor: "white",
-    //   color: "#4F9AFF",
-    // },
-    // "&:active": {
-    //   backgroundColor: "white",
-    //   color: "#4F9AFF",
-    // },
-  }));
-  const StyledButton = withStyles(() => ({
-    // root: {
-    //   marginRight: "1rem",
-    //   width: "25%",
-    //   padding: "1rem",
-    //   fontSize: "1.2rem",
-    //   borderRadius: "1rem",
-    //   color: "#000",
-    //   fontWeight: "400",
-    //   textTransform: "capitalize",
-    // },
-  }))(ButtonBase);
-  
-  const useStyles = makeStyles(() => ({
-    activeButton: {
-      backgroundColor: "white!important",
-      color: "#4F9AFF!important",
-    },
-  }));
+  // "&:focus": {
+  //   backgroundColor: "white",
+  //   color: "#4F9AFF",
+  // },
+  // "&:active": {
+  //   backgroundColor: "white",
+  //   color: "#4F9AFF",
+  // },
+}));
+const StyledButton = withStyles(() => ({
+  // root: {
+  //   marginRight: "1rem",
+  //   width: "25%",
+  //   padding: "1rem",
+  //   fontSize: "1.2rem",
+  //   borderRadius: "1rem",
+  //   color: "#000",
+  //   fontWeight: "400",
+  //   textTransform: "capitalize",
+  // },
+}))(ButtonBase);
 
-  const BasicButton = styled(Button)({
-    mt: 3,
-    mb: 2,
-    width: '442px !important',
-    maxWidth: 450,
-    height: 60,
-    backgroundColor: "#4F9AFF !important",
-    borderRadius: "8px",
-    fontWeight: 700,
-    fontSize: "20px",
-    color:'white !important'
-  });
+const useStyles = makeStyles(() => ({
+  activeButton: {
+    backgroundColor: "white!important",
+    color: "#4F9AFF!important",
+  },
+}));
+
+const BasicButton = styled(Button)({
+  mt: 3,
+  mb: 2,
+  width: "442px !important",
+  maxWidth: 450,
+  height: 60,
+  backgroundColor: "#4F9AFF !important",
+  borderRadius: "8px",
+  fontWeight: 700,
+  fontSize: "20px",
+  color: "white !important",
+});
 function CompleteProfile() {
-    const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   // const [checked, setChecked] = React.useState(true);
 
   const classes = useStyles();
@@ -75,7 +88,7 @@ function CompleteProfile() {
   const enableAction = phoneNumber && phoneNumber.length >= 10;
 
   const getUser = () => {
-    fetch("https://preprod.recroot.au/login/success", {
+    fetch("http://localhost:3000/login/success", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -112,7 +125,7 @@ function CompleteProfile() {
   //       email: values.email,
   //       password: values.password,
   //     };
-  //     axios.post("https://preprod.recroot.au/register", userObject).then(
+  //     axios.post("http://localhost:3000/register", userObject).then(
   //       (res) => {
   //         if (res.status == 200) {
   //           console.log("DFg");
@@ -139,24 +152,28 @@ function CompleteProfile() {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleRegister = (event) => {
     event.preventDefault();
     if (phoneNumber === "") {
-        dispatch(openAlert({
-            type:ERROR,
-            message:"Please Provide Mobile Number With Country Code!"
-        }))
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "Please Provide Mobile Number With Country Code!",
+        })
+      );
       //  if (phoneNumber.length === 0) {
       //   notifyFailed("Please Provide Mobile Number With Contry Code!");
 
       return;
     }
     if (isEmpty(country)) {
-        dispatch(openAlert({
-            type:ERROR,
-            message:"Please Provide Country Code To Mobile Number!"
-        }))
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "Please Provide Country Code To Mobile Number!",
+        })
+      );
       return;
     }
     const UserId = JSON.parse(localStorage.getItem("User")).User._id;
@@ -175,7 +192,7 @@ const dispatch = useDispatch()
         phoneNumber: phoneNumber,
       };
       axios
-        .post("https://preprod.recroot.au/api/completeProfile", userObject)
+        .post("http://localhost:3000/api/completeProfile", userObject)
         .then((res) => {
           if (res.status === 200) {
             console.log(res);
@@ -197,26 +214,40 @@ const dispatch = useDispatch()
             Cookies.set("userType", loggedInUser.User?.recrootUserType, {
               expires: 1,
             });
-            Cookies.set("companyId", loggedInUser.User?.companyId, { expires: 1 });
-            Cookies.set("firstName", loggedInUser.User?.firstName, { expires: 1 });
+            Cookies.set("companyId", loggedInUser.User?.companyId, {
+              expires: 1,
+            });
+            Cookies.set("firstName", loggedInUser.User?.firstName, {
+              expires: 1,
+            });
             if (userType === "TempSocial") {
-              window.location.replace(`https://extraordinary-melba-a931eb.netlify.app/completeProfile`);
+              window.location.replace(
+                `https://extraordinary-melba-a931eb.netlify.app/completeProfile`
+              );
               // navigate("/resume", { replace: false });
             }
             if (userType === "Candidate") {
               if (
                 loggedInUser?.User?.resume?.resumeFileLocation?.length === 0
               ) {
-                window.location.replace(`https://extraordinary-melba-a931eb.netlify.app/uploadResume`);
+                window.location.replace(
+                  `https://extraordinary-melba-a931eb.netlify.app/uploadResume`
+                );
               } else {
                 if (Redirect !== null) {
-                  window.location.replace(`https://extraordinary-melba-a931eb.netlify.app${Redirect}`);
+                  window.location.replace(
+                    `https://extraordinary-melba-a931eb.netlify.app${Redirect}`
+                  );
                 }
-                window.location.replace(`https://extraordinary-melba-a931eb.netlify.app/`);
+                window.location.replace(
+                  `https://extraordinary-melba-a931eb.netlify.app/`
+                );
               }
               // navigate("/resume", { replace: false });
             } else {
-              window.location.replace(`https://extraordinary-melba-a931eb.netlify.app/Pricing`);
+              window.location.replace(
+                `https://extraordinary-melba-a931eb.netlify.app/Pricing`
+              );
               // navigate("/", { replace: false });
             }
           }
@@ -236,11 +267,11 @@ const dispatch = useDispatch()
   };
   return (
     <div>
-       <Box sx={styles.signup}>
+      <Box sx={styles.signup}>
         <Container maxWidth="xl">
           <Box sx={styles.img}>
             <Link href="/">
-              <img style={{ width: "175px" }} src={'/logo.png'} alt="" />
+              <img style={{ width: "175px" }} src={"/logo.png"} alt="" />
             </Link>
           </Box>
           <Box sx={styles.topspc}>
@@ -286,13 +317,16 @@ const dispatch = useDispatch()
           </Box>
           <Typography sx={styles.sinup}>Account Type</Typography>
           <Typography sx={styles.candsub}>
-          Your account was created successfully. Please select your account type to complete the sign-up process.
+            Your account was created successfully. Please select your account
+            type to complete the sign-up process.
           </Typography>
           <form onSubmit={handleRegister}>
             <Grid container spacing={2} sx={styles.grid}>
               <Grid item xs={12} sm={12} md={12}>
-              <Typography sx={{mb: "5px", fontSize: "15px", fontWeight: "600"}}>
-                Add your mobile number
+                <Typography
+                  sx={{ mb: "5px", fontSize: "15px", fontWeight: "600" }}
+                >
+                  Add your mobile number
                 </Typography>
                 <ReactPhoneInput
                   inputExtraProps={{
@@ -329,28 +363,27 @@ const dispatch = useDispatch()
               )}
               {recrootUserType === "Employer" && (
                 <Grid item xs={12} sm={12} md={12}>
-
-            <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">
-                            Sector
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={values.sector}
-                            name="sector"
-                            required
-                            label="sector"
-                            onChange={handleChange}
-                            variant='outlined'
-                          >
-                            {SECTORS.map((job, ind) => (
-                              <MenuItem key={ind} value={job}>
-                                {job}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>  
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Sector
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={values.sector}
+                      name="sector"
+                      required
+                      label="sector"
+                      onChange={handleChange}
+                      variant="outlined"
+                    >
+                      {SECTORS.map((job, ind) => (
+                        <MenuItem key={ind} value={job}>
+                          {job}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
               )}
               <Grid item xs={12} sm={12}>
@@ -381,7 +414,7 @@ const dispatch = useDispatch()
                   sx={{
                     mt: 3,
                     mb: 2,
-                    width: '442px !important',
+                    width: "442px !important",
                     maxWidth: 450,
                     height: 60,
                     backgroundColor: "#4F9AFF !important",
@@ -431,7 +464,7 @@ const dispatch = useDispatch()
         </Box>
       </Box>
     </div>
-  )
+  );
 }
 
-export default CompleteProfile
+export default CompleteProfile;

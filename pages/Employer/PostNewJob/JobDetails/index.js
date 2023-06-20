@@ -85,7 +85,7 @@ const JobDetails = () => {
   const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
     axios
-      .get("https://preprod.recroot.au/api/getTypesJobs", {
+      .get("http://localhost:3000/api/getTypesJobs", {
         headers: { "x-access-token": `${user?.token}` },
       })
       .then((response) => setType(response.data));

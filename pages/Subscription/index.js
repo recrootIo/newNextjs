@@ -104,7 +104,7 @@ function SubscribePrice() {
 
     axios
       .put(
-        `https://preprod.recroot.au/api/${User?.companyId}/applyPromoCode`,
+        `http://localhost:3000/api/${User?.companyId}/applyPromoCode`,
         data,
         {
           headers,

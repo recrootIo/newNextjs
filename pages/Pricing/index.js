@@ -177,7 +177,7 @@ function Pricing() {
   const handleSubmitContact = (e) => {
     e.preventDefault();
     axios
-      .post("https://preprod.recroot.au/api/addContactus", contactus)
+      .post("http://localhost:3000/api/addContactus", contactus)
       .then(function (response) {
         dispatch(
           openAlert({

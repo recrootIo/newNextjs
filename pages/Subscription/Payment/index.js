@@ -64,7 +64,7 @@ function Subpayment() {
       moment(company?.package_end_date).format("L") >
         moment(new Date()).format("L")
     ) {
-      fetch("https://preprod.recroot.au/api/createPayment", {
+      fetch("http://localhost:3000/api/createPayment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -86,7 +86,7 @@ function Subpayment() {
         .then((data) => setClientSecret(data.clientSecret))
         .then(localStorage.setItem("paymentInfo", clientSecret));
     } else {
-      fetch("https://preprod.recroot.au/api/createPayment", {
+      fetch("http://localhost:3000/api/createPayment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

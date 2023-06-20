@@ -144,9 +144,9 @@ function Signin() {
 
   const handleClick = (val) => {
     if (val === "google") {
-      window.location.replace("https://preprod.recroot.au/auth/google");
+      window.location.replace("http://localhost:3000/auth/google");
     } else {
-      window.location.replace("https://preprod.recroot.au/auth/linkedin");
+      window.location.replace("http://localhost:3000/auth/linkedin");
     }
   };
 

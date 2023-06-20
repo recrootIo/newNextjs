@@ -186,7 +186,7 @@ const InterviewCalendar = (props) => {
       Time.meetlink !== ""
     ) {
       axios
-        .post("https://preprod.recroot.au/api/updateInterview", Time, {
+        .post("http://localhost:3000/api/updateInterview", Time, {
           headers: { "x-access-token": `${user.token}` },
         })
         .then((data) => {
@@ -254,7 +254,11 @@ const InterviewCalendar = (props) => {
             Edit
           </Button>
           <Button
-            sx={{ background: "#4fa9ff !important", color: "white !important",ml:2 }}
+            sx={{
+              background: "#4fa9ff !important",
+              color: "white !important",
+              ml: 2,
+            }}
             onClick={handleClose}
           >
             Cancel

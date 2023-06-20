@@ -467,7 +467,7 @@ const CompanyProfile = () => {
                   <StyledAvatar
                     src={
                       logo && logo.logo !== undefined
-                        ? `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo.logo}`
+                        ? `http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo.logo}`
                         : URL.createObjectURL(logo)
                     }
                     sx={{

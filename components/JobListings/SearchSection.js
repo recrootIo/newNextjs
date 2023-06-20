@@ -83,7 +83,7 @@ export const getSalary = (salary, defaults = true) => {
 };
 
 export const getImageLogo = (url) => {
-  return `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${url}`;
+  return `http://localhost:3000/api/getCompanyPhotos?compPhotos=${url}`;
 };
 
 // dialog box for mobile filter

@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const API_URL = "https://preprod.recroot.au/";
+const API_URL = "http://localhost:3000/";
 
 const register = (
   email,
@@ -79,7 +79,9 @@ const login = (email, password) => {
         Cookies.set("memberType", response.data?.User?.memberType, {
           expires: 1,
         });
-        Cookies.set("firstName",response.data?.User?.firstName,{expires:1})
+        Cookies.set("firstName", response.data?.User?.firstName, {
+          expires: 1,
+        });
       }
       return response;
     });
