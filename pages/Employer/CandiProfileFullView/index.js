@@ -949,10 +949,8 @@ onClick={handleEditInterview}
                     />
                     <Stack spacing={1}>
                       <Stack direction={'row'} >
-                      <CustomTypography
-                        variant="subtitle2"
-                        className={styles.ViewFullInfoMainText}
-                      >
+                      <CustomTypography className={styles.FullProfileSectionTypo}>
+
                        Degree Name : 
                       </CustomTypography>
                       <CustomTypography

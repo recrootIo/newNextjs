@@ -117,7 +117,7 @@ const logOut = useCallback(() => {
             </ListItemButton>
             <Divider variant="middle" color="gray" />
             <Link href={'/Employer/Dashboard'}>
-            <Tooltip title="dashboard" placement="right">
+            <Tooltip title="Dashboard" placement="right">
             <ListItemButton
                 sx={{ display: "flex", justifyContent: "center" ,background:select === 'Dashboard' ? background : "" }}
                 onClick={() => handleListItemClick('Dashboard')}
