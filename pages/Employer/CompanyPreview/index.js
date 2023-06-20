@@ -53,6 +53,7 @@ const CompanyPreview = () => {
   const { push } = useRouter();
 
   const final = useSelector((state) => state.company?.companyDetl);
+  console.log(final, "final");
   const logo =
     isEmpty(final?.companyLogo?.logo) === true
       ? "companyLogo/logo-default.svg"
@@ -277,7 +278,7 @@ const CompanyPreview = () => {
                 >
                   <StyledAvatar
                     alt=""
-                    src={`https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo}`}
+                    src={`http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo}`}
                     sx={{ height: "228px", width: "228px" }}
                   />
                 </Box>
@@ -310,7 +311,7 @@ const CompanyPreview = () => {
               <Divider />
               {final.address?.length !== 0
                 ? final.address?.map((addd, index) => (
-                    <Box className={styles.PreviewTypoBox}>
+                    <Box key={final._id} className={styles.PreviewTypoBox}>
                       <Box sx={{ display: "flex" }}>
                         <PlaceOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;
