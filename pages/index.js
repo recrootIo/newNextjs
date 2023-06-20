@@ -5,7 +5,7 @@ import SearchHome from "../components/Home/SearchHome";
 import AboutHome from "../components/Home/AboutHome";
 import ExploreServices from "../components/Home/ExploreServices";
 import CategoryHome from "../components/Home/CategoryHome";
-import GetHiredHome from "../components/GetHired/GetHiredHome";
+// import GetHiredHome from "../components/GetHired/GetHiredHome";
 import BrandsHome from "../components/Home/BrandsHome";
 import FooterHome from "../components/Home/FooterHome";
 import SubscribHome from "../components/Home/SubscribHome";
@@ -36,7 +36,7 @@ export default function Home() {
       <UsersDetailsHome />
       <ExploreServices />
       <CategoryHome />
-      <GetHiredHome />
+      {/* <GetHiredHome /> */}
       <NicheTechHome />
       <OurNumHome />
       <BrandsHome />
