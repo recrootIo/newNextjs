@@ -182,14 +182,14 @@ const CandiFullProfileView = () => {
   const match = useMediaQuery("(max-width:1050px)");
   const resume = useSelector((state) => state.apply.resume);
   const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
-  const recroot = `http://localhost:3000/api/downloadResume?resume=${resume?.resume?.replace(
+  const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
   const isItPdfFile = recroot.includes("pdf");
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
-      ? `http://localhost:3000/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
   const handleChange = (e) => {
@@ -242,7 +242,7 @@ const CandiFullProfileView = () => {
   const saveNote = () => {
     axios
       .post(
-        `http://localhost:3000/api/postNote/${appdata._id}`,
+        `https://preprod.recroot.au/api/postNote/${appdata._id}`,
         { notes: notes },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -1464,7 +1464,7 @@ const CandiFullProfileView = () => {
                                 <IconButton
                                   onClick={async () => {
                                     const res = await fetch(
-                                      `http://localhost:3000/api/downloadResume?resume=${cert?.certificatepath?.replace(
+                                      `https://preprod.recroot.au/api/downloadResume?resume=${cert?.certificatepath?.replace(
                                         /\\/g,
                                         "/"
                                       )}`

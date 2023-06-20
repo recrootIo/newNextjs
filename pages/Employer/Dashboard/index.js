@@ -346,7 +346,7 @@ const EmpoyerDashboard = () => {
   const handleActivate = () => {
     axios
       .put(
-        `http://localhost:3000/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "active" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -382,7 +382,7 @@ const EmpoyerDashboard = () => {
   const handleDeActivate = () => {
     axios
       .put(
-        `http://localhost:3000/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "inactive" },
         { headers: { "x-access-token": `${user.token}` } }
       )

@@ -169,7 +169,7 @@ const CandiDatabaseCard = ({ ...props }) => {
   const matches = useMediaQuery("(max-width:600px)");
   const cvUrl =
     candi?.resume?.resumeFileLocation?.length > 0
-      ? `http://localhost:3000/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}`
+      ? `https://preprod.recroot.au/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}`
       : "";
   const isItPdfFile = cvUrl.includes("pdf");
   return (

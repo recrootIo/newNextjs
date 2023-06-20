@@ -58,7 +58,7 @@ function RedirectUser() {
   const redirect = null;
   const getUser = () => {
     axios
-      .get(`http://localhost:3000/getUser/${id}`)
+      .get(`https://preprod.recroot.au/getUser/${id}`)
       .then((resObject) => {
         localStorage.setItem("User", JSON.stringify(resObject.data));
         Cookies.set("userID", resObject.data.User?._id, { expires: 1 });

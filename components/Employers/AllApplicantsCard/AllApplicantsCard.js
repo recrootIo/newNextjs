@@ -47,7 +47,7 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
 const AllApplicantsCard = ({ users }) => {
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `http://localhost:3000/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ const AllApplicantsCard = ({ users }) => {
     dispatch(getSinResume(users?.resumeId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-  const recroot = `http://localhost:3000/api/downloadResume?resume=${resume?.resume?.replace(
+  const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
