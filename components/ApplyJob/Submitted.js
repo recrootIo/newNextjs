@@ -16,6 +16,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { BOLD } from "@/theme/fonts";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const styles = {
   container: {
@@ -57,9 +58,11 @@ const Submitted = () => {
         }}
       ></Box>
       <div style={styles.container}>
-        <img
-          src="/applyConfirmation Img.png"
-          alt="Centered Image"
+        <Image
+          src={"/applyConfirmation-Img.png"}
+          alt=""
+          height={300}
+          width={400}
           style={styles.image}
         />
       </div>
@@ -71,9 +74,11 @@ const Submitted = () => {
           flexDirection: "column",
         }}
       >
-        <img
-          src="/tickImg.png"
-          alt="Centered Image"
+        <Image
+          src={"/tickImg.png"}
+          alt=""
+          height={300}
+          width={400}
           style={{ maxHeight: "80px", maxWidth: "80px" }}
         />
         <CustomTypography variant="body1" gutterBottom>

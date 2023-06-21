@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import BackupIcon from "@mui/icons-material/Backup";
 import Dropzone from "react-dropzone";
 import { Typography } from "@mui/material";
+import Image from "next/image";
 
 export function Uploader(props) {
   const [fileNames, setFileNames] = useState([]);
@@ -67,12 +68,22 @@ export function Uploader(props) {
 
                 {props?.pdf?.name !== undefined ? (
                   <>
-                    <img src="/pdfImage.png" alt="" />
+                    <Image
+                      src={"/pdfImage.png"}
+                      alt=""
+                      height={300}
+                      width={400}
+                    />
                     <Typography>{props?.pdf?.name}</Typography>
                   </>
                 ) : props?.pdfC?.name !== undefined ? (
                   <>
-                    <img src="/pdfImage.png" alt="" />
+                    <Image
+                      src={"/pdfImage.png"}
+                      alt=""
+                      height={300}
+                      width={400}
+                    />
                     <Typography>{props?.pdfC?.name}</Typography>
                   </>
                 ) : (
