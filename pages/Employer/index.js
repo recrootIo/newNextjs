@@ -146,7 +146,7 @@ function Employer({ children }) {
               width: "100%",
             }}
           >
-            <>
+            <Box>
               <IconButton
                 size="large"
                 edge="start"
@@ -169,22 +169,26 @@ function Employer({ children }) {
               >
                 <EmployerSidebar />
               </Drawer>
-            </>
-            {getUser && (
-              <CustomTypography
-                variant="h6"
-                sx={{
-                  fontFamily: BOLD,
-                  fontSize: "28px",
-                  flex: 1,
-                  color: "white",
-                }}
-                gutterBottom
-                className="tourConfig"
-              >
-                Hello {getUser?.firstName}
-              </CustomTypography>
-            )}
+            </Box>
+            <Box>
+              {getUser && (
+                <CustomTypography
+                  variant="h6"
+                  sx={{
+                    fontFamily: BOLD,
+                    fontSize: "28px",
+                    flex: 1,
+                    color: "white",
+                    display: { xs: "flex", md: "none" },
+                  }}
+                  gutterBottom
+                  // sx={{ display: { xs: "flex", md: "none" } }}
+                  // className="tourConfig"
+                >
+                  Hello {getUser?.firstName}
+                </CustomTypography>
+              )}
+            </Box>
           </Box>
         </Container>
       </Box>
@@ -211,6 +215,7 @@ function Employer({ children }) {
                       fontSize: "28px",
                       flex: 1,
                       color: "white",
+                      display: { xs: "none", md: "block" },
                     }}
                     gutterBottom
                     className="tourConfig"
