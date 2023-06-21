@@ -126,10 +126,13 @@ const faqData = [
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const handleToggle = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? -1 : index));
+    setActiveIndex((prevIndex) => (prevIndex === index ? -1 : index));
   };
+
   return (
     <div>
       <Navbar />
@@ -167,7 +170,10 @@ const FAQ = () => {
               <Box
                 sx={{
                   backgroundColor: "#00339B",
-                  borderRadius: "10px",
+                  borderBottomLeftRadius: activeIndex === index ? "0" : "10px",
+                  borderBottomRightRadius: activeIndex === index ? "0" : "10px",
+                  borderTopLeftRadius: "10px",
+                  borderTopRightRadius: "10px",
                   minHeight: "80px",
                   display: "flex",
                   justifyContent: "space-between",
@@ -200,7 +206,9 @@ const FAQ = () => {
                   sx={{
                     height: "auto",
                     border: "1px solid rgba(3, 66, 117, 0.4)",
-                    borderRadius: "10px",
+                    // borderRadius: "10px",
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
                     padding: "40px 30px",
                   }}
                 >
