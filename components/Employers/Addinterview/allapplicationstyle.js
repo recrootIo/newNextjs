@@ -1,4 +1,4 @@
-export const styles={
+export const styles = {
   addtxt: {
     fontWeight: 700,
     fontSize: "24px",
@@ -8,12 +8,12 @@ export const styles={
     ml: "15px",
     mb: "30px",
   },
-  addtxt1:{
+  addtxt1: {
     fontWeight: 700,
     fontSize: "20px",
     lineHeight: "23px",
-    letterSpacing:"-0.01em",
-    color: "#2A2A2A"
+    letterSpacing: "-0.01em",
+    color: "#2A2A2A",
   },
   inputgrp: {
     display: "flex",
@@ -22,72 +22,74 @@ export const styles={
     mb: "35px",
   },
   sectxtloca: {
-    marginLeft: "3rem",
+    // marginLeft: { xs: "0px", md: "3rem" },
     fontWeight: "700",
     fontSize: "16px",
     lineHeight: "18px",
     mb: "8px",
     mt: "20px",
   },
-  
-   naminput: {
-    width: { md: "290px", xs: "200px" },
-    marginLeft: "40px",
+
+  naminput: {
+    width: { sm: "290px", xs: "100%" },
+    // marginLeft: "40px",
     height: "60px",
     color: "black",
   },
   naminput2: {
-    width:"75%",
-    marginLeft: "40px",
+    width: { xs: "100%", sm: "100%" },
+    // marginLeft: { xs: 0, md: "40px" },
     height: "60px",
     color: "black",
-    mb:'20px'
+    mb: "20px",
   },
   naminputauto: {
     width: { md: "290px", xs: "200px" },
     marginLeft: "40px",
     height: "60px",
     color: "black",
-    mt:"36px"
+    mt: "36px",
   },
   naminput1: {
-    width: { md: "290px", xs: "200px" },
+    width: { sm: "290px", xs: "200px" },
     marginLeft: "40px",
     height: "60px",
     color: "black",
   },
   infofldloc: {
+    width: { xs: "90%", sm: "290px" },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
   },
   infofldloc2: {
+    width: { xs: "90%", sm: "465px" },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems:"center"
+    alignItems: "center",
   },
-  boxdes:{
+  boxdes: {
     border: "1px solid #cacaca",
-    borderRadius:"10px",
-    ml:"18px",
-    mr:"18px",
-    mb:"30px"
+    borderRadius: "10px",
+    ml: "18px",
+    mr: "18px",
+    mb: "30px",
   },
-  rmbtn:{
+  rmbtn: {
     boxSizing: "border-box",
-    ml:{sm:"auto",xs:'0px'},
-    mt:{xs:'8px',sm:'0px'},
+    ml: { sm: "auto", xs: "0px" },
+    mt: { xs: "8px", sm: "0px" },
     // mr:{ md: "80px", xs: "12px" },
     width: { md: "133px", xs: "120px" },
     height: "47px",
     border: "1px solid #4F9AFF",
     borderRadius: "8px",
   },
-  mail:{
+  mail: {
     position: "absolute",
     height: "18px",
-    fontFamily: 'Arial',
+    fontFamily: "Arial",
     fontStyle: "normal",
     fontWeight: "400",
     fontSize: "16px",
@@ -95,9 +97,8 @@ export const styles={
     letterSpacing: "-0.01em",
     color: "#6A6A6A",
   },
-  helpertext:{
-    marginLeft:"50px",
-    color:"#d32f2f"
+  helpertext: {
+    marginLeft: "50px",
+    color: "#d32f2f",
   },
-
-}
+};

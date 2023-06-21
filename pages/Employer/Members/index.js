@@ -181,6 +181,7 @@ const Members = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    minWidth: "300px",
     width: "auto",
     bgcolor: "background.paper",
     border: "2px solid #000",
@@ -544,186 +545,191 @@ const Members = () => {
             pb: "80px",
           }}
         >
-          <Box sx={styles.infofld}>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <form onSubmit={handleRegister}>
-                <Box sx={style1}>
-                  <Typography
-                    variant="h5"
-                    style={{ fontWeight: "900", marginBottom: "15px" }}
-                  >
-                    ADD ACCOUNT MEMBER
-                  </Typography>
-                  <Box sx={style2}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      placeholder="Enter First Name"
-                      autoFocus
-                      value={values.firstName}
-                      onChange={handleChanges("firstName")}
-                      error={errors.firstName ? true : false}
-                      helperText={errors.firstName}
-                    />
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                      placeholder="Enter Last Name"
-                      value={values.lastName}
-                      onChange={handleChanges("lastName")}
-                      error={errors.lastName ? true : false}
-                      helperText={errors.lastName}
-                    />
+          {/* <Box sx={styles.infofld}> */}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            // sx={{
+            //   display: "flex",
+            //   alignItems: "center",
+            //   justifyContent: "center",
+            //   "& .MuiPaper-root": {
+            //     width: "90%",
+            //     maxWidth: 600, // Adjust the max width as needed
+            //   },
+            // }}
+          >
+            <form onSubmit={handleRegister}>
+              <Box sx={style1}>
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "900", marginBottom: "15px" }}
+                >
+                  ADD ACCOUNT MEMBER
+                </Typography>
+                <Box sx={style2}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    placeholder="Enter First Name"
+                    autoFocus
+                    value={values.firstName}
+                    onChange={handleChanges("firstName")}
+                    error={errors.firstName ? true : false}
+                    helperText={errors.firstName}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                    placeholder="Enter Last Name"
+                    value={values.lastName}
+                    onChange={handleChanges("lastName")}
+                    error={errors.lastName ? true : false}
+                    helperText={errors.lastName}
+                  />
 
-                    <TextField
-                      fullWidth
+                  <TextField
+                    fullWidth
+                    required
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    placeholder="Enter E-mail"
+                    value={values.email}
+                    onChange={handleChanges("email")}
+                    error={errors.email ? true : false}
+                    helperText={errors.email}
+                  />
+
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
                       required
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      placeholder="Enter E-mail"
-                      value={values.email}
-                      onChange={handleChanges("email")}
-                      error={errors.email ? true : false}
-                      helperText={errors.email}
+                      id="outlined-adornment-password"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password}
+                      onChange={handleChanges("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                      placeholder="Enter Password"
+                      error={errors.password ? true : false}
                     />
-
-                    <FormControl sx={{ width: "100%" }} variant="outlined">
-                      <InputLabel htmlFor="outlined-adornment-password">
-                        Password
-                      </InputLabel>
-                      <OutlinedInput
-                        required
-                        id="outlined-adornment-password"
-                        type={values.showPassword ? "text" : "password"}
-                        value={values.password}
-                        onChange={handleChanges("password")}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {values.showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password"
-                        placeholder="Enter Password"
-                        error={errors.password ? true : false}
-                      />
-                      {!!errors.password && (
-                        <FormHelperText error id="accountId-error">
-                          {errors.password}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                    <FormControl sx={{ width: "100%" }} variant="outlined">
-                      <InputLabel htmlFor="outlined-confirm-adornment-password">
-                        Confirm Password
-                      </InputLabel>
-                      <OutlinedInput
-                        id="outlined-confirm-adornment-password"
-                        type={
-                          confirmP.showConfirmPassword ? "text" : "password"
-                        }
-                        value={confirmP.confirmPassword}
-                        name="confirmPassword"
-                        onChange={handleConfirmPasswordChange(
-                          "confirmPassword"
-                        )}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle confirm-password visibility"
-                              onClick={handleClickShowConfirmPassword}
-                              onMouseDown={handleMouseConfirmDownPassword}
-                              edge="end"
-                            >
-                              {confirmP.showConfirmPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Confirm Password"
-                        placeholder="Confirm Password"
-                      />
-                      {!!errors.confirmPassword && (
-                        <FormHelperText error id="accountId-error">
-                          {errors.confirmPassword}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-
-                    <ReactPhoneInput
-                      inputExtraProps={{
-                        name: "phoneNumber",
-                        required: true,
-                        autoFocus: true,
-                      }}
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      defaultCountry={"au"}
-                      value={values.phoneNumber}
-                      onChange={handleChangeTWo}
-                      inputStyle={{
-                        width: "100%",
-                        height: "3.7375em",
-                        fontSize: "16px",
-                      }}
+                    {!!errors.password && (
+                      <FormHelperText error id="accountId-error">
+                        {errors.password}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                  <FormControl sx={{ width: "100%" }} variant="outlined">
+                    <InputLabel htmlFor="outlined-confirm-adornment-password">
+                      Confirm Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-confirm-adornment-password"
+                      type={confirmP.showConfirmPassword ? "text" : "password"}
+                      value={confirmP.confirmPassword}
+                      name="confirmPassword"
+                      onChange={handleConfirmPasswordChange("confirmPassword")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle confirm-password visibility"
+                            onClick={handleClickShowConfirmPassword}
+                            onMouseDown={handleMouseConfirmDownPassword}
+                            edge="end"
+                          >
+                            {confirmP.showConfirmPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Confirm Password"
+                      placeholder="Confirm Password"
                     />
-                  </Box>
-                  <Button
-                    size="medium"
-                    type="submit"
-                    align="center"
-                    variant="contained"
-                    sx={{
-                      mt: 3,
-                      backgroundColor: "#4fa9ff !important",
+                    {!!errors.confirmPassword && (
+                      <FormHelperText error id="accountId-error">
+                        {errors.confirmPassword}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+
+                  <ReactPhoneInput
+                    inputExtraProps={{
+                      name: "phoneNumber",
+                      required: true,
+                      autoFocus: true,
                     }}
-                  >
-                    Ok
-                  </Button>
-                  &nbsp;
-                  <Button
-                    sx={{
-                      mt: 3,
-                      backgroundColor: "#4fa9ff !important",
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    defaultCountry={"au"}
+                    value={values.phoneNumber}
+                    onChange={handleChangeTWo}
+                    inputStyle={{
+                      width: "100%",
+                      height: "3.7375em",
+                      fontSize: "16px",
                     }}
-                    variant="contained"
-                    size="medium"
-                    onClick={handleClose}
-                  >
-                    Cancel
-                  </Button>
+                  />
                 </Box>
-              </form>
-            </Modal>
-          </Box>
+                <Button
+                  size="medium"
+                  type="submit"
+                  align="center"
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    backgroundColor: "#4fa9ff !important",
+                  }}
+                >
+                  Ok
+                </Button>
+                &nbsp;
+                <Button
+                  sx={{
+                    mt: 3,
+                    backgroundColor: "#4fa9ff !important",
+                  }}
+                  variant="contained"
+                  size="medium"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </form>
+          </Modal>
+          {/* </Box> */}
           <CardContent>
             <Box>
               <Stack

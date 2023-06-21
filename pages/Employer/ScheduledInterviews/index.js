@@ -170,7 +170,7 @@ const ScheduledInterviews = () => {
             width: "100%",
             backgroundColor: "#F2F8FD",
             mt: "40px",
-            p: "25px 25px 80px 25px",
+            p: { xs: 0, md: "25px 25px 80px 25px" },
           }}
         >
           <CardContent>
@@ -205,12 +205,7 @@ const ScheduledInterviews = () => {
                       }}
                     >
                       <FormControl
-                        // sx={{ m: 1, width: "500px" }}
-                        sx={{
-                          m: 1,
-                          width: { xs: "95%", md: "500px" },
-                          minWidth: { xs: "100%", md: "500px" },
-                        }}
+                        sx={{ width: "100%", minWidth: "280px", m: 1 }}
                       >
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
@@ -223,11 +218,14 @@ const ScheduledInterviews = () => {
                           onChange={handleName}
                           input={<OutlinedInput label="Filter By Jobs" />}
                           MenuProps={MenuProps}
-                          // sx={{ width: "500px" }}
-                          sx={{ width: { xs: "100%", md: "500px" } }}
+                          sx={{ width: "95%" }}
                         >
                           {jobs.map((variant) => (
-                            <MenuItem key={variant._id} value={variant._id}>
+                            <MenuItem
+                              key={variant._id}
+                              value={variant._id}
+                              sx={{ width: "100%" }}
+                            >
                               <ListItemText
                                 primary={`${variant.jobRole} (${moment(
                                   variant.createdAt

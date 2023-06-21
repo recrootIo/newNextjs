@@ -1870,3 +1870,16 @@ a {
     -webkit-mask-size: 0 18px, 0 18px, 0 18px, auto;
   }
 }
+
+
+@media (max-width: 470px) {
+  .fc .fc-toolbar.fc-header-toolbar {
+    display: block;
+    text-align: center;
+  }
+
+  .fc-header-toolbar .fc-toolbar-chunk {
+    display: block;
+  }
+}
+

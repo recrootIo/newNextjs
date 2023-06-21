@@ -229,6 +229,7 @@ const InterviewCalendar = (props) => {
         select={targetDate}
         // datesSet={targetDate}
         ref={calendarRef}
+        className="responsive-calendar"
       />
       <Dialog fullWidth max onClose={handleClose} open={open}>
         <DialogTitle>Interview Details</DialogTitle>
@@ -269,205 +270,231 @@ const InterviewCalendar = (props) => {
         onClose={handleClose1}
         fullWidth
         maxWidth="md"
-        sx={{ p: "20px" }}
+        sx={{
+          p: "20px !important",
+          display: "flex",
+          justifyContent: "center",
+        }}
         open={open1}
       >
-        <DialogTitle>Edit Interview</DialogTitle>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-around",
-            flexWrap: "wrap",
-            gap: "15px",
-          }}
-        >
-          <Box sx={styles.infofldloc}>
-            {/* <Typography sx={styles.sectxtloca}>Date</Typography> */}
-            <Box>
+        <Box sx={{ m: "20px" }}>
+          <DialogTitle sx={{ textAlign: "center" }}>Edit Interview</DialogTitle>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+              flexWrap: "wrap",
+              gap: "15px",
+              // width: "100%",
+            }}
+          >
+            <Box sx={styles.infofldloc}>
+              {/* <Typography sx={styles.sectxtloca}>Date</Typography> */}
+              <Box>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  sx={{ width: { sm: "290px", xs: "100%" } }}
+                >
+                  <DesktopDatePicker
+                    label="Date"
+                    inputFormat="MM/dd/yyyy"
+                    value={Time.day}
+                    name="day"
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField {...params} sx={styles.naminput} />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Box>
+            <Box sx={styles.infofldloc}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopDatePicker
-                  label="Date"
-                  inputFormat="MM/dd/yyyy"
-                  value={Time.day}
-                  name="day"
-                  onChange={handleChange}
+                <MobileTimePicker
+                  label="Time"
+                  value={Time.time}
+                  onChange={(e) => handleChangeTime(e)}
                   renderInput={(params) => (
-                    <TextField {...params} sx={styles.naminput} />
+                    <TextField
+                      error={!!timeErrorText}
+                      helperText={timeErrorText}
+                      sx={styles.naminput}
+                      {...params}
+                    />
                   )}
                 />
               </LocalizationProvider>
             </Box>
-          </Box>
-          <Box sx={styles.infofldloc}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MobileTimePicker
-                label="Time"
-                value={Time.time}
-                onChange={(e) => handleChangeTime(e)}
-                renderInput={(params) => (
-                  <TextField
-                    error={!!timeErrorText}
-                    helperText={timeErrorText}
-                    sx={styles.naminput}
-                    {...params}
-                  />
-                )}
+            <Box sx={styles.infofldloc}>
+              <TextField
+                InputLabelProps={{ style: { color: "black" } }}
+                // sx={styles.naminput}
+                // sx={styles.naminput1}
+
+                id="outlined-basic"
+                label="Duration (Mins)"
+                value={Time.duration}
+                type="number"
+                name="duration"
+                placeholder="Enter Duration"
+                variant="outlined"
+                onChange={handleChange1}
+                error={!!durationErrorText}
+                helperText={durationErrorText}
               />
-            </LocalizationProvider>
+            </Box>
           </Box>
-          <Box sx={styles.infofldloc}>
-            <TextField
-              InputLabelProps={{ style: { color: "black" } }}
-              // sx={styles.naminput}
-              // sx={styles.naminput1}
-
-              id="outlined-basic"
-              label="Duration (Mins)"
-              value={Time.duration}
-              type="number"
-              name="duration"
-              placeholder="Enter Duration"
-              variant="outlined"
-              onChange={handleChange1}
-              error={!!durationErrorText}
-              helperText={durationErrorText}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            mt: "40px",
-            justifyContent: "space-around",
-            flexWrap: "wrap",
-            gap: "15px",
-          }}
-        >
-          <Box sx={styles.infofldloc}>
-            <FormControl>
-              <InputLabel
-                id="demo-simple-select-label"
-                // style={{ marginLeft: "40px" }}
-              >
-                Select Time Zone
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={Time.zone}
-                name="zone"
-                label="Select Time Zone"
-                sx={{
-                  width: { md: "290px", xs: "200px" },
-                  height: "60px",
-                  color: "black",
-                }}
-                onChange={handleChange1}
-                error={!!zoneErrorText}
-              >
-                {TIME_ZONES.map((zones, ind) => (
-                  <MenuItem key={ind} value={zones}>
-                    {zones}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText sx={styles.helpertext}>
-                {zoneErrorText}
-              </FormHelperText>
-            </FormControl>
-          </Box>
-          <Box sx={styles.infofldloc}>
-            <FormControl>
-              <InputLabel
-                id="demo-simple-select-label"
-                // style={{ marginLeft: "40px" }}
-              >
-                Select Event Type
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={Time.event}
-                name="event"
-                label="Select Event Type"
-                sx={{
-                  width: { md: "290px", xs: "200px" },
-                  height: "60px",
-                  color: "black",
-                }}
-                onChange={handleChange1}
-                error={!!eventErrorText}
-              >
-                {evnets.map((evnt, ind) => (
-                  <MenuItem key={ind} value={evnt}>
-                    {evnt}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText sx={styles.helpertext}>
-                {eventErrorText}
-              </FormHelperText>
-            </FormControl>
-          </Box>
-          <Box sx={styles.infofldloc}>
-            <TextField
-              InputLabelProps={{ style: { color: "black" } }}
-              sx={styles.naminput}
-              id="outlined-basic"
-              value={Time.subject}
-              name="subject"
-              label="Subject"
-              placeholder="Enter Subject"
-              variant="outlined"
-              onChange={handleChange1}
-              error={!!subjectErrorText}
-              helperText={subjectErrorText}
-            />
-            {/* </Box> */}
-          </Box>
-        </Box>
-
-        <Box sx={styles.infofldloc2}>
-          <Typography sx={styles.sectxtloca}>Meeting Link</Typography>
-          <TextField
-            InputLabelProps={{ style: { color: "black" } }}
-            sx={styles.naminput2}
-            id="outlined-basic"
-            value={Time.meetlink}
-            fullWidth
-            name="meetlink"
-            label="Meeting Link"
-            placeholder="Enter Link"
-            variant="outlined"
-            onChange={handleChange1}
-            error={!!meetText}
-            helperText={meetText}
-          />
-        </Box>
-        <Divider />
-
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: "row-reverse",
-            padding: "24px 24px 20px 0",
-            gap: "20px",
-          }}
-        >
-          <Button
-            variant="contained"
-            sx={{ background: "#4fa9ff !important" }}
-            onClick={onSubmit}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              mt: "40px",
+              justifyContent: { xs: "center", sm: "space-around" },
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "15px",
+            }}
           >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ background: "#4fa9ff !important" }}
-            onClick={handleClose1}
+            <Box sx={styles.infofldloc}>
+              <FormControl>
+                <InputLabel
+                  id="demo-simple-select-label"
+                  // style={{ marginLeft: "40px" }}
+                >
+                  Select Time Zone
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={Time.zone}
+                  name="zone"
+                  label="Select Time Zone"
+                  sx={{
+                    width: { sm: "290px", xs: "auto" },
+                    height: "60px",
+                    color: "black",
+                  }}
+                  onChange={handleChange1}
+                  error={!!zoneErrorText}
+                >
+                  {TIME_ZONES.map((zones, ind) => (
+                    <MenuItem key={ind} value={zones}>
+                      {zones}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText sx={styles.helpertext}>
+                  {zoneErrorText}
+                </FormHelperText>
+              </FormControl>
+            </Box>
+            <Box sx={styles.infofldloc}>
+              <FormControl>
+                <InputLabel
+                  id="demo-simple-select-label"
+                  // style={{ marginLeft: "40px" }}
+                >
+                  Select Event Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={Time.event}
+                  name="event"
+                  label="Select Event Type"
+                  sx={{
+                    width: { sm: "290px", xs: "auto" },
+                    height: "60px",
+                    color: "black",
+                  }}
+                  onChange={handleChange1}
+                  error={!!eventErrorText}
+                >
+                  {evnets.map((evnt, ind) => (
+                    <MenuItem key={ind} value={evnt}>
+                      {evnt}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText sx={styles.helpertext}>
+                  {eventErrorText}
+                </FormHelperText>
+              </FormControl>
+            </Box>
+            <Box sx={styles.infofldloc}>
+              <TextField
+                InputLabelProps={{ style: { color: "black" } }}
+                sx={styles.naminput}
+                id="outlined-basic"
+                value={Time.subject}
+                name="subject"
+                label="Subject"
+                placeholder="Enter Subject"
+                variant="outlined"
+                onChange={handleChange1}
+                error={!!subjectErrorText}
+                helperText={subjectErrorText}
+              />
+              {/* </Box> */}
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            Cancel
-          </Button>
+            <Box sx={styles.infofldloc2}>
+              <Typography sx={styles.sectxtloca}>Meeting Link</Typography>
+              <TextField
+                InputLabelProps={{ style: { color: "black" } }}
+                sx={styles.naminput2}
+                id="outlined-basic"
+                value={Time.meetlink}
+                fullWidth
+                name="meetlink"
+                label="Meeting Link"
+                placeholder="Enter Link"
+                variant="outlined"
+                onChange={handleChange1}
+                error={!!meetText}
+                helperText={meetText}
+              />
+            </Box>
+          </Box>
+          <Divider />
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", sm: "flex-end" },
+              padding: { xs: 0, sm: "24px 56px 20px 0" },
+              gap: "20px",
+              width: "100%",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                background: "#4fa9ff !important",
+                width: { xs: "30%", sm: "auto" },
+              }}
+              onClick={handleClose1}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                background: "#4fa9ff !important",
+                width: { xs: "30%", sm: "auto" },
+              }}
+              onClick={onSubmit}
+            >
+              Save
+            </Button>
+          </Box>
         </Box>
       </Dialog>
     </>
