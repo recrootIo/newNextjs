@@ -17,6 +17,7 @@ const VerifyEmail = () => {
   const dispatch = useDispatch();
   const userId = Cookies.get("userID");
   const vcode = Cookies.get("verifyCode");
+  const country = Cookies.get("country");
   const { push } = useRouter();
   const code = useSelector((state) => state.personal.code);
   const path = useSelector((state) => state.personal.pricing);
@@ -57,19 +58,14 @@ const VerifyEmail = () => {
       );
       // notify("Your account verification is successful and is ready to go!");
       if (
-        loggedInUser.User.recrootUserType === "Employer" ||
-        loggedInUser.User.recrootUserType === "Member"
+        loggedInUser.User.recrootUserType === "Employer" 
       ) {
-        if (path === true) {
+        if (country === 'LK') {
           push("/Pricing");
-          return;
+        }else{
+          push("/");
         }
-        if (redirect === null) {
-          push("/Pricing");
-        } else {
-          push("/Pricing");
-        }
-      } else if (loggedInUser.User.resume.resumeFileLocation.length === 0) {
+      } else if ( loggedInUser.User.recrootUserType === "Candidate" && loggedInUser.User.resume.resumeFileLocation.length === 0) {
         push("/uploadResume");
       } else {
         push("/");

@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { getCompanyDetails } from "../slices/companyslice";
 import { useEffect } from "react";
 import { isEmpty } from "lodash";
-import { addJobs, companyJobs, errorJobs, setEditJob, singleJobs, updateJobs } from "@/redux/slices/job";
+import { addJobs, addJobsNew, companyJobs, errorJobs, setEditJob, singleJobs, updateJobs } from "@/redux/slices/job";
 // import JobDetails from "./JobDetails/jobDetails";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
@@ -30,6 +30,7 @@ import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
 import validator from "@/components/Validator";
 import Employer from "..";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 function PostnewJob() {
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -55,6 +56,7 @@ function PostnewJob() {
   const showq = useSelector((state) => state?.jobs?.queshow);
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
   const packageType = useSelector((state) => state?.jobs?.packageType);
+  const companyDet = useSelector((state) => state.company.companyDetl);
 
   React.useEffect(() => {
     dispatch(companyJobs());
@@ -83,10 +85,63 @@ function PostnewJob() {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const country = Cookies.get('country')
   const postJobs = (final) => {
     dispatch(applyJobsdet());
-    dispatch(addJobs(final))
+    if (((companyDet?.jobSlotGold === true && full === "jSlot") ||
+    companyDet?.package?.subscription_package === "SuperEmployer" ) || country === 'LK' ) {      
+      dispatch(addJobs(final))
+        .then((res) => {
+          if (res.error !== undefined) {
+            res.error.message === "Request failed with status code 401" ||
+            "Request failed with status code 403"
+              ? dispatch(logout()).then(() => {
+                  router.push("/signin", { state: true });
+                })
+              : "";
+          } else {
+            if (res.payload.code) {
+              if (res.payload.code === 899) {
+                  dispatch(openAlert({
+                      type:ERROR,
+                      message:res.payload.message
+                  }))
+                router.push("/Pricing");
+                return;
+              }
+              dispatch(openAlert({
+                  type:ERROR,
+                  message:res.payload.message
+              }))
+              if (
+                res.payload.message ===
+                "Subscribe for a pricing plan to activate the job!"
+              ) {
+                router.push("/Pricing");
+              }
+            } else {
+              dispatch(openAlert({
+                  type:SUCCESS,
+                  message:"Your job has been posted successfully"
+              }))
+              setTimeout(() => {
+                dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
+              }, 500);
+            }
+          }
+        })
+        .catch((error) => {
+          if (
+            error.message === "Request failed with status code 401" ||
+            "Request failed with status code 403"
+          ) {
+            dispatch(logout()).then(() => {
+              router.push("/signin", { state: true });
+            });
+          }
+        });
+    }else{
+      dispatch(addJobsNew(final))
       .then((res) => {
         if (res.error !== undefined) {
           res.error.message === "Request failed with status code 401" ||
@@ -136,6 +191,7 @@ function PostnewJob() {
           });
         }
       });
+    }
   };
   var Cid = final?._id;
   const handleEdit = () => {
@@ -175,17 +231,18 @@ function PostnewJob() {
       });
   };
 
- 
 console.log(final.details,'quest')
   function Pages(index, cal) {
     if (cal === "add" && index <= 2) {
       if (index === 0) {
-        if(packageType === ""){
-            dispatch(openAlert({
-                type:ERROR,
-                message:"Please choose package type"
-            }))
-          return
+        if (country === 'LK') {     
+          if(packageType === ""){
+              dispatch(openAlert({
+                  type:ERROR,
+                  message:"Please choose package type"
+              }))
+            return
+          }
         }
         const obj = validator(final);
         dispatch(errorJobs(validator(final)));
@@ -248,11 +305,6 @@ console.log(final.details,'quest')
           if (Object.keys(obj2).length > 0) {
             return;
           }
-     
-          // if (final.details.notice === undefined) {
-
-          //   return
-          // }
           if (final.details.notice === undefined) {
             dispatch(openAlert({
               type:ERROR,

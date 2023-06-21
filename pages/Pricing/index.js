@@ -110,6 +110,7 @@ const planHeadSlot = {
 
 function Pricing() {
   const [jobSwitch, setjobSwitch] = useState("jPost");
+  const [countryData, setcountryData] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -117,6 +118,10 @@ function Pricing() {
       .then((response) => {
         console.log(response, "sss");
         let data = response.data;
+        setcountryData(response.data)
+        if (data?.country !== "LK") {
+          setjobSwitch('jSlot')
+        }
         if (data?.country === "IN") {
           setcounCheck(true);
         }
@@ -344,7 +349,7 @@ function Pricing() {
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <Box
+     {countryData?.country === "LK"  ?  <Box
           sx={{
             border: "1px solid #034275",
             borderRadius: "40px",
@@ -373,7 +378,7 @@ function Pricing() {
               Job Slot
             </Typography>
           </Box>
-        </Box>
+        </Box> : ""}
       </Box>
       <Box>
         {jobSwitch === "jPost" ? (

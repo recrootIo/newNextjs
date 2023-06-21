@@ -36,6 +36,8 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 import { Inter, Roboto_Mono } from "next/font/google";
+import Cookies from "js-cookie";
+import axios from "axios";
 const inter = Inter({ subsets: ["latin"] });
 const StyledInput = styled(TextField)({
   // height: "60px",
@@ -198,7 +200,12 @@ function Signup() {
       .unwrap()
       .then((originalPromiseResult) => {
         console.log(originalPromiseResult);
-        push("/verifyMobile");
+        axios
+        .get("https://ipapi.co/json/")
+        .then((response) => {
+          Cookies.set("country", response.data?.country);
+        })
+        push("/verifymobile");
         // navigate("/verifymobile", { replace: true });
       })
       .catch((error) => {
