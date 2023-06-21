@@ -54,9 +54,12 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
+
 const Members = () => {
+  const company = useSelector((state) => state?.company?.companyDetl);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
@@ -372,8 +375,14 @@ const Members = () => {
 
   const { push } = useRouter();
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profileMember: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const gotoPreview = () => {
@@ -446,6 +455,10 @@ const Members = () => {
   ];
 
   const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profileMember);
+  }, [company?.tours?.profileMember]);
 
   return (
     <>

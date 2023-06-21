@@ -65,6 +65,10 @@ class companyservice {
   getApplCounts(value) {
     return http.get(`/getApplCounts/${value}`);
   }
+  updateTourValue(data) {
+    const rs = JSON.parse(localStorage.getItem("User"));
+    return http.post(`/updateTourValue/${rs?.User?.companyId}`, data);
+  }
 }
 
 export default companyservice;

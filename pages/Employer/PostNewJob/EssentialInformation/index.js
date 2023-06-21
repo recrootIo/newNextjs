@@ -49,6 +49,7 @@ import { CURRENCY } from "@/utils/currency";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -80,7 +81,7 @@ const EssentialInformation = () => {
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 30);
@@ -191,8 +192,14 @@ const EssentialInformation = () => {
     dispatch(immediateSet(event.target.checked));
   };
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobEssential: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -262,6 +269,11 @@ const EssentialInformation = () => {
       ),
     },
   ];
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobEssential);
+  }, [company?.tours?.jobEssential]);
 
   return (
     <>

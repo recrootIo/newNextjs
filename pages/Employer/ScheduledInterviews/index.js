@@ -47,6 +47,7 @@ import Employer from "..";
 import { getJobsfil } from "@/redux/slices/applyJobs";
 import dynamic from "next/dynamic";
 import styles from "../../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -79,7 +80,7 @@ const ScheduledInterviews = () => {
   const [names, setNames] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -166,8 +167,14 @@ const ScheduledInterviews = () => {
   const mark = [];
   sear.map((dat) => mark.push(moment(dat.day).format("DD-MM-YYYY")));
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ interview: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -195,6 +202,12 @@ const ScheduledInterviews = () => {
       ),
     },
   ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.interview);
+  }, [company?.tours?.interview]);
 
   return (
     <>

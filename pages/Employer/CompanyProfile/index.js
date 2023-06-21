@@ -73,6 +73,7 @@ import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
 import Employer from "..";
 import { isEmpty } from "lodash";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -131,11 +132,12 @@ const CompanyProfile = () => {
     cmpemail: basicin && basicin.cmpemail,
     cmpwebsite: basicin && basicin.cmpwebsite,
   });
+  const company = useSelector((state) => state?.company?.companyDetl);
   const [cpinfor, setCmpinfor] = useState({
     infosector: cmpin && cmpin.infosector,
     infodes: cmpin && cmpin.infodes,
   });
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   useEffect(() => {
     dispatch(getCompanyDetails());
@@ -238,6 +240,7 @@ const CompanyProfile = () => {
       dispatch(openAlert({ type: SUCCESS, message: msg }))
     );
   };
+
   const handleBlurDes = (value) => {
     if (value.index === 0) {
       return;
@@ -248,6 +251,7 @@ const CompanyProfile = () => {
     );
     handleClick();
   };
+
   const [open1, setOpen1] = React.useState(false);
   const [message, setmessage] = React.useState("");
 
@@ -270,8 +274,14 @@ const CompanyProfile = () => {
     },
   }));
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profileIndex: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const doneTour = () => {
@@ -323,6 +333,10 @@ const CompanyProfile = () => {
   ];
 
   const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profileIndex);
+  }, [company?.tours?.profileIndex]);
 
   return (
     <>

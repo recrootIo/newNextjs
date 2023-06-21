@@ -44,6 +44,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import dynamic from "next/dynamic";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 import styles from "../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 
 const normal = {
   fontFamily: "'Inter'",
@@ -143,7 +144,7 @@ function Pricing() {
   const user = Cookies.get();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const path = useSelector((state) => state.personal.pricing);
   const { push } = useRouter();
   useEffect(() => {
@@ -277,8 +278,14 @@ function Pricing() {
     (item) => item.paidPackage === "Free"
   );
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ pricing: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -306,9 +313,16 @@ function Pricing() {
     },
   ];
 
+  const comp = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.pricing);
+  }, [comp?.tours?.pricing]);
+
   return (
     <div>
       <EmployerNavbar />
+
       <Tour
         onRequestClose={closeTour}
         disableInteraction={true}
@@ -319,6 +333,7 @@ function Pricing() {
         rounded={8}
         accentColor={accentColor}
       />
+
       <Box
         sx={{
           backgroundImage: 'url("/EmployerDashboardBG.svg")',
@@ -1057,6 +1072,7 @@ function Pricing() {
           </form>
         </Box>
       </Dialog>
+
       <Dialog
         open={open2}
         onClose={handleClose2}

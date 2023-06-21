@@ -52,6 +52,7 @@ import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import Address from "@/components/Address";
 import styles from "../../../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 const style = {
@@ -98,7 +99,7 @@ const JobDetails = () => {
   const [role, setRole] = useState({ skill: "", id: uuidv4() });
   const [roles, setRoles] = useState(jobs && jobs?.requiredSkill);
   const [category, setCategory] = useState(false);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const handleChangesRole = (e) => {
     const news = titleDesc.filter((i) => i.rol.role === e.target.value);
@@ -242,8 +243,14 @@ const JobDetails = () => {
     dispatch(jobPackType(e.target.value));
   };
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobDetails: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -333,6 +340,12 @@ const JobDetails = () => {
       ),
     },
   ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobDetails);
+  }, [company?.tours?.jobDetails]);
 
   return (
     <>

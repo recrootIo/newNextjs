@@ -86,6 +86,7 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const bull = (
@@ -119,7 +120,7 @@ const CandiFullProfileView = () => {
   const [status, setstatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [interviewshow, setinterviewshow] = useState(false);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     if (appId !== undefined) {
@@ -272,8 +273,13 @@ const CandiFullProfileView = () => {
     }
   };
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ applicantView: false });
+  };
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -322,10 +328,15 @@ const CandiFullProfileView = () => {
     },
   ];
 
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.applicantView);
+  }, [company?.tours?.applicantView]);
+
   return (
     <>
       <EmployerNavbar />
-
       <Tour
         onRequestClose={closeTour}
         disableInteraction={true}

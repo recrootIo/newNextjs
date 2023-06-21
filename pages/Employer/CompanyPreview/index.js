@@ -40,10 +40,11 @@ import { isEmpty } from "lodash";
 import dynamic from "next/dynamic";
 import Employer from "..";
 import { useRouter } from "next/navigation";
+import companyservice from "@/redux/services/company.service";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 const CompanyPreview = () => {
-  //   const member = useSelector((state) => state.company.members);
+  const company = useSelector((state) => state?.company?.companyDetl);
   //   const [memberrole, setMemberrole] = React.useState(member);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -53,7 +54,7 @@ const CompanyPreview = () => {
   const { push } = useRouter();
 
   const final = useSelector((state) => state.company?.companyDetl);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const logo =
     isEmpty(final?.companyLogo?.logo) === true
       ? "companyLogo/logo-default.svg"
@@ -65,8 +66,14 @@ const CompanyPreview = () => {
     },
   }));
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profilePreview: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const gotoPreview = () => {
@@ -121,6 +128,11 @@ const CompanyPreview = () => {
   ];
 
   const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profilePreview);
+  }, [company?.tours?.profilePreview]);
+
   return (
     <>
       <Employer>

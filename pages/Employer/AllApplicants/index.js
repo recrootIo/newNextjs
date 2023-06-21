@@ -68,6 +68,7 @@ import { isEmpty } from "lodash";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const shadow =
@@ -101,7 +102,7 @@ const AllApplicants = () => {
   const [titles, setTitles] = useState([]);
   const [ids, setids] = useState([]);
   const [selectedStatus, setSelected] = useState([]);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const match = useSelector((state) => state.company.matchingAppl);
   const loading2 = useSelector((data) => data.company.loading);
   const company = useSelector(
@@ -597,8 +598,14 @@ const AllApplicants = () => {
     router.push("/Employer/AllApplicants", undefined, { shallow: true });
   }
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ allApplicant: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -668,6 +675,10 @@ const AllApplicants = () => {
       ),
     },
   ];
+  const comp = useSelector((state) => state?.company?.companyDetl);
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.allApplicant);
+  }, [comp?.tours?.allApplicant]);
 
   return (
     <>

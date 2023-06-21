@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -26,6 +26,7 @@ import styles from "./postNewJobPreview.module.css";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import moment from "moment";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"));
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -66,14 +67,20 @@ const JobPreview = (props) => {
   const descript = useSelector((state) => state.jobs.jobDescription);
   const level = useSelector((state) => state.jobs.jobRole);
   const showq = useSelector((state) => state.jobs.queshow);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const settingIndex = (index) => {
     props.Pages(index);
   };
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobPreview: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -122,6 +129,12 @@ const JobPreview = (props) => {
       ),
     },
   ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobPreview);
+  }, [company?.tours?.jobPreview]);
 
   return (
     <>

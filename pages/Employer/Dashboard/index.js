@@ -51,6 +51,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 import dynamic from "next/dynamic";
 import styles from "../../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 const DatagridClient = dynamic(
   () => import("../../../components/Employers/DatagridClient"),
   { ssr: false }
@@ -110,6 +111,7 @@ function a11yProps(index) {
 const EmpoyerDashboard = () => {
   let dispatch = useDispatch();
   const user = Cookies.get();
+
   useEffect(() => {
     dispatch(applyJobsdet())
       .then((res) => {
@@ -145,7 +147,6 @@ const EmpoyerDashboard = () => {
   // const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
   const [opena, setOpena] = React.useState(false);
-  const [isTourOpen, setTourOpen] = React.useState(true);
 
   const handleClosea = () => {
     setOpena(false);
@@ -185,6 +186,9 @@ const EmpoyerDashboard = () => {
   const totalCount = useSelector((state) => state?.company?.totalCount);
   const shortlistCount = useSelector((state) => state?.company?.shortlistCount);
   const rejectCount = useSelector((state) => state?.company?.rejectCount);
+
+  const [isTourOpen, setTourOpen] = React.useState(false);
+
   // const status = "active";
   // const count = names.filter((obj) => obj.status === status).length;
   const expired = [];
@@ -277,34 +281,6 @@ const EmpoyerDashboard = () => {
     action: nam.packageType,
   }));
 
-  // const rows3 = namesjSlots?.map((nam, index) => ({
-  //   id: nam._id,
-  //   _id: index + 1,
-  //   title: nam.jobRole,
-  //   jobtype: nam.jobType,
-  //   Location: nam.address,
-  //   company: nam.company,
-  //   packType:nam.packageType,
-  //   posteddate: moment(nam.createdAt).format("L"),
-  //   status: capitalizeFirstLetter(nam?.status),
-  //   deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
-  //   action: nam.packageType,
-  // }));
-  // const rows4 = namesjSlotsFeano?.map((nam, index) => ({
-  //   id: nam._id,
-  //   _id: index + 1,
-  //   title: nam.jobRole,
-  //   jobtype: nam.jobType,
-  //   Location: nam.address,
-  //   company: nam.company,
-  //   packType:nam.packageType,
-  //   posteddate: moment(nam.createdAt).format("L"),
-  //   status: capitalizeFirstLetter(nam?.status),
-  //   deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
-  //   action: nam.packageType,
-  // }));
-
-  // let navigate = useNavigate();
   const { push } = useRouter();
   const classes = useStyles();
 
@@ -722,6 +698,12 @@ const EmpoyerDashboard = () => {
 
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
+  };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ home: false });
   };
 
   const tourConfig = [
@@ -908,6 +890,10 @@ const EmpoyerDashboard = () => {
   ];
 
   const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.home);
+  }, [company?.tours?.home]);
 
   return (
     <>

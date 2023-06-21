@@ -11,6 +11,7 @@ import CheckoutForm from "@/components/Checkout/CheckoutForm";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import dynamic from "next/dynamic";
 import styles from "../../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const stripePromise = loadStripe(
@@ -47,17 +48,30 @@ function Subpayment() {
   const { count: countFin } = useSelector((state) => state.subscription);
   const { country: Coutry } = useSelector((state) => state.subscription);
   const company = useSelector((state) => state?.company?.companyDetl);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const payment = company?.payments?.slice(-1)[0];
   const payconfrm =
     payment?.status === "Completed" &&
     company.package.subscription_package === "Growth";
   const [clientSecret, setClientSecret] = useState("");
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ card: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
+
+  const comp = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.card);
+  }, [comp?.tours?.card]);
 
   const tourConfig = [
     {
@@ -173,6 +187,7 @@ function Subpayment() {
           Subscription
         </Typography>
       </Box>
+
       <Tour
         onRequestClose={closeTour}
         disableInteraction={true}
@@ -183,6 +198,7 @@ function Subpayment() {
         rounded={8}
         accentColor={accentColor}
       />
+
       <Card
         sx={{
           background: "#F2F8FD",

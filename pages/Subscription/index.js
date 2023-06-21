@@ -31,6 +31,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import dynamic from "next/dynamic";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 import styles from "../../components/Employers/style.module.css";
+import companyservice from "@/redux/services/company.service";
 
 const StyledButton = styled(Button)({
   color: "#ffff",
@@ -94,7 +95,7 @@ function SubscribePrice() {
   const { country: userCountry } = useSelector((state) => state.subscription);
   console.log(subscriptionpackage, subscriptionPrice, "pppp", userCountry);
   const [newTotal, setNewTotal] = useState(subscriptionPrice);
-  const [isTourOpen, setTourOpen] = React.useState(true);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const county = userCountry === "INR";
   const validatePromo = async () => {
     const data = {
@@ -196,8 +197,14 @@ function SubscribePrice() {
     }
   };
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ payment: false });
+  };
+
   const closeTour = () => {
     setTourOpen(false);
+    updateValue();
   };
 
   const accentColor = "#5cb7b7";
@@ -226,6 +233,14 @@ function SubscribePrice() {
       ),
     },
   ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.payment);
+  }, [company?.tours?.payment]);
+
+  console.log(company, "company");
 
   return (
     <div>
