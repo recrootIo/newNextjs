@@ -50,10 +50,6 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 
-// const DatagridClient = dynamic(
-//   () => import("/../../components/Employers/DataGridClient"),
-//   { ssr: false }
-// );
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -1226,13 +1222,16 @@ const EmpoyerDashboard = () => {
           </TabPanel>
           {/* <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
-              <DatagridClient
-                value={value}
-                index={1}
-                getRowId={handleGetRowId}
-                rows={rows2}
-                columns={columns}
-              />
+                <TabPanel id="simple-tab-0" value={value} index={1}>
+                <div style={{ height: "550px", width: "100%" }}>
+                  <DataGrid
+                    sx={{ display: "flex", justifyContent: "center" }}
+                    getRowId={handleGetRowId}
+                    rows={rows2}
+                    columns={columns}
+                  />
+                </div>
+              </TabPanel>
             ) : (
               <Box
                 sx={{
