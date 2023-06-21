@@ -1246,7 +1246,7 @@ a {
   justify-content: center;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 900px) {
   .recentCard {
     width: 100%;
   }
@@ -1311,7 +1311,7 @@ a {
   }
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 901px) {
   .viewmoreContainer {
     display: none;
   }
@@ -1871,6 +1871,7 @@ a {
   }
 }
 
+
 @media (max-width: 470px) {
   .fc .fc-toolbar.fc-header-toolbar {
     display: block;
@@ -1881,3 +1882,4 @@ a {
     display: block;
   }
 }
+
