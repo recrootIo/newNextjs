@@ -8,7 +8,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { styles } from '../../completeSignupStyle';
+import { styles } from '../../../../components/CompleteProfile/completeSignupStyle';
 import { setUserFromGoogle } from '@/redux/slices/auth';
 import Cookies from 'js-cookie';
 
