@@ -1825,9 +1825,15 @@ a {
   height: 70px;
   background: #4fa9ff;
   border-radius: 50px;
-  -webkit-mask: radial-gradient(circle 31px at 50% calc(100% + 13px),#000 95%,#0000) top 4px left 50%,
-    radial-gradient(circle 31px,#000 95%,#0000) center,
-    radial-gradient(circle 31px at 50% -13px,#000 95%,#0000) bottom 4px left 50%,
+  -webkit-mask: radial-gradient(
+        circle 31px at 50% calc(100% + 13px),
+        #000 95%,
+        #0000
+      )
+      top 4px left 50%,
+    radial-gradient(circle 31px, #000 95%, #0000) center,
+    radial-gradient(circle 31px at 50% -13px, #000 95%, #0000) bottom 4px left
+      50%,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1837,30 +1843,41 @@ a {
 
 @keyframes cu10 {
   0% {
-    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+    -webkit-mask-size: 0 18px, 0 18px, 0 18px, auto;
   }
 
   16.67% {
-    -webkit-mask-size: 100% 18px,0    18px,0    18px,auto
+    -webkit-mask-size: 100% 18px, 0 18px, 0 18px, auto;
   }
 
   33.33% {
-    -webkit-mask-size: 100% 18px,100% 18px,0    18px,auto
+    -webkit-mask-size: 100% 18px, 100% 18px, 0 18px, auto;
   }
 
   50% {
-    -webkit-mask-size: 100% 18px,100% 18px,100% 18px,auto
+    -webkit-mask-size: 100% 18px, 100% 18px, 100% 18px, auto;
   }
 
   66.67% {
-    -webkit-mask-size: 0    18px,100% 18px,100% 18px,auto
+    -webkit-mask-size: 0 18px, 100% 18px, 100% 18px, auto;
   }
 
   83.33% {
-    -webkit-mask-size: 0    18px,0    18px,100% 18px,auto
+    -webkit-mask-size: 0 18px, 0 18px, 100% 18px, auto;
   }
 
   100% {
-    -webkit-mask-size: 0    18px,0    18px,0    18px,auto
+    -webkit-mask-size: 0 18px, 0 18px, 0 18px, auto;
+  }
+}
+
+@media (max-width: 470px) {
+  .fc .fc-toolbar.fc-header-toolbar {
+    display: block;
+    text-align: center;
+  }
+
+  .fc-header-toolbar .fc-toolbar-chunk {
+    display: block;
   }
 }

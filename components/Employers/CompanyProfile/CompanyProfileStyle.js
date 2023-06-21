@@ -138,7 +138,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    width: "100%%",
+    width: "100%",
     mt: "20px",
     // ml: "40px",
   },

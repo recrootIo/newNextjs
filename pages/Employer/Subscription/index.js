@@ -363,7 +363,7 @@ const Subscriptions = () => {
   return (
     <>
       <Employer>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={7}>
             <Stack spacing={2} sx={{ height: "100%" }}>
               <Card
@@ -371,11 +371,10 @@ const Subscriptions = () => {
                   width: "100%",
                   borderRadius: "10px",
                   backgroundImage:
-                    'url("/Subscription card with white top sectionBG.svg")',
+                    'url("/Subscription-card-with-white-top-sectionBG.svg")',
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
+                  backgroundSize: "100% 100%",
                   backgroundColor: "#fff0 !important",
-                  boxShadow: "#fff0 !important",
                 }}
               >
                 <Box
@@ -527,7 +526,7 @@ const Subscriptions = () => {
                   width: "100%",
                   borderRadius: "10px",
                   p: "15px",
-                  backgroundImage: 'url("/Manage Payment card.svg")',
+                  backgroundImage: 'url("/Manage-Payment-card.svg")',
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                 }}
