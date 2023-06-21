@@ -203,8 +203,8 @@ const CandidatePage = () => {
                         className={styles.whyCandidatesChooseUsTypoContent}
                       >
                         Recroot enhances the chances of being noticed and
-                        considered of candidates' profiles for job opportunities
-                        exposing them to potential employers.
+                        considered of candidates&apos; profiles for job
+                        opportunities exposing them to potential employers.
                       </CustomTypography>
                     </Box>
                   </Box>
@@ -922,8 +922,8 @@ const CandidatePage = () => {
                         mt: "20px",
                       }}
                     >
-                      AustraliaThe Do's and Don'ts of Recruiting Passive
-                      Candidates
+                      AustraliaThe Do&apos;s and Don&apos;ts of Recruiting
+                      Passive Candidates
                     </CustomTypography>
                     <CustomTypography
                       sx={{
@@ -1011,8 +1011,8 @@ const CandidatePage = () => {
                         mt: "20px",
                       }}
                     >
-                      AustraliaThe Do's and Don'ts of Recruiting Passive
-                      Candidates
+                      AustraliaThe Do&apos;s and Don&apos;ts of Recruiting
+                      Passive Candidates
                     </CustomTypography>
                     <CustomTypography
                       sx={{
@@ -1100,8 +1100,8 @@ const CandidatePage = () => {
                         mt: "20px",
                       }}
                     >
-                      AustraliaThe Do's and Don'ts of Recruiting Passive
-                      Candidates
+                      AustraliaThe Do&apos;s and Don&apos;ts of Recruiting
+                      Passive Candidates
                     </CustomTypography>
                     <CustomTypography
                       sx={{
