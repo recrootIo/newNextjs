@@ -39,6 +39,7 @@ import { useRouter } from "next/router";
 import { logout } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
+import styles from "./candiDashboard.module.css";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -208,8 +209,13 @@ const Index = () => {
     }
 
     return (
-      <div ref={containerRef} className="scrollbarm">
-        <Stack id="style-2" sx={{ gap: "30px" }}>
+      <div
+        ref={containerRef}
+        className={styles.scrollbar}
+        id="style-5"
+        style={{ height: "100%", paddingRight: "5px" }}
+      >
+        <Stack sx={{ gap: "30px" }}>
           <Profile handle={handleTop()} {...data} />
           <Certifications />
           <CandidateJobs {...data} />
