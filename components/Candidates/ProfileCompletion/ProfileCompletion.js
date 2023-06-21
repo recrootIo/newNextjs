@@ -3,12 +3,12 @@ import {
   retrievePersonal,
   setSection,
 } from "@/redux/slices/personal";
-import { NEUTRAL } from "@/theme/colors";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { Box, Button, Container, Grid, Stack, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const StyledButton = styled("button")({
   minHeight: "43px",
@@ -21,6 +21,7 @@ const StyledButton = styled("button")({
 
 const ProfileCompletion = () => {
   const dispatch = useDispatch();
+  const userType = Cookies.get("userType");
   const router = useRouter();
   const percent = useSelector((data) => data.personal.percentage);
   const users = useSelector((state) => state.personal?.data?.resume);
@@ -84,15 +85,6 @@ const ProfileCompletion = () => {
     essen === percent?.personalInfo?.essent?.length
       ? percent?.personalInfo?.essent?.percent
       : 0;
-  const finalPercent =
-    skill +
-    Experience +
-    Education +
-    Certificate +
-    // Social +
-    persanRank +
-    countries +
-    essential;
 
   const getDetailCards = () => {
     let newDetailCard = [];
@@ -171,7 +163,7 @@ const ProfileCompletion = () => {
     dispatch(retrievePersonal());
   }, [dispatch]);
 
-  if (personal?.profilePercentage < 70)
+  if (personal?.profilePercentage < 70 && userType === "Candidate")
     return (
       <Container
         sx={{
