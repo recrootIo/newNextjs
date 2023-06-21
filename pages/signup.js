@@ -271,11 +271,7 @@ function Signup() {
           justifyContent: "center",
         }}
       >
-        <Grid
-          container
-          spacing={2}
-          // sx={{ gap: { md: "0", sm: "20px", xs: "20px" } }}
-        >
+        <Grid container spacing={2}>
           <Grid
             item
             md={6}
