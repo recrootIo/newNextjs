@@ -85,6 +85,7 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
+import { useRef } from "react";
 
 const bull = (
   <Box
@@ -764,16 +765,20 @@ const CandiFullProfileView = () => {
                             >
                               About
                             </CustomTypography>
-                            <CustomTypography
-                              className={styles.FullProfileSectionTypo}
+                            <Box
+                              className={styles.scrollbar}
+                              id="style-5"
+                              sx={{
+                                height: candidate?.about ? "100px" : "0px",
+                                overflow: "auto",
+                              }}
                             >
-                              :
-                            </CustomTypography>
-                            <CustomTypography
-                              className={styles.FullProfileSectionData}
-                            >
-                              {candidate?.about}
-                            </CustomTypography>
+                              <CustomTypography
+                                className={styles.FullProfileSectionData}
+                              >
+                                {candidate?.about}
+                              </CustomTypography>
+                            </Box>
                           </Box>
                           <Box
                             className={styles.FullProfilePersonalDetailsTypoBox}

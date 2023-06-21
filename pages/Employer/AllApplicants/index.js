@@ -577,6 +577,7 @@ const AllApplicants = () => {
     }
   };
   const { aid } = router.query;
+  console.log(router.query, "aid");
   useEffect(() => {
     if (aid) {
       scrollToDiv(aid);
