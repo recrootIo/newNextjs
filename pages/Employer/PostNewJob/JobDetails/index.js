@@ -38,12 +38,22 @@ import ScreeningQuestions from "@/components/Employers/ScreeningQuestions/Screen
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import Image from "next/image";
 import axios from "axios";
-import { descSet, errorJobs, jobPackType, quesSend, roleSet, skillSet, titleSet } from "@/redux/slices/job";
+import {
+  descSet,
+  errorJobs,
+  jobPackType,
+  quesSend,
+  roleSet,
+  skillSet,
+  titleSet,
+} from "@/redux/slices/job";
 import { v4 as uuidv4 } from "uuid";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import Address from "@/components/Address";
-uuidv4()
+import styles from "../../../../components/Employers/style.module.css";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+uuidv4();
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -64,17 +74,17 @@ const style = {
 };
 
 const JobDetails = () => {
-  const user = Cookies.get()
+  const user = Cookies.get();
 
   let dispatch = useDispatch();
-  
+
   const jobsall = useSelector((state) => state.jobs);
   const jobs = useSelector((state) => state.jobs?.details);
   const companyDet = useSelector((state) => state.company?.companyDetl);
   const descript = useSelector((state) => state.jobs?.jobDescription);
   const level = useSelector((state) => state.jobs?.jobRole);
   const title = useSelector((state) => state.jobs?.jobTitle);
-  const pack = useSelector((state) => state.jobs?.packageType);  
+  const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
     axios
       .get("https://preprod.recroot.au/api/getTypesJobs", {
@@ -88,7 +98,8 @@ const JobDetails = () => {
   const [role, setRole] = useState({ skill: "", id: uuidv4() });
   const [roles, setRoles] = useState(jobs && jobs?.requiredSkill);
   const [category, setCategory] = useState(false);
-  
+  const [isTourOpen, setTourOpen] = React.useState(true);
+
   const handleChangesRole = (e) => {
     const news = titleDesc.filter((i) => i.rol.role === e.target.value);
     dispatch(roleSet(e.target.value));
@@ -177,10 +188,11 @@ const JobDetails = () => {
   const [load, setLoad] = React.useState(false);
   const [deletedSkills, setdeletedSkills] = useState([]);
   const loading = open && arrskills.length === 0;
-  const freePack = companyDet.package?.subscription_package === "Free"
-  const freeCount = freePack === true ? (cjobs !== undefined ? (3 - cjobs?.length) : 0 ): 0;
-  const proCOunt = companyDet?.jobCounts?.proCount 
-  const preCOunt = companyDet?.jobCounts?.premiumCount 
+  const freePack = companyDet.package?.subscription_package === "Free";
+  const freeCount =
+    freePack === true ? (cjobs !== undefined ? 3 - cjobs?.length : 0) : 0;
+  const proCOunt = companyDet?.jobCounts?.proCount;
+  const preCOunt = companyDet?.jobCounts?.premiumCount;
   const inputChanged = (e) => {
     if (e.target.value === "") {
       setArrskills([]);
@@ -209,20 +221,6 @@ const JobDetails = () => {
       .catch((error) => console.warn("error", error));
   };
 
-  // const oneskill = skills.filter((w) => w.length !== 1);
-
-  // function searchKeywords(text) {
-  //   let keys = oneskill;
-  //   let re = new RegExp("(" + keys.join("|") + ")", "g");
-  //   return text?.match(re);
-  // }
-
-  // function removeDuplicates(arr) {
-  //   return [...new Set(arr)];
-  // }
-
-
-
   const handleKey = (e) => {
     setRole({ skill: e.target.value, id: uuidv4() });
     if (e.keyCode === 13) {
@@ -239,256 +237,391 @@ const JobDetails = () => {
     setRoles(values);
     dispatch(skillSet(values));
   };
- const handlePack = (e) =>{
-  dispatch(jobPackType(e.target.value))
- }
+
+  const handlePack = (e) => {
+    dispatch(jobPackType(e.target.value));
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".plan",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select the pricing plan in which you are posting the job
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".title",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Fill in the job details with job title, job details, skills, and
+            location
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".questions",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add screening questions with preferred answers for your job post if
+            necessary
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add screening questions with preferred answers for your job post if
+            necessary
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
 
   return (
     <>
-                <CardContent>
-                  <Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        mt: "30px",
-                        mb: "100px",
-                      }}
-                    >
-                      <Image
-                        src="/post-newjob-firststep-img.png"
-                        alt=""
-                        width="320"
-                        height="20"
-                      />
-                    </Box>
-                    <CustomTypography
-                      sx={{
-                        color: "#034275",
-                        fontFamily: BOLD,
-                        fontSize: "28px",
-                        mb: "25px",
-                      }}
-                    >
-                      Job Details
-                    </CustomTypography>
-                    <Divider
-                      sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }}
-                    />
-                         <Box sx={{ width: "100%" ,p:'0 0 20px 0' }}>
-            <Typography variant="p" >
-             Choose a plan
-            </Typography>
+      <CardContent>
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              mt: "30px",
+              mb: "100px",
+            }}
+          >
+            <Image
+              src="/post-newjob-firststep-img.png"
+              alt=""
+              width="320"
+              height="20"
+            />
+          </Box>
+          <Tour
+            onRequestClose={closeTour}
+            disableInteraction={true}
+            steps={tourConfig}
+            isOpen={isTourOpen}
+            maskClassName={styles.mask}
+            className={styles.helper}
+            rounded={8}
+            accentColor={accentColor}
+          />
+          <CustomTypography
+            sx={{
+              color: "#034275",
+              fontFamily: BOLD,
+              fontSize: "28px",
+              mb: "25px",
+            }}
+          >
+            Job Details
+          </CustomTypography>
+          <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
+          <Box sx={{ width: "100%", p: "0 0 20px 0" }} className="plan">
+            <Typography variant="p">Choose a plan</Typography>
             <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Choose a plan</InputLabel>
+              <InputLabel id="demo-simple-select-label">
+                Choose a plan
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Choose a plan"
                 // sx={styles.naminput2}
-                value={pack || ''}
+                value={pack || ""}
                 name="careerlevel"
                 onChange={(e) => {
                   handlePack(e);
                 }}
               >
-               
-                  <MenuItem  value="free"disabled={freeCount === 0 } >
-                    <Typography textAlign="center">Free Job Post  - Jobs Left : {freeCount}</Typography>
+                <MenuItem value="free" disabled={freeCount === 0}>
+                  <Typography textAlign="center">
+                    Free Job Post - Jobs Left : {freeCount}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  value="pro"
+                  disabled={proCOunt === 0 || proCOunt === undefined}
+                >
+                  <Typography textAlign="center">
+                    Pro Job Post - Jobs Left : {proCOunt}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  value="premium"
+                  disabled={preCOunt === 0 || preCOunt === undefined}
+                >
+                  <Typography textAlign="center">
+                    Premium Job Post - Jobs Left : {preCOunt}
+                  </Typography>
+                </MenuItem>
+                <MenuItem
+                  value="jSlot"
+                  disabled={
+                    !(
+                      companyDet.package?.paymentStatus === "Completed" &&
+                      companyDet.package?.subscription_package === "Growth"
+                    )
+                  }
+                >
+                  <Typography textAlign="center">
+                    Growth Plan - Job Slot
+                  </Typography>
+                </MenuItem>
+
+                {companyDet?.jobSlotGold === true ? (
+                  <MenuItem
+                    value="jSlot"
+                    disabled={
+                      !(
+                        companyDet.package?.paymentStatus === "Completed" &&
+                        companyDet.package?.subscription_package === "Gold"
+                      )
+                    }
+                  >
+                    <Typography textAlign="center">
+                      Gold Plan - Job Slot
+                    </Typography>
                   </MenuItem>
-                  <MenuItem  value="pro"  disabled={proCOunt === 0 || proCOunt === undefined}  >
-                    <Typography textAlign="center">Pro Job Post  - Jobs Left : {proCOunt}</Typography>
-                  </MenuItem>
-                  <MenuItem  value="premium" disabled={preCOunt === 0 || preCOunt === undefined} >
-                    <Typography textAlign="center">Premium Job Post  - Jobs Left : {preCOunt}</Typography>
-                  </MenuItem>
-               <MenuItem value="jSlot"  disabled={! ( companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Growth') }  >
-                    <Typography textAlign="center">Growth Plan  - Job Slot</Typography>
-                  </MenuItem> 
-             
-          {companyDet?.jobSlotGold === true ? 
-               <MenuItem  value="jSlot" disabled={! ( companyDet.package?.paymentStatus === 'Completed' && companyDet.package?.subscription_package === 'Gold')} >
-                    <Typography textAlign="center">Gold Plan  - Job Slot</Typography>
-                  </MenuItem> : '' }
+                ) : (
+                  ""
+                )}
               </Select>
-              </FormControl>
+            </FormControl>
           </Box>
-                    <Stack spacing={3}>
-                      <Autocomplete
-                        freeSolo
-                        id="free-solo-2-demo"
-                        disableClearable
-                        fullWidth
-                        name="jobRole"
-                        value={level}
-                        onBlur={(value) => {
-                          handleChangesRole(value);
-                        }}
-                        options={titleDesc.map((option) => option.rol.role)}
-                        renderInput={(params) => (
-                          <TextField
-                            sx={{ ...style.txtinput, bgcolor: "white" }}
-                            {...params}
-                            label="Job Title"
-                            error={errors?.jobRole ? true : false}
-                            helperText={errors?.jobRole}
-                            name="jobRole"
-                            InputProps={{
-                              ...params.InputProps,
-                              type: "search",
-                            }}
-                            color="warning"
-                            //sx={{ color: "" }}
-                          />
-                        )}
-                      />
-                                {category && (
-            <Box sx={{ width: "100%" }}>
+          <Stack spacing={3}>
+            <Autocomplete
+              freeSolo
+              id="free-solo-2-demo"
+              disableClearable
+              fullWidth
+              name="jobRole"
+              value={level}
+              onBlur={(value) => {
+                handleChangesRole(value);
+              }}
+              options={titleDesc.map((option) => option.rol.role)}
+              renderInput={(params) => (
+                <TextField
+                  sx={{ ...style.txtinput, bgcolor: "white" }}
+                  {...params}
+                  label="Job Title"
+                  error={errors?.jobRole ? true : false}
+                  helperText={errors?.jobRole}
+                  name="jobRole"
+                  InputProps={{
+                    ...params.InputProps,
+                    type: "search",
+                  }}
+                  color="warning"
+                  //sx={{ color: "" }}
+                />
+              )}
+              className="title"
+            />
+            {category && (
+              <Box sx={{ width: "100%" }}>
+                <Autocomplete
+                  fullWidth
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  value={title}
+                  onInputChange={(event, value) => {
+                    handleChangesTitle(value);
+                  }}
+                  name="jobTitle"
+                  options={type.map((option) => option.jobNam)}
+                  renderInput={(params) => (
+                    <TextField
+                      sx={{ textTransform: "capitalize" }}
+                      error={errors?.jobTitle ? true : false}
+                      helperText={errors?.jobTitle}
+                      value="hhhi"
+                      name="jobTitle"
+                      {...params}
+                      label="Job Category"
+                      placeholder="Please Provide Category"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: "search",
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+            )}
+            <Box
+              sx={{
+                width: "100%",
+                height: "320px",
+              }}
+            >
+              <EditorToolbar sx={{ bgcolor: "#F2F8FD" }} />
+              <ReactQuill
+                placeholder="Add Description"
+                value={descript}
+                onChange={handleChangeDesc}
+                // onBlur={handleChangeDesc}
+                modules={modules}
+                formats={formats}
+                className="textareaQuestion"
+                style={{ height: "250px" }}
+              />
+            </Box>
+            <Stack direction="row" spacing={2}>
               <Autocomplete
-                fullWidth
                 freeSolo
                 id="free-solo-2-demo"
-                disableClearable
-                value={title}
-                onInputChange={(event, value) => {
-                  handleChangesTitle(value);
+                disableClearable={false}
+                name="skills"
+                sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: "80%",
                 }}
-                name="jobTitle"
-                options={type.map((option) => option.jobNam)}
+                value={role.skill}
+                onBlurCapture={(e) =>
+                  setRole({ skill: e.target.value, id: uuidv4() })
+                }
+                open={open}
+                onOpen={() => {
+                  setOpen(true);
+                }}
+                onClose={() => {
+                  setOpen(false);
+                }}
+                onBlur={addSkil}
+                onKeyUp={(e) => {
+                  handleKey(e);
+                }}
+                options={arrskills.map((option) => option)}
+                loading={loading}
                 renderInput={(params) => (
                   <TextField
-                    sx={{ textTransform: "capitalize" }}
-                    error={errors?.jobTitle ? true : false}
-                    helperText={errors?.jobTitle}
-                    value="hhhi"
-                    name="jobTitle"
+                    sx={style.txtinput}
                     {...params}
-                    label="Job Category"
-                    placeholder="Please Provide Category"
+                    label="Skills"
+                    onChange={(e) => {
+                      inputChanged(e);
+                    }}
+                    name="jobRole"
                     InputProps={{
                       ...params.InputProps,
                       type: "search",
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading && load ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                        </React.Fragment>
+                      ),
                     }}
                   />
                 )}
               />
+              <Button
+                sx={{
+                  width: "20%",
+                  bgcolor: "white !important",
+                  color: "#01313F",
+                  textTransform: "capitalize",
+                }}
+                //sx={styles.roleblue2}
+                onClick={() => {
+                  addSkil();
+                }}
+                startIcon={<AddIcon />}
+              >
+                Add Skills
+              </Button>
+            </Stack>
+            {isEmpty(!jobs?.requiredSkill) && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              >
+                {jobs?.requiredSkill &&
+                  jobs?.requiredSkill.map((role, index) => (
+                    <Box key={index}>
+                      <Chip
+                        label={role?.skill}
+                        onDelete={() => {
+                          handleRemove(role?.id);
+                        }}
+                        sx={{ bgcolor: "#D4F0FC" }}
+                      />
+                    </Box>
+                  ))}
+              </Box>
+            )}
+            <Address />
+            <Box className="questions">
+              <ScreeningQuestions />
             </Box>
-          )}
-                      <Box
-                        sx={{
-                          width: "100%",
-                          height: "320px",
-                        }}
-                      >
-                        <EditorToolbar sx={{ bgcolor: "#F2F8FD" }} />
-                        <ReactQuill
-                        placeholder="Add Description"
-                        value={descript}
-                        onChange={handleChangeDesc}
-                        // onBlur={handleChangeDesc}
-                        modules={modules}
-                        formats={formats}
-                        className="textareaQuestion"
-                          style={{ height: "250px" }}
-                        />
-                      </Box>
-                      <Stack direction="row" spacing={2}>
-                        <Autocomplete
-                          freeSolo
-                          id="free-solo-2-demo"
-                          disableClearable={false}
-                          name="skills"
-                          sx={{
-                            ...style.txtinput,
-                            bgcolor: "white",
-                            width: "80%",
-                          }}
-                          value={role.skill}
-                          onBlurCapture={(e) =>
-                            setRole({ skill: e.target.value, id: uuidv4() })
-                          }
-                          open={open}
-                          onOpen={() => {
-                            setOpen(true);
-                          }}
-                          onClose={() => {
-                            setOpen(false);
-                          }}
-                          onBlur={addSkil}
-                          onKeyUp={(e) => {
-                            handleKey(e);
-                          }}
-                          options={arrskills.map((option) => option)}
-                          loading={loading}
-                          renderInput={(params) => (
-                            <TextField
-                              sx={style.txtinput}
-                              {...params}
-                              label="Skills"
-                              onChange={(e) => {
-                                inputChanged(e);
-                              }}
-                              name="jobRole"
-                              InputProps={{
-                                ...params.InputProps,
-                                type: "search",
-                                endAdornment: (
-                                  <React.Fragment>
-                                    {loading && load ? (
-                                  <CircularProgress color="inherit" size={20} />
-                                ) : null}
-                                  </React.Fragment>
-                                ),
-                              }}
-                            />
-                          )}
-                        />
-                        <Button
-                          sx={{
-                            width: "20%",
-                            bgcolor: "white !important",
-                            color: "#01313F",
-                            textTransform: "capitalize",
-                          }}
-                          //sx={styles.roleblue2}
-                          onClick={() => {
-                            addSkil();
-                          }}
-                          startIcon={<AddIcon />}
-                        >
-                          Add Skills
-                        </Button>
-                      </Stack>
-                      {isEmpty(!jobs?.requiredSkill) && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: "10px",
-                        }}
-                      >
-                        {jobs?.requiredSkill &&
-                            jobs?.requiredSkill.map((role, index) => (
-                        <Box
-                        key={index}
-                        >
-                          <Chip
-                            label={role?.skill}
-                            onDelete={() => {
-                              handleRemove(role?.id);
-                            }}
-                            sx={{ bgcolor: "#D4F0FC" }}
-                          />
-                        </Box>
-                        ))} 
-                      </Box>
-                       )} 
-                     <Address />
-                      <ScreeningQuestions />
-                    </Stack>
-              
-                  </Box>
-                </CardContent>
+          </Stack>
+        </Box>
+      </CardContent>
     </>
   );
 };

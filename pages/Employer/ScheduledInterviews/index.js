@@ -45,6 +45,9 @@ import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
 import Employer from "..";
 import { getJobsfil } from "@/redux/slices/applyJobs";
+import dynamic from "next/dynamic";
+import styles from "../../../components/Employers/style.module.css";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
   passinput: {
@@ -76,6 +79,7 @@ const ScheduledInterviews = () => {
   const [names, setNames] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
+  const [isTourOpen, setTourOpen] = React.useState(true);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -102,15 +106,15 @@ const ScheduledInterviews = () => {
     dispatch(getJobsfil());
   }, [dispatch]);
   const inters = useSelector((state) => state?.sinterview?.schedules);
-  const [sear, setsear] = useState([])
-  const [seared, setseared] = useState([])
+  const [sear, setsear] = useState([]);
+  const [seared, setseared] = useState([]);
   useEffect(() => {
-  if (inters) {
-setsear(inters)
-setseared(inters)
-  }
-  }, [inters])
-  
+    if (inters) {
+      setsear(inters);
+      setseared(inters);
+    }
+  }, [inters]);
+
   const [arry, setArry] = useState([]);
   useEffect(() => {
     var arrras = [];
@@ -129,7 +133,9 @@ setseared(inters)
   sear.map((set) => {
     schedules.push({
       title: `${set?.jobDetail?.jobRole}(${set.subject})`,
-      start: `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`,
+      start: `${set?.day.split("T")[0]}T${
+        set?.time.split("T")[1].split("+")[0]
+      }`,
       end: moment(
         `${set?.day.split("T")[0]}T${set?.time.split("T")[1].split("+")[0]}`
       )
@@ -150,9 +156,8 @@ setseared(inters)
       target: { value },
     } = event;
     setNames(value);
-    setsear(seared.filter((it)=>it.jobId === value))
+    setsear(seared.filter((it) => it.jobId === value));
   };
-
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -160,6 +165,36 @@ setseared(inters)
 
   const mark = [];
   sear.map((dat) => mark.push(moment(dat.day).format("DD-MM-YYYY")));
+
+  const closeTour = () => {
+    setTourOpen(false);
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".interviewPage",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            This section allows you to update the applicants&apos; status and
+            schedule interviews with them
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>DONE</Button>
+        </Stack>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -171,7 +206,18 @@ setseared(inters)
             mt: "40px",
             p: "25px 25px 80px 25px",
           }}
+          className="interviewPage"
         >
+          <Tour
+            onRequestClose={closeTour}
+            disableInteraction={true}
+            steps={tourConfig}
+            isOpen={isTourOpen}
+            maskClassName={styles.mask}
+            className={styles.helper}
+            rounded={8}
+            accentColor={accentColor}
+          />
           <CardContent>
             <Box>
               <Grid container spacing={2}>
@@ -203,7 +249,7 @@ setseared(inters)
                         horizontal: "left",
                       }}
                     >
-                      <FormControl sx={{ m: 1, width: '500px'}}>
+                      <FormControl sx={{ m: 1, width: "500px" }}>
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
                         </InputLabel>
@@ -217,13 +263,14 @@ setseared(inters)
                           MenuProps={MenuProps}
                           sx={{ width: "500px" }}
                         >
-                  {jobs.map((variant) => ( 
-                          <MenuItem
-                                  key={variant._id}
-                                  value={variant._id}
-                                >
-                                  <ListItemText primary={`${variant.jobRole} (${moment(variant.createdAt).format('LL')})`} />
-                                </MenuItem>
+                          {jobs.map((variant) => (
+                            <MenuItem key={variant._id} value={variant._id}>
+                              <ListItemText
+                                primary={`${variant.jobRole} (${moment(
+                                  variant.createdAt
+                                ).format("LL")})`}
+                              />
+                            </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
@@ -274,7 +321,10 @@ setseared(inters)
                     </Button>
                   </Box> */}
                   <Divider sx={{ mt: "10px", color: "#CEF4F6" }} />
-                  <InterviewCalendar date= {moment(date).format()} schedules={schedules} />
+                  <InterviewCalendar
+                    date={moment(date).format()}
+                    schedules={schedules}
+                  />
                 </Grid>
               </Grid>
             </Box>

@@ -27,6 +27,11 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import { changeValue, updatePromotion } from "@/redux/slices/Subscription";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import dynamic from "next/dynamic";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+import styles from "../../components/Employers/style.module.css";
+
 const StyledButton = styled(Button)({
   color: "#ffff",
   padding: "10px",
@@ -59,10 +64,11 @@ const currencyConvert = (value, currency = "US Dollar", fractions = 0) => {
 
   return formatter.format(value);
 };
+
 function SubscribePrice() {
   const dispatch = useDispatch();
   const User = Cookies.get();
-  const  {push} = useRouter()
+  const { push } = useRouter();
   const [promo, setPromo] = useState(null);
   const [isValid, setIsValid] = useState(false);
   // const [discount, setDiscount] = useState(0);
@@ -83,10 +89,12 @@ function SubscribePrice() {
   const { companyId: subscriptioncompanyId } = useSelector(
     (state) => state.subscription
   );
+
   const value = useSelector((state) => state.subscription);
   const { country: userCountry } = useSelector((state) => state.subscription);
   console.log(subscriptionpackage, subscriptionPrice, "pppp", userCountry);
   const [newTotal, setNewTotal] = useState(subscriptionPrice);
+  const [isTourOpen, setTourOpen] = React.useState(true);
   const county = userCountry === "INR";
   const validatePromo = async () => {
     const data = {
@@ -128,10 +136,12 @@ function SubscribePrice() {
 
   const navigateToPaymentGateway = () => {
     if (value?.count === 0) {
-      dispatch(openAlert({
-        type:ERROR,
-        message:'Job Count Needs To Be Greater Than Zero'
-      }))
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "Job Count Needs To Be Greater Than Zero",
+        })
+      );
       return;
     }
     dispatch(updatePromotion({ price: subscriptionPrice }));
@@ -185,9 +195,51 @@ function SubscribePrice() {
       }
     }
   };
+
+  const closeTour = () => {
+    setTourOpen(false);
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".paymentCard",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select the pricing plan that match with your hiring needs
+          </CustomTypography>
+          <Button onClick={() => closeTour()} variant="outline">
+            Done
+          </Button>
+        </Stack>
+      ),
+    },
+  ];
+
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
       <Box
         sx={{
           backgroundImage: 'url("/EmployerDashboardBG.svg")',
@@ -228,7 +280,7 @@ function SubscribePrice() {
                 flexDirection: "column",
                 justifyContent: "space-between",
                 alignItems: "center",
-                p:'10px'
+                p: "10px",
               }}
             >
               <Box
@@ -237,15 +289,27 @@ function SubscribePrice() {
                   p: "15px",
                   borderRadius: "10px",
                   display: "flex",
-                  gap:'60px'
+                  gap: "60px",
                 }}
               >
                 <Box
                   variant="outlined"
                   className="goldbutton1"
-                  sx={{ background: "#4fa9ff", borderRadius: "10px" ,display:'flex',p:'0 40px 0 40px'}}
+                  sx={{
+                    background: "#4fa9ff",
+                    borderRadius: "10px",
+                    display: "flex",
+                    p: "0 40px 0 40px",
+                  }}
                 >
-                  <Box sx={{ display: "flex",alignItems: 'center',justifyContent: 'space-around' ,gap:'5px'}}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      gap: "5px",
+                    }}
+                  >
                     <img src="/thumbup.png" alt="vector" />
                     <Typography
                       sx={{
@@ -261,7 +325,13 @@ function SubscribePrice() {
                     </Typography>
                   </Box>
                 </Box>
-                <Box sx={{textAlign:'center',display:'flex',flexDirection:'column',}}>
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
                   <Typography
                     sx={{
                       fontFamily: "'Inter'",
@@ -278,18 +348,19 @@ function SubscribePrice() {
                         ? currencyConvert(subscriptionPrice, "Indian Rupee", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)
                       : currencyConvert(subscriptionPrice, "US Dollar", 2)}{" "}
-                    {" "}
                   </Typography>
-                  <Typography  sx={{
+                  <Typography
+                    sx={{
                       fontFamily: "'Inter'",
                       fontStyle: "normal",
                       fontWeight: 600,
                       fontSize: "30px",
                       lineHeight: "145%",
                       color: "#fff",
-                    }}>
+                    }}
+                  >
                     {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium" 
+                    subscriptionpackage === "Premium"
                       ? "(monthly)"
                       : subscriptionTimePackage}
                   </Typography>
@@ -318,7 +389,10 @@ function SubscribePrice() {
                   )}
                 </ul>
               </div>
-              <StyledButton    onClick={() => navigateToPricing()}> Change Plan</StyledButton>
+              <StyledButton onClick={() => navigateToPricing()}>
+                {" "}
+                Change Plan
+              </StyledButton>
             </Grid>
             <Grid item xs={4} sx={{ display: "flex", padding: "10px" }}>
               <Grid container spacing={2}>
@@ -490,6 +564,7 @@ function SubscribePrice() {
                   </Typography>
                 </Grid>
                 <Grid
+                  className="paymentCard"
                   item
                   md={12}
                   sx={{

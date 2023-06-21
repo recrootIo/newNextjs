@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
-import { Box, Card, Typography, styled ,Button } from "@mui/material";
+import { Box, Card, Typography, styled, Button, Stack } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,106 +8,148 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import CheckoutForm from "@/components/Checkout/CheckoutForm";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import dynamic from "next/dynamic";
+import styles from "../../../components/Employers/style.module.css";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const stripePromise = loadStripe(
-    "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
-  );
-  // const stripePromise = loadStripe(
-  //   "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
-  // );
-  const BasicButton = styled(Button)({
-    color: "#ffff",
-    padding: "20px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#4fa9ff !important",
-    textTransform: "capitalize",
-    // width: "50%",
-    marginBottom: "10px",
-  });
+  "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
+);
+// const stripePromise = loadStripe(
+//   "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
+// );
+const BasicButton = styled(Button)({
+  color: "#ffff",
+  padding: "20px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  // width: "50%",
+  marginBottom: "10px",
+});
+
 function Subpayment() {
-    const  {push} = useRouter()
-    const { price: subscriptionPrice } = useSelector(
-      (state) => state.subscription
-    );
-    const { package: subscriptionpackage } = useSelector(
-      (state) => state.subscription
-    );
-    const { timePeriod: subscriptionTimePackage } = useSelector(
-      (state) => state.subscription
-    );
-    const { companyId: subscriptioncompanyId } = useSelector(
-      (state) => state.subscription
-    );
-    const { count: countFin } = useSelector(
-      (state) => state.subscription
-    );
-    const { country: Coutry } = useSelector((state) => state.subscription);
-    const company = useSelector((state) => state?.company?.companyDetl);
-    const payment = company?.payments?.slice(-1)[0];
-    const payconfrm =
-      payment?.status === "Completed" &&
-      company.package.subscription_package === "Growth";
-    const [clientSecret, setClientSecret] = useState("");
-    useEffect(() => {
-      if (subscriptioncompanyId === null) {
-        push("/Pricing", { replace: true });
-        return;
-      }
-      if (
-        payconfrm === true &&
-        moment(company?.package_end_date).format("L") >
-          moment(new Date()).format("L")
-      ) {
-        fetch("https://preprod.recroot.au/api/createPayment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            price: subscriptionPrice,
-            currency: Coutry,
-            packagesDetail: subscriptionpackage,
-            oldTime: payment.packageEndDate,
-            timePeriod: subscriptionTimePackage,
-            companyId: subscriptioncompanyId,
-            subType: subscriptionpackage === "Gold" ||  subscriptionpackage === "Growth" ? "jSlot" : "jPost",
-            count:countFin
-            // date: moment().utc().format(),
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => setClientSecret(data.clientSecret))
-          .then(localStorage.setItem("paymentInfo", clientSecret));
-      } else {
-        fetch("https://preprod.recroot.au/api/createPayment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            price: subscriptionPrice,
-            packagesDetail: subscriptionpackage,
-            timePeriod: subscriptionTimePackage,
-            currency: Coutry,
-            companyId: subscriptioncompanyId,
-            subType: subscriptionpackage === "Gold" ||  subscriptionpackage === "Growth" ? "jSlot" : "jPost",
-            date: moment().utc().format(),
-            count:countFin
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => setClientSecret(data.clientSecret))
-          .then(localStorage.setItem("paymentInfo", clientSecret));
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  
-    const appearance = {
-      theme: "stripe",
-    };
-    const options = {
-      clientSecret,
-      appearance,
-      countFin,
-      subscriptionpackage
-    };
+  const { push } = useRouter();
+  const { price: subscriptionPrice } = useSelector(
+    (state) => state.subscription
+  );
+  const { package: subscriptionpackage } = useSelector(
+    (state) => state.subscription
+  );
+  const { timePeriod: subscriptionTimePackage } = useSelector(
+    (state) => state.subscription
+  );
+  const { companyId: subscriptioncompanyId } = useSelector(
+    (state) => state.subscription
+  );
+  const { count: countFin } = useSelector((state) => state.subscription);
+  const { country: Coutry } = useSelector((state) => state.subscription);
+  const company = useSelector((state) => state?.company?.companyDetl);
+  const [isTourOpen, setTourOpen] = React.useState(true);
+  const payment = company?.payments?.slice(-1)[0];
+  const payconfrm =
+    payment?.status === "Completed" &&
+    company.package.subscription_package === "Growth";
+  const [clientSecret, setClientSecret] = useState("");
+  const closeTour = () => {
+    setTourOpen(false);
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".pay-button",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add card details and click on &quot;Pay Now&quot; button to finalize
+            your subscription
+          </CustomTypography>
+          <Button onClick={() => closeTour()} variant="outline">
+            Done
+          </Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    if (subscriptioncompanyId === null) {
+      push("/Pricing", { replace: true });
+      return;
+    }
+    if (
+      payconfrm === true &&
+      moment(company?.package_end_date).format("L") >
+        moment(new Date()).format("L")
+    ) {
+      fetch("https://preprod.recroot.au/api/createPayment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          price: subscriptionPrice,
+          currency: Coutry,
+          packagesDetail: subscriptionpackage,
+          oldTime: payment.packageEndDate,
+          timePeriod: subscriptionTimePackage,
+          companyId: subscriptioncompanyId,
+          subType:
+            subscriptionpackage === "Gold" || subscriptionpackage === "Growth"
+              ? "jSlot"
+              : "jPost",
+          count: countFin,
+          // date: moment().utc().format(),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setClientSecret(data.clientSecret))
+        .then(localStorage.setItem("paymentInfo", clientSecret));
+    } else {
+      fetch("https://preprod.recroot.au/api/createPayment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          price: subscriptionPrice,
+          packagesDetail: subscriptionpackage,
+          timePeriod: subscriptionTimePackage,
+          currency: Coutry,
+          companyId: subscriptioncompanyId,
+          subType:
+            subscriptionpackage === "Gold" || subscriptionpackage === "Growth"
+              ? "jSlot"
+              : "jPost",
+          date: moment().utc().format(),
+          count: countFin,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setClientSecret(data.clientSecret))
+        .then(localStorage.setItem("paymentInfo", clientSecret));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+    countFin,
+    subscriptionpackage,
+  };
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
@@ -131,6 +173,16 @@ function Subpayment() {
           Subscription
         </Typography>
       </Box>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
       <Card
         sx={{
           background: "#F2F8FD",
@@ -150,31 +202,29 @@ function Subpayment() {
                 borderRadius: "10px",
                 display: "flex",
                 gap: "20px",
-                alignItems:'center'
+                alignItems: "center",
               }}
             >
-                  <Box
-                  variant="outlined"
-                  className="goldbutton1"
-                  sx={{ background: "#4fa9ff", borderRadius: "10px" ,display:'flex',p:'15px 40px 15px 40px'}}
+              <Box
+                variant="outlined"
+                className="goldbutton1"
+                sx={{
+                  background: "#4fa9ff",
+                  borderRadius: "10px",
+                  display: "flex",
+                  p: "15px 40px 15px 40px",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    gap: "5px",
+                  }}
                 >
-                  <Box sx={{ display: "flex",alignItems: 'center',justifyContent: 'space-around' ,gap:'5px'}}>
-                    <img src="/thumbup.png" alt="vector" />
-                    <Typography
-                      sx={{
-                        fontFamily: "'Inter'",
-                        fontStyle: "normal",
-                        fontWeight: 800,
-                        fontSize: "40px",
-                        lineHeight: "145%",
-                        color: "#fff",
-                      }}
-                    >
-                     {subscriptionpackage}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Typography
+                  <img src="/thumbup.png" alt="vector" />
+                  <Typography
                     sx={{
                       fontFamily: "'Inter'",
                       fontStyle: "normal",
@@ -184,28 +234,44 @@ function Subpayment() {
                       color: "#fff",
                     }}
                   >
-                    {subscriptionpackage === "Pro Plan" ||
-                    subscriptionpackage === "Premium" ? (
-                      Coutry === "INR" ? (
-                        <span>&#8377;</span>
-                      ) : (
-                        '$'
-                      )
-                    ) : (
-                      '$'
-                    )}
-                    <b>{subscriptionPrice}</b>
-                
-                      /
-                      {subscriptionTimePackage === "single"
-                        ? "15Days"
-                        : "Monthly"}
-                    
+                    {subscriptionpackage}
                   </Typography>
-                  <BasicButton onClick={()=>{ push("/Pricing")}}> Change Plan</BasicButton>
+                </Box>
+              </Box>
+              <Typography
+                sx={{
+                  fontFamily: "'Inter'",
+                  fontStyle: "normal",
+                  fontWeight: 800,
+                  fontSize: "40px",
+                  lineHeight: "145%",
+                  color: "#fff",
+                }}
+              >
+                {subscriptionpackage === "Pro Plan" ||
+                subscriptionpackage === "Premium" ? (
+                  Coutry === "INR" ? (
+                    <span>&#8377;</span>
+                  ) : (
+                    "$"
+                  )
+                ) : (
+                  "$"
+                )}
+                <b>{subscriptionPrice}</b>/
+                {subscriptionTimePackage === "single" ? "15Days" : "Monthly"}
+              </Typography>
+              <BasicButton
+                onClick={() => {
+                  push("/Pricing");
+                }}
+              >
+                {" "}
+                Change Plan
+              </BasicButton>
             </Box>
-            <Box sx={{p:3,}}>
-            {clientSecret && (
+            <Box sx={{ p: 3 }}>
+              {clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutForm options={options} />
                 </Elements>

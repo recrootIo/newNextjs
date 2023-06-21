@@ -109,6 +109,7 @@ function a11yProps(index) {
 
 const EmpoyerDashboard = () => {
   let dispatch = useDispatch();
+  const user = Cookies.get();
   useEffect(() => {
     dispatch(applyJobsdet())
       .then((res) => {
@@ -339,8 +340,6 @@ const EmpoyerDashboard = () => {
       }, 500)
     );
   };
-
-  const user = Cookies.get();
 
   const handleAppilcants = () => {
     // const details = {
