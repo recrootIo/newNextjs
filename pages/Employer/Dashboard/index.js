@@ -48,8 +48,13 @@ import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import axios from "axios";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import dynamic from "next/dynamic";
 import Employer from "..";
 
+const DatagridClient = dynamic(
+  () => import("../../../components/Employers/DatagridClient"),
+  { ssr: false }
+);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -712,12 +717,10 @@ const EmpoyerDashboard = () => {
   return (
     <>
       <Employer>
-        {/* <Grid item xs={10}> */}
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -753,7 +756,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -789,7 +791,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "235px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1072,7 +1073,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1113,7 +1113,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1154,7 +1153,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "235px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1193,8 +1191,6 @@ const EmpoyerDashboard = () => {
             </CardContent>
           </Card>
         </Stack>
-        {/* </Grid> */}
-        {/* <Grid item xs={12} > */}
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -1212,7 +1208,7 @@ const EmpoyerDashboard = () => {
           </AppBar>
           <TabPanel id="simple-tab-0" value={value} index={0}>
             <Box sx={{ height: "550px", width: "100%" }}>
-              <DataGrid
+              <DatagridClient
                 sx={{ display: "flex", justifyContent: "center" }}
                 getRowId={handleGetRowId}
                 rows={rows}
@@ -1220,18 +1216,15 @@ const EmpoyerDashboard = () => {
               />
             </Box>
           </TabPanel>
-          {/* <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
-                <TabPanel id="simple-tab-0" value={value} index={1}>
-                <div style={{ height: "550px", width: "100%" }}>
-                  <DataGrid
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    getRowId={handleGetRowId}
-                    rows={rows2}
-                    columns={columns}
-                  />
-                </div>
-              </TabPanel>
+              <DatagridClient
+                value={value}
+                index={1}
+                getRowId={handleGetRowId}
+                rows={rows2}
+                columns={columns}
+              />
             ) : (
               <Box
                 sx={{
@@ -1247,9 +1240,8 @@ const EmpoyerDashboard = () => {
                 </Typography>
               </Box>
             )}
-          </TabPanel> */}
+          </TabPanel>
         </Box>
-        {/* </Grid> */}
       </Employer>
     </>
   );
