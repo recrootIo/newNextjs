@@ -4,6 +4,7 @@ import "./upload.module.css";
 import BackupIcon from "@mui/icons-material/Backup";
 import Dropzone from "react-dropzone";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import Image from "next/image";
 
 export function UploadPhoto(props) {
   const [fileNames, setFileNames] = useState([]);
@@ -60,7 +61,7 @@ export function UploadPhoto(props) {
 
             if (acceptedFiles && acceptedFiles[0]?.name) {
               return (
-                <img
+                <Image
                   src={URL.createObjectURL(acceptedFiles[0])}
                   alt=""
                   height={"300px"}

@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "@/components/Navbar/Navbar";
 import CreateIcon from "@mui/icons-material/Create";
 import { deleteSkillAndGet, retrievePersonal } from "@/redux/slices/personal";
+import Image from "next/image";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -129,7 +130,12 @@ function ReviewAppication(props) {
       ></Box>
       <Container>
         <Box sx={{ display: "flex", justifyContent: "center", mt: "60px" }}>
-          <img src="/reviewResumeStepper.png" alt="" />
+          <Image
+            src={"/reviewResumeStepper.png"}
+            alt=""
+            height={30}
+            width={180}
+          />
         </Box>
         <Grid container spacing={2} sx={{ marginTop: "60px" }}>
           {[lightTheme].map((theme, index) => (

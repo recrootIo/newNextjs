@@ -61,8 +61,11 @@ const JobDetailCard = ({ ...props }) => {
   useEffect(() => {
     setLoginCallBackURL(`${window.location}`);
   }, []);
-
   const gotApply = () => {
+    if(data?.resume?.resumeFileLocation?.length < 1){
+      router.push(`/uploadResume`);
+      return
+    }
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
       router.push(`/Candidate/Dashboard`);

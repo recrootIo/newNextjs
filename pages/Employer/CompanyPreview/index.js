@@ -53,6 +53,7 @@ const CompanyPreview = () => {
   const { push } = useRouter();
 
   const final = useSelector((state) => state.company?.companyDetl);
+  console.log(final, "final");
   const logo =
     isEmpty(final?.companyLogo?.logo) === true
       ? "companyLogo/logo-default.svg"
@@ -87,7 +88,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -137,7 +138,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -177,7 +178,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -310,7 +311,7 @@ const CompanyPreview = () => {
               <Divider />
               {final.address?.length !== 0
                 ? final.address?.map((addd, index) => (
-                    <Box className={styles.PreviewTypoBox}>
+                    <Box key={final._id} className={styles.PreviewTypoBox}>
                       <Box sx={{ display: "flex" }}>
                         <PlaceOutlinedIcon className={styles.PreviewIcon} />
                         &nbsp;&nbsp;

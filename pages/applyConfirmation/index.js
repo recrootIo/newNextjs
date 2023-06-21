@@ -8,6 +8,7 @@ import { BOLD } from "@/theme/fonts";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { useRouter } from "next/router";
 import { Stack } from "@mui/material";
+import Image from "next/image";
 
 const styles = {
   container: {
@@ -65,9 +66,11 @@ const ApplyConfirmation = () => {
       </Stack>
 
       <div style={styles.container}>
-        <img
-          src="/applyConfirmation Img.png"
-          alt="Centered Image"
+        <Image
+          src={"/applyConfirmation-Img.png"}
+          alt=""
+          height={325}
+          width={245}
           style={styles.image}
         />
       </div>
@@ -79,11 +82,7 @@ const ApplyConfirmation = () => {
           flexDirection: "column",
         }}
       >
-        <img
-          src="/tickImg.png"
-          alt="Centered Image"
-          style={{ maxHeight: "80px", maxWidth: "80px" }}
-        />
+        <Image src={"/tickImg.png"} alt="" height={65} width={80} />
         <CustomTypography variant="body1" gutterBottom>
           Your Application is Submitted
         </CustomTypography>

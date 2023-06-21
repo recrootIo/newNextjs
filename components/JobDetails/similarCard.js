@@ -16,9 +16,14 @@ import Image from "next/image";
 import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import moment from "moment";
 import styles from "./jobDetail.module.css";
+import { useRouter } from "next/router";
 
 const SimilarJobCard = ({ ...props }) => {
   const { data } = props;
+  const router = useRouter()
+  const handleNavigate = (jobTitle, jobRole, _id) => {
+    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
+  };
   return (
     <div>
       <Card className={styles.similarCard}>

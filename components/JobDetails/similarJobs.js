@@ -6,13 +6,11 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import searchService from "@/redux/services/search.service";
 import styles from "./jobDetail.module.css";
 import dynamic from "next/dynamic";
-
 
 const breakPoints = [
   { width: 550, itemsToShow: 1 },
@@ -37,7 +35,7 @@ const SimilarJobs = ({ jobRole }) => {
     if (jobRole) {
       similarJobs();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const carouselRef = useRef(null);
@@ -53,7 +51,6 @@ const SimilarJobs = ({ jobRole }) => {
       }}
     >
       <Container>
-
         <CustomTypography
           className={styles.similarTopic}
           fontWeight={700}
@@ -69,10 +66,9 @@ const SimilarJobs = ({ jobRole }) => {
             </Grid>
           ))}
         </Grid>
-
       </Container>
     </Box>
   );
 };
 
-export default dynamic (() => Promise.resolve(SimilarJobs), {ssr: false})
+export default dynamic(() => Promise.resolve(SimilarJobs), { ssr: false });

@@ -112,7 +112,7 @@ const ProfileCompletion = () => {
           description: "Your profile must include at least one work experience",
         });
       }
-      if (persanRank < 5) {
+      if (persanRank+essential + countries < 15) {
         newDetailCard.push({
           title: "Add Personal Details",
           buttonText: "Add Details More",
@@ -139,14 +139,14 @@ const ProfileCompletion = () => {
         });
       }
 
-      if (essential + countries < 10) {
-        newDetailCard.push({
-          title: "Add Essential Details",
-          buttonText: "Add Essential Details",
-          id: 1,
-          description: "Add more Essential Details to complete your profile",
-        });
-      }
+      // if (essential + countries < 10) {
+      //   newDetailCard.push({
+      //     title: "Add Essential Details",
+      //     buttonText: "Add Essential Details",
+      //     id: 1,
+      //     description: "Add more Essential Details to complete your profile",
+      //   });
+      // }
 
       if (skill < 10) {
         newDetailCard.push({

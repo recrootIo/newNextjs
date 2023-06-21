@@ -83,7 +83,7 @@ export const getSalary = (salary, defaults = true) => {
 };
 
 export const getImageLogo = (url) => {
-  return `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${url}`;
+  // return `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${url}`;
 };
 
 // dialog box for mobile filter
@@ -287,18 +287,20 @@ const SearchSection = ({ ...props }) => {
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
+
   const loading = useSelector((state) => state.searchJobs.loading);
   // console.log(page,'pagessss')
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [names, setNames] = useState(jobType || []);
+  const [names, setNames] = useState(
+    isEmpty(jobType?.[0]) ? [] : jobType || []
+  );
   const [exper, setExper] = useState(experience || []);
   const [title, setTitle] = useState(props.title || "");
   const [address, setAddress] = useState(props.address || "");
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
-
   const [selectedCategory, setSelectedCategory] = useState(category || []);
 
   const theme = useTheme();
@@ -1160,7 +1162,7 @@ const SearchSection = ({ ...props }) => {
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  {count[0]?.count} Jobs Result
+                  {Array.isArray(count) ? count[0].count : 0 ?? 0} Jobs Result
                 </CustomTypography>
                 <FormControl
                   className="sortBy"

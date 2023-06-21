@@ -1,23 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Box,
-  Button,
-  ButtonBase,
-  CircularProgress,
-  Container,
-  Typography,
-} from "@mui/material";
-import { makeStyles, styled, withStyles } from "@mui/styles";
-import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { styles } from "../../completeSignupStyle";
-import { setUserFromGoogle } from "@/redux/slices/auth";
-import Cookies from "js-cookie";
+
+import { Box, Button, ButtonBase, CircularProgress, Container, Typography } from '@mui/material';
+import { makeStyles, styled ,withStyles} from '@mui/styles';
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { styles } from '../../../../components/CompleteProfile/completeSignupStyle';
+import { setUserFromGoogle } from '@/redux/slices/auth';
+import Cookies from 'js-cookie';
+
 
 const ColorButton = styled(Button)(({ theme }) => ({
   // "&:focus": {

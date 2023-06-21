@@ -124,16 +124,18 @@ export default function EmployerSidebar() {
         pb: "20px",
       }}
     >
-      <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton
-          sx={{ display: "flex", justifyContent: "center" }}
-          onClick={() => handleListItemClick()}
-        >
-          <Image src="/empImg.png" alt="" width="40" height="40" />
-        </ListItemButton>
-        <Divider variant="middle" color="gray" />
-        <Link href={"/Employer/Dashboard"}>
-          <Tooltip title="dashboard" placement="right">
+
+        <List component="nav" aria-label="main mailbox folders">
+            <ListItemButton
+                sx={{ display: "flex", justifyContent: "center" }}
+                onClick={() => handleListItemClick()}
+            >
+                <Image src="/empImg.png" alt="" width="40" height="40" />
+            </ListItemButton>
+            <Divider variant="middle" color="gray" />
+            <Link href={'/Employer/Dashboard'}>
+            <Tooltip title="Dashboard" placement="right">
+
             <ListItemButton
               sx={{
                 display: "flex",
