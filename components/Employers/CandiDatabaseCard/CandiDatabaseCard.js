@@ -31,7 +31,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import styles from "./CandiDatabaseCard.module.css";
 import moment from "moment";
 import { useEffect } from "react";
-import CampaignIcon from '@mui/icons-material/Campaign';
+import CampaignIcon from "@mui/icons-material/Campaign";
 import { currencyConvert } from "@/utils/HelperFunctions";
 import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
@@ -110,9 +110,9 @@ export const StyledAvatar = styled(Avatar)(({}) => ({
   width: "40px",
 }));
 
-const CandiDatabaseCard = ({...props}) => {
+const CandiDatabaseCard = ({ ...props }) => {
   const [open, setOpen] = React.useState(false);
-  const candi = props?.can
+  const candi = props?.can;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -167,7 +167,10 @@ const CandiDatabaseCard = ({...props}) => {
     changePage(+1);
   };
   const matches = useMediaQuery("(max-width:600px)");
-  const cvUrl = candi?.resume?.resumeFileLocation?.length > 0  ? `https://preprod.recroot.au/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}` : '';
+  const cvUrl =
+    candi?.resume?.resumeFileLocation?.length > 0
+      ? `https://preprod.recroot.au/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}`
+      : "";
   const isItPdfFile = cvUrl.includes("pdf");
   return (
     <Card
@@ -187,7 +190,10 @@ const CandiDatabaseCard = ({...props}) => {
               border: "1px solid #2699ff",
             }}
             alt="logo"
-            src={candi?.profpicFileLocation?.photo && `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`}
+            src={
+              candi?.profpicFileLocation?.photo &&
+              `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+            }
             size={300}
           />
         }
@@ -205,20 +211,24 @@ const CandiDatabaseCard = ({...props}) => {
         subheader={
           <>
             {candi?.jobTitle}
-       {candi?.resume?.location?.city &&   
-         <Box sx={{ display: "flex", alignItems: "center", mt: "5px" }}>
-              <LocationOnIcon sx={{ color: "#2699FF", fontSize: "17px" }} />{" "}
-              <CustomTypography variant="body2" color="#01313F">
-              {candi?.resume?.location?.city}
-              </CustomTypography>
-            </Box>}
-         {candi?.myPreferenceInfo?.immediateJoiner === 'yes' ?
-           <Box sx={{ display: "flex", alignItems: "center", mt: "5px" }}>
-              <ScheduleIcon sx={{ color: "#2699FF", fontSize: "17px" }} />{" "}
-              <CustomTypography variant="body2" color="#01313F">
-                Immediately
-              </CustomTypography>
-            </Box> : ''}
+            {candi?.resume?.location?.city && (
+              <Box sx={{ display: "flex", alignItems: "center", mt: "5px" }}>
+                <LocationOnIcon sx={{ color: "#2699FF", fontSize: "17px" }} />{" "}
+                <CustomTypography variant="body2" color="#01313F">
+                  {candi?.resume?.location?.city}
+                </CustomTypography>
+              </Box>
+            )}
+            {candi?.myPreferenceInfo?.immediateJoiner === "yes" ? (
+              <Box sx={{ display: "flex", alignItems: "center", mt: "5px" }}>
+                <ScheduleIcon sx={{ color: "#2699FF", fontSize: "17px" }} />{" "}
+                <CustomTypography variant="body2" color="#01313F">
+                  Immediately
+                </CustomTypography>
+              </Box>
+            ) : (
+              ""
+            )}
           </>
         }
         action={
@@ -247,7 +257,9 @@ const CandiDatabaseCard = ({...props}) => {
                     bgcolor: "#02A9F7 !important",
                     fontSize: "16px",
                   }}
-                  onClick={()=>{props?.handle(candi?._id)}}
+                  onClick={() => {
+                    props?.handle(candi?._id);
+                  }}
                 >
                   View Detail
                 </Button>
@@ -276,81 +288,92 @@ const CandiDatabaseCard = ({...props}) => {
                 maxWidth={"md"}
               >
                 <DialogTitle>
-          <Stack>
-            <Typography sx={{ fontSize: "20px", fontWeight: "600" }}>
-              {candi?.firstName} Resume
-            </Typography>
-            {isItPdfFile && (
-              <>
-                <Stack
-                  direction={"row"}
-                  sx={{ justifyContent: "space-between" }}
-                >
-                  <Stack direction={"row"} sx={{ alignItems: "center" }}>
-                    {pageNumber > 1 && (
-                      <IconButton onClick={changePageBack}>
-                        <SkipPreviousRoundedIcon
-                          sx={{ color: "#4fa9ff", fontSize: "2rem" }}
-                        />
-                      </IconButton>
-                    )}
-
-                    <Typography>
-                      Page {pageNumber} of {numPages}
+                  <Stack>
+                    <Typography sx={{ fontSize: "20px", fontWeight: "600" }}>
+                      {candi?.firstName} Resume
                     </Typography>
+                    {isItPdfFile && (
+                      <>
+                        <Stack
+                          direction={"row"}
+                          sx={{ justifyContent: "space-between" }}
+                        >
+                          <Stack
+                            direction={"row"}
+                            sx={{ alignItems: "center" }}
+                          >
+                            {pageNumber > 1 && (
+                              <IconButton onClick={changePageBack}>
+                                <SkipPreviousRoundedIcon
+                                  sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                                />
+                              </IconButton>
+                            )}
 
-                    {pageNumber < numPages && (
-                      <IconButton onClick={changePageNext}>
-                        <SkipNextRoundedIcon
-                          sx={{ color: "#4fa9ff", fontSize: "2rem" }}
-                        />
-                      </IconButton>
+                            <Typography>
+                              Page {pageNumber} of {numPages}
+                            </Typography>
+
+                            {pageNumber < numPages && (
+                              <IconButton onClick={changePageNext}>
+                                <SkipNextRoundedIcon
+                                  sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                                />
+                              </IconButton>
+                            )}
+                          </Stack>
+
+                          <IconButton onClick={handleClose}>
+                            <CloseIcon
+                              sx={{ color: "#4fa9ff", fontSize: "2rem" }}
+                            />
+                          </IconButton>
+                        </Stack>
+                      </>
                     )}
                   </Stack>
-
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon sx={{ color: "#4fa9ff", fontSize: "2rem" }} />
-                  </IconButton>
-                </Stack>
-              </>
-            )}
-          </Stack>
-        </DialogTitle>
-        <DialogContent>
-          {isItPdfFile ? (
-            <Document file={cvUrl} onLoadSuccess={onDocumentLoadSuccess}>
-              <Page
-                width={matches === true ? 300 : 600}
-                pageNumber={pageNumber}
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-              />
-            </Document>
-          ) : (
-            <Typography>
-              Unfortunately, the CV cannot be opened. Kindly download the
-              document to review.
-            </Typography>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Stack direction={"row"} sx={{ gap: "10px" }}>
-            <Button
-              variant="contained"
-              onClick={async () => {
-                const res = await fetch(cvUrl);
-                const blob = await res.blob();
-                download(blob, `${candi?.resume?.resumeFileLocation.resumeName}`);
-              }}
-              sx={{background:'#4fa9ff !important'}}
-            >
-              Download
-            </Button>
-            <Button variant="outlined" onClick={handleClose}>
-              Close
-            </Button>
-          </Stack>
-        </DialogActions>
+                </DialogTitle>
+                <DialogContent>
+                  {isItPdfFile ? (
+                    <Document
+                      file={cvUrl}
+                      onLoadSuccess={onDocumentLoadSuccess}
+                    >
+                      <Page
+                        width={matches === true ? 300 : 600}
+                        pageNumber={pageNumber}
+                        renderTextLayer={false}
+                        renderAnnotationLayer={false}
+                      />
+                    </Document>
+                  ) : (
+                    <Typography>
+                      Unfortunately, the CV cannot be opened. Kindly download
+                      the document to review.
+                    </Typography>
+                  )}
+                </DialogContent>
+                <DialogActions>
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <Button
+                      variant="contained"
+                      onClick={async () => {
+                        const res = await fetch(cvUrl);
+                        const blob = await res.blob();
+                        download(
+                          blob,
+                          `${candi?.resume?.resumeFileLocation.resumeName}`
+                        );
+                      }}
+                      sx={{ background: "#4fa9ff !important" }}
+                    >
+                      Download
+                    </Button>
+                    <Button variant="outlined" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Stack>
+                </DialogActions>
               </Dialog>
             </Box>
           </>
@@ -359,150 +382,166 @@ const CandiDatabaseCard = ({...props}) => {
       />
       <CardContent sx={{ pt: 0 }}>
         <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
-    {candi?.resume?.workExperience?.length > 0 ?
-    <>
-        <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
-          <HourglassTopIcon sx={{ color: "#00339B" }} />
-          <CustomTypography
-            color="#00339B"
-            sx={{ fontSize: "16px", fontWeight: 600 }}
-          >
-            Experience :
-          </CustomTypography>
-          <Box>
-            <ul>
-           {experiences.map((wrk,index)=>(
-            <li key={index}>
-            {bull} {wrk?.role} at {wrk?.companyName}{" "}
-            <span
-              style={{
-                color: "#2699FF",
-                fontWeight: 600,
-              }}
-            >
-           {moment(wrk?.fromDate, 'DD-MM-YYYY').format('YYYY')} - {moment(wrk?.toDate, 'DD-MM-YYYY').format('YYYY')}
-            </span>
-            </li>
-           ))  
-              }
-            </ul>
-{experienceStrenght && (
+        {candi?.resume?.workExperience?.length > 0 ? (
+          <>
+            <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
+              <HourglassTopIcon sx={{ color: "#00339B" }} />
+              <CustomTypography
+                color="#00339B"
+                sx={{ fontSize: "16px", fontWeight: 600 }}
+              >
+                Experience :
+              </CustomTypography>
+              <Box>
+                <ul>
+                  {experiences.map((wrk, index) => (
+                    <li key={index}>
+                      {bull} {wrk?.role} at {wrk?.companyName}{" "}
+                      <span
+                        style={{
+                          color: "#2699FF",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {moment(wrk?.fromDate, "DD-MM-YYYY").format("YYYY")} -{" "}
+                        {moment(wrk?.toDate, "DD-MM-YYYY").format("YYYY")}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {experienceStrenght && (
+                  <CustomTypography
+                    color="#00339B"
+                    sx={{
+                      fontSize: "14px",
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => {
+                      showExperienceMore();
+                      setShowExperiences(!showExperience);
+                    }}
+                  >
+                    {showExperience ? "View less" : "View More"}
+                  </CustomTypography>
+                )}
+              </Box>
+            </Box>
+            <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
+          </>
+        ) : (
+          ""
+        )}
+
+        {candi?.resume?.education.length > 0 ? (
+          <>
+            <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
+              <HourglassTopIcon sx={{ color: "#00339B" }} />
+              <CustomTypography
+                color="#00339B"
+                sx={{ fontSize: "16px", fontWeight: 600 }}
+              >
+                Education :
+              </CustomTypography>
+              <Box>
+                <ul>
+                  {educations.map((edu, index) => (
+                    <li key={index}>
+                      {bull} {edu?.graduate} at {edu?.collegeName}{" "}
+                      <span
+                        style={{
+                          color: "#2699FF",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {moment(edu?.fromDate, "DD-MM-YYYY").format("YYYY")} -{" "}
+                        {moment(edu?.toDate, "DD-MM-YYYY").format("YYYY")}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {educationStrenght && (
+                  <CustomTypography
+                    color="#00339B"
+                    sx={{
+                      fontSize: "14px",
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => {
+                      showEducationMore();
+                      setShowEducation(!showEducation);
+                    }}
+                  >
+                    {showEducation ? "View less" : "View More"}
+                  </CustomTypography>
+                )}
+              </Box>
+            </Box>
+            <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
+          </>
+        ) : (
+          ""
+        )}
+
+        {candi?.resume?.notice && (
+          <>
+            <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
+              <CampaignIcon sx={{ color: "#00339B" }} />
+              <CustomTypography
+                color="#00339B"
+                sx={{ fontSize: "16px", fontWeight: 600 }}
+              >
+                Notice Period :
+              </CustomTypography>
+              {bull} {candi?.resume?.notice}
+            </Box>
+            <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
+          </>
+        )}
+        {candi?.resume?.currentSalary?.salary && (
+          <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
+            <CurrencyRupeeIcon sx={{ color: "#00339B" }} />
             <CustomTypography
               color="#00339B"
-              sx={{
-                fontSize: "14px",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                showExperienceMore();
-                setShowExperiences(!showExperience);
-              }}
+              sx={{ fontSize: "16px", fontWeight: 600 }}
             >
-              {showExperience ? "View less" : "View More"}
+              Salary :
             </CustomTypography>
-)}
+            <Box>
+              <ul>
+                <li>
+                  {bull}Current Salary -{" "}
+                  <span
+                    style={{
+                      color: "#2699FF",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {currencyConvert(
+                      candi?.resume?.currentSalary?.salary,
+                      candi?.resume?.salaryCurrency
+                    )}{" "}
+                    {candi?.resume?.currentSalary?.denomination}
+                  </span>
+                </li>
+                <li>
+                  {bull} Expected Salary -{" "}
+                  <span
+                    style={{
+                      color: "#2699FF",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {currencyConvert(
+                      candi?.resume?.expectedSalary?.salary,
+                      candi?.resume?.salaryCurrency
+                    )}{" "}
+                    {candi?.resume?.expectedSalary?.denomination}
+                  </span>
+                </li>
+              </ul>
+            </Box>
           </Box>
-        </Box>
-         <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
-    </>
-          : ''}
-       
-  {candi?.resume?.education.length > 0 ?
-  <>
-        <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
-          <HourglassTopIcon sx={{ color: "#00339B" }} />
-          <CustomTypography
-            color="#00339B"
-            sx={{ fontSize: "16px", fontWeight: 600 }}
-          >
-            Education :
-          </CustomTypography>
-          <Box>
-            <ul>
-           {educations.map((edu,index)=>(
-              <li key={index}>
-              {bull} {edu?.graduate} at {edu?.collegeName}{" "}
-              <span
-                style={{
-                  color: "#2699FF",
-                  fontWeight: 600,
-                }}
-              >
-               {moment(edu?.fromDate, 'DD-MM-YYYY').format('YYYY')} - {moment(edu?.toDate, 'DD-MM-YYYY').format('YYYY')}
-              </span>
-              </li>
-           ))  }
-            </ul>
- {educationStrenght && (        <CustomTypography
-              color="#00339B"
-              sx={{
-                fontSize: "14px",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                showEducationMore();
-                setShowEducation(!showEducation);
-              }}
-            >
-              {showEducation ? "View less" : "View More"}
-            </CustomTypography> )}
-          </Box>
-        </Box> 
-        <Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
-  </>
-        : ''}
-          
-{candi?.resume?.notice &&
-<>
-<Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
-  <CampaignIcon sx={{ color: "#00339B" }} />
-  <CustomTypography
-    color="#00339B"
-    sx={{ fontSize: "16px", fontWeight: 600 }}
-  >
-    Notice Period :
-  </CustomTypography>
-  {bull} {candi?.resume?.notice}
-  </Box>
-<Divider sx={{ bgcolor: "#D4F0FC", mt: "20px" }} />
-</>
- }
-  {candi?.resume?.currentSalary?.salary  &&
-        <Box sx={{ display: "flex", gap: "10px", mt: "20px", mb: "20px" }}>
-          <CurrencyRupeeIcon sx={{ color: "#00339B" }} />
-          <CustomTypography
-            color="#00339B"
-            sx={{ fontSize: "16px", fontWeight: 600 }}
-          >
-            Salary :
-          </CustomTypography>
-          <Box>
-            <ul>
-              <li>
-                {bull}Current Salary -{" "}
-                <span
-                  style={{
-                    color: "#2699FF",
-                    fontWeight: 600,
-                  }}
-                >
-                 {currencyConvert(candi?.resume?.currentSalary?.salary,candi?.resume?.salaryCurrency)} {candi?.resume?.currentSalary?.denomination}
-                 </span>
-              </li>
-              <li>
-                {bull} Expected Salary -{" "}
-                <span
-                  style={{
-                    color: "#2699FF",
-                    fontWeight: 600,
-                  }}
-                >
-              {currencyConvert(candi?.resume?.expectedSalary?.salary,candi?.resume?.salaryCurrency)} {candi?.resume?.expectedSalary?.denomination}
-                </span>
-              </li>
-            </ul>
-          </Box>
-        </Box>}
+        )}
       </CardContent>
     </Card>
   );

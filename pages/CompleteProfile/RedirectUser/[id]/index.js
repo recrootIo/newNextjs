@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 import { Box, Button, ButtonBase, CircularProgress, Container, Typography } from '@mui/material';
 import { makeStyles, styled ,withStyles} from '@mui/styles';
 import axios from 'axios';
@@ -12,98 +13,102 @@ import { styles } from '../../../../components/CompleteProfile/completeSignupSty
 import { setUserFromGoogle } from '@/redux/slices/auth';
 import Cookies from 'js-cookie';
 
+
 const ColorButton = styled(Button)(({ theme }) => ({
-    // "&:focus": {
-    //   backgroundColor: "white",
-    //   color: "#4F9AFF",
-    // },
-    // "&:active": {
-    //   backgroundColor: "white",
-    //   color: "#4F9AFF",
-    // },
-  }));
-  const StyledButton = withStyles(() => ({
-    // root: {
-    //   marginRight: "1rem",
-    //   width: "25%",
-    //   padding: "1rem",
-    //   fontSize: "1.2rem",
-    //   borderRadius: "1rem",
-    //   color: "#000",
-    //   fontWeight: "400",
-    //   textTransform: "capitalize",
-    // },
-  }))(ButtonBase);
-  
-  const useStyles = makeStyles(() => ({
-    activeButton: {
-      backgroundColor: "white!important",
-      color: "#4F9AFF!important",
-    },
-  }));
+  // "&:focus": {
+  //   backgroundColor: "white",
+  //   color: "#4F9AFF",
+  // },
+  // "&:active": {
+  //   backgroundColor: "white",
+  //   color: "#4F9AFF",
+  // },
+}));
+const StyledButton = withStyles(() => ({
+  // root: {
+  //   marginRight: "1rem",
+  //   width: "25%",
+  //   padding: "1rem",
+  //   fontSize: "1.2rem",
+  //   borderRadius: "1rem",
+  //   color: "#000",
+  //   fontWeight: "400",
+  //   textTransform: "capitalize",
+  // },
+}))(ButtonBase);
+
+const useStyles = makeStyles(() => ({
+  activeButton: {
+    backgroundColor: "white!important",
+    color: "#4F9AFF!important",
+  },
+}));
 function RedirectUser() {
-    let dispatch = useDispatch();
-    const classes = useStyles();
-    const [recrootUserType] = useState("Candidate");
-    const router = useRouter()
-    const { id } = router.query;
-console.log(id,'ssss')
-    const redirect = null
-    const getUser = () => {
-      axios
-        .get(`https://preprod.recroot.au/getUser/${id}`)
-        .then((resObject) => {
-          localStorage.setItem("User", JSON.stringify(resObject.data));
-          Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
-          Cookies.set("verifyCode", resObject.data.User?.referral_code, {
-            expires: 1,
-          });
-          Cookies.set("token", resObject.data.token, { expires: 1 });
-          Cookies.set("userType", resObject.data.User?.recrootUserType, {
-            expires: 1,
-          });
-          Cookies.set("companyId", resObject.data.User?.companyId, { expires: 1 });
-          Cookies.set("firstName", resObject.data.User?.firstName, { expires: 1 });
-          dispatch(setUserFromGoogle(resObject.data));
-          if (resObject.data.User) {
-            if (resObject.data.User.recrootUserType === "Employer") {
+  let dispatch = useDispatch();
+  const classes = useStyles();
+  const [recrootUserType] = useState("Candidate");
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id, "ssss");
+  const redirect = null;
+  const getUser = () => {
+    axios
+      .get(`https://preprod.recroot.au/getUser/${id}`)
+      .then((resObject) => {
+        localStorage.setItem("User", JSON.stringify(resObject.data));
+        Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
+        Cookies.set("verifyCode", resObject.data.User?.referral_code, {
+          expires: 1,
+        });
+        Cookies.set("token", resObject.data.token, { expires: 1 });
+        Cookies.set("userType", resObject.data.User?.recrootUserType, {
+          expires: 1,
+        });
+        Cookies.set("companyId", resObject.data.User?.companyId, {
+          expires: 1,
+        });
+        Cookies.set("firstName", resObject.data.User?.firstName, {
+          expires: 1,
+        });
+        dispatch(setUserFromGoogle(resObject.data));
+        if (resObject.data.User) {
+          if (resObject.data.User.recrootUserType === "Employer") {
+            router.push("/");
+          } else if (resObject.data.User.recrootUserType === "TempSocial") {
+            router.push("CompleteProfile");
+          } else {
+            if (resObject.data.User.resume.resumeFileLocation.length > 0) {
+              // if(redirect !== null){
+              // router.push(redirect);
+              // }else{
               router.push("/");
-            } else if (resObject.data.User.recrootUserType === "TempSocial") {
-              router.push("CompleteProfile");
+              // }
             } else {
-              if (resObject.data.User.resume.resumeFileLocation.length > 0) {
-                // if(redirect !== null){
-                // router.push(redirect);
-                // }else{
-                  router.push("/");
-                // }
-              } else {
-                router.push("/uploadResume");
-              }
+              router.push("/uploadResume");
             }
           }
-        })
-        .catch((err) => {
-          console.warn(err);
-        });
-    };
-    useEffect(() => {
-        if (id !== undefined) {
-          getUser()
         }
-          console.log('object')
-          setTimeout(() => {
-          }, 1000);
-        // }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
+  useEffect(() => {
+    if (id !== undefined) {
+      getUser();
+    }
+    console.log("object");
+    setTimeout(() => {}, 1000);
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   return (
     <div>
-            <Box sx={styles.signup}>
+      <Box sx={styles.signup}>
         <Container maxWidth="xl">
           <Box sx={styles.img}>
             <Link href="/">
-              <img style={{ width: "175px" }} src={'/logo.png'} alt="" />
+              <img style={{ width: "175px" }} src={"/logo.png"} alt="" />
             </Link>
           </Box>
           <Box sx={styles.topspc}>
@@ -313,7 +318,7 @@ console.log(id,'ssss')
         </Box>
       </Box>
     </div>
-  )
+  );
 }
 
-export default RedirectUser
+export default RedirectUser;

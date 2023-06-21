@@ -289,7 +289,7 @@ const Members = () => {
         dispatch(
           openAlert({
             type: SUCCESS,
-            message: "Company Member Details Was Updated",
+            message: "Company Member Details Were Updated",
           })
         );
       }
@@ -334,7 +334,7 @@ const Members = () => {
       dispatch(
         openAlert({
           type: SUCCESS,
-          message: "Company Member Details Was Updated",
+          message: "Company Member Details Were Updated",
         })
       );
     }
@@ -358,7 +358,7 @@ const Members = () => {
     setMemberrole(updatedField);
     dispatch(updateFinaldetails({ ...final, members: updatedField }));
     dispatch(
-      openAlert({ type: ERROR, message: "Company Member Details Was Removed" })
+      openAlert({ type: ERROR, message: "Company Member Details Were Removed" })
     );
   };
 

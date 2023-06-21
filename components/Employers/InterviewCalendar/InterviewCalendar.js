@@ -254,7 +254,11 @@ const InterviewCalendar = (props) => {
             Edit
           </Button>
           <Button
-            sx={{ background: "#4fa9ff !important", color: "white !important",ml:2 }}
+            sx={{
+              background: "#4fa9ff !important",
+              color: "white !important",
+              ml: 2,
+            }}
             onClick={handleClose}
           >
             Cancel

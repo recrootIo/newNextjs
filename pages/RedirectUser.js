@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Router } from "next/router";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 // const Button = styled(Button)(({ theme }) => ({
 //   // "&:focus": {
 //   //   backgroundColor: "white",
@@ -47,13 +47,13 @@ import { useRouter } from 'next/router'
 
 function RedirectUser() {
   let dispatch = useDispatch();
-//   const classes = useStyles();
-//   let navigate = useNavigate();
+  //   const classes = useStyles();
+  //   let navigate = useNavigate();
   const [recrootUserType] = useState("Candidate");
-//   const { id } = useParams();
-//   const redirect = localStorage.getItem("Redirect");
-const router = useRouter()
-const {id} = router.query
+  //   const { id } = useParams();
+  //   const redirect = localStorage.getItem("Redirect");
+  const router = useRouter();
+  const { id } = router.query;
   const getUser = () => {
     axios
       .get(`https://preprod.recroot.au/getUser/${id}`)
@@ -67,9 +67,9 @@ const {id} = router.query
             Router.push("/completeProfile");
           } else {
             if (resObject.data.User.resume.resumeFileLocation.length > 0) {
-              if(redirect !== null){
-              Router.push(redirect);
-              }else{
+              if (redirect !== null) {
+                Router.push(redirect);
+              } else {
                 Router.push("/");
               }
             } else {
@@ -102,19 +102,19 @@ const {id} = router.query
       />
       {/* Same as */}
       <ToastContainer />
-      <Box >
+      <Box>
         <Container maxWidth="xl">
           {/* <Box sx={styles.img}>
             <Link to="/">
               <img style={{ width: "175px" }} src={logo} alt="" />
             </Link>
           </Box> */}
-          <Box >
+          <Box>
             <Button
               variant="outlined"
-            //   className={
-            //     recrootUserType === "Candidate" ? `${classes.activeButton}` : ""
-            //   }
+              //   className={
+              //     recrootUserType === "Candidate" ? `${classes.activeButton}` : ""
+              //   }
               // onClick={() => clickedButtonHandler("Candidate")}
             >
               <div
@@ -130,11 +130,11 @@ const {id} = router.query
               </div>
             </Button>
             <Button
-            //   sx={styles.topbtn}
+              //   sx={styles.topbtn}
               variant="outlined"
-            //   className={
-            //     recrootUserType === "Employer" ? `${classes.activeButton}` : ""
-            //   }
+              //   className={
+              //     recrootUserType === "Employer" ? `${classes.activeButton}` : ""
+              //   }
               // onClick={() => clickedButtonHandler("Employer")}
             >
               <div
@@ -281,44 +281,48 @@ const {id} = router.query
             </Grid>
           </form> */}
         </Container>
-        <Box 
+        <Box
         // sx={styles.blue}
         >
-          <Box 
-        //   sx={styles.rightbtn}
+          <Box
+          //   sx={styles.rightbtn}
           >
             <Button
               name="Candidate"
-            //   className={
-            //     recrootUserType === "Candidate" ? `${classes.activeButton}` : ""
-            //   }
-            //   sx={styles.btncand}
+              //   className={
+              //     recrootUserType === "Candidate" ? `${classes.activeButton}` : ""
+              //   }
+              //   sx={styles.btncand}
               variant="outlined"
               // onClick={() => clickedButtonHandler("Candidate")}
             >
               <Typography
-            //    sx={styles.candtxt}
-               >Candidate</Typography>
-              <Typography 
-            //   sx={styles.candsub}
+              //    sx={styles.candtxt}
+              >
+                Candidate
+              </Typography>
+              <Typography
+              //   sx={styles.candsub}
               >
                 I want to discover awesome companies
               </Typography>
             </Button>
             <Button
               name="second"
-            //   className={
-            //     recrootUserType === "Employer" ? `${classes.activeButton}` : ""
-            //   }
-            //   sx={styles.btncand}
+              //   className={
+              //     recrootUserType === "Employer" ? `${classes.activeButton}` : ""
+              //   }
+              //   sx={styles.btncand}
               variant="outlined"
               // onClick={() => clickedButtonHandler("Employer")}
             >
               <Typography
-            //    sx={styles.candtxt}
-               >Employer</Typography>
-              <Typography 
-            //   sx={styles.candsub}
+              //    sx={styles.candtxt}
+              >
+                Employer
+              </Typography>
+              <Typography
+              //   sx={styles.candsub}
               >
                 I want to attract the best talent
               </Typography>
