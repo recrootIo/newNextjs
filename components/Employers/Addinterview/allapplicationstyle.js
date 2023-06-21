@@ -31,13 +31,13 @@ export const styles = {
   },
 
   naminput: {
-    width: { md: "290px", xs: "100%" },
+    width: { sm: "290px", xs: "100%" },
     // marginLeft: "40px",
     height: "60px",
     color: "black",
   },
   naminput2: {
-    width: { xs: "100%", md: "100%" },
+    width: { xs: "100%", sm: "100%" },
     // marginLeft: { xs: 0, md: "40px" },
     height: "60px",
     color: "black",
@@ -51,19 +51,19 @@ export const styles = {
     mt: "36px",
   },
   naminput1: {
-    width: { md: "290px", xs: "200px" },
+    width: { sm: "290px", xs: "200px" },
     marginLeft: "40px",
     height: "60px",
     color: "black",
   },
   infofldloc: {
-    width: { xs: "90%", md: "290px" },
+    width: { xs: "90%", sm: "290px" },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
   },
   infofldloc2: {
-    width: { xs: "90%", md: "465px" },
+    width: { xs: "90%", sm: "465px" },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

@@ -293,7 +293,7 @@ const InterviewCalendar = (props) => {
               <Box>
                 <LocalizationProvider
                   dateAdapter={AdapterDateFns}
-                  sx={{ width: { md: "290px", xs: "100%" } }}
+                  sx={{ width: { sm: "290px", xs: "100%" } }}
                 >
                   <DesktopDatePicker
                     label="Date"
@@ -347,9 +347,9 @@ const InterviewCalendar = (props) => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", md: "row" },
+              flexDirection: { xs: "column", sm: "row" },
               mt: "40px",
-              justifyContent: { xs: "center", md: "space-around" },
+              justifyContent: { xs: "center", sm: "space-around" },
               alignItems: "center",
               flexWrap: "wrap",
               gap: "15px",
@@ -370,7 +370,7 @@ const InterviewCalendar = (props) => {
                   name="zone"
                   label="Select Time Zone"
                   sx={{
-                    width: { md: "290px", xs: "auto" },
+                    width: { sm: "290px", xs: "auto" },
                     height: "60px",
                     color: "black",
                   }}
@@ -403,7 +403,7 @@ const InterviewCalendar = (props) => {
                   name="event"
                   label="Select Event Type"
                   sx={{
-                    width: { md: "290px", xs: "auto" },
+                    width: { sm: "290px", xs: "auto" },
                     height: "60px",
                     color: "black",
                   }}
@@ -468,8 +468,8 @@ const InterviewCalendar = (props) => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: { xs: "center", md: "flex-end" },
-              padding: { xs: 0, md: "24px 56px 20px 0" },
+              justifyContent: { xs: "center", sm: "flex-end" },
+              padding: { xs: 0, sm: "24px 56px 20px 0" },
               gap: "20px",
               width: "100%",
             }}
@@ -478,7 +478,7 @@ const InterviewCalendar = (props) => {
               variant="contained"
               sx={{
                 background: "#4fa9ff !important",
-                width: { xs: "30%", md: "auto" },
+                width: { xs: "30%", sm: "auto" },
               }}
               onClick={handleClose1}
             >
@@ -488,7 +488,7 @@ const InterviewCalendar = (props) => {
               variant="contained"
               sx={{
                 background: "#4fa9ff !important",
-                width: { xs: "30%", md: "auto" },
+                width: { xs: "30%", sm: "auto" },
               }}
               onClick={onSubmit}
             >
