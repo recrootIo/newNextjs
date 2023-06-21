@@ -88,7 +88,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -138,7 +138,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -178,7 +178,7 @@ const CompanyPreview = () => {
           <Card
             sx={{
               width: "100%",
-              height: "190px",
+              height: { xs: "150px", sm: "190px" },
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",

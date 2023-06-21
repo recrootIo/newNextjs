@@ -51,7 +51,6 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import Employer from "..";
 
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -1221,7 +1220,7 @@ const EmpoyerDashboard = () => {
               />
             </Box>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          {/* <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
                 <TabPanel id="simple-tab-0" value={value} index={1}>
                 <div style={{ height: "550px", width: "100%" }}>
@@ -1248,7 +1247,7 @@ const EmpoyerDashboard = () => {
                 </Typography>
               </Box>
             )}
-          </TabPanel>
+          </TabPanel> */}
         </Box>
         {/* </Grid> */}
       </Employer>

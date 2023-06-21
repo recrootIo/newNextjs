@@ -112,7 +112,7 @@ function ScreeningQuestions() {
       {showq === undefined || showq === "true"
         ? question &&
           question.map((quest, ind) => (
-            <Box key={quest.id} sx={{ margin: "10px 0 " }}>
+            <Box key={quest.id} sx={{ margin: "20px 0 " }}>
               <Box>
                 <CustomTypography sx={{ fontSize: "18px", color: "#034275" }}>
                   Question
@@ -141,7 +141,10 @@ function ScreeningQuestions() {
                 />
 
                 {question.length > 1 ? (
-                  <IconButton edge="end" sx={{ mr: "1px", color: "#3771C8" }}>
+                  <IconButton
+                    edge="end"
+                    sx={{ mr: "1px", color: "#3771C8", width: "10%" }}
+                  >
                     <Close
                       onClick={() => {
                         deleteQuestion(quest.id);
@@ -152,12 +155,12 @@ function ScreeningQuestions() {
                   ""
                 )}
 
-                <Button onClick={handleAdd}>
-                  <Add sx={{ color: "#3771C8" }} />
-                </Button>
+                <IconButton edge="end" sx={{ color: "#3771C8", width: "10%" }}>
+                  <Add sx={{ color: "#3771C8" }} onClick={handleAdd} />
+                </IconButton>
               </Box>
 
-              <Box>
+              <Box sx={{ mt: "5px" }}>
                 <CustomTypography
                   variant="p"
                   sx={{ fontSize: "18px", color: "#034275" }}

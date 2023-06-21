@@ -204,7 +204,14 @@ const ScheduledInterviews = () => {
                         horizontal: "left",
                       }}
                     >
-                      <FormControl sx={{ m: 1, width: "500px" }}>
+                      <FormControl
+                        // sx={{ m: 1, width: "500px" }}
+                        sx={{
+                          m: 1,
+                          width: { xs: "95%", md: "500px" },
+                          minWidth: { xs: "100%", md: "500px" },
+                        }}
+                      >
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
                         </InputLabel>
@@ -216,7 +223,8 @@ const ScheduledInterviews = () => {
                           onChange={handleName}
                           input={<OutlinedInput label="Filter By Jobs" />}
                           MenuProps={MenuProps}
-                          sx={{ width: "500px" }}
+                          // sx={{ width: "500px" }}
+                          sx={{ width: { xs: "100%", md: "500px" } }}
                         >
                           {jobs.map((variant) => (
                             <MenuItem key={variant._id} value={variant._id}>
