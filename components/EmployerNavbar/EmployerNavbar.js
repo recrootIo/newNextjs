@@ -28,8 +28,8 @@ const EmployerNavbar = () => {
             <Image
               src="/logo.png"
               alt="Your Company"
-              width="143"
-              height="31"
+              width="160"
+              height="35"
               onClick={() => {
                 push("/");
               }}
