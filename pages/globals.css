@@ -49,8 +49,7 @@ body {
   background: #fff;
   align-items: center;
   width: 100%;
-  font-size: 16px;
-  height: 40px;
+  height: 51px;
   border: 1px solid #c2c8d0;
   color: #202124;
   cursor: pointer;
@@ -58,12 +57,9 @@ body {
   gap: 10px;
   justify-content: center;
   padding-top: 4px;
-  height: 60px;
   border-radius: 8px;
-  width: 95%;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
-  color: #949494;
 }
 
 .MuiContainer-maxWidthLg {
@@ -845,9 +841,19 @@ body {
   width: auto;
 }
 
+.recruitImages {
+  height: 181px;
+  width: auto;
+}
+
 @media only screen and (max-width: 600px) {
   .loginImages {
     height: 120px;
+  }
+
+  .recruitImages {
+    height: 120px;
+    width: auto;
   }
 
   .styledRows .startingTd {
@@ -1871,7 +1877,6 @@ a {
   }
 }
 
-
 @media (max-width: 470px) {
   .fc .fc-toolbar.fc-header-toolbar {
     display: block;
@@ -1882,4 +1887,3 @@ a {
     display: block;
   }
 }
-
