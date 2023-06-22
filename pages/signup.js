@@ -498,10 +498,12 @@ function Signup() {
                       direction={"row"}
                       sx={{
                         gap: "5px",
-                        display: { md: "flex", xs: "none", sm: "none" },
+                        display: { md: "flex", xs: "flex"},
+                        flexDirection:{xs:'column',sm:'row'},
+                        alignItems:'center'
                       }}
                     >
-                      <CustomTypography>
+                      <CustomTypography sx={{textAlign:'center'}}>
                         Sign Up Already have an account?
                       </CustomTypography>
                       <Link href="/signin">
