@@ -1,18 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { Box, Button, ButtonBase, CircularProgress, Container, Typography } from '@mui/material';
-import { makeStyles, styled ,withStyles} from '@mui/styles';
-import axios from 'axios';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { styles } from '../../../../components/CompleteProfile/completeSignupStyle';
-import { setUserFromGoogle } from '@/redux/slices/auth';
-import Cookies from 'js-cookie';
-
+import {
+  Box,
+  Button,
+  ButtonBase,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
+import { makeStyles, styled, withStyles } from "@mui/styles";
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { styles } from "../../../../components/CompleteProfile/completeSignupStyle";
+import { setUserFromGoogle } from "@/redux/slices/auth";
+import Cookies from "js-cookie";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   // "&:focus": {
@@ -43,45 +50,53 @@ const useStyles = makeStyles(() => ({
     color: "#4F9AFF!important",
   },
 }));
+
 function RedirectUser() {
-    let dispatch = useDispatch();
-    const classes = useStyles();
-    const [recrootUserType] = useState("Candidate");
-    const router = useRouter()
-    const { id } = router.query;
-console.log(id,'ssss')
-    const redirect = null
-    const getUser = () => {
-      axios
-        .get(`https://preprod.recroot.au/getUser/${id}`)
-        .then((resObject) => {
-          axios
-          .get("https://ipapi.co/json/")
-          .then((response) => {
-            Cookies.set("country", response.data?.country);
-          })
-          localStorage.setItem("User", JSON.stringify(resObject.data));
-          Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
-          Cookies.set("verifyCode", resObject.data.User?.referral_code, {
-            expires: 1,
-          });
-          Cookies.set("token", resObject.data.token, { expires: 1 });
-          Cookies.set("userType", resObject.data.User?.recrootUserType, {
-            expires: 1,
-          });
-          Cookies.set("companyId", resObject.data.User?.companyId, { expires: 1 });
-          Cookies.set("firstName", resObject.data.User?.firstName, { expires: 1 });
-          dispatch(setUserFromGoogle(resObject.data));
-          if (resObject.data.User) {
-            if (resObject.data.User.recrootUserType === "Employer") {
-              router.push("/");
-              // }
-            } else {
-              router.push("/uploadResume");
-            }
+  let dispatch = useDispatch();
+  const classes = useStyles();
+  const [recrootUserType] = useState("Candidate");
+  const employerTypes = [EMPLOYER, RECRUITER];
+  const IsEmployer = employerTypes.includes(recrootUserType);
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id, "ssss");
+  const redirect = null;
+  const getUser = () => {
+    axios
+      .get(`https://preprod.recroot.au/getUser/${id}`)
+      .then((resObject) => {
+        axios.get("https://ipapi.co/json/").then((response) => {
+          Cookies.set("country", response.data?.country);
+        });
+        localStorage.setItem("User", JSON.stringify(resObject.data));
+        Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
+        Cookies.set("verifyCode", resObject.data.User?.referral_code, {
+          expires: 1,
+        });
+        Cookies.set("token", resObject.data.token, { expires: 1 });
+        Cookies.set("userType", resObject.data.User?.recrootUserType, {
+          expires: 1,
+        });
+        Cookies.set("companyId", resObject.data.User?.companyId, {
+          expires: 1,
+        });
+        Cookies.set("firstName", resObject.data.User?.firstName, {
+          expires: 1,
+        });
+        dispatch(setUserFromGoogle(resObject.data));
+
+        if (resObject.data.User) {
+          if (
+            employerTypes.includes(resObject.data.User.recrootUserType) ===
+            "Employer"
+          ) {
+            router.push("/");
+            // }
+          } else {
+            router.push("/uploadResume");
           }
         }
-      )
+      })
       .catch((err) => {
         console.warn(err);
       });
@@ -96,6 +111,7 @@ console.log(id,'ssss')
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
   return (
     <div>
       <Box sx={styles.signup}>
@@ -129,9 +145,7 @@ console.log(id,'ssss')
             <ColorButton
               sx={styles.topbtn}
               variant="outlined"
-              className={
-                recrootUserType === "Employer" ? `${classes.activeButton}` : ""
-              }
+              className={IsEmployer ? `${classes.activeButton}` : ""}
               // onClick={() => clickedButtonHandler("Employer")}
             >
               <div
@@ -296,9 +310,7 @@ console.log(id,'ssss')
             </StyledButton>
             <StyledButton
               name="second"
-              className={
-                recrootUserType === "Employer" ? `${classes.activeButton}` : ""
-              }
+              className={IsEmployer ? `${classes.activeButton}` : ""}
               sx={styles.btncand}
               variant="outlined"
               // onClick={() => clickedButtonHandler("Employer")}
