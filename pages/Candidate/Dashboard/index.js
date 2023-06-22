@@ -97,6 +97,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -105,6 +106,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -113,6 +115,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -121,6 +124,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -129,6 +133,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -137,6 +142,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -145,6 +151,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -153,6 +160,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -161,6 +169,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
 
@@ -169,6 +178,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
+      setMobileOpen(false)
       return;
     }
   };
@@ -396,7 +406,7 @@ const Index = () => {
               fontSize="large"
               onClick={() => handleDrawerToggle()}
               sx={{
-                margin: "20px 0 20px 11px",
+                // margin: "20px 0 20px 11px",
                 display: { md: "none", sm: "flex", xs: "flex" },
               }}
             />

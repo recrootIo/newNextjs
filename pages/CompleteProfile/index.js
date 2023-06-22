@@ -21,7 +21,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import ReactPhoneInput from "react-phone-input-2";
-
+import 'react-phone-input-2/lib/bootstrap.css';
+import 'react-phone-input-2/lib/style.css';
 import { styles } from '../../components/CompleteProfile/completeSignupStyle';
 import { ERROR, SECTORS } from '@/utils/constants';
 import { isEmpty } from 'lodash';

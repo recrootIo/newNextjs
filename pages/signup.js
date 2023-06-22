@@ -385,6 +385,7 @@ function Signup() {
                         alignItems: "center",
                         gap: "5px",
                       }}
+<<<<<<< HEAD
                       onClick={() => {
                         setuserType(EMPLOYER);
                         setValues({ ...values, recrootUserType: EMPLOYER });
@@ -409,6 +410,61 @@ function Signup() {
                           blurDataURL="URL"
                           placeholder="blur"
                         />
+=======
+                    >
+                      <Image
+                        src="/Employer.png"
+                        className="loginImages"
+                        alt=""
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        blurDataURL="URL"
+                        placeholder="blur"
+                      />
+                      <CustomTypography
+                        sx={{ color: "white", fontWeight: "900" }}
+                      >
+                        Employer
+                      </CustomTypography>
+                    </CardContent>
+                  </NonCard>
+                </Stack>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item md={6} sm={12} xs={12}>
+            <Card
+              variant="outlined"
+              sx={{
+                background: "white",
+                borderRadius: "20px",
+                padding: { md: "30px", xs: "10px", sm: "10px" },
+              }}
+            >
+              <CardContent>
+                <Stack sx={{ alignItems: "center", gap: "20px" }}>
+                  <Stack sx={{ alignItems: "center" }}>
+                    <CustomTypography
+                      sx={{ fontSize: "30px", fontWeight: "900" }}
+                    >
+                      Sign Up
+                    </CustomTypography>
+                    <Stack
+                      direction={"row"}
+                      sx={{
+                        gap: "5px",
+                        display: { md: "flex", xs: "flex"},
+                        flexDirection:{xs:'column',sm:'row'},
+                        alignItems:'center'
+                      }}
+                    >
+                      <CustomTypography sx={{textAlign:'center'}}>
+                        Sign Up Already have an account?
+                      </CustomTypography>
+                      <Link href="/signin">
+>>>>>>> main
                         <CustomTypography
                           sx={{ color: "white", fontWeight: "900" }}
                         >

@@ -184,9 +184,10 @@ function Signin() {
                 fontSize: "30px",
                 color: "white",
                 fontFamily: "Inter-Bold",
+                textAlign:'center'
               }}
             >
-              Sign Up and Find Your Dream Job
+              Sign In and Find Your Dream Job
             </CustomTypography>
           </Stack>
 
