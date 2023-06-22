@@ -74,6 +74,8 @@ import Location from "@/components/Location";
 import Employer from "..";
 import { useTheme } from "@mui/material/styles";
 import { isEmpty } from "lodash";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
   naminput: {
@@ -116,6 +118,7 @@ const selectstyle = {
 
 const CompanyProfile = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -284,6 +287,73 @@ const CompanyProfile = () => {
     // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profileIndex: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const doneTour = () => {
+    closeTour();
+    push("/Employer/Members");
+  };
+
+  const tourConfig = [
+    {
+      selector: ".basicInfo",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Here, you can find company basic details
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextProfile",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Here, you can navigate to Members page
+          </CustomTypography>
+          <Button onClick={() => doneTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profileIndex);
+  }, [company?.tours?.profileIndex]);
+
   return (
     <Box sx={{ p: "-100px" }}>
       <Employer>
@@ -452,6 +522,7 @@ const CompanyProfile = () => {
             mt: "40px",
             p: "25px 25px 80px 25px",
           }}
+          className="basicInfo"
         >
           <CardContent>
             <Box
@@ -875,6 +946,7 @@ const CompanyProfile = () => {
               </Button>
               <Button
                 variant="contained"
+                className="nextProfile"
                 sx={{
                   width: "50%",
                   bgcolor: "#015FB1 !important",
@@ -899,6 +971,16 @@ const CompanyProfile = () => {
           </CardContent>
         </Card>
       </Employer>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </Box>
   );
 };

@@ -62,14 +62,16 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import dynamic from "next/dynamic";
 import Employer from "..";
 
-
 const DatagridClient = dynamic(
   () => import("../../../components/Employers/DatagridClient"),
   { ssr: false }
 );
 
-
 import http from "@/redux/http-common";
+import styles from "../../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+
 const BasicButton = styled(Button)({
   color: "#ffff",
   padding: "15px",
@@ -79,7 +81,7 @@ const BasicButton = styled(Button)({
   textTransform: "capitalize",
   // width: "50%",
   marginBottom: "10px",
-  marginTop:'15px'
+  marginTop: "15px",
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -130,12 +132,11 @@ function a11yProps(index) {
 }
 const EmpoyerDashboard = () => {
   let dispatch = useDispatch();
+
   useEffect(() => {
-    axios
-    .get("https://ipapi.co/json/")
-    .then((response) => {
+    axios.get("https://ipapi.co/json/").then((response) => {
       Cookies.set("country", response.data?.country);
-    })
+    });
     dispatch(applyJobsdet())
       .then((res) => {
         if (res.error !== undefined) {
@@ -170,6 +171,9 @@ const EmpoyerDashboard = () => {
   // const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
   const [opena, setOpena] = React.useState(false);
+
+  const [isTourOpen, setTourOpen] = React.useState(false);
+
   const handleClosea = () => {
     setOpena(false);
   };
@@ -476,11 +480,11 @@ const EmpoyerDashboard = () => {
     }
   };
 
-  const handleUpgrade = (parms) =>{
-    dispatch(upgradejob([parms.id]))
-    push('/Employer/Jobpayment')
-  }
-  console.log(premium,'pree')
+  const handleUpgrade = (parms) => {
+    dispatch(upgradejob([parms.id]));
+    push("/Employer/Jobpayment");
+  };
+  console.log(premium, "pree");
   const columns = [
     { field: "id", headerName: "Id", width: 100, hide: true },
     { field: "_id", headerName: "Job", width: 120 },
@@ -518,10 +522,10 @@ const EmpoyerDashboard = () => {
             : parms?.value === "free"
             ? "Free"
             : parms?.value === "jSlot"
-            ? "Job Slot": 
-            parms?.row?.premium === false
-            ? "Free" : 
-            parms?.row?.premium === true
+            ? "Job Slot"
+            : parms?.row?.premium === false
+            ? "Free"
+            : parms?.row?.premium === true
             ? "Premium"
             : "N/A"}
         </p>
@@ -550,8 +554,8 @@ const EmpoyerDashboard = () => {
       headerName: "Action",
       width: 130,
       renderCell: (parms) =>
-      user?.memberType === "HiringManager" ? (
-        <>
+        user?.memberType === "HiringManager" ? (
+          <>
             <Button
               className="editButton"
               id="basic-button"
@@ -625,31 +629,37 @@ const EmpoyerDashboard = () => {
                 See Applicants
               </MenuItem>
 
-             {!premium ? <MenuItem
-                onClick={() => {
-                  handleClose2();
-                  handleUpgrade(parms?.row)
-                }}
-                value="delete"
-              >
-                Upgrade To Premium
-              </MenuItem> : ''}
-{packType === null ? "" :
-              <MenuItem
-                onClick={() => {
-                  handleClose2();
-                  handleActivate();
-                }}
-                value="delete"
-                disabled={
-                  packType === "free" ||
-                  packType === "pro" ||
-                  packType === "premium"
-                }
-              >
-                Activate
-              </MenuItem> }
-          
+              {!premium ? (
+                <MenuItem
+                  onClick={() => {
+                    handleClose2();
+                    handleUpgrade(parms?.row);
+                  }}
+                  value="delete"
+                >
+                  Upgrade To Premium
+                </MenuItem>
+              ) : (
+                ""
+              )}
+              {packType === null ? (
+                ""
+              ) : (
+                <MenuItem
+                  onClick={() => {
+                    handleClose2();
+                    handleActivate();
+                  }}
+                  value="delete"
+                  disabled={
+                    packType === "free" ||
+                    packType === "pro" ||
+                    packType === "premium"
+                  }
+                >
+                  Activate
+                </MenuItem>
+              )}
             </Menu>
           </>
         ) : (
@@ -769,24 +779,22 @@ const EmpoyerDashboard = () => {
   };
 
   const [open1, setOpen1] = React.useState(false);
-const [sectors, setsectors] = useState([])
+  const [sectors, setsectors] = useState([]);
   const handleClickOpen = () => {
     setOpen1(true);
-    http.get(`/getfreeJobs/${company?._id}`).then((res)=>{
-      console.log(res,'jobss')
-      setsectors(res.data?.data)
-    })
+    http.get(`/getfreeJobs/${company?._id}`).then((res) => {
+      console.log(res, "jobss");
+      setsectors(res.data?.data);
+    });
   };
 
   const handleClose1 = () => {
     if (freejobs?.length > 0) {
-      dispatch(upgradejob(freejobs)).then(
-        push('/Employer/Jobpayment')
-      )
+      dispatch(upgradejob(freejobs)).then(push("/Employer/Jobpayment"));
     }
     setOpen1(false);
   };
-  const [freejobs, setfreejobs] = useState([])
+  const [freejobs, setfreejobs] = useState([]);
   const selectJobs = (e) => {
     const { value, checked } = e.target;
     let newJobs = freejobs;
@@ -797,10 +805,221 @@ const [sectors, setsectors] = useState([])
       newJobs = freejobs.filter((arr) => value != arr);
       setfreejobs(() => [...newJobs]);
     }
-  }
-console.log(freejobs,'ssssss')
+  };
+  console.log(freejobs, "ssssss");
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ home: false });
+  };
+
+  const tourConfig = [
+    {
+      selector: ".welcome",
+      style: {
+        color: "black",
+        maxWidth: "500px",
+      },
+      navDotAriaLabel: "12345",
+      content: ({ goTo }) => (
+        <Card variant="outlined" sx={{ border: "0" }}>
+          <CardContent>
+            <Stack
+              sx={{
+                gap: "10px",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image src="/welcome.png" width={250} height={250} alt="" />
+              <CustomTypography sx={{ fontSize: "20px", fontWeight: "900" }}>
+                Hi {user?.firstName}, Welcome to Recroot!
+              </CustomTypography>
+              <CustomTypography>
+                Lets get started a quick website tour. This ll take no more than
+                a few minutes
+              </CustomTypography>
+
+              <CustomTypography>Are you ready? Let s go</CustomTypography>
+              <Button onClick={() => closeTour()}>SKIP</Button>
+            </Stack>
+          </CardContent>
+        </Card>
+      ),
+    },
+    {
+      selector: ".Dashboard",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Here, you can view and manage your created jobs!
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".companyProfile",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            You can highlight company information in this dedicated section.
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+    {
+      selector: ".postNewJob",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            You can post job listings to attract candidates here.`
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+    {
+      selector: ".allApplicants",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            You can manage applications received for your job listings on this
+            page
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+    {
+      selector: ".interview",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Upcoming interviews scheduled with applicants can be viewed here.
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+    {
+      selector: ".subscription",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            You can manage subscription plans and billing details on this page.
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+    {
+      selector: ".account",
+      content: (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            This section allows you to update your account information
+          </CustomTypography>
+          <Button
+            sx={{ backgroundColor: "#1976d2 !important" }}
+            variant="contained"
+            onClick={() => closeTour()}
+          >
+            Done
+          </Button>
+        </Stack>
+      ),
+      style: {
+        color: "black",
+      },
+    },
+  ];
+
+  const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.home);
+  }, [company?.tours?.home]);
+
   return (
     <>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
+
       <Employer>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <Card
@@ -1150,100 +1369,106 @@ console.log(freejobs,'ssssss')
             </Card>
           </Grid>
         </Grid>
-        <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-    <BasicButton onClick={()=>{handleClickOpen()}}>
-      Upgrade To Free Jobs To Premium
-      </BasicButton>        
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <BasicButton
+            onClick={() => {
+              handleClickOpen();
+            }}
+          >
+            Upgrade To Free Jobs To Premium
+          </BasicButton>
         </Box>
-      {user?.country === 'LK' ? 
-       <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={2}
-          sx={{ mt: 2 }}
-        >
-          <Card
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              textAlign: "center",
-              backgroundImage: 'url("/activejob-bg.svg")',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              borderRadius: "15px",
-            }}
+        {user?.country === "LK" ? (
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            sx={{ mt: 2 }}
           >
-            <Box
+            <Card
               sx={{
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                mt: "25px",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/activejob-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
               }}
             >
-              <img
-                src="/free-board-sign-icon.svg"
-                alt=""
-                style={{
-                  width: "60px",
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
                 }}
-              />
-            </Box>
-            <CardContent>
-              <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
-                variant="h5"
               >
-                {freeCount}
-              </CustomTypography>
-              <CustomTypography variant="body1" sx={{ color: "white" }}>
-                Free Jobs
-              </CustomTypography>
-            </CardContent>
-          </Card>
-          <Card
-            sx={{
-              width: "100%",
+                <img
+                  src="/free-board-sign-icon.svg"
+                  alt=""
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {freeCount}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Free Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+            <Card
+              sx={{
+                width: "100%",
 
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              textAlign: "center",
-              backgroundImage: 'url("/interviews-bg.svg")',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              borderRadius: "15px",
-            }}
-          >
-            <Box
-              sx={{
                 display: "flex",
                 justifyContent: "center",
-                mt: "25px",
+                flexDirection: "column",
+                textAlign: "center",
+                backgroundImage: 'url("/interviews-bg.svg")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                borderRadius: "15px",
               }}
             >
-              <img
-                src="/premiumjob.svg"
-                alt=""
-                style={{
-                  width: "60px",
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  mt: "25px",
                 }}
-              />
-            </Box>
-            <CardContent>
-              <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
-                variant="h5"
               >
-                {preCOunt}
-              </CustomTypography>
-              <CustomTypography variant="body1" sx={{ color: "white" }}>
-                Premium Jobs
-              </CustomTypography>
-            </CardContent>
-          </Card>
-        </Stack>
-         : ""}
+                <img
+                  src="/premiumjob.svg"
+                  alt=""
+                  style={{
+                    width: "60px",
+                  }}
+                />
+              </Box>
+              <CardContent>
+                <CustomTypography
+                  sx={{ color: "white", fontSize: "30px" }}
+                  variant="h5"
+                >
+                  {preCOunt}
+                </CustomTypography>
+                <CustomTypography variant="body1" sx={{ color: "white" }}>
+                  Premium Jobs
+                </CustomTypography>
+              </CardContent>
+            </Card>
+          </Stack>
+        ) : (
+          ""
+        )}
 
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
@@ -1298,37 +1523,45 @@ console.log(freejobs,'ssssss')
         </Box>
 
         <Dialog
-        open={open1}
-        onClose={handleClose1}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        fullWidth
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Upgrade Free Jobs To Premium"}
-        </DialogTitle>
-        <DialogContent>
-        <Box sx={{ border: "1px solid grey",
-  borderRadius: "8px",
-  padding: "10px"}}>
-        <FormControl sx={{ m: 1 }} fullWidth>
-        <FormLabel component="legend">Jobs List</FormLabel>
-        <FormGroup>
-          {
-            sectors?.map((sec, index)=>(
-              <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox 
-                    checked={freejobs.includes(sec?._id)}
-                    onChange={(e)=>{selectJobs(e)}} name={sec?.jobRole} value={sec?._id} />
-                  }
-                  label={`${sec?.jobRole} (${moment(sec?.createdAt).format('LL')})`}
-                />
-
-            ))
-          }
-      {/* {sectors.map((sec, index) => (
+          open={open1}
+          onClose={handleClose1}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          fullWidth
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Upgrade Free Jobs To Premium"}
+          </DialogTitle>
+          <DialogContent>
+            <Box
+              sx={{
+                border: "1px solid grey",
+                borderRadius: "8px",
+                padding: "10px",
+              }}
+            >
+              <FormControl sx={{ m: 1 }} fullWidth>
+                <FormLabel component="legend">Jobs List</FormLabel>
+                <FormGroup>
+                  {sectors?.map((sec, index) => (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          checked={freejobs.includes(sec?._id)}
+                          onChange={(e) => {
+                            selectJobs(e);
+                          }}
+                          name={sec?.jobRole}
+                          value={sec?._id}
+                        />
+                      }
+                      label={`${sec?.jobRole} (${moment(sec?.createdAt).format(
+                        "LL"
+                      )})`}
+                    />
+                  ))}
+                  {/* {sectors.map((sec, index) => (
         <FormLabel
           key={index}
           control={<CheckBox
@@ -1339,24 +1572,31 @@ console.log(freejobs,'ssssss')
              />}
           label={sec?.jobRole} />
       ))} */}
-        </FormGroup>
-        </FormControl>
-    </Box>
-        </DialogContent>
-        <DialogActions>
-          <BasicButton sx={{p:'5px !important',m:"0 !important"}} onClick={()=>{setOpen1(false)}} autoFocus>
-            Cancel
-          </BasicButton>
-          <BasicButton sx={{p:'5px !important',m:"0 !important"}} onClick={handleClose1} autoFocus>
-            Upgrade
-          </BasicButton>
-        </DialogActions>
-      </Dialog>
-
+                </FormGroup>
+              </FormControl>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <BasicButton
+              sx={{ p: "5px !important", m: "0 !important" }}
+              onClick={() => {
+                setOpen1(false);
+              }}
+              autoFocus
+            >
+              Cancel
+            </BasicButton>
+            <BasicButton
+              sx={{ p: "5px !important", m: "0 !important" }}
+              onClick={handleClose1}
+              autoFocus
+            >
+              Upgrade
+            </BasicButton>
+          </DialogActions>
+        </Dialog>
       </Employer>
     </>
   );
 };
 export default EmpoyerDashboard;
-
-

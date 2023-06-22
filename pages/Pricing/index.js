@@ -41,6 +41,12 @@ import Cookies from "js-cookie";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import { changeSubscription } from "@/redux/slices/Subscription";
+import dynamic from "next/dynamic";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+import styles from "../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+
 const normal = {
   fontFamily: "'Inter'",
   fontStyle: "normal",
@@ -110,7 +116,8 @@ const planHeadSlot = {
 
 function Pricing() {
   const [jobSwitch, setjobSwitch] = useState("jPost");
-  const [countryData, setcountryData] = useState('');
+  const [countryData, setcountryData] = useState("");
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -118,9 +125,9 @@ function Pricing() {
       .then((response) => {
         console.log(response, "sss");
         let data = response.data;
-        setcountryData(response.data)
+        setcountryData(response.data);
         if (data?.country !== "LK") {
-          setjobSwitch('jSlot')
+          setjobSwitch("jSlot");
         }
         if (data?.country === "IN") {
           setcounCheck(true);
@@ -277,6 +284,47 @@ function Pricing() {
     (item) => item.paidPackage === "Free"
   );
 
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ pricing: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".jobSlots",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select the pricing plan that match with your hiring needs
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const comp = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.pricing);
+  }, [comp?.tours?.pricing]);
+
   return (
     <div>
       <EmployerNavbar />
@@ -288,6 +336,7 @@ function Pricing() {
           height: "250px",
           display: "flex",
         }}
+        className="jobSlots"
       >
         <Typography
           sx={{
@@ -349,36 +398,40 @@ function Pricing() {
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-     {countryData?.country === "LK"  ?  <Box
-          sx={{
-            border: "1px solid #034275",
-            borderRadius: "40px",
-            display: "flex",
-            cursor: "pointer",
-          }}
-        >
-          <Box>
-            <Typography
-              sx={jobSwitch === "jPost" ? active : normal}
-              onClick={() => {
-                setjobSwitch("jPost");
-              }}
-            >
-              Job Post
-            </Typography>{" "}
-          </Box>{" "}
-          <Box>
-            {" "}
-            <Typography
-              sx={jobSwitch === "jSlot" ? active : normal}
-              onClick={() => {
-                setjobSwitch("jSlot");
-              }}
-            >
-              Job Slot
-            </Typography>
+        {countryData?.country === "LK" ? (
+          <Box
+            sx={{
+              border: "1px solid #034275",
+              borderRadius: "40px",
+              display: "flex",
+              cursor: "pointer",
+            }}
+          >
+            <Box>
+              <Typography
+                sx={jobSwitch === "jPost" ? active : normal}
+                onClick={() => {
+                  setjobSwitch("jPost");
+                }}
+              >
+                Job Post
+              </Typography>{" "}
+            </Box>{" "}
+            <Box>
+              {" "}
+              <Typography
+                sx={jobSwitch === "jSlot" ? active : normal}
+                onClick={() => {
+                  setjobSwitch("jSlot");
+                }}
+              >
+                Job Slot
+              </Typography>
+            </Box>
           </Box>
-        </Box> : ""}
+        ) : (
+          ""
+        )}
       </Box>
       <Box>
         {jobSwitch === "jPost" ? (
@@ -1053,6 +1106,17 @@ function Pricing() {
           </BasicButton>
         </DialogActions>
       </Dialog>
+
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </div>
   );
 }

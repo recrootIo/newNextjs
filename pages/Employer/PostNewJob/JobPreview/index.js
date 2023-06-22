@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -26,6 +26,8 @@ import styles from "./postNewJobPreview.module.css";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import moment from "moment";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"));
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -66,14 +68,78 @@ const JobPreview = (props) => {
   const descript = useSelector((state) => state.jobs.jobDescription);
   const level = useSelector((state) => state.jobs.jobRole);
   const showq = useSelector((state) => state.jobs.queshow);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const settingIndex = (index) => {
     props.Pages(index);
   };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobPreview: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".previewJob",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Ensure that all the information you provided is accurate before
+            submitting
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click on &quot;Submit&quot; button to make your job post live on
+            Recroot
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>DONE</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobPreview);
+  }, [company?.tours?.jobPreview]);
   return (
     <>
       <CardContent>
-        <Box>
+        <Box className="previewJob">
           <Box
             sx={{
               display: "flex",
@@ -412,6 +478,17 @@ const JobPreview = (props) => {
           </Box>
         </Box>
       </CardContent>
+
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

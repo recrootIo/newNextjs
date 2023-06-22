@@ -41,10 +41,12 @@ import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import Employer from "..";
 import { useRouter } from "next/navigation";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCompanyDetails());
@@ -80,6 +82,75 @@ const CompanyPreview = () => {
     // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profilePreview: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const gotoPreview = () => {
+    closeTour();
+    push("/Employer/CompanyPreview");
+  };
+
+  const tourConfig = [
+    {
+      selector: ".preview",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Check whether information you have provided is accurate before the
+            final submission
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to make your company profile information visible to
+            others
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const accentColor = "#5cb7b7";
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profilePreview);
+  }, [company?.tours?.profilePreview]);
 
   return (
     <>
@@ -236,6 +307,7 @@ const CompanyPreview = () => {
           Preview
         </CustomTypography>
         <Card
+          className="preview"
           variant="outlined"
           sx={{
             width: "100%",

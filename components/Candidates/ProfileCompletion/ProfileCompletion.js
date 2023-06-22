@@ -9,6 +9,7 @@ import { Box, Button, Container, Grid, Stack, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const StyledButton = styled("button")({
   minHeight: "43px",
@@ -26,6 +27,7 @@ const ProfileCompletion = () => {
   const users = useSelector((state) => state.personal?.data?.resume);
   const personal = useSelector((state) => state.personal?.data);
   const display = useSelector((state) => state.personal?.display);
+  const userType = Cookies.get("userType");
 
   const skill =
     percent?.skills?.length <= users?.skills?.length
@@ -112,7 +114,7 @@ const ProfileCompletion = () => {
           description: "Your profile must include at least one work experience",
         });
       }
-      if (persanRank+essential + countries < 15) {
+      if (persanRank + essential + countries < 15) {
         newDetailCard.push({
           title: "Add Personal Details",
           buttonText: "Add Details More",
@@ -171,7 +173,7 @@ const ProfileCompletion = () => {
     dispatch(retrievePersonal());
   }, [dispatch]);
 
-  if (personal?.profilePercentage < 70)
+  if (personal?.profilePercentage < 70 && userType === "Candidate")
     return (
       <Container
         sx={{

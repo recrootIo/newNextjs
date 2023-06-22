@@ -51,6 +51,9 @@ import { v4 as uuidv4 } from "uuid";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import Address from "@/components/Address";
+import styles from "../../../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 const style = {
   txtinput: {
@@ -75,7 +78,7 @@ const JobDetails = () => {
   const user = Cookies.get();
 
   let dispatch = useDispatch();
-
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const jobsall = useSelector((state) => state.jobs);
   const jobs = useSelector((state) => state.jobs?.details);
   const companyDet = useSelector((state) => state.company?.companyDetl);
@@ -249,7 +252,112 @@ const JobDetails = () => {
   const handlePack = (e) => {
     dispatch(jobPackType(e.target.value));
   };
-const country = Cookies.get('country')
+  const country = Cookies.get("country");
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobDetails: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".plan",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select the pricing plan in which you are posting the job
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".title",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Fill in the job details with job title, job details, skills, and
+            location
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".questions",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add screening questions with preferred answers for your job post if
+            necessary
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add screening questions with preferred answers for your job post if
+            necessary
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobDetails);
+  }, [company?.tours?.jobDetails]);
+
   return (
     <>
       <CardContent>
@@ -280,80 +388,84 @@ const country = Cookies.get('country')
             Job Details
           </CustomTypography>
           <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
-          {country === 'LK' || (companyDet.jobSlot === true && companyDet.package?.paymentStatus === 'Completed') ?
-          <Box sx={{ width: "100%", p: "0 0 20px 0" }}>
-            <Typography variant="p">Choose a plan</Typography>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Choose a plan
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Choose a plan"
-                // sx={styles.naminput2}
-                value={pack || ""}
-                name="careerlevel"
-                onChange={(e) => {
-                  handlePack(e);
-                }}
-              >
-                <MenuItem value="free" disabled={freeCount === 0}>
-                  <Typography textAlign="center">
-                    Free Job Post - Jobs Left : {freeCount}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="pro"
-                  disabled={proCOunt === 0 || proCOunt === undefined}
+          {country === "LK" ||
+          (companyDet.jobSlot === true &&
+            companyDet.package?.paymentStatus === "Completed") ? (
+            <Box sx={{ width: "100%", p: "0 0 20px 0" }} className="plan">
+              <Typography variant="p">Choose a plan</Typography>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Choose a plan
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Choose a plan"
+                  // sx={styles.naminput2}
+                  value={pack || ""}
+                  name="careerlevel"
+                  onChange={(e) => {
+                    handlePack(e);
+                  }}
                 >
-                  <Typography textAlign="center">
-                    Pro Job Post - Jobs Left : {proCOunt}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="premium"
-                  disabled={preCOunt === 0 || preCOunt === undefined}
-                >
-                  <Typography textAlign="center">
-                    Premium Job Post - Jobs Left : {preCOunt}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="jSlot"
-                  disabled={
-                    !(
-                      companyDet.package?.paymentStatus === "Completed" &&
-                      companyDet.package?.subscription_package === "Growth"
-                    )
-                  }
-                >
-                  <Typography textAlign="center">
-                    Growth Plan - Job Slot
-                  </Typography>
-                </MenuItem>
-
-                {companyDet?.jobSlotGold === true ? (
+                  <MenuItem value="free" disabled={freeCount === 0}>
+                    <Typography textAlign="center">
+                      Free Job Post - Jobs Left : {freeCount}
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    value="pro"
+                    disabled={proCOunt === 0 || proCOunt === undefined}
+                  >
+                    <Typography textAlign="center">
+                      Pro Job Post - Jobs Left : {proCOunt}
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    value="premium"
+                    disabled={preCOunt === 0 || preCOunt === undefined}
+                  >
+                    <Typography textAlign="center">
+                      Premium Job Post - Jobs Left : {preCOunt}
+                    </Typography>
+                  </MenuItem>
                   <MenuItem
                     value="jSlot"
                     disabled={
                       !(
                         companyDet.package?.paymentStatus === "Completed" &&
-                        companyDet.package?.subscription_package === "Gold"
+                        companyDet.package?.subscription_package === "Growth"
                       )
                     }
                   >
                     <Typography textAlign="center">
-                      Gold Plan - Job Slot
+                      Growth Plan - Job Slot
                     </Typography>
                   </MenuItem>
-                ) : (
-                  ""
-                )}
-              </Select>
-            </FormControl>
-          </Box> : ''
-          }
+
+                  {companyDet?.jobSlotGold === true ? (
+                    <MenuItem
+                      value="jSlot"
+                      disabled={
+                        !(
+                          companyDet.package?.paymentStatus === "Completed" &&
+                          companyDet.package?.subscription_package === "Gold"
+                        )
+                      }
+                    >
+                      <Typography textAlign="center">
+                        Gold Plan - Job Slot
+                      </Typography>
+                    </MenuItem>
+                  ) : (
+                    ""
+                  )}
+                </Select>
+              </FormControl>
+            </Box>
+          ) : (
+            ""
+          )}
           <Stack spacing={3}>
             <Autocomplete
               freeSolo
@@ -365,6 +477,7 @@ const country = Cookies.get('country')
               onBlur={(value) => {
                 handleChangesRole(value);
               }}
+              className="title"
               options={titleDesc.map((option) => option.rol.role)}
               renderInput={(params) => (
                 <TextField
@@ -539,10 +652,23 @@ const country = Cookies.get('country')
               </Box>
             )}
             <Address />
-            <ScreeningQuestions />
+            <Box className="questions">
+              {" "}
+              <ScreeningQuestions />
+            </Box>
           </Stack>
         </Box>
       </CardContent>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

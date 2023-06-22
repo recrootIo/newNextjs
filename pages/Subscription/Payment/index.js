@@ -7,6 +7,7 @@ import {
   styled,
   Button,
   Container,
+  Stack,
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -15,6 +16,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import CheckoutForm from "@/components/Checkout/CheckoutForm";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import dynamic from "next/dynamic";
+import styles from "../../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const stripePromise = loadStripe(
   "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
@@ -48,6 +54,7 @@ function Subpayment() {
   );
   const { count: countFin } = useSelector((state) => state.subscription);
   const { country: Coutry } = useSelector((state) => state.subscription);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const company = useSelector((state) => state?.company?.companyDetl);
   const payment = company?.payments?.slice(-1)[0];
   const payconfrm =
@@ -119,6 +126,51 @@ function Subpayment() {
     countFin,
     subscriptionpackage,
   };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ card: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const comp = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.card);
+  }, [comp?.tours?.card]);
+
+  const tourConfig = [
+    {
+      selector: ".pay-button",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Add card details and click on &quot;Pay Now&quot; button to finalize
+            your subscription
+          </CustomTypography>
+          <Button onClick={() => closeTour()} variant="outline">
+            Done
+          </Button>
+        </Stack>
+      ),
+    },
+  ];
+
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
@@ -245,6 +297,16 @@ function Subpayment() {
           </Card>
         </Card>
       </Container>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </div>
   );
 }
