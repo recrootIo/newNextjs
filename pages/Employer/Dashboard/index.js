@@ -386,7 +386,7 @@ const EmpoyerDashboard = () => {
   const handleActivate = () => {
     axios
       .put(
-        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
+        `http://localhost:3000/api/updateJobStatus/${jobid}`,
         { status: "active" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -422,7 +422,7 @@ const EmpoyerDashboard = () => {
   const handleDeActivate = () => {
     axios
       .put(
-        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
+        `http://localhost:3000/api/updateJobStatus/${jobid}`,
         { status: "inactive" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -1155,7 +1155,8 @@ console.log(freejobs,'ssssss')
       Upgrade To Free Jobs To Premium
       </BasicButton>        
         </Box>
-      {user?.country === 'LK' ?  <Stack
+      {user?.country === 'LK' ? 
+       <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={2}
           sx={{ mt: 2 }}
@@ -1208,47 +1209,6 @@ console.log(freejobs,'ssssss')
               justifyContent: "center",
               flexDirection: "column",
               textAlign: "center",
-              backgroundImage: 'url("/inactivejobs-bg.svg")',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              borderRadius: "15px",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mt: "25px",
-              }}
-            >
-              <img
-                src="/projob.svg"
-                alt=""
-                style={{
-                  width: "60px",
-                }}
-              />
-            </Box>
-            <CardContent>
-              <CustomTypography
-                sx={{ color: "white", fontSize: "30px" }}
-                variant="h5"
-              >
-                {proCOunt}
-              </CustomTypography>
-              <CustomTypography variant="body1" sx={{ color: "white" }}>
-                Pro Jobs
-              </CustomTypography>
-            </CardContent>
-          </Card>
-          <Card
-            sx={{
-              width: "100%",
-
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              textAlign: "center",
               backgroundImage: 'url("/interviews-bg.svg")',
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -1283,6 +1243,7 @@ console.log(freejobs,'ssssss')
             </CardContent>
           </Card>
         </Stack>
+         : ""}
 
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
