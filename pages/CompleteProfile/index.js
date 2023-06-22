@@ -21,16 +21,16 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import ReactPhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/bootstrap.css';
-import 'react-phone-input-2/lib/style.css';
-import { styles } from '../../components/CompleteProfile/completeSignupStyle';
-import { ERROR, SECTORS } from '@/utils/constants';
-import { isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
-import { openAlert } from '@/redux/slices/alert';
+import "react-phone-input-2/lib/bootstrap.css";
+import "react-phone-input-2/lib/style.css";
+import { styles } from "../../components/CompleteProfile/completeSignupStyle";
+import { ERROR, SECTORS } from "@/utils/constants";
+import { isEmpty } from "lodash";
+import { useDispatch } from "react-redux";
+import { openAlert } from "@/redux/slices/alert";
 import { validator } from "../../components/CompleteProfile/Validator";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   // "&:focus": {
@@ -268,6 +268,10 @@ function CompleteProfile() {
     setphoneNumber(value);
     setCountry(country);
   };
+
+  const employerTypes = [EMPLOYER, RECRUITER];
+  const IsEmployer = employerTypes.includes(recrootUserType);
+
   return (
     <div>
       <Box sx={styles.signup}>
@@ -301,7 +305,7 @@ function CompleteProfile() {
               sx={styles.topbtn}
               variant="outlined"
               className={
-                recrootUserType === "Employer" ? `${classes.activeButton}` : ""
+                IsEmployer ? `${classes.activeButton}` : ""
               }
               onClick={() => clickedButtonHandler("Employer")}
             >
@@ -350,7 +354,8 @@ function CompleteProfile() {
                   }}
                 />
               </Grid>
-              {recrootUserType === "Employer" && (
+
+              {IsEmployer && (
                 <Grid item xs={12} sm={12} md={12}>
                   <TextField
                     required
@@ -364,7 +369,8 @@ function CompleteProfile() {
                   />
                 </Grid>
               )}
-              {recrootUserType === "Employer" && (
+
+              {IsEmployer && (
                 <Grid item xs={12} sm={12} md={12}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
@@ -389,6 +395,7 @@ function CompleteProfile() {
                   </FormControl>
                 </Grid>
               )}
+
               <Grid item xs={12} sm={12}>
                 <FormControl>
                   <FormControlLabel
@@ -409,6 +416,7 @@ function CompleteProfile() {
                   )}
                 </FormControl>
               </Grid>
+
               <Grid item xs={12} sm={12} container justifyContent="center">
                 <BasicButton
                   type="submit"
@@ -451,9 +459,7 @@ function CompleteProfile() {
             </StyledButton>
             <StyledButton
               name="second"
-              className={
-                recrootUserType === "Employer" ? `${classes.activeButton}` : ""
-              }
+              className={IsEmployer ? `${classes.activeButton}` : ""}
               sx={styles.btncand}
               variant="outlined"
               onClick={() => clickedButtonHandler("Employer")}

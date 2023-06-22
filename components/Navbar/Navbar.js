@@ -304,6 +304,7 @@ const Navbar = () => {
               )}{" "}
             </List>
             <Divider />
+
             <List>
               {user === undefined ? (
                 <>

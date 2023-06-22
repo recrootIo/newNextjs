@@ -98,8 +98,9 @@ function Signin() {
             push("/uploadResume");
           }
         } else if (
-          originalPromiseResult.User.recrootUserType === "Employer" ||
-          originalPromiseResult.User.recrootUserType === "Member"
+          originalPromiseResult.User.recrootUserType === EMPLOYER ||
+          originalPromiseResult.User.recrootUserType === "Member" ||
+          originalPromiseResult.User.recrootUserType === RECRUITER
         ) {
           push("/");
           dispatch(
@@ -184,7 +185,7 @@ function Signin() {
                 fontSize: "30px",
                 color: "white",
                 fontFamily: "Inter-Bold",
-                textAlign:'center'
+                textAlign: "center",
               }}
             >
               Sign In and Find Your Dream Job

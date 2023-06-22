@@ -52,6 +52,9 @@ function RedirectUser() {
   const [recrootUserType] = useState("Candidate");
   //   const { id } = useParams();
   //   const redirect = localStorage.getItem("Redirect");
+
+  const employerTypes = [EMPLOYER, RECRUITER];
+
   const router = useRouter();
   const { id } = router.query;
   const getUser = () => {
@@ -61,7 +64,7 @@ function RedirectUser() {
         localStorage.setItem("User", JSON.stringify(resObject.data));
         dispatch(setUserFromGoogle(resObject.data));
         if (resObject.data.User) {
-          if (resObject.data.User.recrootUserType === "Employer") {
+          if (employerTypes.includes(resObject.data.User.recrootUserType)) {
             Router.push("/");
           } else if (resObject.data.User.recrootUserType === "TempSocial") {
             Router.push("/completeProfile");
