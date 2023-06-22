@@ -25,7 +25,9 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
 import { openAlert } from "@/redux/slices/alert";
-import { ERROR, SUCCESS } from "@/utils/constants";
+import { ERROR , SUCCESS } from "@/utils/constants";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -73,9 +75,14 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
+        axios
+        .get("https://ipapi.co/json/")
+        .then((response) => {
+          Cookies.set("country", response.data?.country);
+        })
         if (
           originalPromiseResult.User.email_is_verified === false &&
-          originalPromiseResult.User.recrootUserType === "Member"
+          originalPromiseResult.User.recrootUserType !== "Member"
         ) {
           push("/Verifymobile");
           return;
