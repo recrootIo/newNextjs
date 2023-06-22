@@ -208,7 +208,10 @@ const AllApplicants = () => {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push("/signin", { state: true });
+                router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
               })
             : console.log("error");
         }
@@ -219,7 +222,10 @@ const AllApplicants = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push("/signin", { state: true });
+            router.push({
+              pathname: '/signin',
+              query: { name: 'session' }
+          }, '/signin');
           });
         }
       });

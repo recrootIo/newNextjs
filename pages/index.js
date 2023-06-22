@@ -25,7 +25,13 @@ export default function Home() {
     AOS.init();
   }, []);
   const user = Cookies.get("token");
-
+ useEffect(() => {
+  const redirect = localStorage.getItem("redirect");
+  if (redirect !== null){
+    localStorage.removeItem("redirect");
+  }
+ }, [])
+ 
   return (
     <>
       <Header title={"HOME"} />
