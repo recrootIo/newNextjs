@@ -282,7 +282,6 @@ const country = Cookies.get('country')
           <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
           {country === 'LK' || (companyDet.jobSlot === true && companyDet.package?.paymentStatus === 'Completed') ?
           <Box sx={{ width: "100%", p: "0 0 20px 0" }}>
-            <Typography variant="p">Choose a plan</Typography>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Choose a plan

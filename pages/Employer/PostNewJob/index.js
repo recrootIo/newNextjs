@@ -310,6 +310,7 @@ console.log(final.details,'quest')
               type:ERROR,
               message:"Provide Notice Period"
             }));
+            return
           }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });

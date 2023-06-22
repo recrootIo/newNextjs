@@ -26,6 +26,7 @@ import {
   Popover,
   Checkbox,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
@@ -45,7 +46,7 @@ import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
 import Employer from "..";
 import { getJobsfil } from "@/redux/slices/applyJobs";
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 const style = {
   passinput: {
     "& .MuiOutlinedInput-root": {
@@ -73,7 +74,7 @@ const ScheduledInterviews = () => {
     month: "long",
   })} ${date.getFullYear()}`;
   const jobs = useSelector((state) => state?.apply?.names);
-  const [names, setNames] = useState([]);
+  const [names, setNames] = useState('');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
 
@@ -154,7 +155,6 @@ const ScheduledInterviews = () => {
     setNames(value);
     setsear(seared.filter((it) => it.jobId === value));
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -162,6 +162,10 @@ const ScheduledInterviews = () => {
   const mark = [];
   sear.map((dat) => mark.push(moment(dat.day).format("DD-MM-YYYY")));
 
+  const handleDelete = () => {
+setNames("")
+setsear(seared)
+  }
   return (
     <>
       <Employer>
@@ -186,6 +190,7 @@ const ScheduledInterviews = () => {
                       justifyContent: { xs: "center", lg: "none" },
                     }}
                   >
+                    <Box sx={{display:'flex',flexDirection:'column',width:'100%',alignItems:'center'}}>
                     <Button
                       aria-describedby={id}
                       onClick={handleClick}
@@ -194,6 +199,11 @@ const ScheduledInterviews = () => {
                     >
                       Filter
                     </Button>
+                {names !== ""  ?   <Box sx={{display:'flex',justifyContent:'center',gap:'10px'}}>
+                    <Typography sx={{mt:1}}>{sear[0]?.jobDetail?.jobRole}</Typography>
+                    <Button sx={{mt:'2px'}} onClick={handleDelete}><DeleteForeverIcon sx={{color:'red'}}/></Button>
+                    </Box> : ''}
+                    </Box>
                     <Popover
                       id={id}
                       open={open}

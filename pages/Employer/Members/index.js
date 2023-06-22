@@ -53,6 +53,9 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { useTheme } from "@mui/material/styles";
 import Employer from "..";
+import 'react-phone-input-2/lib/bootstrap.css';
+import 'react-phone-input-2/lib/style.css';
+
 uuidv4();
 const Members = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
