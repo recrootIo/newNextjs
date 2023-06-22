@@ -25,9 +25,10 @@ import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
 import { openAlert } from "@/redux/slices/alert";
-import { ERROR , SUCCESS } from "@/utils/constants";
+import { ERROR, SUCCESS } from "@/utils/constants";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Header from "@/components/Header";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -75,11 +76,9 @@ function Signin() {
     dispatch(login({ values }))
       .unwrap()
       .then((originalPromiseResult) => {
-        axios
-        .get("https://ipapi.co/json/")
-        .then((response) => {
+        axios.get("https://ipapi.co/json/").then((response) => {
           Cookies.set("country", response.data?.country);
-        })
+        });
         if (
           originalPromiseResult.User.email_is_verified === false &&
           originalPromiseResult.User.recrootUserType !== "Member"
@@ -165,6 +164,7 @@ function Signin() {
 
   return (
     <section className="signInMain">
+      <Header title={"SIGN IN"} />
       <Container
         maxWidth="sm"
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
@@ -201,7 +201,7 @@ function Signin() {
               }}
             >
               <CardContent>
-                <Stack sx={{ alignItems: "center", gap: "20px" }}>
+                <Stack sx={{ alignItems: "center", gap: "16px" }}>
                   <Stack sx={{ alignItems: "center" }}>
                     <CustomTypography
                       sx={{ fontSize: "30px", fontWeight: "900" }}
@@ -227,8 +227,14 @@ function Signin() {
                       </Link>
                     </Stack>
                   </Stack>
+
                   <Stack
-                    sx={{ alignItems: "center", gap: "20px", width: "100%" }}
+                    sx={{
+                      alignItems: "center",
+                      gap: "15px",
+                      width: "95%",
+                      flexDirection: { md: "row", sm: "column", xs: "column" },
+                    }}
                   >
                     <button onClick={handleClick} className="linkedinButton">
                       <span>
@@ -267,23 +273,9 @@ function Signin() {
                       </span>
                     </button>
                   </Stack>
+
                   <Divider>OR</Divider>
-                  {/* <img
-                      src="/signIn.png"
-                      className="signInSideImage1"
-                      alt=""
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                    />
-                    <img
-                      src="/signIn2.png"
-                      className="signInSideImage2"
-                      alt=""
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                    /> */}
+
                   <form
                     onSubmit={(e) => {
                       handleLogin(e);
@@ -307,6 +299,7 @@ function Signin() {
                       onChange={handleChange}
                       value={values.email}
                     />
+
                     <OutlinedInput
                       id="outlined-adornment-password"
                       type={showPassword ? "text" : "password"}
