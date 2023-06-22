@@ -1871,7 +1871,6 @@ a {
   }
 }
 
-
 @media (max-width: 470px) {
   .fc .fc-toolbar.fc-header-toolbar {
     display: block;
@@ -1883,3 +1882,6 @@ a {
   }
 }
 
+.ql-container.ql-snow {
+  border: none;
+}

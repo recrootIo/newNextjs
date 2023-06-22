@@ -419,6 +419,7 @@ const JobDetails = () => {
               sx={{
                 width: "100%",
                 height: "auto",
+                bgcolor: "white",
               }}
             >
               <EditorToolbar sx={{ bgcolor: "#F2F8FD" }} />
@@ -430,7 +431,7 @@ const JobDetails = () => {
                 modules={modules}
                 formats={formats}
                 className="textareaQuestion"
-                style={{ height: "250px" }}
+                style={{ height: "250px", borderColor: "red" }}
               />
             </Box>
             <Stack

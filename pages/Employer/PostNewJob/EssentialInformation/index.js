@@ -80,7 +80,7 @@ const EssentialInformation = () => {
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
   const jobsmeen = useSelector((state) => state.jobs);
-  const country = Cookies.get('country')
+  const country = Cookies.get("country");
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 2);
   const [value, setValue] = useState(
@@ -109,7 +109,7 @@ const EssentialInformation = () => {
           roles,
         })
       );
-    dispatch(skillSet([...roles]));
+      dispatch(skillSet([...roles]));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs]);
@@ -193,7 +193,7 @@ const EssentialInformation = () => {
   const handleImmediateType = (event) => {
     dispatch(immediateSet(event.target.checked));
   };
-console.log(jobsmeen,'err')
+  console.log(jobsmeen, "err");
   return (
     <>
       <Box>
@@ -252,9 +252,7 @@ console.log(jobsmeen,'err')
               >
                 {CAREER_LEVEL.map((CareerLevel) => (
                   <MenuItem key={CareerLevel} value={CareerLevel}>
-                    <CustomTypography textAlign="center">
-                      {CareerLevel}
-                    </CustomTypography>
+                    <CustomTypography>{CareerLevel}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>
@@ -370,7 +368,12 @@ console.log(jobsmeen,'err')
                       ? value
                       : new Date(jobs.applicationDeadline)) || new Date()
                   }
-                  disabled={!(full !== null)  || !( companyDet?.jobSlot === true && full === "jSlot") || (companyDet?.package?.subscription_package === "SuperEmployer")}
+                  disabled={
+                    !(full !== null) ||
+                    !(companyDet?.jobSlot === true && full === "jSlot") ||
+                    companyDet?.package?.subscription_package ===
+                      "SuperEmployer"
+                  }
                   onChange={handleChangeDate}
                   renderInput={(params) => (
                     <TextField
@@ -559,7 +562,8 @@ console.log(jobsmeen,'err')
             </Stack>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
-          companyDet?.package?.subscription_package === "SuperEmployer" || jobsmeen?.premium === true? (
+          companyDet?.package?.subscription_package === "SuperEmployer" ||
+          jobsmeen?.premium === true ? (
             <Box>
               <FormGroup>
                 <FormControlLabel
