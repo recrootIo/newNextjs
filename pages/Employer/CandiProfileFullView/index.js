@@ -765,20 +765,11 @@ const CandiFullProfileView = () => {
                             >
                               About
                             </CustomTypography>
-                            <Box
-                              className={styles.scrollbar}
-                              id="style-5"
-                              sx={{
-                                height: candidate?.about ? "100px" : "0px",
-                                overflow: "auto",
-                              }}
+                            <CustomTypography
+                              className={styles.FullProfileSectionData}
                             >
-                              <CustomTypography
-                                className={styles.FullProfileSectionData}
-                              >
-                                {candidate?.about}
-                              </CustomTypography>
-                            </Box>
+                              {candidate?.about}
+                            </CustomTypography>
                           </Box>
                           <Box
                             className={styles.FullProfilePersonalDetailsTypoBox}
@@ -1232,7 +1223,7 @@ const CandiFullProfileView = () => {
                                     variant="subtitle2"
                                     className={styles.ViewFullInfoMainText}
                                   >
-                                    Skill : {skil?.skillName}
+                                    {skil?.skillName}
                                   </CustomTypography>
                                 </Box>
                                 <LinearProgress
@@ -1250,6 +1241,9 @@ const CandiFullProfileView = () => {
                                     width: "70%",
                                     height: "10px",
                                     borderRadius: "5px",
+                                    "& .MuiLinearProgress-bar": {
+                                      backgroundColor: "#7AC1DA", // Replace with your desired color
+                                    },
                                   }}
                                 />
                               </Box>

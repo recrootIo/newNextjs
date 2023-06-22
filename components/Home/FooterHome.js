@@ -232,9 +232,7 @@ const FooterHome = () => {
                   >
                     Post New Job
                   </StyledTypo>
-                  <Link href={"/jobs"}>
-                    <StyledTypo>Job Packages</StyledTypo>
-                  </Link>
+                  {/* <StyledTypo>Job Packages</StyledTypo> */}
                 </div>
               </Box>
             </Grid>
