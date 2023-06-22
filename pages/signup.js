@@ -90,10 +90,35 @@ function Signup() {
 
   const regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
 
+  const StyledFirstCard = styled(Card)(
+    userType === "candidate"
+      ? {
+          background: "rgba(255, 255, 255, 0.3)",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(5px)",
+          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          width: "250px",
+          // height: "250px",
+          borderRadius: "20px",
+          cursor: "pointer",
+        }
+      : {
+          /* From https://css.glass */
+          background: "rgba(255, 255, 255, 0)",
+          borderRadius: "16px",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(0.2px)",
+          border: "1px solid rgba(255, 255, 255, 0.01)",
+          width: "250px",
+          // height: "250px",
+          cursor: "pointer",
+        }
+  );
+
   const StyledCard = styled(Card)(
     userType === "candidate"
       ? {
-          background: "rgba(255, 255, 255, 0.2)",
+          background: "rgba(255, 255, 255, 0.3)",
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           backdropFilter: "blur(5px)",
           border: " 1px solid rgba(255, 255, 255, 0.3)",
@@ -118,7 +143,7 @@ function Signup() {
   const NonCard = styled(Card)(
     userType === "employer"
       ? {
-          background: "rgba(255, 255, 255, 0.2)",
+          background: "rgba(255, 255, 255, 0.3)",
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           backdropFilter: "blur(5px)",
           border: " 1px solid rgba(255, 255, 255, 0.3)",
@@ -253,7 +278,7 @@ function Signup() {
           justifyContent: "center",
         }}
       >
-        <Grid container sx={{ gap: { md: "0", sm: "20px", xs: "20px" } }}>
+        <Grid container spacing={2}>
           <Grid
             item
             md={6}
@@ -285,32 +310,24 @@ function Signup() {
                 placeholder="blur"
               />
             </Stack>
-            <Stack
-              sx={{
-                justifyContent: "center",
-                gap: "20px",
-                alignItems: "center",
-                flexDirection: { md: "column", sm: " row", xs: "row" },
-                width: "100%",
-              }}
-            >
-              <StyledCard
-                variant="outlined"
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                md={6}
+                lg={5}
                 sx={{
-                  width: { md: "250px", xs: "100%", sm: "100%" },
                   display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
                   alignItems: "center",
-                  gap: "5px",
-                }}
-                onClick={() => {
-                  setuserType("candidate");
-                  setValues({ ...values, recrootUserType: "Candidate" });
+                  justifyContent: "center",
+                  order: { xs: 2, md: 1 },
                 }}
               >
-                <CardContent
+                <StyledFirstCard
+                  variant="outlined"
                   sx={{
+                    width: { lg: "250px", md: "100%", xs: "50%", sm: "100%" },
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -318,62 +335,146 @@ function Signup() {
                     gap: "5px",
                   }}
                 >
-                  <Image
-                    src="/candidate.png"
-                    className="loginImages"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    blurDataURL="URL"
-                    placeholder="blur"
-                  />
-                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
-                    Candidate
-                  </CustomTypography>
-                </CardContent>
-              </StyledCard>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <Image
+                      src="/candidate.png"
+                      className="loginImages"
+                      alt=""
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      blurDataURL="URL"
+                      placeholder="blur"
+                    />
+                    <CustomTypography
+                      sx={{ color: "white", fontWeight: "900" }}
+                    >
+                      Candidate
+                    </CustomTypography>
+                  </CardContent>
+                </StyledFirstCard>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={8}
+                md={6}
+                lg={7}
+                sx={{ order: { xs: 1, sm: 2 } }}
+              >
+                <Stack
+                  sx={{
+                    justifyContent: "center",
+                    gap: "20px",
+                    alignItems: "flex-start",
+                    flexDirection: { md: "column", sm: " row", xs: "row" },
+                    width: "100%",
+                  }}
+                >
+                  <StyledCard
+                    variant="outlined"
+                    sx={{
+                      width: {
+                        lg: "250px",
+                        md: "100%",
+                        xs: "100%",
+                        sm: "100%",
+                      },
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                    onClick={() => {
+                      setuserType("candidate");
+                      setValues({ ...values, recrootUserType: "Candidate" });
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <Image
+                        src="/candidate.png"
+                        className="loginImages"
+                        alt=""
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        blurDataURL="URL"
+                        placeholder="blur"
+                      />
+                      <CustomTypography
+                        sx={{ color: "white", fontWeight: "900" }}
+                      >
+                        Candidate
+                      </CustomTypography>
+                    </CardContent>
+                  </StyledCard>
 
-              <NonCard
-                variant="outlined"
-                sx={{
-                  width: { md: "250px", xs: "100%", sm: "100%" },
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "5px",
-                }}
-                onClick={() => {
-                  setuserType("employer");
-                  setValues({ ...values, recrootUserType: "Employer" });
-                }}
-              >
-                <CardContent
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                >
-                  <Image
-                    src="/Employer.png"
-                    className="loginImages"
-                    alt=""
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    blurDataURL="URL"
-                    placeholder="blur"
-                  />
-                  <CustomTypography sx={{ color: "white", fontWeight: "900" }}>
-                    Employer
-                  </CustomTypography>
-                </CardContent>
-              </NonCard>
-            </Stack>
+                  <NonCard
+                    variant="outlined"
+                    sx={{
+                      width: {
+                        lg: "250px",
+                        md: "100%",
+                        xs: "100%",
+                        sm: "100%",
+                      },
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                    onClick={() => {
+                      setuserType("employer");
+                      setValues({ ...values, recrootUserType: "Employer" });
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <Image
+                        src="/Employer.png"
+                        className="loginImages"
+                        alt=""
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        blurDataURL="URL"
+                        placeholder="blur"
+                      />
+                      <CustomTypography
+                        sx={{ color: "white", fontWeight: "900" }}
+                      >
+                        Employer
+                      </CustomTypography>
+                    </CardContent>
+                  </NonCard>
+                </Stack>
+              </Grid>
+            </Grid>
           </Grid>
 
           <Grid item md={6} sm={12} xs={12}>

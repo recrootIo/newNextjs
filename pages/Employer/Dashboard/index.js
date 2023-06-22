@@ -59,9 +59,15 @@ import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import axios from "axios";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
-import Employer from "..";
-import http from "@/redux/http-common";
 import dynamic from "next/dynamic";
+import Employer from "..";
+
+const DatagridClient = dynamic(
+  () => import("../../../components/Employers/DatagridClient"),
+  { ssr: false }
+);
+
+import http from "@/redux/http-common";
 import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
@@ -77,6 +83,7 @@ const BasicButton = styled(Button)({
   marginBottom: "10px",
   marginTop: "15px",
 });
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -1002,13 +1009,21 @@ const EmpoyerDashboard = () => {
 
   return (
     <>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
       <Employer>
-        {/* <Grid item xs={10}> */}
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1044,7 +1059,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1080,7 +1094,6 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
-              // height: "235px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1373,7 +1386,6 @@ const EmpoyerDashboard = () => {
             <Card
               sx={{
                 width: "100%",
-                // height: "215px",
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
@@ -1414,7 +1426,7 @@ const EmpoyerDashboard = () => {
             <Card
               sx={{
                 width: "100%",
-                // height: "235px",
+
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
@@ -1456,8 +1468,7 @@ const EmpoyerDashboard = () => {
         ) : (
           ""
         )}
-        {/* </Grid> */}
-        {/* <Grid item xs={12} > */}
+
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -1475,7 +1486,7 @@ const EmpoyerDashboard = () => {
           </AppBar>
           <TabPanel id="simple-tab-0" value={value} index={0}>
             <Box sx={{ height: "550px", width: "100%" }}>
-              <DataGrid
+              <DatagridClient
                 sx={{ display: "flex", justifyContent: "center" }}
                 getRowId={handleGetRowId}
                 rows={rows}
@@ -1483,18 +1494,15 @@ const EmpoyerDashboard = () => {
               />
             </Box>
           </TabPanel>
-          {/* <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
-                <TabPanel id="simple-tab-0" value={value} index={1}>
-                <div style={{ height: "550px", width: "100%" }}>
-                  <DataGrid
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    getRowId={handleGetRowId}
-                    rows={rows2}
-                    columns={columns}
-                  />
-                </div>
-              </TabPanel>
+              <DatagridClient
+                value={value}
+                index={1}
+                getRowId={handleGetRowId}
+                rows={rows2}
+                columns={columns}
+              />
             ) : (
               <Box
                 sx={{
@@ -1510,9 +1518,9 @@ const EmpoyerDashboard = () => {
                 </Typography>
               </Box>
             )}
-          </TabPanel> */}
+          </TabPanel>
         </Box>
-        {/* </Grid> */}
+
         <Dialog
           open={open1}
           onClose={handleClose1}
@@ -1586,17 +1594,6 @@ const EmpoyerDashboard = () => {
             </BasicButton>
           </DialogActions>
         </Dialog>
-
-        <Tour
-          onRequestClose={closeTour}
-          disableInteraction={true}
-          steps={tourConfig}
-          isOpen={isTourOpen}
-          maskClassName={styles.mask}
-          className={styles.helper}
-          rounded={8}
-          accentColor={accentColor}
-        />
       </Employer>
     </>
   );
