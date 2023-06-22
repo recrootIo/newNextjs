@@ -254,6 +254,7 @@ const JobDetails = () => {
   };
   const country = Cookies.get("country");
 
+
   const updateValue = async () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ jobDetails: false });
@@ -358,6 +359,7 @@ const JobDetails = () => {
     setTourOpen(() => company?.tours?.jobDetails);
   }, [company?.tours?.jobDetails]);
 
+
   return (
     <>
       <CardContent>
@@ -391,9 +393,11 @@ const JobDetails = () => {
           {country === "LK" ||
           (companyDet.jobSlot === true &&
             companyDet.package?.paymentStatus === "Completed") ? (
+
             <Box sx={{ width: "100%", p: "0 0 20px 0" }} className="plan">
               <Typography variant="p">Choose a plan</Typography>
-              <FormControl fullWidth>
+              <FormControl fullWidth  sx={{ ...style.txtinput, bgcolor: "white" }}>
+
                 <InputLabel id="demo-simple-select-label">
                   Choose a plan
                 </InputLabel>
@@ -409,25 +413,31 @@ const JobDetails = () => {
                   }}
                 >
                   <MenuItem value="free" disabled={freeCount === 0}>
-                    <Typography textAlign="center">
+
+                    <CustomTypography>
                       Free Job Post - Jobs Left : {freeCount}
-                    </Typography>
+                    </CustomTypography>
+
                   </MenuItem>
                   <MenuItem
                     value="pro"
                     disabled={proCOunt === 0 || proCOunt === undefined}
                   >
-                    <Typography textAlign="center">
+
+                    <CustomTypography>
                       Pro Job Post - Jobs Left : {proCOunt}
-                    </Typography>
+                    </CustomTypography>
+
                   </MenuItem>
                   <MenuItem
                     value="premium"
                     disabled={preCOunt === 0 || preCOunt === undefined}
                   >
-                    <Typography textAlign="center">
+
+                    <CustomTypography>
                       Premium Job Post - Jobs Left : {preCOunt}
-                    </Typography>
+                    </CustomTypography>
+
                   </MenuItem>
                   <MenuItem
                     value="jSlot"
@@ -438,9 +448,9 @@ const JobDetails = () => {
                       )
                     }
                   >
-                    <Typography textAlign="center">
-                      Growth Plan - Job Slot
-                    </Typography>
+
+                    <CustomTypography>Growth Plan - Job Slot</CustomTypography>
+
                   </MenuItem>
 
                   {companyDet?.jobSlotGold === true ? (
@@ -453,9 +463,9 @@ const JobDetails = () => {
                         )
                       }
                     >
-                      <Typography textAlign="center">
-                        Gold Plan - Job Slot
-                      </Typography>
+
+                      <CustomTypography>Gold Plan - Job Slot</CustomTypography>
+
                     </MenuItem>
                   ) : (
                     ""
@@ -491,8 +501,6 @@ const JobDetails = () => {
                     ...params.InputProps,
                     type: "search",
                   }}
-                  color="warning"
-                  //sx={{ color: "" }}
                 />
               )}
             />
@@ -532,6 +540,7 @@ const JobDetails = () => {
               sx={{
                 width: "100%",
                 height: "auto",
+                bgcolor: "white",
               }}
             >
               <EditorToolbar sx={{ bgcolor: "#F2F8FD" }} />

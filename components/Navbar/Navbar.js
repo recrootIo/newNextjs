@@ -162,6 +162,18 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <>
+                      <Link
+                        href="/Employer/Dashboard"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                        prefetch
+                      >
+                        Dashboard
+                      </Link>
+
                       <Button
                         id="fade-button"
                         aria-controls={openEmp ? "fade-menu" : undefined}
@@ -323,4 +335,4 @@ const Navbar = () => {
 };
 
 // export default Navbar;
-export default dynamic (() => Promise.resolve(Navbar), {ssr: false})
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

@@ -197,6 +197,7 @@ const EssentialInformation = () => {
     dispatch(immediateSet(event.target.checked));
   };
 
+
   const [isTourOpen, setTourOpen] = React.useState(false);
 
   const updateValue = async () => {
@@ -283,6 +284,7 @@ const EssentialInformation = () => {
     setTourOpen(() => company?.tours?.jobEssential);
   }, [company?.tours?.jobEssential]);
 
+
   return (
     <>
       <Box className="essentialInfo">
@@ -321,10 +323,7 @@ const EssentialInformation = () => {
                 width: { xs: "100%", sm: "50%" },
               }}
             >
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ color: "#BAD4DF" }}
-              >
+              <InputLabel id="demo-simple-select-label">
                 Career Level
               </InputLabel>
               <Select
@@ -341,9 +340,7 @@ const EssentialInformation = () => {
               >
                 {CAREER_LEVEL.map((CareerLevel) => (
                   <MenuItem key={CareerLevel} value={CareerLevel}>
-                    <CustomTypography textAlign="center">
-                      {CareerLevel}
-                    </CustomTypography>
+                    <CustomTypography>{CareerLevel}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>
@@ -360,12 +357,7 @@ const EssentialInformation = () => {
                 width: { xs: "100%", sm: "50%" },
               }}
             >
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ color: "#BAD4DF" }}
-              >
-                Experience
-              </InputLabel>
+              <InputLabel id="demo-simple-select-label">Experience</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -381,9 +373,7 @@ const EssentialInformation = () => {
               >
                 {USER_EXPERIENCES.map((Experiences) => (
                   <MenuItem key={Experiences} value={Experiences}>
-                    <CustomTypography textAlign="center">
-                      {Experiences}
-                    </CustomTypography>
+                    <CustomTypography>{Experiences}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>
@@ -402,10 +392,7 @@ const EssentialInformation = () => {
                 width: { xs: "100%", sm: "50%" },
               }}
             >
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{ color: "#BAD4DF" }}
-              >
+              <InputLabel id="demo-simple-select-label">
                 Qualifications
               </InputLabel>
               <Select
@@ -423,9 +410,7 @@ const EssentialInformation = () => {
               >
                 {EDUCATION_LEVELS.map((Qualifications) => (
                   <MenuItem key={Qualifications} value={Qualifications}>
-                    <CustomTypography textAlign="center">
-                      {Qualifications}
-                    </CustomTypography>
+                    <CustomTypography>{Qualifications}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>
@@ -483,9 +468,7 @@ const EssentialInformation = () => {
             </Box>
           </Stack>
           <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
-              Notice Period
-            </InputLabel>
+            <InputLabel id="demo-simple-select-label">Notice Period</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -512,9 +495,7 @@ const EssentialInformation = () => {
             )}
           </FormControl>
           <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
-              Job Type
-            </InputLabel>
+            <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -539,9 +520,7 @@ const EssentialInformation = () => {
             )}
           </FormControl>
           <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
-            <InputLabel id="demo-simple-select-label" sx={{ color: "#BAD4DF" }}>
-              Salary Type
-            </InputLabel>
+            <InputLabel id="demo-simple-select-label">Salary Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -580,10 +559,7 @@ const EssentialInformation = () => {
                   width: "50%",
                 }}
               >
-                <InputLabel
-                  id="demo-simple-select-label"
-                  sx={{ color: "#BAD4DF" }}
-                >
+                <InputLabel id="demo-simple-select-label">
                   Salary Currency
                 </InputLabel>
                 <Select
@@ -611,7 +587,6 @@ const EssentialInformation = () => {
                 )}
               </FormControl>
               <TextField
-                InputLabelProps={{ style: { color: "#BAD4DF" } }}
                 id="outlined-basic"
                 label="Min Salary"
                 value={jobs.salary && jobs.salary.minSalary}
@@ -631,7 +606,6 @@ const EssentialInformation = () => {
                 }}
               />
               <TextField
-                InputLabelProps={{ style: { color: "#BAD4DF" } }}
                 id="outlined-basic"
                 value={jobs.salary && jobs.salary.maxSalary}
                 onChange={(e) => {
