@@ -39,7 +39,9 @@ import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useTheme } from "@mui/material/styles";
-
+import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 require("jspdf-autotable");
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -359,6 +361,69 @@ const Subscriptions = () => {
   const county = state?.countryCurrecy === "INR";
 
   const theme = useTheme();
+  const [isTourOpen, setTourOpen] = React.useState(false);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ subscription: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".changePlan",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to update your pricing plan
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".billingHistory",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Clicking on any row will allow you to examine the invoice
+            information for the respective completed payment.
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const comp = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.subscription);
+  }, [comp?.tours?.subscription]);
 
   return (
     <>
@@ -495,6 +560,7 @@ const Subscriptions = () => {
                               fontSize: "16px",
                               width: { xs: "100%", sm: "50%", md: "50%" },
                             }}
+                            className="changePlan"
                             onClick={handleNavigate}
                           >
                             Change Plan
@@ -821,7 +887,12 @@ const Subscriptions = () => {
             Download Invoice
           </Button>
         </Box>
-        <Grid item xs={12} sx={{ mt: { xs: "30px", md: "0px" } }}>
+        <Grid
+          item
+          xs={12}
+          sx={{ mt: { xs: "30px", md: "0px" } }}
+          className="billingHistory"
+        >
           <Box sx={{ width: "100%" }}>
             <CustomTypography
               sx={{

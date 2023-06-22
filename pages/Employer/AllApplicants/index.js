@@ -79,10 +79,14 @@ import EditorToolbar, {
 } from "@/components/EditorToolbar/EditorToolbar";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+
 const shadow =
   "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
 const AllApplicants = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [isTourOpen, setTourOpen] = React.useState(false);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -604,6 +608,88 @@ const AllApplicants = () => {
     targetElement.scrollIntoView({ behavior: "smooth" });
     router.push("/Employer/AllApplicants", undefined, { shallow: true });
   }
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ allApplicant: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".filtersJob",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Here, you can sort applicants by either the jobs you posted on
+            Recroot or their current status
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".viewDetails",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            By clicking here, you can access more details about the applicant
+            and download their resume
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to proceed to the next step
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+  const comp = useSelector((state) => state?.company?.companyDetl);
+  useEffect(() => {
+    setTourOpen(() => comp?.tours?.allApplicant);
+  }, [comp?.tours?.allApplicant]);
+
   return (
     <>
       <Employer>
@@ -736,6 +822,7 @@ const AllApplicants = () => {
                 ""
               ) : (
                 <Stack
+                  className="filtersJob"
                   direction={{ xs: "column", md: "row" }}
                   spacing={2}
                   sx={{ mb: "30px", width: { xs: "100%", md: "50%" } }}
@@ -1302,6 +1389,16 @@ const AllApplicants = () => {
             </Box>
           </CardContent>
         </Card>
+        <Tour
+          onRequestClose={closeTour}
+          disableInteraction={true}
+          steps={tourConfig}
+          isOpen={isTourOpen}
+          maskClassName={styles.mask}
+          className={styles.helper}
+          rounded={8}
+          accentColor={accentColor}
+        />
       </Employer>
     </>
   );

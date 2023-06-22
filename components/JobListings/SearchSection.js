@@ -284,6 +284,7 @@ const SearchSection = ({ ...props }) => {
     // page,
     variant,
   } = props;
+  console.log(sector,'sector')
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
@@ -912,7 +913,7 @@ const SearchSection = ({ ...props }) => {
                           <Tab label="Job Type" {...a11yProps(3)} />
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                          <Box sx={{ width: "100px" }}>
+                          <Box sx={{ width: {sm:'300px',xs:"100px"} }}>
                             {sectors.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
@@ -930,7 +931,7 @@ const SearchSection = ({ ...props }) => {
                           </Box>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                          <Box sx={{ width: "100px" }}>
+                          <Box sx={{ width: {sm:'300px',xs:"100px"} }}>
                             {categories.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}

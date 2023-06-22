@@ -95,7 +95,7 @@ export const getServerSideProps = async (context) => {
       category: Array.isArray(category) ? category : [category],
       page,
       variant,
-      sector,
+      sector: Array.isArray(sector) ? sector : [sector],
       company,
       experience: Array.isArray(experience) ? experience : [experience],
       jobType: Array.isArray(jobType) ? jobType : [jobType],

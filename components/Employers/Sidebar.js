@@ -25,6 +25,7 @@ export default function EmployerSidebar() {
   const freeCount = freePack === true ? 2 - cjobs.length : 0;
   const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
+
   const handleListItemClick = (val) => {
     dispatch(selectRoute(val));
     if (val === "PostNewJob") {
@@ -124,18 +125,17 @@ export default function EmployerSidebar() {
         pb: "20px",
       }}
     >
+      <List component="nav" aria-label="main mailbox folders">
+        <ListItemButton
+          sx={{ display: "flex", justifyContent: "center" }}
+          onClick={() => handleListItemClick()}
+        >
+          <Image src="/empImg.png" alt="" width="40" height="40" />
+        </ListItemButton>
+        <Divider variant="middle" color="gray" />
 
-        <List component="nav" aria-label="main mailbox folders">
-            <ListItemButton
-                sx={{ display: "flex", justifyContent: "center" }}
-                onClick={() => handleListItemClick()}
-            >
-                <Image src="/empImg.png" alt="" width="40" height="40" />
-            </ListItemButton>
-            <Divider variant="middle" color="gray" />
-            <Link href={'/Employer/Dashboard'}>
-            <Tooltip title="Dashboard" placement="right">
-
+        <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
+          <Tooltip title="Dashboard" placement="right">
             <ListItemButton
               sx={{
                 display: "flex",
@@ -148,7 +148,12 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Tooltip>
         </Link>
-        <Tooltip title="Company Profile" placement="right">
+
+        <Tooltip
+          title="Company Profile"
+          placement="right"
+          className="companyProfile"
+        >
           <Link href={"/Employer/CompanyProfile"}>
             <ListItemButton
               sx={{
@@ -167,8 +172,8 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Link>
         </Tooltip>
-        {/* <Link href={'/Employer/PostNewJob'}> */}
-        <Tooltip title="Post New Job" placement="right">
+
+        <Tooltip title="Post New Job" placement="right" className="postNewJob">
           <ListItemButton
             sx={{
               display: "flex",
@@ -180,8 +185,12 @@ export default function EmployerSidebar() {
             <Image src="/jobs.png" alt="" width="40" height="40" />
           </ListItemButton>
         </Tooltip>
-        {/* </Link> */}
-        <Tooltip title="All Applicants" placement="right">
+
+        <Tooltip
+          title="All Applicants"
+          placement="right"
+          className="allApplicants"
+        >
           <Link href={"/Employer/AllApplicants"}>
             <ListItemButton
               sx={{
@@ -195,7 +204,12 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Link>
         </Tooltip>
-        <Tooltip title="Scheduled Interviews" placement="right">
+
+        <Tooltip
+          title="Scheduled Interviews"
+          placement="right"
+          className="interview"
+        >
           <Link href={"/Employer/ScheduledInterviews"}>
             <ListItemButton
               sx={{
@@ -209,7 +223,12 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Link>
         </Tooltip>
-        <Tooltip title="Subscription" placement="right">
+
+        <Tooltip
+          title="Subscription"
+          placement="right"
+          className="subscription"
+        >
           <Link href={"/Employer/Subscription"}>
             <ListItemButton
               sx={{ display: "flex", justifyContent: "center" }}
@@ -219,7 +238,8 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Link>
         </Tooltip>
-        <Tooltip title="My Account" placement="right">
+
+        <Tooltip title="My Account" placement="right" className="account">
           <Link href={"/Employer/MyAccount"}>
             <ListItemButton
               sx={{ display: "flex", justifyContent: "center" }}
@@ -229,6 +249,7 @@ export default function EmployerSidebar() {
             </ListItemButton>
           </Link>
         </Tooltip>
+
         <Tooltip title="Logout" placement="right">
           <ListItemButton
             sx={{ display: "flex", justifyContent: "center" }}

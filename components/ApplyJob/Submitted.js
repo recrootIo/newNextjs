@@ -87,7 +87,7 @@ const Submitted = () => {
         <CustomTypography
           variant="h4"
           gutterBottom
-          sx={{ color: "#2699FF", fontFamily: BOLD }}
+          sx={{ color: "#2699FF", fontFamily: BOLD ,textAlign:'center'}}
         >
           Thank You For Applying
         </CustomTypography>

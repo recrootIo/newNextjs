@@ -47,6 +47,11 @@ import moment from "moment";
 import Employer from "..";
 import { getJobsfil } from "@/redux/slices/applyJobs";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import dynamic from "next/dynamic";
+import styles from "../../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+
 const style = {
   passinput: {
     "& .MuiOutlinedInput-root": {
@@ -166,10 +171,55 @@ const ScheduledInterviews = () => {
 setNames("")
 setsear(seared)
   }
+  const [isTourOpen, setTourOpen] = React.useState(false);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ interview: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".interviewPage",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            This section allows you to update the applicants&apos; status and
+            schedule interviews with them
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>DONE</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.interview);
+  }, [company?.tours?.interview]);
+
   return (
     <>
       <Employer>
         <Card
+          className="interviewPage"
           sx={{
             width: "100%",
             backgroundColor: "#F2F8FD",
@@ -307,6 +357,16 @@ setsear(seared)
           </CardContent>
         </Card>
       </Employer>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };
