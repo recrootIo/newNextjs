@@ -587,6 +587,9 @@ const Subscriptions = () => {
                   </Grid>
                 </Box>
               </Card>
+              {paymentInfo.package.subscription_package === "Free" ? (
+                ""
+              ) : (
               <Card
                 sx={{
                   width: "100%",
@@ -597,9 +600,6 @@ const Subscriptions = () => {
                   backgroundSize: "cover",
                 }}
               >
-                {paymentInfo.package.subscription_package === "Free" ? (
-                  ""
-                ) : (
                   <Box
                     sx={{
                       height: "160px",
@@ -713,8 +713,8 @@ const Subscriptions = () => {
                           </Grid> */}
                     </Grid>
                   </Box>
-                )}
               </Card>
+                )}
             </Stack>
           </Grid>
           <Grid item xs={12} md={5}>

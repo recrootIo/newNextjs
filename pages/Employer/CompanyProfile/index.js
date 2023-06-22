@@ -793,7 +793,7 @@ const CompanyProfile = () => {
                 }}
               >
                 <EditorToolbar />
-                <ReactQuill
+                {typeof window !== 'undefined' && (      <ReactQuill
                   placeholder="Add Description"
                   value={cmpin.infodes}
                   onChange={handleDesc}
@@ -802,7 +802,7 @@ const CompanyProfile = () => {
                   formats={formats}
                   className="textareaQuestion"
                   style={{ height: "250px" }}
-                />
+                />)}
               </Box>
             </Box>
             <Box display="block" sx={styles.infofld}>
@@ -941,7 +941,7 @@ const CompanyProfile = () => {
                 mt: "40px",
               }}
             >
-              <Button variant="outlined" sx={{ width: "50%", height: "55px" }}>
+              <Button disabled variant="outlined" sx={{ width: "50%", height: "55px" }}>
                 Previous
               </Button>
               <Button
