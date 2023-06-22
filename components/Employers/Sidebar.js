@@ -124,23 +124,22 @@ export default function EmployerSidebar() {
         pb: "20px",
       }}
     >
-
-        <List component="nav" aria-label="main mailbox folders">
-            <ListItemButton
-                sx={{ display: "flex", justifyContent: "center" }}
-                onClick={() => handleListItemClick()}
-            >
-                <Image src="/empImg.png" alt="" width="40" height="40" />
-            </ListItemButton>
-            <Divider variant="middle" color="gray" />
-            <Link href={'/Employer/Dashboard'}>
-            <Tooltip title="Dashboard" placement="right">
-
+      <List component="nav" aria-label="main mailbox folders">
+        <ListItemButton
+          sx={{ display: "flex", justifyContent: "center" }}
+          onClick={() => handleListItemClick()}
+        >
+          <Image src="/empImg.png" alt="" width="40" height="40" />
+        </ListItemButton>
+        <Divider variant="middle" color="gray" />
+        <Link href={"/Employer/Dashboard"}>
+          <Tooltip title="Dashboard" placement="right">
             <ListItemButton
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 background: select === "Dashboard" ? background : "",
+                height: "65px",
               }}
               onClick={() => handleListItemClick("Dashboard")}
             >
@@ -154,6 +153,7 @@ export default function EmployerSidebar() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                height: "65px",
                 background:
                   select === "CompanyProfile" ||
                   select === "Members" ||
@@ -172,6 +172,7 @@ export default function EmployerSidebar() {
           <ListItemButton
             sx={{
               display: "flex",
+              height: "65px",
               justifyContent: "center",
               background: select === "PostNewJob" ? background : "",
             }}
@@ -187,6 +188,7 @@ export default function EmployerSidebar() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                height: "65px",
                 background: select === "AllApplicants" ? background : "",
               }}
               onClick={() => handleListItemClick("AllApplicants")}
@@ -201,6 +203,7 @@ export default function EmployerSidebar() {
               sx={{
                 display: "flex",
                 justifyContent: "center",
+                height: "65px",
                 background: select === "ScheduledInterviews" ? background : "",
               }}
               onClick={() => handleListItemClick("ScheduledInterviews")}
@@ -212,7 +215,7 @@ export default function EmployerSidebar() {
         <Tooltip title="Subscription" placement="right">
           <Link href={"/Employer/Subscription"}>
             <ListItemButton
-              sx={{ display: "flex", justifyContent: "center" }}
+              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/subscription.png" alt="" width="40" height="40" />
@@ -222,7 +225,7 @@ export default function EmployerSidebar() {
         <Tooltip title="My Account" placement="right">
           <Link href={"/Employer/MyAccount"}>
             <ListItemButton
-              sx={{ display: "flex", justifyContent: "center" }}
+              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/myAccount.png" alt="" width="40" height="40" />
@@ -231,7 +234,7 @@ export default function EmployerSidebar() {
         </Tooltip>
         <Tooltip title="Logout" placement="right">
           <ListItemButton
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ display: "flex", justifyContent: "center", height: "65px" }}
             onClick={logOut}
           >
             <Image src="/power-icon.png" alt="" width="40" height="40" />

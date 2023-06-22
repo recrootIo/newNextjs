@@ -1,14 +1,142 @@
 "use client";
+import Cookies from "js-cookie";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Box, Stack, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
+import { companyJobs } from "@/redux/slices/job";
 
 const StyledTypo = styled(CustomTypography)({
   cursor: "pointer",
+  color: "white",
 });
 
 const FooterHome = () => {
+  const user = Cookies.get();
+  const { push } = useRouter();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCompanyDetails());
+    dispatch(companyJobs());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const company = useSelector((state) => state.company?.companyDetl);
+  const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
+  const freePack = company.package?.subscription_package === "Free";
+  const freeCount = freePack === true ? 2 - cjobs.length : 0;
+  // const proCOunt = company?.jobCounts?.proCount;
+  const preCOunt = company?.jobCounts?.premiumCount;
+
+  const handlePostNewJobClick = () => {
+    if (
+      user?.country === "LK" ||
+      (company.jobSlot === true &&
+        company.package?.paymentStatus === "Completed")
+    ) {
+      if (
+        company.jobSlot === true &&
+        company.package?.paymentStatus === "Completed"
+      ) {
+        dispatch(
+          setEditJob({
+            salary: {},
+            question: [
+              {
+                id: new Date().getTime(),
+                questions: "",
+                answer: "",
+                preferedAns: "",
+              },
+            ],
+            requiredSkill: [],
+            address: [],
+            featureType: false,
+            queshow: "",
+          })
+        ).then(
+          setTimeout(() => {
+            push("/Employer/PostNewJob");
+          }, 500)
+        );
+        return;
+      }
+      // eslint-disable-next-line no-mixed-operators
+      if (
+        (freeCount === 0 && preCOunt === 0) ||
+        (freeCount === 0 && preCOunt === undefined)
+      ) {
+        if (company.package?.subscription_package === undefined) {
+          dispatch(
+            openAlert({
+              type: ERROR,
+              message: "Subscribe A Plan To Post A job",
+            })
+          );
+        } else {
+          dispatch(
+            openAlert({
+              type: ERROR,
+              message: "Your Job Limit Was Reached!",
+            })
+          );
+        }
+        push("/Pricing");
+        return;
+      }
+
+      dispatch(
+        setEditJob({
+          salary: {},
+          question: [
+            {
+              id: new Date().getTime(),
+              questions: "",
+              answer: "",
+              preferedAns: "",
+            },
+          ],
+          requiredSkill: [],
+          address: [],
+          featureType: false,
+          queshow: "true",
+          packageType: "",
+        })
+      ).then(
+        setTimeout(() => {
+          push("/Employer/PostNewJob");
+        }, 500)
+      );
+    } else {
+      dispatch(
+        setEditJob({
+          salary: {},
+          question: [
+            {
+              id: new Date().getTime(),
+              questions: "",
+              answer: "",
+              preferedAns: "",
+            },
+          ],
+          requiredSkill: [],
+          address: [],
+          featureType: false,
+          queshow: "",
+        })
+      ).then(
+        setTimeout(() => {
+          push("/Employer/PostNewJob");
+        }, 500)
+      );
+    }
+  };
+
   return (
     <div className="footer">
       <Box
@@ -94,9 +222,19 @@ const FooterHome = () => {
                   </StyledTypo>
                 </div>
                 <div className="abt">
-                  <StyledTypo>Job Listing</StyledTypo>
-                  <StyledTypo>Post New Job</StyledTypo>
-                  <StyledTypo>Job Packages</StyledTypo>
+                  <Link href={"/jobs"}>
+                    <StyledTypo>Job Listing</StyledTypo>
+                  </Link>
+                  <StyledTypo
+                    onClick={() => {
+                      handlePostNewJobClick();
+                    }}
+                  >
+                    Post New Job
+                  </StyledTypo>
+                  <Link href={"/jobs"}>
+                    <StyledTypo>Job Packages</StyledTypo>
+                  </Link>
                 </div>
               </Box>
             </Grid>
@@ -117,10 +255,18 @@ const FooterHome = () => {
                   </StyledTypo>
                 </div>
                 <div className="abt">
-                  <StyledTypo>Corporate Info</StyledTypo>
-                  <StyledTypo>Privacy Info</StyledTypo>
-                  <StyledTypo>Information Security Policy</StyledTypo>
-                  <StyledTypo>Website Term of Use</StyledTypo>
+                  <Link href={"/corporateinfo"}>
+                    <StyledTypo>Corporate Info</StyledTypo>
+                  </Link>
+                  <Link href={"/privacyinfo"}>
+                    <StyledTypo>Privacy Info</StyledTypo>
+                  </Link>
+                  <Link href={"/infoSecurityPolicy"}>
+                    <StyledTypo>Information Security Policy</StyledTypo>
+                  </Link>
+                  <Link href={"/termsOfUse"}>
+                    <StyledTypo>Website Term of Use</StyledTypo>
+                  </Link>
                 </div>
               </Box>
             </Grid>
@@ -140,9 +286,13 @@ const FooterHome = () => {
                   </StyledTypo>
                 </div>
                 <div className="abt">
-                  <StyledTypo>Blogs</StyledTypo>
+                  <Link href={"/blogs"}>
+                    <StyledTypo>Blogs</StyledTypo>
+                  </Link>
                   <StyledTypo>Videos</StyledTypo>
-                  <StyledTypo>FAQ</StyledTypo>
+                  <Link href={"/FAQ"}>
+                    <StyledTypo>FAQ</StyledTypo>
+                  </Link>
                 </div>
               </Box>
 
@@ -160,16 +310,22 @@ const FooterHome = () => {
                   marginTop: "20px",
                 }}
               >
-                <Image
-                  src="/instagram.png"
-                  alt=""
-                  width={45}
-                  style={{ mr: "20px" }}
-                  height={45}
-                  sizes="100vw"
-                />
-                <Image src="/linkedin.png" alt="" height={45} width={45} />
-                <Image src="/facebook.png" alt="" height={45} width={45} />
+                <Link href={"https://www.instagram.com/recroot.io/?hl=en"}>
+                  <Image
+                    src="/instagram.png"
+                    alt=""
+                    width={45}
+                    style={{ mr: "20px" }}
+                    height={45}
+                    sizes="100vw"
+                  />
+                </Link>
+                <Link href={"https://au.linkedin.com/company/recroot-io"}>
+                  <Image src="/linkedin.png" alt="" height={45} width={45} />
+                </Link>
+                <Link href={"https://www.facebook.com/Recrootit"}>
+                  <Image src="/facebook.png" alt="" height={45} width={45} />
+                </Link>
               </Stack>
             </Grid>
           </Grid>

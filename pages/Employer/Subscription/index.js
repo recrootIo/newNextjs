@@ -382,7 +382,7 @@ const Subscriptions = () => {
                     height: "67px",
                     display: "flex",
                     alignItems: "center",
-                    p: "0px 15px 0px 15px",
+                    p: "0px 25px 0px 25px",
                   }}
                 >
                   <CustomTypography
@@ -398,7 +398,7 @@ const Subscriptions = () => {
                 <Box
                   sx={{
                     height: "auto",
-                    p: "15px",
+                    p: "25px",
                   }}
                 >
                   <Grid container spacing={2}>
@@ -414,7 +414,7 @@ const Subscriptions = () => {
                       >
                         <Box
                           sx={{
-                            width: { xs: "100%", md: "40%" },
+                            width: { xs: "100%", md: "100%" },
                             display: "flex",
                             borderRadius: "6px",
                           }}
@@ -423,11 +423,13 @@ const Subscriptions = () => {
                             sx={{
                               color: "#00339B",
                               fontWeight: 600,
-                              fontSize: "24px",
+                              fontSize: "22px",
                               background: "#03E7F4",
                               padding: "5px",
                               borderRadius: "5px",
                               mt: "5px",
+                              p: "0 20px 0px 20px",
+                              minWidth: { xs: "100%", md: "50%" },
                             }}
                           >
                             {/* <b>/ */}
@@ -449,7 +451,7 @@ const Subscriptions = () => {
                             sx={{
                               color: "#85F8FF",
                               fontWeight: 600,
-                              fontSize: "24px",
+                              fontSize: "22px",
                             }}
                           >
                             {paymentInfo.package.subscription_package ===
@@ -494,6 +496,7 @@ const Subscriptions = () => {
                               textTransform: "capitalize",
                               fontSize: "16px",
                               width: { xs: "100%", sm: "50%", md: "50%" },
+                              p: "5px 16px",
                             }}
                             onClick={handleNavigate}
                           >
@@ -651,8 +654,8 @@ const Subscriptions = () => {
               </Card>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={5}>
-            <Card sx={{ borderRadius: "10px" }}>
+          <Grid item xs={12} md={5} sx={{ height: "100%" }}>
+            <Card sx={{ borderRadius: "10px", height: "100% !important" }}>
               <Box
                 sx={{
                   backgroundColor: "#02A9F7",
@@ -666,7 +669,7 @@ const Subscriptions = () => {
                   sx={{
                     color: "white",
                     fontWeight: 600,
-                    fontSize: "24px",
+                    fontSize: "20px",
                   }}
                 >
                   Invoice Information
@@ -675,16 +678,16 @@ const Subscriptions = () => {
               <Box
                 sx={{
                   backgroundColor: "#F2F8FD",
-                  height: "360px",
+                  height: "381px",
                   display: "flex",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                   p: "0px 15px 0px 15px",
                 }}
               >
-                <Stack spacing={2} sx={{ width: "100%" }}>
+                <Stack spacing={2} sx={{ width: "100%", mt: "25px" }}>
                   <Box className={styles.SubsInvoiceTypoBox}>
                     <CustomTypography className={styles.SubsInvoiceTypo}>
-                      Invoice Information
+                      Invoice Id
                     </CustomTypography>
                     <CustomTypography className={styles.SubsInvoiceDataTypo}>
                       {invoiceInfo.id}
@@ -815,6 +818,7 @@ const Subscriptions = () => {
               width: { xs: "100%", md: "40%" },
               borderRadius: "8px",
               mt: "10px",
+              fontSize: "13px",
             }}
             onClick={() => generatePDF(company, invoiceInfo)}
           >
@@ -827,7 +831,7 @@ const Subscriptions = () => {
               sx={{
                 color: "#01313F",
                 fontWeight: 600,
-                fontSize: "24px",
+                fontSize: "22px",
               }}
             >
               Billing History

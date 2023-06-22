@@ -290,9 +290,7 @@ const EssentialInformation = () => {
               >
                 {USER_EXPERIENCES.map((Experiences) => (
                   <MenuItem key={Experiences} value={Experiences}>
-                    <CustomTypography textAlign="center">
-                      {Experiences}
-                    </CustomTypography>
+                    <CustomTypography>{Experiences}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>
@@ -332,9 +330,7 @@ const EssentialInformation = () => {
               >
                 {EDUCATION_LEVELS.map((Qualifications) => (
                   <MenuItem key={Qualifications} value={Qualifications}>
-                    <CustomTypography textAlign="center">
-                      {Qualifications}
-                    </CustomTypography>
+                    <CustomTypography>{Qualifications}</CustomTypography>
                   </MenuItem>
                 ))}
               </Select>

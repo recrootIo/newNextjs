@@ -431,7 +431,7 @@ const JobDetails = () => {
                 modules={modules}
                 formats={formats}
                 className="textareaQuestion"
-                style={{ height: "250px", borderColor: "red" }}
+                style={{ height: "250px" }}
               />
             </Box>
             <Stack
