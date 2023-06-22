@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Router } from "next/router";
 import { useRouter } from "next/router";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 // const Button = styled(Button)(({ theme }) => ({
 //   // "&:focus": {
 //   //   backgroundColor: "white",

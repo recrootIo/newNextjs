@@ -56,11 +56,10 @@ function RedirectUser() {
   const classes = useStyles();
   const [recrootUserType] = useState("Candidate");
   const employerTypes = [EMPLOYER, RECRUITER];
-  const IsEmployer = employerTypes.includes(recrootUserType);
+  const IsEmployer = employerTypes?.includes(recrootUserType);
   const router = useRouter();
   const { id } = router.query;
-  console.log(id, "ssss");
-  const redirect = null;
+  // const redirect = null;
   const getUser = () => {
     axios
       .get(`https://preprod.recroot.au/getUser/${id}`)
