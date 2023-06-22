@@ -107,7 +107,6 @@ const CandidateProfileHeader = (data) => {
 
   const imageUrl = photoss?.photo ? srcsjjj : "";
 
-  console.log(data?.profilePercentage, "data?.profilePercentage");
 
   return (
     <Box
@@ -118,16 +117,11 @@ const CandidateProfileHeader = (data) => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         p: "40px",
+        flexDirection:{sm:'row',xs:'column'}
       }}
     >
-      <Container>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "space-between", md: "flex-end" },
-          }}
-        >
-          <Box
+      <Box sx={{display:{sm:'none',xs:'flex'},width: '100%',justifyContent:'space-between'}}>
+      <Box
             sx={{
               display: "flex",
               justifyContent: { xs: "flex-start", md: "flex-end" },
@@ -140,7 +134,6 @@ const CandidateProfileHeader = (data) => {
                 color: "white",
                 width: "20px",
                 p: 0,
-                mt: { xs: "12px", md: 0 },
               }}
             >
               <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
@@ -158,7 +151,7 @@ const CandidateProfileHeader = (data) => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  position: "absolute",
+                  // position: "absolute",
                   backgroundImage: 'url("/profileprecentageborder.png")',
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
@@ -195,7 +188,9 @@ const CandidateProfileHeader = (data) => {
               </Box>
             )}
           </Box>
-        </Box>
+      </Box>
+      <Container>
+ 
         <Grid container spacing={2}>
           <Grid
             item
@@ -205,6 +200,7 @@ const CandidateProfileHeader = (data) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              flexDirection:'column'
             }}
           >
             {loadimg === true ? (
@@ -213,8 +209,8 @@ const CandidateProfileHeader = (data) => {
               <Avatar
                 src={imageUrl}
                 sx={{
-                  width: { sm: "200px", xs: "150px" },
-                  height: { sm: "200px", xs: "150px" },
+                  width: { md: "200px", xs: "150px" },
+                  height: { md: "200px", xs: "150px" },
                   border: "10px solid #4fa9ff",
                 }}
               />
@@ -222,8 +218,8 @@ const CandidateProfileHeader = (data) => {
             <IconButton
               sx={{
                 position: "relative",
-                top: "70px",
-                left: "-60px",
+                top: "-50px",
+                left: "60px",
                 backgroundColor: "#4fa9ff",
               }}
               onClick={() => {
@@ -348,7 +344,7 @@ const CandidateProfileHeader = (data) => {
                   backgroundImage: 'url("/profileprecentageborder.png")',
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
-                  height: "200px",
+                  height: {md:'200px',sm:"150px"},
                   flexWrap: "wrap",
                 }}
               >
@@ -359,8 +355,8 @@ const CandidateProfileHeader = (data) => {
                     fontFamily: "Inter-bold",
                     zIndex: "1",
                     fontSize: "2rem",
-                    top: "50%",
-                    left: "50%",
+                    top: {md:'50%',sm:"40%"},
+                    left: {md:'50%',sm:"40%"},
                     transform: "translate(-50%, -50%)",
                   }}
                 >
