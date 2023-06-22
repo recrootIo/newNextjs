@@ -44,43 +44,36 @@ const useStyles = makeStyles(() => ({
   },
 }));
 function RedirectUser() {
-  let dispatch = useDispatch();
-  const classes = useStyles();
-  const [recrootUserType] = useState("Candidate");
-  const router = useRouter();
-  const { id } = router.query;
-  console.log(id, "ssss");
-  const redirect = null;
-  const getUser = () => {
-    axios
-      .get(`https://preprod.recroot.au/getUser/${id}`)
-      .then((resObject) => {
-        localStorage.setItem("User", JSON.stringify(resObject.data));
-        Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
-        Cookies.set("verifyCode", resObject.data.User?.referral_code, {
-          expires: 1,
-        });
-        Cookies.set("token", resObject.data.token, { expires: 1 });
-        Cookies.set("userType", resObject.data.User?.recrootUserType, {
-          expires: 1,
-        });
-        Cookies.set("companyId", resObject.data.User?.companyId, {
-          expires: 1,
-        });
-        Cookies.set("firstName", resObject.data.User?.firstName, {
-          expires: 1,
-        });
-        dispatch(setUserFromGoogle(resObject.data));
-        if (resObject.data.User) {
-          if (resObject.data.User.recrootUserType === "Employer") {
-            router.push("/");
-          } else if (resObject.data.User.recrootUserType === "TempSocial") {
-            router.push("CompleteProfile");
-          } else {
-            if (resObject.data.User.resume.resumeFileLocation.length > 0) {
-              // if(redirect !== null){
-              // router.push(redirect);
-              // }else{
+    let dispatch = useDispatch();
+    const classes = useStyles();
+    const [recrootUserType] = useState("Candidate");
+    const router = useRouter()
+    const { id } = router.query;
+console.log(id,'ssss')
+    const redirect = null
+    const getUser = () => {
+      axios
+        .get(`https://preprod.recroot.au/getUser/${id}`)
+        .then((resObject) => {
+          axios
+          .get("https://ipapi.co/json/")
+          .then((response) => {
+            Cookies.set("country", response.data?.country);
+          })
+          localStorage.setItem("User", JSON.stringify(resObject.data));
+          Cookies.set("userID", resObject.data.User?._id, { expires: 1 });
+          Cookies.set("verifyCode", resObject.data.User?.referral_code, {
+            expires: 1,
+          });
+          Cookies.set("token", resObject.data.token, { expires: 1 });
+          Cookies.set("userType", resObject.data.User?.recrootUserType, {
+            expires: 1,
+          });
+          Cookies.set("companyId", resObject.data.User?.companyId, { expires: 1 });
+          Cookies.set("firstName", resObject.data.User?.firstName, { expires: 1 });
+          dispatch(setUserFromGoogle(resObject.data));
+          if (resObject.data.User) {
+            if (resObject.data.User.recrootUserType === "Employer") {
               router.push("/");
               // }
             } else {
@@ -88,11 +81,12 @@ function RedirectUser() {
             }
           }
         }
-      })
+      )
       .catch((err) => {
         console.warn(err);
       });
   };
+
   useEffect(() => {
     if (id !== undefined) {
       getUser();

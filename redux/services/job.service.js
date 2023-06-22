@@ -4,6 +4,9 @@ class jobsService {
   addJobss(value, companyId) {
     return http.post(`addJob/${companyId}`, value);
   }
+  addJobNew(value, companyId) {
+    return http.post(`addJobNew/${companyId}`, value);
+  }
   editJobss(value, id, companyId) {
     return http.post(`editJob/${id}/${companyId}`, value);
   }

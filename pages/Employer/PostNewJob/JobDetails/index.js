@@ -249,7 +249,7 @@ const JobDetails = () => {
   const handlePack = (e) => {
     dispatch(jobPackType(e.target.value));
   };
-
+const country = Cookies.get('country')
   return (
     <>
       <CardContent>
@@ -280,6 +280,7 @@ const JobDetails = () => {
             Job Details
           </CustomTypography>
           <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
+          {country === 'LK' || (companyDet.jobSlot === true && companyDet.package?.paymentStatus === 'Completed') ?
           <Box sx={{ width: "100%", p: "0 0 20px 0" }}>
             <Typography variant="p">Choose a plan</Typography>
             <FormControl fullWidth>
@@ -351,7 +352,8 @@ const JobDetails = () => {
                 )}
               </Select>
             </FormControl>
-          </Box>
+          </Box> : ''
+          }
           <Stack spacing={3}>
             <Autocomplete
               freeSolo

@@ -48,6 +48,7 @@ import {
 import { CURRENCY } from "@/utils/currency";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import Cookies from "js-cookie";
 
 const style = {
   txtinput: {
@@ -78,14 +79,14 @@ const EssentialInformation = () => {
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
-  console.log(errors, "err");
+  const jobsmeen = useSelector((state) => state.jobs);
+  const country = Cookies.get('country')
   const futureDate = new Date();
-  futureDate.setDate(futureDate.getDate() + 30);
+  futureDate.setDate(futureDate.getDate() + 2);
   const [value, setValue] = useState(
     full === "jSlot" ? new Date() : futureDate
   );
   const dispatch = useDispatch();
-
   const [salary, setSalary] = useState({
     salaryType: jobs.salary && jobs.salary.salaryType,
     minSalary: jobs.salary && jobs.salary.minSalary,
@@ -98,8 +99,17 @@ const EssentialInformation = () => {
     }
     if (jobs?.applicationDeadline === undefined) {
       const futureDate = new Date();
-      futureDate.setDate(futureDate.getDate() + 30);
+      futureDate.setDate(futureDate.getDate() + 2);
       setDatas({ ...datas, applicationDeadline: futureDate });
+      dispatch(
+        detailsSet({
+          ...datas,
+          applicationDeadline: futureDate,
+          salary,
+          roles,
+        })
+      );
+    dispatch(skillSet([...roles]));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs]);
@@ -183,7 +193,7 @@ const EssentialInformation = () => {
   const handleImmediateType = (event) => {
     dispatch(immediateSet(event.target.checked));
   };
-console.log(errors,'err')
+console.log(jobsmeen,'err')
   return (
     <>
       <Box>
@@ -360,7 +370,7 @@ console.log(errors,'err')
                       ? value
                       : new Date(jobs.applicationDeadline)) || new Date()
                   }
-                  disabled={_id !== undefined}
+                  disabled={!(full !== null)  || !( companyDet?.jobSlot === true && full === "jSlot") || (companyDet?.package?.subscription_package === "SuperEmployer")}
                   onChange={handleChangeDate}
                   renderInput={(params) => (
                     <TextField
@@ -549,7 +559,7 @@ console.log(errors,'err')
             </Stack>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
-          companyDet?.package?.subscription_package === "SuperEmployer" ? (
+          companyDet?.package?.subscription_package === "SuperEmployer" || jobsmeen?.premium === true? (
             <Box>
               <FormGroup>
                 <FormControlLabel

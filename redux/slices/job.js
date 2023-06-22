@@ -29,7 +29,13 @@ const initialState = {
   jobId: "",
   companyJobs:"",
   jLoad:false,
-  jobDet:''
+  jobDet:'',
+  upJob:'',
+  jobPayment:{
+    ids:[],
+    amount:'',
+    country:''
+  }
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -104,11 +110,22 @@ export const immediatejobs = createAsyncThunk(
 export const jobId = createAsyncThunk("jobId/jobs", async (data) => {
   return data;
 });
+export const upgradejob = createAsyncThunk("jobId/upgrade", async (data) => {
+  return data;
+});
+export const upgradejobPayment = createAsyncThunk("jobId/upgradepaymen", async (data) => {
+  return data;
+});
 
 
 export const addJobs = createAsyncThunk("add/jobs", async (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
   const res = await jobsService.addJobss(value, user.User.companyId);
+  return res.data;
+});
+export const addJobsNew = createAsyncThunk("add/jobsNew", async (value) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const res = await jobsService.addJobNew(value, user.User.companyId);
   return res.data;
 });
 export const updateJobs = createAsyncThunk(
@@ -221,7 +238,12 @@ const jobsSlice = createSlice({
     [updateJobs.fulfilled]: (state, action) => {
       state.jLoad = false;
     },
-
+    [upgradejob.fulfilled]: (state, action) => {
+      state.upJob = action.payload;
+    },
+    [upgradejobPayment.fulfilled]: (state, action) => {
+      state.jobPayment = action.payload;
+    },
     [setEditJob.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
       state.details.requiredSkill = action.payload.requiredSkill;
@@ -307,6 +329,8 @@ const jobsSlice = createSlice({
             ];
       state.location = action.payload.address;
       state._id = action.payload._id;
+      state.premium = action.payload.premium;
+      state.payment = action.payload.payment;
     },
   },
 });

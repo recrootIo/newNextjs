@@ -18,6 +18,16 @@ import {
   MenuItem,
   Slide,
   Typography,
+  styled,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  FormLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
@@ -28,6 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ArrowDropDownCircleOutlined,
   ArrowDropDownCircleRounded,
+  CheckBox,
 } from "@mui/icons-material";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -41,7 +52,7 @@ import {
   getCompanyDetails,
   getapplCount,
 } from "@/redux/slices/companyslice";
-import { companyJobs, jobId, setEditJob } from "@/redux/slices/job";
+import { companyJobs, jobId, setEditJob, upgradejob } from "@/redux/slices/job";
 import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
@@ -51,10 +62,25 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import dynamic from "next/dynamic";
 import Employer from "..";
 
+
 const DatagridClient = dynamic(
   () => import("../../../components/Employers/DatagridClient"),
   { ssr: false }
 );
+
+
+import http from "@/redux/http-common";
+const BasicButton = styled(Button)({
+  color: "#ffff",
+  padding: "15px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  // width: "50%",
+  marginBottom: "10px",
+  marginTop:'15px'
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,6 +131,11 @@ function a11yProps(index) {
 const EmpoyerDashboard = () => {
   let dispatch = useDispatch();
   useEffect(() => {
+    axios
+    .get("https://ipapi.co/json/")
+    .then((response) => {
+      Cookies.set("country", response.data?.country);
+    })
     dispatch(applyJobsdet())
       .then((res) => {
         if (res.error !== undefined) {
@@ -185,7 +216,6 @@ const EmpoyerDashboard = () => {
     return array.some((obj) => obj.jobId === value);
   }
   const cjobs = useSelector((state) => state?.jobs?.companyJobs) || [];
-  console.log(cjobs, "cjobs");
   names.map((nam) => {
     if (
       moment(nam.applicationDeadline).format() < moment(new Date()).format() ||
@@ -253,6 +283,7 @@ const EmpoyerDashboard = () => {
     status: capitalizeFirstLetter(nam?.status),
     deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
     action: nam.packageType,
+    premium: nam.premium,
   }));
 
   const rows2 = namesFeautre?.map((nam, index) => ({
@@ -267,6 +298,7 @@ const EmpoyerDashboard = () => {
     status: capitalizeFirstLetter(nam?.status),
     deadline: moment(nam.applicationDeadline).format("MMM Do YY"),
     action: nam.packageType,
+    premium: nam.premium,
   }));
 
   // const rows3 = namesjSlots?.map((nam, index) => ({
@@ -301,10 +333,12 @@ const EmpoyerDashboard = () => {
   const classes = useStyles();
 
   const [jobid, setJobid] = useState("");
+  const [premium, setpremium] = useState("");
 
   const handleIdJob = (parms) => {
     setJobid(parms.id);
     setpackType(parms?.row?.packType);
+    setpremium(parms?.row?.premium);
     dispatch(jobId(parms.id));
   };
 
@@ -442,6 +476,11 @@ const EmpoyerDashboard = () => {
     }
   };
 
+  const handleUpgrade = (parms) =>{
+    dispatch(upgradejob([parms.id]))
+    push('/Employer/Jobpayment')
+  }
+  console.log(premium,'pree')
   const columns = [
     { field: "id", headerName: "Id", width: 100, hide: true },
     { field: "_id", headerName: "Job", width: 120 },
@@ -479,7 +518,11 @@ const EmpoyerDashboard = () => {
             : parms?.value === "free"
             ? "Free"
             : parms?.value === "jSlot"
-            ? "Job Slot"
+            ? "Job Slot": 
+            parms?.row?.premium === false
+            ? "Free" : 
+            parms?.row?.premium === true
+            ? "Premium"
             : "N/A"}
         </p>
       ),
@@ -507,8 +550,8 @@ const EmpoyerDashboard = () => {
       headerName: "Action",
       width: 130,
       renderCell: (parms) =>
-        user?.memberType === "HiringManager" ? (
-          <>
+      user?.memberType === "HiringManager" ? (
+        <>
             <Button
               className="editButton"
               id="basic-button"
@@ -570,7 +613,7 @@ const EmpoyerDashboard = () => {
                 }}
                 value="edit"
               >
-                Edit Jobs
+                Edit Job
               </MenuItem>
               <MenuItem
                 onClick={() => {
@@ -582,6 +625,16 @@ const EmpoyerDashboard = () => {
                 See Applicants
               </MenuItem>
 
+             {!premium ? <MenuItem
+                onClick={() => {
+                  handleClose2();
+                  handleUpgrade(parms?.row)
+                }}
+                value="delete"
+              >
+                Upgrade To Premium
+              </MenuItem> : ''}
+{packType === null ? "" :
               <MenuItem
                 onClick={() => {
                   handleClose2();
@@ -595,7 +648,8 @@ const EmpoyerDashboard = () => {
                 }
               >
                 Activate
-              </MenuItem>
+              </MenuItem> }
+          
             </Menu>
           </>
         ) : (
@@ -714,6 +768,37 @@ const EmpoyerDashboard = () => {
     setSelectedIndex(index);
   };
 
+  const [open1, setOpen1] = React.useState(false);
+const [sectors, setsectors] = useState([])
+  const handleClickOpen = () => {
+    setOpen1(true);
+    http.get(`/getfreeJobs/${company?._id}`).then((res)=>{
+      console.log(res,'jobss')
+      setsectors(res.data?.data)
+    })
+  };
+
+  const handleClose1 = () => {
+    if (freejobs?.length > 0) {
+      dispatch(upgradejob(freejobs)).then(
+        push('/Employer/Jobpayment')
+      )
+    }
+    setOpen1(false);
+  };
+  const [freejobs, setfreejobs] = useState([])
+  const selectJobs = (e) => {
+    const { value, checked } = e.target;
+    let newJobs = freejobs;
+    if (checked) {
+      setfreejobs([...new Set([...freejobs, value])]);
+      newJobs.push(value);
+    } else {
+      newJobs = freejobs.filter((arr) => value != arr);
+      setfreejobs(() => [...newJobs]);
+    }
+  }
+console.log(freejobs,'ssssss')
   return (
     <>
       <Employer>
@@ -1065,7 +1150,12 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-        <Stack
+        <Box sx={{display:'flex',justifyContent:'flex-end'}}>
+    <BasicButton onClick={()=>{handleClickOpen()}}>
+      Upgrade To Free Jobs To Premium
+      </BasicButton>        
+        </Box>
+      {user?.country === 'LK' ?  <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={2}
           sx={{ mt: 2 }}
@@ -1113,6 +1203,7 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
+
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1153,6 +1244,7 @@ const EmpoyerDashboard = () => {
           <Card
             sx={{
               width: "100%",
+
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1191,6 +1283,7 @@ const EmpoyerDashboard = () => {
             </CardContent>
           </Card>
         </Stack>
+
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -1242,9 +1335,67 @@ const EmpoyerDashboard = () => {
             )}
           </TabPanel>
         </Box>
+
+        <Dialog
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Upgrade Free Jobs To Premium"}
+        </DialogTitle>
+        <DialogContent>
+        <Box sx={{ border: "1px solid grey",
+  borderRadius: "8px",
+  padding: "10px"}}>
+        <FormControl sx={{ m: 1 }} fullWidth>
+        <FormLabel component="legend">Jobs List</FormLabel>
+        <FormGroup>
+          {
+            sectors?.map((sec, index)=>(
+              <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox 
+                    checked={freejobs.includes(sec?._id)}
+                    onChange={(e)=>{selectJobs(e)}} name={sec?.jobRole} value={sec?._id} />
+                  }
+                  label={`${sec?.jobRole} (${moment(sec?.createdAt).format('LL')})`}
+                />
+
+            ))
+          }
+      {/* {sectors.map((sec, index) => (
+        <FormLabel
+          key={index}
+          control={<CheckBox
+            size="small"
+            // checked={selectedSector.includes(sec)}
+            name={sec?.jobRole}
+            // onChange={handleSector}
+             />}
+          label={sec?.jobRole} />
+      ))} */}
+        </FormGroup>
+        </FormControl>
+    </Box>
+        </DialogContent>
+        <DialogActions>
+          <BasicButton sx={{p:'5px !important',m:"0 !important"}} onClick={()=>{setOpen1(false)}} autoFocus>
+            Cancel
+          </BasicButton>
+          <BasicButton sx={{p:'5px !important',m:"0 !important"}} onClick={handleClose1} autoFocus>
+            Upgrade
+          </BasicButton>
+        </DialogActions>
+      </Dialog>
+
       </Employer>
     </>
   );
 };
-
 export default EmpoyerDashboard;
+
+
