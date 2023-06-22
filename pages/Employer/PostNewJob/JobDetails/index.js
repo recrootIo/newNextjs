@@ -249,7 +249,7 @@ const JobDetails = () => {
   const handlePack = (e) => {
     dispatch(jobPackType(e.target.value));
   };
-const country = Cookies.get('country')
+  const country = Cookies.get("country");
   return (
     <>
       <CardContent>
@@ -280,80 +280,82 @@ const country = Cookies.get('country')
             Job Details
           </CustomTypography>
           <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
-          {country === 'LK' || (companyDet.jobSlot === true && companyDet.package?.paymentStatus === 'Completed') ?
-          <Box sx={{ width: "100%", p: "0 0 20px 0" }}>
-            <Typography variant="p">Choose a plan</Typography>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Choose a plan
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Choose a plan"
-                // sx={styles.naminput2}
-                value={pack || ""}
-                name="careerlevel"
-                onChange={(e) => {
-                  handlePack(e);
-                }}
+          {country === "LK" ||
+          (companyDet.jobSlot === true &&
+            companyDet.package?.paymentStatus === "Completed") ? (
+            <Box sx={{ width: "100%", p: "0 0 20px 0" }}>
+              <FormControl
+                fullWidth
+                sx={{ ...style.txtinput, bgcolor: "white" }}
               >
-                <MenuItem value="free" disabled={freeCount === 0}>
-                  <Typography textAlign="center">
-                    Free Job Post - Jobs Left : {freeCount}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="pro"
-                  disabled={proCOunt === 0 || proCOunt === undefined}
+                <InputLabel id="demo-simple-select-label">
+                  Choose a plan
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Choose a plan"
+                  // sx={styles.naminput2}
+                  value={pack || ""}
+                  name="careerlevel"
+                  onChange={(e) => {
+                    handlePack(e);
+                  }}
                 >
-                  <Typography textAlign="center">
-                    Pro Job Post - Jobs Left : {proCOunt}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="premium"
-                  disabled={preCOunt === 0 || preCOunt === undefined}
-                >
-                  <Typography textAlign="center">
-                    Premium Job Post - Jobs Left : {preCOunt}
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  value="jSlot"
-                  disabled={
-                    !(
-                      companyDet.package?.paymentStatus === "Completed" &&
-                      companyDet.package?.subscription_package === "Growth"
-                    )
-                  }
-                >
-                  <Typography textAlign="center">
-                    Growth Plan - Job Slot
-                  </Typography>
-                </MenuItem>
-
-                {companyDet?.jobSlotGold === true ? (
+                  <MenuItem value="free" disabled={freeCount === 0}>
+                    <CustomTypography>
+                      Free Job Post - Jobs Left : {freeCount}
+                    </CustomTypography>
+                  </MenuItem>
+                  <MenuItem
+                    value="pro"
+                    disabled={proCOunt === 0 || proCOunt === undefined}
+                  >
+                    <CustomTypography>
+                      Pro Job Post - Jobs Left : {proCOunt}
+                    </CustomTypography>
+                  </MenuItem>
+                  <MenuItem
+                    value="premium"
+                    disabled={preCOunt === 0 || preCOunt === undefined}
+                  >
+                    <CustomTypography>
+                      Premium Job Post - Jobs Left : {preCOunt}
+                    </CustomTypography>
+                  </MenuItem>
                   <MenuItem
                     value="jSlot"
                     disabled={
                       !(
                         companyDet.package?.paymentStatus === "Completed" &&
-                        companyDet.package?.subscription_package === "Gold"
+                        companyDet.package?.subscription_package === "Growth"
                       )
                     }
                   >
-                    <Typography textAlign="center">
-                      Gold Plan - Job Slot
-                    </Typography>
+                    <CustomTypography>Growth Plan - Job Slot</CustomTypography>
                   </MenuItem>
-                ) : (
-                  ""
-                )}
-              </Select>
-            </FormControl>
-          </Box> : ''
-          }
+
+                  {companyDet?.jobSlotGold === true ? (
+                    <MenuItem
+                      value="jSlot"
+                      disabled={
+                        !(
+                          companyDet.package?.paymentStatus === "Completed" &&
+                          companyDet.package?.subscription_package === "Gold"
+                        )
+                      }
+                    >
+                      <CustomTypography>Gold Plan - Job Slot</CustomTypography>
+                    </MenuItem>
+                  ) : (
+                    ""
+                  )}
+                </Select>
+              </FormControl>
+            </Box>
+          ) : (
+            ""
+          )}
           <Stack spacing={3}>
             <Autocomplete
               freeSolo
@@ -378,8 +380,6 @@ const country = Cookies.get('country')
                     ...params.InputProps,
                     type: "search",
                   }}
-                  color="warning"
-                  //sx={{ color: "" }}
                 />
               )}
             />
