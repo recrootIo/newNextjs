@@ -20,8 +20,8 @@ const ProfileCard = ({ ...props }) => {
     question = [],
     companyId = "",
     jobTitle = "",
+    show=""
   } = props?.companyDetails;
-
   const details = useSelector((state) => state?.personal?.data);
   const CoverSin = useSelector((state) => state?.personal?.cover);
   const resumeSin = useSelector((state) => state?.personal?.resume);
@@ -66,8 +66,7 @@ const ProfileCard = ({ ...props }) => {
       });
   };
 
-  const hasQuestions = question.length > 0;
-
+  const hasQuestions = show === "true";
   const getScreens = () => {
     if (currentScreen === "upload") {
       return (

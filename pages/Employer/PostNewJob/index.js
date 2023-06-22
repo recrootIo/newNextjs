@@ -84,7 +84,10 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push("/signin", { state: true });
+                router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
               })
             : "";
         } else {
@@ -97,7 +100,10 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push("/signin", { state: true });
+            router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
           });
         }
       });
@@ -117,7 +123,10 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push("/signin", { state: true });
+                  router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
                 })
               : "";
           } else {
@@ -163,7 +172,10 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push("/signin", { state: true });
+              router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
             });
           }
         });
@@ -174,7 +186,10 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push("/signin", { state: true });
+                  router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
                 })
               : "";
           } else {
@@ -220,7 +235,10 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push("/signin", { state: true });
+              router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
             });
           }
         });
@@ -234,7 +252,10 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push("/signin", { state: true });
+                router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
               })
             : "";
         } else {
@@ -262,7 +283,10 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push("/signin", { state: true });
+            router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
           });
         }
       });

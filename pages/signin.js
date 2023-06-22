@@ -20,7 +20,7 @@ import { CustomTypography } from "../ui-components/CustomTypography/CustomTypogr
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
@@ -29,6 +29,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Header from "@/components/Header";
+import { useRouter } from "next/router";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -44,6 +45,7 @@ const StyledInput = styled("input")({
 function Signin() {
   const dispatch = useDispatch();
   const { push } = useRouter();
+  const router = useRouter();
 
   const redirect = useRef();
 
@@ -162,7 +164,17 @@ function Signin() {
       window.location.replace("https://preprod.recroot.au/auth/linkedin");
     }
   };
-
+  const { name } = router.query;
+  useEffect(() => {
+ if (name === 'session') {
+  dispatch(openAlert({
+    type:ERROR,
+    message:'Your Session Was Expired!'
+  }))
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name])
+  
   return (
     <section className="signInMain">
       <Header title={"SIGN IN"} />

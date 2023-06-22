@@ -330,7 +330,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        goToProfile("resume_section");
+                        setCurrentScreen("upload");
                       }}
                     >
                       <CreateIcon />
@@ -406,7 +406,7 @@ function ReviewAppication({ ...props }) {
                       color="initial"
                       sx={{ fontSize: "14px", float: "right", color: NEUTRAL }}
                       onClick={() => {
-                        goToProfile("resume_section");
+                        setCurrentScreen("upload");
                       }}
                     >
                       <CreateIcon />
