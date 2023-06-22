@@ -28,6 +28,12 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import { changeValue, updatePromotion } from "@/redux/slices/Subscription";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import dynamic from "next/dynamic";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+import styles from "../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
+
 const StyledButton = styled(Button)({
   color: "#ffff",
   padding: "10px",
@@ -68,7 +74,7 @@ function SubscribePrice() {
   const [isValid, setIsValid] = useState(false);
   // const [discount, setDiscount] = useState(0);
   const [alertType, setAlertType] = useState("info");
-
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const { price: subscriptionPrice } = useSelector(
     (state) => state.subscription
   );
@@ -188,6 +194,50 @@ function SubscribePrice() {
       }
     }
   };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ payment: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".paymentCard",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select the pricing plan that match with your hiring needs
+          </CustomTypography>
+          <Button onClick={() => closeTour()} variant="outline">
+            Done
+          </Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.payment);
+  }, [company?.tours?.payment]);
+
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
@@ -546,6 +596,7 @@ function SubscribePrice() {
                     </Typography>
                   </Grid>
                   <Grid
+                    className="paymentCard"
                     item
                     xs={12}
                     sx={{
@@ -571,6 +622,16 @@ function SubscribePrice() {
           </Card>
         </Card>
       </Container>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </div>
   );
 }

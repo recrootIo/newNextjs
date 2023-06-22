@@ -86,6 +86,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const bull = (
   <Box
@@ -118,6 +120,7 @@ const CandiFullProfileView = () => {
   const [status, setstatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [interviewshow, setinterviewshow] = useState(false);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     if (appId !== undefined) {
@@ -268,6 +271,67 @@ const CandiFullProfileView = () => {
       router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
     }
   };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ applicantView: false });
+  };
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".action",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            This section allows you to update the applicants&apos; status and
+            schedule interviews with them
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".cvDownload",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to download the resume of the applicant
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>DONE</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.applicantView);
+  }, [company?.tours?.applicantView]);
   return (
     <>
       <EmployerNavbar />
@@ -639,6 +703,7 @@ const CandiFullProfileView = () => {
                     border: "1px solid #D3EAFF",
                     borderRadius: "15px",
                   }}
+                  className="action"
                 >
                   <Box
                     sx={{
@@ -1623,6 +1688,7 @@ const CandiFullProfileView = () => {
                         >
                           <Button
                             variant="contained"
+                            className="cvDownload"
                             startIcon={<FileDownloadOutlinedIcon />}
                             sx={{
                               bgcolor: "#00339B !important",
@@ -1902,6 +1968,16 @@ const CandiFullProfileView = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       </Container>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

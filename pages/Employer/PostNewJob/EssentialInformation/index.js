@@ -49,6 +49,9 @@ import { CURRENCY } from "@/utils/currency";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
   txtinput: {
@@ -80,7 +83,7 @@ const EssentialInformation = () => {
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
   const immediate = useSelector((state) => state.jobs.immediate);
   const jobsmeen = useSelector((state) => state.jobs);
-  const country = Cookies.get('country')
+  const country = Cookies.get("country");
   const futureDate = new Date();
   futureDate.setDate(futureDate.getDate() + 2);
   const [value, setValue] = useState(
@@ -109,7 +112,7 @@ const EssentialInformation = () => {
           roles,
         })
       );
-    dispatch(skillSet([...roles]));
+      dispatch(skillSet([...roles]));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs]);
@@ -193,10 +196,96 @@ const EssentialInformation = () => {
   const handleImmediateType = (event) => {
     dispatch(immediateSet(event.target.checked));
   };
-console.log(jobsmeen,'err')
+
+  const [isTourOpen, setTourOpen] = React.useState(false);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ jobEssential: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".essentialInfo",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Provide the essential information to make your job post more
+            appealing to candidates
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".slide",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Make your job post a featured job or an immediate job if necessary
+            (This message should be shown if this feature is available for the
+            selected pricing plan)
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextButton",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to proceed to the next step
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.jobEssential);
+  }, [company?.tours?.jobEssential]);
+
   return (
     <>
-      <Box>
+      <Box className="essentialInfo">
         <Box
           sx={{
             display: "flex",
@@ -370,7 +459,12 @@ console.log(jobsmeen,'err')
                       ? value
                       : new Date(jobs.applicationDeadline)) || new Date()
                   }
-                  disabled={!(full !== null)  || !( companyDet?.jobSlot === true && full === "jSlot") || (companyDet?.package?.subscription_package === "SuperEmployer")}
+                  disabled={
+                    !(full !== null) ||
+                    !(companyDet?.jobSlot === true && full === "jSlot") ||
+                    companyDet?.package?.subscription_package ===
+                      "SuperEmployer"
+                  }
                   onChange={handleChangeDate}
                   renderInput={(params) => (
                     <TextField
@@ -559,7 +653,8 @@ console.log(jobsmeen,'err')
             </Stack>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
-          companyDet?.package?.subscription_package === "SuperEmployer" || jobsmeen?.premium === true? (
+          companyDet?.package?.subscription_package === "SuperEmployer" ||
+          jobsmeen?.premium === true ? (
             <Box>
               <FormGroup>
                 <FormControlLabel
@@ -619,6 +714,16 @@ console.log(jobsmeen,'err')
           </Box>
         </Stack>
       </Box>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };
