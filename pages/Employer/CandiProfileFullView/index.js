@@ -86,6 +86,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const bull = (
   <Box
@@ -118,6 +120,7 @@ const CandiFullProfileView = () => {
   const [status, setstatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [interviewshow, setinterviewshow] = useState(false);
+  const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     if (appId !== undefined) {
@@ -268,6 +271,67 @@ const CandiFullProfileView = () => {
       router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
     }
   };
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ applicantView: false });
+  };
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const accentColor = "#5cb7b7";
+
+  const tourConfig = [
+    {
+      selector: ".action",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            This section allows you to update the applicants&apos; status and
+            schedule interviews with them
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".cvDownload",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to download the resume of the applicant
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>DONE</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const company = useSelector((state) => state?.company?.companyDetl);
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.applicantView);
+  }, [company?.tours?.applicantView]);
   return (
     <>
       <EmployerNavbar />
@@ -325,7 +389,7 @@ const CandiFullProfileView = () => {
             <Box
               sx={{
                 width: "100%",
-                height: "310px",
+                height: "auto",
                 borderRadius: "15px",
                 backgroundImage:
                   'url("/candidate-full-profile-view-card-bg.svg")',
@@ -339,7 +403,8 @@ const CandiFullProfileView = () => {
               <Grid container spacing={2}>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  md={4}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -361,12 +426,16 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  sm={6}
+                  md={4}
                   sx={{
-                    borderRight: "1px solid white",
+                    borderRight: { xs: "none", sm: "1px solid white" },
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
+                    pt: { xs: "normal", sm: "0px !important", md: "normal" },
+                    mt: { xs: "none", sm: "20px", md: "none" },
                   }}
                 >
                   <CustomTypography
@@ -423,12 +492,16 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  sm={6}
+                  md={4}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    paddingLeft: "60px !important",
+                    paddingLeft: { xs: 0, md: "60px !important" },
+                    pt: { xs: "normal", sm: "0px !important", md: "normal" },
+                    mt: { xs: "none", sm: "20px", md: "none" },
                   }}
                 >
                   <CustomTypography
@@ -508,17 +581,17 @@ const CandiFullProfileView = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "flex-end",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: { xs: "flex-start", sm: "flex-end" },
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      width: "33%",
-                      justifyContent: "center",
+                      width: { xs: "100%", sm: "33%" },
+                      justifyContent: { xs: "flex-start", sm: "center" },
                       gap: "10px",
-                      borderRight: "1px solid white",
+                      borderRight: { xs: "none", sm: "1px solid white" },
                     }}
                   >
                     <LinkedInIcon sx={{ color: "white" }} />
@@ -535,8 +608,8 @@ const CandiFullProfileView = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      width: "33%",
-                      justifyContent: "center",
+                      width: { xs: "100%", sm: "33%" },
+                      justifyContent: { xs: "flex-start", sm: "center" },
                       gap: "10px",
                     }}
                   >
@@ -552,7 +625,15 @@ const CandiFullProfileView = () => {
                     </CustomTypography>
                   </Box>
                 </Grid>
-                <Box sx={{ ml: "auto", display: "flex", gap: "30px" }}>
+                <Box
+                  sx={{
+                    ml: { xs: "16px", sm: "auto" },
+                    display: "flex",
+                    gap: "30px",
+                    mt: { xs: "10px", sm: 0 },
+                    width: { xs: "100%", sm: "auto" },
+                  }}
+                >
                   <Button
                     sx={{
                       color: "#black !important",
@@ -639,6 +720,7 @@ const CandiFullProfileView = () => {
                     border: "1px solid #D3EAFF",
                     borderRadius: "15px",
                   }}
+                  className="action"
                 >
                   <Box
                     sx={{
@@ -662,7 +744,7 @@ const CandiFullProfileView = () => {
                   <Box sx={{ p: "25px" }}>
                     {/* <Stack spacing={1}> */}
                     <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item xs={6}>
+                      <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
                           <InputLabel id="demo-simple-select-label">
                             Status
@@ -682,7 +764,7 @@ const CandiFullProfileView = () => {
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={12} sm={6}>
                         {scheduleinterview?.length > 0 ? (
                           <Button
                             sx={{
@@ -1617,6 +1699,7 @@ const CandiFullProfileView = () => {
                         >
                           <Button
                             variant="contained"
+                            className="cvDownload"
                             startIcon={<FileDownloadOutlinedIcon />}
                             sx={{
                               bgcolor: "#00339B !important",
@@ -1896,6 +1979,16 @@ const CandiFullProfileView = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       </Container>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

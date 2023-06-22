@@ -52,10 +52,20 @@ import { useRouter } from "next/navigation";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { useTheme } from "@mui/material/styles";
+import dynamic from "next/dynamic";
+import companyservice from "@/redux/services/company.service";
+const Tour = dynamic(() => import("reactour"), { ssr: false });
+
 import Employer from "..";
+import 'react-phone-input-2/lib/bootstrap.css';
+import 'react-phone-input-2/lib/style.css';
+
 uuidv4();
+
 const Members = () => {
+  const company = useSelector((state) => state?.company?.companyDetl);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [isTourOpen, setTourOpen] = React.useState(true);
   //   const member = useSelector((state) => state.company.members);
   //   const [memberrole, setMemberrole] = React.useState(member);
 
@@ -385,6 +395,92 @@ const Members = () => {
     // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const updateValue = async () => {
+    const companyService = new companyservice();
+    await companyService.updateTourValue({ profileMember: false });
+  };
+
+  const closeTour = () => {
+    setTourOpen(false);
+    updateValue();
+  };
+
+  const gotoPreview = () => {
+    closeTour();
+    push("/Employer/CompanyPreview");
+  };
+
+  const tourConfig = [
+    {
+      selector: ".addAccount",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click here to add new members to the list
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".addRole",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Select members, assign roles, and click &quot;+&quot; to grant
+            access them to your company profile
+          </CustomTypography>
+          <Button onClick={() => closeTour()}>SKIP</Button>
+        </Stack>
+      ),
+    },
+    {
+      selector: ".nextPreview",
+      style: {
+        color: "black",
+      },
+      content: ({ goTo }) => (
+        <Stack
+          sx={{
+            gap: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CustomTypography>
+            Click NEXT to Preview Company Profile
+          </CustomTypography>
+          <Button onClick={() => gotoPreview()}>Done</Button>
+        </Stack>
+      ),
+    },
+  ];
+
+  const accentColor = "#5cb7b7";
+
+  useEffect(() => {
+    setTourOpen(() => company?.tours?.profileMember);
+  }, [company?.tours?.profileMember]);
+
   return (
     <>
       <Employer>
@@ -566,6 +662,7 @@ const Members = () => {
                 <Typography
                   variant="h5"
                   style={{ fontWeight: "900", marginBottom: "15px" }}
+                  className="addAccount"
                 >
                   ADD ACCOUNT MEMBER
                 </Typography>
@@ -922,6 +1019,7 @@ const Members = () => {
                             onClick={() => {
                               handleMemRemove(member.id);
                             }}
+                            className="addRole"
                           >
                             <RemoveCircleIcon
                               sx={{
@@ -965,6 +1063,7 @@ const Members = () => {
                   bgcolor: "#015FB1 !important",
                   height: "55px",
                 }}
+                className="nextPreview"
                 onClick={() => {
                   push("/Employer/CompanyPreview");
                 }}
@@ -975,6 +1074,16 @@ const Members = () => {
           </CardContent>
         </Card>
       </Employer>
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={styles.mask}
+        className={styles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

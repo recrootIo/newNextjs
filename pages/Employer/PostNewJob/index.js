@@ -355,12 +355,13 @@ function PostnewJob() {
             return;
           }
           if (final.details.notice === undefined) {
-            dispatch(
-              openAlert({
-                type: ERROR,
-                message: "Provide Notice Period",
-              })
-            );
+
+            dispatch(openAlert({
+              type:ERROR,
+              message:"Provide Notice Period"
+            }));
+            return
+
           }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
@@ -475,6 +476,9 @@ function PostnewJob() {
                 </Button>
               ) : (
                 <Button
+
+                  className="nextButton"
+
                   variant="contained"
                   sx={{
                     width: "50%",
@@ -499,6 +503,9 @@ function PostnewJob() {
             ) : (
               <Button
                 variant="contained"
+
+                className="nextButton"
+
                 onClick={() => {
                   Pages(profiletab.index, "add");
                 }}

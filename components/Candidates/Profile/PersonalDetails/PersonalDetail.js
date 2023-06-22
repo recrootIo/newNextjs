@@ -63,7 +63,7 @@ const PersonalDetail = ({ ...data }) => {
           spacing={2}
         >
           <Grid item md={6} xs={12}>
-            <Stack sx={{ gap: LAZY }}>
+            <Stack className="persFlex" sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Name:

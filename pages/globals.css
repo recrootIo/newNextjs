@@ -1882,6 +1882,15 @@ a {
   }
 }
 
-.ql-container.ql-snow {
-  border: none;
+
+
+@media (max-width: 1200px) {
+  .persFlex{
+    gap: 15px !important;
+  }
+}
+@media (max-width: 1000px) {
+  .persFlex{
+    gap: 10px !important;
+  }
 }
