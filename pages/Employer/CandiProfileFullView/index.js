@@ -325,7 +325,7 @@ const CandiFullProfileView = () => {
             <Box
               sx={{
                 width: "100%",
-                height: "310px",
+                height: "auto",
                 borderRadius: "15px",
                 backgroundImage:
                   'url("/candidate-full-profile-view-card-bg.svg")',
@@ -339,7 +339,8 @@ const CandiFullProfileView = () => {
               <Grid container spacing={2}>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  md={4}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -361,12 +362,16 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  sm={6}
+                  md={4}
                   sx={{
-                    borderRight: "1px solid white",
+                    borderRight: { xs: "none", sm: "1px solid white" },
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
+                    pt: { xs: "normal", sm: "0px !important", md: "normal" },
+                    mt: { xs: "none", sm: "20px", md: "none" },
                   }}
                 >
                   <CustomTypography
@@ -423,12 +428,16 @@ const CandiFullProfileView = () => {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
+                  xs={12}
+                  sm={6}
+                  md={4}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    paddingLeft: "60px !important",
+                    paddingLeft: { xs: 0, md: "60px !important" },
+                    pt: { xs: "normal", sm: "0px !important", md: "normal" },
+                    mt: { xs: "none", sm: "20px", md: "none" },
                   }}
                 >
                   <CustomTypography
@@ -508,17 +517,17 @@ const CandiFullProfileView = () => {
                   xs={12}
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "flex-end",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: { xs: "flex-start", sm: "flex-end" },
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      width: "33%",
-                      justifyContent: "center",
+                      width: { xs: "100%", sm: "33%" },
+                      justifyContent: { xs: "flex-start", sm: "center" },
                       gap: "10px",
-                      borderRight: "1px solid white",
+                      borderRight: { xs: "none", sm: "1px solid white" },
                     }}
                   >
                     <LinkedInIcon sx={{ color: "white" }} />
@@ -535,8 +544,8 @@ const CandiFullProfileView = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      width: "33%",
-                      justifyContent: "center",
+                      width: { xs: "100%", sm: "33%" },
+                      justifyContent: { xs: "flex-start", sm: "center" },
                       gap: "10px",
                     }}
                   >
@@ -552,7 +561,15 @@ const CandiFullProfileView = () => {
                     </CustomTypography>
                   </Box>
                 </Grid>
-                <Box sx={{ ml: "auto", display: "flex", gap: "30px" }}>
+                <Box
+                  sx={{
+                    ml: { xs: "16px", sm: "auto" },
+                    display: "flex",
+                    gap: "30px",
+                    mt: { xs: "10px", sm: 0 },
+                    width: { xs: "100%", sm: "auto" },
+                  }}
+                >
                   <Button
                     sx={{
                       color: "#black !important",
@@ -662,7 +679,7 @@ const CandiFullProfileView = () => {
                   <Box sx={{ p: "25px" }}>
                     {/* <Stack spacing={1}> */}
                     <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item xs={6}>
+                      <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
                           <InputLabel id="demo-simple-select-label">
                             Status
@@ -682,7 +699,7 @@ const CandiFullProfileView = () => {
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={12} sm={6}>
                         {scheduleinterview?.length > 0 ? (
                           <Button
                             sx={{

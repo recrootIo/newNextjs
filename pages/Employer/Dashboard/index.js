@@ -59,7 +59,16 @@ import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
 import axios from "axios";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import dynamic from "next/dynamic";
 import Employer from "..";
+
+
+const DatagridClient = dynamic(
+  () => import("../../../components/Employers/DatagridClient"),
+  { ssr: false }
+);
+
+
 import http from "@/redux/http-common";
 const BasicButton = styled(Button)({
   color: "#ffff",
@@ -72,6 +81,7 @@ const BasicButton = styled(Button)({
   marginBottom: "10px",
   marginTop:'15px'
 });
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -792,12 +802,10 @@ console.log(freejobs,'ssssss')
   return (
     <>
       <Employer>
-        {/* <Grid item xs={10}> */}
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -833,7 +841,6 @@ console.log(freejobs,'ssssss')
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -869,7 +876,6 @@ console.log(freejobs,'ssssss')
           <Card
             sx={{
               width: "100%",
-              // height: "235px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1157,7 +1163,6 @@ console.log(freejobs,'ssssss')
           <Card
             sx={{
               width: "100%",
-              // height: "215px",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1198,7 +1203,48 @@ console.log(freejobs,'ssssss')
           <Card
             sx={{
               width: "100%",
-              // height: "235px",
+
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
+              backgroundImage: 'url("/inactivejobs-bg.svg")',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              borderRadius: "15px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: "25px",
+              }}
+            >
+              <img
+                src="/projob.svg"
+                alt=""
+                style={{
+                  width: "60px",
+                }}
+              />
+            </Box>
+            <CardContent>
+              <CustomTypography
+                sx={{ color: "white", fontSize: "30px" }}
+                variant="h5"
+              >
+                {proCOunt}
+              </CustomTypography>
+              <CustomTypography variant="body1" sx={{ color: "white" }}>
+                Pro Jobs
+              </CustomTypography>
+            </CardContent>
+          </Card>
+          <Card
+            sx={{
+              width: "100%",
+
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
@@ -1236,9 +1282,8 @@ console.log(freejobs,'ssssss')
               </CustomTypography>
             </CardContent>
           </Card>
-        </Stack> : ""}
-        {/* </Grid> */}
-        {/* <Grid item xs={12} > */}
+        </Stack>
+
         <Box sx={{ width: "100%", mt: "40px" }}>
           <AppBar position="static">
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -1256,7 +1301,7 @@ console.log(freejobs,'ssssss')
           </AppBar>
           <TabPanel id="simple-tab-0" value={value} index={0}>
             <Box sx={{ height: "550px", width: "100%" }}>
-              <DataGrid
+              <DatagridClient
                 sx={{ display: "flex", justifyContent: "center" }}
                 getRowId={handleGetRowId}
                 rows={rows}
@@ -1264,18 +1309,15 @@ console.log(freejobs,'ssssss')
               />
             </Box>
           </TabPanel>
-          {/* <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
-                <TabPanel id="simple-tab-0" value={value} index={1}>
-                <div style={{ height: "550px", width: "100%" }}>
-                  <DataGrid
-                    sx={{ display: "flex", justifyContent: "center" }}
-                    getRowId={handleGetRowId}
-                    rows={rows2}
-                    columns={columns}
-                  />
-                </div>
-              </TabPanel>
+              <DatagridClient
+                value={value}
+                index={1}
+                getRowId={handleGetRowId}
+                rows={rows2}
+                columns={columns}
+              />
             ) : (
               <Box
                 sx={{
@@ -1291,9 +1333,9 @@ console.log(freejobs,'ssssss')
                 </Typography>
               </Box>
             )}
-          </TabPanel> */}
+          </TabPanel>
         </Box>
-        {/* </Grid> */}
+
         <Dialog
         open={open1}
         onClose={handleClose1}
@@ -1349,6 +1391,7 @@ console.log(freejobs,'ssssss')
           </BasicButton>
         </DialogActions>
       </Dialog>
+
       </Employer>
     </>
   );
