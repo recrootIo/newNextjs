@@ -1871,7 +1871,6 @@ a {
   }
 }
 
-
 @media (max-width: 470px) {
   .fc .fc-toolbar.fc-header-toolbar {
     display: block;
@@ -1882,6 +1881,7 @@ a {
     display: block;
   }
 }
+
 
 
 @media (max-width: 1200px) {
