@@ -10,6 +10,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { logout } from "@/redux/slices/auth";
 import { styled } from "@mui/system";
+import Cookies from "js-cookie";
 
 const HoverListItemButton = styled(ListItemButton)`
   display: flex;
@@ -29,6 +30,7 @@ export default function EmployerSidebar() {
   // const select = useSelector(data => data.company.selectedRoute)
   const router = useRouter();
   const { pathname } = router;
+  const { push } = router;
   const pathSegments = pathname.split("/");
   const select = pathSegments[2];
   const company = useSelector((state) => state.company?.companyDetl);
@@ -37,15 +39,90 @@ export default function EmployerSidebar() {
   const freeCount = freePack === true ? 2 - cjobs.length : 0;
   const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
+  const user = Cookies.get();
 
   const handleListItemClick = (val) => {
     dispatch(selectRoute(val));
     if (val === "PostNewJob") {
-      console.log(company.jobSlot === true, "side");
       if (
-        company.jobSlot === true &&
-        company.package?.paymentStatus === "Completed"
+        user?.country === "LK" ||
+        (company.jobSlot === true &&
+          company.package?.paymentStatus === "Completed")
       ) {
+        if (
+          company.jobSlot === true &&
+          company.package?.paymentStatus === "Completed"
+        ) {
+          dispatch(
+            setEditJob({
+              salary: {},
+              question: [
+                {
+                  id: new Date().getTime(),
+                  questions: "",
+                  answer: "",
+                  preferedAns: "",
+                },
+              ],
+              requiredSkill: [],
+              address: [],
+              featureType: false,
+              queshow: "",
+            })
+          ).then(
+            setTimeout(() => {
+              push("/Employer/PostNewJob");
+            }, 500)
+          );
+          return;
+        }
+        // eslint-disable-next-line no-mixed-operators
+        if (
+          (freeCount === 0 && preCOunt === 0) ||
+          (freeCount === 0 && preCOunt === undefined)
+        ) {
+          if (company.package?.subscription_package === undefined) {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Subscribe A Plan To Post A job",
+              })
+            );
+          } else {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Your Job Limit Was Reached!",
+              })
+            );
+          }
+          push("/Pricing");
+          return;
+        }
+
+        dispatch(
+          setEditJob({
+            salary: {},
+            question: [
+              {
+                id: new Date().getTime(),
+                questions: "",
+                answer: "",
+                preferedAns: "",
+              },
+            ],
+            requiredSkill: [],
+            address: [],
+            featureType: false,
+            queshow: "true",
+            packageType: "",
+          })
+        ).then(
+          setTimeout(() => {
+            push("/Employer/PostNewJob");
+          }, 500)
+        );
+      } else {
         dispatch(
           setEditJob({
             salary: {},
@@ -64,55 +141,10 @@ export default function EmployerSidebar() {
           })
         ).then(
           setTimeout(() => {
-            router.push("/Employer/PostNewJob");
+            push("/Employer/PostNewJob");
           }, 500)
         );
-        return;
       }
-      // eslint-disable-next-line no-mixed-operators
-      if (
-        (freeCount === 0 && preCOunt === 0 && proCOunt === 0) ||
-        (freeCount === 0 && preCOunt === undefined && proCOunt === undefined)
-      ) {
-        if (company.package?.subscription_package === undefined) {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Subscribe A Plan To Post A job",
-            })
-          );
-        } else {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Your Job Limit Was Reached!",
-            })
-          );
-        }
-        router.push("/Pricing");
-        return;
-      }
-      dispatch(
-        setEditJob({
-          salary: {},
-          question: [
-            {
-              id: new Date().getTime(),
-              questions: "",
-              answer: "",
-              preferedAns: "",
-            },
-          ],
-          requiredSkill: [],
-          address: [],
-          featureType: false,
-          queshow: "",
-        })
-      ).then(
-        setTimeout(() => {
-          router.push("/Employer/PostNewJob");
-        }, 500)
-      );
     }
   };
   const logOut = useCallback(() => {

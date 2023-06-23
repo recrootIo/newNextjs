@@ -54,6 +54,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
+import stepsStyle from "../../../components/Employers/styles.module.css";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 import Employer from "..";
@@ -665,7 +666,6 @@ const Members = () => {
                 <Typography
                   variant="h5"
                   style={{ fontWeight: "900", marginBottom: "15px" }}
-                  className="addAccount"
                 >
                   ADD ACCOUNT MEMBER
                 </Typography>
@@ -859,12 +859,10 @@ const Members = () => {
                   sx={{
                     color: "#034275",
                   }}
+                  className="addAccount"
                 >
                   + Add New Member
                 </Button>
-                {/* ) : (
-                        ""
-                      )} */}
               </Stack>
               <Box
                 sx={{
@@ -991,6 +989,7 @@ const Members = () => {
                         </Box>
                       </Stack>
                       <Box
+                        className="addRole"
                         sx={{
                           display: "flex",
                           width: "10%",
@@ -1022,7 +1021,6 @@ const Members = () => {
                             onClick={() => {
                               handleMemRemove(member.id);
                             }}
-                            className="addRole"
                           >
                             <RemoveCircleIcon
                               sx={{
@@ -1040,6 +1038,7 @@ const Members = () => {
                 ))}
               </Box>
             </Box>
+
             <Stack
               direction="row"
               spacing={2}
@@ -1082,8 +1081,8 @@ const Members = () => {
         disableInteraction={true}
         steps={tourConfig}
         isOpen={isTourOpen}
-        maskClassName={styles.mask}
-        className={styles.helper}
+        maskClassName={stepsStyle.mask}
+        className={stepsStyle.helper}
         rounded={8}
         accentColor={accentColor}
       />

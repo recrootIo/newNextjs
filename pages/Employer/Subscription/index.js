@@ -41,7 +41,7 @@ import autoTable from "jspdf-autotable";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
-// const Tour = dynamic(() => import("reactour"), { ssr: false });
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 require("jspdf-autotable");
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -924,6 +924,16 @@ const Subscriptions = () => {
             />
           </div>
         </Grid>
+        <Tour
+          onRequestClose={closeTour}
+          disableInteraction={true}
+          steps={tourConfig}
+          isOpen={isTourOpen}
+          maskClassName={styles.mask}
+          className={styles.helper}
+          rounded={8}
+          accentColor={accentColor}
+        />
       </Employer>
     </>
   );

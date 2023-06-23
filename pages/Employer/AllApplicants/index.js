@@ -676,31 +676,12 @@ const AllApplicants = () => {
             By clicking here, you can access more details about the applicant
             and download their resume
           </CustomTypography>
-          <Button onClick={() => closeTour()}>SKIP</Button>
-        </Stack>
-      ),
-    },
-    {
-      selector: ".nextButton",
-      style: {
-        color: "black",
-      },
-      content: ({ goTo }) => (
-        <Stack
-          sx={{
-            gap: "10px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CustomTypography>
-            Click here to proceed to the next step
-          </CustomTypography>
           <Button onClick={() => closeTour()}>Done</Button>
         </Stack>
       ),
     },
   ];
+
   const comp = useSelector((state) => state?.company?.companyDetl);
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);

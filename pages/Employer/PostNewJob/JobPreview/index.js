@@ -19,7 +19,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ScreeningQuestions from "@/components/Employers/ScreeningQuestions/ScreeningQuestions";
 import styled from "styled-components";
 import styles from "./postNewJobPreview.module.css";
@@ -27,6 +27,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import moment from "moment";
 import companyservice from "@/redux/services/company.service";
+import { setpremium } from "@/redux/slices/job";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -79,7 +80,10 @@ const JobPreview = (props) => {
   const settingIndex = (index) => {
     props.Pages(index);
   };
-
+  const dispatch = useDispatch()
+    useEffect(() => {
+    dispatch(setpremium(false))
+    }, [dispatch])
   const updateValue = async () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ jobPreview: false });

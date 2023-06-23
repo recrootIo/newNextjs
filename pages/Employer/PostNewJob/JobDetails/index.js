@@ -53,6 +53,7 @@ import { isEmpty } from "lodash";
 import Address from "@/components/Address";
 import styles from "../../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 const style = {
@@ -256,7 +257,9 @@ const JobDetails = () => {
 
   const updateValue = async () => {
     const companyService = new companyservice();
-    await companyService.updateTourValue({ jobDetails: false });
+    await companyService
+      .updateTourValue({ jobDetails: false })
+      .then(() => dispatch(getCompanyDetails()));
   };
 
   const closeTour = () => {
@@ -357,6 +360,8 @@ const JobDetails = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.jobDetails);
   }, [company?.tours?.jobDetails]);
+
+  console.log(company?.tours, "company?.tours");
 
   return (
     <>

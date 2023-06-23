@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import {
+  Backdrop,
   Button,
   Card,
   CircularProgress,
@@ -25,11 +26,14 @@ import { isEmpty } from "lodash";
 import {
   addJobs,
   addJobsNew,
+  addJobsNewPre,
   companyJobs,
   errorJobs,
   setEditJob,
+  setpremium,
   singleJobs,
   updateJobs,
+  upgradejob,
 } from "@/redux/slices/job";
 // import JobDetails from "./JobDetails/jobDetails";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
@@ -49,6 +53,7 @@ import validator from "@/components/Validator";
 import Employer from "..";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Chooseplan from "./ChoosePlan";
 
 function PostnewJob() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -116,7 +121,8 @@ function PostnewJob() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const country = Cookies.get("country");
-  const postJobs = (final) => {
+
+  const postJobs = () => {
     dispatch(applyJobsdet());
     if (
       (companyDet?.jobSlotGold === true && full === "jSlot") ||
@@ -209,14 +215,13 @@ function PostnewJob() {
               : "";
           } else {
             if (res.payload.code) {
-              if (res.payload.code === 899) {
+              if (res.payload.code === 500) {
                 dispatch(
                   openAlert({
                     type: ERROR,
                     message: res.payload.message,
                   })
                 );
-                router.push("/Pricing");
                 return;
               }
               dispatch(
@@ -427,6 +432,12 @@ function PostnewJob() {
           setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
         }
       }
+      if (index === 2) {
+        setProfiletab({
+          index: 3,
+          page: <Chooseplan postJobs={postJobs} postPremJobs={postPremJobs} />,
+        });
+      }
     }
   }
   const PagesTwo = (index, cal) => {
@@ -467,7 +478,35 @@ function PostnewJob() {
       ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
       : { index: 0, page: <JobDetails /> }
   );
-
+  const [open, setopen] = useState(false);
+  console.log(final, "final");
+  const postPremJobs = () => {
+    setopen(true);
+    dispatch(addJobsNewPre(final))
+      .then((res) => {
+        console.log(res?.payload?.user?._id, "ressssssss");
+        dispatch(upgradejob([res?.payload?.user?._id])).then(
+          setopen(false),
+          router.push("/Employer/Jobpayment")
+        );
+      })
+      .catch((error) => {
+        if (
+          error.message === "Request failed with status code 401" ||
+          "Request failed with status code 403"
+        ) {
+          dispatch(logout()).then(() => {
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
+          });
+        }
+      });
+  };
   return (
     <Employer>
       <Box>
@@ -525,7 +564,10 @@ function PostnewJob() {
                 >
                   <CircularProgress color="inherit" />
                 </Button>
-              ) : (
+              ) : (companyDet?.jobSlotGold === true && full === "jSlot") ||
+                companyDet?.package?.subscription_package === "SuperEmployer" ||
+                country === "LK" ||
+                Cid !== undefined ? (
                 <Button
                   className="nextButton"
                   variant="contained"
@@ -548,7 +590,25 @@ function PostnewJob() {
                     ? "Save"
                     : "Submit"}
                 </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="nextButton"
+                  onClick={() => {
+                    Pages(profiletab.index, "add");
+                    dispatch(setpremium(true));
+                  }}
+                  sx={{
+                    width: "50%",
+                    bgcolor: "#015FB1 !important",
+                    height: "55px",
+                  }}
+                >
+                  Submit & Choose Plan
+                </Button>
               )
+            ) : profiletab.index === 3 ? (
+              ""
             ) : (
               <Button
                 variant="contained"
@@ -568,6 +628,15 @@ function PostnewJob() {
           </Stack>
         </Card>
       </Box>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={() => {
+          setopen(false);
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Employer>
   );
 }
