@@ -238,7 +238,7 @@ const Certifications = () => {
                     sx={{
                       backgroundColor: "#F6FCFF",
                       borderRadius: "10px",
-                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      padding: { md: "18px 20px", sm: "15px", xs: "10px" },
                       border: "1px solid #D3EAFF",
                     }}
                     key={index}
@@ -254,6 +254,7 @@ const Certifications = () => {
                         onClick={() => {
                           handleGetSingle(prj._id);
                         }}
+                        sx={{ pt: 0 }}
                       >
                         <CreateIcon
                           sx={{ color: "#00339B" }}
@@ -264,6 +265,7 @@ const Certifications = () => {
                         onClick={() => {
                           handleClickOpenDeleteProject(prj._id);
                         }}
+                        sx={{ pr: 0, pt: 0 }}
                       >
                         <DeleteIcon sx={{ color: DANGER }} />
                       </IconButton>
@@ -359,7 +361,7 @@ const Certifications = () => {
                     sx={{
                       backgroundColor: "#F6FCFF",
                       borderRadius: "10px",
-                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      padding: { md: "18px 20px", sm: "15px", xs: "10px" },
                       border: "1px solid #D3EAFF",
                     }}
                     key={index}
@@ -375,6 +377,7 @@ const Certifications = () => {
                         onClick={() => {
                           openEditTraining(tra?._id);
                         }}
+                        sx={{ pt: 0 }}
                       >
                         <CreateIcon
                           sx={{ color: "#00339B" }}
@@ -385,6 +388,7 @@ const Certifications = () => {
                         onClick={() => {
                           handleClickOpenDelTraining(tra._id);
                         }}
+                        sx={{ pr: 0, pt: 0 }}
                       >
                         <DeleteIcon sx={{ color: DANGER }} />
                       </IconButton>
@@ -467,7 +471,7 @@ const Certifications = () => {
                     sx={{
                       backgroundColor: "#F6FCFF",
                       borderRadius: "10px",
-                      padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                      padding: { md: "18px 20px", sm: "15px", xs: "10px" },
                       border: "1px solid #D3EAFF",
                     }}
                     key={index}
@@ -479,7 +483,10 @@ const Certifications = () => {
                         alignItems: "center",
                       }}
                     >
-                      <IconButton onClick={() => handleGetSingleCer(cet._id)}>
+                      <IconButton
+                        onClick={() => handleGetSingleCer(cet._id)}
+                        sx={{ pt: 0 }}
+                      >
                         <CreateIcon
                           sx={{ color: "#00339B" }}
                           fontSize="small"
@@ -489,6 +496,7 @@ const Certifications = () => {
                         onClick={() => {
                           handleClickOpenDelCert(cet._id);
                         }}
+                        sx={{ pr: 0, pt: 0 }}
                       >
                         <DeleteIcon sx={{ color: DANGER }} />
                       </IconButton>

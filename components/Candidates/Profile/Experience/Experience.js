@@ -110,7 +110,7 @@ const Experience = ({ ...experience }) => {
                 sx={{
                   backgroundColor: "#F6FCFF",
                   borderRadius: "10px",
-                  padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                  padding: { md: "18px 20px", sm: "15px", xs: "10px" },
                   border: "1px solid #D3EAFF",
                 }}
               >
@@ -121,7 +121,10 @@ const Experience = ({ ...experience }) => {
                     alignItems: "center",
                   }}
                 >
-                  <IconButton onClick={() => handleGetSingle(ex?._id)}>
+                  <IconButton
+                    onClick={() => handleGetSingle(ex?._id)}
+                    sx={{ pt: 0 }}
+                  >
                     <CreateIcon
                       sx={{ color: "#00339B", cursor: "pointer" }}
                       fontSize="small"
@@ -132,6 +135,7 @@ const Experience = ({ ...experience }) => {
                       setOpenDeleteScreen(() => true);
                       setSelectedId(ex?._id);
                     }}
+                    sx={{ pr: 0, pt: 0 }}
                   >
                     <DeleteIcon sx={{ color: DANGER }} />
                   </IconButton>

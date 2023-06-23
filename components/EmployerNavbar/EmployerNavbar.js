@@ -44,8 +44,8 @@ const EmployerNavbar = () => {
                   alignItems: "center",
                 }}
               >
-                <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
-                <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" />
+                {/* <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
+                <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" /> */}
                 <Avatar sx={{ color: "#034275" }} />
               </Stack>
             </Box>

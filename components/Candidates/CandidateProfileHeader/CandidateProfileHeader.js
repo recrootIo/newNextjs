@@ -45,6 +45,7 @@ const CandidateProfileHeader = (data) => {
   const photoss = useSelector(
     (state) => state.personal?.data?.profpicFileLocation
   );
+  console.log(data, "data");
 
   const personal = useSelector((state) => state.personal?.data);
 
@@ -107,7 +108,6 @@ const CandidateProfileHeader = (data) => {
 
   const imageUrl = photoss?.photo ? srcsjjj : "";
 
-
   return (
     <Box
       sx={{
@@ -117,11 +117,17 @@ const CandidateProfileHeader = (data) => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         p: "40px",
-        flexDirection:{sm:'row',xs:'column'}
+        flexDirection: { sm: "row", xs: "column" },
       }}
     >
-      <Box sx={{display:{sm:'none',xs:'flex'},width: '100%',justifyContent:'space-between'}}>
       <Box
+        sx={{
+          display: { sm: "none", xs: "flex" },
+          width: "100%",
+          justifyContent: "flex-end",
+        }}
+      >
+        {/* <Box
             sx={{
               display: "flex",
               justifyContent: { xs: "flex-start", md: "flex-end" },
@@ -138,59 +144,58 @@ const CandidateProfileHeader = (data) => {
             >
               <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
             </IconButton>
-          </Box>
-          <Box
-            sx={{
-              display: { xs: "flex", md: "none" },
-              justifyContent: "flex-end",
-            }}
-          >
-            {data?.profilePercentage < 70 && (
-              <Box
+          </Box> */}
+        <Box
+          sx={{
+            display: { xs: "flex", md: "none" },
+            justifyContent: "flex-end",
+          }}
+        >
+          {data?.profilePercentage < 70 && (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                // position: "absolute",
+                backgroundImage: 'url("/profileprecentageborder.png")',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                width: "70px",
+                mt: "5px",
+              }}
+            >
+              <CustomTypography
+                variant="h6"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  // position: "absolute",
-                  backgroundImage: 'url("/profileprecentageborder.png")',
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  width: "70px",
-                  mt: "5px",
+                  position: "relative",
+                  fontFamily: "Inter-bold",
+                  zIndex: "1",
+                  top: "25px",
+                  left: "22px",
+                  fontSize: "12px",
                 }}
               >
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    position: "relative",
-                    fontFamily: "Inter-bold",
-                    zIndex: "1",
-                    top: "25px",
-                    left: "22px",
-                    fontSize: "12px",
-                  }}
-                >
-                  {data?.profilePercentage}%
-                </CustomTypography>
-                <CustomTypography
-                  variant="subtitle1"
-                  sx={{
-                    mt: "25px",
-                    fontSize: { xs: "10px", md: "14px" },
-                    position: "relative",
-                    top: "25px",
-                    color: NEUTRAL,
-                    textAlign: "center",
-                  }}
-                >
-                  Profile completed (Excellent)
-                </CustomTypography>
-              </Box>
-            )}
-          </Box>
+                {data?.profilePercentage}%
+              </CustomTypography>
+              <CustomTypography
+                variant="subtitle1"
+                sx={{
+                  mt: "25px",
+                  fontSize: { xs: "10px", md: "14px" },
+                  position: "relative",
+                  top: "25px",
+                  color: NEUTRAL,
+                  textAlign: "center",
+                }}
+              >
+                Profile completed (Excellent)
+              </CustomTypography>
+            </Box>
+          )}
+        </Box>
       </Box>
       <Container>
- 
         <Grid container spacing={2}>
           <Grid
             item
@@ -200,7 +205,7 @@ const CandidateProfileHeader = (data) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              flexDirection:'column'
+              flexDirection: "column",
             }}
           >
             {loadimg === true ? (
@@ -344,7 +349,7 @@ const CandidateProfileHeader = (data) => {
                   backgroundImage: 'url("/profileprecentageborder.png")',
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
-                  height: {md:'200px',sm:"150px"},
+                  height: { md: "200px", sm: "150px" },
                   flexWrap: "wrap",
                 }}
               >
@@ -355,8 +360,8 @@ const CandidateProfileHeader = (data) => {
                     fontFamily: "Inter-bold",
                     zIndex: "1",
                     fontSize: "2rem",
-                    top: {md:'50%',sm:"40%"},
-                    left: {md:'50%',sm:"40%"},
+                    top: { md: "50%", sm: "40%" },
+                    left: { md: "50%", sm: "40%" },
                     transform: "translate(-50%, -50%)",
                   }}
                 >
@@ -379,7 +384,7 @@ const CandidateProfileHeader = (data) => {
             )}
           </Grid>
           {personal?.profilePercentage < 70 && (
-            <Grid md={12}>
+            <Grid item md={12}>
               <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
                 <CustomTypography
                   variant="subtitle1"

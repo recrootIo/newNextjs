@@ -30,6 +30,13 @@
   box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
   border-radius: 10px;
   padding-top: 0;
+  background-image: url("/similar-jobs-card-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.similarCard .MuiCardContent-root {
+  background-image: none;
 }
 
 .similarAvatar {

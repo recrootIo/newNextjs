@@ -16,9 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import FooterHome from "@/components/Home/FooterHome";
+import EmployerMobileSidebar from "@/components/Employers/EmployerMobileSidebar/EmployerMobileSidebar";
 
 function Employer({ children }) {
-
   const [getUser, setUser] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
@@ -38,7 +38,11 @@ function Employer({ children }) {
   // const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
   const handleEdit = () => {
-    if (user?.country === 'LK' || (company.jobSlot === true && company.package?.paymentStatus === 'Completed')) {      
+    if (
+      user?.country === "LK" ||
+      (company.jobSlot === true &&
+        company.package?.paymentStatus === "Completed")
+    ) {
       if (
         company.jobSlot === true &&
         company.package?.paymentStatus === "Completed"
@@ -68,8 +72,8 @@ function Employer({ children }) {
       }
       // eslint-disable-next-line no-mixed-operators
       if (
-        (freeCount === 0 && preCOunt === 0 ) ||
-        (freeCount === 0 && preCOunt === undefined )
+        (freeCount === 0 && preCOunt === 0) ||
+        (freeCount === 0 && preCOunt === undefined)
       ) {
         if (company.package?.subscription_package === undefined) {
           dispatch(
@@ -89,7 +93,7 @@ function Employer({ children }) {
         push("/Pricing");
         return;
       }
-  
+
       dispatch(
         setEditJob({
           salary: {},
@@ -131,7 +135,7 @@ function Employer({ children }) {
         })
       ).then(
         setTimeout(() => {
-          push('/Employer/PostNewJob');
+          push("/Employer/PostNewJob");
         }, 500)
       );
     }
@@ -192,7 +196,7 @@ function Employer({ children }) {
                   },
                 }}
               >
-                <EmployerSidebar />
+                <EmployerMobileSidebar setIsDrawerOpen={setIsDrawerOpen} />
               </Drawer>
             </Box>
             <Box>

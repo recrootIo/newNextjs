@@ -88,6 +88,7 @@ const AddExperience = () => {
     jobProfile: resume?.jobProfile,
     _id: resume?._id,
   });
+  const [title, setTitle] = React.useState("Add Experience");
 
   const gotoHome = () => {
     dispatch(clearExperience());
@@ -156,6 +157,14 @@ const AddExperience = () => {
       });
   };
 
+  React.useEffect(() => {
+    if (resume?._id) {
+      setTitle("Edit Experience");
+    } else {
+      setTitle("Add Experience");
+    }
+  }, [resume]);
+
   return (
     <div>
       <Container>
@@ -190,7 +199,7 @@ const AddExperience = () => {
                 fontSize: "33px",
               }}
             >
-              Add Experience
+              {title}
             </CustomTypography>
 
             <Formik

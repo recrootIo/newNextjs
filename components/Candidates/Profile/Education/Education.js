@@ -105,7 +105,7 @@ const Education = ({ ...resume }) => {
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: { md: "20px 30px", sm: "10px", xs: "10px" },
+                padding: { md: "18px 20px", sm: "15px", xs: "10px" },
                 border: "1px solid #D3EAFF",
               }}
             >
@@ -116,7 +116,10 @@ const Education = ({ ...resume }) => {
                   alignItems: "center",
                 }}
               >
-                <IconButton onClick={() => handleGetSingle(edi?._id)}>
+                <IconButton
+                  onClick={() => handleGetSingle(edi?._id)}
+                  sx={{ pt: 0 }}
+                >
                   <CreateIcon
                     sx={{ color: "#00339B", cursor: "pointer" }}
                     fontSize="small"
@@ -127,6 +130,7 @@ const Education = ({ ...resume }) => {
                     setOpenDeleteScreen(() => true);
                     setSelectedId(edi?._id);
                   }}
+                  sx={{ pr: 0, pt: 0 }}
                 >
                   <DeleteIcon sx={{ color: DANGER }} />
                 </IconButton>

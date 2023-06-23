@@ -57,15 +57,16 @@ const VerifyEmail = () => {
         })
       );
       // notify("Your account verification is successful and is ready to go!");
-      if (
-        loggedInUser.User.recrootUserType === "Employer" 
-      ) {
-        if (country === 'LK') {
+      if (loggedInUser.User.recrootUserType === "Employer") {
+        if (country === "LK") {
           push("/Pricing");
-        }else{
+        } else {
           push("/");
         }
-      } else if ( loggedInUser.User.recrootUserType === "Candidate" && loggedInUser.User.resume.resumeFileLocation.length === 0) {
+      } else if (
+        loggedInUser.User.recrootUserType === "Candidate" &&
+        loggedInUser.User.resume.resumeFileLocation.length === 0
+      ) {
         push("/uploadResume");
       } else {
         push("/");
@@ -191,7 +192,8 @@ const VerifyEmail = () => {
             }}
             gutterBottom
           >
-            If you {"didn't"} receive the OTP, Click Here to
+            Make sure to review your spam folder if OTP is not received and if
+            not found, request a resend here.
             <span>
               <Button onClick={sendCode}>Resend</Button>
             </span>

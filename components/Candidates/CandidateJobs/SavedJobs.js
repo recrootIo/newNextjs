@@ -28,7 +28,6 @@ const SavedJobs = () => {
         >
           Saved Jobs
         </CustomTypography>
-        <AddIcon />
       </Stack>
 
       <CardContent

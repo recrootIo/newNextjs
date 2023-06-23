@@ -47,6 +47,7 @@ const AddSkill = () => {
     Compitance: skill?.Compitance,
     _id: skill?._id,
   });
+  const [title, setTitle] = React.useState("Add Skill");
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
@@ -115,6 +116,14 @@ const AddSkill = () => {
       });
   };
 
+  React.useEffect(() => {
+    if (skill?._id) {
+      setTitle("Edit Skill");
+    } else {
+      setTitle("Add Skill");
+    }
+  }, [skill]);
+
   return (
     <div>
       <Container>
@@ -149,7 +158,7 @@ const AddSkill = () => {
                 fontSize: "33px",
               }}
             >
-              Add Skill
+              {title}
             </CustomTypography>
 
             <Formik
