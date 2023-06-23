@@ -35,7 +35,8 @@ const initialState = {
     ids:[],
     amount:'',
     country:''
-  }
+  },
+  choosePremium:false
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -128,6 +129,11 @@ export const addJobsNew = createAsyncThunk("add/jobsNew", async (value) => {
   const res = await jobsService.addJobNew(value, user.User.companyId);
   return res.data;
 });
+export const addJobsNewPre = createAsyncThunk("add/jobsNew", async (value) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const res = await jobsService.addJobNewPre(value, user.User.companyId);
+  return res.data;
+});
 export const updateJobs = createAsyncThunk(
   "add/jobs",
   async ({ final, Cid }) => {
@@ -153,6 +159,9 @@ export const singleJobs = createAsyncThunk(
 );
 
 export const jobPackType = createAsyncThunk("set/jobPackType", async (data) => {
+  return data;
+});
+export const setpremium = createAsyncThunk("set/setpremium", async (data) => {
   return data;
 });
 
@@ -240,6 +249,9 @@ const jobsSlice = createSlice({
     },
     [upgradejob.fulfilled]: (state, action) => {
       state.upJob = action.payload;
+    },
+    [setpremium.fulfilled]: (state, action) => {
+      state.choosePremium = action.payload;
     },
     [upgradejobPayment.fulfilled]: (state, action) => {
       state.jobPayment = action.payload;
