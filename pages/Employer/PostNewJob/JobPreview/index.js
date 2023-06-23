@@ -27,7 +27,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import moment from "moment";
 import companyservice from "@/redux/services/company.service";
-const Tour = dynamic(() => import("reactour"));
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -60,6 +60,10 @@ const style = {
   },
 };
 
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const JobPreview = (props) => {
   const details = useSelector((state) => state.jobs.details);
   const essen = useSelector((state) => state.jobs.essential);
@@ -69,6 +73,8 @@ const JobPreview = (props) => {
   const level = useSelector((state) => state.jobs.jobRole);
   const showq = useSelector((state) => state.jobs.queshow);
   const [isTourOpen, setTourOpen] = React.useState(false);
+
+  const salaryType = details && details.salary.salaryType;
 
   const settingIndex = (index) => {
     props.Pages(index);
@@ -452,25 +458,27 @@ const JobPreview = (props) => {
               details?.salary?.salaryType !== "noprovide" ? (
                 <>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <Typography>Salary :</Typography>
-                    <Typography sx={styles.contentprv}>
-                      {details && details.salary.salaryType} (
+                    <CustomTypography>Salary :</CustomTypography>
+                    <CustomTypography sx={styles.contentprv}>
+                      {salaryType && capitalizeFirstLetter(salaryType)} (
                       {details && details.salary.minSalary} to{" "}
                       {details && details.salary.maxSalary})
-                    </Typography>
+                    </CustomTypography>
                   </Box>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <Typography>Salary Currency : </Typography>
-                    <Typography sx={styles.contentprv}>
+                    <CustomTypography>Salary Currency : </CustomTypography>
+                    <CustomTypography sx={styles.contentprv}>
                       {details && details.salary.salaryCrrancy}
-                    </Typography>
+                    </CustomTypography>
                   </Box>
                 </>
               ) : (
                 <>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <Typography>Salary :</Typography>
-                    <Typography sx={styles.contentprv}>Negotiable</Typography>
+                    <CustomTypography>Salary :</CustomTypography>
+                    <CustomTypography sx={styles.contentprv}>
+                      Negotiable
+                    </CustomTypography>
                   </Box>
                 </>
               )}

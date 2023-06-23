@@ -63,16 +63,10 @@ export default function Address() {
                   ...provided,
                   boxShadow: 0,
                   height: "40px",
-                  "&:hover": {
-                    border: "1px solid purple",
-                  },
                 }),
                 singleValue: (provided) => ({
                   ...provided,
                   boxShadow: 0,
-                  "&:hover": {
-                    border: "1px solid purple",
-                  },
                 }),
               },
             }}

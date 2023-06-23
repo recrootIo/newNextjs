@@ -41,7 +41,6 @@ import {
   CheckBox,
 } from "@mui/icons-material";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
@@ -70,6 +69,7 @@ const DatagridClient = dynamic(
 import http from "@/redux/http-common";
 import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
+import { useRouter } from "next/router";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const BasicButton = styled(Button)({
@@ -143,7 +143,13 @@ const EmpoyerDashboard = () => {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push("/signin", { state: true });
+                push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : console.warn("error");
         }
@@ -154,7 +160,13 @@ const EmpoyerDashboard = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -390,7 +402,7 @@ const EmpoyerDashboard = () => {
   const handleActivate = () => {
     axios
       .put(
-        `http://localhost:3000/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "active" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -426,7 +438,7 @@ const EmpoyerDashboard = () => {
   const handleDeActivate = () => {
     axios
       .put(
-        `http://localhost:3000/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "inactive" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -447,7 +459,13 @@ const EmpoyerDashboard = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push("/signin", { state: true });
+            push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });

@@ -503,7 +503,7 @@ function Signup() {
                         alignItems:'center'
                       }}
                     >
-                      <CustomTypography sx={{textAlign:'center'}}>
+                      <CustomTypography sx={{textAlign:'center',textTransform:'capitalize'}}>
                         Sign Up Already have an account?
                       </CustomTypography>
                       <Link href="/signin">

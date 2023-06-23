@@ -46,6 +46,7 @@ const Tour = dynamic(() => import("reactour"), { ssr: false });
 import styles from "../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { RECRUITER } from "@/utils/UserConstants";
 
 const normal = {
   fontFamily: "'Inter'",
@@ -154,7 +155,11 @@ function Pricing() {
   const path = useSelector((state) => state.personal.pricing);
   const { push } = useRouter();
   useEffect(() => {
-    if (user?.userType === "Employer" || user?.userType === "Member") {
+    if (
+      user?.userType === "Employer" ||
+      user?.userType === "Member" ||
+      user?.userType === RECRUITER
+    ) {
       dispatch(getCompanyDetails());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -144,19 +144,22 @@ function ScreeningQuestions() {
                   <IconButton
                     edge="end"
                     sx={{ mr: "1px", color: "#3771C8", width: "10%" }}
+                    onClick={() => {
+                      deleteQuestion(quest.id);
+                    }}
                   >
-                    <Close
-                      onClick={() => {
-                        deleteQuestion(quest.id);
-                      }}
-                    />
+                    <Close />
                   </IconButton>
                 ) : (
                   ""
                 )}
 
-                <IconButton edge="end" sx={{ color: "#3771C8", width: "10%" }}>
-                  <Add sx={{ color: "#3771C8" }} onClick={handleAdd} />
+                <IconButton
+                  edge="end"
+                  sx={{ color: "#3771C8", width: "10%" }}
+                  onClick={handleAdd}
+                >
+                  <Add sx={{ color: "#3771C8" }} />
                 </IconButton>
               </Box>
 

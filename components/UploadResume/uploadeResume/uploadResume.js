@@ -50,7 +50,20 @@ const UploadResume = () => {
       parallax.current.scrollTo(to);
     }
   };
+  useEffect(() => {
+    const disableBackNavigation = () => {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = () => {
+        window.history.go(1);
+      };
+    };
 
+    disableBackNavigation();
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
   useEffect(() => {
     dispatch(retrievePersonal()).then((res) => {
       if (res?.payload?.resume?.resumeFileLocation?.length > 0) {

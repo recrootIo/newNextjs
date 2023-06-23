@@ -2,7 +2,7 @@
 "use client";
 import React, { useCallback } from "react";
 import Container from "@mui/material/Container";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import {
   Avatar,
@@ -26,6 +26,7 @@ import Fade from "@mui/material/Fade";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   // const { data: session } = useSession()
@@ -49,7 +50,7 @@ const Navbar = () => {
   const logOut = useCallback(() => {
     handleClose();
     dispatch(logout()).then(() => {
-      push("/");
+      push('/');
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -162,6 +163,18 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <>
+                      <Link
+                        href="/Employer/Dashboard"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                        prefetch
+                      >
+                        Dashboard
+                      </Link>
+
                       <Button
                         id="fade-button"
                         aria-controls={openEmp ? "fade-menu" : undefined}
@@ -292,6 +305,7 @@ const Navbar = () => {
               )}{" "}
             </List>
             <Divider />
+
             <List>
               {user === undefined ? (
                 <>
@@ -323,4 +337,4 @@ const Navbar = () => {
 };
 
 // export default Navbar;
-export default dynamic (() => Promise.resolve(Navbar), {ssr: false})
+export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

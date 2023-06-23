@@ -18,31 +18,41 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Cookies from "js-cookie";
+import Header from "@/components/Header";
 
 export default function Home() {
   useEffect(() => {
     AOS.init();
   }, []);
   const user = Cookies.get("token");
-
+ useEffect(() => {
+  const redirect = localStorage.getItem("redirect");
+  if (redirect !== null){
+    localStorage.removeItem("redirect");
+  }
+ }, [])
+ 
   return (
-    <Box sx={{ height: "100%", width: "100%" }}>
-      <Navbar />
+    <>
+      <Header title={"HOME"} />
+      <Box sx={{ height: "100%", width: "100%" }}>
+        <Navbar />
 
-      {user === undefined ? <SignUpHome /> : ""}
+        {user === undefined ? <SignUpHome /> : ""}
 
-      <SearchHome />
-      <AboutHome />
-      <UsersDetailsHome />
-      <ExploreServices />
-      <CategoryHome />
-      {/* <GetHiredHome /> */}
-      <NicheTechHome />
-      <OurNumHome />
-      <BrandsHome />
-      <TestimonialHome />
-      <SubscribHome />
-      <FooterHome />
-    </Box>
+        <SearchHome />
+        <AboutHome />
+        <UsersDetailsHome />
+        <ExploreServices />
+        <CategoryHome />
+        {/* <GetHiredHome /> */}
+        <NicheTechHome />
+        <OurNumHome />
+        <BrandsHome />
+        <TestimonialHome />
+        <SubscribHome />
+        <FooterHome />
+      </Box>
+    </>
   );
 }

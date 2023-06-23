@@ -33,6 +33,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import ShareForm from "../ShareForm/ShareForm";
 import dynamic from "next/dynamic";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -62,9 +63,9 @@ const JobDetailCard = ({ ...props }) => {
     setLoginCallBackURL(`${window.location}`);
   }, []);
   const gotApply = () => {
-    if(data?.resume?.resumeFileLocation?.length < 1){
+    if (data?.resume?.resumeFileLocation?.length < 1) {
       router.push(`/uploadResume`);
-      return
+      return;
     }
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
@@ -85,8 +86,8 @@ const JobDetailCard = ({ ...props }) => {
   };
 
   const goToLogin = () => {
-    router.push(`/signin`);
     localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+    router.push(`/signin`);
   };
 
   useEffect(() => {
@@ -126,6 +127,9 @@ const JobDetailCard = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
+
+  const employerTypes = [EMPLOYER, RECRUITER];
+  const isEmployer = employerTypes.includes(userType);
 
   return (
     <Box
@@ -400,7 +404,7 @@ const JobDetailCard = ({ ...props }) => {
                           ? "Complete Profile"
                           : "Apply now"}
                       </Button>
-                    ) : userType === "Employer" ? (
+                    ) : isEmployer ? (
                       ""
                     ) : (
                       <Button

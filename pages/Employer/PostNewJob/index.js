@@ -84,7 +84,10 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push("/signin", { state: true });
+                router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
               })
             : "";
         } else {
@@ -97,7 +100,10 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push("/signin", { state: true });
+            router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
           });
         }
       });
@@ -117,7 +123,10 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push("/signin", { state: true });
+                  router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
                 })
               : "";
           } else {
@@ -163,7 +172,10 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push("/signin", { state: true });
+              router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
             });
           }
         });
@@ -174,7 +186,10 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push("/signin", { state: true });
+                  router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
                 })
               : "";
           } else {
@@ -220,7 +235,10 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push("/signin", { state: true });
+              router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
             });
           }
         });
@@ -234,7 +252,10 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push("/signin", { state: true });
+                router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
               })
             : "";
         } else {
@@ -262,7 +283,10 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push("/signin", { state: true });
+            router.push({
+                  pathname: '/signin',
+                  query: { name: 'session' }
+              }, '/signin');
           });
         }
       });
@@ -277,7 +301,7 @@ function PostnewJob() {
             dispatch(
               openAlert({
                 type: ERROR,
-                message: "Please choose package type",
+                message: "Please Choose A Plan",
               })
             );
             return;
@@ -355,11 +379,13 @@ function PostnewJob() {
             return;
           }
           if (final.details.notice === undefined) {
+
             dispatch(openAlert({
               type:ERROR,
               message:"Provide Notice Period"
             }));
             return
+
           }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
@@ -474,7 +500,9 @@ function PostnewJob() {
                 </Button>
               ) : (
                 <Button
+
                   className="nextButton"
+
                   variant="contained"
                   sx={{
                     width: "50%",
@@ -499,7 +527,9 @@ function PostnewJob() {
             ) : (
               <Button
                 variant="contained"
+
                 className="nextButton"
+
                 onClick={() => {
                   Pages(profiletab.index, "add");
                 }}

@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Router } from "next/router";
 import { useRouter } from "next/router";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 // const Button = styled(Button)(({ theme }) => ({
 //   // "&:focus": {
 //   //   backgroundColor: "white",
@@ -52,6 +53,9 @@ function RedirectUser() {
   const [recrootUserType] = useState("Candidate");
   //   const { id } = useParams();
   //   const redirect = localStorage.getItem("Redirect");
+
+  const employerTypes = [EMPLOYER, RECRUITER];
+
   const router = useRouter();
   const { id } = router.query;
   const getUser = () => {
@@ -61,7 +65,7 @@ function RedirectUser() {
         localStorage.setItem("User", JSON.stringify(resObject.data));
         dispatch(setUserFromGoogle(resObject.data));
         if (resObject.data.User) {
-          if (resObject.data.User.recrootUserType === "Employer") {
+          if (employerTypes.includes(resObject.data.User.recrootUserType)) {
             Router.push("/");
           } else if (resObject.data.User.recrootUserType === "TempSocial") {
             Router.push("/completeProfile");

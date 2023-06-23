@@ -57,8 +57,8 @@ import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 import Employer from "..";
-import 'react-phone-input-2/lib/bootstrap.css';
-import 'react-phone-input-2/lib/style.css';
+import "react-phone-input-2/lib/bootstrap.css";
+import "react-phone-input-2/lib/style.css";
 
 uuidv4();
 

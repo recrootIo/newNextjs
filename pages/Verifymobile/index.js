@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
+import { RECRUITER } from "@/utils/UserConstants";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = React.useState("");
@@ -57,7 +58,10 @@ const VerifyEmail = () => {
         })
       );
       // notify("Your account verification is successful and is ready to go!");
-      if (loggedInUser.User.recrootUserType === "Employer") {
+      if (
+        loggedInUser.User.recrootUserType === "Employer" ||
+        loggedInUser.User.recrootUserType === RECRUITER
+      ) {
         if (country === "LK") {
           push("/Pricing");
         } else {
