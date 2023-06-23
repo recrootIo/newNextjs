@@ -197,7 +197,6 @@ const EssentialInformation = () => {
     dispatch(immediateSet(event.target.checked));
   };
 
-
   const [isTourOpen, setTourOpen] = React.useState(false);
 
   const updateValue = async () => {
@@ -283,7 +282,6 @@ const EssentialInformation = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.jobEssential);
   }, [company?.tours?.jobEssential]);
-
 
   return (
     <>

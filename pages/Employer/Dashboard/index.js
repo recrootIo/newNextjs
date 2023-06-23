@@ -143,10 +143,13 @@ const EmpoyerDashboard = () => {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : console.warn("error");
         }
@@ -157,10 +160,13 @@ const EmpoyerDashboard = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push({
-              pathname: '/signin',
-              query: { name: 'session' }
-          }, '/signin');
+            push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -453,10 +459,13 @@ const EmpoyerDashboard = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            push({
-              pathname: '/signin',
-              query: { name: 'session' }
-          }, '/signin');
+            push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
