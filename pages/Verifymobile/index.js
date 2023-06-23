@@ -196,7 +196,8 @@ const VerifyEmail = () => {
             }}
             gutterBottom
           >
-            If you {"didn't"} receive the OTP, Click Here to
+            Make sure to review your spam folder if OTP is not received and if
+            not found, request a resend here.
             <span>
               <Button onClick={sendCode}>Resend</Button>
             </span>

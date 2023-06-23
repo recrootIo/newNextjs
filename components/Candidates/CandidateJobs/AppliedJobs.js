@@ -57,7 +57,6 @@ const AppliedJobs = ({ appliedJobs }) => {
         >
           Applied Job
         </CustomTypography>
-        <AddIcon />
       </Stack>
       <CardContent
         sx={{ padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" } }}

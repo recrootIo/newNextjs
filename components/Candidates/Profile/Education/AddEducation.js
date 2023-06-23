@@ -87,6 +87,7 @@ const AddEducation = () => {
     toDate: convertFormat(education?.toDate || ""),
     _id: education?._id,
   });
+  const [title, setTitle] = React.useState("Add Education");
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
@@ -158,6 +159,14 @@ const AddEducation = () => {
     setInitialValues(() => education);
   }, []);
 
+  React.useEffect(() => {
+    if (education?._id) {
+      setTitle("Edit Education");
+    } else {
+      setTitle("Add Education");
+    }
+  }, [education]);
+
   return (
     <div>
       <Container>
@@ -191,7 +200,7 @@ const AddEducation = () => {
                 fontSize: "33px",
               }}
             >
-              Add Education
+              {title}
             </CustomTypography>
 
             <Formik

@@ -11,6 +11,7 @@ import {
   Stepper,
   Step,
   StepLabel,
+  useMediaQuery,
 } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -33,12 +34,12 @@ const NoticePeriodInputs = ({ ...props }) => {
   const { scroll, setCreateResume, position } = props;
   const [notice, setNotice] = React.useState("Immediate Joiner");
   const [hasAnOffer, setHasAnOffer] = React.useState("no");
-
   const [state, setState] = React.useState({
     Remote: false,
     Onsite: false,
     Hybrid: false,
   });
+  // const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const handleChange = (event) => {
     setState({
@@ -149,31 +150,37 @@ const NoticePeriodInputs = ({ ...props }) => {
                   value="Immediate Joiner"
                   control={<Radio />}
                   label="Immediate"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
                 <FormControlLabel
                   value="15 Days"
                   control={<Radio />}
                   label="15 Days"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
                 <FormControlLabel
                   value="30 days"
                   control={<Radio />}
                   label="30 Days"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
                 <FormControlLabel
                   value="45 Days"
                   control={<Radio />}
                   label="45 Days"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
                 <FormControlLabel
                   value="60 Days"
                   control={<Radio />}
                   label="60 Days"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
                 <FormControlLabel
                   value="90 Days"
                   control={<Radio />}
                   label="90 Days"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
                 />
               </RadioGroup>
             </FormControl>
@@ -188,9 +195,14 @@ const NoticePeriodInputs = ({ ...props }) => {
                 name="row-radio-buttons-group"
                 value={hasAnOffer}
                 onChange={handleHasAnOffer}
-                sx={{ columnGap: "14%", marginTop: "10px" }}
+                sx={{ columnGap: { xs: "none", sm: "14%" }, marginTop: "10px" }}
               >
-                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                <FormControlLabel
+                  value="yes"
+                  control={<Radio />}
+                  label="Yes"
+                  sx={{ width: { xs: "45%", sm: "auto" } }}
+                />
                 <FormControlLabel value="no" control={<Radio />} label="No" />
               </RadioGroup>
             </FormControl>
@@ -199,7 +211,10 @@ const NoticePeriodInputs = ({ ...props }) => {
               <FormLabel component="legend">Work Preference *</FormLabel>
               <FormGroup
                 aria-label="position"
-                sx={{ columnGap: "10%", marginTop: "10px" }}
+                sx={{
+                  columnGap: { xs: "none", sm: "10%" },
+                  marginTop: "10px",
+                }}
                 row
               >
                 {WORK_PREFERENCE.map((prefer, index) => (
@@ -215,6 +230,7 @@ const NoticePeriodInputs = ({ ...props }) => {
                     }
                     label={prefer}
                     labelPlacement="end"
+                    sx={{ width: { xs: "45%", sm: "auto" } }}
                   />
                 ))}
               </FormGroup>

@@ -87,6 +87,7 @@ const AddCertificates = ({}) => {
     issueDate: certOne?.issueDate,
     id: certOne?._id,
   });
+  const [title, setTitle] = React.useState("Add Certificates");
 
   React.useEffect(() => {
     setInitialValues(certOne);
@@ -148,6 +149,14 @@ const AddCertificates = ({}) => {
       });
   };
 
+  React.useEffect(() => {
+    if (training?._id) {
+      setTitle("Edit Certificates");
+    } else {
+      setTitle("Add Certificates");
+    }
+  }, [training]);
+
   return (
     <div>
       <Container>
@@ -182,7 +191,7 @@ const AddCertificates = ({}) => {
                 fontSize: "33px",
               }}
             >
-              Add Certificates
+              {title}
             </CustomTypography>
             <Formik
               initialValues={{ ...INITIAL_VALUES }}

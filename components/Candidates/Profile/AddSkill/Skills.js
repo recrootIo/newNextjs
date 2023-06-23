@@ -95,7 +95,7 @@ const Skills = ({ skills }) => {
         </Stack>
         <CardContent
           sx={{
-            padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+            padding: { md: "30px 50px", xs: "16px 10px", sm: "16px 10px" },
           }}
         >
           <table
@@ -118,7 +118,9 @@ const Skills = ({ skills }) => {
                     <CustomTypography>{skill?.Experience}</CustomTypography>
                   </td>
                   <td style={{ width: "150px" }}>
-                    <CustomTypography>{skill?.Compitance}</CustomTypography>
+                    <CustomTypography sx={{ textTransform: "capitalize" }}>
+                      {skill?.Compitance}
+                    </CustomTypography>
                   </td>
                   <td style={{ width: "160px" }}>
                     <LinearProgress

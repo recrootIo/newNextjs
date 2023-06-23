@@ -62,7 +62,7 @@ const PersonalDetail = ({ ...data }) => {
           sx={{ padding: { md: "10px 15px", sm: "10px" } }}
           spacing={2}
         >
-          <Grid item md={6} xs={12}>
+          <Grid item md={6} xs={12} sx={{ pt: "10px !important" }}>
             <Stack className="persFlex" sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>
@@ -110,7 +110,7 @@ const PersonalDetail = ({ ...data }) => {
             </Stack>
           </Grid>
 
-          <Grid item md={6} xs={12}>
+          <Grid item md={6} xs={12} sx={{ pt: "10px !important" }}>
             <Stack sx={{ gap: LAZY }}>
               <Stack direction={"row"} sx={{ gap: MID }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>

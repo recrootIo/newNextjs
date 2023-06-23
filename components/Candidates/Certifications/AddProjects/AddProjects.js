@@ -49,6 +49,7 @@ const AddProjects = () => {
     portafolioLink: project?.portafolioLink,
     _id: project?._id,
   });
+  const [title, setTitle] = React.useState("Add Projects");
 
   React.useEffect(() => {
     setInitialValues(project);
@@ -118,6 +119,14 @@ const AddProjects = () => {
     }
   };
 
+  React.useEffect(() => {
+    if (project?._id) {
+      setTitle("Edit Projects");
+    } else {
+      setTitle("Add Projects");
+    }
+  }, [project]);
+
   return (
     <div>
       <Container>
@@ -152,7 +161,7 @@ const AddProjects = () => {
                 fontSize: "33px",
               }}
             >
-              Add Projects
+              {title}
             </CustomTypography>
             <Formik
               initialValues={{ ...INITIAL_VALUES }}

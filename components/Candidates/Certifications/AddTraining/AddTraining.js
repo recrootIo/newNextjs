@@ -69,6 +69,7 @@ const AddTraining = () => {
     toDate: training?.toDate,
     _id: training?._id,
   });
+  const [title, setTitle] = React.useState("Add Training");
 
   React.useEffect(() => {
     setInitialValues(INITIAL_VALUES);
@@ -141,6 +142,14 @@ const AddTraining = () => {
     setInitialValues(training);
   }, [training]);
 
+  React.useEffect(() => {
+    if (training?._id) {
+      setTitle("Edit Training");
+    } else {
+      setTitle("Add Training");
+    }
+  }, [training]);
+
   return (
     <div>
       <Container>
@@ -175,7 +184,7 @@ const AddTraining = () => {
                 fontSize: "33px",
               }}
             >
-              Add Training
+              {title}
             </CustomTypography>
 
             <Formik

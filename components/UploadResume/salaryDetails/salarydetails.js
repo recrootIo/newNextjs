@@ -200,9 +200,9 @@ const Salary = ({ ...props }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{ width: "80%", mr: "5px" }}
+                sx={{ width: { xs: "50%", md: "80%" }, mr: "5px" }}
               />
-              <FormControl sx={{ width: "20%" }}>
+              <FormControl sx={{ width: { xs: "50%", md: "20%" } }}>
                 <InputLabel id="demo-simple-select-required-label">
                   Denomination
                 </InputLabel>
@@ -238,9 +238,9 @@ const Salary = ({ ...props }) => {
                   shrink: true,
                 }}
                 onChange={selectExpectedSalary}
-                sx={{ width: "80%", mr: "5px" }}
+                sx={{ width: { xs: "50%", md: "80%" }, mr: "5px" }}
               />
-              <FormControl sx={{ width: "20%" }}>
+              <FormControl sx={{ width: { xs: "50%", md: "20%" } }}>
                 <InputLabel id="demo-simple-select-required-label">
                   Denomination
                 </InputLabel>
@@ -280,10 +280,11 @@ const Salary = ({ ...props }) => {
                 className={!enableNext ? "disabledButtons" : "nextBtn"}
                 sx={{
                   height: "50px",
-                  width: "30%",
+                  width: { xs: "100%", sm: "30%" },
                   textAlign: "center",
                   textTransform: "capitalize",
                   marginBottom: "50px",
+                  mt: "24px",
                 }}
                 variant="contained"
                 disabled={!enableNext}
