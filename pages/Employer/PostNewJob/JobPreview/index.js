@@ -27,7 +27,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import moment from "moment";
 import companyservice from "@/redux/services/company.service";
-const Tour = dynamic(() => import("reactour"));
+const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 

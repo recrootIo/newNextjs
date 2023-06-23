@@ -41,7 +41,7 @@ import autoTable from "jspdf-autotable";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
-const Tour = dynamic(() => import("reactour"), { ssr: false });
+// const Tour = dynamic(() => import("reactour"), { ssr: false });
 require("jspdf-autotable");
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -593,16 +593,16 @@ const Subscriptions = () => {
               {paymentInfo.package.subscription_package === "Free" ? (
                 ""
               ) : (
-              <Card
-                sx={{
-                  width: "100%",
-                  borderRadius: "10px",
-                  p: "15px",
-                  backgroundImage: 'url("/Manage-Payment-card.svg")',
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-              >
+                <Card
+                  sx={{
+                    width: "100%",
+                    borderRadius: "10px",
+                    p: "15px",
+                    backgroundImage: 'url("/Manage-Payment-card.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
                   <Box
                     sx={{
                       height: "160px",
@@ -716,8 +716,8 @@ const Subscriptions = () => {
                           </Grid> */}
                     </Grid>
                   </Box>
-              </Card>
-                )}
+                </Card>
+              )}
             </Stack>
           </Grid>
           <Grid item xs={12} md={5} sx={{ height: "100%" }}>
