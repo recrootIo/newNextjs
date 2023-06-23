@@ -87,7 +87,7 @@ import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
 import companyservice from "@/redux/services/company.service";
-import { C } from "@fullcalendar/core/internal-common";
+// import { C } from "@fullcalendar/core/internal-common";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const bull = (
