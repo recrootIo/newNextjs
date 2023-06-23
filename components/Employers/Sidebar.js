@@ -9,6 +9,18 @@ import { setEditJob } from "@/redux/slices/job";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { logout } from "@/redux/slices/auth";
+import { styled } from "@mui/system";
+
+const HoverListItemButton = styled(ListItemButton)`
+  display: flex;
+  justify-content: center;
+  height: 65px;
+  transition: transform 0.2s, font-size 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function EmployerSidebar() {
   const background =
@@ -134,20 +146,16 @@ export default function EmployerSidebar() {
         </ListItemButton>
         <Divider variant="middle" color="gray" />
 
-
         <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
           <Tooltip title="Dashboard" placement="right">
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
                 background: select === "Dashboard" ? background : "",
-                height: "65px",
               }}
               onClick={() => handleListItemClick("Dashboard")}
             >
               <Image src="/home.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Tooltip>
         </Link>
 
@@ -157,11 +165,8 @@ export default function EmployerSidebar() {
           className="companyProfile"
         >
           <Link href={"/Employer/CompanyProfile"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background:
                   select === "CompanyProfile" ||
                   select === "Members" ||
@@ -172,22 +177,19 @@ export default function EmployerSidebar() {
               onClick={() => handleListItemClick("CompanyProfile")}
             >
               <Image src="/profile.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="Post New Job" placement="right" className="postNewJob">
-          <ListItemButton
+          <HoverListItemButton
             sx={{
-              display: "flex",
-              height: "65px",
-              justifyContent: "center",
               background: select === "PostNewJob" ? background : "",
             }}
             onClick={() => handleListItemClick("PostNewJob")}
           >
             <Image src="/jobs.png" alt="" width="40" height="40" />
-          </ListItemButton>
+          </HoverListItemButton>
         </Tooltip>
 
         <Tooltip
@@ -196,17 +198,14 @@ export default function EmployerSidebar() {
           className="allApplicants"
         >
           <Link href={"/Employer/AllApplicants"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background: select === "AllApplicants" ? background : "",
               }}
               onClick={() => handleListItemClick("AllApplicants")}
             >
               <Image src="/team.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
@@ -216,17 +215,14 @@ export default function EmployerSidebar() {
           className="interview"
         >
           <Link href={"/Employer/ScheduledInterviews"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background: select === "ScheduledInterviews" ? background : "",
               }}
               onClick={() => handleListItemClick("ScheduledInterviews")}
             >
               <Image src="/convo.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
@@ -236,33 +232,34 @@ export default function EmployerSidebar() {
           className="subscription"
         >
           <Link href={"/Employer/Subscription"}>
-            <ListItemButton
-              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
+            <HoverListItemButton
+              sx={{
+                background: select === "Subscription" ? background : "",
+              }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/subscription.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="My Account" placement="right" className="account">
           <Link href={"/Employer/MyAccount"}>
-            <ListItemButton
-              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
+            <HoverListItemButton
+              sx={{
+                background: select === "MyAccount" ? background : "",
+              }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/myAccount.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="Logout" placement="right">
-          <ListItemButton
-            sx={{ display: "flex", justifyContent: "center", height: "65px" }}
-            onClick={logOut}
-          >
+          <HoverListItemButton onClick={logOut}>
             <Image src="/power-icon.png" alt="" width="40" height="40" />
-          </ListItemButton>
+          </HoverListItemButton>
         </Tooltip>
       </List>
     </Box>

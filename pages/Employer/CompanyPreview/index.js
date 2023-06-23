@@ -315,6 +315,9 @@ const CompanyPreview = () => {
             pb: "80px",
             boder: "none",
             overflow: "visible",
+            backgroundImage: `url("/company-profile-elements-bg.svg")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
         >
           <CardContent>

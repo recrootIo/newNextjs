@@ -639,6 +639,9 @@ const Members = () => {
             backgroundColor: "#F2F8FD",
             mt: "40px",
             pb: "80px",
+            backgroundImage: `url("/company-profile-elements-bg.svg")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
         >
           {/* <Box sx={styles.infofld}> */}

@@ -84,10 +84,13 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                router.push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : "";
         } else {
@@ -100,10 +103,13 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -123,10 +129,13 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                  router.push(
+                    {
+                      pathname: "/signin",
+                      query: { name: "session" },
+                    },
+                    "/signin"
+                  );
                 })
               : "";
           } else {
@@ -172,10 +181,13 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+              router.push(
+                {
+                  pathname: "/signin",
+                  query: { name: "session" },
+                },
+                "/signin"
+              );
             });
           }
         });
@@ -186,10 +198,13 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                  router.push(
+                    {
+                      pathname: "/signin",
+                      query: { name: "session" },
+                    },
+                    "/signin"
+                  );
                 })
               : "";
           } else {
@@ -235,10 +250,13 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+              router.push(
+                {
+                  pathname: "/signin",
+                  query: { name: "session" },
+                },
+                "/signin"
+              );
             });
           }
         });
@@ -252,10 +270,13 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                router.push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : "";
         } else {
@@ -283,10 +304,13 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -379,13 +403,13 @@ function PostnewJob() {
             return;
           }
           if (final.details.notice === undefined) {
-
-            dispatch(openAlert({
-              type:ERROR,
-              message:"Provide Notice Period"
-            }));
-            return
-
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Provide Notice Period",
+              })
+            );
+            return;
           }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
@@ -453,6 +477,9 @@ function PostnewJob() {
             backgroundColor: "#F2F8FD",
             mt: "40px",
             p: "25px 25px 80px 25px",
+            backgroundImage: `url("/company-profile-elements-bg.svg")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
           variant="outlined"
         >
@@ -500,9 +527,7 @@ function PostnewJob() {
                 </Button>
               ) : (
                 <Button
-
                   className="nextButton"
-
                   variant="contained"
                   sx={{
                     width: "50%",
@@ -527,9 +552,7 @@ function PostnewJob() {
             ) : (
               <Button
                 variant="contained"
-
                 className="nextButton"
-
                 onClick={() => {
                   Pages(profiletab.index, "add");
                 }}

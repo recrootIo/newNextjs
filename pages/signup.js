@@ -225,11 +225,9 @@ function Signup() {
       .unwrap()
       .then((originalPromiseResult) => {
         console.log(originalPromiseResult);
-        axios
-        .get("https://ipapi.co/json/")
-        .then((response) => {
+        axios.get("https://ipapi.co/json/").then((response) => {
           Cookies.set("country", response.data?.country);
-        })
+        });
         push("/verifymobile");
         // navigate("/verifymobile", { replace: true });
       })
@@ -498,12 +496,17 @@ function Signup() {
                       direction={"row"}
                       sx={{
                         gap: "5px",
-                        display: { md: "flex", xs: "flex"},
-                        flexDirection:{xs:'column',sm:'row'},
-                        alignItems:'center'
+                        display: { md: "flex", xs: "flex" },
+                        flexDirection: { xs: "column", sm: "row" },
+                        alignItems: "center",
                       }}
                     >
-                      <CustomTypography sx={{textAlign:'center',textTransform:'capitalize'}}>
+                      <CustomTypography
+                        sx={{
+                          textAlign: "center",
+                          textTransform: "capitalize",
+                        }}
+                      >
                         Sign Up Already have an account?
                       </CustomTypography>
                       <Link href="/signin">
@@ -647,13 +650,9 @@ function Signup() {
                           error={errors.password ? true : false}
                         />
                         {!!errors.password && (
-                          <FormHelperText error id="accountId-error">
-                            {errors.password}
-                          </FormHelperText>
-                        )}
-                        {!errors.password && (
                           <FormHelperText
-                            id="accountpAss-error"
+                            error
+                            id="accountId-error"
                             sx={{
                               width: {
                                 sm: "400px",
@@ -661,6 +660,20 @@ function Signup() {
                                 marginLeft: "0px",
                               },
                             }}
+                          >
+                            {errors.password}
+                          </FormHelperText>
+                        )}
+                        {!errors.password && (
+                          <FormHelperText
+                            id="accountpAss-error"
+                            // sx={{
+                            //   width: {
+                            //     sm: "400px",
+                            //     xs: "100%",
+                            //     marginLeft: "0px",
+                            //   },
+                            // }}
                           >
                             Password must contain at least one uppercase
                             character, one lowercase character, one special

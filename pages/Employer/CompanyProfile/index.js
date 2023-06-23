@@ -521,6 +521,9 @@ const CompanyProfile = () => {
             backgroundColor: "#F2F8FD",
             mt: "40px",
             p: "25px 25px 80px 25px",
+            backgroundImage: `url("/company-profile-elements-bg.svg")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
           className="basicInfo"
         >
