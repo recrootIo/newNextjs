@@ -29,6 +29,7 @@ import { ERROR, SUCCESS } from "@/utils/constants";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Header from "@/components/Header";
+import { EMPLOYER } from "@/utils/UserConstants";
 
 const StyledInput = styled("input")({
   height: "60px",

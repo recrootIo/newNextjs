@@ -54,6 +54,19 @@ const editTrainings = (value, id) => {
   return http.put(`editTrainings/${id}`, value);
 };
 
+const saveJob = (id, value) => {
+  return http.post(`savedJobs/${id}`, { jobId: value });
+};
+
+const deleteJob = (id) => {
+  console.log("values");
+  return http.delete(`savedJobs/${id}`);
+};
+
+const getJob = (id) => {
+  return http.get(`savedJobs/${id}`);
+};
+
 const candidateServices = {
   updateService,
   updateMyPreference,
@@ -68,5 +81,8 @@ const candidateServices = {
   editProjects,
   editTrainings,
   addTrainings,
+  saveJob,
+  deleteJob,
+  getJob,
 };
 export default candidateServices;

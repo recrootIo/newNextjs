@@ -19,7 +19,11 @@ import Certifications from "@/components/Candidates/Certifications/Certification
 import CandidateJobs from "@/components/Candidates/CandidateJobs/CandidateJobs";
 
 import { useDispatch, useSelector } from "react-redux";
-import { GetCandsPrefInfo, retrievePersonal } from "@/redux/slices/personal";
+import {
+  GetCandsPrefInfo,
+  getSavedJobs,
+  retrievePersonal,
+} from "@/redux/slices/personal";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import AddResume from "@/components/Candidates/Profile/AddResume/AddResume";
@@ -97,7 +101,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -106,7 +110,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -115,7 +119,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -124,7 +128,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -133,7 +137,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -142,7 +146,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -151,7 +155,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -160,7 +164,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -169,7 +173,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
 
@@ -178,7 +182,7 @@ const Index = () => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setMobileOpen(false)
+      setMobileOpen(false);
       return;
     }
   };
@@ -367,6 +371,7 @@ const Index = () => {
   useEffect(() => {
     dispatch(retrievePersonal());
     dispatch(GetCandsPrefInfo());
+    dispatch(getSavedJobs());
     scrollToElement(section);
   }, [dispatch, section]);
 

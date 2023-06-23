@@ -27,8 +27,11 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SchoolIcon from "@mui/icons-material/School";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import { useDispatch } from "react-redux";
+import { saveJobs } from "@/redux/slices/personal";
+import Cookies from "js-cookie";
+import { CANDIDATE, SUCCESS } from "@/utils/constants";
+import { openAlert } from "@/redux/slices/alert";
 
 const StyledIconWrapper = styled(Box)({
   display: "flex",
@@ -38,7 +41,9 @@ const StyledIconWrapper = styled(Box)({
 });
 
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
-  console.log(lateJob, "lateJob");
+  const dispatch = useDispatch();
+  const userType = Cookies.get("userType");
+
   const extractFirstTwoTags = (data) => {
     const container = document?.createElement("div");
     container.innerHTML = data;
@@ -51,16 +56,31 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const compImage = lateJob?.company[0]?.companyLogo?.logo
     ? getImageLogo(lateJob?.company[0]?.companyLogo?.logo)
     : "/defaultCompany.svg";
-    const StyledAvatar = styled(Avatar)(({}) => ({
-      "& .MuiAvatar-img": {
-        objectFit:'contain'
-      }
-    }));
+  const StyledAvatar = styled(Avatar)(({}) => ({
+    "& .MuiAvatar-img": {
+      objectFit: "contain",
+    },
+  }));
+
+  const saveNewJobs = (id) => {
+    console.log(id);
+    dispatch(saveJobs(id))
+      .unwrap()
+      .then(
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
+      )
+      .catch((res) => console.log(res));
+  };
+
   return (
     <Card className="jobCard">
       <CardHeader
         avatar={
-          <StyledAvatar alt="logo" src={compImage} sx={{ width: 65, height: 65 }} />
+          <StyledAvatar
+            alt="logo"
+            src={compImage}
+            sx={{ width: 65, height: 65 }}
+          />
         }
         titleTypographyProps={{
           fontSize: 18,
@@ -76,14 +96,18 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
         action={
           <>
             <Box className="searchRstBtn" sx={{ mb: "7px" }}>
-              {/* <Button
-                className="bookmarkBtn"
-                size="small"
-                variant="outlined"
-                bgcolor="#02A9F7 !important"
-              >
-                <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-              </Button> */}
+              {userType === CANDIDATE && (
+                <Button
+                  className="bookmarkBtn"
+                  size="small"
+                  variant="outlined"
+                  bgcolor="#02A9F7 !important"
+                  onClick={() => saveNewJobs(lateJob?._id)}
+                >
+                  <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
+                </Button>
+              )}
+
               <Button
                 variant="contained"
                 size="medium"
@@ -216,23 +240,17 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           )}
         </Stack>
 
-        <CustomTypography variant="body2" color="text.secondary" fontSize={15}>
-          <div
-            style={{
-              overflow: "hidden",
-              maxHeight: "68px",
-              textOverflow: "ellipsis",
-              // whiteSpace: "nowrap",
-            }}
-          >
-            {extractFirstTwoTags(lateJob?.jobDescription)}
-            {/* <ReactQuill
-              value={}
-              readOnly={true}
-              theme={"bubble"}
-            /> */}
-            {/* {} */}
-          </div>
+        <CustomTypography
+          variant="body2"
+          color="text.secondary"
+          fontSize={15}
+          sx={{
+            overflow: "hidden",
+            maxHeight: "68px",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {extractFirstTwoTags(lateJob?.jobDescription)}
         </CustomTypography>
 
         <Stack

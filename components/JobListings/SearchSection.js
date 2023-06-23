@@ -51,13 +51,13 @@ import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
 
-export const getSalary = (salary, defaults = true) => {
+export const getSalary = (salary, defaults = true, font = 16) => {
   if (salary?.salaryType !== "noprovide") {
     return (
       <CustomTypography
         variant="body2"
         sx={{ color: defaults ? "rgb(115, 115, 115)" : "#034275" }}
-        fontSize={15}
+        fontSize={font}
       >
         {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
@@ -70,7 +70,7 @@ export const getSalary = (salary, defaults = true) => {
       <CustomTypography
         sx={{
           fontWeight: "400",
-          fontSize: "16px",
+          fontSize: font,
           lineHeight: "24px",
           color: defaults ? "rgb(115, 115, 115)" : "#034275",
         }}
@@ -284,7 +284,7 @@ const SearchSection = ({ ...props }) => {
     // page,
     variant,
   } = props;
-  console.log(sector,'sector')
+  console.log(sector, "sector");
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
@@ -913,7 +913,7 @@ const SearchSection = ({ ...props }) => {
                           <Tab label="Job Type" {...a11yProps(3)} />
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                          <Box sx={{ width: {sm:'300px',xs:"100px"} }}>
+                          <Box sx={{ width: { sm: "300px", xs: "100px" } }}>
                             {sectors.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}
@@ -931,7 +931,7 @@ const SearchSection = ({ ...props }) => {
                           </Box>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                          <Box sx={{ width: {sm:'300px',xs:"100px"} }}>
+                          <Box sx={{ width: { sm: "300px", xs: "100px" } }}>
                             {categories.map((sec, index) => (
                               <StyledFormLabel
                                 key={index}

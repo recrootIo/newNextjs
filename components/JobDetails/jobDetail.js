@@ -34,11 +34,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAppliedJobs,
   retrievePersonal,
+  saveJobs,
   setJobID,
 } from "@/redux/slices/personal";
 import { useEffect, useState } from "react";
-import { CANDIDATE } from "@/utils/constants";
+import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import ShareForm from "../ShareForm/ShareForm";
+import { openAlert } from "@/redux/slices/alert";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -99,30 +101,12 @@ const JobDetail = ({ ...props }) => {
   }, []);
 
   const handleBookmark = () => {
-    const currentPage = window.location.href;
-
-    // Check if localStorage is supported by the browser
-    if (typeof localStorage !== "undefined") {
-      let bookmarks = localStorage.getItem("bookmarks");
-
-      if (bookmarks) {
-        // Parse existing bookmarks from localStorage
-        bookmarks = JSON.parse(bookmarks);
-
-        // Add current page to the bookmarks if it doesn't already exist
-        if (!bookmarks.includes(currentPage)) {
-          bookmarks.push(currentPage);
-        }
-      } else {
-        // Create a new array with the current page as the bookmark
-        bookmarks = [currentPage];
-      }
-
-      // Save the updated bookmarks to localStorage
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    } else {
-      console.log("localStorage is not available.");
-    }
+    dispatch(saveJobs(_id))
+      .unwrap()
+      .then(
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
+      )
+      .catch((res) => console.log(res));
   };
 
   return (

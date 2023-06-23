@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import candidateServices from "../services/candidate.services";
 // import { notifySuccess } from "../helpers/Toast";
 import personalService from "../services/personal.service";
 import resumeService from "../services/resume.service";
 import userService from "../services/user.service";
-import { updateCurrentScreen } from "./candidate";
+import candidate, { updateCurrentScreen } from "./candidate";
 
 const initialState = {
   data: [],
@@ -33,6 +34,7 @@ const initialState = {
   appliedJobs: [],
   myPreferenceInfo: {},
   section: "",
+  savedJobs: [],
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -667,6 +669,25 @@ export const setSection = createAsyncThunk("section/set", async (data) => {
   return data;
 });
 
+export const saveJobs = createAsyncThunk("save/jobs", async (data) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const id = user?.User?._id;
+  const res = await candidateServices.saveJob(id, data);
+  return res;
+});
+
+export const deleteJob = createAsyncThunk("delete/jobs", async (data) => {
+  const res = await candidateServices.deleteJob(data);
+  return res;
+});
+
+export const getSavedJobs = createAsyncThunk("get/jobs", async (data) => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const id = user.User._id;
+  const res = await candidateServices.getJob(id);
+  return res.data;
+});
+
 const personalSlice = createSlice({
   name: "personal",
   initialState,
@@ -834,6 +855,9 @@ const personalSlice = createSlice({
     },
     [setSection.fulfilled]: (state, action) => {
       state.section = action.payload;
+    },
+    [getSavedJobs.fulfilled]: (state, action) => {
+      state.savedJobs = action.payload;
     },
   },
 });
