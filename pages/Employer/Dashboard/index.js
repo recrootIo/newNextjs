@@ -773,8 +773,10 @@ const EmpoyerDashboard = () => {
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
     company?.jobCounts?.premiumPayment === "Completed" ||
-    company?.package?.subscription_package === "Gold" ||
-    company?.jobSlotGold === true;
+    company?.package?.subscription_package === "Gold" || 
+    company?.jobSlotGold === true ||
+    user?.country === 'IN'
+    
   const enableFeaturedJobs2 =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
@@ -1564,6 +1566,7 @@ const EmpoyerDashboard = () => {
                   {sectors?.map((sec, index) => (
                     <FormControlLabel
                       key={index}
+                      sx={{width:'fit-content'}}
                       control={
                         <Checkbox
                           checked={freejobs.includes(sec?._id)}
