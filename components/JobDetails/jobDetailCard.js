@@ -16,11 +16,12 @@ import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { CANDIDATE } from "@/utils/constants";
+import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import { useEffect, useState } from "react";
 import {
   fetchAppliedJobs,
   retrievePersonal,
+  saveJobs,
   setJobID,
 } from "@/redux/slices/personal";
 import Cookies from "js-cookie";
@@ -34,6 +35,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import ShareForm from "../ShareForm/ShareForm";
 import dynamic from "next/dynamic";
 import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
+import { openAlert } from "@/redux/slices/alert";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -47,6 +49,8 @@ const JobDetailCard = ({ ...props }) => {
     notice,
     _id,
   } = props;
+
+  console.log(props);
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
 
@@ -62,6 +66,7 @@ const JobDetailCard = ({ ...props }) => {
   useEffect(() => {
     setLoginCallBackURL(`${window.location}`);
   }, []);
+
   const gotApply = () => {
     if (data?.resume?.resumeFileLocation?.length < 1) {
       router.push(`/uploadResume`);
@@ -98,30 +103,13 @@ const JobDetailCard = ({ ...props }) => {
   const userType = Cookies.get("userType");
 
   const handleBookmark = () => {
-    const currentPage = window.location.href;
-
-    // Check if localStorage is supported by the browser
-    if (typeof localStorage !== "undefined") {
-      let bookmarks = localStorage.getItem("bookmarks");
-
-      if (bookmarks) {
-        // Parse existing bookmarks from localStorage
-        bookmarks = JSON.parse(bookmarks);
-
-        // Add current page to the bookmarks if it doesn't already exist
-        if (!bookmarks.includes(currentPage)) {
-          bookmarks.push(currentPage);
-        }
-      } else {
-        // Create a new array with the current page as the bookmark
-        bookmarks = [currentPage];
-      }
-
-      // Save the updated bookmarks to localStorage
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    } else {
-      console.log("localStorage is not available.");
-    }
+    console.log("_id");
+    dispatch(saveJobs(_id))
+      .unwrap()
+      .then(
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
+      )
+      .catch((res) => console.log(res));
   };
 
   const compImage = company?.companyLogo?.logo
@@ -373,18 +361,20 @@ const JobDetailCard = ({ ...props }) => {
                       width: "100%",
                     }}
                   >
-                    <IconButton
-                      aria-label="share"
-                      size="large"
-                      sx={{
-                        color: "#02a9f7",
-                        fontSize: "14px",
-                        padding: 0,
-                      }}
-                      onClick={() => handleBookmark()}
-                    >
-                      <BookmarkBorderIcon sx={{ fontSize: "38px" }} />
-                    </IconButton>
+                    {userType === CANDIDATE && (
+                      <IconButton
+                        aria-label="share"
+                        size="large"
+                        sx={{
+                          color: "#02a9f7",
+                          fontSize: "14px",
+                          padding: 0,
+                        }}
+                        onClick={() => handleBookmark()}
+                      >
+                        <BookmarkBorderIcon sx={{ fontSize: "38px" }} />
+                      </IconButton>
+                    )}
 
                     <ShareForm url={loginCallBackURL} title={jobRole} />
 
