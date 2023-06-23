@@ -233,28 +233,7 @@ const EssentialInformation = () => {
         </Stack>
       ),
     },
-    {
-      selector: ".slide",
-      style: {
-        color: "black",
-      },
-      content: ({ goTo }) => (
-        <Stack
-          sx={{
-            gap: "10px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CustomTypography>
-            Make your job post a featured job or an immediate job if necessary
-            (This message should be shown if this feature is available for the
-            selected pricing plan)
-          </CustomTypography>
-          <Button onClick={() => closeTour()}>SKIP</Button>
-        </Stack>
-      ),
-    },
+
     {
       selector: ".nextButton",
       style: {

@@ -39,7 +39,11 @@ import {
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import WorkIcon from "@mui/icons-material/Work";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
-import { DesktopDateTimePicker, LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import {
+  DesktopDateTimePicker,
+  LocalizationProvider,
+  MobileDatePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
@@ -208,10 +212,13 @@ const AllApplicants = () => {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                router.push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : console.log("error");
         }
@@ -222,10 +229,13 @@ const AllApplicants = () => {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push({
-              pathname: '/signin',
-              query: { name: 'session' }
-          }, '/signin');
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -445,7 +455,7 @@ const AllApplicants = () => {
 
   // Rejected email content modal
   const [Modelopen, setModelopen] = React.useState(false);
-  console.log(rejectedTemp.jobTitle,'ss')
+  console.log(rejectedTemp.jobTitle, "ss");
   const handleDialogAction = () => {
     setModelopen(!Modelopen);
     const value = {
@@ -666,31 +676,12 @@ const AllApplicants = () => {
             By clicking here, you can access more details about the applicant
             and download their resume
           </CustomTypography>
-          <Button onClick={() => closeTour()}>SKIP</Button>
-        </Stack>
-      ),
-    },
-    {
-      selector: ".nextButton",
-      style: {
-        color: "black",
-      },
-      content: ({ goTo }) => (
-        <Stack
-          sx={{
-            gap: "10px",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CustomTypography>
-            Click here to proceed to the next step
-          </CustomTypography>
           <Button onClick={() => closeTour()}>Done</Button>
         </Stack>
       ),
     },
   ];
+
   const comp = useSelector((state) => state?.company?.companyDetl);
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);
@@ -949,354 +940,372 @@ const AllApplicants = () => {
                     ))}
                   </Menu>
                   <div style={{ display: isShown ? "none" : "block" }}>
-                  <Button
-                id="demo-customized-button"
-                variant="contained"
-                aria-controls={
-                  emailActionOpen ? "demo-positioned-menu" : undefined
-                }
-                aria-haspopup="true"
-                aria-expanded={emailActionOpen ? "true" : undefined}
-                onClick={emailActionHandleClick}
-                disableElevation
-                sx={{
-                  bgcolor: "#1097CD !important",
-                  width: { xs: "100%" },
-                }}
-                endIcon={
-                  <Settings
-                    sx={{
-                      bgcolor: "primary",
-                    }}
-                  />
-                }
-              >
-                Feedback Email Settings
-              </Button>
-              <Menu
-                id="demo-customized-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={emailAction}
-                open={emailActionOpen}
-                onClose={emailActionHandleClose}
-                // anchorOrigin={{
-                //   vertical: "top",
-                //   horizontal: "left",
-                // }}
-                // transformOrigin={{
-                //   vertical: "top",
-                //   horizontal: "left",
-                // }}
-              >
-                <MenuItem onClick={handleDialogAction}>
-                Email - Rejected Candidates
-                </MenuItem>
-                <MenuItem onClick={handleShortlistedDialogAction}>
-                Email - Shortlist Candidates
-                </MenuItem>
-              </Menu>
-              <Dialog fullWidth open={Modelopen} onClose={handleDialogAction}>
-                <Box sx={{ p: "40px" }}>
-                  <Typography variant="h5" sx={{ textAlign: "center" }}>
-                    Email - Rejected Candidates
-                  </Typography>
-
-                  <Box
-                    component="form"
-                    sx={{
-                      "& > :not(style)": { width: "100%" },
-                      mt: "10px",
-                    }}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    <TextField
-                      sx={{ mt: 3 }}
-                      id="Email subject"
-                      label="Email subject"
-                      variant="outlined"
-                      onChange={(e) =>
-                        setRejectedTemp((state) => ({
-                          ...state,
-                          subject: e.target.value,
-                        }))
+                    <Button
+                      id="demo-customized-button"
+                      variant="contained"
+                      aria-controls={
+                        emailActionOpen ? "demo-positioned-menu" : undefined
                       }
-                      value={rejectedTemp.subject || ""}
-                    />
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      mt: "10px",
-                    }}
-                  >
-                    <EditorToolbar />
-                    {typeof window !== 'undefined' && (    <ReactQuill
-                      value={rejectedTemp.emailBody}
-                      onChange={(e) => {
-                        setRejectedTemp((state) => ({
-                          ...state,
-                          emailBody: e,
-                        }));
+                      aria-haspopup="true"
+                      aria-expanded={emailActionOpen ? "true" : undefined}
+                      onClick={emailActionHandleClick}
+                      disableElevation
+                      sx={{
+                        bgcolor: "#1097CD !important",
+                        width: { xs: "100%" },
                       }}
-                      theme={"snow"}
-                      className="textareaQuestion"
-                      modules={modules}
-                      formats={formats}
-                    /> )}
-
-                    <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group">
-                        <Typography variant="subtitle1">
-                          Sending settings
+                      endIcon={
+                        <Settings
+                          sx={{
+                            bgcolor: "primary",
+                          }}
+                        />
+                      }
+                    >
+                      Feedback Email Settings
+                    </Button>
+                    <Menu
+                      id="demo-customized-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={emailAction}
+                      open={emailActionOpen}
+                      onClose={emailActionHandleClose}
+                      // anchorOrigin={{
+                      //   vertical: "top",
+                      //   horizontal: "left",
+                      // }}
+                      // transformOrigin={{
+                      //   vertical: "top",
+                      //   horizontal: "left",
+                      // }}
+                    >
+                      <MenuItem onClick={handleDialogAction}>
+                        Email - Rejected Candidates
+                      </MenuItem>
+                      <MenuItem onClick={handleShortlistedDialogAction}>
+                        Email - Shortlist Candidates
+                      </MenuItem>
+                    </Menu>
+                    <Dialog
+                      fullWidth
+                      open={Modelopen}
+                      onClose={handleDialogAction}
+                    >
+                      <Box sx={{ p: "40px" }}>
+                        <Typography variant="h5" sx={{ textAlign: "center" }}>
+                          Email - Rejected Candidates
                         </Typography>
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={rejectedTemp?.setting}
-                        onChange={(e) => {
-                          setRejectedTemp((state) => ({
-                            ...state,
-                            setting: e.target.value,
-                          }));
-                        }}
-                        sx={{ justifyContent: "space-around" }}
-                      >
-                        <FormControlLabel
-                          value="Do_not_send"
-                          control={<Radio />}
-                          label="Do not send"
-                        />
-                        <FormControlLabel
-                          value="As_soon_as_reject"
-                          control={<Radio />}
-                          label="As soon as reject"
-                        />
-                        {/* <FormControlLabel
-                          value="Schedule_email"
-                          control={<Radio />}
-                          label="Schedule email"
-                        /> */}
-                      </RadioGroup>
-                    </FormControl>
 
-                    {rejectedTemp?.setting === "Schedule_email" && (
-                      <Box>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                          <DesktopDateTimePicker
-                            label="Select Date and Time"
-                            // inputFormat="MM/dd/yyyy"
-                            minDate={new Date()}
-                            value={rejectedTemp?.date}
-                            onChange={(e) => {
+                        <Box
+                          component="form"
+                          sx={{
+                            "& > :not(style)": { width: "100%" },
+                            mt: "10px",
+                          }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TextField
+                            sx={{ mt: 3 }}
+                            id="Email subject"
+                            label="Email subject"
+                            variant="outlined"
+                            onChange={(e) =>
                               setRejectedTemp((state) => ({
                                 ...state,
-                                date: moment(e).format(),
-                              }));
-                            }}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={styles.naminput} />
-                            )}
+                                subject: e.target.value,
+                              }))
+                            }
+                            value={rejectedTemp.subject || ""}
                           />
-                        </LocalizationProvider>
-                      </Box>
-                    )}
-                  </Box>
+                        </Box>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "10px",
-                      gap: "5px",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{ backgroundColor: "#4fa9ff !important" }}
-                      type="submit"
-                      onClick={() => updateRejectedEmails()}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        setModelopen(false);
-                        setRejectedTemp({
-                          jobTitle: rejectedTemp?.jobTitle,
-                          type: REJECTED,
-                          subject: "",
-                          emailBody: "",
-                          date: "",
-                          setting: "Do_not_send",
-                        });
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                </Box>
-              </Dialog>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            mt: "10px",
+                          }}
+                        >
+                          <EditorToolbar />
+                          {typeof window !== "undefined" && (
+                            <ReactQuill
+                              value={rejectedTemp.emailBody}
+                              onChange={(e) => {
+                                setRejectedTemp((state) => ({
+                                  ...state,
+                                  emailBody: e,
+                                }));
+                              }}
+                              theme={"snow"}
+                              className="textareaQuestion"
+                              modules={modules}
+                              formats={formats}
+                            />
+                          )}
 
-              <Dialog
-                fullWidth
-                open={ShortlistedModelopen}
-                onClose={handleShortlistedDialogAction}
-              >
-                <Box sx={{ p: "40px" }}>
-                  <Typography variant="h5" sx={{ textAlign: "center" }}>
-                    Email - Shortlisted Candidates
-                  </Typography>
-
-                  <Box
-                    component="form"
-                    sx={{
-                      "& > :not(style)": { width: "100%" },
-                      mt: "10px",
-                    }}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    <TextField
-                      sx={{ mt: 3 }}
-                      id="Email subject"
-                      label="Email subject"
-                      variant="outlined"
-                      onChange={(e) =>
-                        setSelectedTemp((state) => ({
-                          ...state,
-                          subject: e.target.value,
-                        }))
-                      }
-                      value={selectedTemp.subject || ""}
-                    />
-                  </Box>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      mt: "10px",
-                    }}
-                  >
-                    <EditorToolbar />
-                    {typeof window !== 'undefined' && (    <ReactQuill
-                      value={selectedTemp.emailBody}
-                      onChange={(e) => {
-                        setSelectedTemp((state) => ({
-                          ...state,
-                          emailBody: e,
-                        }));
-                      }}
-                      theme={"snow"}
-                      className="textareaQuestion"
-                      modules={modules}
-                      formats={formats}
-                    /> )}
-
-                    <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group">
-                        <Typography variant="subtitle1">
-                          Sending settings
-                        </Typography>
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={selectedTemp?.setting}
-                        onChange={(e) => {
-                          setSelectedTemp((state) => ({
-                            ...state,
-                            setting: e.target.value,
-                          }));
-                        }}
-                        sx={{ justifyContent: "space-around" }}
-                      >
-                        <FormControlLabel
-                          value="Do_not_send"
-                          control={<Radio />}
-                          label="Do not send"
-                        />
-                        <FormControlLabel
-                          value="As_soon_as_short"
-                          control={<Radio />}
-                          label="As soon as Shortlist"
-                        />
-                        {/* <FormControlLabel
+                          <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">
+                              <Typography variant="subtitle1">
+                                Sending settings
+                              </Typography>
+                            </FormLabel>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={rejectedTemp?.setting}
+                              onChange={(e) => {
+                                setRejectedTemp((state) => ({
+                                  ...state,
+                                  setting: e.target.value,
+                                }));
+                              }}
+                              sx={{ justifyContent: "space-around" }}
+                            >
+                              <FormControlLabel
+                                value="Do_not_send"
+                                control={<Radio />}
+                                label="Do not send"
+                              />
+                              <FormControlLabel
+                                value="As_soon_as_reject"
+                                control={<Radio />}
+                                label="As soon as reject"
+                              />
+                              {/* <FormControlLabel
                           value="Schedule_email"
                           control={<Radio />}
                           label="Schedule email"
                         /> */}
-                      </RadioGroup>
-                    </FormControl>
+                            </RadioGroup>
+                          </FormControl>
 
-                    {selectedTemp?.setting === "Schedule_email" && (
-                      <Box>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                          <DesktopDateTimePicker
-                            label="Select Date and Time"
-                            // inputFormat="MM/dd/yyyy"
-                            minDate={new Date()}
-                            name="date"
-                            value={selectedTemp?.date}
-                            onChange={(e) => {
+                          {rejectedTemp?.setting === "Schedule_email" && (
+                            <Box>
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <DesktopDateTimePicker
+                                  label="Select Date and Time"
+                                  // inputFormat="MM/dd/yyyy"
+                                  minDate={new Date()}
+                                  value={rejectedTemp?.date}
+                                  onChange={(e) => {
+                                    setRejectedTemp((state) => ({
+                                      ...state,
+                                      date: moment(e).format(),
+                                    }));
+                                  }}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      sx={styles.naminput}
+                                    />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                          )}
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            mt: "10px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            sx={{ backgroundColor: "#4fa9ff !important" }}
+                            type="submit"
+                            onClick={() => updateRejectedEmails()}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            onClick={() => {
+                              setModelopen(false);
+                              setRejectedTemp({
+                                jobTitle: rejectedTemp?.jobTitle,
+                                type: REJECTED,
+                                subject: "",
+                                emailBody: "",
+                                date: "",
+                                setting: "Do_not_send",
+                              });
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Dialog>
+
+                    <Dialog
+                      fullWidth
+                      open={ShortlistedModelopen}
+                      onClose={handleShortlistedDialogAction}
+                    >
+                      <Box sx={{ p: "40px" }}>
+                        <Typography variant="h5" sx={{ textAlign: "center" }}>
+                          Email - Shortlisted Candidates
+                        </Typography>
+
+                        <Box
+                          component="form"
+                          sx={{
+                            "& > :not(style)": { width: "100%" },
+                            mt: "10px",
+                          }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TextField
+                            sx={{ mt: 3 }}
+                            id="Email subject"
+                            label="Email subject"
+                            variant="outlined"
+                            onChange={(e) =>
                               setSelectedTemp((state) => ({
                                 ...state,
-                                date: moment(e).format(),
-                              }));
-                            }}
-                            renderInput={(params) => (
-                              <TextField {...params} sx={styles.naminput} />
-                            )}
+                                subject: e.target.value,
+                              }))
+                            }
+                            value={selectedTemp.subject || ""}
                           />
-                        </LocalizationProvider>
-                      </Box>
-                    )}
-                  </Box>
+                        </Box>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: "10px",
-                      gap: "5px",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{ backgroundColor: "#4fa9ff !important" }}
-                      type="submit"
-                      onClick={() => updateShortlistedEmails()}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        setShortlistedModelopen(false);
-                        setSelectedTemp({
-                          jobTitle: selectedTemp?.jobTitle,
-                          type: SHORT_LISTED,
-                          subject: "",
-                          emailBody: "",
-                          date: "",
-                          setting: "Do_not_send",
-                        });
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                </Box>
-              </Dialog>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            mt: "10px",
+                          }}
+                        >
+                          <EditorToolbar />
+                          {typeof window !== "undefined" && (
+                            <ReactQuill
+                              value={selectedTemp.emailBody}
+                              onChange={(e) => {
+                                setSelectedTemp((state) => ({
+                                  ...state,
+                                  emailBody: e,
+                                }));
+                              }}
+                              theme={"snow"}
+                              className="textareaQuestion"
+                              modules={modules}
+                              formats={formats}
+                            />
+                          )}
+
+                          <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">
+                              <Typography variant="subtitle1">
+                                Sending settings
+                              </Typography>
+                            </FormLabel>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={selectedTemp?.setting}
+                              onChange={(e) => {
+                                setSelectedTemp((state) => ({
+                                  ...state,
+                                  setting: e.target.value,
+                                }));
+                              }}
+                              sx={{ justifyContent: "space-around" }}
+                            >
+                              <FormControlLabel
+                                value="Do_not_send"
+                                control={<Radio />}
+                                label="Do not send"
+                              />
+                              <FormControlLabel
+                                value="As_soon_as_short"
+                                control={<Radio />}
+                                label="As soon as Shortlist"
+                              />
+                              {/* <FormControlLabel
+                          value="Schedule_email"
+                          control={<Radio />}
+                          label="Schedule email"
+                        /> */}
+                            </RadioGroup>
+                          </FormControl>
+
+                          {selectedTemp?.setting === "Schedule_email" && (
+                            <Box>
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <DesktopDateTimePicker
+                                  label="Select Date and Time"
+                                  // inputFormat="MM/dd/yyyy"
+                                  minDate={new Date()}
+                                  name="date"
+                                  value={selectedTemp?.date}
+                                  onChange={(e) => {
+                                    setSelectedTemp((state) => ({
+                                      ...state,
+                                      date: moment(e).format(),
+                                    }));
+                                  }}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      sx={styles.naminput}
+                                    />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                          )}
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            mt: "10px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            sx={{ backgroundColor: "#4fa9ff !important" }}
+                            type="submit"
+                            onClick={() => updateShortlistedEmails()}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            onClick={() => {
+                              setShortlistedModelopen(false);
+                              setSelectedTemp({
+                                jobTitle: selectedTemp?.jobTitle,
+                                type: SHORT_LISTED,
+                                subject: "",
+                                emailBody: "",
+                                date: "",
+                                setting: "Do_not_send",
+                              });
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Dialog>
                   </div>
                 </Stack>
               )}

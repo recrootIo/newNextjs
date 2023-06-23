@@ -89,10 +89,13 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                router.push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : "";
         } else {
@@ -105,10 +108,13 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -129,10 +135,13 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                  router.push(
+                    {
+                      pathname: "/signin",
+                      query: { name: "session" },
+                    },
+                    "/signin"
+                  );
                 })
               : "";
           } else {
@@ -178,10 +187,13 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+              router.push(
+                {
+                  pathname: "/signin",
+                  query: { name: "session" },
+                },
+                "/signin"
+              );
             });
           }
         });
@@ -192,10 +204,13 @@ function PostnewJob() {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
               ? dispatch(logout()).then(() => {
-                  router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                  router.push(
+                    {
+                      pathname: "/signin",
+                      query: { name: "session" },
+                    },
+                    "/signin"
+                  );
                 })
               : "";
           } else {
@@ -240,10 +255,13 @@ function PostnewJob() {
             "Request failed with status code 403"
           ) {
             dispatch(logout()).then(() => {
-              router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+              router.push(
+                {
+                  pathname: "/signin",
+                  query: { name: "session" },
+                },
+                "/signin"
+              );
             });
           }
         });
@@ -257,10 +275,13 @@ function PostnewJob() {
           res.error.message === "Request failed with status code 401" ||
           "Request failed with status code 403"
             ? dispatch(logout()).then(() => {
-                router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+                router.push(
+                  {
+                    pathname: "/signin",
+                    query: { name: "session" },
+                  },
+                  "/signin"
+                );
               })
             : "";
         } else {
@@ -288,10 +309,13 @@ function PostnewJob() {
           "Request failed with status code 403"
         ) {
           dispatch(logout()).then(() => {
-            router.push({
-                  pathname: '/signin',
-                  query: { name: 'session' }
-              }, '/signin');
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
           });
         }
       });
@@ -384,13 +408,13 @@ function PostnewJob() {
             return;
           }
           if (final.details.notice === undefined) {
-
-            dispatch(openAlert({
-              type:ERROR,
-              message:"Provide Notice Period"
-            }));
-            return
-
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Provide Notice Period",
+              })
+            );
+            return;
           }
           if (final.details.salary === undefined) {
             setProfiletab({ index: 2, page: <JobPreview Pages={PagesTwo} /> });
@@ -409,7 +433,10 @@ function PostnewJob() {
         }
       }
       if (index === 2) {
-        setProfiletab({ index: 3, page: <Chooseplan postJobs={postJobs} postPremJobs={postPremJobs}/> });
+        setProfiletab({
+          index: 3,
+          page: <Chooseplan postJobs={postJobs} postPremJobs={postPremJobs} />,
+        });
       }
     }
   }
@@ -451,31 +478,35 @@ function PostnewJob() {
       ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
       : { index: 0, page: <JobDetails /> }
   );
-const [open, setopen] = useState(false)
-console.log(final,'final')
-const postPremJobs = () =>{
-  setopen(true)
-  dispatch(addJobsNewPre(final)).then((res) => {
-  console.log(res?.payload?.user?._id,'ressssssss')
-  dispatch(upgradejob([res?.payload?.user?._id])).then(
-    setopen(false),
-    router.push("/Employer/Jobpayment")
-    );
-  })
-  .catch((error) => {
-    if (
-      error.message === "Request failed with status code 401" ||
-      "Request failed with status code 403"
-    ) {
-      dispatch(logout()).then(() => {
-        router.push({
-            pathname: '/signin',
-            query: { name: 'session' }
-        }, '/signin');
+  const [open, setopen] = useState(false);
+  console.log(final, "final");
+  const postPremJobs = () => {
+    setopen(true);
+    dispatch(addJobsNewPre(final))
+      .then((res) => {
+        console.log(res?.payload?.user?._id, "ressssssss");
+        dispatch(upgradejob([res?.payload?.user?._id])).then(
+          setopen(false),
+          router.push("/Employer/Jobpayment")
+        );
+      })
+      .catch((error) => {
+        if (
+          error.message === "Request failed with status code 401" ||
+          "Request failed with status code 403"
+        ) {
+          dispatch(logout()).then(() => {
+            router.push(
+              {
+                pathname: "/signin",
+                query: { name: "session" },
+              },
+              "/signin"
+            );
+          });
+        }
       });
-    }
-  });
-}
+  };
   return (
     <Employer>
       <Box>
@@ -530,14 +561,12 @@ const postPremJobs = () =>{
                 >
                   <CircularProgress color="inherit" />
                 </Button>
-              ) :(companyDet?.jobSlotGold === true && full === "jSlot") ||
-              companyDet?.package?.subscription_package === "SuperEmployer" ||
-              country === "LK"  ? Cid !== undefined
-                (
+              ) : (companyDet?.jobSlotGold === true && full === "jSlot") ||
+                companyDet?.package?.subscription_package === "SuperEmployer" ||
+                country === "LK" ||
+                Cid !== undefined ? (
                 <Button
-
                   className="nextButton"
-
                   variant="contained"
                   sx={{
                     width: "50%",
@@ -558,33 +587,29 @@ const postPremJobs = () =>{
                     ? "Save"
                     : "Submit"}
                 </Button>
-              ) : 
-              <Button
-              variant="contained"
-
-              className="nextButton"
-
-              onClick={() => {
-                Pages(profiletab.index, "add");
-                dispatch(setpremium(true))
-              }}
-              sx={{
-                width: "50%",
-                bgcolor: "#015FB1 !important",
-                height: "55px",
-              }}
-            >
-             Submit & Choose Plan
-            </Button>
-            ) :profiletab.index === 3 ? (
+              ) : (
+                <Button
+                  variant="contained"
+                  className="nextButton"
+                  onClick={() => {
+                    Pages(profiletab.index, "add");
+                    dispatch(setpremium(true));
+                  }}
+                  sx={{
+                    width: "50%",
+                    bgcolor: "#015FB1 !important",
+                    height: "55px",
+                  }}
+                >
+                  Submit & Choose Plan
+                </Button>
+              )
+            ) : profiletab.index === 3 ? (
               ""
-            ) :
-             (
+            ) : (
               <Button
                 variant="contained"
-
                 className="nextButton"
-
                 onClick={() => {
                   Pages(profiletab.index, "add");
                 }}
@@ -597,17 +622,18 @@ const postPremJobs = () =>{
                 Next
               </Button>
             )}
-
           </Stack>
         </Card>
       </Box>
       <Backdrop
-  sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-  open={open}
-  onClick={()=>{setopen(false)}}
->
-  <CircularProgress color="inherit" />
-</Backdrop>
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={() => {
+          setopen(false);
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Employer>
   );
 }

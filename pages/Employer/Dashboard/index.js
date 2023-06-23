@@ -861,11 +861,11 @@ const EmpoyerDashboard = () => {
                 Hi {user?.firstName}, Welcome to Recroot!
               </CustomTypography>
               <CustomTypography>
-                Lets get started a quick website tour. This ll take no more than
-                a few minutes
+                Lets get started a quick website tour. This&apos;ll take no more
+                than a few minutes
               </CustomTypography>
 
-              <CustomTypography>Are you ready? Let s go</CustomTypography>
+              <CustomTypography>Are you ready? Let&apos;s go</CustomTypography>
               <Button onClick={() => closeTour()}>SKIP</Button>
             </Stack>
           </CardContent>
@@ -923,7 +923,7 @@ const EmpoyerDashboard = () => {
           }}
         >
           <CustomTypography>
-            You can post job listings to attract candidates here.`
+            You can post job listings to attract candidates here.
           </CustomTypography>
           <Button onClick={() => closeTour()}>SKIP</Button>
         </Stack>
