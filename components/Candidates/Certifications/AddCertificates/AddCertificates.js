@@ -150,12 +150,12 @@ const AddCertificates = ({}) => {
   };
 
   React.useEffect(() => {
-    if (training?._id) {
+    if (certOne?._id) {
       setTitle("Edit Certificates");
     } else {
       setTitle("Add Certificates");
     }
-  }, [training]);
+  }, [certOne]);
 
   return (
     <div>

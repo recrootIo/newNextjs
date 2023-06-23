@@ -58,7 +58,7 @@ const Index = () => {
 
   const { data } = useSelector((state) => state?.personal);
   const { currentScreen } = useSelector((state) => state?.candidate);
-  const { section } = useSelector((state) => state?.candidate);
+  const { section } = useSelector((state) => state?.personal);
 
   const [profile, setProfile] = React.useState(true);
   const [certification, setCertification] = React.useState(true);
@@ -94,6 +94,7 @@ const Index = () => {
   };
 
   const scrollToElement = (section) => {
+    dispatch(updateCurrentScreen(""))
     let element = null;
 
     if (section === "resume_section") {
@@ -373,6 +374,7 @@ const Index = () => {
     dispatch(GetCandsPrefInfo());
     dispatch(getSavedJobs());
     scrollToElement(section);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, section]);
 
   useEffect(() => {
