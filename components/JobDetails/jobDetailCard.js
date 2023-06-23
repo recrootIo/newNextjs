@@ -91,8 +91,8 @@ const JobDetailCard = ({ ...props }) => {
   };
 
   const goToLogin = () => {
-    router.push(`/signin`);
     localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+    router.push(`/signin`);
   };
 
   useEffect(() => {

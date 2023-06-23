@@ -123,7 +123,7 @@ const UploadResume = ({ ...props }) => {
   const { setApplication, setCurrentScreen, jobTitle, hasQuestions } = props;
   const dispatch = useDispatch();
   const router = useRouter();
-
+console.log(hasQuestions,'questtt')
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
   const show = useSelector((state) => state.personal.show);

@@ -248,13 +248,13 @@ const AddCertificates = ({}) => {
                           />
                         </Button>
                       </Stack>
-                      {values.certificate.name && (
+                      {values?.certificate?.name && (
                         <Stack
                           direction={"row"}
                           sx={{ justifyContent: "flex-end" }}
                         >
                           <CustomTypography>
-                            {values.certificate.name}
+                            {values?.certificate?.name}
                           </CustomTypography>
                         </Stack>
                       )}

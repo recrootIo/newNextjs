@@ -272,6 +272,12 @@ export const BootstrapDialogTitle = (props) => {
 };
 
 const SearchSection = ({ ...props }) => {
+  useEffect(() => {
+    const redirect = localStorage.getItem("redirect");
+    if (redirect !== null){
+      localStorage.removeItem("redirect");
+    }
+   }, [])
   const {
     sectors,
     companies,

@@ -102,6 +102,10 @@ const Skills = ({ skills }) => {
             style={{
               // minWidth: "600px",
               overflowX: "auto",
+              backgroundColor: "#F6FCFF",
+              borderRadius: "10px",
+              padding: "20px 30px",
+              border: "1px solid #D3EAFF",
             }}
           >
             <tbody>
