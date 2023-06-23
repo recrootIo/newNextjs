@@ -249,6 +249,7 @@ const AllApplicantsCard = ({ users }) => {
             <DownloadIcon sx={{ fontSize: "35px" }} />
           </Button>
           <Button
+            className="viewDetails"
             variant="contained"
             size="medium"
             sx={{
@@ -263,6 +264,7 @@ const AllApplicantsCard = ({ users }) => {
             View Details
           </Button>
         </Box>
+
         <Stack
           direction={{ xs: "column", md: "row" }}
           sx={{
@@ -366,6 +368,7 @@ const AllApplicantsCard = ({ users }) => {
               fontSize: { xs: "13px", md: "18px" },
               whiteSpace: "nowrap",
             }}
+            className="viewDetails"
             onClick={() => navigate(users?._id, users?.status)}
           >
             View Details

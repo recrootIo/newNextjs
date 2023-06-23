@@ -302,7 +302,6 @@ const CompanyProfile = () => {
 
   const doneTour = () => {
     closeTour();
-    push("/Employer/Members");
   };
 
   const tourConfig = [

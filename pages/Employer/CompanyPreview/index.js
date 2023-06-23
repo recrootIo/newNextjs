@@ -41,6 +41,8 @@ import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import Employer from "..";
 import { useRouter } from "next/navigation";
+import tourStyles from "../../../components/Employers/styles.module.css";
+import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const CompanyPreview = () => {
@@ -68,6 +70,7 @@ const CompanyPreview = () => {
 
   const theme = useTheme();
   const [isMobile, setIsMobile] = React.useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 600);
@@ -100,7 +103,7 @@ const CompanyPreview = () => {
 
   const tourConfig = [
     {
-      selector: ".preview",
+      selector: ".companyPreview",
       style: {
         color: "black",
       },
@@ -120,9 +123,8 @@ const CompanyPreview = () => {
         </Stack>
       ),
     },
-
     {
-      selector: ".nextButton",
+      selector: ".nextDashboard",
       style: {
         color: "black",
       },
@@ -307,7 +309,7 @@ const CompanyPreview = () => {
           Preview
         </CustomTypography>
         <Card
-          className="preview"
+          className="companyPreview"
           variant="outlined"
           sx={{
             width: "100%",
@@ -511,6 +513,7 @@ const CompanyPreview = () => {
               </Box>
             </Box>
             <Stack
+              className="nextDashboard"
               direction="row"
               spacing={2}
               sx={{
@@ -537,6 +540,17 @@ const CompanyPreview = () => {
           </CardContent>
         </Card>
       </Employer>
+
+      <Tour
+        onRequestClose={closeTour}
+        disableInteraction={true}
+        steps={tourConfig}
+        isOpen={isTourOpen}
+        maskClassName={tourStyles.mask}
+        className={tourStyles.helper}
+        rounded={8}
+        accentColor={accentColor}
+      />
     </>
   );
 };

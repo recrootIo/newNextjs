@@ -341,7 +341,6 @@ function Pricing() {
           height: "250px",
           display: "flex",
         }}
-        className="jobSlots"
       >
         <Typography
           sx={{
@@ -411,6 +410,7 @@ function Pricing() {
               display: "flex",
               cursor: "pointer",
             }}
+            className="jobSlots"
           >
             <Box>
               <Typography
