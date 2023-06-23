@@ -30,6 +30,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 
 const StyledInput = styled("input")({
   height: "60px",
@@ -166,15 +167,17 @@ function Signin() {
   };
   const { name } = router.query;
   useEffect(() => {
- if (name === 'session') {
-  dispatch(openAlert({
-    type:ERROR,
-    message:'Your Session Was Expired!'
-  }))
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name])
-  
+    if (name === "session") {
+      dispatch(
+        openAlert({
+          type: ERROR,
+          message: "Your Session Was Expired!",
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name]);
+
   return (
     <section className="signInMain">
       <Header title={"SIGN IN"} />
