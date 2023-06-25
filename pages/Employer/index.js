@@ -17,6 +17,9 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import FooterHome from "@/components/Home/FooterHome";
 import EmployerMobileSidebar from "@/components/Employers/EmployerMobileSidebar/EmployerMobileSidebar";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["cyrillic"] });
 
 function Employer({ children }) {
   const [getUser, setUser] = useState("");
@@ -255,7 +258,7 @@ function Employer({ children }) {
                 <Button
                   variant="contained"
                   sx={{
-                    bgcolor: "#03d3fc !important",
+                    bgcolor: "#02A9F7 !important",
                     color: "#FFFFF",
                     height: "42px",
                   }}

@@ -1,71 +1,83 @@
 /* eslint-disable @next/next/no-img-element */
-import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar';
-import { Box, Button, Card, Container, Divider, Grid, Stack, TextField, Typography, styled } from '@mui/material';
-import { Elements } from '@stripe/react-stripe-js';
-import React from 'react'
+import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
+import { Elements } from "@stripe/react-stripe-js";
+import React from "react";
 import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";
 import AddCardIcon from "@mui/icons-material/AddCard";
-import { NEW_PRICING_PLAN } from '@/utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
-import { currencyConvert } from '@/utils/HelperFunctions';
-import { upgradejobPayment } from '@/redux/slices/job';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { NEW_PRICING_PLAN } from "@/utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { currencyConvert } from "@/utils/HelperFunctions";
+import { upgradejobPayment } from "@/redux/slices/job";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 
 const StyledButton = styled(Button)({
-    color: "#ffff",
-    padding: "10px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#00339B !important",
-    textTransform: "capitalize",
-    width: "100%",
-    marginBottom: "10px",
-  });
-  const BasicButton = styled(Button)({
-    color: "#ffff",
-    // padding: "10px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#4fa9ff !important",
-    textTransform: "capitalize",
-    width: "100%",
-    marginBottom: "10px",
-  });
-  const packageList = [
-    "1 Featured job post",
-    "Unlimited job applicants",
-    "Priority in job searches",
-    "Marketing on Recroot social media handles",
-    "20 relevant profiles from the candidate database",
-    "Dedicated candidate manager",
-    "Job expires in 1 month",
-  ]
+  color: "#ffff",
+  padding: "10px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#00339B !important",
+  textTransform: "capitalize",
+  width: "100%",
+  marginBottom: "10px",
+});
+const BasicButton = styled(Button)({
+  color: "#ffff",
+  // padding: "10px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  width: "100%",
+  marginBottom: "10px",
+});
+const packageList = [
+  "1 Featured job post",
+  "Unlimited job applicants",
+  "Priority in job searches",
+  "Marketing on Recroot social media handles",
+  "20 relevant profiles from the candidate database",
+  "Dedicated candidate manager",
+  "Job expires in 1 month",
+];
 function Jobpayment() {
-    const jobDet =  useSelector(data => data.jobs.upJob)
-    const country = Cookies.get('country')
-    const {push} = useRouter()
-    const county = country === 'IN'
-    const subscriptionPrice = county ? 1600 : 35
-    const finalPrice = subscriptionPrice * jobDet?.length;
-    const dispatch = useDispatch();
-    useEffect(() => {
-    if (jobDet === '') {
-        push('/Employer/Dashboard')
+  const jobDet = useSelector((data) => data.jobs.upJob);
+  const country = Cookies.get("country");
+  const { push } = useRouter();
+  const county = country === "IN";
+  const subscriptionPrice = county ? 1600 : 35;
+  const finalPrice = subscriptionPrice * jobDet?.length;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (jobDet === "") {
+      push("/Employer/Dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [jobDet])
-    
-    const  handleNavigate = ()=>{
-        dispatch(upgradejobPayment({
-            ids:jobDet,
-            payment:finalPrice,
-            country:country
-        })).then(
-      push('/Employer/Jobpayment/Payment')
-        )
-    }
+  }, [jobDet]);
+
+  const handleNavigate = () => {
+    dispatch(
+      upgradejobPayment({
+        ids: jobDet,
+        payment: finalPrice,
+        country: country,
+      })
+    ).then(push("/Employer/Jobpayment/Payment"));
+  };
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
@@ -88,7 +100,7 @@ function Jobpayment() {
             m: "45px auto 0 auto",
           }}
         >
-        Upgrade To Premium
+          Upgrade To Premium
         </Typography>
       </Box>
       <Container>
@@ -158,7 +170,7 @@ function Jobpayment() {
                           color: "#fff",
                         }}
                       >
-                     Premium
+                        Premium
                       </Typography>
                     </Box>
                   </Box>
@@ -180,13 +192,8 @@ function Jobpayment() {
                       }}
                     >
                       {county
-                          ? currencyConvert(
-                              finalPrice,
-                              "Indian Rupee",
-                              2
-                            )
-                          : currencyConvert(finalPrice, "US Dollar", 2)
-                    }
+                        ? currencyConvert(finalPrice, "Indian Rupee", 2)
+                        : currencyConvert(finalPrice, "US Dollar", 2)}
                     </Typography>
                     <Typography
                       sx={{
@@ -198,34 +205,31 @@ function Jobpayment() {
                         color: "#fff",
                       }}
                     >
-                    / Month
+                      / Month
                     </Typography>
                   </Box>
                 </Box>
                 <div className="pricig-body">
                   <ul style={{ marginBottom: "20px", ml: "-40px" }}>
-                    {packageList?.map(
-                      (de, id) => (
-                        <li key={id} style={{ listStyleType: "none" }}>
-                          <Stack
-                            direction={"row"}
-                            sx={{
-                              alignItems: "center",
-                            }}
-                            gap={2}
-                          >
-                            <CheckCircleOutlineTwoToneIcon
-                              fontSize="small"
-                              sx={{ color: "#1097CD" }}
-                            />
-                            <Typography fontSize={"20px"}>{de}</Typography>
-                          </Stack>
-                        </li>
-                      )
-                    )}
+                    {packageList?.map((de, id) => (
+                      <li key={id} style={{ listStyleType: "none" }}>
+                        <Stack
+                          direction={"row"}
+                          sx={{
+                            alignItems: "center",
+                          }}
+                          gap={2}
+                        >
+                          <CheckCircleOutlineTwoToneIcon
+                            fontSize="small"
+                            sx={{ color: "#1097CD" }}
+                          />
+                          <Typography fontSize={"20px"}>{de}</Typography>
+                        </Stack>
+                      </li>
+                    ))}
                   </ul>
                 </div>
-
               </Grid>
               <Grid
                 item
@@ -234,36 +238,42 @@ function Jobpayment() {
                 sx={{ display: "flex", padding: "10px" }}
               >
                 <Grid container spacing={2}>
-                  <Grid item md={12}>
-                  </Grid>
-                    <>
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                          textAlign: "right",
-                        }}
+                  <Grid item md={12}></Grid>
+                  <>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        textAlign: "right",
+                      }}
+                    >
+                      <CustomTypography
+                        fontSize={"20px"}
+                        sx={{ textAlign: "right" }}
                       >
-                        <Typography fontSize={"20px"}>Job Count</Typography>
-                      </Grid> 
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          textAlign: "right",
-                        }}
-                      >
-                        <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <Typography fontWeight={600} fontSize={"30px"}>{jobDet?.length}</Typography>
-                        </Box>
-                      </Grid>
-                    </>
+                        Job Count
+                      </CustomTypography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "right",
+                      }}
+                    >
+                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Typography fontWeight={600} fontSize={"30px"}>
+                          {jobDet?.length}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </>
                   <Grid
                     item
                     xs={6}
@@ -287,22 +297,14 @@ function Jobpayment() {
                     }}
                   >
                     <Typography fontSize={"20px"}>
-                    {county
-                          ? currencyConvert(
-                              finalPrice,
-                              "Indian Rupee",
-                              2
-                            )
-                          : currencyConvert(finalPrice, "US Dollar", 2)
-                    }
+                      {county
+                        ? currencyConvert(finalPrice, "Indian Rupee", 2)
+                        : currencyConvert(finalPrice, "US Dollar", 2)}
                     </Typography>
                   </Grid>
 
-
-
                   <Grid item xs={12}>
-                    <Divider
-                     />
+                    <Divider />
                   </Grid>
                   <Grid
                     item
@@ -327,14 +329,9 @@ function Jobpayment() {
                     }}
                   >
                     <Typography fontSize={"30px"}>
-                    {county
-                          ? currencyConvert(
-                              finalPrice,
-                              "Indian Rupee",
-                              2
-                            )
-                          : currencyConvert(finalPrice, "US Dollar", 2)
-                    }
+                      {county
+                        ? currencyConvert(finalPrice, "Indian Rupee", 2)
+                        : currencyConvert(finalPrice, "US Dollar", 2)}
                     </Typography>
                   </Grid>
                   <Grid
@@ -364,7 +361,7 @@ function Jobpayment() {
         </Card>
       </Container>
     </div>
-  )
+  );
 }
 
-export default Jobpayment
+export default Jobpayment;

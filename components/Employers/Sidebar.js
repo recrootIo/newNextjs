@@ -9,7 +9,19 @@ import { setEditJob } from "@/redux/slices/job";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { logout } from "@/redux/slices/auth";
+import { styled } from "@mui/system";
 import Cookies from "js-cookie";
+
+const HoverListItemButton = styled(ListItemButton)`
+  display: flex;
+  justify-content: center;
+  height: 65px;
+  transition: transform 0.2s, font-size 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function EmployerSidebar() {
   const background =
@@ -27,16 +39,90 @@ export default function EmployerSidebar() {
   const freeCount = freePack === true ? 2 - cjobs.length : 0;
   const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
-  const user = Cookies.get()
+  const user = Cookies.get();
 
   const handleListItemClick = (val) => {
     dispatch(selectRoute(val));
-    if (val === "PostNewJob") {   
-       if (user?.country === 'LK' || (company.jobSlot === true && company.package?.paymentStatus === 'Completed')) {      
+    if (val === "PostNewJob") {
       if (
-        company.jobSlot === true &&
-        company.package?.paymentStatus === "Completed"
+        user?.country === "LK" ||
+        (company.jobSlot === true &&
+          company.package?.paymentStatus === "Completed")
       ) {
+        if (
+          company.jobSlot === true &&
+          company.package?.paymentStatus === "Completed"
+        ) {
+          dispatch(
+            setEditJob({
+              salary: {},
+              question: [
+                {
+                  id: new Date().getTime(),
+                  questions: "",
+                  answer: "",
+                  preferedAns: "",
+                },
+              ],
+              requiredSkill: [],
+              address: [],
+              featureType: false,
+              queshow: "",
+            })
+          ).then(
+            setTimeout(() => {
+              push("/Employer/PostNewJob");
+            }, 500)
+          );
+          return;
+        }
+        // eslint-disable-next-line no-mixed-operators
+        if (
+          (freeCount === 0 && preCOunt === 0) ||
+          (freeCount === 0 && preCOunt === undefined)
+        ) {
+          if (company.package?.subscription_package === undefined) {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Subscribe A Plan To Post A job",
+              })
+            );
+          } else {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Your Job Limit Was Reached!",
+              })
+            );
+          }
+          push("/Pricing");
+          return;
+        }
+
+        dispatch(
+          setEditJob({
+            salary: {},
+            question: [
+              {
+                id: new Date().getTime(),
+                questions: "",
+                answer: "",
+                preferedAns: "",
+              },
+            ],
+            requiredSkill: [],
+            address: [],
+            featureType: false,
+            queshow: "true",
+            packageType: "",
+          })
+        ).then(
+          setTimeout(() => {
+            push("/Employer/PostNewJob");
+          }, 500)
+        );
+      } else {
         dispatch(
           setEditJob({
             salary: {},
@@ -58,77 +144,8 @@ export default function EmployerSidebar() {
             push("/Employer/PostNewJob");
           }, 500)
         );
-        return;
       }
-      // eslint-disable-next-line no-mixed-operators
-      if (
-        (freeCount === 0 && preCOunt === 0 ) ||
-        (freeCount === 0 && preCOunt === undefined )
-      ) {
-        if (company.package?.subscription_package === undefined) {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Subscribe A Plan To Post A job",
-            })
-          );
-        } else {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Your Job Limit Was Reached!",
-            })
-          );
-        }
-        push("/Pricing");
-        return;
-      }
-  
-      dispatch(
-        setEditJob({
-          salary: {},
-          question: [
-            {
-              id: new Date().getTime(),
-              questions: "",
-              answer: "",
-              preferedAns: "",
-            },
-          ],
-          requiredSkill: [],
-          address: [],
-          featureType: false,
-          queshow: "true",
-          packageType: "",
-        })
-      ).then(
-        setTimeout(() => {
-          push("/Employer/PostNewJob");
-        }, 500)
-      );
-    } else {
-      dispatch(
-        setEditJob({
-          salary: {},
-          question: [
-            {
-              id: new Date().getTime(),
-              questions: "",
-              answer: "",
-              preferedAns: "",
-            },
-          ],
-          requiredSkill: [],
-          address: [],
-          featureType: false,
-          queshow: "",
-        })
-      ).then(
-        setTimeout(() => {
-          push('/Employer/PostNewJob');
-        }, 500)
-      );
-    }}
+    }
   };
   const logOut = useCallback(() => {
     dispatch(logout()).then(() => {
@@ -161,20 +178,16 @@ export default function EmployerSidebar() {
         </ListItemButton>
         <Divider variant="middle" color="gray" />
 
-
         <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
           <Tooltip title="Dashboard" placement="right">
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
                 background: select === "Dashboard" ? background : "",
-                height: "65px",
               }}
               onClick={() => handleListItemClick("Dashboard")}
             >
               <Image src="/home.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Tooltip>
         </Link>
 
@@ -184,11 +197,8 @@ export default function EmployerSidebar() {
           className="companyProfile"
         >
           <Link href={"/Employer/CompanyProfile"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background:
                   select === "CompanyProfile" ||
                   select === "Members" ||
@@ -199,22 +209,19 @@ export default function EmployerSidebar() {
               onClick={() => handleListItemClick("CompanyProfile")}
             >
               <Image src="/profile.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="Post New Job" placement="right" className="postNewJob">
-          <ListItemButton
+          <HoverListItemButton
             sx={{
-              display: "flex",
-              height: "65px",
-              justifyContent: "center",
               background: select === "PostNewJob" ? background : "",
             }}
             onClick={() => handleListItemClick("PostNewJob")}
           >
             <Image src="/jobs.png" alt="" width="40" height="40" />
-          </ListItemButton>
+          </HoverListItemButton>
         </Tooltip>
 
         <Tooltip
@@ -223,17 +230,14 @@ export default function EmployerSidebar() {
           className="allApplicants"
         >
           <Link href={"/Employer/AllApplicants"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background: select === "AllApplicants" ? background : "",
               }}
               onClick={() => handleListItemClick("AllApplicants")}
             >
               <Image src="/team.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
@@ -243,17 +247,14 @@ export default function EmployerSidebar() {
           className="interview"
         >
           <Link href={"/Employer/ScheduledInterviews"}>
-            <ListItemButton
+            <HoverListItemButton
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                height: "65px",
                 background: select === "ScheduledInterviews" ? background : "",
               }}
               onClick={() => handleListItemClick("ScheduledInterviews")}
             >
               <Image src="/convo.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
@@ -263,33 +264,34 @@ export default function EmployerSidebar() {
           className="subscription"
         >
           <Link href={"/Employer/Subscription"}>
-            <ListItemButton
-              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
+            <HoverListItemButton
+              sx={{
+                background: select === "Subscription" ? background : "",
+              }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/subscription.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="My Account" placement="right" className="account">
           <Link href={"/Employer/MyAccount"}>
-            <ListItemButton
-              sx={{ display: "flex", justifyContent: "center", height: "65px" }}
+            <HoverListItemButton
+              sx={{
+                background: select === "MyAccount" ? background : "",
+              }}
               onClick={() => handleListItemClick()}
             >
               <Image src="/myAccount.png" alt="" width="40" height="40" />
-            </ListItemButton>
+            </HoverListItemButton>
           </Link>
         </Tooltip>
 
         <Tooltip title="Logout" placement="right">
-          <ListItemButton
-            sx={{ display: "flex", justifyContent: "center", height: "65px" }}
-            onClick={logOut}
-          >
+          <HoverListItemButton onClick={logOut}>
             <Image src="/power-icon.png" alt="" width="40" height="40" />
-          </ListItemButton>
+          </HoverListItemButton>
         </Tooltip>
       </List>
     </Box>

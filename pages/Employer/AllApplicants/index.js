@@ -842,13 +842,19 @@ const AllApplicants = () => {
                   </Button>
                   <Menu
                     id="demo-customized-menu"
-                    MenuListProps={{
-                      "aria-labelledby": "demo-customized-button",
-                    }}
-                    disablePortal={true}
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    getContentAnchorEl={null}
+                    disablePortal={true}
                     sx={{ maxHeight: "400px" }}
                   >
                     <List

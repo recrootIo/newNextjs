@@ -372,7 +372,7 @@ const JobDetails = () => {
               display: "flex",
               justifyContent: "center",
               mt: "30px",
-              mb: "100px",
+              mb: "90px",
             }}
           >
             <Image
@@ -397,7 +397,6 @@ const JobDetails = () => {
           (companyDet.jobSlot === true &&
             companyDet.package?.paymentStatus === "Completed") ? (
             <Box sx={{ width: "100%", p: "0 0 20px 0" }} className="plan">
-              <Typography variant="p">Choose a plan</Typography>
               <FormControl
                 fullWidth
                 sx={{ ...style.txtinput, bgcolor: "white" }}
@@ -579,7 +578,6 @@ const JobDetails = () => {
                 onClose={() => {
                   setOpen(false);
                 }}
-                onBlur={addSkil}
                 onKeyUp={(e) => {
                   handleKey(e);
                 }}

@@ -50,7 +50,7 @@ const Navbar = () => {
   const logOut = useCallback(() => {
     handleClose();
     dispatch(logout()).then(() => {
-      push('/');
+      push("/");
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -150,6 +150,22 @@ const Navbar = () => {
                     Jobs
                   </Link>
 
+                  {userType === "Employer" ? (
+                    <Link
+                      href="/Employer/Dashboard"
+                      style={{
+                        fontSize: "17px",
+                        color: "black",
+                        fontWeight: 600,
+                      }}
+                      prefetch
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
                   {userType === "Candidate" ? (
                     <Link
                       href={"/Candidate/Dashboard"}
@@ -163,18 +179,6 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <>
-                      <Link
-                        href="/Employer/Dashboard"
-                        style={{
-                          fontSize: "17px",
-                          color: "black",
-                          fontWeight: 600,
-                        }}
-                        prefetch
-                      >
-                        Dashboard
-                      </Link>
-
                       <Button
                         id="fade-button"
                         aria-controls={openEmp ? "fade-menu" : undefined}

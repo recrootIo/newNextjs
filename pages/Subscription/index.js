@@ -9,7 +9,6 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography,
   styled,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
@@ -251,7 +250,7 @@ function SubscribePrice() {
           justifyContent: "center",
         }}
       >
-        <Typography
+        <CustomTypography
           sx={{
             color: "white",
             fontSize: "2rem",
@@ -261,7 +260,7 @@ function SubscribePrice() {
           }}
         >
           Subscription
-        </Typography>
+        </CustomTypography>
       </Box>
       <Container>
         <Card
@@ -320,18 +319,18 @@ function SubscribePrice() {
                       }}
                     >
                       <img src="/thumbup.png" alt="vector" />
-                      <Typography
+                      <CustomTypography
                         sx={{
                           fontFamily: "'Inter'",
                           fontStyle: "normal",
                           fontWeight: 800,
-                          fontSize: "40px",
+                          fontSize: { xs: "30px", md: "40px" },
                           lineHeight: "145%",
                           color: "#fff",
                         }}
                       >
                         {subscriptionpackage}
-                      </Typography>
+                      </CustomTypography>
                     </Box>
                   </Box>
                   <Box
@@ -341,7 +340,7 @@ function SubscribePrice() {
                       flexDirection: "column",
                     }}
                   >
-                    <Typography
+                    <CustomTypography
                       sx={{
                         fontFamily: "'Inter'",
                         fontStyle: "normal",
@@ -365,8 +364,8 @@ function SubscribePrice() {
                             "US Dollar",
                             2
                           )}{" "}
-                    </Typography>
-                    <Typography
+                    </CustomTypography>
+                    <CustomTypography
                       sx={{
                         fontFamily: "'Inter'",
                         fontStyle: "normal",
@@ -380,7 +379,7 @@ function SubscribePrice() {
                       subscriptionpackage === "Premium"
                         ? "(monthly)"
                         : subscriptionTimePackage}
-                    </Typography>
+                    </CustomTypography>
                   </Box>
                 </Box>
                 <div className="pricig-body">
@@ -399,7 +398,12 @@ function SubscribePrice() {
                               fontSize="small"
                               sx={{ color: "#1097CD" }}
                             />
-                            <Typography fontSize={"20px"}>{de}</Typography>
+                            <CustomTypography
+                              fontSize={"19px"}
+                              sx={{ lineHeight: "30.7px", color: "#034275" }}
+                            >
+                              {de}
+                            </CustomTypography>
                           </Stack>
                         </li>
                       )
@@ -450,10 +454,12 @@ function SubscribePrice() {
                           display: "flex",
                           justifyContent: "flex-start",
                           alignItems: "center",
-                          textAlign: "right",
+                          textAlign: "left",
                         }}
                       >
-                        <Typography fontSize={"20px"}>Job Count</Typography>
+                        <CustomTypography fontSize={"20px"}>
+                          Job Count
+                        </CustomTypography>
                       </Grid>
                       <Grid
                         item
@@ -497,7 +503,9 @@ function SubscribePrice() {
                       textAlign: "right",
                     }}
                   >
-                    <Typography fontSize={"20px"}>Sub Total</Typography>
+                    <CustomTypography fontSize={"20px"}>
+                      Sub Total
+                    </CustomTypography>
                   </Grid>
                   <Grid
                     item
@@ -509,7 +517,7 @@ function SubscribePrice() {
                       textAlign: "right",
                     }}
                   >
-                    <Typography fontSize={"20px"}>
+                    <CustomTypography fontSize={"20px"}>
                       {subscriptionpackage === "Pro Plan" ||
                       subscriptionpackage === "Premium"
                         ? county
@@ -520,7 +528,7 @@ function SubscribePrice() {
                             )
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
-                    </Typography>
+                    </CustomTypography>
                   </Grid>
 
                   <Grid
@@ -534,7 +542,9 @@ function SubscribePrice() {
                     }}
                   >
                     {isValid && (
-                      <Typography fontSize={"20px"}>Discount</Typography>
+                      <CustomTypography fontSize={"20px"}>
+                        Discount
+                      </CustomTypography>
                     )}
                   </Grid>
                   <Grid
@@ -548,13 +558,13 @@ function SubscribePrice() {
                     }}
                   >
                     {isValid && (
-                      <Typography fontSize={"20px"}>
+                      <CustomTypography fontSize={"20px"}>
                         {currencyConvert(
                           subscriptionPrice - newTotal,
                           "US Dollar",
                           2
                         )}
-                      </Typography>
+                      </CustomTypography>
                     )}
                   </Grid>
                   <Grid item xs={12}>
@@ -570,7 +580,7 @@ function SubscribePrice() {
                       textAlign: "right",
                     }}
                   >
-                    <Typography fontSize={"30px"}>Total</Typography>
+                    <CustomTypography fontSize={"30px"}>Total</CustomTypography>
                   </Grid>
                   <Grid
                     item
@@ -582,7 +592,7 @@ function SubscribePrice() {
                       textAlign: "right",
                     }}
                   >
-                    <Typography fontSize={"30px"}>
+                    <CustomTypography fontSize={"30px"}>
                       {subscriptionpackage === "Pro Plan" ||
                       subscriptionpackage === "Premium"
                         ? county
@@ -593,7 +603,7 @@ function SubscribePrice() {
                             )
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
-                    </Typography>
+                    </CustomTypography>
                   </Grid>
                   <Grid
                     className="paymentCard"

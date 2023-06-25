@@ -155,7 +155,7 @@ const JobPreview = (props) => {
               display: "flex",
               justifyContent: "center",
               mt: "30px",
-              mb: "100px",
+              mb: "90px",
             }}
           >
             <Image
