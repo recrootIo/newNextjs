@@ -80,10 +80,10 @@ const JobPreview = (props) => {
   const settingIndex = (index) => {
     props.Pages(index);
   };
-  const dispatch = useDispatch()
-    useEffect(() => {
-    dispatch(setpremium(false))
-    }, [dispatch])
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setpremium(false));
+  }, [dispatch]);
   const updateValue = async () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ jobPreview: false });
@@ -154,8 +154,8 @@ const JobPreview = (props) => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              mt: "30px",
-              mb: "90px",
+              mt: "10px",
+              mb: "10px",
             }}
           >
             <Image

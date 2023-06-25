@@ -28,11 +28,13 @@ function Jobpaymentstatus() {
   );
   const jobPay =  useSelector(data => data.jobs.jobPayment)
   const jobDet =  useSelector(data => data.jobs.upJob)
+
 const [clientSecret, setClientSecret] = useState("");
 const token = Cookies.get('token')
+const choosePremium =  useSelector(data => data.jobs.choosePremium)
 const router = useRouter()
   useEffect(() => {
-    if(jobDet === ""){
+    if(jobDet === ""  && choosePremium !== true){
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
@@ -55,8 +57,8 @@ const router = useRouter()
         appearance,
       };
   const country = Cookies.get('country')
-  const queryString = jobPay?.ids.join(',');
-  const url = `/?elements=${queryString}`;
+  // const queryString = jobPay?.ids.join(',');
+  // const url = `/?elements=${queryString}`;
   return (
     <div>
       <EmployerNavbar />
