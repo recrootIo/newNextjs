@@ -55,29 +55,35 @@ const packageList = [
   "Job expires in 1 month",
 ];
 function Jobpayment() {
-  const jobDet = useSelector((data) => data.jobs.upJob);
-  const country = Cookies.get("country");
-  const { push } = useRouter();
-  const county = country === "IN";
-  const subscriptionPrice = county ? 1600 : 35;
-  const finalPrice = subscriptionPrice * jobDet?.length;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (jobDet === "") {
-      push("/Employer/Dashboard");
+    const jobDet =  useSelector(data => data.jobs.upJob)
+    const choosePremium =  useSelector(data => data.jobs.choosePremium)
+    const country = Cookies.get('country')
+    const {push} = useRouter()
+    const router = useRouter()
+    const {pre} =router.query
+
+    const county = country === 'IN'
+    const subscriptionPrice = county ? 1600 : 35
+    const joblength = choosePremium === true ? 1 : jobDet?.length ;
+    const finalPrice =  subscriptionPrice * joblength;
+    const dispatch = useDispatch();
+    useEffect(() => {
+      const job = JSON.parse(localStorage.getItem("jobDetail"));
+    if (choosePremium !== true && jobDet === '') {
+        push('/Employer/Dashboard')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jobDet]);
-
-  const handleNavigate = () => {
-    dispatch(
-      upgradejobPayment({
-        ids: jobDet,
-        payment: finalPrice,
-        country: country,
-      })
-    ).then(push("/Employer/Jobpayment/Payment"));
-  };
+    }, [jobDet,pre])
+    
+    const  handleNavigate = ()=>{
+        dispatch(upgradejobPayment({
+            ids:jobDet,
+            payment:finalPrice,
+            country:country
+        })).then(
+      push('/Employer/Jobpayment/Payment')
+        )
+    }
   return (
     <div>
       <EmployerNavbar></EmployerNavbar>
@@ -256,24 +262,22 @@ function Jobpayment() {
                       >
                         Job Count
                       </CustomTypography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "right",
-                      }}
-                    >
-                      <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <Typography fontWeight={600} fontSize={"30px"}>
-                          {jobDet?.length}
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </>
+                      </Grid> 
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "right",
+                        }}
+                      >
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Typography fontWeight={600} fontSize={"30px"}>{joblength}</Typography>
+                        </Box>
+                      </Grid>
+                    </>
                   <Grid
                     item
                     xs={6}

@@ -5,6 +5,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { Button, CircularProgress, styled } from "@mui/material";
+import { useSelector } from "react-redux";
 const StyledButton = styled(Button)({
   color: "#ffff",
   padding: "10px",
@@ -19,6 +20,7 @@ const StyledButton = styled(Button)({
 export default function PaymentInt(props) {
   const stripe = useStripe();
   const elements = useElements();
+  const choosePremium =  useSelector(data => data.jobs.choosePremium)
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,17 +65,29 @@ export default function PaymentInt(props) {
       return;
     }
     setIsLoading(true);
-    const queryString = props?.jobPay?.ids.join(',');
-    const url = `/?elements=${queryString}`;
-    console.log(url,'url')
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `https://extraordinary-melba-a931eb.netlify.app/Employer/Jobpayment/Success${url}`,
-        
-      },
-    });
+    if (choosePremium) {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: `http://localhost:3001/Employer/Jobpayment/Success?newJob=${choosePremium}`,
+          
+        },
+      });
+      return
+    }else{
+      const queryString = props?.jobPay?.ids?.join(',');
+      const url = `/?elements=${queryString}`;
+      console.log(url,'url')
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: `http://localhost:3001/Employer/Jobpayment/Success${url}`,
+          
+        },
+      });
+    }
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
