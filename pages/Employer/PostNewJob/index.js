@@ -29,6 +29,7 @@ import {
   addJobsNewPre,
   companyJobs,
   errorJobs,
+  getfreeCount,
   setEditJob,
   setpremium,
   singleJobs,
@@ -124,6 +125,7 @@ function PostnewJob() {
 
   React.useEffect(() => {
     dispatch(companyJobs());
+    dispatch(getfreeCount())
     dispatch(getCompanyDetails())
       .then((res) => {
         if (res.error !== undefined) {
@@ -505,18 +507,7 @@ function PostnewJob() {
         break;
     }
   };
-  //   const location = useLocation();
-  //   useEffect(() => {
-  //     if (location.state === true) {
-  //       setProfiletab({ index: 0, page: <JobDetails /> });
-  //     }
-  //   }, [location]);
-  // useEffect(() => {
-  // setProfiletab( jid  !== undefined
-  //   ? { index: 2, page: <JobPreview Pages={PagesTwo} /> }
-  //   : { index: 0, page: <JobDetails /> })
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [final])
+ 
 
   const [profiletab, setProfiletab] = useState(
     final?.details?.applicationDeadline !== undefined
@@ -527,30 +518,9 @@ function PostnewJob() {
   console.log(final, "final");
   const postPremJobs = () => {
     setopen(true);
-    dispatch(addJobsNewPre(final))
-      .then((res) => {
-        console.log(res?.payload?.user?._id, "ressssssss");
-        dispatch(upgradejob([res?.payload?.user?._id])).then(
+    localStorage.setItem("jobDetail", JSON.stringify(final));
           setopen(false),
-          router.push("/Employer/Jobpayment")
-        );
-      })
-      .catch((error) => {
-        if (
-          error.message === "Request failed with status code 401" ||
-          "Request failed with status code 403"
-        ) {
-          dispatch(logout()).then(() => {
-            router.push(
-              {
-                pathname: "/signin",
-                query: { name: "session" },
-              },
-              "/signin"
-            );
-          });
-        }
-      });
+          router.push("/Employer/Jobpayment?pre=true")
   };
   return (
     <Employer>
@@ -649,7 +619,7 @@ function PostnewJob() {
                     height: "55px",
                   }}
                 >
-                  Submit & Choose Plan
+                 Next
                 </Button>
               )
             ) : profiletab.index === 3 ? (

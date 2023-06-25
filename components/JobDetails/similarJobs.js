@@ -6,42 +6,10 @@ import { CustomTypography } from "../../ui-components/CustomTypography/CustomTyp
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import SimilarJobCard from "./similarCard";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import searchService from "@/redux/services/search.service";
 import styles from "./jobDetail.module.css";
 import dynamic from "next/dynamic";
 
-const breakPoints = [
-  { width: 550, itemsToShow: 1 },
-  { width: 768, itemsToShow: 3 },
-  { width: 1200, itemsToShow: 6 },
-];
-
-const SimilarJobs = ({ jobRole }) => {
-  const [similar, setSimilar] = useState([]);
-
-  const similarJobs = () => {
-    searchService
-      .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
-      .then((res) => {
-        console.log(res);
-        setSimilar(res.data.posts);
-      })
-      .catch(() => {});
-  };
-
-  useEffect(() => {
-    if (jobRole) {
-      similarJobs();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const carouselRef = useRef(null);
-  const totalPages = 4;
-  let resetTimeout;
-
+const SimilarJobs = ({ similar }) => {
   if (similar.length < 1) return;
 
   return (

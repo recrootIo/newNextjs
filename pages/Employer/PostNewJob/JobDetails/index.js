@@ -371,8 +371,8 @@ const JobDetails = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              mt: "30px",
-              mb: "90px",
+              mt: "10px",
+              mb: "10px",
             }}
           >
             <Image

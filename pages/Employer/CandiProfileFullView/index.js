@@ -164,7 +164,6 @@ const CandiFullProfileView = () => {
     });
   };
   const [candidate, setcandidate] = useState({});
-  console.log(candidate, "candi");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -187,6 +186,7 @@ const CandiFullProfileView = () => {
   const matches = useMediaQuery("(max-width:600px)");
   const match = useMediaQuery("(max-width:1050px)");
   const resume = useSelector((state) => state.apply.resume);
+  console.log(resume, "resume");
   const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,

@@ -7,8 +7,9 @@ import JobDetailCard from "@/components/JobDetails/jobDetailCard";
 import SimilarJobs from "@/components/JobDetails/similarJobs";
 import Navbar from "@/components/Navbar/Navbar";
 import jobsService from "@/redux/services/job.service";
+import searchService from "@/redux/services/search.service";
 
-const JobDetails = ({ job, jobRole }) => {
+const JobDetails = ({ job, jobRole, similar }) => {
   return (
     <>
       <Header title={jobRole} description={job?.jobDescription} />
@@ -16,7 +17,7 @@ const JobDetails = ({ job, jobRole }) => {
       <BackBar />
       <JobDetailCard {...job} />
       <JobDetail {...job} />
-      <SimilarJobs jobRole={jobRole} />
+      <SimilarJobs similar={similar} />
       <SubscribHome />
       <FooterHome />
     </>
@@ -27,6 +28,7 @@ export const getServerSideProps = async (context) => {
   const { jobTitle = "", jobRole = "", _id = "" } = context.query;
   const newService = new jobsService();
   let job = {};
+  let similar = [];
 
   await newService
     .getSingleJob(_id)
@@ -40,12 +42,20 @@ export const getServerSideProps = async (context) => {
     .then(() => {})
     .catch((error) => console.log(error));
 
+  await searchService
+    .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
+    .then((res) => {
+      similar = res.data.posts;
+      console.log(res.data.posts);
+    })
+    .catch(() => {});
+
   return {
     props: {
       jobTitle,
       jobRole,
       job,
-      // fullPath,
+      similar,
     },
   };
 };

@@ -245,7 +245,6 @@ const EditPersonalDetails = () => {
               }}
             >
               {({ errors, values, setFieldValue, submitForm }) => {
-                console.log(values.languages, "values.languages");
                 return (
                   <Form>
                     <Stack spacing={2} sx={{ mt: "50px" }}>

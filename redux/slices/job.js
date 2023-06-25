@@ -37,6 +37,8 @@ const initialState = {
     country: "",
   },
   choosePremium: false,
+  freeCount: "",
+  loading: false,
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -153,6 +155,14 @@ export const singleJobs = createAsyncThunk("single/gjobs", async (id) => {
   const res = await jobsService.getSingleJob(id);
   return res.data.data;
 });
+export const getfreeCount = createAsyncThunk(
+  "free/user.User.companyId",
+  async () => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    const res = await jobsService.getFreeJobsount(user.User.companyId);
+    return res.data;
+  }
+);
 
 export const jobPackType = createAsyncThunk("set/jobPackType", async (data) => {
   return data;
@@ -251,6 +261,15 @@ const jobsSlice = createSlice({
     },
     [upgradejobPayment.fulfilled]: (state, action) => {
       state.jobPayment = action.payload;
+    },
+    [getfreeCount.fulfilled]: (state, action) => {
+      state.freeCount = action.payload;
+    },
+    [addJobsNew.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [addJobsNew.fulfilled]: (state, action) => {
+      state.loading = false;
     },
     [setEditJob.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
