@@ -164,6 +164,7 @@ const CandiFullProfileView = () => {
     });
   };
   const [candidate, setcandidate] = useState({});
+  console.log(candidate, "candi");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -516,17 +517,41 @@ const CandiFullProfileView = () => {
                   >
                     Other Info:
                   </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Country : {candidate?.resume?.location?.country}
-                  </CustomTypography>
-                  {candidate?.resume?.nationality?.length > 0 ? (
+                  {candidate?.resume?.location?.country?.length === 0 ? (
+                    <CustomTypography
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Country : N/A
+                    </CustomTypography>
+                  ) : (
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Country : {candidate?.resume?.location?.country}
+                    </CustomTypography>
+                  )}
+                  {candidate?.resume?.nationality?.length === 0 ? (
+                    <CustomTypography
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Nationality : N/A
+                    </CustomTypography>
+                  ) : (
                     <CustomTypography
                       sx={{
                         fontSize: "18px",
@@ -537,10 +562,20 @@ const CandiFullProfileView = () => {
                     >
                       Nationality : {candidate?.resume?.nationality?.country}
                     </CustomTypography>
-                  ) : (
-                    ""
                   )}
-                  {candidate?.resume?.countrieswithworkingRights?.length > 0 ? (
+                  {candidate?.resume?.countrieswithworkingRights?.country
+                    ?.length === 0 ? (
+                    <CustomTypography
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Working rights : N/A
+                    </CustomTypography>
+                  ) : (
                     <CustomTypography
                       sx={{
                         fontSize: "18px",
@@ -552,30 +587,54 @@ const CandiFullProfileView = () => {
                       Working rights :{" "}
                       {candidate?.resume?.countrieswithworkingRights?.country}
                     </CustomTypography>
-                  ) : (
-                    ""
                   )}
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Notice Period :{candidate?.resume?.notice}
-                  </CustomTypography>
-                  <CustomTypography
-                    sx={{
-                      fontSize: "18px",
-                      fontWeight: 500,
-                      color: "white",
-                    }}
-                    gutterBottom
-                  >
-                    Total Work Experience :{" "}
-                    {candidate?.resume?.totalWorkExperience} Years
-                  </CustomTypography>
+                  {candidate?.resume?.notice?.length === 0 ? (
+                    <CustomTypography
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Notice Period : N/A
+                    </CustomTypography>
+                  ) : (
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Notice Period :{candidate?.resume?.notice}
+                    </CustomTypography>
+                  )}
+                  {candidate?.resume?.totalWorkExperience?.length === 0 ? (
+                    <CustomTypography
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "18px",
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Total Work Experience : N/A
+                    </CustomTypography>
+                  ) : (
+                    <CustomTypography
+                      sx={{
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        color: "white",
+                      }}
+                      gutterBottom
+                    >
+                      Total Work Experience :{" "}
+                      {candidate?.resume?.totalWorkExperience} Years
+                    </CustomTypography>
+                  )}
                 </Grid>
                 <Grid
                   item
@@ -848,11 +907,24 @@ const CandiFullProfileView = () => {
                             >
                               About
                             </CustomTypography>
-                            <CustomTypography
-                              className={styles.FullProfileSectionData}
-                            >
-                              {candidate?.about}
-                            </CustomTypography>
+                            {candidate?.about?.length === 0 ? (
+                              <CustomTypography
+                                style={{
+                                  fontWeight: 500,
+                                  fontSize: "16px",
+                                  marginLeft: "20px",
+                                  color: "red",
+                                }}
+                              >
+                                N/A
+                              </CustomTypography>
+                            ) : (
+                              <CustomTypography
+                                className={styles.FullProfileSectionData}
+                              >
+                                {candidate?.about}
+                              </CustomTypography>
+                            )}
                           </Box>
                           <Box
                             className={styles.FullProfilePersonalDetailsTypoBox}
@@ -1029,103 +1101,120 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.workExperience?.map(
-                            (wrk, index) => (
-                              <Box
-                                key={index}
-                                className={styles.ViewFullCandiProfileCard}
-                              >
-                                <BeenhereOutlinedIcon
-                                  sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                                />
-                                <Stack spacing={1}>
-                                  <Stack direction={"row"}>
-                                    <CustomTypography
-                                      className={styles.FullProfileSectionTypo}
-                                    >
-                                      Role :
-                                    </CustomTypography>
-                                    <CustomTypography
-                                      variant="subtitle2"
-                                      className={styles.ViewFullInfoMainText}
-                                    >
-                                      &nbsp;{wrk?.role}
-                                    </CustomTypography>
-                                  </Stack>
-                                  <Stack direction={"row"}>
-                                    <CustomTypography
-                                      className={styles.FullProfileSectionTypo}
-                                    >
-                                      Organization :
-                                    </CustomTypography>
+                        {candidate.resume?.workExperience?.length === 0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.workExperience?.map(
+                              (wrk, index) => (
+                                <Box
+                                  key={index}
+                                  className={styles.ViewFullCandiProfileCard}
+                                >
+                                  <BeenhereOutlinedIcon
+                                    sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                                  />
+                                  <Stack spacing={1}>
+                                    <Stack direction={"row"}>
+                                      <CustomTypography
+                                        className={
+                                          styles.FullProfileSectionTypo
+                                        }
+                                      >
+                                        Role :
+                                      </CustomTypography>
+                                      <CustomTypography
+                                        variant="subtitle2"
+                                        className={styles.ViewFullInfoMainText}
+                                      >
+                                        &nbsp;{wrk?.role}
+                                      </CustomTypography>
+                                    </Stack>
+                                    <Stack direction={"row"}>
+                                      <CustomTypography
+                                        className={
+                                          styles.FullProfileSectionTypo
+                                        }
+                                      >
+                                        Organization :
+                                      </CustomTypography>
+                                      <CustomTypography
+                                        variant="subtitle2"
+                                        className={styles.ViewFullInfoText}
+                                      >
+                                        &nbsp; {wrk?.companyName}
+                                      </CustomTypography>
+                                    </Stack>
+                                    {wrk?.city !== "" ? (
+                                      <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Location :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={styles.ViewFullInfoText}
+                                        >
+                                          &nbsp; {wrk?.city},{wrk?.state},
+                                          {wrk?.country}
+                                        </CustomTypography>
+                                      </Stack>
+                                    ) : (
+                                      ""
+                                    )}
+                                    {wrk?.jobProfile !== "" ? (
+                                      <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Job Profile :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={styles.ViewFullInfoText}
+                                        >
+                                          &nbsp; {wrk?.jobProfile}
+                                        </CustomTypography>
+                                      </Stack>
+                                    ) : (
+                                      ""
+                                    )}
                                     <CustomTypography
                                       variant="subtitle2"
                                       className={styles.ViewFullInfoText}
                                     >
-                                      &nbsp; {wrk?.companyName}
+                                      {moment(wrk?.fromDate).format("LL")} -{" "}
+                                      {moment(wrk?.toDate).format("LL")} {bull}{" "}
+                                      {wrk?.experience} Years
                                     </CustomTypography>
                                   </Stack>
-                                  {wrk?.city !== "" ? (
-                                    <Stack direction={"row"}>
-                                      <CustomTypography
-                                        className={
-                                          styles.FullProfileSectionTypo
-                                        }
-                                      >
-                                        Location :
-                                      </CustomTypography>
-                                      <CustomTypography
-                                        variant="subtitle2"
-                                        className={styles.ViewFullInfoText}
-                                      >
-                                        &nbsp; {wrk?.city},{wrk?.state},
-                                        {wrk?.country}
-                                      </CustomTypography>
-                                    </Stack>
-                                  ) : (
-                                    ""
-                                  )}
-                                  {wrk?.jobProfile !== "" ? (
-                                    <Stack direction={"row"}>
-                                      <CustomTypography
-                                        className={
-                                          styles.FullProfileSectionTypo
-                                        }
-                                      >
-                                        Job Profile :
-                                      </CustomTypography>
-                                      <CustomTypography
-                                        variant="subtitle2"
-                                        className={styles.ViewFullInfoText}
-                                      >
-                                        &nbsp; {wrk?.jobProfile}
-                                      </CustomTypography>
-                                    </Stack>
-                                  ) : (
-                                    ""
-                                  )}
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    {moment(wrk?.fromDate).format("LL")} -{" "}
-                                    {moment(wrk?.toDate).format("LL")} {bull}{" "}
-                                    {wrk?.experience} Years
-                                  </CustomTypography>
-                                </Stack>
-                              </Box>
-                            )
-                          )}
-                        </Box>
+                                </Box>
+                              )
+                            )}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -1156,99 +1245,116 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.education?.map((edu, index) => (
-                            <Box
-                              key={index}
-                              className={styles.ViewFullCandiProfileCard}
-                            >
-                              <BeenhereOutlinedIcon
-                                sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                              />
-                              <Stack spacing={1}>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoMainText}
-                                  >
-                                    Degree Name :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoMainText}
-                                  >
-                                    &nbsp;{edu?.degreeName}
-                                  </CustomTypography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Graduate :
-                                  </CustomTypography>
+                        {candidate.resume?.education?.length === 0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.education?.map((edu, index) => (
+                              <Box
+                                key={index}
+                                className={styles.ViewFullCandiProfileCard}
+                              >
+                                <BeenhereOutlinedIcon
+                                  sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                                />
+                                <Stack spacing={1}>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoMainText}
+                                    >
+                                      Degree Name :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoMainText}
+                                    >
+                                      &nbsp;{edu?.degreeName}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Graduate :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp;{edu?.graduate}
+                                    </CustomTypography>
+                                  </Stack>
+                                  {console.log(edu)}
+                                  {edu?.collegeName !== "" ? (
+                                    <Stack direction={"row"}>
+                                      <CustomTypography
+                                        className={
+                                          styles.FullProfileSectionTypo
+                                        }
+                                      >
+                                        College Name :
+                                      </CustomTypography>
+                                      <CustomTypography
+                                        variant="subtitle2"
+                                        className={styles.ViewFullInfoText}
+                                      >
+                                        &nbsp; {edu?.collegeName}
+                                      </CustomTypography>
+                                    </Stack>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {edu?.city !== "" ? (
+                                    <Stack direction={"row"}>
+                                      <CustomTypography
+                                        className={
+                                          styles.FullProfileSectionTypo
+                                        }
+                                      >
+                                        Location :
+                                      </CustomTypography>
+                                      <CustomTypography
+                                        variant="subtitle2"
+                                        className={styles.ViewFullInfoText}
+                                      >
+                                        &nbsp; {edu?.city},{edu?.state},
+                                        {edu?.country}
+                                      </CustomTypography>
+                                    </Stack>
+                                  ) : (
+                                    ""
+                                  )}
                                   <CustomTypography
                                     variant="subtitle2"
                                     className={styles.ViewFullInfoText}
                                   >
-                                    &nbsp;{edu?.graduate}
+                                    {moment(edu?.fromDate).format("LL")} -{" "}
+                                    {moment(edu?.toDate).format("LL")} {bull}{" "}
+                                    {edu?.experience} Years
                                   </CustomTypography>
                                 </Stack>
-                                {console.log(edu)}
-                                {edu?.collegeName !== "" ? (
-                                  <Stack direction={"row"}>
-                                    <CustomTypography
-                                      className={styles.FullProfileSectionTypo}
-                                    >
-                                      College Name :
-                                    </CustomTypography>
-                                    <CustomTypography
-                                      variant="subtitle2"
-                                      className={styles.ViewFullInfoText}
-                                    >
-                                      &nbsp; {edu?.collegeName}
-                                    </CustomTypography>
-                                  </Stack>
-                                ) : (
-                                  ""
-                                )}
-                                {edu?.city !== "" ? (
-                                  <Stack direction={"row"}>
-                                    <CustomTypography
-                                      className={styles.FullProfileSectionTypo}
-                                    >
-                                      Location :
-                                    </CustomTypography>
-                                    <CustomTypography
-                                      variant="subtitle2"
-                                      className={styles.ViewFullInfoText}
-                                    >
-                                      &nbsp; {edu?.city},{edu?.state},
-                                      {edu?.country}
-                                    </CustomTypography>
-                                  </Stack>
-                                ) : (
-                                  ""
-                                )}
-                                <CustomTypography
-                                  variant="subtitle2"
-                                  className={styles.ViewFullInfoText}
-                                >
-                                  {moment(edu?.fromDate).format("LL")} -{" "}
-                                  {moment(edu?.toDate).format("LL")} {bull}{" "}
-                                  {edu?.experience} Years
-                                </CustomTypography>
-                              </Stack>
-                            </Box>
-                          ))}
-                        </Box>
+                              </Box>
+                            ))}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -1279,60 +1385,73 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.skills?.map((skil, index) => (
-                            <Box
-                              key={index}
-                              className={styles.ViewFullCandiProfileSkillCard}
-                            >
+                        {candidate.resume?.skills?.length === 0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.skills?.map((skil, index) => (
                               <Box
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "10px",
-                                  width: "100%",
-                                }}
+                                key={index}
+                                className={styles.ViewFullCandiProfileSkillCard}
                               >
-                                <Box sx={{ width: "30%" }}>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoMainText}
-                                  >
-                                    {skil?.skillName}
-                                  </CustomTypography>
-                                </Box>
-                                <LinearProgress
-                                  variant="determinate"
-                                  value={
-                                    skil?.Compitance === "intermediate"
-                                      ? 75
-                                      : skil?.Compitance === "expert"
-                                      ? 100
-                                      : skil?.Compitance === "beginner"
-                                      ? 25
-                                      : ""
-                                  }
+                                <Box
                                   sx={{
-                                    width: "70%",
-                                    height: "10px",
-                                    borderRadius: "5px",
-                                    "& .MuiLinearProgress-bar": {
-                                      backgroundColor: "#7AC1DA", // Replace with your desired color
-                                    },
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "10px",
+                                    width: "100%",
                                   }}
-                                />
+                                >
+                                  <Box sx={{ width: "30%" }}>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoMainText}
+                                    >
+                                      {skil?.skillName}
+                                    </CustomTypography>
+                                  </Box>
+                                  <LinearProgress
+                                    variant="determinate"
+                                    value={
+                                      skil?.Compitance === "intermediate"
+                                        ? 75
+                                        : skil?.Compitance === "expert"
+                                        ? 100
+                                        : skil?.Compitance === "beginner"
+                                        ? 25
+                                        : ""
+                                    }
+                                    sx={{
+                                      width: "70%",
+                                      height: "10px",
+                                      borderRadius: "5px",
+                                      "& .MuiLinearProgress-bar": {
+                                        backgroundColor: "#7AC1DA", // Replace with your desired color
+                                      },
+                                    }}
+                                  />
+                                </Box>
                               </Box>
-                            </Box>
-                          ))}
-                        </Box>
+                            ))}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -1363,81 +1482,94 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.projects?.map((pro, index) => (
-                            <Box
-                              key={index}
-                              className={styles.ViewFullCandiProfileCard}
-                            >
-                              <BeenhereOutlinedIcon
-                                sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                              />
-                              <Stack spacing={1}>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Title :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoMainText}
-                                  >
-                                    &nbsp;{pro?.ProjectName}
-                                  </CustomTypography>
+                        {candidate.resume?.projects?.length === 0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.projects?.map((pro, index) => (
+                              <Box
+                                key={index}
+                                className={styles.ViewFullCandiProfileCard}
+                              >
+                                <BeenhereOutlinedIcon
+                                  sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                                />
+                                <Stack spacing={1}>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Title :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoMainText}
+                                    >
+                                      &nbsp;{pro?.ProjectName}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Organization :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp; {pro?.Organization}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Description :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp;{pro?.Description}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Link :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      component="a"
+                                      href={pro?.portafolioLink}
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp; {pro?.portafolioLink}
+                                    </CustomTypography>
+                                  </Stack>
                                 </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Organization :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    &nbsp; {pro?.Organization}
-                                  </CustomTypography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Description :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    &nbsp;{pro?.Description}
-                                  </CustomTypography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Link :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    component="a"
-                                    href={pro?.portafolioLink}
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    &nbsp; {pro?.portafolioLink}
-                                  </CustomTypography>
-                                </Stack>
-                              </Stack>
-                            </Box>
-                          ))}
-                        </Box>
+                              </Box>
+                            ))}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -1468,101 +1600,120 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.certificateFileLocation?.map(
-                            (cert, index) => (
-                              <Box
-                                key={index}
-                                className={styles.ViewFullCandiProfileCard}
-                              >
+                        {candidate.resume?.certificateFileLocation?.length ===
+                        0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.certificateFileLocation?.map(
+                              (cert, index) => (
                                 <Box
-                                  sx={{
-                                    flex: "1",
-                                    display: "flex",
-                                    gap: "10px",
-                                  }}
+                                  key={index}
+                                  className={styles.ViewFullCandiProfileCard}
                                 >
-                                  <BeenhereOutlinedIcon
-                                    sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                                  />
-                                  <Stack spacing={1}>
-                                    <Stack direction={"row"}>
-                                      <CustomTypography
-                                        className={
-                                          styles.FullProfileSectionTypo
-                                        }
-                                      >
-                                        Title :
-                                      </CustomTypography>
-                                      <CustomTypography
-                                        variant="subtitle2"
-                                        className={styles.ViewFullInfoMainText}
-                                      >
-                                        &nbsp; {cert?.title}
-                                      </CustomTypography>
+                                  <Box
+                                    sx={{
+                                      flex: "1",
+                                      display: "flex",
+                                      gap: "10px",
+                                    }}
+                                  >
+                                    <BeenhereOutlinedIcon
+                                      sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                                    />
+                                    <Stack spacing={1}>
+                                      <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Title :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={
+                                            styles.ViewFullInfoMainText
+                                          }
+                                        >
+                                          &nbsp; {cert?.title}
+                                        </CustomTypography>
+                                      </Stack>
+                                      <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Organization :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={styles.ViewFullInfoText}
+                                        >
+                                          &nbsp; {cert?.organization}
+                                        </CustomTypography>
+                                      </Stack>
+                                      <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Duration :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={styles.ViewFullInfoText}
+                                        >
+                                          &nbsp;{" "}
+                                          {moment(cert?.issueDate).format("LL")}{" "}
+                                          -{" "}
+                                          {moment(cert?.expireDate).format(
+                                            "LL"
+                                          )}
+                                        </CustomTypography>
+                                      </Stack>
                                     </Stack>
-                                    <Stack direction={"row"}>
-                                      <CustomTypography
-                                        className={
-                                          styles.FullProfileSectionTypo
-                                        }
-                                      >
-                                        Organization :
-                                      </CustomTypography>
-                                      <CustomTypography
-                                        variant="subtitle2"
-                                        className={styles.ViewFullInfoText}
-                                      >
-                                        &nbsp; {cert?.organization}
-                                      </CustomTypography>
-                                    </Stack>
-                                    <Stack direction={"row"}>
-                                      <CustomTypography
-                                        className={
-                                          styles.FullProfileSectionTypo
-                                        }
-                                      >
-                                        Duration :
-                                      </CustomTypography>
-                                      <CustomTypography
-                                        variant="subtitle2"
-                                        className={styles.ViewFullInfoText}
-                                      >
-                                        &nbsp;{" "}
-                                        {moment(cert?.issueDate).format("LL")} -{" "}
-                                        {moment(cert?.expireDate).format("LL")}
-                                      </CustomTypography>
-                                    </Stack>
-                                  </Stack>
+                                  </Box>
+                                  <IconButton
+                                    onClick={async () => {
+                                      const res = await fetch(
+                                        `https://preprod.recroot.au/api/downloadResume?resume=${cert?.certificatepath?.replace(
+                                          /\\/g,
+                                          "/"
+                                        )}`
+                                      );
+                                      const blob = await res.blob();
+                                      download(blob, `${cert.certificateName}`);
+                                    }}
+                                  >
+                                    <FileDownloadOutlinedIcon
+                                      sx={{ cursor: "pointer" }}
+                                    />
+                                  </IconButton>
                                 </Box>
-                                <IconButton
-                                  onClick={async () => {
-                                    const res = await fetch(
-                                      `https://preprod.recroot.au/api/downloadResume?resume=${cert?.certificatepath?.replace(
-                                        /\\/g,
-                                        "/"
-                                      )}`
-                                    );
-                                    const blob = await res.blob();
-                                    download(blob, `${cert.certificateName}`);
-                                  }}
-                                >
-                                  <FileDownloadOutlinedIcon
-                                    sx={{ cursor: "pointer" }}
-                                  />
-                                </IconButton>
-                              </Box>
-                            )
-                          )}
-                        </Box>
+                              )
+                            )}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -1593,68 +1744,81 @@ const CandiFullProfileView = () => {
                         </CustomTypography>
                       </Box>
                       <Box sx={{ p: "25px" }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: "15px",
-                            flexWrap: "wrap",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          {candidate?.resume?.traning?.map((trn, index) => (
-                            <Box
-                              key={index}
-                              className={styles.ViewFullCandiProfileCard}
-                            >
-                              <BeenhereOutlinedIcon
-                                sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                              />
-                              <Stack spacing={1}>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Title :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoMainText}
-                                  >
-                                    &nbsp;{trn?.title}
-                                  </CustomTypography>
+                        {candidate.resume?.traning?.length === 0 ? (
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              fontSize: "16px",
+                              marginLeft: "20px",
+                              color: "#fe7171",
+                            }}
+                          >
+                            No Data Provided
+                          </span>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: "15px",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                            }}
+                          >
+                            {candidate?.resume?.traning?.map((trn, index) => (
+                              <Box
+                                key={index}
+                                className={styles.ViewFullCandiProfileCard}
+                              >
+                                <BeenhereOutlinedIcon
+                                  sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                                />
+                                <Stack spacing={1}>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Title :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoMainText}
+                                    >
+                                      &nbsp;{trn?.title}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Organization :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp; {trn?.instituete}
+                                    </CustomTypography>
+                                  </Stack>
+                                  <Stack direction={"row"}>
+                                    <CustomTypography
+                                      className={styles.FullProfileSectionTypo}
+                                    >
+                                      Duration :
+                                    </CustomTypography>
+                                    <CustomTypography
+                                      variant="subtitle2"
+                                      className={styles.ViewFullInfoText}
+                                    >
+                                      &nbsp;{moment(trn?.fromDate).format("LL")}{" "}
+                                      - {moment(trn?.toDate).format("LL")}
+                                    </CustomTypography>
+                                  </Stack>
                                 </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Organization :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    &nbsp; {trn?.instituete}
-                                  </CustomTypography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                  <CustomTypography
-                                    className={styles.FullProfileSectionTypo}
-                                  >
-                                    Duration :
-                                  </CustomTypography>
-                                  <CustomTypography
-                                    variant="subtitle2"
-                                    className={styles.ViewFullInfoText}
-                                  >
-                                    &nbsp;{moment(trn?.fromDate).format("LL")} -{" "}
-                                    {moment(trn?.toDate).format("LL")}
-                                  </CustomTypography>
-                                </Stack>
-                              </Stack>
-                            </Box>
-                          ))}
-                        </Box>
+                              </Box>
+                            ))}
+                          </Box>
+                        )}
                       </Box>
                     </Box>
                     <Box

@@ -21,9 +21,12 @@ function ScreeningQuestions() {
   const dispatch = useDispatch();
   const quiz = useSelector((state) => state.jobs && state.jobs.question);
   const showq = useSelector((state) => state.jobs && state.jobs.queshow);
+  console.log(showq, "showq");
   const [question, setQuestion] = useState(quiz);
+
   const handleQueshow = (e) => {
     dispatch(queShow(e.target.value));
+    setValue(e.target.value);
   };
 
   useEffect(() => {
@@ -98,14 +101,14 @@ function ScreeningQuestions() {
           sx={{ gap: { xs: "20px", md: "50px" } }}
         >
           <FormControlLabel
-            value="true"
-            control={<Radio />}
-            label="Post Job With Screening Questions"
-          />
-          <FormControlLabel
             value="false"
             control={<Radio />}
             label="Post Job Without Screening Questions"
+          />
+          <FormControlLabel
+            value="true"
+            control={<Radio />}
+            label="Post Job With Screening Questions"
           />
         </RadioGroup>
       </Box>

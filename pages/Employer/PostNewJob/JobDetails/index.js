@@ -396,7 +396,11 @@ const JobDetails = () => {
           {country === "LK" ||
           (companyDet.jobSlot === true &&
             companyDet.package?.paymentStatus === "Completed") ? (
-            <Box sx={{ width: "100%", p: "0 0 20px 0" }} className="plan">
+            <Box
+              sx={{ width: "100%", p: "0 0 20px 0" }}
+              className="plan"
+              id="add_packageType"
+            >
               <FormControl
                 fullWidth
                 sx={{ ...style.txtinput, bgcolor: "white" }}
@@ -498,7 +502,7 @@ const JobDetails = () => {
               )}
             />
             {category && (
-              <Box sx={{ width: "100%" }}>
+              <Box sx={{ width: "100%" }} id="job_category">
                 <Autocomplete
                   fullWidth
                   freeSolo
@@ -549,6 +553,7 @@ const JobDetails = () => {
               />
             </Box>
             <Stack
+              id="add_jobskills"
               direction="row"
               spacing={2}
               sx={{
@@ -652,8 +657,8 @@ const JobDetails = () => {
                   ))}
               </Box>
             )}
-            <Address />
-            <Box className="questions">
+            <Address id="add_joblocation" />
+            <Box className="questions" id="screening_ques">
               {" "}
               <ScreeningQuestions />
             </Box>

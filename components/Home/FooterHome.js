@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import { companyJobs } from "@/redux/slices/job";
+import { setEditJob } from "@/redux/slices/job";
 
 const StyledTypo = styled(CustomTypography)({
   cursor: "pointer",
@@ -104,7 +105,7 @@ const FooterHome = () => {
           requiredSkill: [],
           address: [],
           featureType: false,
-          queshow: "true",
+          queshow: "false",
           packageType: "",
         })
       ).then(

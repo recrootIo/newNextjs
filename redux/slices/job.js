@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jobsS from "../services/job.service";
 const jobsService = new jobsS();
 const initialState = {
-  details: { salary: {}, requiredSkill: [] ,notice:''},
+  details: { salary: {}, requiredSkill: [], notice: "" },
   essential: {
     careerlevel: "",
     experience: "",
@@ -17,7 +17,7 @@ const initialState = {
   jobDescription: "",
   jobTitle: "",
   jobRole: "",
-  packageType:'',
+  packageType: "",
   featureType: false,
   latejob: [],
   roleType: [],
@@ -25,18 +25,18 @@ const initialState = {
   error: {},
   feature: false,
   immediate: false,
-  queshow: "true",
+  queshow: "false",
   jobId: "",
-  companyJobs:"",
-  jLoad:false,
-  jobDet:'',
-  upJob:'',
-  jobPayment:{
-    ids:[],
-    amount:'',
-    country:''
+  companyJobs: "",
+  jLoad: false,
+  jobDet: "",
+  upJob: "",
+  jobPayment: {
+    ids: [],
+    amount: "",
+    country: "",
   },
-  choosePremium:false
+  choosePremium: false,
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -114,10 +114,12 @@ export const jobId = createAsyncThunk("jobId/jobs", async (data) => {
 export const upgradejob = createAsyncThunk("jobId/upgrade", async (data) => {
   return data;
 });
-export const upgradejobPayment = createAsyncThunk("jobId/upgradepaymen", async (data) => {
-  return data;
-});
-
+export const upgradejobPayment = createAsyncThunk(
+  "jobId/upgradepaymen",
+  async (data) => {
+    return data;
+  }
+);
 
 export const addJobs = createAsyncThunk("add/jobs", async (value) => {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -142,21 +144,15 @@ export const updateJobs = createAsyncThunk(
     return res.data;
   }
 );
-export const companyJobs = createAsyncThunk(
-  "company/gjobs",
-  async () => {
-    const user = JSON.parse(localStorage.getItem("User"));
-    const res = await jobsService.getJobss(user.User.companyId);
-    return res.data;
-  }
-);
-export const singleJobs = createAsyncThunk(
-  "single/gjobs",
-  async (id) => {
-    const res = await jobsService.getSingleJob(id);
-    return res.data.data;
-  }
-);
+export const companyJobs = createAsyncThunk("company/gjobs", async () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  const res = await jobsService.getJobss(user.User.companyId);
+  return res.data;
+});
+export const singleJobs = createAsyncThunk("single/gjobs", async (id) => {
+  const res = await jobsService.getSingleJob(id);
+  return res.data.data;
+});
 
 export const jobPackType = createAsyncThunk("set/jobPackType", async (data) => {
   return data;

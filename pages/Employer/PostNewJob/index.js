@@ -54,6 +54,7 @@ import Employer from "..";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Chooseplan from "./ChoosePlan";
+import { updateCurrentScreen } from "@/redux/slices/candidate";
 
 function PostnewJob() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -80,6 +81,46 @@ function PostnewJob() {
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
   const packageType = useSelector((state) => state?.jobs?.packageType);
   const companyDet = useSelector((state) => state.company.companyDetl);
+  const scrollToElement = (section) => {
+    dispatch(updateCurrentScreen(""));
+    let element = null;
+
+    if (section === "add_jobskills") {
+      element = document.getElementById("add_jobskills");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+      // setMobileOpen(false);
+      return;
+    }
+
+    if (section === "add_packageType") {
+      element = document.getElementById("add_packageType");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+      // setMobileOpen(false);
+      return;
+    }
+
+    if (section === "add_joblocation") {
+      element = document.getElementById("add_joblocation");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+      // setMobileOpen(false);
+      return;
+    }
+
+    if (section === "screening_ques") {
+      element = document.getElementById("screening_ques");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+      // setMobileOpen(false);
+      return;
+    }
+  };
 
   React.useEffect(() => {
     dispatch(companyJobs());
@@ -327,6 +368,7 @@ function PostnewJob() {
       if (index === 0) {
         if (country === "LK") {
           if (packageType === "") {
+            scrollToElement("add_packageType");
             dispatch(
               openAlert({
                 type: ERROR,
@@ -342,6 +384,7 @@ function PostnewJob() {
           return;
         }
         if (final.details.requiredSkill.length === 0) {
+          scrollToElement("add_jobskills");
           dispatch(
             openAlert({
               type: ERROR,
@@ -351,6 +394,7 @@ function PostnewJob() {
           return;
         }
         if (isEmpty(final.location)) {
+          scrollToElement("add_joblocation");
           dispatch(
             openAlert({
               type: ERROR,
@@ -360,6 +404,7 @@ function PostnewJob() {
           return;
         }
         if (showq === "") {
+          scrollToElement("screening_ques");
           dispatch(
             openAlert({
               type: ERROR,

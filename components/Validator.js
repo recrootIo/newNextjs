@@ -1,4 +1,4 @@
-  export default function validator(values) {
+export default function validator(values) {
   let errors = {};
 
   Object.entries(values).map((item) => {
@@ -50,14 +50,14 @@
     return errors;
   });
   return errors;
-};
+}
 
 // ******************************
 
 // ******************************
 function validateJobTitle(jobTitle, errors) {
   let result = true;
-  if (!jobTitle || jobTitle === undefined || jobTitle === '') {
+  if (!jobTitle || jobTitle === undefined || jobTitle === "") {
     errors.jobTitle = "Job Category is Required";
     result = false;
   }

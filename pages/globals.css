@@ -1826,3 +1826,7 @@ a {
     gap: 10px !important;
   }
 }
+
+.custom-datepicker {
+  width: 100% !important;
+}
