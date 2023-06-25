@@ -7,30 +7,31 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { BOLD } from "@/theme/fonts";
 import { NEUTRAL } from "@/theme/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteJob, getSavedJobs } from "@/redux/slices/personal";
+import { deleteJob, getSavedJobs, setJobID } from "@/redux/slices/personal";
 import { getSalary } from "@/components/JobListings/SearchSection";
 import styles from "./savedJobs.module.css";
 import Link from "next/link";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
+import moment from "moment";
+import { useRouter } from "next/router";
 
 const SavedJobs = () => {
   const savedJobs = useSelector((state) => state.personal.savedJobs);
+  const { appliedJobs = [] } = useSelector((state) => state?.personal);
+
+  const appliedIds = appliedJobs.map((i) => i.jobId[0]);
+  // const isApplied = appliedIds.includes(_id);
+  // const appliedJob = appliedJobs.find((i) => i.jobId[0]);
   const { data } = useSelector((state) => state?.personal);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getSavedJobs());
   }, [dispatch]);
-
-  const handleNavigate = (job) => {
-    const jobTitle = job.job?.jobTitle;
-    const jobRole = job.job?.jobRole;
-    const _id = job._id;
-    return `/jobs/${jobTitle}/${jobRole}/${_id}`;
-  };
 
   const deleteTheJobs = (id) => {
     console.log(id);
@@ -48,6 +49,36 @@ const SavedJobs = () => {
   };
 
   const disabled = data?.profilePercentage < 69;
+
+  const getBtnText = (_id) => {
+    const appliedIdcheck = appliedIds.includes(_id);
+    const appliedJob = appliedJobs.find((i) => i.jobId[0] === _id);
+    return disabled
+      ? "Complete Profile"
+      : appliedIdcheck
+      ? `Applied ${moment(appliedJob.createdAt).endOf("day").fromNow()}`
+      : "Apply";
+  };
+
+  const disabledBtn = (_id) => {
+    if (getBtnText(_id) === "Apply") return false;
+    return true;
+  };
+
+  const gotApply = (job) => {
+    // console.log(appliedJob, "_id");
+    dispatch(
+      setJobID({
+        companyId: job.company?._id,
+        jobId: job._id,
+        question: job.question,
+        name: job.jobRole,
+        show: job.queshow,
+      })
+    );
+
+    router.push(`/applyJob?jobid=${job._id}`);
+  };
 
   return (
     <StyledCard variant="outlined" id="savedJob_details_section">
@@ -133,7 +164,9 @@ const SavedJobs = () => {
                   mt: "20px",
                 }}
               >
-                <Link href={handleNavigate(saved)}>
+                <Link
+                  href={`/jobs/${saved.job.jobTitle}/${saved.job.jobRole}/${saved.job._id}`}
+                >
                   <CustomTypography
                     sx={{
                       color: "#00339B",
@@ -146,10 +179,15 @@ const SavedJobs = () => {
                 </Link>
 
                 <button
-                  className={disabled ? styles.disabledBtn : styles.activeBtn}
-                  disabled={disabled}
+                  className={
+                    disabledBtn(saved.job._id)
+                      ? styles.disabledBtn
+                      : styles.activeBtn
+                  }
+                  disabled={disabledBtn(saved.job._id)}
+                  onClick={() => gotApply(saved.job)}
                 >
-                  {disabled ? "Complete Profile" : "Apply Now"}
+                  {getBtnText(saved?.job?._id)}
                 </button>
               </Stack>
             </Stack>

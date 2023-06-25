@@ -106,7 +106,6 @@ const JobDetailCard = ({ ...props }) => {
   const userType = Cookies.get("userType");
 
   const handleBookmark = () => {
-    console.log("_id");
     dispatch(saveJobs(_id))
       .unwrap()
       .then(
