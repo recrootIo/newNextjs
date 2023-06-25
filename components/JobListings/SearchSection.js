@@ -290,7 +290,6 @@ const SearchSection = ({ ...props }) => {
     // page,
     variant,
   } = props;
-  console.log(sector, "sector");
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
@@ -303,12 +302,19 @@ const SearchSection = ({ ...props }) => {
     isEmpty(jobType?.[0]) ? [] : jobType || []
   );
   const [exper, setExper] = useState(experience || []);
+  const [titlef, setTitlef] = useState("");
   const [title, setTitle] = useState(props.title || "");
+  const [addressf, setAddressf] = useState("");
   const [address, setAddress] = useState(props.address || "");
   const [jobVariant, setJobVariant] = useState(variant || "");
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
   const [selectedCategory, setSelectedCategory] = useState(category || []);
+useEffect(() => {
+setTitlef(props.title)
+setAddressf(props.address)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -475,7 +481,8 @@ const SearchSection = ({ ...props }) => {
       title,
       category,
     };
-
+   setTitlef(title)
+   setAddressf(address)
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,
@@ -620,11 +627,13 @@ const SearchSection = ({ ...props }) => {
   const handleDeleteTitle = () => {
     deleteQueries("title");
     setTitle(() => "");
+    setTitlef(() => "");
   };
 
   const handleDeleteAddress = () => {
     deleteQueries("address");
     setAddress(() => "");
+    setAddressf(() => "");
   };
 
   useEffect(() => {
@@ -777,10 +786,10 @@ const SearchSection = ({ ...props }) => {
                         </Button>
                       </Box>
                       <Stack direction={"row"} sx={{ flexWrap: "wrap" }}>
-                        {title && (
+                        {titlef && (
                           <Chip
-                            key={title}
-                            label={title}
+                            key={titlef}
+                            label={titlef}
                             color="primary"
                             style={{
                               fontWeight: 500,
@@ -793,9 +802,9 @@ const SearchSection = ({ ...props }) => {
                           />
                         )}
 
-                        {address && (
+                        {addressf && (
                           <Chip
-                            label={address}
+                            label={addressf}
                             color="primary"
                             style={{
                               fontWeight: 500,
@@ -1040,10 +1049,10 @@ const SearchSection = ({ ...props }) => {
                   flexWrap={"wrap"}
                   direction="row"
                 >
-                  {title && (
+                  {titlef && (
                     <Chip
-                      key={title}
-                      label={title}
+                      key={titlef}
+                      label={titlef}
                       color="primary"
                       onDelete={handleDeleteTitle}
                       style={{
@@ -1056,9 +1065,9 @@ const SearchSection = ({ ...props }) => {
                     />
                   )}
 
-                  {address && (
+                  {addressf && (
                     <Chip
-                      label={address}
+                      label={addressf}
                       color="primary"
                       style={{
                         fontWeight: 500,

@@ -135,7 +135,7 @@ console.log(hasQuestions,'questtt')
   const [opena, setOpena] = React.useState(false);
   const [openc, setOpenc] = React.useState(false);
   const [opencov, setOpencov] = React.useState(false);
-  const [cover, setCover] = useState(true);
+  const [cover, setCover] = useState(false);
   const [pdf, setPdf] = useState(null);
   const [pdfC, setPdfC] = useState();
 
@@ -325,7 +325,7 @@ console.log(hasQuestions,'questtt')
             <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
               {jobTitle}
             </CustomTypography>
-            <ApplyJobStepper activeStep={0} />
+            <ApplyJobStepper  activeStep={0} />
           </Stack>
 
           <Stack

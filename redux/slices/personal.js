@@ -20,7 +20,7 @@ const initialState = {
   ids: {},
   code: {},
   certone: {},
-  show: true,
+  show: false,
   account: "profile",
   pricing: false,
   percentage: {},

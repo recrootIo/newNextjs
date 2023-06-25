@@ -919,10 +919,12 @@ const AllApplicants = () => {
                     onClose={handleClose1}
                     disablePortal={true}
                   >
+                    
                     {EMPLOYEE_STATUS.map((variant) => (
                       <MenuItem
                         key={variant}
-                        sx={{ zIndex: 10001, width: "200px" }}
+                        sx={{  width: "200px" ,cursor:'auto'}}
+                        onClick={(e) => handleNameStatus(e, variant)}
                       >
                         <Checkbox
                           checked={
@@ -930,7 +932,6 @@ const AllApplicants = () => {
                               (item) => item === variant
                             ) >= 0
                           }
-                          onClick={(e) => handleNameStatus(e, variant)}
                         />
                         <ListItemText
                           primary={variant}

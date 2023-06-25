@@ -99,7 +99,7 @@ const ScheduledInterviews = () => {
     PaperProps: {
       style: {
         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
+        // width: 250,
       },
     },
   };
@@ -286,7 +286,7 @@ const ScheduledInterviews = () => {
                       }}
                     >
                       <FormControl
-                        sx={{ width: "100%", minWidth: "280px", m: 1 }}
+                        sx={{ width: "100%", minWidth: {sm:"400px",xs:'250px'}, m: 1 }}
                       >
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs

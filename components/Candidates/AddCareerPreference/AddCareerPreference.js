@@ -36,7 +36,7 @@ import { debounce } from "@/utils/HelperFunctions";
 import http from "@/redux/http-common";
 import { ERROR, JOB_NATURE, SUCCESS, WORK_PREFERENCE } from "@/utils/constants";
 import {
-  GetCandsPrefInfo,
+  GetCandsPrefInfo, getCandsPrefInfo,
   // insertNewJobTitles,
   // insertNewJobType,
   // insertNewLocation,
@@ -46,20 +46,34 @@ import {
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import userService from "@/redux/services/user.service";
 import { openAlert } from "@/redux/slices/alert";
+import { useEffect } from "react";
 
 const AddCareerPreference = () => {
-  const user = JSON.parse(localStorage.getItem("User"));
+  const [user, setuser] = useState({})
+  useEffect(() => {
+ setuser(JSON.parse(localStorage.getItem("User")))
+  }, [])
   const { myPreferenceInfo } = useSelector(
     (state) => state?.personal?.myPreferenceInfo
   );
-
+console.log(myPreferenceInfo,'prefer')
   const [careerPre, setCareerPre] = useState({
+    immediateJoiner: '',
+    jobLocations: [],
+    jobTitles:[],
+    jobTypes: [],
+    workPlaces: [],
+  });
+  useEffect(() => {
+   setCareerPre({
     immediateJoiner: myPreferenceInfo?.immediateJoiner,
     jobLocations: myPreferenceInfo?.jobLocations,
-    jobTitles: myPreferenceInfo?.jobTitles,
+    jobTitles:myPreferenceInfo?.jobTitles,
     jobTypes: myPreferenceInfo?.jobTypes,
     workPlaces: myPreferenceInfo?.workPlaces,
-  });
+   })
+  }, [myPreferenceInfo])
+  
 
   const [address, setaddress] = useState("");
   const [type, setType] = useState([]);
@@ -69,11 +83,27 @@ const AddCareerPreference = () => {
   const [jobTypes, setJobTypes] = useState("");
   const dispatch = useDispatch();
 
-  const handleAvailabilityChange = (event) => {
+  const handleAvailabilityChange = async(event) => {
     setCareerPre((state) => ({
       ...state,
       immediateJoiner: event.target.value,
     }));
+    try {
+      const res = await userService.updateAvailablity(
+        user?.User?._id,
+        event.target.value
+      );
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:"Error Occured"
+      }))
+    }
   };
 
   const requestTitles = (e) => {
@@ -96,69 +126,179 @@ const AddCareerPreference = () => {
     debounce(requestTitles, null, timetoLoad, setTimeTLoad, e);
   };
 
-  const handleTitle = (e) => {
+  const handleTitle = async(e) => {
     let jobTitleList = careerPre.jobTitles;
     jobTitleList = [...jobTitleList, e];
     setCareerPre((state) => ({ ...state, jobTitles: jobTitleList }));
+    try {
+      console.log('object')
+      const res = await userService.insertNewTitle(user?.User?._id, jobTitleList);
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:'Error Occured'
+      }))
+    }
   };
 
-  const handleSelect = (selected) => {
+  const handleSelect = async(selected) => {
     if (selected?.label) {
       let located = selected?.label;
       setCareerPre((state) => ({
         ...state,
         jobLocations: [located, ...state.jobLocations],
       }));
+      try {
+        const res = await userService.insertNewLocation(
+          user?.User?._id,
+          selected?.label
+        );
+        dispatch(openAlert({
+          type:SUCCESS,
+          message:res.data
+        }))
+        dispatch(getCandsPrefInfo(user?.User?._id))
+      } catch (err) {
+        dispatch(openAlert({
+          type:ERROR,
+          message:"Error Occured"
+        }))
+      }
       setaddress("");
     }
   };
 
-  const removeTitle = (e) => {
+  const removeTitle = async(e) => {
     let newTitles = careerPre.jobTitles.filter((j) => e != j);
     setCareerPre((state) => ({ ...state, jobTitles: newTitles }));
+    try {
+      console.log('object')
+      const res = await userService.removeTheTitle(user?.User?._id, newTitles);
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:'Error Occured'
+      }))
+    }
   };
 
   const handlePreference = (e, val) => {
     setPreference(() => val);
   };
 
-  const addPreference = () => {
+  const addPreference = async() => {
     if (preference) {
       let preferences = careerPre.workPlaces;
       preferences = [...preferences, preference];
       preferences = Array.from(new Set(preferences));
       setCareerPre((state) => ({ ...state, workPlaces: preferences }));
+      try {
+        const res = await userService.insertNewPlace(user?.User?._id, preferences);
+        dispatch(openAlert({
+          type:SUCCESS,
+          message:res.data
+        }))
+        dispatch(getCandsPrefInfo(user?.User?._id))
+      } catch (err) {
+        dispatch(openAlert({
+          type:ERROR,
+          message:"Error Occured"
+        }))
+      }
       setPreference("");
     }
   };
 
-  const removePreferences = (e) => {
+  const removePreferences = async(e) => {
     let newPreferences = careerPre.workPlaces.filter((j) => e != j);
     setCareerPre((state) => ({ ...state, workPlaces: newPreferences }));
+    const res = await userService.insertNewPlace(user?.User?._id, newPreferences);
+    try {
+      const res = await userService.removeThePlace(user?.User?._id, newPreferences);
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:"Error Occured"
+      }))
+    }
   };
 
   const addWork = (e, val) => {
     setJobTypes(() => val);
   };
 
-  const addWordType = () => {
+  const addWordType = async() => {
     let work = careerPre.jobTypes;
     if (jobTypes) {
       work = [...work, jobTypes];
       work = Array.from(new Set(work));
       setCareerPre((state) => ({ ...state, jobTypes: work }));
+      try {
+        const res = await userService.insertNewJobType(user?.User?._id, work);
+        dispatch(openAlert({
+          type:SUCCESS,
+          message:res.data
+        }))
+        dispatch(getCandsPrefInfo(user?.User?._id))
+      } catch (err) {
+        dispatch(openAlert({
+          type:ERROR,
+          message:"Error Occured"
+        }))
+      }
       setJobTypes(() => "");
     }
   };
 
-  const removeJobs = (e) => {
+  const removeJobs = async(e) => {
     let newJobs = careerPre.jobTypes.filter((j) => e != j);
     setCareerPre((state) => ({ ...state, jobTypes: newJobs }));
+    try {
+      const res = await userService.reomvoeJobType(user?.User?._id, newJobs);
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:"Error Occured"
+      }))
+    }
   };
 
-  const removeTheLocation = (e) => {
+  const removeTheLocation = async(e) => {
     let newLocation = careerPre.jobLocations.filter((j) => e != j);
     setCareerPre((state) => ({ ...state, jobLocations: newLocation }));
+    try {
+      const res = await userService.removeTheLocation(user?.User?._id, newLocation);
+      dispatch(openAlert({
+        type:SUCCESS,
+        message:res.data
+      }))
+      dispatch(getCandsPrefInfo(user?.User?._id))
+    } catch (err) {
+      dispatch(openAlert({
+        type:ERROR,
+        message:"Error Occured"
+      }))
+    }
   };
 
   const updateData = () => {
@@ -214,7 +354,7 @@ const AddCareerPreference = () => {
                 fontSize: "33px",
               }}
             >
-              Add Career Preference
+              Update Career Preference
             </CustomTypography>
 
             <Stack sx={{ mt: "50px", gap: "30px" }}>
@@ -445,7 +585,7 @@ const AddCareerPreference = () => {
                 </Box>
               </Stack>
 
-              <Stack direction="row" spacing={2}>
+              {/* <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
                   sx={{
@@ -468,7 +608,7 @@ const AddCareerPreference = () => {
                 >
                   Save
                 </Button>
-              </Stack>
+              </Stack> */}
             </Stack>
           </CardContent>
         </Card>
