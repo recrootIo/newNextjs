@@ -26,6 +26,9 @@ class jobsService {
   getJobsCatCount() {
     return http.get(`getJobsCatCount`);
   }
+  getFreeJobsount(id) {
+    return http.get(`getfreeJobsCount/${id}`);
+  }
 }
 
 export default jobsService;

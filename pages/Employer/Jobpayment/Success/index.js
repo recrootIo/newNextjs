@@ -19,6 +19,7 @@ const BasicButton = styled(Button)({
 function SuccessJobPay() {
     const router = useRouter();
     const { elements } = router.query;
+    const { newJob } = router.query;
     const { payment_intent_client_secret } = router.query;
     const array = elements ? elements.split(',') : [];
     const value = {
@@ -34,8 +35,24 @@ const token = Cookies.get('token')
             ).then((res)=>{
                 console.log(res)
             })}
+        if (newJob === 'true') {
+          const user = JSON.parse(localStorage.getItem("User"));
+          axios.post(
+            `${'https://preprod.recroot.au/api/'}updateJobPaymentNew`,{
+              clientSecret:payment_intent_client_secret,
+              job:JSON.parse(localStorage.getItem("jobDetail")),
+              companyId:user?.User?.companyId
+            }, {
+              headers: { "x-access-token": `${token}` },
+            }
+              ).then((res)=>{
+                if (res.status === 200) {
+                  localStorage.removeItem("jobDetail");
+                }
+              })
+        }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [array])
+      }, [array,newJob])
   return (
     <div>
          <EmployerNavbar />
