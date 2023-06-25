@@ -101,7 +101,7 @@ const AllApplicantsCard = ({ users }) => {
   const handleReject = (id) => {
     axios
       .put(
-        `http://localhost:3000/api/updateStatus/${id}`,
+        `https://preprod.recroot.au/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -115,7 +115,7 @@ const AllApplicantsCard = ({ users }) => {
   const handleShort = (id) => {
     axios
       .put(
-        `http://localhost:3000/api/updateStatus/${id}`,
+        `https://preprod.recroot.au/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )
