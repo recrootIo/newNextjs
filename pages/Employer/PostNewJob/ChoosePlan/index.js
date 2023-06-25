@@ -1,6 +1,6 @@
 import PricingTable from "@/components/PricingJob";
 import styled from "@emotion/styled";
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -16,7 +16,9 @@ const BasicButton = styled(Button)({
 });
 function Chooseplan(props) {
   const country = Cookies.get("country");
-  const jobCount = useSelector(data => data.jobs)
+  const jobCount = useSelector(data => data.jobs.freeCount)
+  const loading = useSelector((state) => state?.jobs?.loading);
+  console.log(jobCount.count ,'check')
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
@@ -42,7 +44,13 @@ function Chooseplan(props) {
             {" "}
             Success Rate: 43%
           </Typography>
-          <BasicButton disabled={jobCount.count >= 3} onClick={props.postJobs}>Submit</BasicButton>
+         {loading === false ?
+         jobCount.count >= 3
+         ? <Button disabled={jobCount.count >= 3}>Submit</Button>
+         : <BasicButton  onClick={props.postJobs}>Submit</BasicButton>
+         :
+          <BasicButton ><CircularProgress  color="inherit"/></BasicButton>
+          }
           <Typography sx={{ textAlign: "center" }}>
             {" "}
             3 job posts per day

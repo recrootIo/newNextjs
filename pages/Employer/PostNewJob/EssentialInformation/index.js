@@ -604,8 +604,7 @@ const EssentialInformation = () => {
             </Stack>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
-          companyDet?.package?.subscription_package === "SuperEmployer" ||
-          jobsmeen?.premium === true ? (
+          companyDet?.package?.subscription_package === "SuperEmployer"  ? (
             <Box>
               <FormGroup>
                 <FormControlLabel
