@@ -358,7 +358,7 @@ function Pricing() {
           sx={{
             background: "#F2F8FD",
             borderRadius: "15px",
-            margin: { xs: "0px", sm: "0 100px 0 100px" },
+            // margin: { xs: "0px", sm: "0 100px 0 100px" },
             padding: "65px",
             display: "flex",
             flexDirection: "column",
@@ -383,6 +383,7 @@ function Pricing() {
               fontWeight: 400,
               fontSize: "16px",
               lineHeight: "36px",
+              textAlign: "center",
             }}
           >
             Thanks for trying Recroot! Select a pricing plan that offers the

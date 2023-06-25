@@ -8,6 +8,7 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const EmployerNavbar = () => {
   const { push } = useRouter();
@@ -46,7 +47,9 @@ const EmployerNavbar = () => {
               >
                 {/* <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
                 <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" /> */}
-                <Avatar sx={{ color: "#034275" }} />
+                <Link href={"/Employer/MyAccount"}>
+                  <Avatar sx={{ color: "#034275" }} />
+                </Link>
               </Stack>
             </Box>
           </Stack>

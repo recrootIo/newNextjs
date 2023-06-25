@@ -36,6 +36,7 @@ import ShareForm from "../ShareForm/ShareForm";
 import dynamic from "next/dynamic";
 import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 import { openAlert } from "@/redux/slices/alert";
+import styles from "./jobDetail.module.css";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -142,7 +143,7 @@ const JobDetailCard = ({ ...props }) => {
               <Grid item xs={12} sm={8}>
                 <Stack spacing={1}>
                   <Box
-                    className="mobileLogo"
+                    className={styles.mobileLogo}
                     sx={{ display: "flex", justifyContent: "flex-start" }}
                   >
                     <Image
@@ -184,7 +185,7 @@ const JobDetailCard = ({ ...props }) => {
                   <Box>
                     <Grid container spacing={2}>
                       {salary && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{
@@ -199,7 +200,7 @@ const JobDetailCard = ({ ...props }) => {
                         </Grid>
                       )}
                       {jobType && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "center", gap: "10px" }}
@@ -218,7 +219,7 @@ const JobDetailCard = ({ ...props }) => {
                         </Grid>
                       )}
                       {essentialInformation?.experience && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "center", gap: "10px" }}
@@ -237,7 +238,7 @@ const JobDetailCard = ({ ...props }) => {
                         </Grid>
                       )}
                       {essentialInformation?.careerlevel && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "center", gap: "10px" }}
@@ -256,7 +257,7 @@ const JobDetailCard = ({ ...props }) => {
                         </Grid>
                       )}
                       {notice && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "center", gap: "10px" }}
@@ -276,7 +277,7 @@ const JobDetailCard = ({ ...props }) => {
                       )}
 
                       {essentialInformation?.qualification && (
-                        <Grid item md={4} xs={12}>
+                        <Grid item md={4} sm={6} xs={12}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "center", gap: "10px" }}
@@ -298,7 +299,7 @@ const JobDetailCard = ({ ...props }) => {
 
                     <Grid container spacing={2} sx={{ mt: "20px" }}>
                       {address.map((add, index) => (
-                        <Grid item md={4} xs={12} key={index}>
+                        <Grid item md={4} sm={6} xs={12} key={index}>
                           <Stack
                             direction={"row"}
                             sx={{ alignItems: "flex-start", gap: "10px" }}
@@ -331,7 +332,7 @@ const JobDetailCard = ({ ...props }) => {
                 }}
               >
                 <Box
-                  className="logo"
+                  className={styles.logo}
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
                   <Image
