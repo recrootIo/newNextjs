@@ -609,21 +609,21 @@ const AllApplicants = () => {
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
     }
   };
-  const { aid } = router.query;
-  useEffect(() => {
-    if (aid) {
-      scrollToDiv(aid);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [aid]);
-  function scrollToDiv(div) {
-    // Get the target div element
-    const targetElement = document.getElementById(div);
+  // const { aid } = router.query;
+  // useEffect(() => {
+  //   if (aid) {
+  //     scrollToDiv(aid);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [aid]);
+  // function scrollToDiv(div) {
+  //   // Get the target div element
+  //   const targetElement = document.getElementById(div);
 
-    // Scroll to the target element
-    targetElement.scrollIntoView({ behavior: "smooth" });
-    router.push("/Employer/AllApplicants", undefined, { shallow: true });
-  }
+  //   // Scroll to the target element
+  //   targetElement.scrollIntoView({ behavior: "smooth" });
+  //   router.push("/Employer/AllApplicants", undefined, { shallow: true });
+  // }
 
   const updateValue = async () => {
     const companyService = new companyservice();
@@ -849,7 +849,13 @@ const AllApplicants = () => {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    sx={{ maxHeight: "400px" }}
+                    sx={{
+                      maxHeight: "400px",
+                      "& .MuiMenu-paper": {
+                        marginTop: "0px !important",
+                        borderRadius: "0px",
+                      },
+                    }}
                   >
                     <List
                       sx={{
@@ -919,11 +925,10 @@ const AllApplicants = () => {
                     onClose={handleClose1}
                     disablePortal={true}
                   >
-                    
                     {EMPLOYEE_STATUS.map((variant) => (
                       <MenuItem
                         key={variant}
-                        sx={{  width: "200px" ,cursor:'auto'}}
+                        sx={{ width: "200px", cursor: "auto" }}
                         onClick={(e) => handleNameStatus(e, variant)}
                       >
                         <Checkbox

@@ -32,6 +32,7 @@ import { getSinResume } from "@/redux/slices/applyJobs";
 import applyJobService from "@/redux/services/applyjobs.service";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -87,6 +88,56 @@ const AllApplicantsCard = ({ users }) => {
       : "";
 
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  // const handleReject = (id) => {
+  //   axios
+  //     .put(
+  //       `https://preprod.recroot.au/api/updateStatus/${id}`,
+  //       { status: "rejected" },
+  //       { headers: { "x-access-token": `${users.token}` } }
+  //     )
+  //     .then(function (res) {
+  //       dispatch(updateStatus({ _id: id, status: REJECTED }));
+  //       dispatch(updatCountes());
+  //     })
+  //     .catch(function (error) {});
+  // };
+
+  // const handleShort = (id) => {
+  //   axios
+  //     .put(
+  //       `https://preprod.recroot.au/api/updateStatus/${id}`,
+  //       { status: "shortlist" },
+  //       { headers: { "x-access-token": `${users.token}` } }
+  //     )
+  //     .then(function (res) {
+  //       dispatch(updateStatus({ _id: id, status: SHORT_LISTED }));
+  //       dispatch(updatCountes());
+  //     })
+  //     .catch(function (error) {});
+  // };
+
+  // const getStatusIcon = (status, id) => {
+  //   switch (status) {
+  //     case SHORT_LISTED:
+  //       return (
+  //         <ThumbUpIcon
+  //           sx={{ color: PRIMARY }}
+  //           onClick={() => handleReject(id)}
+  //         />
+  //       );
+  //     case REJECTED:
+  //       return (
+  //         <ThumbDownIcon
+  //           sx={{ color: WARNING }}
+  //           onClick={() => handleShort(id)}
+  //         />
+  //       );
+  //     default:
+  //       return <></>;
+  //   }
+  // };
+
   return (
     <Card
       sx={{
@@ -193,7 +244,7 @@ const AllApplicantsCard = ({ users }) => {
                 <ThumbDownOffAltIcon
                   sx={{ color: "#7AC1DA", fontSize: "30px" }}
                 /> */}
-
+                {/* 
                 {users?.status === "shortlist" ||
                 users?.status === "rejected" ? (
                   <Checkbox
@@ -212,7 +263,8 @@ const AllApplicantsCard = ({ users }) => {
                   />
                 ) : (
                   ""
-                )}
+                )} */}
+                {/* {getStatusIcon(users?.status, users?._id)} */}
               </Stack>
             </Box>
           </>
