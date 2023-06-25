@@ -45,7 +45,8 @@ const CandidateProfileHeader = (data) => {
   const photoss = useSelector(
     (state) => state.personal?.data?.profpicFileLocation
   );
-  console.log(data, "data");
+
+  const loading = useSelector((state) => state.personal.loading);
 
   const personal = useSelector((state) => state.personal?.data);
 
@@ -127,24 +128,6 @@ const CandidateProfileHeader = (data) => {
           justifyContent: "flex-end",
         }}
       >
-        {/* <Box
-            sx={{
-              display: "flex",
-              justifyContent: { xs: "flex-start", md: "flex-end" },
-            }}
-          >
-            <IconButton
-              aria-label="notifications"
-              size="large"
-              sx={{
-                color: "white",
-                width: "20px",
-                p: 0,
-              }}
-            >
-              <NotificationsOutlinedIcon sx={{ fontSize: "2rem" }} />
-            </IconButton>
-          </Box> */}
         <Box
           sx={{
             display: { xs: "flex", md: "none" },
@@ -353,20 +336,35 @@ const CandidateProfileHeader = (data) => {
                   flexWrap: "wrap",
                 }}
               >
-                <CustomTypography
-                  variant="h6"
-                  sx={{
-                    position: "absolute",
-                    fontFamily: "Inter-bold",
-                    zIndex: "1",
-                    fontSize: "2rem",
-                    top: { md: "50%", sm: "40%" },
-                    left: { md: "50%", sm: "40%" },
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  {data?.profilePercentage}%
-                </CustomTypography>
+                {loading ? (
+                  <CustomTypography
+                    sx={{
+                      position: "absolute",
+                      fontFamily: "Inter-bold",
+                      zIndex: "1",
+                      top: { md: "50%", sm: "40%" },
+                      left: { md: "50%", sm: "40%" },
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  >
+                    Calculating..
+                  </CustomTypography>
+                ) : (
+                  <CustomTypography
+                    variant="h6"
+                    sx={{
+                      position: "absolute",
+                      fontFamily: "Inter-bold",
+                      zIndex: "1",
+                      fontSize: "2rem",
+                      top: { md: "50%", sm: "40%" },
+                      left: { md: "50%", sm: "40%" },
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  >
+                    {data?.profilePercentage}%
+                  </CustomTypography>
+                )}
 
                 <CustomTypography
                   variant="subtitle1"
