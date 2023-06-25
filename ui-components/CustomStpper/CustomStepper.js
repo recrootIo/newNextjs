@@ -141,7 +141,6 @@ const steps = ["Applied", "Viewed", "Shortlisted", "Interviewed"];
 const stepsRejected = ["Applied", "Viewed", "Rejected"];
 
 export default function CustomizedSteppers({ activeStep, currentStep }) {
-  console.log(currentStep, "currentStep");
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper

@@ -35,6 +35,7 @@ const initialState = {
   myPreferenceInfo: {},
   section: "",
   savedJobs: [],
+  loading: false,
 };
 
 export const retrievePersonal = createAsyncThunk(
@@ -726,6 +727,11 @@ const personalSlice = createSlice({
     [retrievePersonal.fulfilled]: (state, action) => {
       state.data = action.payload;
       state.certLoad = false;
+      state.loading = false;
+    },
+
+    [retrievePersonal.pending]: (state, action) => {
+      state.loading = true;
     },
     [retrieveGetSinExperience.fulfilled]: (state, action) => {
       state.exper = action.payload;
