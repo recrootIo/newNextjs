@@ -154,3 +154,12 @@ export const convertFormat = (dateString) => {
   const formattedDate = `${year}-${month}-${day}`;
   return formattedDate;
 };
+
+/**
+ * returns url
+ * @param {*} inputString
+ * @returns
+ */
+export const replaceSlashes = (inputString) => {
+  return inputString.replace(/\//g, "%20");
+};
