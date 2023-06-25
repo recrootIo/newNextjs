@@ -920,6 +920,13 @@ const AllApplicants = () => {
                     open={open2}
                     onClose={handleClose1}
                     disablePortal={true}
+                    sx={{
+                      maxHeight: "400px",
+                      "& .MuiMenu-paper": {
+                        marginTop: "0px !important",
+                        borderRadius: "0px",
+                      },
+                    }}
                   >
                     {EMPLOYEE_STATUS.map((variant) => (
                       <MenuItem
