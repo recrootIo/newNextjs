@@ -50,6 +50,7 @@ import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
+import { replaceSlashes } from "@/utils/HelperFunctions";
 
 export const getSalary = (salary, defaults = true, font = 16) => {
   if (salary?.salaryType !== "noprovide") {
@@ -274,10 +275,10 @@ export const BootstrapDialogTitle = (props) => {
 const SearchSection = ({ ...props }) => {
   useEffect(() => {
     const redirect = localStorage.getItem("redirect");
-    if (redirect !== null){
+    if (redirect !== null) {
       localStorage.removeItem("redirect");
     }
-   }, [])
+  }, []);
   const {
     sectors,
     companies,
@@ -310,11 +311,11 @@ const SearchSection = ({ ...props }) => {
   // const [selectedCompanies, setSelectedCompanies] = useState(company || "");
   const [selectedSector, setSelectedSector] = useState(sector || []);
   const [selectedCategory, setSelectedCategory] = useState(category || []);
-useEffect(() => {
-setTitlef(props.title)
-setAddressf(props.address)
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+  useEffect(() => {
+    setTitlef(props.title);
+    setAddressf(props.address);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -436,7 +437,9 @@ setAddressf(props.address)
   };
 
   const handleNavigate = (jobTitle, jobRole, _id) => {
-    router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
+    router.push(
+      `/jobs/${replaceSlashes(jobTitle)}/${replaceSlashes(jobRole)}/${_id}`
+    );
   };
 
   const handleExperience = (re) => {
@@ -481,8 +484,8 @@ setAddressf(props.address)
       title,
       category,
     };
-   setTitlef(title)
-   setAddressf(address)
+    setTitlef(title);
+    setAddressf(address);
     router.push({
       pathname: router.pathname,
       query: updatedQueryParams,

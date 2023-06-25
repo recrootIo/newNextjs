@@ -37,11 +37,11 @@ import dynamic from "next/dynamic";
 import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 import { openAlert } from "@/redux/slices/alert";
 import styles from "./jobDetail.module.css";
+import moment from "moment";
 
 const JobDetailCard = ({ ...props }) => {
   const {
     essentialInformation,
-    // jobTitle,
     jobRole,
     company,
     salary,
@@ -49,6 +49,7 @@ const JobDetailCard = ({ ...props }) => {
     address = [],
     notice,
     _id,
+    createdAt,
   } = props;
 
   console.log(props);
@@ -60,6 +61,7 @@ const JobDetailCard = ({ ...props }) => {
 
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
+  const appliedJob = appliedJobs.find((i) => i.jobId[0]);
   const isUserType = data?.recrootUserType === CANDIDATE;
 
   const [loginCallBackURL, setLoginCallBackURL] = useState("");
@@ -199,6 +201,7 @@ const JobDetailCard = ({ ...props }) => {
                           </Stack>
                         </Grid>
                       )}
+
                       {jobType && (
                         <Grid item md={4} sm={6} xs={12}>
                           <Stack
@@ -321,6 +324,7 @@ const JobDetailCard = ({ ...props }) => {
                   </Box>
                 </Stack>
               </Grid>
+
               <Grid
                 item
                 xs={12}
@@ -390,7 +394,9 @@ const JobDetailCard = ({ ...props }) => {
                         onClick={() => gotApply()}
                       >
                         {isApplied
-                          ? "applied"
+                          ? `Applied ${moment(appliedJob.createdAt)
+                              .endOf("day")
+                              .fromNow()}`
                           : data.profilePercentage < 70
                           ? "Complete Profile"
                           : "Apply now"}

@@ -28,7 +28,7 @@ import { getImageLogo } from "../JobListings/SearchSection";
 // import { getAddress } from "@/utils/HelperFunctions";
 import moment from "moment";
 import Image from "next/image";
-import { getUserId } from "@/utils/HelperFunctions";
+import { compareToday, getUserId } from "@/utils/HelperFunctions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -63,6 +63,7 @@ const JobDetail = ({ ...props }) => {
 
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
+  const appliedJob = appliedJobs.find((i) => i.jobId[0]);
   const isUserType = data?.recrootUserType === CANDIDATE;
 
   const gotApply = () => {
@@ -157,7 +158,9 @@ const JobDetail = ({ ...props }) => {
                     onClick={() => gotApply()}
                   >
                     {isApplied
-                      ? "applied"
+                      ? `Applied ${moment(appliedJob.createdAt)
+                          .endOf("day")
+                          .fromNow()}`
                       : data.profilePercentage < 70
                       ? "Complete Profile"
                       : " Apply now"}
