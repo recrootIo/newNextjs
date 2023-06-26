@@ -94,6 +94,7 @@ function SubscribePrice() {
   console.log(subscriptionpackage, subscriptionPrice, "pppp", userCountry);
   const [newTotal, setNewTotal] = useState(subscriptionPrice);
   const county = userCountry === "INR";
+  const lakn = userCountry === "LKR";
   const validatePromo = async () => {
     const data = {
       code: promo,
@@ -358,7 +359,9 @@ function SubscribePrice() {
                               "Indian Rupee",
                               2
                             )
-                          : currencyConvert(subscriptionPrice, "US Dollar", 2)
+                          :lakn ?
+                          `Rs.${subscriptionPrice}.00`:
+                           currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(
                             subscriptionPrice,
                             "US Dollar",
@@ -525,7 +528,9 @@ function SubscribePrice() {
                               subscriptionPrice,
                               "Indian Rupee",
                               2
-                            )
+                            ) :
+                            lakn ?
+                            `Rs.${subscriptionPrice}.00`
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
                     </CustomTypography>
@@ -600,7 +605,11 @@ function SubscribePrice() {
                               subscriptionPrice,
                               "Indian Rupee",
                               2
-                            )
+                            ) :
+                            lakn ?
+                            
+                            `Rs.${subscriptionPrice}.00`
+                             
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
                     </CustomTypography>

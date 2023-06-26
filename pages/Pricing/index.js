@@ -117,7 +117,9 @@ const planHeadSlot = {
 
 function Pricing() {
   const [jobSwitch, setjobSwitch] = useState("jPost");
-  const [countryData, setcountryData] = useState("");
+  const [countryData, setcountryData] = useState({
+    country:'LK'
+  });
   const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -126,17 +128,17 @@ function Pricing() {
       .then((response) => {
         console.log(response, "sss");
         let data = response.data;
-        setcountryData(response.data);
-        if (data?.country !== "LK") {
-          setjobSwitch("jSlot");
-        }
-        if (data?.country === "IN") {
-          setcounCheck(true);
-        }
+        // setcountryData(response.data);
+        // if (data?.country !== "LK") {
+        //   setjobSwitch("jSlot");
+        // }
+        // if (data?.country === "IN") {
+        //   setcounCheck(true);
+        // }
         dispatch(
           userCountry({
-            countryName: data.country_name,
-            countryCurrecy: data.currency,
+            countryName: "Sri Lanka",
+            countryCurrecy:"LKR",
           })
         );
       })
@@ -267,6 +269,8 @@ function Pricing() {
         ? packageDetails.pricing.us
         : counCheck
         ? packageDetails.pricing.rs
+        : countryData.country === 'LK' ?
+        packageDetails.pricing.lk
         : packageDetails.pricing.us;
     console.log(price, "ppp");
     const newPackage = {
@@ -543,7 +547,7 @@ function Pricing() {
                     borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  {counCheck ? (
+                  {countryData.country ==='IN' ? (
                     <>
                       <sup style={{ fontSize: "30px" }}></sup>
                       <Typography
@@ -558,6 +562,24 @@ function Pricing() {
                         }}
                       >
                         &#8377; <span>{PRO_PLAN.pricing.rs}</span>
+                      </Typography>
+                    </>
+                  ) :
+                  countryData.country === 'LK' ?
+                  (
+                    <>
+                      <Typography
+                        sx={{
+                          fontFamily: "'Inter'",
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          fontSize: "35px",
+                          lineHeight: "40px",
+                          color: "#034275",
+                          m: "auto",
+                        }}
+                      >
+                      &#8360; <span>{PRO_PLAN.pricing.lk}</span>
                       </Typography>
                     </>
                   ) : (
@@ -635,7 +657,7 @@ function Pricing() {
                     borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  {counCheck ? (
+                  {countryData.country === 'IN' ? (
                     <>
                       <Typography
                         sx={{
@@ -651,7 +673,26 @@ function Pricing() {
                         &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
                       </Typography>
                     </>
-                  ) : (
+                  ) :
+                  countryData.country === 'LK' ?
+                  (
+                    <>
+                      <Typography
+                        sx={{
+                          fontFamily: "'Inter'",
+                          fontStyle: "normal",
+                          fontWeight: 600,
+                          fontSize: "35px",
+                          lineHeight: "40px",
+                          color: "#034275",
+                          m: "auto",
+                        }}
+                      >
+                        &#8360; <span>{PREMIUM_PACKAGE.pricing.lk}</span>
+                      </Typography>
+                    </>
+                  ):
+                   (
                     <>
                       <Typography
                         sx={{
