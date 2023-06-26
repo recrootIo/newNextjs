@@ -51,7 +51,7 @@ import {
   getCompanyDetails,
   getapplCount,
 } from "@/redux/slices/companyslice";
-import { companyJobs, jobId, setEditJob, upgradejob } from "@/redux/slices/job";
+import { companyJobs, getfreeCount, jobId, setEditJob, upgradejob } from "@/redux/slices/job";
 import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
@@ -82,6 +82,19 @@ const BasicButton = styled(Button)({
   // width: "50%",
   marginBottom: "10px",
   marginTop: "15px",
+  
+});
+const BasicButtonUp = styled(Button)({
+  color: "#ffff",
+  padding: "15px",
+  borderRadius: "10px",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  // width: "50%",
+  marginBottom: "10px",
+  marginTop: "15px",
+  boxShadow:
+    "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -359,6 +372,7 @@ const EmpoyerDashboard = () => {
   };
 
   useEffect(() => {
+    dispatch(getfreeCount())
     dispatch(
       setEditJob({
         salary: {},
@@ -502,7 +516,8 @@ const EmpoyerDashboard = () => {
     dispatch(upgradejob([parms.id]));
     push("/Employer/Jobpayment");
   };
-  console.log(premium, "pree");
+  const jobCount = useSelector(data => data.jobs.freeCount)
+
   const columns = [
     { field: "id", headerName: "Id", width: 100, hide: true },
     { field: "_id", headerName: "Job", width: 120 },
@@ -647,19 +662,6 @@ const EmpoyerDashboard = () => {
                 See Applicants
               </MenuItem>
 
-              {!premium ? (
-                <MenuItem
-                  onClick={() => {
-                    handleClose2();
-                    handleUpgrade(parms?.row);
-                  }}
-                  value="delete"
-                >
-                  Upgrade To Premium
-                </MenuItem>
-              ) : (
-                ""
-              )}
               {packType === null ? (
                 ""
               ) : (
@@ -761,7 +763,22 @@ const EmpoyerDashboard = () => {
           </>
         ),
     },
+    {
+      // field: "status",
+      headerName: "Upgrade",
+      width: 200,
+      renderCell: (parms) => (
+        <>
+          <Button sx={{textTransform:'capitalize',color:'green'}}  onClick={() => {
+                    handleClose2();
+                    handleUpgrade(parms?.row);
+                  }}>
+                    Upgrade To Premium</Button>
+        </>
+      ),
+    },
   ];
+  const updatedColumns = columns.filter((column) => column.headerName !== 'Upgrade')
 
   const handleGetRowId = (e) => {
     return e.id;
@@ -826,7 +843,6 @@ const EmpoyerDashboard = () => {
       setfreejobs(() => [...newJobs]);
     }
   };
-  console.log(freejobs, "ssssss");
 
   const closeTour = () => {
     setTourOpen(false);
@@ -1389,15 +1405,15 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <BasicButton
+      {jobCount.count > 0 ?  <Box sx={{ display: "flex", justifyContent: "flex-end", }}>
+          <BasicButtonUp
             onClick={() => {
               handleClickOpen();
             }}
           >
-            Upgrade To Free Jobs To Premium
-          </BasicButton>
-        </Box>
+            Upgrade To Premium
+          </BasicButtonUp>
+        </Box> : ""}
         {user?.country === "LK" ? (
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -1511,7 +1527,7 @@ const EmpoyerDashboard = () => {
                 sx={{ display: "flex", justifyContent: "center" }}
                 getRowId={handleGetRowId}
                 rows={rows}
-                columns={columns}
+                columns={user?.country === 'LK' ? updatedColumns : columns}
               />
             </Box>
           </TabPanel>
@@ -1522,7 +1538,7 @@ const EmpoyerDashboard = () => {
                 index={1}
                 getRowId={handleGetRowId}
                 rows={rows2}
-                columns={columns}
+                columns={updatedColumns}
               />
             ) : (
               <Box

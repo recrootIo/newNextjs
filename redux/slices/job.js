@@ -37,7 +37,8 @@ const initialState = {
     country:''
   },
   choosePremium:false,
-  freeCount:''
+  freeCount:'',
+  loading:false
 };
 
 export const detailsSet = createAsyncThunk("get/jobDetails", async (data) => {
@@ -267,6 +268,12 @@ const jobsSlice = createSlice({
     },
     [getfreeCount.fulfilled]: (state, action) => {
       state.freeCount = action.payload;
+    },
+    [addJobsNew.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [addJobsNew.fulfilled]: (state, action) => {
+      state.loading = false;
     },
     [setEditJob.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
