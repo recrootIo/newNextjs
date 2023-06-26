@@ -10,6 +10,9 @@ import {
   List,
   ListItemButton,
   Stack,
+  Step,
+  StepLabel,
+  Stepper,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -82,6 +85,8 @@ function PostnewJob() {
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
   const packageType = useSelector((state) => state?.jobs?.packageType);
   const companyDet = useSelector((state) => state.company.companyDetl);
+  const full = useSelector((state) => state.jobs.packageType);
+
   const scrollToElement = (section) => {
     dispatch(updateCurrentScreen(""));
     let element = null;
@@ -366,6 +371,11 @@ function PostnewJob() {
 
   console.log(final.details, "quest");
   function Pages(index, cal) {
+    console.log(index)
+    if (index === -1) {
+      setProfiletab({ index: 0, page: <JobDetails /> })
+      return
+    }
     if (cal === "add" && index <= 2) {
       if (index === 0) {
         if (country === "LK") {
@@ -396,13 +406,13 @@ function PostnewJob() {
           return;
         }
         if (isEmpty(final.location)) {
-          scrollToElement("add_joblocation");
           dispatch(
             openAlert({
               type: ERROR,
               message: "Please Provide Job Location",
             })
-          );
+            );
+            scrollToElement("add_joblocation");
           return;
         }
         if (showq === "") {
@@ -447,6 +457,12 @@ function PostnewJob() {
           const obj3 = validator(final.essential);
           dispatch(errorJobs(validator(final.essential)));
           if (Object.keys(obj3).length > 0) {
+            dispatch(
+              openAlert({
+                type: ERROR,
+                message: "Please Fill All Mandotary Details",
+              })
+            );
             return;
           }
           const obj2 = validator(final.details);
@@ -480,9 +496,19 @@ function PostnewJob() {
         }
       }
       if (index === 2) {
+        const obj3s = validator(final.essential);
+        if (Object.keys(obj3s).length > 0) {
+          dispatch(
+            openAlert({
+              type: ERROR,
+              message: "Please Fill All Mandotary Details",
+            })
+          );
+          return
+        }
         setProfiletab({
           index: 3,
-          page: <Chooseplan postJobs={postJobs} postPremJobs={postPremJobs} />,
+          page: <Chooseplan postJobs={postJobs} Pages={PagesTwo} postPremJobs={postPremJobs} />,
         });
       }
     }
@@ -522,6 +548,20 @@ function PostnewJob() {
           setopen(false),
           router.push("/Employer/Jobpayment?pre=true")
   };
+
+  const steps = (companyDet?.jobSlotGold === true && full === "jSlot") ||
+  companyDet?.package?.subscription_package === "SuperEmployer" ||
+  country === "LK" ||
+  Cid !== undefined ?  [
+    'Job Details',
+    'Essential Information',
+    'Preview',
+  ] : [
+    'Job Details',
+    'Essential Information',
+    'Preview',
+    'Choose Payment'
+  ];
   return (
     <Employer>
       <Box>
@@ -536,7 +576,18 @@ function PostnewJob() {
             backgroundSize: "cover",
           }}
           variant="outlined"
+          id="top"
         >
+          {console.log(profiletab.index,'index')}
+          <Box sx={{width: 'fit-content', margin: 'auto',mb:3}}>
+            <Stepper activeStep={profiletab.index} alternativeLabel>
+        {steps.map((label,index) => (
+          <Step onClick={()=>{Pages(index-1,'add')}} key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+          </Box>
           {profiletab.index === profiletab.index + 0 ? profiletab.page : ""}
           <Stack
             direction="row"

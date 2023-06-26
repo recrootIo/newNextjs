@@ -74,9 +74,9 @@ export default function Location(props) {
               <Typography
                 variant="h5"
                 sx={{
-                  m: "0 0px 5px 49px",
+                  m: "0 0px 5px 20px",
                   fontWeight: "700",
-                  fontSize: "20px",
+                  fontSize: "15px",
                   lineHeight: "23px",
                 }}
               >
@@ -105,16 +105,12 @@ export default function Location(props) {
                           ...provided,
                           boxShadow: 0,
                           height: "40px",
-                          "&:hover": {
-                            border: "1px solid purple",
-                          },
+                          
                         }),
                         singleValue: (provided) => ({
                           ...provided,
                           boxShadow: 0,
-                          "&:hover": {
-                            border: "1px solid purple",
-                          },
+                          
                         }),
                       },
                     }}

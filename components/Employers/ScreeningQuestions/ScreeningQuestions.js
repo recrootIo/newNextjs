@@ -26,7 +26,6 @@ function ScreeningQuestions() {
 
   const handleQueshow = (e) => {
     dispatch(queShow(e.target.value));
-    setValue(e.target.value);
   };
 
   useEffect(() => {

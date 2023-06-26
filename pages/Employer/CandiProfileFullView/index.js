@@ -186,7 +186,6 @@ const CandiFullProfileView = () => {
   const matches = useMediaQuery("(max-width:600px)");
   const match = useMediaQuery("(max-width:1050px)");
   const resume = useSelector((state) => state.apply.resume);
-  console.log(resume, "resume");
   const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
   const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
@@ -217,7 +216,7 @@ const CandiFullProfileView = () => {
       });
   };
   const handleInterview = () => {
-    setinterviewshow(true);
+    setinterviewshow(!interviewshow);
   };
   const handleEditInterview = () => {
     dispatch(setinterview(scheduleinterview[0]));
@@ -234,6 +233,7 @@ const CandiFullProfileView = () => {
   const [cvshow, setcvshow] = useState(false);
   const [open, setOpen] = React.useState(false);
   const enableCvAction = () => {
+    setinterviewshow(false)
     setcvshow(!cvshow);
   };
   const onChange = (e) => {
@@ -735,7 +735,6 @@ const CandiFullProfileView = () => {
                 </Box>
               </Grid>
             </Box>
-            {console.log(notes)}
             {isEmpty(notes) ? (
               ""
             ) : (
@@ -900,7 +899,7 @@ const CandiFullProfileView = () => {
                       <Box sx={{ p: "25px" }}>
                         <Stack spacing={1}>
                           <Box
-                            className={styles.FullProfilePersonalDetailsTypoBox}
+                            sx={{display:'flex',flexDirection:'column'}}
                           >
                             <CustomTypography
                               className={styles.FullProfileSectionTypo}
@@ -1031,7 +1030,6 @@ const CandiFullProfileView = () => {
                         <Box sx={{ p: "25px" }}>
                           {appdata?.question?.map((ques) => (
                             <>
-                              {console.log(ques, "eee")}
                               <Stack spacing={1}>
                                 <Box
                                   className={
@@ -1302,7 +1300,6 @@ const CandiFullProfileView = () => {
                                       &nbsp;{edu?.graduate}
                                     </CustomTypography>
                                   </Stack>
-                                  {console.log(edu)}
                                   {edu?.collegeName !== "" ? (
                                     <Stack direction={"row"}>
                                       <CustomTypography
@@ -1691,6 +1688,22 @@ const CandiFullProfileView = () => {
                                           )}
                                         </CustomTypography>
                                       </Stack>
+                                    { cert?.certificateLink !== undefined ?  <Stack direction={"row"}>
+                                        <CustomTypography
+                                          className={
+                                            styles.FullProfileSectionTypo
+                                          }
+                                        >
+                                          Link :
+                                        </CustomTypography>
+                                        <CustomTypography
+                                          variant="subtitle2"
+                                          className={styles.ViewFullInfoText}
+                                        >
+                                          &nbsp;
+                                          <span><a href={cert?.certificateLink}>{cert?.certificateLink}</a></span>
+                                        </CustomTypography>
+                                      </Stack> : ""}
                                     </Stack>
                                   </Box>
                                   <IconButton
@@ -2076,6 +2089,7 @@ const CandiFullProfileView = () => {
                   <CustomTypography className={styles.FullProfileSectionTitle}>
                     Schedule Interview
                   </CustomTypography>
+                  <Button onClick={()=>{setinterviewshow(false)}} sx={{textTransform:"capitalize"}}>Close</Button>
                 </Box>
                 <Addinterview
                   setinterviewshow={setinterviewshow}

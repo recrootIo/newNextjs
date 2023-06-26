@@ -1830,3 +1830,7 @@ a {
 .custom-datepicker {
   width: 100% !important;
 }
+
+.css-ll07pc-Input:hover {
+border: none !important;
+}

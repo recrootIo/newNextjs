@@ -73,6 +73,7 @@ const JobPreview = (props) => {
   const descript = useSelector((state) => state.jobs.jobDescription);
   const level = useSelector((state) => state.jobs.jobRole);
   const showq = useSelector((state) => state.jobs.queshow);
+  
   const [isTourOpen, setTourOpen] = React.useState(false);
 
   const salaryType = details && details.salary.salaryType;
@@ -146,25 +147,16 @@ const JobPreview = (props) => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.jobPreview);
   }, [company?.tours?.jobPreview]);
+  useEffect(() => {
+    const element = document.getElementById("top");
+       element.scrollIntoView({
+         behavior: "smooth",
+       });
+   }, []);
   return (
     <>
       <CardContent>
         <Box className="previewJob">
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              mt: "10px",
-              mb: "10px",
-            }}
-          >
-            <Image
-              src="/post-newjob-thirdstep-img.png"
-              alt=""
-              width="320"
-              height="20"
-            />
-          </Box>
           <CustomTypography
             sx={{
               color: "#034275",
