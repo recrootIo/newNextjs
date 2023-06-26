@@ -16,11 +16,27 @@ const BasicButton = styled(Button)({
 });
 function Chooseplan(props) {
   const country = Cookies.get("country");
-  const jobCount = useSelector(data => data.jobs.freeCount)
+  const jobCount = useSelector((data) => data.jobs.freeCount);
   const loading = useSelector((state) => state?.jobs?.loading);
-  console.log(jobCount.count ,'check')
+  console.log(jobCount.count, "check");
   return (
     <div>
+      <Typography variant="h5" fontWeight={600} textAlign={"center"} mb={5}>
+        Choose the ideal method to post your job based on your hiring needs
+      </Typography>
+    {  jobCount.count >= 3 ? (  <Typography
+        sx={{
+          background: "#4fa9ff",
+          width: "fit-content",
+          margin: "0px auto 20px auto",
+          padding: "5px",
+          color: "#ffff",
+          borderRadius: "10px",
+        }}
+        textAlign={"center"}
+      >
+        Your free job limit has been reached
+      </Typography>) : ""}
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Card
           sx={{
@@ -44,13 +60,17 @@ function Chooseplan(props) {
             {" "}
             Success Rate: 43%
           </Typography>
-         {loading === false ?
-         jobCount.count >= 3
-         ? <Button disabled={jobCount.count >= 3}>Submit</Button>
-         : <BasicButton  onClick={props.postJobs}>Submit</BasicButton>
-         :
-          <BasicButton ><CircularProgress  color="inherit"/></BasicButton>
-          }
+          {loading === false ? (
+            jobCount.count >= 3 ? (
+              <Button disabled={jobCount.count >= 3}>Submit</Button>
+            ) : (
+              <BasicButton onClick={props.postJobs}>Submit</BasicButton>
+            )
+          ) : (
+            <BasicButton>
+              <CircularProgress color="inherit" />
+            </BasicButton>
+          )}
           <Typography sx={{ textAlign: "center" }}>
             {" "}
             3 job posts per day

@@ -372,7 +372,9 @@ const EmpoyerDashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getfreeCount())
+    http.get(`/getfreeJobs/${company?._id}`).then((res) => {
+      setsectors(res.data?.data);
+    });
     dispatch(
       setEditJob({
         salary: {},
@@ -387,7 +389,7 @@ const EmpoyerDashboard = () => {
         requiredSkill: [],
       })
     );
-  }, [dispatch]);
+  }, [company?._id, dispatch]);
 
   const handleEdit = () => {
     dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
@@ -516,8 +518,7 @@ const EmpoyerDashboard = () => {
     dispatch(upgradejob([parms.id]));
     push("/Employer/Jobpayment");
   };
-  const jobCount = useSelector(data => data.jobs.freeCount)
-
+  
   const columns = [
     { field: "id", headerName: "Id", width: 100, hide: true },
     { field: "_id", headerName: "Job", width: 120 },
@@ -819,10 +820,6 @@ const EmpoyerDashboard = () => {
   const [sectors, setsectors] = useState([]);
   const handleClickOpen = () => {
     setOpen1(true);
-    http.get(`/getfreeJobs/${company?._id}`).then((res) => {
-      console.log(res, "jobss");
-      setsectors(res.data?.data);
-    });
   };
 
   const handleClose1 = () => {
@@ -1405,7 +1402,7 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-      {jobCount.count > 0 ?  <Box sx={{ display: "flex", justifyContent: "flex-end", }}>
+   {sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
           <BasicButtonUp
             onClick={() => {
               handleClickOpen();
@@ -1413,7 +1410,7 @@ const EmpoyerDashboard = () => {
           >
             Upgrade To Premium
           </BasicButtonUp>
-        </Box> : ""}
+        </Box>  : ''}
         {user?.country === "LK" ? (
           <Stack
             direction={{ xs: "column", sm: "row" }}
