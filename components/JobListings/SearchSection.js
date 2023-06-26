@@ -331,7 +331,7 @@ const SearchSection = ({ ...props }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(latestJobs, "exper");
+
   const { page = 1 } = router.query;
   const getJobs = () => {
     dispatch(
@@ -1172,6 +1172,7 @@ const SearchSection = ({ ...props }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   mb: "10px",
+                  mt: "10px",
                 }}
               >
                 <CustomTypography
@@ -1181,7 +1182,9 @@ const SearchSection = ({ ...props }) => {
                   color="rgba(3, 66, 117, 0.6);"
                   fontSize={14}
                 >
-                  {Array.isArray(count) ? count[0].count : 0 ?? 0} Jobs Result
+                  {isEmpty(count) ? 0 : count[0]?.count}
+                  {""} Jobs Result
+                  {/* {Array.isArray(count) ? count[0].count : 0 ?? 0}  */}
                 </CustomTypography>
                 <FormControl
                   className="sortBy"
