@@ -133,14 +133,18 @@ function Addinterview({ users, setinterviewshow }) {
 
   const handleChange1 = (event) => {
     const value = event.target.value;
+    if (value && parseInt(value) > 120) {
+      setDurationErrorText("Maximum duration is 120 minutes");
+    } else {
+      setDurationErrorText("");
+    }
     setTime({
       ...Time,
       [event.target.name]: value,
     });
-    //   dispatch(interview({ ...Time, [event.target.name]: value }));
-
     Time.date = values;
   };
+
   const handleChangeTime = (event) => {
     setTime({
       ...Time,
@@ -159,6 +163,9 @@ function Addinterview({ users, setinterviewshow }) {
     }
     if (!Time.duration) {
       setDurationErrorText("Please Enter duration");
+    }
+    if (Time.duration > 120) {
+      setDurationErrorText("Minimum Duration is 20 minutes");
     } else {
       setDurationErrorText("");
     }
@@ -186,6 +193,7 @@ function Addinterview({ users, setinterviewshow }) {
     if (
       Time.time !== "" &&
       Time.duration !== "" &&
+      Time.duration < 120 &&
       Time.zone !== "" &&
       Time.event !== "" &&
       Time.subject !== "" &&
@@ -247,15 +255,27 @@ function Addinterview({ users, setinterviewshow }) {
   return (
     <div>
       <Box sx={{ p: "25px" }}>
-        <Box style={{ border: "1px solid #cacaca", borderRadius: "10px" }}>
+        <Box
+          style={{
+            border: "1px solid #cacaca",
+            borderRadius: "10px",
+          }}
+        >
           <Box>
             <Typography variant="h5" sx={styles.addtxt}>
               Schedule an Event
             </Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "space-around" },
+                flexDirection: { xs: "column", md: "row" },
+                gap: { xs: "20px", md: 0 },
+                alignItems: "center",
+              }}
+            >
               <Box sx={styles.infofldloc}>
-                {/* <Typography sx={styles.sectxtloca}>Date</Typography> */}
-                <Box>
+                <Box sx={{ width: "100%" }}>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker
                       label="Date"
@@ -267,6 +287,7 @@ function Addinterview({ users, setinterviewshow }) {
                       renderInput={(params) => (
                         <TextField {...params} sx={styles.naminput} />
                       )}
+                      className="custom-datepicker"
                     />
                   </LocalizationProvider>
                 </Box>
@@ -302,21 +323,29 @@ function Addinterview({ users, setinterviewshow }) {
                   onChange={handleChange1}
                   error={!!durationErrorText}
                   helperText={durationErrorText}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                    max: 120,
+                  }}
                 />
               </Box>
             </Box>
             <Box
               sx={{
                 display: "flex",
-                mt: "40px",
-                justifyContent: "space-around",
+                mt: { xs: "20px", md: "40px" },
+                justifyContent: { xs: "center", md: "space-around" },
+                flexDirection: { xs: "column", md: "row" },
+                gap: { xs: "20px", md: 0 },
+                alignItems: "center",
               }}
             >
               <Box sx={styles.infofldloc}>
                 <FormControl>
                   <InputLabel
                     id="demo-simple-select-label"
-                    style={{ marginLeft: "40px" }}
+                    // style={{ marginLeft: "40px" }}
                   >
                     Select Time Zone
                   </InputLabel>
@@ -343,10 +372,7 @@ function Addinterview({ users, setinterviewshow }) {
               </Box>
               <Box sx={styles.infofldloc}>
                 <FormControl>
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    style={{ marginLeft: "40px" }}
-                  >
+                  <InputLabel id="demo-simple-select-label">
                     Select Event Type
                   </InputLabel>
                   <Select
@@ -388,22 +414,30 @@ function Addinterview({ users, setinterviewshow }) {
               </Box>
             </Box>
           </Box>
-          <Box sx={styles.infofldloc2}>
-            <Typography sx={styles.sectxtloca}>Meeting Link</Typography>
-            <TextField
-              InputLabelProps={{ style: { color: "black" } }}
-              sx={styles.naminput2}
-              id="outlined-basic"
-              value={Time.meetlink}
-              fullWidth
-              name="meetlink"
-              label="Meeting Link"
-              placeholder="Enter Link"
-              variant="outlined"
-              onChange={handleChange1}
-              error={!!meetText}
-              helperText={meetText}
-            />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box sx={styles.infofldloc2}>
+              <Typography sx={styles.sectxtloca}>Meeting Link</Typography>
+              <TextField
+                InputLabelProps={{ style: { color: "black" } }}
+                sx={styles.naminput2}
+                id="outlined-basic"
+                value={Time.meetlink}
+                fullWidth
+                name="meetlink"
+                label="Meeting Link"
+                placeholder="Enter Link"
+                variant="outlined"
+                onChange={handleChange1}
+                error={!!meetText}
+                helperText={meetText}
+              />
+            </Box>
           </Box>
           <Divider />
 
