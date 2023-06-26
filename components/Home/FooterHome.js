@@ -21,11 +21,11 @@ const FooterHome = () => {
   const user = Cookies.get();
   const { push } = useRouter();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCompanyDetails());
-    dispatch(companyJobs());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getCompanyDetails());
+  //   dispatch(companyJobs());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const company = useSelector((state) => state.company?.companyDetl);
   const cjobs = useSelector((state) => state.jobs.companyJobs) || [];
@@ -34,109 +34,110 @@ const FooterHome = () => {
   // const proCOunt = company?.jobCounts?.proCount;
   const preCOunt = company?.jobCounts?.premiumCount;
 
-  const handlePostNewJobClick = () => {
-    if (
-      user?.country === "LK" ||
-      (company.jobSlot === true &&
-        company.package?.paymentStatus === "Completed")
-    ) {
-      if (
-        company.jobSlot === true &&
-        company.package?.paymentStatus === "Completed"
-      ) {
-        dispatch(
-          setEditJob({
-            salary: {},
-            question: [
-              {
-                id: new Date().getTime(),
-                questions: "",
-                answer: "",
-                preferedAns: "",
-              },
-            ],
-            requiredSkill: [],
-            address: [],
-            featureType: false,
-            queshow: "",
-          })
-        ).then(
-          setTimeout(() => {
-            push("/Employer/PostNewJob");
-          }, 500)
-        );
-        return;
-      }
-      // eslint-disable-next-line no-mixed-operators
-      if (
-        (freeCount === 0 && preCOunt === 0) ||
-        (freeCount === 0 && preCOunt === undefined)
-      ) {
-        if (company.package?.subscription_package === undefined) {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Subscribe A Plan To Post A job",
-            })
-          );
-        } else {
-          dispatch(
-            openAlert({
-              type: ERROR,
-              message: "Your Job Limit Was Reached!",
-            })
-          );
-        }
-        push("/Pricing");
-        return;
-      }
+  // const handlePostNewJobClick = () => {
+  //   if (
+  //     user?.country === "LK" ||
+  //     (company.jobSlot === true &&
+  //       company.package?.paymentStatus === "Completed")
+  //   ) {
+  //     if (
+  //       company.jobSlot === true &&
+  //       company.package?.paymentStatus === "Completed"
+  //     ) {
+  //       dispatch(
+  //         setEditJob({
+  //           salary: {},
+  //           question: [
+  //             {
+  //               id: new Date().getTime(),
+  //               questions: "",
+  //               answer: "",
+  //               preferedAns: "",
+  //             },
+  //           ],
+  //           requiredSkill: [],
+  //           address: [],
+  //           featureType: false,
+  //           queshow: "",
+  //         })
+  //       ).then(
+  //         setTimeout(() => {
+  //           push("/Employer/PostNewJob");
+  //         }, 500)
+  //       );
+  //       return;
+  //     }
+  //     // eslint-disable-next-line no-mixed-operators
+  //     if (
+  //       (freeCount === 0 && preCOunt === 0) ||
+  //       (freeCount === 0 && preCOunt === undefined)
+  //     ) {
+  //       if (company.package?.subscription_package === undefined) {
+  //         dispatch(
+  //           openAlert({
+  //             type: ERROR,
+  //             message: "Subscribe A Plan To Post A job",
+  //           })
+  //         );
+  //       } else {
+  //         dispatch(
+  //           openAlert({
+  //             type: ERROR,
+  //             message: "Your Job Limit Was Reached!",
+  //           })
+  //         );
+  //       }
+  //       push("/Pricing");
+  //       return;
+  //     }
 
-      dispatch(
-        setEditJob({
-          salary: {},
-          question: [
-            {
-              id: new Date().getTime(),
-              questions: "",
-              answer: "",
-              preferedAns: "",
-            },
-          ],
-          requiredSkill: [],
-          address: [],
-          featureType: false,
-          queshow: "false",
-          packageType: "",
-        })
-      ).then(
-        setTimeout(() => {
-          push("/Employer/PostNewJob");
-        }, 500)
-      );
-    } else {
-      dispatch(
-        setEditJob({
-          salary: {},
-          question: [
-            {
-              id: new Date().getTime(),
-              questions: "",
-              answer: "",
-              preferedAns: "",
-            },
-          ],
-          requiredSkill: [],
-          address: [],
-          featureType: false,
-          queshow: "",
-        })
-      ).then(
-        setTimeout(() => {
-          push("/Employer/PostNewJob");
-        }, 500)
-      );
-    }
-  };
+  //     dispatch(
+  //       setEditJob({
+  //         salary: {},
+  //         question: [
+  //           {
+  //             id: new Date().getTime(),
+  //             questions: "",
+  //             answer: "",
+  //             preferedAns: "",
+  //           },
+  //         ],
+  //         requiredSkill: [],
+  //         address: [],
+  //         featureType: false,
+  //         queshow: "true",
+  //         packageType: "",
+  //       })
+  //     ).then(
+  //       setTimeout(() => {
+  //         push("/Employer/PostNewJob");
+  //       }, 500)
+  //     );
+  //   } else {
+  //     dispatch(
+  //       setEditJob({
+  //         salary: {},
+  //         question: [
+  //           {
+  //             id: new Date().getTime(),
+  //             questions: "",
+  //             answer: "",
+  //             preferedAns: "",
+  //           },
+  //         ],
+  //         requiredSkill: [],
+  //         address: [],
+  //         featureType: false,
+  //         queshow: "",
+  //       })
+  //     ).then(
+  //       setTimeout(() => {
+  //         push("/Employer/PostNewJob");
+  //       }, 500)
+  //     );
+  //   }
+  // };
+
 
   return (
     <div className="footer">
@@ -226,13 +227,13 @@ const FooterHome = () => {
                   <Link href={"/jobs"}>
                     <StyledTypo>Job Listing</StyledTypo>
                   </Link>
-                  <StyledTypo
+                  {/* <StyledTypo
                     onClick={() => {
                       handlePostNewJobClick();
                     }}
                   >
                     Post New Job
-                  </StyledTypo>
+                  </StyledTypo> */}
                   {/* <StyledTypo>Job Packages</StyledTypo> */}
                 </div>
               </Box>
