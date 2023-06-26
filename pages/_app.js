@@ -8,7 +8,6 @@ import { Inter } from "next/font/google";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
-import { GetCountryIp, useUserIp } from "@/utils/useUserIp";
 import cookies from "js-cookie";
 import axios from "axios";
 
