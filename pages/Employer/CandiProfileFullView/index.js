@@ -233,7 +233,7 @@ const CandiFullProfileView = () => {
   const [cvshow, setcvshow] = useState(false);
   const [open, setOpen] = React.useState(false);
   const enableCvAction = () => {
-    setinterviewshow(false)
+    setinterviewshow(false);
     setcvshow(!cvshow);
   };
   const onChange = (e) => {
@@ -899,7 +899,7 @@ const CandiFullProfileView = () => {
                       <Box sx={{ p: "25px" }}>
                         <Stack spacing={1}>
                           <Box
-                            sx={{display:'flex',flexDirection:'column'}}
+                            sx={{ display: "flex", flexDirection: "column" }}
                           >
                             <CustomTypography
                               className={styles.FullProfileSectionTypo}
@@ -915,7 +915,7 @@ const CandiFullProfileView = () => {
                                   color: "red",
                                 }}
                               >
-                                N/A
+                                N/P
                               </CustomTypography>
                             ) : (
                               <CustomTypography
@@ -1688,22 +1688,30 @@ const CandiFullProfileView = () => {
                                           )}
                                         </CustomTypography>
                                       </Stack>
-                                    { cert?.certificateLink !== undefined ?  <Stack direction={"row"}>
-                                        <CustomTypography
-                                          className={
-                                            styles.FullProfileSectionTypo
-                                          }
-                                        >
-                                          Link :
-                                        </CustomTypography>
-                                        <CustomTypography
-                                          variant="subtitle2"
-                                          className={styles.ViewFullInfoText}
-                                        >
-                                          &nbsp;
-                                          <span><a href={cert?.certificateLink}>{cert?.certificateLink}</a></span>
-                                        </CustomTypography>
-                                      </Stack> : ""}
+                                      {cert?.certificateLink !== undefined ? (
+                                        <Stack direction={"row"}>
+                                          <CustomTypography
+                                            className={
+                                              styles.FullProfileSectionTypo
+                                            }
+                                          >
+                                            Link :
+                                          </CustomTypography>
+                                          <CustomTypography
+                                            variant="subtitle2"
+                                            className={styles.ViewFullInfoText}
+                                          >
+                                            &nbsp;
+                                            <span>
+                                              <a href={cert?.certificateLink}>
+                                                {cert?.certificateLink}
+                                              </a>
+                                            </span>
+                                          </CustomTypography>
+                                        </Stack>
+                                      ) : (
+                                        ""
+                                      )}
                                     </Stack>
                                   </Box>
                                   <IconButton
@@ -2089,7 +2097,14 @@ const CandiFullProfileView = () => {
                   <CustomTypography className={styles.FullProfileSectionTitle}>
                     Schedule Interview
                   </CustomTypography>
-                  <Button onClick={()=>{setinterviewshow(false)}} sx={{textTransform:"capitalize"}}>Close</Button>
+                  <Button
+                    onClick={() => {
+                      setinterviewshow(false);
+                    }}
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    Close
+                  </Button>
                 </Box>
                 <Addinterview
                   setinterviewshow={setinterviewshow}

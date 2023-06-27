@@ -158,13 +158,13 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
         />
       </Box>
       <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton
+        {/* <ListItemButton
           sx={{ display: "flex", justifyContent: "center", height: "80px" }}
           onClick={() => handleListItemClick()}
         >
           <Image src="/empImg.png" alt="" width="40" height="40" />
-        </ListItemButton>
-        <Divider variant="middle" color="gray" />
+        </ListItemButton> */}
+        {/* <Divider variant="middle" color="gray" /> */}
         <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
           <ListItemButton
             sx={{
