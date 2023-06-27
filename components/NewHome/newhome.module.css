@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   padding: 25px;
+  position: relative;
 }
 
 .successBlueBox {
@@ -14,6 +15,7 @@
   flex-direction: column;
   align-items: center;
   padding: 25px;
+  position: relative;
 }
 
 .successImgBox {

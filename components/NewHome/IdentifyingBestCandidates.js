@@ -6,7 +6,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 const IdentifyingBestCandidates = () => {
   return (
     <Box>
-      <Container>
+      <Container sx={{ pb: "150px" }}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Box>
@@ -48,12 +48,17 @@ const IdentifyingBestCandidates = () => {
       </Container>
       <Box
         sx={{
-          backgroundImage: `url("/newhome_images/guaranteed-hiring-bg.svg")`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "725px",
+          bgcolor: "#edfcff",
+          pb: "150px",
         }}
       >
+        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#fff"
+            fill-opacity="1"
+            d="M0,192L60,160C120,128,240,64,360,58.7C480,53,600,107,720,154.7C840,203,960,245,1080,234.7C1200,224,1320,160,1380,128L1440,96L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+          ></path>
+        </svg> */}
         <Container>
           <Grid container spacing={4}>
             <Grid
@@ -85,7 +90,7 @@ const IdentifyingBestCandidates = () => {
             <Grid item xs={12} md={6}>
               <Box>
                 <Image
-                  src="/newhome_images/guaranteed-hiring-img.png"
+                  src="/newhome_images/gyaraneed-hiring.png"
                   alt="Picture of the Guaranteed hiring"
                   priority={true}
                   width="526"
@@ -95,6 +100,13 @@ const IdentifyingBestCandidates = () => {
             </Grid>
           </Grid>
         </Container>
+        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#fff"
+            fill-opacity="1"
+            d="M0,192L60,160C120,128,240,64,360,58.7C480,53,600,107,720,154.7C840,203,960,245,1080,234.7C1200,224,1320,160,1380,128L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+          ></path>
+        </svg> */}
       </Box>
       <Container>
         <Box

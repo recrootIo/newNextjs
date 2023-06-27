@@ -7,13 +7,15 @@ const LevelUp = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url("/newhome_images/guaranteed-hiring-bg.svg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        height: "725px",
+        // backgroundImage: `url("/newhome_images/guaranteed-hiring-bg.svg")`,
+        // backgroundRepeat: "no-repeat",
+        // backgroundSize: "cover",
+        bgcolor: "#edfcff",
+        // height: "725px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        pb: "80px",
       }}
     >
       <Container>
@@ -41,7 +43,7 @@ const LevelUp = () => {
                       priority={true}
                       width="306"
                       height="406"
-                      style={{ position: "absolute", zIndex: 1, top: "4189px" }}
+                      style={{ position: "absolute", zIndex: 1, top: "4482px" }}
                     />
                   </Grid>
                   <Grid
@@ -93,7 +95,7 @@ const LevelUp = () => {
                       priority={true}
                       width="246"
                       height="370"
-                      style={{ position: "absolute", zIndex: 1, top: "4189px" }}
+                      style={{ position: "absolute", zIndex: 1, top: "4482px" }}
                     />
                   </Grid>
                   <Grid

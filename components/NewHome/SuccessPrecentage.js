@@ -6,7 +6,7 @@ import styles from "./newhome.module.css";
 
 const SuccessPrecentage = () => {
   return (
-    <Box sx={{ mt: "80px" }}>
+    <Box sx={{ mt: "80px", mb: "80px" }}>
       <Container>
         <Box
           sx={{
@@ -50,7 +50,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "2649px" }}
+                    style={{
+                      position: "absolute",
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/india-img.png"
@@ -58,7 +64,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="90"
                     height="90"
-                    style={{ position: "absolute", top: "2688px" }}
+                    style={{
+                      position: "absolute",
+                      position: "absolute",
+                      top: "-49px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -86,7 +98,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "2649px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/india-img.png"
@@ -94,7 +111,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="90"
                     height="90"
-                    style={{ position: "absolute", top: "2688px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-49px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -122,7 +144,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "2649px" }}
+                    style={{
+                      position: "absolute",
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/phillipines-img.png"
@@ -130,7 +158,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="70"
                     height="70"
-                    style={{ position: "absolute", top: "2688px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-47px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -158,7 +191,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "2649px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/singapore-img.png"
@@ -166,7 +204,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="100"
                     height="100"
-                    style={{ position: "absolute", top: "2707px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-30px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -196,7 +239,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "3005px" }}
+                    style={{
+                      position: "absolute",
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/dubai-img.png"
@@ -204,7 +253,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="90"
                     height="90"
-                    style={{ position: "absolute", top: "3054px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-39px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -232,7 +286,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "3005px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/australia-img.png"
@@ -240,7 +299,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="90"
                     height="90"
-                    style={{ position: "absolute", top: "3054px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-39px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -268,7 +332,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "3005px" }}
+                    style={{
+                      position: "absolute",
+                      position: "absolute",
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/usa-img.png"
@@ -276,7 +346,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="90"
                     height="90"
-                    style={{ position: "absolute", top: "3054px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-39px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>
@@ -304,7 +379,13 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="180"
                     height="180"
-                    style={{ position: "absolute", top: "3005px" }}
+                    style={{
+                      position: "absolute",
+                      //  bottom: "50%"
+                      top: "-90px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                   <Image
                     src="/newhome_images/uk-img.png"
@@ -312,7 +393,12 @@ const SuccessPrecentage = () => {
                     priority={true}
                     width="60"
                     height="60"
-                    style={{ position: "absolute", top: "3054px" }}
+                    style={{
+                      position: "absolute",
+                      top: "-49px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
                 </Box>
                 <CustomTypography className={styles.successCountryTypo}>

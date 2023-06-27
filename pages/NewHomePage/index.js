@@ -24,7 +24,13 @@ import WatchDemo from "@/components/NewHome/WatchDemo";
 
 const index = () => {
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: `url("/newhome_images/Bubble-BG.png")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
+    >
       <Header title={"Home"} />
       <Navbar />
       <HireTalents />
@@ -39,7 +45,7 @@ const index = () => {
       <WatchDemo />
       <SubscribHome />
       <FooterHome />
-    </>
+    </div>
   );
 };
 
