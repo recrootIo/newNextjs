@@ -9,6 +9,7 @@ import {
   Stack,
   styled,
   Avatar,
+  Tooltip,
 } from "@mui/material";
 import { bull, getImageLogo, getSalary, StyledAvatar } from "./SearchSection";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -97,15 +98,17 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           <>
             <Box className="searchRstBtn" sx={{ mb: "7px" }}>
               {userType === CANDIDATE && (
-                <Button
-                  className="bookmarkBtn"
-                  size="small"
-                  variant="outlined"
-                  bgcolor="#02A9F7 !important"
-                  onClick={() => saveNewJobs(lateJob?._id)}
-                >
-                  <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                </Button>
+                <Tooltip title="Save the Job on Candidate's dashboard">
+                  <Button
+                    className="bookmarkBtn"
+                    size="small"
+                    variant="outlined"
+                    bgcolor="#02A9F7 !important"
+                    onClick={() => saveNewJobs(lateJob?._id)}
+                  >
+                    <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
+                  </Button>
+                </Tooltip>
               )}
 
               <Button

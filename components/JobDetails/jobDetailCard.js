@@ -8,6 +8,7 @@ import {
   CardContent,
   IconButton,
   Container,
+  Tooltip,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
@@ -366,18 +367,20 @@ const JobDetailCard = ({ ...props }) => {
                     }}
                   >
                     {userType === CANDIDATE && (
-                      <IconButton
-                        aria-label="share"
-                        size="large"
-                        sx={{
-                          color: "#02a9f7",
-                          fontSize: "14px",
-                          padding: 0,
-                        }}
-                        onClick={() => handleBookmark()}
-                      >
-                        <BookmarkBorderIcon sx={{ fontSize: "38px" }} />
-                      </IconButton>
+                      <Tooltip title="Save the Job on Candidate's dashboard">
+                        <IconButton
+                          aria-label="share"
+                          size="large"
+                          sx={{
+                            color: "#02a9f7",
+                            fontSize: "14px",
+                            padding: 0,
+                          }}
+                          onClick={() => handleBookmark()}
+                        >
+                          <BookmarkBorderIcon sx={{ fontSize: "38px" }} />
+                        </IconButton>
+                      </Tooltip>
                     )}
 
                     <ShareForm url={loginCallBackURL} title={jobRole} />
