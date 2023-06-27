@@ -52,6 +52,8 @@ export const getServerSideProps = async (context) => {
     limit = 10,
   } = context.query;
 
+  const locale = context?.locale;
+  const country = address ? address : locale === "lk" ? "Sri Lanka" : null;
   const newService = new CompanyData();
   const jobsServices = new jobsService();
 
@@ -89,7 +91,7 @@ export const getServerSideProps = async (context) => {
     props: {
       sectors,
       companies,
-      address,
+      address: country,
       title,
       categories,
       category: Array.isArray(category) ? category : [category],

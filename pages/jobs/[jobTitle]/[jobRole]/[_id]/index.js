@@ -46,7 +46,6 @@ export const getServerSideProps = async (context) => {
     .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
     .then((res) => {
       similar = res.data.posts;
-      console.log(res.data.posts);
     })
     .catch(() => {});
 
