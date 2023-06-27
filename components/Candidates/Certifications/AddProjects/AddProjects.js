@@ -13,11 +13,6 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  // AddProAndThenGet,
-  // EditProjectAndGet,
-  retrievePersonal,
-} from "@/redux/slices/personal";
 import candidateServices from "@/redux/services/candidate.services";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
@@ -25,6 +20,7 @@ import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import * as Yup from "yup";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { clearCertificate, clearProject } from "@/redux/slices/personal";
 
 const FORM_VALIDATION = Yup.object().shape({
   Description: Yup.string().required("Description field is required"),
@@ -57,6 +53,8 @@ const AddProjects = () => {
 
   const gotToProjects = () => {
     dispatch(updateCurrentScreen(""));
+
+    dispatch(clearProject());
   };
 
   const addNewProject = (value) => {
@@ -70,7 +68,7 @@ const AddProjects = () => {
               message: "New Project is added",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotToProjects();
           CalculatePercentage();
         }
       })
@@ -95,7 +93,7 @@ const AddProjects = () => {
               message: "Project is Updated",
             })
           );
-          dispatch(updateCurrentScreen(""));
+          gotToProjects();
           CalculatePercentage();
         }
       })

@@ -32,6 +32,7 @@ import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { ADD, EDIT } from "@/utils/buttnTexts";
 
 const FORM_VALIDATION = Yup.object().shape({
   title: Yup.string().required("Title field is required"),
@@ -150,6 +151,8 @@ const AddTraining = () => {
     }
   }, [training]);
 
+  const buttonText = training?._id ? EDIT : ADD;
+
   return (
     <div>
       <Container>
@@ -261,7 +264,7 @@ const AddTraining = () => {
                           sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                           onClick={() => submitForm()}
                         >
-                          Add
+                          {buttonText}
                         </Button>
                       </Stack>
                     </Stack>

@@ -27,6 +27,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const Navbar = () => {
   // const { data: session } = useSession()
@@ -272,6 +273,21 @@ const Navbar = () => {
 
         <Drawer anchor={"left"} open={openDrawer} onClose={toggleDrawer}>
           <Box role="presentation" sx={{ width: 250 }}>
+            <List>
+              <ListItem
+                disablePadding
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <IconButton onClick={toggleDrawer}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </ListItem>
+            </List>
+
             <List>
               <ListItem disablePadding>
                 <ListItemButton onClick={() => navigate("/")}>

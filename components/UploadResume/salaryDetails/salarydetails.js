@@ -270,8 +270,8 @@ const Salary = ({ ...props }) => {
             <Stack
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: url ? "space-between" : "flex-end",
+                flexDirection: { md: "row", sm: "column", xs: "column" },
+                justifyContent: "space-between",
                 mb: "120px",
               }}
             >
@@ -284,7 +284,6 @@ const Salary = ({ ...props }) => {
                   textAlign: "center",
                   textTransform: "capitalize",
                   marginBottom: "50px",
-                  mt: "24px",
                 }}
                 variant="contained"
                 disabled={!enableNext}
@@ -292,23 +291,23 @@ const Salary = ({ ...props }) => {
                 Search For Jobs
               </Button>
 
-              {url && (
-                <Button
-                  onClick={() => actionNext(true)}
-                  className={!enableNext ? "disabledButtons" : "nextBtn"}
-                  sx={{
-                    height: "50px",
-                    width: "30%",
-                    textAlign: "center",
-                    textTransform: "capitalize",
-                    marginBottom: "50px",
-                  }}
-                  variant="contained"
-                  disabled={!enableNext}
-                >
-                  Apply
-                </Button>
-              )}
+              {/* {url && ( */}
+              <Button
+                onClick={() => actionNext(true)}
+                className={!enableNext ? "disabledButtons" : "nextBtn"}
+                sx={{
+                  height: "50px",
+                  width: { xs: "100%", sm: "30%" },
+                  textAlign: "center",
+                  textTransform: "capitalize",
+                  marginBottom: "50px",
+                }}
+                variant="contained"
+                disabled={!enableNext}
+              >
+                Apply
+              </Button>
+              {/* )} */}
             </Stack>
           </Stack>
         </Box>
