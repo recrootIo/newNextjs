@@ -434,7 +434,7 @@ const Subscriptions = () => {
               <Card
                 sx={{
                   width: "100%",
-                  borderRadius: "10px",
+                  borderRadius: "24px",
                   backgroundImage:
                     'url("/Subscription-card-with-white-top-sectionBG.svg")',
                   backgroundRepeat: "no-repeat",
@@ -596,7 +596,7 @@ const Subscriptions = () => {
                 <Card
                   sx={{
                     width: "100%",
-                    borderRadius: "10px",
+                    borderRadius: "24px",
                     p: "15px",
                     backgroundImage: 'url("/Manage-Payment-card.svg")',
                     backgroundRepeat: "no-repeat",
