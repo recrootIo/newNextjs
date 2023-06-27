@@ -8,7 +8,7 @@ import Image from "next/image";
 import companyservice from "@/redux/services/company.service";
 import http from "@/redux/http-common";
 
-const BrandsHome = () => {
+const BrandsWeWork = () => {
   const newService = new companyservice();
   const [brands, setBrands] = useState([]);
 
@@ -84,7 +84,7 @@ const BrandsHome = () => {
                 style={{
                   textAlign: "center",
                   position: "relative",
-                  fontWeight: "900",
+                  fontWeight: "400",
                   fontSize: "18px",
                 }}
               >
@@ -135,6 +135,7 @@ const BrandsHome = () => {
                 }}
               >
                 <Box className="brandsLogos">
+                  {console.log(getLogo(brand?.logo))}
                   <Image
                     src={getLogo(brand?.logo)}
                     width="0"
@@ -153,4 +154,4 @@ const BrandsHome = () => {
   );
 };
 
-export default BrandsHome;
+export default BrandsWeWork;

@@ -45,6 +45,7 @@ import {
   quesSend,
   roleSet,
   skillSet,
+  skillSetmand,
   titleSet,
 } from "@/redux/slices/job";
 import { v4 as uuidv4 } from "uuid";
@@ -56,6 +57,21 @@ import companyservice from "@/redux/services/company.service";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
+
+const scrollToElement = (section) => {
+  dispatch(updateCurrentScreen(""));
+  let element = null;
+
+  if (section === "add_jobtitle") {
+    element = document.getElementById("add_jobtitle");
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
+    // setMobileOpen(false);
+    return;
+  }
+};
+
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -88,10 +104,10 @@ const JobDetails = () => {
   const title = useSelector((state) => state.jobs?.jobTitle);
   const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
-   const element = document.getElementById("top");
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
+    const element = document.getElementById("top");
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
   }, []);
   useEffect(() => {
     axios
@@ -104,7 +120,9 @@ const JobDetails = () => {
   const errors = useSelector((state) => state.jobs?.error);
 
   const [role, setRole] = useState({ skill: "", id: uuidv4() });
+  const [rolemand, setRolemand] = useState({ skill: "", id: uuidv4() });
   const [roles, setRoles] = useState(jobs && jobs?.requiredSkill);
+  const [rolesmand, setRolesmand] = useState(jobs && jobs?.requiredSkill);
   const [category, setCategory] = useState(false);
 
   const handleChangesRole = (e) => {
@@ -168,6 +186,16 @@ const JobDetails = () => {
     setArrskills([]);
     setLoad(false);
   };
+  const addSkilMand = () => {
+    if (rolemand.skill === "") {
+      return;
+    }
+    setRolesmand([...rolesmand, rolemand]);
+    dispatch(skillSetmand([...rolesmand, rolemand]));
+    setRolemand({ skill: "", id: "" });
+    setArrskillsmand([]);
+    setLoad(false);
+  };
   const [type, setType] = useState([]);
 
   var titleDesc = [];
@@ -191,10 +219,15 @@ const JobDetails = () => {
   const cjobs = useSelector((state) => state.jobs?.companyJobs) || [];
   const [timer, setTimer] = useState(null);
   const [arrskills, setArrskills] = useState([]);
+  const [arrskillsmand, setArrskillsmand] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [load, setLoad] = React.useState(false);
+  const [openmand, setOpenmand] = React.useState(false);
+  const [loadmand, setLoadmand] = React.useState(false);
   const [deletedSkills, setdeletedSkills] = useState([]);
+  const [deletedSkillsmand, setdeletedSkillsmand] = useState([]);
   const loading = open && arrskills.length === 0;
+  const loadingmand = openmand && arrskillsmand.length === 0;
   const freePack = companyDet.package?.subscription_package === "Free";
   const freeCount =
     freePack === true ? (cjobs !== undefined ? 3 - cjobs?.length : 0) : 0;
@@ -218,6 +251,24 @@ const JobDetails = () => {
 
     setTimer(newTimer);
   };
+  const inputChangedmand = (e) => {
+    if (e.target.value === "") {
+      setArrskillsmand([]);
+      setLoadmand(false);
+      return;
+    }
+    setLoadmand(true);
+    clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      if (e.target.value === "") {
+        setArrskillsmand([]);
+        return;
+      }
+      skillApimand(e.target.value);
+    }, 500);
+
+    setTimer(newTimer);
+  };
 
   const skillApi = (skil) => {
     fetch(`https://api.apilayer.com/skills?q=${skil}`, requestOptions)
@@ -227,23 +278,26 @@ const JobDetails = () => {
       })
       .catch((error) => console.warn("error", error));
   };
+  const skillApimand = (skil) => {
+    fetch(`https://api.apilayer.com/skills?q=${skil}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setArrskillsmand(result);
+      })
+      .catch((error) => console.warn("error", error));
+  };
 
-  // const oneskill = skills.filter((w) => w.length !== 1);
-
-  // function searchKeywords(text) {
-  //   let keys = oneskill;
-  //   let re = new RegExp("(" + keys.join("|") + ")", "g");
-  //   return text?.match(re);
-  // }
-
-  // function removeDuplicates(arr) {
-  //   return [...new Set(arr)];
-  // }
 
   const handleKey = (e) => {
     setRole({ skill: e.target.value, id: uuidv4() });
     if (e.keyCode === 13) {
       addSkil();
+    }
+  };
+  const handleKeymand = (e) => {
+    setRolemand({ skill: e.target.value, id: uuidv4() });
+    if (e.keyCode === 13) {
+      addSkilMand();
     }
   };
 
@@ -255,6 +309,15 @@ const JobDetails = () => {
     ]);
     setRoles(values);
     dispatch(skillSet(values));
+  };
+  const handleRemoveMand = (id) => {
+    let values = [...rolesmand].filter((fiel) => fiel.id !== id);
+    setdeletedSkillsmand([
+      ...deletedSkillsmand,
+      [...rolesmand].find((x) => x.id === id).skill,
+    ]);
+    setRolesmand(values);
+    dispatch(skillSetmand(values));
   };
   const handlePack = (e) => {
     dispatch(jobPackType(e.target.value));
@@ -371,7 +434,7 @@ const JobDetails = () => {
 
   return (
     <>
-      <CardContent >
+      <CardContent>
         <Box>
           <CustomTypography
             sx={{
@@ -464,7 +527,7 @@ const JobDetails = () => {
           ) : (
             ""
           )}
-          <Stack spacing={3}>
+          <Stack spacing={3} id="add_jobtitle">
             <Autocomplete
               freeSolo
               id="free-solo-2-demo"
@@ -583,7 +646,7 @@ const JobDetails = () => {
                   <TextField
                     sx={style.txtinput}
                     {...params}
-                    label="Skills"
+                    label="Required Skills"
                     onChange={(e) => {
                       inputChanged(e);
                     }}
@@ -641,6 +704,111 @@ const JobDetails = () => {
                         label={role?.skill}
                         onDelete={() => {
                           handleRemove(role?.id);
+                        }}
+                        sx={{ bgcolor: "#D4F0FC" }}
+                      />
+                    </Box>
+                  ))}
+              </Box>
+            )}
+            <Stack
+              id="add_jobskills"
+              direction="row"
+              spacing={2}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable={false}
+                name="skillsm"
+                sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: { xs: "95%", md: "80%" },
+                }}
+                value={rolemand.skill}
+                onBlurCapture={(e) =>
+                  setRolemand({ skill: e.target.value, id: uuidv4() })
+                }
+                open={openmand}
+                onOpen={() => {
+                  setOpenmand(true);
+                }}
+                onClose={() => {
+                  setOpenmand(false);
+                }}
+                onKeyUp={(e) => {
+                  handleKeymand(e);
+                }}
+                options={arrskillsmand.map((option) => option)}
+                loading={loadingmand}
+                renderInput={(params) => (
+                  <TextField
+                    sx={style.txtinput}
+                    {...params}
+                    label="Mandotary Skills (Optional)"
+                    onChange={(e) => {
+                      inputChangedmand(e);
+                    }}
+                    name="jobRoles"
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                      endAdornment: (
+                        <React.Fragment>
+                          {loadingmand && loadmand ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
+              />
+              <Button
+                sx={{
+                  width: "20%",
+                  bgcolor: "white !important",
+                  color: "#01313F",
+                  textTransform: "capitalize",
+                  display: { xs: "none", md: "block" },
+                  whiteSpace: "nowrap",
+                }}
+                //sx={styles.roleblue2}
+                onClick={() => {
+                  addSkilMand();
+                }}
+                startIcon={<AddIcon />}
+              >
+                Add Skills
+              </Button>
+              <AddIcon
+                onClick={() => {
+                  addSkilMand();
+                }}
+                sx={{ display: { xs: "block", md: "none" }, cursor: "pointer" }}
+              />
+            </Stack>
+            {isEmpty(!jobs?.mandatorySkill) && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              >
+                {jobs?.mandatorySkill &&
+                  jobs?.mandatorySkill.map((role, index) => (
+                    <Box key={index}>
+                      <Chip
+                        label={role?.skill}
+                        onDelete={() => {
+                          handleRemoveMand(role?.id);
                         }}
                         sx={{ bgcolor: "#D4F0FC" }}
                       />

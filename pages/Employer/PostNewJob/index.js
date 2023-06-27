@@ -81,6 +81,7 @@ function PostnewJob() {
   let dispatch = useDispatch();
 
   const final = useSelector((state) => state?.jobs);
+  console.log(final, "u");
   const showq = useSelector((state) => state?.jobs?.queshow);
   const jLoad = useSelector((state) => state?.jobs?.jLoad);
   const packageType = useSelector((state) => state?.jobs?.packageType);
@@ -91,8 +92,8 @@ function PostnewJob() {
     dispatch(updateCurrentScreen(""));
     let element = null;
 
-    if (section === "add_jobskills") {
-      element = document.getElementById("add_jobskills");
+    if (section === "add_jobtitle") {
+      element = document.getElementById("add_jobtitle");
       element.scrollIntoView({
         behavior: "smooth",
       });
@@ -102,6 +103,15 @@ function PostnewJob() {
 
     if (section === "add_packageType") {
       element = document.getElementById("add_packageType");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+      // setMobileOpen(false);
+      return;
+    }
+
+    if (section === "add_jobskills") {
+      element = document.getElementById("add_jobskills");
       element.scrollIntoView({
         behavior: "smooth",
       });
@@ -130,7 +140,7 @@ function PostnewJob() {
 
   React.useEffect(() => {
     dispatch(companyJobs());
-    dispatch(getfreeCount())
+    dispatch(getfreeCount());
     dispatch(getCompanyDetails())
       .then((res) => {
         if (res.error !== undefined) {
@@ -369,12 +379,12 @@ function PostnewJob() {
       });
   };
 
-  console.log(final.details, "quest");
+  console.log(final, "quest");
   function Pages(index, cal) {
-    console.log(index)
+    console.log(index);
     if (index === -1) {
-      setProfiletab({ index: 0, page: <JobDetails /> })
-      return
+      setProfiletab({ index: 0, page: <JobDetails /> });
+      return;
     }
     if (cal === "add" && index <= 2) {
       if (index === 0) {
@@ -395,6 +405,10 @@ function PostnewJob() {
         if (Object.keys(obj).length > 0) {
           return;
         }
+        if (final.jobRole.length === 0) {
+          scrollToElement("add_jobtitle");
+          return;
+        }
         if (final.details.requiredSkill.length === 0) {
           scrollToElement("add_jobskills");
           dispatch(
@@ -411,8 +425,8 @@ function PostnewJob() {
               type: ERROR,
               message: "Please Provide Job Location",
             })
-            );
-            scrollToElement("add_joblocation");
+          );
+          scrollToElement("add_joblocation");
           return;
         }
         if (showq === "") {
@@ -504,11 +518,17 @@ function PostnewJob() {
               message: "Please Fill All Mandotary Details",
             })
           );
-          return
+          return;
         }
         setProfiletab({
           index: 3,
-          page: <Chooseplan postJobs={postJobs} Pages={PagesTwo} postPremJobs={postPremJobs} />,
+          page: (
+            <Chooseplan
+              postJobs={postJobs}
+              Pages={PagesTwo}
+              postPremJobs={postPremJobs}
+            />
+          ),
         });
       }
     }
@@ -533,7 +553,6 @@ function PostnewJob() {
         break;
     }
   };
- 
 
   const [profiletab, setProfiletab] = useState(
     final?.details?.applicationDeadline !== undefined
@@ -545,23 +564,16 @@ function PostnewJob() {
   const postPremJobs = () => {
     setopen(true);
     localStorage.setItem("jobDetail", JSON.stringify(final));
-          setopen(false),
-          router.push("/Employer/Jobpayment?pre=true")
+    setopen(false), router.push("/Employer/Jobpayment?pre=true");
   };
 
-  const steps = (companyDet?.jobSlotGold === true && full === "jSlot") ||
-  companyDet?.package?.subscription_package === "SuperEmployer" ||
-  country === "LK" ||
-  Cid !== undefined ?  [
-    'Job Details',
-    'Essential Information',
-    'Preview',
-  ] : [
-    'Job Details',
-    'Essential Information',
-    'Preview',
-    'Choose Payment'
-  ];
+  const steps =
+    (companyDet?.jobSlotGold === true && full === "jSlot") ||
+    companyDet?.package?.subscription_package === "SuperEmployer" ||
+    country === "LK" ||
+    Cid !== undefined
+      ? ["Job Details", "Essential Information", "Preview"]
+      : ["Job Details", "Essential Information", "Preview", "Choose Payment"];
   return (
     <Employer>
       <Box>
@@ -578,15 +590,20 @@ function PostnewJob() {
           variant="outlined"
           id="top"
         >
-          {console.log(profiletab.index,'index')}
-          <Box sx={{width: 'fit-content', margin: 'auto',mb:3}}>
+          {console.log(profiletab.index, "index")}
+          <Box sx={{ width: "fit-content", margin: "auto", mb: 3 }}>
             <Stepper activeStep={profiletab.index} alternativeLabel>
-        {steps.map((label,index) => (
-          <Step onClick={()=>{Pages(index-1,'add')}} key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+              {steps.map((label, index) => (
+                <Step
+                  onClick={() => {
+                    Pages(index - 1, "add");
+                  }}
+                  key={label}
+                >
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
           </Box>
           {profiletab.index === profiletab.index + 0 ? profiletab.page : ""}
           <Stack
@@ -670,7 +687,7 @@ function PostnewJob() {
                     height: "55px",
                   }}
                 >
-                 Next
+                  Next
                 </Button>
               )
             ) : profiletab.index === 3 ? (

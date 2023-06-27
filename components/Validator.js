@@ -57,8 +57,13 @@ export default function validator(values) {
 // ******************************
 function validateJobTitle(jobTitle, errors) {
   let result = true;
+  let element = null;
   if (!jobTitle || jobTitle === undefined || jobTitle === "") {
     errors.jobTitle = "Job Category is Required";
+    element = document.getElementById("add_jobtitle");
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
     result = false;
   }
   return result;

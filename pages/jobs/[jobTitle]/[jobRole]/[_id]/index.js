@@ -9,14 +9,14 @@ import Navbar from "@/components/Navbar/Navbar";
 import jobsService from "@/redux/services/job.service";
 import searchService from "@/redux/services/search.service";
 
-const JobDetails = ({ job, jobRole, similar }) => {
+const JobDetails = ({ job, jobRole, similar ,count ,appcount}) => {
   return (
     <>
       <Header title={jobRole} description={job?.jobDescription} />
       <Navbar />
       <BackBar />
       <JobDetailCard {...job} />
-      <JobDetail {...job} />
+      <JobDetail {...job} count={count} appcount={appcount}/>
       <SimilarJobs similar={similar} />
       <SubscribHome />
       <FooterHome />
@@ -29,6 +29,8 @@ export const getServerSideProps = async (context) => {
   const newService = new jobsService();
   let job = {};
   let similar = [];
+  let count = 0
+  let appcount = 0
 
   await newService
     .getSingleJob(_id)
@@ -46,7 +48,13 @@ export const getServerSideProps = async (context) => {
     .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
     .then((res) => {
       similar = res.data.posts;
-      console.log(res.data.posts);
+    })
+    .catch(() => {});
+  await searchService
+    .getsaveCount(_id)
+    .then((res) => {
+      count = res?.count
+      appcount=res?.appCount
     })
     .catch(() => {});
 
@@ -56,6 +64,8 @@ export const getServerSideProps = async (context) => {
       jobRole,
       job,
       similar,
+      count,
+      appcount
     },
   };
 };

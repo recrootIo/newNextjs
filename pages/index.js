@@ -1,55 +1,51 @@
 "use client";
 import SignUpHome from "../components/Home/SignUpHome";
 import Box from "@mui/material/Box";
-import SearchHome from "../components/Home/SearchHome";
-import AboutHome from "../components/Home/AboutHome";
-import ExploreServices from "../components/Home/ExploreServices";
-import CategoryHome from "../components/Home/CategoryHome";
-// import GetHiredHome from "../components/GetHired/GetHiredHome";
-import BrandsHome from "../components/Home/BrandsHome";
 import FooterHome from "../components/Home/FooterHome";
 import SubscribHome from "../components/Home/SubscribHome";
-import OurNumHome from "../components/Home/OurNumHome";
-import NicheTechHome from "../components/Home/NicheTechHome";
-import TestimonialHome from "../components/Home/TestimonialHome";
 import Navbar from "../components/Navbar/Navbar";
-import UsersDetailsHome from "../components/Home/UsersDetailsHome";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Cookies from "js-cookie";
 import Header from "@/components/Header";
+import HireTalents from "@/components/NewHome/HireTalents";
+import IdentifyingBestCandidates from "@/components/NewHome/IdentifyingBestCandidates";
+import WhtMakesRecrootDiff from "@/components/NewHome/WhtMakesRecrootDiff";
+import SuccessPrecentage from "@/components/NewHome/SuccessPrecentage";
+import LevelUp from "@/components/NewHome/LevelUp";
+import FeaturedJobs from "@/components/NewHome/FeaturedJobs";
+import WeAreProud from "@/components/NewHome/WeAreProud";
+import BrandsWeWork from "@/components/NewHome/BrandsWeWork";
+import SuccessStories from "@/components/NewHome/SuccessStories";
+import WatchDemo from "@/components/NewHome/WatchDemo";
 
 export default function Home() {
   useEffect(() => {
     AOS.init();
   }, []);
   const user = Cookies.get("token");
- useEffect(() => {
-  const redirect = localStorage.getItem("redirect");
-  if (redirect !== null){
-    localStorage.removeItem("redirect");
-  }
- }, [])
- 
+  useEffect(() => {
+    const redirect = localStorage.getItem("redirect");
+    if (redirect !== null) {
+      localStorage.removeItem("redirect");
+    }
+  }, []);
+
   return (
     <>
       <Header title={"HOME"} />
       <Box sx={{ height: "100%", width: "100%" }}>
         <Navbar />
-
-        {user === undefined ? <SignUpHome /> : ""}
-
-        <SearchHome />
-        <AboutHome />
-        <UsersDetailsHome />
-        <ExploreServices />
-        <CategoryHome />
-        {/* <GetHiredHome /> */}
-        <NicheTechHome />
-        <OurNumHome />
-        <BrandsHome />
-        <TestimonialHome />
+        <HireTalents />
+        <IdentifyingBestCandidates />
+        <SuccessPrecentage />
+        <LevelUp />
+        <FeaturedJobs />
+        <WeAreProud />
+        <BrandsWeWork />
+        <SuccessStories />
+        <WatchDemo />
         <SubscribHome />
         <FooterHome />
       </Box>
