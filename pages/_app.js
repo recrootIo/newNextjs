@@ -23,9 +23,10 @@ export default function App({ Component, pageProps }) {
     let country = "";
 
     try {
-      axios.get(`http://ip-api.com/json/${userIp}`).then((res) => {
+      axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
         country = res?.data?.country;
-        if (country === "Sri Lanka" && !router.asPath.startsWith("/lk/")) {
+        console.log(country, "country");
+        if (country === "LK" && !router.asPath.startsWith("/lk/")) {
           router.push(`/lk${router.asPath}`);
         }
       });
