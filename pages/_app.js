@@ -14,7 +14,8 @@ import axios from "axios";
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["cyrillic"] });
 
-export default function App({ Component, pageProps, country }) {
+export default function App({ Component, pageProps, country, userIp }) {
+  console.log(userIp, "userIp");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -109,5 +110,5 @@ App.getInitialProps = async ({ Component, ctx }) => {
       console.log("Error occurred while fetching country:", error)
     );
 
-  return { pageProps, country };
+  return { pageProps, country, userIp };
 };
