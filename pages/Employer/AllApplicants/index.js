@@ -84,6 +84,7 @@ import EditorToolbar, {
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import companyservice from "@/redux/services/company.service";
+import moment from "moment";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const shadow =
@@ -148,30 +149,29 @@ const AllApplicants = () => {
   //   );
   var name = [...names];
   // var output = [];
+  // var output = name.reduce(function (o, cur) {
+  //   // Get the index of the key-value pair.
+  //   var occurs = o.reduce(function (n, item, i) {
+  //     return item.jobRole === cur.jobRole ? i : n;
+  //   }, -1);
 
-  var output = name.reduce(function (o, cur) {
-    // Get the index of the key-value pair.
-    var occurs = o.reduce(function (n, item, i) {
-      return item.jobRole === cur.jobRole ? i : n;
-    }, -1);
+  //   // If the name is found,
+  //   if (occurs >= 0) {
+  //     // append the current value to its list of values.
+  //     o[occurs]._id = [o[occurs]._id.concat(cur._id)];
 
-    // If the name is found,
-    if (occurs >= 0) {
-      // append the current value to its list of values.
-      o[occurs]._id = [o[occurs]._id.concat(cur._id)];
+  //     // Otherwise,
+  //   } else {
+  //     // add the current item to o (but make sure the value is an array).
+  //     var obj = {
+  //       jobRole: cur.jobRole,
+  //       _id: [cur._id],
+  //     };
+  //     o = o.concat([obj]);
+  //   }
 
-      // Otherwise,
-    } else {
-      // add the current item to o (but make sure the value is an array).
-      var obj = {
-        jobRole: cur.jobRole,
-        _id: [cur._id],
-      };
-      o = o.concat([obj]);
-    }
-
-    return o;
-  }, []);
+  //   return o;
+  // }, []);
 
   // let mergedArray = names.reduce((accumulator, currentValue) => {
   //   let existingObject = accumulator.find(item => item.jobRole === currentValue.jobRole);
@@ -197,6 +197,21 @@ const AllApplicants = () => {
   const { jid } = router.query;
   // const jid = undefined;
   const matching = jid !== undefined;
+ 
+  useEffect(() => {
+    const { array } = router.query;
+    const { status } = router.query;
+    if (array) {
+      const parsedArray = JSON.parse(array);
+      setTitles(parsedArray);
+      setids(parsedArray.map(obj => obj._id))
+    }
+    if (status) {
+      const parsedStatus = JSON.parse(status);
+      setSelected(parsedStatus)
+    }
+  }, [router.query])
+  
   useEffect(() => {
     if (matching) {
       const value = {
@@ -327,64 +342,112 @@ const AllApplicants = () => {
     }
   };
 
-  const handleName = (value) => {
+  const handleName = (e,value) => {
     // const value = val
-    if (Array.isArray(value._id[0])) {
-      value = {
-        jobRole: value?.jobRole,
-        _id: value._id[0],
-      };
-    }
-    const hasbeenSelected = titles.some(
-      (item) => item.jobRole === value?.jobRole
-    );
-    const result = value._id.some((item) => Array.isArray(item))
-      ? ids.some((str) => value._id[0].includes(str))
-      : ids.some((str) => value._id.includes(str));
-    let newArray = [...titles];
-    let arr3 = [...ids];
-    if (hasbeenSelected) {
-      newArray = newArray.filter((f) => f.jobRole !== value.jobRole);
+    const { name, checked } = e.target;
+    // const {
+    //   target: { value },
+    // } = event;
+    if (checked) {
+     const titls = [...ids,value._id]
+      setTitles(
+        // On autofill we get a stringified value.
+        [...titles,{_id:value._id,jobRole:value.jobRole,createdAt:value.createdAt}]
+      );
+      setids([...ids,value._id])
+      if (titls.length === 1) {       
+        setSelectedTemp({ ...selectedTemp, jobTitle: titls });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: titls });
+      }
+      const queryString = JSON.stringify([...titles,{_id:value._id,jobRole:value.jobRole,createdAt:value.createdAt}]);
+      const url = `${window.location.pathname}?array=${encodeURIComponent(queryString)}`;
+      router.push(url, undefined, { shallow: false }); 
+      // router.push(
+      //   {
+      //     pathname: router.pathname,
+      //     query: { array: queryString },
+      //   },
+      //   undefined,
+      //   { shallow: true } // This option prevents the page from rerendering
+      // );
     } else {
-      newArray.push(value);
-    }
-    if (value._id.some((item) => Array.isArray(item))) {
-      if (result === true) {
-        arr3 = arr3.filter((str) => !value._id[0].includes(str));
-      } else {
-        value._id[0].forEach((item) => {
-          if (!arr3.includes(item)) {
-            arr3.push(item);
-          }
-        });
+     let newJobs = titles.filter((arr) => value._id != arr._id);
+     let newIds = ids.filter((arr) => value._id != arr);
+      setTitles(() => [...newJobs]);
+      setids(newIds)
+      if (newIds.length === 1) {       
+        setSelectedTemp({ ...selectedTemp, jobTitle: newIds });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: newIds });
       }
-    } else {
-      if (result === true) {
-        arr3 = arr3.filter((str) => !value._id.includes(str));
-      } else {
-        value._id.forEach((item) => {
-          if (!arr3.includes(item)) {
-            arr3.push(item);
-          }
-        });
-      }
+      const queryString = JSON.stringify(newJobs);
+      const url = `${window.location.pathname}?array=${encodeURIComponent(queryString)}`;
+      router.push(url, url, { shallow: true });
+      // router.push(
+      //   {
+      //     pathname: router.pathname,
+      //     query: { array: queryString },
+      //   },
+      //   undefined,
+      //   { shallow: true } // This option prevents the page from rerendering
+      // );
     }
-    setTitles(() => [...newArray]);
-    setids(() => [...arr3]);
-    if (newArray?.length === 1) {
-      if (newArray[0]._id.some((item) => Array.isArray(item))) {
-        setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id[0] });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id[0] });
-      } else {
-        setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
-      }
-    }
-    const reqObject = {
-      page: 1,
-      data: { status: selectedStatus, job: arr3 || [] },
-    };
-    dispatch(applyJobsdet(reqObject));
+  
+    // if (Array.isArray(value._id[0])) {
+    //   value = {
+    //     jobRole: value?.jobRole,
+    //     _id: value._id[0],
+    //   };
+    // }
+    // const hasbeenSelected = titles.some(
+    //   (item) => item.jobRole === value?.jobRole
+    // );
+    // const result = value._id.some((item) => Array.isArray(item))
+    //   ? ids.some((str) => value._id[0].includes(str))
+    //   : ids.some((str) => value._id.includes(str));
+    // let newArray = [...titles];
+    // let arr3 = [...ids];
+    // if (hasbeenSelected) {
+    //   newArray = newArray.filter((f) => f.jobRole !== value.jobRole);
+    // } else {
+    //   newArray.push(value);
+    // }
+    // if (value._id.some((item) => Array.isArray(item))) {
+    //   if (result === true) {
+    //     arr3 = arr3.filter((str) => !value._id[0].includes(str));
+    //   } else {
+    //     value._id[0].forEach((item) => {
+    //       if (!arr3.includes(item)) {
+    //         arr3.push(item);
+    //       }
+    //     });
+    //   }
+    // } else {
+    //   if (result === true) {
+    //     arr3 = arr3.filter((str) => !value._id.includes(str));
+    //   } else {
+    //     value._id.forEach((item) => {
+    //       if (!arr3.includes(item)) {
+    //         arr3.push(item);
+    //       }
+    //     });
+    //   }
+    // }
+    // setTitles(() => [...newArray]);
+    // setids(() => [...arr3]);
+    // if (newArray?.length === 1) {
+    //   if (newArray[0]._id.some((item) => Array.isArray(item))) {
+    //     setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id[0] });
+    //     setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id[0] });
+    //   } else {
+    //     setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id });
+    //     setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
+    //   }
+    // }
+    // const reqObject = {
+    //   page: 1,
+    //   data: { status: selectedStatus, job: arr3 || [] },
+    // };
+    // dispatch(applyJobsdet(reqObject));
   };
   useEffect(() => {
     const reqObject = {
@@ -409,24 +472,43 @@ const AllApplicants = () => {
     let newArray = [...selectedStatus];
     if (e.target.checked) {
       newArray.push(value);
+      const queryString = JSON.stringify([...selectedStatus,value]);
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { status: queryString },
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     } else {
       newArray = newArray.filter((res) => res !== value);
+      const queryString = JSON.stringify(newArray.filter((res) => res !== value));
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { status: queryString },
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     }
-    setSelected(() => [...newArray]);
-    const onlyTitles = titles.map((o) => o.jobRole);
-    let data = names.filter((item) => onlyTitles.includes(item.jobRole));
-    const arr = data.map((object) => object._id);
+    // setSelected(() => [...newArray]);
+ 
+    // const onlyTitles = titles.map((o) => o.jobRole);
+    // let data = names.filter((item) => onlyTitles.includes(item.jobRole));
+    // const arr = data.map((object) => object._id);
 
-    const reqObject = {
-      page: 1,
-      data: { status: newArray, job: arr },
-      jobid: seeAll?.jobId,
-    };
-    if (seeAll?.state === true) {
-      dispatch(applyJobsdetFilter(reqObject));
-    } else {
-      dispatch(applyJobsdet(reqObject));
-    }
+    // const reqObject = {
+    //   page: 1,
+    //   data: { status: newArray, job: arr },
+    //   jobid: seeAll?.jobId,
+    // };
+    // if (seeAll?.state === true) {
+    //   dispatch(applyJobsdetFilter(reqObject));
+    // } else {
+    //   dispatch(applyJobsdet(reqObject));
+    // }
   };
 
   function roundAndIncrease(decimalNumber) {
@@ -455,7 +537,6 @@ const AllApplicants = () => {
 
   // Rejected email content modal
   const [Modelopen, setModelopen] = React.useState(false);
-  console.log(rejectedTemp.jobTitle, "ss");
   const handleDialogAction = () => {
     setModelopen(!Modelopen);
     const value = {
@@ -605,8 +686,26 @@ const AllApplicants = () => {
     if (typ === "titl") {
       setids(ids.filter((element) => !idds.includes(element)));
       setTitles(titles.filter((_, index) => index !== indexToRemove));
+      const queryString = JSON.stringify(titles.filter((_, index) => index !== indexToRemove));
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { array: queryString },
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     } else {
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
+      const queryString = JSON.stringify(selectedStatus.filter((_, index) => index !== indexToRemove));
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { status: queryString },
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     }
   };
   // const { aid } = router.query;
@@ -860,14 +959,14 @@ const AllApplicants = () => {
                         bgcolor: "background.paper",
                       }}
                     >
-                      {output.map((variant) => {
+                      {name.map((variant) => {
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
                           <ListItem key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
-                              onClick={() => handleName(variant)}
+                              onClick={(e) => handleName(e,variant)}
                               dense
                             >
                               <ListItemIcon>
@@ -875,7 +974,7 @@ const AllApplicants = () => {
                                   edge="start"
                                   checked={
                                     titles.findIndex(
-                                      (item) => item.jobRole === variant.jobRole
+                                      (item) => item._id === variant._id
                                     ) >= 0
                                   }
                                   disableRipple
@@ -886,7 +985,7 @@ const AllApplicants = () => {
                               </ListItemIcon>
                               <ListItemText
                                 id={labelId}
-                                primary={variant?.jobRole}
+                                primary={`${variant?.jobRole} (${moment(variant?.createdAt).format('LLL')})`}
                               />
                             </ListItemButton>
                           </ListItem>
@@ -1327,7 +1426,7 @@ const AllApplicants = () => {
                 {titles.map((tit, index) => (
                   <Chip
                     key={index}
-                    label={tit?.jobRole}
+                    label={`${tit?.jobRole}`}
                     onDelete={() => {
                       handleDelete(index, "titl", tit?._id);
                     }}
