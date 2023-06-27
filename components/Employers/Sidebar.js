@@ -170,13 +170,13 @@ export default function EmployerSidebar() {
       }}
     >
       <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton
+        {/* <ListItemButton
           sx={{ display: "flex", justifyContent: "center" }}
           onClick={() => handleListItemClick()}
         >
           <Image src="/empImg.png" alt="" width="40" height="40" />
         </ListItemButton>
-        <Divider variant="middle" color="gray" />
+        <Divider variant="middle" color="gray" /> */}
 
         <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
           <Tooltip title="Dashboard" placement="right">

@@ -56,6 +56,21 @@ import companyservice from "@/redux/services/company.service";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
+
+const scrollToElement = (section) => {
+  dispatch(updateCurrentScreen(""));
+  let element = null;
+
+  if (section === "add_jobtitle") {
+    element = document.getElementById("add_jobtitle");
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
+    // setMobileOpen(false);
+    return;
+  }
+};
+
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -88,10 +103,10 @@ const JobDetails = () => {
   const title = useSelector((state) => state.jobs?.jobTitle);
   const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
-   const element = document.getElementById("top");
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
+    const element = document.getElementById("top");
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
   }, []);
   useEffect(() => {
     axios
@@ -371,7 +386,7 @@ const JobDetails = () => {
 
   return (
     <>
-      <CardContent >
+      <CardContent>
         <Box>
           <CustomTypography
             sx={{
@@ -464,7 +479,7 @@ const JobDetails = () => {
           ) : (
             ""
           )}
-          <Stack spacing={3}>
+          <Stack spacing={3} id="add_jobtitle">
             <Autocomplete
               freeSolo
               id="free-solo-2-demo"
