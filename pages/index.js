@@ -37,9 +37,6 @@ export default function Home() {
       <Header title={"HOME"} />
       <Box sx={{ height: "100%", width: "100%" }}>
         <Navbar />
-
-        {user === undefined ? <SignUpHome /> : ""}
-
         <HireTalents />
         <IdentifyingBestCandidates />
         <SuccessPrecentage />
