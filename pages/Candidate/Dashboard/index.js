@@ -44,6 +44,7 @@ import { logout } from "@/redux/slices/auth";
 import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
 import styles from "./candiDashboard.module.css";
+import Header from "@/components/Header";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -94,7 +95,7 @@ const Index = () => {
   };
 
   const scrollToElement = (section) => {
-    dispatch(updateCurrentScreen(""))
+    dispatch(updateCurrentScreen(""));
     let element = null;
 
     if (section === "resume_section") {
@@ -374,7 +375,7 @@ const Index = () => {
     dispatch(GetCandsPrefInfo());
     dispatch(getSavedJobs());
     scrollToElement(section);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, section]);
 
   useEffect(() => {
@@ -387,6 +388,7 @@ const Index = () => {
 
   return (
     <div>
+      <Header title={"DASHBOARD"} />
       <Navbar />
       <CandidateProfileHeader {...data} />
       <Container>

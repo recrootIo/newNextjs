@@ -279,6 +279,7 @@ const SearchSection = ({ ...props }) => {
       localStorage.removeItem("redirect");
     }
   }, []);
+
   const {
     sectors,
     companies,
@@ -772,20 +773,11 @@ const SearchSection = ({ ...props }) => {
                           <TuneIcon sx={{ height: "16px" }} />
                         </CustomTypography>
                         <Button
-                          variant="text"
                           size="small"
                           onClick={() => clearSearch()}
+                          variant="outlined"
                         >
-                          <CustomTypography
-                            sx={{
-                              fontSize: 16,
-                              textDecoration: "underline",
-                            }}
-                            color="#777777"
-                            gutterBottom
-                          >
-                            Clear
-                          </CustomTypography>
+                          Clear
                         </Button>
                       </Box>
                       <Stack direction={"row"} sx={{ flexWrap: "wrap" }}>

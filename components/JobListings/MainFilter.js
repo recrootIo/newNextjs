@@ -153,7 +153,7 @@ const MainFilter = ({ ...props }) => {
     let newJobs = names;
 
     if (checked) {
-      setNames([...new Set([...names,name])]);
+      setNames([...new Set([...names, name])]);
       newJobs.push(name);
     } else {
       newJobs = names.filter((arr) => name != arr);
@@ -167,12 +167,13 @@ const MainFilter = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    }, 
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
       undefined,
-    { shallow: true }
+      { shallow: true }
     );
   };
 
@@ -190,16 +191,18 @@ const MainFilter = ({ ...props }) => {
 
     const updatedQueryParams = {
       ...otherParams,
-      experience:[...new Set(newJobs)],
+      experience: [...new Set(newJobs)],
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    },
-        undefined,
-    { shallow: true });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   // const selectCompanies = (re, a) => {
@@ -217,8 +220,8 @@ const MainFilter = ({ ...props }) => {
   //     pathname: router.pathname,
   //     query: updatedQueryParams,
   //   },
-    //   undefined,
-    // { shallow: true });
+  //   undefined,
+  // { shallow: true });
   // };
 
   const selectTheSector = (re) => {
@@ -239,13 +242,15 @@ const MainFilter = ({ ...props }) => {
       sector: [...new Set(newJobs)],
       page: 1,
     };
-      router.push({
+    router.push(
+      {
         pathname: router.pathname,
         query: updatedQueryParams,
-    },
-        undefined,
-    { shallow: true });
-};
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
 
   const handleCateExpandClick = () => {
     setCateExpanded(!cateExpanded);
@@ -269,12 +274,14 @@ const MainFilter = ({ ...props }) => {
       page: 1,
     };
 
-    router.push({
-      pathname: router.pathname,
-      query: updatedQueryParams,
-    },
-        undefined,
-    { shallow: true });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   return (
@@ -286,17 +293,8 @@ const MainFilter = ({ ...props }) => {
           </Typography>
           <TuneIcon sx={{ height: "16px" }} />
         </Stack>
-        <Button variant="text" size="small" onClick={() => clearSearch()}>
-          <CustomTypography
-            sx={{
-              fontSize: 16,
-              textDecoration: "underline",
-            }}
-            color="#777777"
-            gutterBottom
-          >
-            Clear
-          </CustomTypography>
+        <Button variant="outlined" size="small" onClick={() => clearSearch()}>
+          Clear
         </Button>
       </Box>
       <Divider className="divider" variant="middle" />
@@ -317,21 +315,28 @@ const MainFilter = ({ ...props }) => {
         <CardContent
           className="scrollbar"
           id="style-1"
-          sx={{ pt: 0, pb: "0px !important",display:'flex',flexDirection:'column' }}
+          sx={{
+            pt: 0,
+            pb: "0px !important",
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
           {/* <RadioGroup  value={selectedSector}> */}
-            {sectors.map((sec, index) => (
-              <StyledFormLabel
-                key={index}
-                control={<BpCheckbox 
-                  onChange={(e)=>selectTheSector(e)}
+          {sectors.map((sec, index) => (
+            <StyledFormLabel
+              key={index}
+              control={
+                <BpCheckbox
+                  onChange={(e) => selectTheSector(e)}
                   name={sec}
-                  size="small" 
+                  size="small"
                   checked={selectedSector.includes(sec)}
-                  />}
-                label={sec}
-              />
-            ))}
+                />
+              }
+              label={sec}
+            />
+          ))}
           {/* </RadioGroup> */}
         </CardContent>
       </Collapse>
@@ -352,20 +357,27 @@ const MainFilter = ({ ...props }) => {
         <CardContent
           className="scrollbar"
           id="style-1"
-          sx={{ pt: 0, pb: "0px !important" ,display:'flex',flexDirection:'column'}}
+          sx={{
+            pt: 0,
+            pb: "0px !important",
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-            {categories.map((sec, index) => (
-              <StyledFormLabel
-                key={index}
-                control={<BpCheckbox
-                size="small"
-                onChange={(e)=>selectTheCate(e)}
-                checked={selectedCategory.includes(sec)}
-                name={sec}
-                 />}
-                label={sec}
-              />
-            ))}
+          {categories.map((sec, index) => (
+            <StyledFormLabel
+              key={index}
+              control={
+                <BpCheckbox
+                  size="small"
+                  onChange={(e) => selectTheCate(e)}
+                  checked={selectedCategory.includes(sec)}
+                  name={sec}
+                />
+              }
+              label={sec}
+            />
+          ))}
         </CardContent>
       </Collapse>
 
@@ -415,22 +427,29 @@ const MainFilter = ({ ...props }) => {
         </ExpandMore>
       </Box>
       <Collapse in={expExpanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{display:'flex',flexDirection:'column', pt: 0, pb: "0px !important" }}>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            pt: 0,
+            pb: "0px !important",
+          }}
+        >
           {/* <RadioGroup onChange={handleExperience} value={exper[0] || null}> */}
-            {USER_EXPERIENCES.map((ex, index) => (
-              <FormControlLabel
-                key={index}
-                control={
+          {USER_EXPERIENCES.map((ex, index) => (
+            <FormControlLabel
+              key={index}
+              control={
                 <BpCheckbox
-                  size="small" 
+                  size="small"
                   onChange={handleExperience}
                   name={ex}
                   checked={exper.includes(ex)}
-                  />
-                  }
-                label={ex}
-              />
-            ))}
+                />
+              }
+              label={ex}
+            />
+          ))}
           {/* </RadioGroup> */}
         </CardContent>
       </Collapse>
@@ -448,7 +467,14 @@ const MainFilter = ({ ...props }) => {
         </ExpandMore>
       </Box>
       <Collapse in={typeExpanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{display:'flex',flexDirection:'column', pt: 0, pb: "0px !important" }}>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            pt: 0,
+            pb: "0px !important",
+          }}
+        >
           <FormGroup>
             {WORK_PREFERENCE.map((reference, index) => (
               <StyledFormLabel

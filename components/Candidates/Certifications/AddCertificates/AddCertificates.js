@@ -28,6 +28,7 @@ import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import * as YUP from "yup";
 import CalculatePercentage from "@/utils/CalculatePercentange";
+import { ADD, EDIT } from "@/utils/buttnTexts";
 
 export const FORM_VALIDATION = YUP.object().shape({
   title: YUP.string().required("Title field Required"),
@@ -68,7 +69,6 @@ export const FORM_VALIDATION = YUP.object().shape({
 
 const AddCertificates = ({}) => {
   const certOne = useSelector((state) => state.personal.certone);
-  console.log(certOne, "certOne");
   const dispatch = useDispatch();
 
   const gotToCertificates = () => {
@@ -156,6 +156,8 @@ const AddCertificates = ({}) => {
       setTitle("Add Certificates");
     }
   }, [certOne]);
+
+  const buttonText = certOne?._id ? EDIT : ADD;
 
   return (
     <div>
@@ -285,7 +287,7 @@ const AddCertificates = ({}) => {
                           sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                           onClick={() => submitForm()}
                         >
-                          Add
+                          {buttonText}
                         </Button>
                       </Stack>
                     </Stack>

@@ -86,18 +86,10 @@ const ProfileCompletion = () => {
     essen === percent?.personalInfo?.essent?.length
       ? percent?.personalInfo?.essent?.percent
       : 0;
-  const finalPercent =
-    skill +
-    Experience +
-    Education +
-    Certificate +
-    // Social +
-    persanRank +
-    countries +
-    essential;
 
   const getDetailCards = () => {
     let newDetailCard = [];
+
     if (personal?.resume?.resumeFileLocation?.length < 1) {
       newDetailCard.push({
         title: "Add Resume",
@@ -105,59 +97,60 @@ const ProfileCompletion = () => {
         id: "resume_section",
         description: "Add Resume to complete your profile",
       });
-    } else {
-      if (Experience < 10) {
-        newDetailCard.push({
-          title: "Add Experiences",
-          buttonText: "Add Experiences",
-          id: "experience_details_section",
-          description: "Your profile must include at least one work experience",
-        });
-      }
-      if (persanRank + essential + countries < 15) {
-        newDetailCard.push({
-          title: "Add Personal Details",
-          buttonText: "Add Details More",
-          id: "personal_details_section",
-          description: "Add more Personal Details to complete your profile",
-        });
-      }
+    }
 
-      if (Education < 15) {
-        newDetailCard.push({
-          title: "Add Education",
-          buttonText: "Add Education More",
-          id: "education_details_section",
-          description: "Your profile must include at least one education",
-        });
-      }
+    if (Experience < 10) {
+      newDetailCard.push({
+        title: "Add Experiences",
+        buttonText: "Add Experiences",
+        id: "experience_details_section",
+        description: "Your profile must include at least one work experience",
+      });
+    }
 
-      if (Certificate < 10) {
-        newDetailCard.push({
-          title: "Add Certificates",
-          buttonText: "Add Certificates",
-          id: "certificate_details_section",
-          description: " Add Certificates to complete your profile",
-        });
-      }
+    if (persanRank + essential + countries < 15) {
+      newDetailCard.push({
+        title: "Add Personal Details",
+        buttonText: "Add Details More",
+        id: "personal_details_section",
+        description: "Add more Personal Details to complete your profile",
+      });
+    }
 
-      // if (essential + countries < 10) {
-      //   newDetailCard.push({
-      //     title: "Add Essential Details",
-      //     buttonText: "Add Essential Details",
-      //     id: 1,
-      //     description: "Add more Essential Details to complete your profile",
-      //   });
-      // }
+    if (Education < 15) {
+      newDetailCard.push({
+        title: "Add Education",
+        buttonText: "Add Education More",
+        id: "education_details_section",
+        description: "Your profile must include at least one education",
+      });
+    }
 
-      if (skill < 10) {
-        newDetailCard.push({
-          title: "Add Skills ",
-          buttonText: "Add Skills",
-          id: "skills_details_section",
-          description: "Your profile must have a minimum of two skills",
-        });
-      }
+    if (Certificate < 10) {
+      newDetailCard.push({
+        title: "Add Certificates",
+        buttonText: "Add Certificates",
+        id: "certificate_details_section",
+        description: " Add Certificates to complete your profile",
+      });
+    }
+
+    // if (essential + countries < 10) {
+    //   newDetailCard.push({
+    //     title: "Add Essential Details",
+    //     buttonText: "Add Essential Details",
+    //     id: 1,
+    //     description: "Add more Essential Details to complete your profile",
+    //   });
+    // }
+
+    if (skill < 10) {
+      newDetailCard.push({
+        title: "Add Skills ",
+        buttonText: "Add Skills",
+        id: "skills_details_section",
+        description: "Your profile must have a minimum of two skills",
+      });
     }
 
     return newDetailCard;
@@ -172,6 +165,8 @@ const ProfileCompletion = () => {
     dispatch(getPercentage());
     dispatch(retrievePersonal());
   }, [dispatch]);
+
+  console.log(getDetailCards(), "getDetailCards");
 
   if (personal?.profilePercentage < 70 && userType === "Candidate")
     return (

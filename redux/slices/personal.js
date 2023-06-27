@@ -666,6 +666,10 @@ export const clearExperience = createAsyncThunk(
   }
 );
 
+export const clearProject = createAsyncThunk("experience/clear", async (id) => {
+  return;
+});
+
 export const setSection = createAsyncThunk("section/set", async (data) => {
   return data;
 });
@@ -769,6 +773,9 @@ const personalSlice = createSlice({
     [retrieveGetSinCertificate.fulfilled]: (state, action) => {
       state.certone = action.payload;
     },
+    [clearCertificate.fulfilled]: (state, action) => {
+      state.certone = {};
+    },
     [clearSinResume.fulfilled]: (state, action) => {
       state.resume = action.payload;
     },
@@ -853,9 +860,7 @@ const personalSlice = createSlice({
     [clearTraining.fulfilled]: (state, action) => {
       state.training = {};
     },
-    [clearCertificate.fulfilled]: (state, action) => {
-      state.certOne = {};
-    },
+
     [clearExperience.fulfilled]: (state, action) => {
       state.exper = {};
     },
@@ -864,6 +869,9 @@ const personalSlice = createSlice({
     },
     [getSavedJobs.fulfilled]: (state, action) => {
       state.savedJobs = action.payload;
+    },
+    [clearProject.fulfilled]: (state, action) => {
+      state.project = {};
     },
   },
 });
