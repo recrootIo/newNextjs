@@ -270,9 +270,16 @@ const Salary = ({ ...props }) => {
             <Stack
               sx={{
                 display: "flex",
-                flexDirection: { md: "row", sm: "column", xs: "column" },
+                flexDirection: {
+                  lg: "row",
+                  md: "row",
+                  sm: "column",
+                  xs: "column",
+                },
                 justifyContent: "space-between",
+                alignItems: "flex-end",
                 mb: "120px",
+                gap: "10px",
               }}
             >
               <Button
@@ -283,7 +290,6 @@ const Salary = ({ ...props }) => {
                   width: { xs: "100%", sm: "30%" },
                   textAlign: "center",
                   textTransform: "capitalize",
-                  marginBottom: "50px",
                 }}
                 variant="contained"
                 disabled={!enableNext}
@@ -300,7 +306,6 @@ const Salary = ({ ...props }) => {
                   width: { xs: "100%", sm: "30%" },
                   textAlign: "center",
                   textTransform: "capitalize",
-                  marginBottom: "50px",
                 }}
                 variant="contained"
                 disabled={!enableNext}
