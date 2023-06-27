@@ -677,7 +677,7 @@ const CandiFullProfileView = () => {
                         color: "white",
                       }}
                     >
-                      https://Lorem Ipsum
+                      {candidate?.resume?.socialMediaLink?.linkin}
                     </CustomTypography>
                   </Box>
                   <Box
@@ -696,7 +696,7 @@ const CandiFullProfileView = () => {
                         color: "white",
                       }}
                     >
-                      https://Lorem Ipsum
+                      {candidate?.resume?.socialMediaLink?.twitter}
                     </CustomTypography>
                   </Box>
                 </Grid>
