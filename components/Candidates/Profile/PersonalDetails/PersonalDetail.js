@@ -113,7 +113,7 @@ const PersonalDetail = ({ ...data }) => {
                   Youtube :
                 </CustomTypography>
                 <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
-                  {resume.socialMediaLink.utube}
+                  {resume?.socialMediaLink?.utube}
                 </Stack>
               </Stack>
 
@@ -122,7 +122,7 @@ const PersonalDetail = ({ ...data }) => {
                   Twitter :
                 </CustomTypography>
                 <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
-                  {resume.socialMediaLink.twitter}
+                  {resume?.socialMediaLink?.twitter}
                 </Stack>
               </Stack>
             </Stack>
@@ -188,7 +188,7 @@ const PersonalDetail = ({ ...data }) => {
                   Facebook :
                 </CustomTypography>
                 <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
-                  {resume.socialMediaLink.fb}
+                  {resume?.socialMediaLink?.fb}
                 </Stack>
               </Stack>
 
@@ -197,7 +197,7 @@ const PersonalDetail = ({ ...data }) => {
                   LinkedIn :
                 </CustomTypography>
                 <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
-                  {resume.socialMediaLink.linkin}
+                  {resume?.socialMediaLink?.linkin}
                 </Stack>
               </Stack>
             </Stack>
