@@ -107,6 +107,24 @@ const PersonalDetail = ({ ...data }) => {
                 </CustomTypography>
                 <CustomTypography>{resume?.notice}</CustomTypography>
               </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID, flexWrap: "wrap" }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Youtube :
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.socialMediaLink?.utube}
+                </Stack>
+              </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID, flexWrap: "wrap" }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Twitter :
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.socialMediaLink?.twitter}
+                </Stack>
+              </Stack>
             </Stack>
           </Grid>
 
@@ -162,6 +180,24 @@ const PersonalDetail = ({ ...data }) => {
                   {resume?.workPrefence.map((pre, index) => (
                     <CustomTypography key={index}>{pre}</CustomTypography>
                   ))}
+                </Stack>
+              </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID, flexWrap: "wrap" }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  Facebook :
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.socialMediaLink?.fb}
+                </Stack>
+              </Stack>
+
+              <Stack direction={"row"} sx={{ gap: MID, flexWrap: "wrap" }}>
+                <CustomTypography sx={{ fontWeight: "900" }}>
+                  LinkedIn :
+                </CustomTypography>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                  {resume?.socialMediaLink?.linkin}
                 </Stack>
               </Stack>
             </Stack>

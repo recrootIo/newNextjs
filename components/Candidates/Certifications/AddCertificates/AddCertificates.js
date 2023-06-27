@@ -228,11 +228,15 @@ const AddCertificates = ({}) => {
                         <CustomPickers name="issueDate" label="From" />
                         <CustomPickers name="expireDate" label="To" />
                       </Stack>
-                      <Stack direction="row" spacing={2}>
-                        <CustomTextField
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{ justifyContent: "flex-end" }}
+                      >
+                        {/* <CustomTextField
                           label="Certificate link"
-                          name="certificateName"
-                        />
+                          name="certificateLink"
+                        /> */}
                         <Button
                           variant="outlined"
                           component="label"
@@ -259,16 +263,15 @@ const AddCertificates = ({}) => {
                           />
                         </Button>
                       </Stack>
-                      {values?.certificate?.name && (
-                        <Stack
-                          direction={"row"}
-                          sx={{ justifyContent: "flex-end" }}
-                        >
-                          <CustomTypography>
-                            {values?.certificate?.name}
-                          </CustomTypography>
-                        </Stack>
-                      )}
+
+                      <Stack
+                        direction={"row"}
+                        sx={{ justifyContent: "flex-end" }}
+                      >
+                        <CustomTypography>
+                          {values?.certificate?.name || values?.certificateName}
+                        </CustomTypography>
+                      </Stack>
 
                       <Stack direction="row" spacing={2}>
                         <Button

@@ -20,4 +20,8 @@ export const FORM_VALIDATION = YUP.object().shape({
   city: YUP.string().required("City required"),
   totalWorkExperience: YUP.number().required("Years of Experience required"),
   about: YUP.string().required("About required"),
+  utube: YUP.string().url("Invalid YouTube URL"),
+  twitter: YUP.string().url("Invalid Twitter URL"),
+  linkin: YUP.string().url("Invalid LinkedIn URL"),
+  fb: YUP.string().url("Invalid Facebook URL"),
 });
