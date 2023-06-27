@@ -166,8 +166,6 @@ const ProfileCompletion = () => {
     dispatch(retrievePersonal());
   }, [dispatch]);
 
-  console.log(getDetailCards(), "getDetailCards");
-
   if (personal?.profilePercentage < 70 && userType === "Candidate")
     return (
       <Container

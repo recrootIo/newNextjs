@@ -14,26 +14,14 @@ import axios from "axios";
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["cyrillic"] });
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, country }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const GetCountryIp = () => {
-    const userIp = cookies.get("user-ip") ?? "";
-    let country = "";
-
-    try {
-      axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
-        country = res?.data?.country;
-        console.log(country, "country");
-        if (country === "LK" && !router.asPath.startsWith("/lk/")) {
-          router.push(`/lk${router.asPath}`);
-        }
-      });
-    } catch (error) {
-      console.log("Error occurred while fetching country:", error);
+    if (country === "LK" && !router.asPath.startsWith("/lk/")) {
+      router.push(`/lk${router.asPath}`);
     }
-    return country;
   };
 
   useEffect(() => {
@@ -63,9 +51,11 @@ export default function App({ Component, pageProps }) {
     <Provider store={Rstore}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
+
         <div className={`page-container ${loading ? "blur" : ""}`}>
           <Component {...pageProps} className={inter.className} />
         </div>
+
         {loading && (
           <div className="loading-overlay">
             <Loader />
@@ -98,3 +88,26 @@ export default function App({ Component, pageProps }) {
     </Provider>
   );
 }
+
+App.getInitialProps = async ({ Component, ctx }) => {
+  const userIp = cookies.get("user-ip") ?? "";
+  let pageProps = {};
+
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+
+  let country = "";
+
+  await axios
+    .get(`https://ipapi.co/${userIp}/json`)
+    .then((res) => {
+      country = res?.data?.country;
+      console.log(country, "country");
+    })
+    .catch((error) =>
+      console.log("Error occurred while fetching country:", error)
+    );
+
+  return { pageProps, country };
+};
