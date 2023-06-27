@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import jobsS from "../services/job.service";
 const jobsService = new jobsS();
 const initialState = {
-  details: { salary: {}, requiredSkill: [], notice: "" },
+  details: { salary: {}, requiredSkill: [], mandatorySkill: [], notice: "" },
   essential: {
     careerlevel: "",
     experience: "",
@@ -21,6 +21,7 @@ const initialState = {
   featureType: false,
   latejob: [],
   roleType: [],
+  roleTypeMand: [],
   applyIds: [],
   error: {},
   feature: false,
@@ -78,6 +79,9 @@ export const queShow = createAsyncThunk("que/show", async (data) => {
   return data;
 });
 export const skillSet = createAsyncThunk("get/Skill", async (data) => {
+  return data;
+});
+export const skillSetmand = createAsyncThunk("get/Skillmand", async (data) => {
   return data;
 });
 export const essentialSet = createAsyncThunk("set/Essential", async (data) => {
@@ -196,6 +200,9 @@ const jobsSlice = createSlice({
     [skillSet.fulfilled]: (state, action) => {
       state.details.requiredSkill = [...action.payload];
     },
+    [skillSetmand.fulfilled]: (state, action) => {
+      state.details.mandatorySkill = [...action.payload];
+    },
     [descSet.fulfilled]: (state, action) => {
       state.jobDescription = action.payload;
     },
@@ -274,6 +281,7 @@ const jobsSlice = createSlice({
     [setEditJob.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
       state.details.requiredSkill = action.payload.requiredSkill;
+      state.details.mandatorySkill = action?.payload?.mandatorySkill;
       state.jobDescription = action.payload.jobDescription;
       state.jobTitle = action.payload.jobTitle;
       state.jobRole = action.payload.jobRole;
@@ -317,6 +325,7 @@ const jobsSlice = createSlice({
     [singleJobs.fulfilled]: (state, action) => {
       state.queshow = action.payload.queshow;
       state.details.requiredSkill = action.payload.requiredSkill;
+      state.details.mandatorySkill = action.payload.mandatorySkill;
       state.jobDescription = action.payload.jobDescription;
       state.jobTitle = action.payload.jobTitle;
       state.jobRole = action.payload.jobRole;

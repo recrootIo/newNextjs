@@ -370,7 +370,7 @@ function PostnewJob() {
       });
   };
 
-  console.log(final.details, "quest");
+  console.log(final, "quest");
   function Pages(index, cal) {
     console.log(index);
     if (index === -1) {
