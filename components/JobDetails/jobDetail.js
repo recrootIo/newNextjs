@@ -112,7 +112,9 @@ const JobDetail = ({ ...props }) => {
       )
       .catch((res) => console.log(res));
   };
-
+  const compImage = company?.companyLogo?.logo
+    ? getImageLogo(company?.companyLogo?.logo)
+    : "/defaultCompany.svg";
   return (
     <Box
       sx={{
@@ -348,7 +350,7 @@ const JobDetail = ({ ...props }) => {
                         <Avatar
                           className="similarAvatar"
                           alt="logo"
-                          src={getImageLogo(company?.companyLogo?.logo)}
+                          src={compImage}
                           size={100}
                           sx={{
                             "& .MuiAvatar-img": {
