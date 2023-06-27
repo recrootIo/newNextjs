@@ -90,6 +90,11 @@ const getImmediateOpenings = (page) => {
     return response;
   });
 };
+const getsaveCount = (page) => {
+  return http.get(`getSaveJobCount/${page}`).then((response) => {
+    return response?.data;
+  });
+};
 
 const searchService = {
   getLatestJObs,
@@ -99,5 +104,6 @@ const searchService = {
   ImmediateJobs,
   getImmediateOpenings,
   getSingleImmediateJobs,
+  getsaveCount
 };
 export default searchService;

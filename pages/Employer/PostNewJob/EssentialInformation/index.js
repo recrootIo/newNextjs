@@ -37,6 +37,7 @@ import {
   immediateSet,
   salarySet,
   skillSet,
+  skillSetmand,
 } from "@/redux/slices/job";
 import moment from "moment";
 import {
@@ -81,6 +82,7 @@ const EssentialInformation = () => {
   const jobs = useSelector((state) => state.jobs.details);
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
+  const rolesmand = useSelector((state) => state.jobs.details.mandatorySkill);
   const immediate = useSelector((state) => state.jobs.immediate);
   const jobsmeen = useSelector((state) => state.jobs);
   const country = Cookies.get("country");
@@ -113,6 +115,7 @@ const EssentialInformation = () => {
         })
       );
       dispatch(skillSet([...roles]));
+      dispatch(skillSetmand([...rolesmand]));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs]);
@@ -136,6 +139,7 @@ const EssentialInformation = () => {
     });
     dispatch(detailsSet({ ...datas, [name]: value, salary }));
     dispatch(skillSet([...roles]));
+    dispatch(skillSetmand([...rolesmand]));
   };
 
   const handleChangeDate = (newValue) => {
@@ -153,6 +157,7 @@ const EssentialInformation = () => {
       })
     );
     dispatch(skillSet([...roles]));
+    dispatch(skillSetmand([...rolesmand]));
   };
   const handleChangesSalary = (e) => {
     if (e.target.value === "noprovide") {
@@ -162,6 +167,7 @@ const EssentialInformation = () => {
         })
       );
       dispatch(skillSet([...roles]));
+      dispatch(skillSetmand([...rolesmand]));
     } else {
       let { name, value } = e.target;
       setSalary({
@@ -170,6 +176,7 @@ const EssentialInformation = () => {
       });
       dispatch(salarySet({ ...salary, [name]: value }));
       dispatch(skillSet([...roles]));
+      dispatch(skillSetmand([...rolesmand]));
     }
   };
 
