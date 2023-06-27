@@ -57,20 +57,6 @@ import { getCompanyDetails } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 
-const scrollToElement = (section) => {
-  dispatch(updateCurrentScreen(""));
-  let element = null;
-
-  if (section === "add_jobtitle") {
-    element = document.getElementById("add_jobtitle");
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
-    // setMobileOpen(false);
-    return;
-  }
-};
-
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -663,7 +649,7 @@ const JobDetails = () => {
                   ))}
               </Box>
             )}
-            <Address id="add_joblocation" />
+            <Address />
             <Box className="questions" id="screening_ques">
               {" "}
               <ScreeningQuestions />
