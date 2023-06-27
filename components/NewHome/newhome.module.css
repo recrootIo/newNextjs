@@ -1,0 +1,113 @@
+.successGreyBox {
+  border-radius: 20px;
+  background-color: #ebf3ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+
+.successBlueBox {
+  border-radius: 20px;
+  background-color: #dbfdff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+}
+
+.successImgBox {
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  height: 75px;
+}
+
+.successCountryTypo {
+  font-size: 28px;
+  font-weight: 600;
+  color: #01313f;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.successPrecentageTypo {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1097cd;
+  text-align: center;
+}
+
+.FeaturedjobsCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
+  border-radius: 10px;
+  padding-top: 0;
+  background-image: url("/similar-jobs-card-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.featuredAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.featurediconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.featuredText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+
+.featuredInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 75%;
+}
+
+.featuredTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  /* margin-bottom: 15px; */
+}
+
+.featuredTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+@media only screen and (max-width: 600px) {
+  .FeaturedjobsCard {
+    width: 100%;
+  }
+}
+
+.watchDemo {
+  /* background: linear-gradient(98.12deg, #034275 -3.27%, #02a9f7 93.69%); */
+  background-image: url("/NicheSectionBG.svg");
+  color: white;
+  min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
