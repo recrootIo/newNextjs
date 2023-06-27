@@ -207,7 +207,6 @@ const Members = () => {
   };
 
   const member = useSelector((state) => state.company.members);
-
   const getMember = () => {
     axios
       .get(`https://preprod.recroot.au/api/getMember/${companyId}`, {
@@ -227,7 +226,9 @@ const Members = () => {
 
   const [memberrole, setMemberrole] = useState(member);
   useEffect(() => {
-    setMemberrole(member);
+    if (member.length !== 0) {
+      setMemberrole(member);
+    }
   }, [member]);
 
   var mems = [];
@@ -481,7 +482,6 @@ const Members = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.profileMember);
   }, [company?.tours?.profileMember]);
-
   return (
     <>
       <Employer>
@@ -498,6 +498,7 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor:'pointer'
             }}
             onClick={() => {
               push("/Employer/CompanyProfile");
@@ -593,7 +594,9 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
+              cursor:'pointer'
             }}
+            onClick={()=>{ push("/Employer/CompanyPreview");}}
           >
             <Box
               sx={{
@@ -938,7 +941,7 @@ const Members = () => {
                             mt: { xs: "normal", sm: "0px !important" },
                           }}
                         >
-                          <FormControl sx={{ width: "100%", bgcolor: "white" }}>
+                          <FormControl disabled={member?.memberId === ""} sx={{ width: "100%", bgcolor: "white" }}>
                             <InputLabel
                               id="demo-simple-select-label"
                               sx={{ color: "#BAD4DF" }}

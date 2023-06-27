@@ -224,7 +224,8 @@ const CompanyProfile = () => {
 
   const handleBlur = (e, msg) => {
     console.log("object1");
-    e.preventDefault();
+    // e.preventDefault();
+    e.stopPropagation();
     if (e.target.name === "cmpemail") {
       let result = re.test(String(e.target.value).toLowerCase());
       if (!result) {
@@ -235,9 +236,14 @@ const CompanyProfile = () => {
     if (e.target.value === "") {
       return;
     }
-    dispatch(updateFinaldetails(final)).then(
-      dispatch(openAlert({ type: SUCCESS, message: msg }))
-    );
+    dispatch(updateFinaldetails(final)).then((res)=>{
+console.log(res,'res')
+if (res?.meta?.requestStatus === "fulfilled") {
+  dispatch(
+    openAlert({ type: SUCCESS, message:msg })
+  )
+}
+    });
   };
   const handleBlurDes = (value) => {
     if (value.index === 0) {
@@ -247,7 +253,6 @@ const CompanyProfile = () => {
     dispatch(
       openAlert({ type: SUCCESS, message: "Company Description Was Updated" })
     );
-    handleClick();
   };
   const [open1, setOpen1] = React.useState(false);
   const [message, setmessage] = React.useState("");

@@ -116,6 +116,12 @@ const EssentialInformation = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobs]);
+  useEffect(() => {
+    const element = document.getElementById("top");
+       element.scrollIntoView({
+         behavior: "smooth",
+       });
+   }, []);
   const [datas, setDatas] = useState({
     jobType: jobs && jobs.jobType,
     applicationDeadline: jobs && jobs.applicationDeadline,
@@ -264,22 +270,7 @@ const EssentialInformation = () => {
 
   return (
     <>
-      <Box className="essentialInfo">
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            mt: "10px",
-            mb: "10px",
-          }}
-        >
-          <Image
-            src="/post-newjob-secondstep-img.png"
-            alt=""
-            width="320"
-            height="20"
-          />
-        </Box>
+      <Box  className="essentialInfo">
         <CustomTypography
           sx={{
             color: "#034275",

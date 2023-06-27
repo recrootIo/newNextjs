@@ -88,6 +88,12 @@ const JobDetails = () => {
   const title = useSelector((state) => state.jobs?.jobTitle);
   const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
+   const element = document.getElementById("top");
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+  }, []);
+  useEffect(() => {
     axios
       .get("https://preprod.recroot.au/api/getTypesJobs", {
         headers: { "x-access-token": `${user?.token}` },
@@ -365,23 +371,8 @@ const JobDetails = () => {
 
   return (
     <>
-      <CardContent>
+      <CardContent >
         <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              mt: "10px",
-              mb: "10px",
-            }}
-          >
-            <Image
-              src="/post-newjob-firststep-img.png"
-              alt=""
-              width="320"
-              height="20"
-            />
-          </Box>
           <CustomTypography
             sx={{
               color: "#034275",

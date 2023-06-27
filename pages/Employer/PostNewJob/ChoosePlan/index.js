@@ -4,6 +4,8 @@ import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import React from "react";
 import { useSelector } from "react-redux";
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import { useEffect } from "react";
 const BasicButton = styled(Button)({
   color: "#ffff",
   padding: "10px",
@@ -18,10 +20,15 @@ function Chooseplan(props) {
   const country = Cookies.get("country");
   const jobCount = useSelector((data) => data.jobs.freeCount);
   const loading = useSelector((state) => state?.jobs?.loading);
-  console.log(jobCount.count, "check");
+  useEffect(() => {
+    const element = document.getElementById("top");
+       element.scrollIntoView({
+         behavior: "smooth",
+       });
+   }, []);
   return (
-    <div>
-      <Typography variant="h5" fontWeight={600} textAlign={"center"} mb={5}>
+    <div >
+       <Typography variant="h5" fontWeight={600} textAlign={"center"} mb={5}>
         Choose the ideal method to post your job based on your hiring needs
       </Typography>
     {  jobCount.count >= 3 ? (  <Typography
@@ -37,6 +44,9 @@ function Chooseplan(props) {
       >
         Your free job limit has been reached
       </Typography>) : ""}
+      <Box>
+        <Button onClick={()=>{props?.Pages(2)}}><ArrowBackRoundedIcon /> Back</Button>
+      </Box>
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Card
           sx={{
