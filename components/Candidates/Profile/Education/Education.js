@@ -139,7 +139,7 @@ const Education = ({ ...resume }) => {
                 <Grid item md={6} sm={12} xs={12}>
                   <Stack
                     direction={"row"}
-                    sx={{ gap: "10px", flexWrap: "wrap" }}
+                    sx={{ gap: "3px", flexWrap: "wrap" }}
                   >
                     <CustomTypography
                       sx={{ fontWeight: "700", flexWrap: "wrap" }}
@@ -151,7 +151,7 @@ const Education = ({ ...resume }) => {
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                  <Stack direction={"row"} sx={{ gap: "3px" }}>
                     <CustomTypography sx={{ fontWeight: "700" }}>
                       Institute:
                     </CustomTypography>
@@ -160,7 +160,7 @@ const Education = ({ ...resume }) => {
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                  <Stack direction={"row"} sx={{ gap: "3px" }}>
                     <CustomTypography sx={{ fontWeight: "700" }}>
                       From:
                     </CustomTypography>
@@ -171,7 +171,7 @@ const Education = ({ ...resume }) => {
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                  <Stack direction={"row"} sx={{ gap: "3px" }}>
                     <CustomTypography sx={{ fontWeight: "700" }}>
                       To:
                     </CustomTypography>
@@ -182,7 +182,7 @@ const Education = ({ ...resume }) => {
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                  <Stack direction={"row"} sx={{ gap: "3px" }}>
                     <CustomTypography sx={{ fontWeight: "700" }}>
                       Location:
                     </CustomTypography>
@@ -193,7 +193,7 @@ const Education = ({ ...resume }) => {
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12}>
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                  <Stack direction={"row"} sx={{ gap: "3px" }}>
                     <CustomTypography sx={{ fontWeight: "700" }}>
                       Specialization:
                     </CustomTypography>
