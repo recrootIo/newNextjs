@@ -135,7 +135,6 @@ const BrandsHome = () => {
                 }}
               >
                 <Box className="brandsLogos">
-                  {console.log(getLogo(brand?.logo))}
                   <Image
                     src={getLogo(brand?.logo)}
                     width="0"
