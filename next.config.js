@@ -10,6 +10,7 @@ const nextConfig = {
   reactStrictMode: false,
   transpilePackages: ["@mui/material/css"],
   images: {
+    unoptimized: false,
     domains: [
       "localhost",
       "preprod.recroot.au",

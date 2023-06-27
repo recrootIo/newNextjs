@@ -50,6 +50,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import dynamic from "next/dynamic";
 import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
+import { useRouter } from "next/router";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -82,12 +83,20 @@ const ScheduledInterviews = () => {
   const [names, setNames] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
-
+ const router = useRouter()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     if (names.length === 0) {
       setUser(arry);
     }
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { status: 'queryString' },
+      },
+      undefined,
+      { shallow: true } // This option prevents the page from rerendering
+    );
   };
 
   const open = Boolean(anchorEl);

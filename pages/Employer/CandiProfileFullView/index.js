@@ -270,7 +270,8 @@ const CandiFullProfileView = () => {
     if (canId) {
       router.back();
     } else {
-      router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
+      router.back();
+      // router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
     }
   };
 
