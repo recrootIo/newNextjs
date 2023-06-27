@@ -16,6 +16,7 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 import { Box } from "@mui/material";
+import { useEffect } from "react";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -101,9 +102,26 @@ ColorlibStepIcon.propTypes = {
   icon: PropTypes.node,
 };
 
-const steps = ["Select Resume", "Create an ad group", "Create an ad"];
 
 export default function ApplyJobStepper(activeStep) {
+
+  const steps = activeStep.hasQuestions ? ["Select Resume", "Create an ad group",  "Create an ad"] : ["Select Resume", "Create an ad"];
+  
+  const handleNavigate =(ind)=>{
+    if (ind === 2 ) {
+      activeStep.setCurrentScreen('review')
+    }
+    if (ind === 0) {
+      activeStep.setCurrentScreen('upload')
+    }
+    if (ind === 1) {
+      if (activeStep.hasQuestions) {
+        activeStep.setCurrentScreen('quize')
+      }else{
+      activeStep.setCurrentScreen('review')
+      }
+    }
+  }
   return (
     <Box
       sx={{
@@ -119,8 +137,8 @@ export default function ApplyJobStepper(activeStep) {
           activeStep={activeStep.activeStep}
           connector={<ColorlibConnector />}
         >
-          {steps.map((label) => (
-            <Step key={label}>
+          {steps.map((label,index) => (
+            <Step onClick={()=>{handleNavigate(index)}} key={label}>
               <StepLabel StepIconComponent={ColorlibStepIcon}></StepLabel>
             </Step>
           ))}
