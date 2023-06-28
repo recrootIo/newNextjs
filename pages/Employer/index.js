@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import FooterHome from "@/components/Home/FooterHome";
 import EmployerMobileSidebar from "@/components/Employers/EmployerMobileSidebar/EmployerMobileSidebar";
 import { Inter } from "next/font/google";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -278,5 +279,4 @@ function Employer({ children }) {
     </div>
   );
 }
-
-export default Employer;
+export default dynamic(() => Promise.resolve(Employer), { ssr: false });
