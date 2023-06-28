@@ -169,7 +169,7 @@ const Navbar = () => {
 
                   {userType === "Candidate" ? (
                     <Link
-                      href={"/Candidate/Dashboard"}
+                      href={"/candidate/dashboard"}
                       style={{
                         fontSize: "17px",
                         color: "black",

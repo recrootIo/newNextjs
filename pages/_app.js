@@ -15,34 +15,40 @@ import axios from "axios";
 const inter = Inter({ subsets: ["cyrillic"] });
 
 export default function App({ Component, pageProps }) {
+  console.log(pageProps, "Component");
+
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const { pathname, asPath, query } = router;
+
   const GetCountryIp = async () => {
     const userIp = cookies.get("user-ip") ?? "";
-    setLoading(true);
+    // setLoading(true);
 
     try {
       await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
         const country = res?.data?.country;
 
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
-          const excluded = ["/lk/Employer/Dashboard"];
-          const newPaths = `/lk${router.asPath}`;
+          // const excluded = ["lk/Employer/Dashboard"];
+          // const newPaths = `lk${router.asPath}`;
+          router.push({ pathname, query }, asPath, { locale: "lk" });
 
-          if (excluded.includes(newPaths) || router.asPath === "/") {
-            if (newPaths === "/lk/Employer/Dashboard") {
-              router.push(`/Employer/Dashboard`);
-            } else {
-              router.push(`/${router.asPath}`);
-            }
-          } else {
-            if (newPaths === "/lk/Employer/Dashboard") {
-              router.push(`/Employer/Dashboard`);
-            } else {
-              router.push(`/${router.asPath}`);
-            }
-          }
+          // if (excluded.includes(newPaths) || router.asPath === "/") {
+          //   if (newPaths === "lk/Employer/Dashboard") {
+          //     router.push(`Employer/Dashboard`);
+          //   } else {
+          //     router.push(`/${router.asPath}`);
+          //   }
+          // } else {
+          //   if (newPaths === "lk/Employer/Dashboard") {
+          //     router.push(`Employer/Dashboard`);
+          //   } else {
+          //     router.push(`/${router.asPath}`);
+          //    router.push({ pathname, query }, asPath, { locale: nextLocale });
+          //   }
+          // }
         }
 
         setLoading(false);
