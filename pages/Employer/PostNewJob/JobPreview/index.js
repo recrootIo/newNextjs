@@ -74,7 +74,7 @@ const JobPreview = (props) => {
   const descript = useSelector((state) => state.jobs.jobDescription);
   const level = useSelector((state) => state.jobs.jobRole);
   const showq = useSelector((state) => state.jobs.queshow);
-  
+
   const [isTourOpen, setTourOpen] = React.useState(false);
 
   const salaryType = details && details.salary.salaryType;
@@ -150,14 +150,39 @@ const JobPreview = (props) => {
   }, [company?.tours?.jobPreview]);
   useEffect(() => {
     const element = document.getElementById("top");
-       element.scrollIntoView({
-         behavior: "smooth",
-       });
-   }, []);
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
-      <CardContent>
+      <CardContent sx={{ position: "relative" }}>
         <Box className="previewJob">
+          <Image
+            src="/corn-img.png"
+            alt="Corn image for the background"
+            priority={true}
+            width="200"
+            height="200"
+            style={{
+              position: "absolute",
+              zIndex: 1,
+              top: "450px",
+              left: "500px",
+            }}
+          />
+          <Image
+            src="/shaded-ring-ng.png"
+            alt="Corn image for the background"
+            priority={true}
+            width="200"
+            height="200"
+            style={{
+              position: "absolute",
+              zIndex: 1,
+              top: "-169px",
+            }}
+          />
           <CustomTypography
             sx={{
               color: "#034275",

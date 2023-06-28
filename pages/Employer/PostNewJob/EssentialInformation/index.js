@@ -121,10 +121,10 @@ const EssentialInformation = () => {
   }, [jobs]);
   useEffect(() => {
     const element = document.getElementById("top");
-       element.scrollIntoView({
-         behavior: "smooth",
-       });
-   }, []);
+    element.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, []);
   const [datas, setDatas] = useState({
     jobType: jobs && jobs.jobType,
     applicationDeadline: jobs && jobs.applicationDeadline,
@@ -277,7 +277,7 @@ const EssentialInformation = () => {
 
   return (
     <>
-      <Box  className="essentialInfo">
+      <Box className="essentialInfo">
         <CustomTypography
           sx={{
             color: "#034275",
@@ -292,6 +292,7 @@ const EssentialInformation = () => {
         <Stack spacing={3}>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <FormControl
+              id="add_careerlevel"
               sx={{
                 ...style.txtinput,
                 bgcolor: "white",
@@ -326,6 +327,7 @@ const EssentialInformation = () => {
               )}
             </FormControl>
             <FormControl
+              id="add_experience"
               sx={{
                 ...style.txtinput,
                 bgcolor: "white",
@@ -361,6 +363,7 @@ const EssentialInformation = () => {
           </Stack>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <FormControl
+              id="add_qualification"
               sx={{
                 ...style.txtinput,
                 bgcolor: "white",
@@ -395,7 +398,7 @@ const EssentialInformation = () => {
                 </FormHelperText>
               )}
             </FormControl>
-            <Box sx={{ width: "100%" }}>
+            <Box sx={{ width: "100%" }} id="add_deadline">
               <LocalizationProvider
                 dateAdapter={AdapterDateFns}
                 style={{ width: { xs: "100%", sm: "50%" }, bgcolor: "white" }}
@@ -442,7 +445,10 @@ const EssentialInformation = () => {
               )}
             </Box>
           </Stack>
-          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+          <FormControl
+            sx={{ ...style.txtinput, bgcolor: "white" }}
+            id="add_noticeperiod"
+          >
             <InputLabel id="demo-simple-select-label">Notice Period</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -469,7 +475,10 @@ const EssentialInformation = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+          <FormControl
+            id="add_jobType"
+            sx={{ ...style.txtinput, bgcolor: "white" }}
+          >
             <InputLabel id="demo-simple-select-label">Job Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -494,7 +503,10 @@ const EssentialInformation = () => {
               </FormHelperText>
             )}
           </FormControl>
-          <FormControl sx={{ ...style.txtinput, bgcolor: "white" }}>
+          <FormControl
+            id="add_salaryType"
+            sx={{ ...style.txtinput, bgcolor: "white" }}
+          >
             <InputLabel id="demo-simple-select-label">Salary Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -528,6 +540,7 @@ const EssentialInformation = () => {
           ) : (
             <Stack direction="row" spacing={2}>
               <FormControl
+                id="add_salaryCurrency"
                 sx={{
                   ...style.txtinput,
                   bgcolor: "white",
@@ -562,7 +575,7 @@ const EssentialInformation = () => {
                 )}
               </FormControl>
               <TextField
-                id="outlined-basic"
+                id="add_minSalary"
                 label="Min Salary"
                 value={jobs.salary && jobs.salary.minSalary}
                 onChange={(e) => {
@@ -581,7 +594,7 @@ const EssentialInformation = () => {
                 }}
               />
               <TextField
-                id="outlined-basic"
+                id="add_maxSalary"
                 value={jobs.salary && jobs.salary.maxSalary}
                 onChange={(e) => {
                   handleChangesSalary(e);
@@ -602,7 +615,7 @@ const EssentialInformation = () => {
             </Stack>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
-          companyDet?.package?.subscription_package === "SuperEmployer"  ? (
+          companyDet?.package?.subscription_package === "SuperEmployer" ? (
             <Box>
               <FormGroup>
                 <FormControlLabel
