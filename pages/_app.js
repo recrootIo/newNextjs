@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }) {
           // const excluded = ["lk/Employer/Dashboard"];
           // const newPaths = `lk${router.asPath}`;
           router.push({ pathname, query }, asPath, { locale: "lk" });
+          console.log("");
 
           // if (excluded.includes(newPaths) || router.asPath === "/") {
           //   if (newPaths === "lk/Employer/Dashboard") {
