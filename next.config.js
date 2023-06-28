@@ -3,11 +3,17 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+
   i18n: {
+    localeDetection: true,
     locales: ["en-US", "lk"],
     defaultLocale: "en-US",
   },
+
+  trailingSlash: false,
+
   reactStrictMode: false,
+
   transpilePackages: ["@mui/material/css"],
   images: {
     unoptimized: false,
