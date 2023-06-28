@@ -33,8 +33,13 @@ export default function App({ Component, pageProps }) {
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
           // const excluded = ["lk/Employer/Dashboard"];
           // const newPaths = `lk${router.asPath}`;
-          router.push({ pathname, query }, asPath, { locale: "lk" });
-          console.log("");
+
+          if (asPath.includes("Employer")) {
+            console.log(pathname, "pathname");
+            router.push({ pathname, query }, asPath);
+          } else {
+            router.push({ pathname, query }, asPath, { locale: "lk" });
+          }
 
           // if (excluded.includes(newPaths) || router.asPath === "/") {
           //   if (newPaths === "lk/Employer/Dashboard") {
