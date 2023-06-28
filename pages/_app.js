@@ -29,7 +29,8 @@ export default function App({ Component, pageProps }) {
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
           const excluded = ["/lk/Employer/Dashboard"];
           const newPaths = `/lk${router.asPath}`;
-          if (excluded.includes(newPaths) || newPaths === "/") {
+          if (excluded.includes(newPaths) || router.asPath === "/") {
+            router.push(`/${router.asPath}`);
           } else {
             router.push(newPaths);
           }
