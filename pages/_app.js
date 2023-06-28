@@ -18,16 +18,23 @@ export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const GetCountryIp = () => {
+  const GetCountryIp = async () => {
     const userIp = cookies.get("user-ip") ?? "";
     setLoading(true);
+
     try {
-      axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
+      await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
         const country = res?.data?.country;
-        console.log(country, "country");
+
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
-          router.push(`/lk${router.asPath}`);
+          const excluded = ["/lk/Employer/Dashboard"];
+          const newPaths = `/lk${router.asPath}`;
+          if (excluded.includes(newPaths) || newPaths === "/") {
+          } else {
+            router.push(newPaths);
+          }
         }
+
         setLoading(false);
       });
     } catch (error) {
@@ -38,6 +45,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     GetCountryIp();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
