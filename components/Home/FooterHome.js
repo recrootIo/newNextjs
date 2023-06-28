@@ -138,7 +138,6 @@ const FooterHome = () => {
   //   }
   // };
 
-
   return (
     <div className="footer">
       <Box
@@ -182,22 +181,27 @@ const FooterHome = () => {
               <div
                 style={{
                   display: "flex",
-                  alignItems: { md: "flex-start", sm: "center", xs: "center" },
-                  justifyContent: {
-                    md: "flex-start",
-                    sm: "center",
-                    xs: "center",
-                  },
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <Image
-                  src="/whiteLogo.png"
+                  src="/footer_logo.svg"
                   alt=""
-                  className="whiteLogo"
                   height={159}
                   style={{ marginRight: "10px" }}
                   width={45}
                 />
+                <CustomTypography
+                  variant="h3"
+                  sx={{
+                    color: "white",
+                    fontWeight: "700",
+                    fontSize: { md: "32px", xs: "20px" },
+                  }}
+                >
+                  RECROOT
+                </CustomTypography>
               </div>
               <div className="para">
                 <StyledTypo sx={{ fontSize: "18px" }}>
