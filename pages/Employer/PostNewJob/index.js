@@ -54,7 +54,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
 import validator from "@/components/Validator";
-import Employer from "../layout1";
+import Employer from "..";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Chooseplan from "./ChoosePlan";

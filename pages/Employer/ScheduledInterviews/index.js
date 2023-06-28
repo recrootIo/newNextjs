@@ -44,7 +44,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import InterviewCalendar from "@/components/Employers/InterviewCalendar/InterviewCalendar";
 import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
-import Employer from "../layout1";
+import Employer from "..";
 import { getJobsfil } from "@/redux/slices/applyJobs";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import dynamic from "next/dynamic";
@@ -83,7 +83,7 @@ const ScheduledInterviews = () => {
   const [names, setNames] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [user, setUser] = React.useState([]);
-  const router = useRouter();
+ const router = useRouter()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     if (names.length === 0) {
@@ -92,7 +92,7 @@ const ScheduledInterviews = () => {
     router.push(
       {
         pathname: router.pathname,
-        query: { status: "queryString" },
+        query: { status: 'queryString' },
       },
       undefined,
       { shallow: true } // This option prevents the page from rerendering
@@ -295,11 +295,7 @@ const ScheduledInterviews = () => {
                       }}
                     >
                       <FormControl
-                        sx={{
-                          width: "100%",
-                          minWidth: { sm: "400px", xs: "250px" },
-                          m: 1,
-                        }}
+                        sx={{ width: "100%", minWidth: {sm:"400px",xs:'250px'}, m: 1 }}
                       >
                         <InputLabel id="demo-multiple-checkbox-label">
                           Filter By Jobs
