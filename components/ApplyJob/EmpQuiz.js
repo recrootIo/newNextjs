@@ -15,7 +15,7 @@ import ApplyJobStepper from "../ApplyJobStepper/ApplyJobStepper";
 import { BOLD } from "@/theme/fonts";
 import styles from "./applyJobs.module.css";
 
-const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
+const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen ,currentScreen}) => {
   const handleRadio = (e, id) => {
     const newMemChange = questions.map((i) => {
       if (id === i.id) {
@@ -37,7 +37,6 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
     return true; // Return true if all answers are either "yes" or "no"
   };
 
-  console.log(checkAnswers(), "checkAnswers");
   return (
     <div
       style={{
@@ -72,7 +71,7 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen }) => {
           <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
             {jobTitle}
           </CustomTypography>
-          <ApplyJobStepper activeStep={1} />
+          <ApplyJobStepper setCurrentScreen={setCurrentScreen} currentScreen={currentScreen} activeStep={1} />
         </Stack>
 
         <Grid container sx={{ gap: "10px" }}>

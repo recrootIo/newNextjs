@@ -67,6 +67,7 @@ const ProfileCard = ({ ...props }) => {
   };
 
   const hasQuestions = show === "true";
+  console.log(currentScreen,'ssss')
   const getScreens = () => {
     if (currentScreen === "upload") {
       return (
@@ -75,6 +76,7 @@ const ProfileCard = ({ ...props }) => {
           setCurrentScreen={setCurrentScreen}
           jobTitle={jobTitle}
           hasQuestions={hasQuestions}
+          currentScreen={currentScreen}
         />
       );
     }
@@ -87,6 +89,7 @@ const ProfileCard = ({ ...props }) => {
           submit={submit}
           jobTitle={jobTitle}
           hasQuestions={hasQuestions}
+          currentScreen={currentScreen}
         />
       );
     }
@@ -99,6 +102,7 @@ const ProfileCard = ({ ...props }) => {
         questions={final.question}
         jobTitle={jobTitle}
         setFinal={setFinal}
+        currentScreen={currentScreen}
       />
     );
   };
