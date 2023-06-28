@@ -65,9 +65,10 @@ export default function EmployerSidebar() {
                 },
               ],
               requiredSkill: [],
+              mandatorySkill: [],
               address: [],
               featureType: false,
-              queshow: "",
+              queshow: "false",
             })
           ).then(
             setTimeout(() => {

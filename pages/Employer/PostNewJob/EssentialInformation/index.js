@@ -82,7 +82,7 @@ const EssentialInformation = () => {
   const jobs = useSelector((state) => state.jobs.details);
   const full = useSelector((state) => state.jobs.packageType);
   const roles = useSelector((state) => state.jobs.details.requiredSkill);
-  const rolesmand = useSelector((state) => state.jobs.details.mandatorySkill);
+  const rolesmand = useSelector((state) => state.jobs.details.mandatorySkill) || [];
   const immediate = useSelector((state) => state.jobs.immediate);
   const jobsmeen = useSelector((state) => state.jobs);
   const country = Cookies.get("country");

@@ -42,19 +42,25 @@ const AddResume = () => {
   const send = (file) => {
     let formData = new FormData();
     formData.append("resume", file);
-    // console.log(formData, "formData");
+
 
     personalService
       .addResume(formData)
       .then((res) => {
-        dispatch(
-          openAlert({
-            type: SUCCESS,
-            message: "Resume is Updated",
+        if(res?.status === 200){
+          dispatch(
+            openAlert({
+              type: SUCCESS,
+              message: "Resume is Updated",
+            })
+          );
+          dispatch(updateCurrentScreen(""));
+          dispatch(retrievePersonal()).then((res)=>{
+            if(res?.meta?.requestStatus === "fulfilled"){
+              CalculatePercentage()
+            }
           })
-        );
-        dispatch(updateCurrentScreen(""));
-        CalculatePercentage();
+        }
       })
       .catch((error) => {
         dispatch(
@@ -65,7 +71,7 @@ const AddResume = () => {
         );
       });
     setTimeout(() => {
-      dispatch(retrievePersonal());
+   
     }, 1500);
   };
 

@@ -17,7 +17,10 @@ const CalculatePercentage = () => {
     percent?.workExperince?.length <= users?.workExperience?.length
       ? percent?.workExperince?.percent
       : 0;
-
+      const Resumes =
+      percent?.resume?.length <= users?.resumeFileLocation?.length
+        ? percent?.resume?.percent
+        : 0;
   const Education =
     percent?.education?.length <= users?.education?.length
       ? percent?.education?.percent
@@ -73,7 +76,7 @@ const CalculatePercentage = () => {
     Experience +
     Education +
     Certificate +
-    // Social +
+    Resumes +
     persanRank +
     countries +
     essential;

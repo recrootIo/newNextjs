@@ -42,15 +42,16 @@ const Resume = ({ ...resume }) => {
   };
 
   const handleDelete = () => {
-    dispatch(updateAndThenGet(selectedId)).then(() => {
+    dispatch(updateAndThenGet(selectedId)).then((res) => {
+      console.log(res,'sss')
       dispatch(
         openAlert({
           type: SUCCESS,
           message: "Resume has been deleted",
         })
       );
+      CalculatePercentage();
     });
-    CalculatePercentage();
   };
 
   const closeMessage = () => {

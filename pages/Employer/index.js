@@ -133,9 +133,10 @@ function Employer({ children }) {
             },
           ],
           requiredSkill: [],
+          mandatorySkill:[],
           address: [],
           featureType: false,
-          queshow: "",
+          queshow: "false",
         })
       ).then(
         setTimeout(() => {

@@ -73,8 +73,9 @@ export function Uploader(props) {
                       alt=""
                       height={300}
                       width={400}
+                      style={{margin:'auto'}}
                     />
-                    <Typography>{props?.pdf?.name}</Typography>
+                    <Typography fontWeight={600}>{props?.pdf?.name}</Typography>
                   </>
                 ) : props?.pdfC?.name !== undefined ? (
                   <>
@@ -82,9 +83,10 @@ export function Uploader(props) {
                       src={"/pdfImage.png"}
                       alt=""
                       height={300}
+                      style={{margin:'auto'}}
                       width={400}
                     />
-                    <Typography>{props?.pdfC?.name}</Typography>
+                    <Typography fontWeight={600}>{props?.pdfC?.name}</Typography>
                   </>
                 ) : (
                   <>

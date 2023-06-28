@@ -108,9 +108,8 @@ const JobDetails = () => {
   const [role, setRole] = useState({ skill: "", id: uuidv4() });
   const [rolemand, setRolemand] = useState({ skill: "", id: uuidv4() });
   const [roles, setRoles] = useState(jobs && jobs?.requiredSkill);
-  const [rolesmand, setRolesmand] = useState(jobs && jobs?.requiredSkill);
+  const [rolesmand, setRolesmand] = useState(jobs?.mandatorySkill || []);
   const [category, setCategory] = useState(false);
-
   const handleChangesRole = (e) => {
     const news = titleDesc.filter((i) => i.rol.role === e.target.value);
     dispatch(roleSet(e.target.value));
@@ -415,7 +414,6 @@ const JobDetails = () => {
     setTourOpen(() => company?.tours?.jobDetails);
   }, [company?.tours?.jobDetails]);
 
-  console.log(company?.tours, "company?.tours");
 
   return (
     <>

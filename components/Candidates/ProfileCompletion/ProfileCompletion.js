@@ -40,6 +40,10 @@ const ProfileCompletion = () => {
     percent?.workExperince?.length <= users?.workExperience?.length
       ? percent?.workExperince?.percent
       : 0;
+  const Resumes =
+    percent?.resume?.length <= personal?.resume?.resumeFileLocation?.length
+      ? percent?.resume?.percent
+      : 0;
 
   const Education =
     percent?.education?.length <= users?.education?.length
@@ -90,7 +94,7 @@ const ProfileCompletion = () => {
   const getDetailCards = () => {
     let newDetailCard = [];
 
-    if (personal?.resume?.resumeFileLocation?.length < 1) {
+    if (Resumes < 10) {
       newDetailCard.push({
         title: "Add Resume",
         buttonText: "Add Resume",

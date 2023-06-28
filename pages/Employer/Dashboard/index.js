@@ -1402,7 +1402,7 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-   {user.country !== 'LK' ?  sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
+   {user?.country !== 'LK' ?  sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
           <BasicButtonUp
             onClick={() => {
               handleClickOpen();
