@@ -279,4 +279,4 @@ function Employer({ children }) {
     </div>
   );
 }
-export default dynamic(() => Promise.resolve(Employer), { ssr: false });
+export default Employer;
