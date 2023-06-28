@@ -59,7 +59,7 @@ const OurNumHome = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcard userDetailCard">
+              <Card className="numcardpink userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -72,7 +72,7 @@ const OurNumHome = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -106,7 +106,7 @@ const OurNumHome = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -119,7 +119,7 @@ const OurNumHome = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardpink userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -132,7 +132,7 @@ const OurNumHome = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
