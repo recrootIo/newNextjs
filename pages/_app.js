@@ -31,26 +31,35 @@ export default function App({ Component, pageProps }) {
         const country = res?.data?.country;
 
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
-          // const excluded = ["lk/Employer/Dashboard"];
-          // const newPaths = `lk${router.asPath}`;
+          const targetUrl = { pathname, query, locale: "lk" };
+          const currentUrl = router.asPath;
 
-          router.push({ pathname, query }, asPath, { locale: "lk" });
-
-          // if (excluded.includes(newPaths) || router.asPath === "/") {
-          //   if (newPaths === "lk/Employer/Dashboard") {
-          //     router.push(`Employer/Dashboard`);
-          //   } else {
-          //     router.push(`/${router.asPath}`);
-          //   }
-          // } else {
-          //   if (newPaths === "lk/Employer/Dashboard") {
-          //     router.push(`Employer/Dashboard`);
-          //   } else {
-          //     router.push(`/${router.asPath}`);
-          //    router.push({ pathname, query }, asPath, { locale: nextLocale });
-          //   }
-          // }
+          if (targetUrl !== currentUrl) {
+            router.push(targetUrl, asPath, { locale: "lk" });
+          }
         }
+
+        // if (country === "LK" && !router.asPath.startsWith("/lk/")) {
+        // const excluded = ["lk/Employer/Dashboard"];
+        // const newPaths = `lk${router.asPath}`;
+
+        // router.push({ pathname, query }, asPath, { locale: "lk" });
+
+        // if (excluded.includes(newPaths) || router.asPath === "/") {
+        //   if (newPaths === "lk/Employer/Dashboard") {
+        //     router.push(`Employer/Dashboard`);
+        //   } else {
+        //     router.push(`/${router.asPath}`);
+        //   }
+        // } else {
+        //   if (newPaths === "lk/Employer/Dashboard") {
+        //     router.push(`Employer/Dashboard`);
+        //   } else {
+        //     router.push(`/${router.asPath}`);
+        //    router.push({ pathname, query }, asPath, { locale: nextLocale });
+        //   }
+        // }
+        // }
 
         setLoading(false);
       });
