@@ -56,7 +56,7 @@ import {
 } from "@mui/icons-material";
 import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
-import Employer from "../layout1";
+import Employer from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { EMPLOYEE_STATUS, REJECTED, SHORT_LISTED } from "@/utils/constants";
 import { useEffect } from "react";

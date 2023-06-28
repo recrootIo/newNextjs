@@ -57,7 +57,7 @@ import companyservice from "@/redux/services/company.service";
 import stepsStyle from "../../../components/Employers/styles.module.css";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
-import Employer from "../layout1";
+import Employer from "..";
 import "react-phone-input-2/lib/bootstrap.css";
 import "react-phone-input-2/lib/style.css";
 
@@ -498,7 +498,7 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
-              cursor: "pointer",
+              cursor:'pointer'
             }}
             onClick={() => {
               push("/Employer/CompanyProfile");
@@ -594,11 +594,9 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
-              cursor: "pointer",
+              cursor:'pointer'
             }}
-            onClick={() => {
-              push("/Employer/CompanyPreview");
-            }}
+            onClick={()=>{ push("/Employer/CompanyPreview");}}
           >
             <Box
               sx={{
@@ -943,10 +941,7 @@ const Members = () => {
                             mt: { xs: "normal", sm: "0px !important" },
                           }}
                         >
-                          <FormControl
-                            disabled={member?.memberId === ""}
-                            sx={{ width: "100%", bgcolor: "white" }}
-                          >
+                          <FormControl disabled={member?.memberId === ""} sx={{ width: "100%", bgcolor: "white" }}>
                             <InputLabel
                               id="demo-simple-select-label"
                               sx={{ color: "#BAD4DF" }}

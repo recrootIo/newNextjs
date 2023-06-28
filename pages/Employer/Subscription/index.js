@@ -25,7 +25,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "./subscription.module.css";
 import FooterHome from "@/components/Home/FooterHome";
 import Image from "next/image";
-import Employer from "../layout1";
+import Employer from "..";
 import http from "@/redux/http-common";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
