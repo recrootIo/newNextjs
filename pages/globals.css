@@ -71,6 +71,13 @@ body {
   position: relative !important;
 }
 
+/* .userDetailCard {
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  box-shadow: "inset 0px 0px 10px rgba(0,0,0,0.5)";
+  cursor: pointer;
+} */
+
 .userDetailCard {
   transform: translatey(0px);
   animation: float 6s ease-in-out infinite;
@@ -154,11 +161,20 @@ body {
   min-height: 430px;
 }
 
-.numcard {
+.numcardpink {
   width: 240px;
   box-shadow: 0;
   height: 130px;
   border-radius: 15px;
+  background-color: #fbf3e9;
+}
+
+.numcardblue {
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+  background-color: #dbfff2;
 }
 
 .brandsBackgroundImage {
@@ -176,7 +192,11 @@ body {
     min-height: 473px;
   }
 
-  .numcard {
+  .numcardpink {
+    width: 217px;
+  }
+
+  .numcardblue {
     width: 217px;
   }
 
@@ -651,11 +671,18 @@ body {
   padding: 50px 0 0 0;
 }
 
-.numcard {
+.numcardpink {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0099ff14;
+  background-color: #fbf3e9 !important;
+}
+
+.numcardblue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dbfff2 !important;
 }
 
 .nichetech {
@@ -1832,5 +1859,5 @@ a {
 }
 
 .css-ll07pc-Input:hover {
-border: none !important;
+  border: none !important;
 }

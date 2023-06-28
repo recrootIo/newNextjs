@@ -69,7 +69,7 @@ const WeAreProud = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcard userDetailCard">
+              <Card className="numcardpink userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -82,7 +82,7 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -116,7 +116,7 @@ const WeAreProud = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -129,7 +129,7 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardpink userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
@@ -142,7 +142,7 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcard userDetailCard">
+              <Card className="numcardblue userDetailCard">
                 <CardContent>
                   <CustomTypography
                     sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
