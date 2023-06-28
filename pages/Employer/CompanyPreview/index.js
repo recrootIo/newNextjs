@@ -39,7 +39,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import { isEmpty } from "lodash";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
-import Employer from "..";
+import Employer from "../layout1";
 import { useRouter } from "next/navigation";
 import tourStyles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
