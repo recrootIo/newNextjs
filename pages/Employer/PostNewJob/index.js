@@ -92,15 +92,6 @@ function PostnewJob() {
     dispatch(updateCurrentScreen(""));
     let element = null;
 
-    if (section === "add_jobtitle") {
-      element = document.getElementById("add_jobtitle");
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
-      // setMobileOpen(false);
-      return;
-    }
-
     if (section === "add_packageType") {
       element = document.getElementById("add_packageType");
       element.scrollIntoView({
@@ -405,10 +396,6 @@ function PostnewJob() {
         if (Object.keys(obj).length > 0) {
           return;
         }
-        if (final.jobRole.length === 0) {
-          scrollToElement("add_jobtitle");
-          return;
-        }
         if (final.details.requiredSkill.length === 0) {
           scrollToElement("add_jobskills");
           dispatch(
@@ -420,13 +407,13 @@ function PostnewJob() {
           return;
         }
         if (isEmpty(final.location)) {
+          scrollToElement("add_joblocation");
           dispatch(
             openAlert({
               type: ERROR,
               message: "Please Provide Job Location",
             })
           );
-          scrollToElement("add_joblocation");
           return;
         }
         if (showq === "") {
@@ -447,6 +434,7 @@ function PostnewJob() {
             return null;
           });
           if (arryMem.includes(false) === true) {
+            scrollToElement("add_joblocation");
             dispatch(
               openAlert({
                 type: ERROR,

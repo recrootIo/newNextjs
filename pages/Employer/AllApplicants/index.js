@@ -197,21 +197,21 @@ const AllApplicants = () => {
   const { jid } = router.query;
   // const jid = undefined;
   const matching = jid !== undefined;
- 
+
   useEffect(() => {
     const { array } = router.query;
     const { status } = router.query;
     if (array) {
       const parsedArray = JSON.parse(array);
       setTitles(parsedArray);
-      setids(parsedArray.map(obj => obj._id))
+      setids(parsedArray.map((obj) => obj._id));
     }
     if (status) {
       const parsedStatus = JSON.parse(status);
-      setSelected(parsedStatus)
+      setSelected(parsedStatus);
     }
-  }, [router.query])
-  
+  }, [router.query]);
+
   useEffect(() => {
     if (matching) {
       const value = {
@@ -342,26 +342,38 @@ const AllApplicants = () => {
     }
   };
 
-  const handleName = (e,value) => {
+  const handleName = (e, value) => {
     // const value = val
     const { name, checked } = e.target;
     // const {
     //   target: { value },
     // } = event;
     if (checked) {
-     const titls = [...ids,value._id]
+      const titls = [...ids, value._id];
       setTitles(
         // On autofill we get a stringified value.
-        [...titles,{_id:value._id,jobRole:value.jobRole,createdAt:value.createdAt}]
+        [
+          ...titles,
+          {
+            _id: value._id,
+            jobRole: value.jobRole,
+            createdAt: value.createdAt,
+          },
+        ]
       );
-      setids([...ids,value._id])
-      if (titls.length === 1) {       
+      setids([...ids, value._id]);
+      if (titls.length === 1) {
         setSelectedTemp({ ...selectedTemp, jobTitle: titls });
         setRejectedTemp({ ...rejectedTemp, jobTitle: titls });
       }
-      const queryString = JSON.stringify([...titles,{_id:value._id,jobRole:value.jobRole,createdAt:value.createdAt}]);
-      const url = `${window.location.pathname}?array=${encodeURIComponent(queryString)}`;
-      router.push(url, undefined, { shallow: false }); 
+      const queryString = JSON.stringify([
+        ...titles,
+        { _id: value._id, jobRole: value.jobRole, createdAt: value.createdAt },
+      ]);
+      const url = `${window.location.pathname}?array=${encodeURIComponent(
+        queryString
+      )}`;
+      router.push(url, undefined, { shallow: false });
       // router.push(
       //   {
       //     pathname: router.pathname,
@@ -371,16 +383,18 @@ const AllApplicants = () => {
       //   { shallow: true } // This option prevents the page from rerendering
       // );
     } else {
-     let newJobs = titles.filter((arr) => value._id != arr._id);
-     let newIds = ids.filter((arr) => value._id != arr);
+      let newJobs = titles.filter((arr) => value._id != arr._id);
+      let newIds = ids.filter((arr) => value._id != arr);
       setTitles(() => [...newJobs]);
-      setids(newIds)
-      if (newIds.length === 1) {       
+      setids(newIds);
+      if (newIds.length === 1) {
         setSelectedTemp({ ...selectedTemp, jobTitle: newIds });
         setRejectedTemp({ ...rejectedTemp, jobTitle: newIds });
       }
       const queryString = JSON.stringify(newJobs);
-      const url = `${window.location.pathname}?array=${encodeURIComponent(queryString)}`;
+      const url = `${window.location.pathname}?array=${encodeURIComponent(
+        queryString
+      )}`;
       router.push(url, url, { shallow: true });
       // router.push(
       //   {
@@ -391,7 +405,7 @@ const AllApplicants = () => {
       //   { shallow: true } // This option prevents the page from rerendering
       // );
     }
-  
+
     // if (Array.isArray(value._id[0])) {
     //   value = {
     //     jobRole: value?.jobRole,
@@ -472,7 +486,7 @@ const AllApplicants = () => {
     let newArray = [...selectedStatus];
     if (e.target.checked) {
       newArray.push(value);
-      const queryString = JSON.stringify([...selectedStatus,value]);
+      const queryString = JSON.stringify([...selectedStatus, value]);
       router.push(
         {
           pathname: router.pathname,
@@ -483,7 +497,9 @@ const AllApplicants = () => {
       );
     } else {
       newArray = newArray.filter((res) => res !== value);
-      const queryString = JSON.stringify(newArray.filter((res) => res !== value));
+      const queryString = JSON.stringify(
+        newArray.filter((res) => res !== value)
+      );
       router.push(
         {
           pathname: router.pathname,
@@ -494,7 +510,7 @@ const AllApplicants = () => {
       );
     }
     // setSelected(() => [...newArray]);
- 
+
     // const onlyTitles = titles.map((o) => o.jobRole);
     // let data = names.filter((item) => onlyTitles.includes(item.jobRole));
     // const arr = data.map((object) => object._id);
@@ -686,7 +702,9 @@ const AllApplicants = () => {
     if (typ === "titl") {
       setids(ids.filter((element) => !idds.includes(element)));
       setTitles(titles.filter((_, index) => index !== indexToRemove));
-      const queryString = JSON.stringify(titles.filter((_, index) => index !== indexToRemove));
+      const queryString = JSON.stringify(
+        titles.filter((_, index) => index !== indexToRemove)
+      );
       router.push(
         {
           pathname: router.pathname,
@@ -697,7 +715,9 @@ const AllApplicants = () => {
       );
     } else {
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
-      const queryString = JSON.stringify(selectedStatus.filter((_, index) => index !== indexToRemove));
+      const queryString = JSON.stringify(
+        selectedStatus.filter((_, index) => index !== indexToRemove)
+      );
       router.push(
         {
           pathname: router.pathname,
@@ -966,7 +986,7 @@ const AllApplicants = () => {
                           <ListItem key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
-                              onClick={(e) => handleName(e,variant)}
+                              onClick={(e) => handleName(e, variant)}
                               dense
                             >
                               <ListItemIcon>
@@ -985,7 +1005,9 @@ const AllApplicants = () => {
                               </ListItemIcon>
                               <ListItemText
                                 id={labelId}
-                                primary={`${variant?.jobRole} (${moment(variant?.createdAt).format('LLL')})`}
+                                primary={`${variant?.jobRole} (${moment(
+                                  variant?.createdAt
+                                ).format("LLL")})`}
                               />
                             </ListItemButton>
                           </ListItem>

@@ -273,7 +273,7 @@ const Certifications = () => {
                     <Grid container spacing={2}>
                       <Grid item md={6}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Portfolio Link:
                             </CustomTypography>
@@ -285,7 +285,7 @@ const Certifications = () => {
                       </Grid>
                       <Grid item md={6}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Project Name:
                             </CustomTypography>
@@ -297,7 +297,7 @@ const Certifications = () => {
                       </Grid>
                       <Grid item md={6}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Organization:
                             </CustomTypography>
@@ -309,7 +309,7 @@ const Certifications = () => {
                       </Grid>
                       <Grid item md={12}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Description:
                             </CustomTypography>
@@ -396,13 +396,13 @@ const Certifications = () => {
                     <Grid container spacing={2}>
                       <Grid item md={6}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Title:
                             </CustomTypography>
                             <CustomTypography>{tra?.title}</CustomTypography>
                           </Stack>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               From:
                             </CustomTypography>
@@ -412,7 +412,7 @@ const Certifications = () => {
                       </Grid>
                       <Grid item md={6}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Institute:
                             </CustomTypography>
@@ -421,7 +421,7 @@ const Certifications = () => {
                             </CustomTypography>
                           </Stack>
 
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               To:
                             </CustomTypography>
@@ -504,13 +504,13 @@ const Certifications = () => {
                     <Grid container spacing={2}>
                       <Grid item md={6} xs={12} sm={12}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Title:
                             </CustomTypography>
                             <CustomTypography>{cet?.title}</CustomTypography>
                           </Stack>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               From:
                             </CustomTypography>
@@ -522,7 +522,7 @@ const Certifications = () => {
                       </Grid>
                       <Grid item md={6} xs={12} sm={12}>
                         <Stack sx={{ gap: LAZY }}>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               Organization:
                             </CustomTypography>
@@ -531,7 +531,7 @@ const Certifications = () => {
                             </CustomTypography>
                           </Stack>
 
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <CustomTypography sx={{ fontWeight: "700" }}>
                               To:
                             </CustomTypography>
@@ -555,7 +555,7 @@ const Certifications = () => {
                           <CustomTypography>
                             {cet?.certificateName}
                           </CustomTypography>
-                          <Stack direction={"row"} sx={{ gap: "10px" }}>
+                          <Stack direction={"row"} sx={{ gap: "3px" }}>
                             <IconButton
                               onClick={async () => {
                                 const res = await fetch(

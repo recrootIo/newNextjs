@@ -106,6 +106,10 @@ const EditPersonalDetails = () => {
     workPrefence: resume?.workPrefence,
     languages: resume?.languages,
     notice: resume?.notice,
+    utube: resume.socialMediaLink.utube,
+    twitter: resume.socialMediaLink.twitter,
+    linkin: resume.socialMediaLink.linkin,
+    fb: resume.socialMediaLink.fb,
   };
 
   const dispatch = useDispatch();
@@ -240,6 +244,12 @@ const EditPersonalDetails = () => {
                   workPrefence: values.workPrefence,
                   languages: values?.languages,
                   notice: values?.notice,
+                  socialMediaLink: {
+                    utube: values.utube,
+                    twitter: values.twitter,
+                    linkin: values.linkin,
+                    fb: values.fb,
+                  },
                 };
                 handleEdit(updatedValues);
               }}
@@ -695,7 +705,13 @@ const EditPersonalDetails = () => {
                           ))}
                         </Select>
                       </FormControl>
+
+                      <CustomTextField name="utube" label="Youtube" />
+                      <CustomTextField name="linkin" label="LinkedIn" />
+                      <CustomTextField name="twitter" label="Twitter" />
+                      <CustomTextField name="fb" label="Facebook" />
                     </Stack>
+
                     <Stack direction="row" spacing={2} sx={{ mt: "10px" }}>
                       <Button
                         variant="contained"

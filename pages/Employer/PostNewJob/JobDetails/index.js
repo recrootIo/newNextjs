@@ -58,20 +58,6 @@ import { getCompanyDetails } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 
-const scrollToElement = (section) => {
-  dispatch(updateCurrentScreen(""));
-  let element = null;
-
-  if (section === "add_jobtitle") {
-    element = document.getElementById("add_jobtitle");
-    element.scrollIntoView({
-      behavior: "smooth",
-    });
-    // setMobileOpen(false);
-    return;
-  }
-};
-
 const style = {
   txtinput: {
     "& .MuiOutlinedInput-root": {
@@ -286,7 +272,6 @@ const JobDetails = () => {
       })
       .catch((error) => console.warn("error", error));
   };
-
 
   const handleKey = (e) => {
     setRole({ skill: e.target.value, id: uuidv4() });

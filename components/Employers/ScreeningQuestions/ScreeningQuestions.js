@@ -93,7 +93,6 @@ function ScreeningQuestions() {
           row
           aria-labelledby="demo-radio-buttons-group-label"
           value={showq}
-          defaultValue="false"
           name="preferedAns"
           onChange={(e) => {
             handleQueshow(e);

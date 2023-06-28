@@ -123,6 +123,7 @@ const CandiFullProfileView = () => {
   const [interviewshow, setinterviewshow] = useState(false);
   const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (appId !== undefined) {
       setLoading(true);
@@ -135,6 +136,7 @@ const CandiFullProfileView = () => {
     // .then((res) => console.log(res));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appId, canId]);
+
   const getCanddet = () => {
     dispatch(getCandi(canId))
       .unwrap()
@@ -148,6 +150,7 @@ const CandiFullProfileView = () => {
         setLoading(false);
       });
   };
+
   const getCand = () => {
     new applyJobService().getAppliedOnly(appId).then((res) => {
       setappdata(res.data);
@@ -191,12 +194,15 @@ const CandiFullProfileView = () => {
     /\\/g,
     "/"
   )}`;
+
   const isItPdfFile = recroot.includes("pdf");
+
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
       ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
+
   const handleChange = (e) => {
     if (e.target.value === status) {
       return;
@@ -215,13 +221,16 @@ const CandiFullProfileView = () => {
         }
       });
   };
+
   const handleInterview = () => {
     setinterviewshow(!interviewshow);
   };
+
   const handleEditInterview = () => {
     dispatch(setinterview(scheduleinterview[0]));
     setinterviewshow(true);
   };
+
   useEffect(() => {
     const ids = {
       cid: appdata?.candidateId?._id,
@@ -230,6 +239,7 @@ const CandiFullProfileView = () => {
     dispatch(getSchedulesInterview(ids));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interviewshow]);
+
   const [cvshow, setcvshow] = useState(false);
   const [open, setOpen] = React.useState(false);
   const enableCvAction = () => {
@@ -279,6 +289,7 @@ const CandiFullProfileView = () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ applicantView: false });
   };
+
   const closeTour = () => {
     setTourOpen(false);
     updateValue();
@@ -335,6 +346,9 @@ const CandiFullProfileView = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.applicantView);
   }, [company?.tours?.applicantView]);
+
+  console.log(candidate, "candidate");
+
   return (
     <>
       <EmployerNavbar />
@@ -663,7 +677,7 @@ const CandiFullProfileView = () => {
                         color: "white",
                       }}
                     >
-                      https://Lorem Ipsum
+                      {candidate?.resume?.socialMediaLink?.linkin}
                     </CustomTypography>
                   </Box>
                   <Box
@@ -682,7 +696,7 @@ const CandiFullProfileView = () => {
                         color: "white",
                       }}
                     >
-                      https://Lorem Ipsum
+                      {candidate?.resume?.socialMediaLink?.twitter}
                     </CustomTypography>
                   </Box>
                 </Grid>

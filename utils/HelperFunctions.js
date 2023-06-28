@@ -145,6 +145,8 @@ export { capitalizeFirstLetter };
 export const convertFormat = (dateString) => {
   const dateObject = new Date(dateString);
 
+  if (!dateString) return "";
+
   // Step 2: Extract year, month, and day from the Date object
   const year = dateObject.getFullYear();
   const month = String(dateObject.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed, so add 1

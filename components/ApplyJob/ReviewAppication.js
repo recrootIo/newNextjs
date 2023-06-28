@@ -169,7 +169,7 @@ function ReviewAppication({ ...props }) {
           <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
             {jobTitle}
           </CustomTypography>
-          <ApplyJobStepper activeStep={1} />
+          <ApplyJobStepper hasQuestions={hasQuestions} setCurrentScreen={setCurrentScreen} activeStep={hasQuestions ? 1 :2} />
         </Stack>
 
         <Box sx={{ marginTop: "60px" }}>

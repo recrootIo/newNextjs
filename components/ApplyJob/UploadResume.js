@@ -120,10 +120,9 @@ const BpRadio = (props) => {
 };
 
 const UploadResume = ({ ...props }) => {
-  const { setApplication, setCurrentScreen, jobTitle, hasQuestions } = props;
+  const { setApplication, setCurrentScreen, jobTitle, hasQuestions ,currentScreen} = props;
   const dispatch = useDispatch();
   const router = useRouter();
-console.log(hasQuestions,'questtt')
   const resumeSin = useSelector((state) => state.personal.resume);
   const CoverSin = useSelector((state) => state.personal.cover);
   const show = useSelector((state) => state.personal.show);
@@ -157,7 +156,6 @@ console.log(hasQuestions,'questtt')
   }, [dispatch]);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setSelectedResume({ id: e.target.value });
     dispatch(retrieveGetSinResume(e.target.value));
     setApplication((state) => ({
@@ -202,7 +200,6 @@ console.log(hasQuestions,'questtt')
           })
         );
 
-        console.log(res, "res");
 
         dispatch(retrievePersonal());
         dispatch(removeResume({}));
@@ -325,7 +322,7 @@ console.log(hasQuestions,'questtt')
             <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
               {jobTitle}
             </CustomTypography>
-            <ApplyJobStepper  activeStep={0} />
+            <ApplyJobStepper setCurrentScreen={setCurrentScreen} hasQuestions={hasQuestions} currentScreen={currentScreen} activeStep={0} />
           </Stack>
 
           <Stack
@@ -788,7 +785,7 @@ console.log(hasQuestions,'questtt')
                 if (hasQuestions) {
                   setCurrentScreen("quize");
                 } else {
-                  setCurrentScreen("Review");
+                  setCurrentScreen("review");
                 }
               }}
               className={
