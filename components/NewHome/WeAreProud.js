@@ -69,10 +69,14 @@ const WeAreProud = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcardpink userDetailCard">
+              <Card className="numcard numcardone userDetailCard">
                 <CardContent>
                   <CustomTypography
-                    sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
+                    sx={{
+                      fontSize: "35px",
+                      fontFamily: "Inter-bold",
+                      fontWeight: "700",
+                    }}
                   >
                     <CounterUpCom endValue={130} sectionSelect="OurNumHome" />+
                   </CustomTypography>
@@ -82,10 +86,14 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcardblue userDetailCard">
+              <Card className="numcard numcardtwo userDetailCard">
                 <CardContent>
                   <CustomTypography
-                    sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
+                    sx={{
+                      fontSize: "35px",
+                      fontFamily: "Inter-bold",
+                      fontWeight: "700",
+                    }}
                   >
                     <CounterUpCom endValue={130} sectionSelect="OurNumHome" />+
                   </CustomTypography>
@@ -116,10 +124,14 @@ const WeAreProud = () => {
                 gap: "20px",
               }}
             >
-              <Card className="numcardblue userDetailCard">
+              <Card className="numcard numcardthree userDetailCard">
                 <CardContent>
                   <CustomTypography
-                    sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
+                    sx={{
+                      fontSize: "35px",
+                      fontFamily: "Inter-bold",
+                      fontWeight: "700",
+                    }}
                   >
                     <CounterUpCom endValue={130} sectionSelect="OurNumHome" />+
                   </CustomTypography>
@@ -129,10 +141,14 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcardpink userDetailCard">
+              <Card className="numcard numcardfour userDetailCard">
                 <CardContent>
                   <CustomTypography
-                    sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
+                    sx={{
+                      fontSize: "35px",
+                      fontFamily: "Inter-bold",
+                      fontWeight: "700",
+                    }}
                   >
                     <CounterUpCom endValue={130} sectionSelect="OurNumHome" />+
                   </CustomTypography>
@@ -142,10 +158,14 @@ const WeAreProud = () => {
                 </CardContent>
               </Card>
 
-              <Card className="numcardblue userDetailCard">
+              <Card className="numcard numcardfive userDetailCard">
                 <CardContent>
                   <CustomTypography
-                    sx={{ fontSize: "35px", fontFamily: "Inter-bold" }}
+                    sx={{
+                      fontSize: "35px",
+                      fontFamily: "Inter-bold",
+                      fontWeight: "700",
+                    }}
                   >
                     <CounterUpCom endValue={130} sectionSelect="OurNumHome" />+
                   </CustomTypography>

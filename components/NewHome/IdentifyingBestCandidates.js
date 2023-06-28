@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Container, Button } from "@mui/material";
+import { Box, Grid, Container, Button, CardContent, Card } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 
@@ -25,6 +25,7 @@ const IdentifyingBestCandidates = () => {
             md={6}
             sx={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
             }}
           >
@@ -43,6 +44,276 @@ const IdentifyingBestCandidates = () => {
                 hours.
               </CustomTypography>
             </Box>
+            <Grid container spacing={2} sx={{ mt: "20px" }}>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#FBF3E9",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/AI-icon-img.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="70"
+                        height="70"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      Utilize the best AI tools in the industry
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#DBFFF2",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/automate-process-icon.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="70"
+                        height="70"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      Automate the discovery of the best candidates who meet the
+                      job criteria
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#EAEBF4",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/priority-icon.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="70"
+                        height="70"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      Factors given high priority for matching: skills,
+                      experience, location, salary, and notice period
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#E3F7FE",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/technical-bias-icon.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="70"
+                        height="70"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      Reduce the chances of human bias in the selection process
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#EAEBF4",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/save-time-icon.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="70"
+                        height="70"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      Help you save time by focusing on promising candidates and
+                      minimizing time spent on initial screening
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={4}>
+                <Card
+                  sx={{
+                    bgcolor: "#FFEEEF",
+                    borderRadius: "15px",
+                    minHeight: "307px",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100px",
+                      }}
+                    >
+                      <Image
+                        src="/newhome_images/24hours-icon.png"
+                        alt="Picture of the utilize best AI tools card"
+                        priority={true}
+                        width="80"
+                        height="80"
+                      />
+                    </Box>
+                    <CustomTypography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 600,
+                        color: "#01313F",
+                        textAlign: "center",
+                      }}
+                    >
+                      90% of our employers hire the right candidates within 24
+                      hours
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Container>

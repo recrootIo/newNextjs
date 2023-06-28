@@ -161,20 +161,31 @@ body {
   min-height: 430px;
 }
 
-.numcardpink {
+.numcard {
   width: 240px;
   box-shadow: 0;
   height: 130px;
   border-radius: 15px;
+}
+
+.numcardone {
   background-color: #fbf3e9;
 }
 
-.numcardblue {
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
+.numcardtwo {
   background-color: #dbfff2;
+}
+
+.numcardthree {
+  background-color: #e3f7fe;
+}
+
+.numcardfour {
+  background-color: #ffeeef;
+}
+
+.numcardfive {
+  background-color: #eaebf4;
 }
 
 .brandsBackgroundImage {
@@ -192,11 +203,7 @@ body {
     min-height: 473px;
   }
 
-  .numcardpink {
-    width: 217px;
-  }
-
-  .numcardblue {
+  .numcard {
     width: 217px;
   }
 
@@ -671,18 +678,10 @@ body {
   padding: 50px 0 0 0;
 }
 
-.numcardpink {
+.numcard {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fbf3e9 !important;
-}
-
-.numcardblue {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #dbfff2 !important;
 }
 
 .nichetech {
