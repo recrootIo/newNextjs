@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
           // const excluded = ["lk/Employer/Dashboard"];
           // const newPaths = `lk${router.asPath}`;
 
-          if (asPath.includes("Employer")) {
+          if (asPath.includes("employer")) {
             console.log(pathname, "pathname");
             router.push({ pathname, query }, asPath);
           } else {
