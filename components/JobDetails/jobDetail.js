@@ -10,6 +10,7 @@ import {
   CardContent,
   Avatar,
   Container,
+  Tooltip,
 } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -57,7 +58,7 @@ const JobDetail = ({ ...props }) => {
     queshow,
     _id,
     count,
-    appcount
+    appcount,
   } = props;
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
 
@@ -171,27 +172,30 @@ const JobDetail = ({ ...props }) => {
                       : " Apply now"}
                   </Button>
                 ) : (
-                  <Button
-                    variant="contained"
-                    size="medium"
-                    className="activeButton"
-                    onClick={() => goToLogin()}
-                  >
-                    Sign In
-                  </Button>
+                  <Tooltip title="Sign In" placement="right">
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      className="activeButton"
+                      onClick={() => goToLogin()}
+                    >
+                      Sign In
+                    </Button>
+                  </Tooltip>
                 )}
 
                 <ShareForm url={loginCallBackURL} title={jobRole} />
-
-                <Button
-                  className="bookmarkBtn"
-                  size="small"
-                  variant="outlined"
-                  bgcolor="#02A9F7 !important"
-                  onClick={() => handleBookmark()}
-                >
-                  <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
-                </Button>
+                <Tooltip title="Add to Saved Jobs" placement="right">
+                  <Button
+                    className="bookmarkBtn"
+                    size="small"
+                    variant="outlined"
+                    bgcolor="#02A9F7 !important"
+                    onClick={() => handleBookmark()}
+                  >
+                    <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
+                  </Button>
+                </Tooltip>
               </CardActions>
             </Card>
           </Grid>
@@ -292,36 +296,39 @@ const JobDetail = ({ ...props }) => {
                   ))}
                 </CardContent>
               </Card>
-          {isEmpty(mandatorySkill) ? "" :
-             <Card
-                variant="outlined"
-                sx={{
-                  width: "100%",
-                  borderRadius: "7px",
-                  borderColor: "#d3eaff",
-                }}
-              >
-                <CardHeader
-                  title="Mandatory Skills"
-                  titleTypographyProps={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    color: "#01313F",
+              {isEmpty(mandatorySkill) ? (
+                ""
+              ) : (
+                <Card
+                  variant="outlined"
+                  sx={{
+                    width: "100%",
+                    borderRadius: "7px",
+                    borderColor: "#d3eaff",
                   }}
-                  sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
-                />
+                >
+                  <CardHeader
+                    title="Mandatory Skills"
+                    titleTypographyProps={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#01313F",
+                    }}
+                    sx={{ bgcolor: "#EDF8FD", padding: "8px 16px" }}
+                  />
 
-                <CardContent sx={{ rowGap: "70px" }}>
-                  {mandatorySkill?.map((skill, index) => (
-                    <Chip
-                      key={index}
-                      label={skill.skill}
-                      size="small"
-                      className="skillChip"
-                    />
-                  ))}
-                </CardContent>
-              </Card>}
+                  <CardContent sx={{ rowGap: "70px" }}>
+                    {mandatorySkill?.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        label={skill.skill}
+                        size="small"
+                        className="skillChip"
+                      />
+                    ))}
+                  </CardContent>
+                </Card>
+              )}
               <Card
                 variant="outlined"
                 sx={{
@@ -397,14 +404,17 @@ const JobDetail = ({ ...props }) => {
                       </Grid>
                     </Grid>
                   </Box>
-                {isEmpty(company?.companyInformation?.infodes) ? "" :
-                <Box sx={{height:'300px',overflow:'hidden',mt:1}}>
-                  <ReactQuill
-                  value={company?.companyInformation?.infodes}
-                  readOnly={true}
-                  theme={"bubble"}
-                />
-                  </Box>}
+                  {isEmpty(company?.companyInformation?.infodes) ? (
+                    ""
+                  ) : (
+                    <Box sx={{ height: "300px", overflow: "hidden", mt: 1 }}>
+                      <ReactQuill
+                        value={company?.companyInformation?.infodes}
+                        readOnly={true}
+                        theme={"bubble"}
+                      />
+                    </Box>
+                  )}
                   {/* <CustomTypography
                     variant="body2"
                     // color="text.secondary"
@@ -434,35 +444,40 @@ const JobDetail = ({ ...props }) => {
                       </CustomTypography>
                     </Box> */}
                   <Stack spacing={1} sx={{ mt: "25px" }}>
-                 {isEmpty(company?.basicInformation?.cmpemail) ? "" :
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <MailOutlineIcon
-                    fontSize="14px"
-                    sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                  />
-                  <CustomTypography
-                    variant="body2"
-                    color="text.secondary"
-                    fontSize="16px"
-                    sx={{ marginBottom: 0 }}
-                  >
-                    &nbsp;&nbsp;{company?.basicInformation?.cmpemail}
-                  </CustomTypography>
-                </Box>
-                 }
-                   
-                  {isEmpty(company?.basicInformation?.cmpwebsite) ? "" : 
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Image src="/url.png" alt="" width={16} height={16} />
-                      <CustomTypography
-                        variant="body2"
-                        color="text.secondary"
-                        fontSize="16px"
-                        sx={{ marginBottom: 0 }}
-                      >
-                        &nbsp;&nbsp;{company?.basicInformation?.cmpwebsite}
-                      </CustomTypography>
-                    </Box>}
+                    {isEmpty(company?.basicInformation?.cmpemail) ? (
+                      ""
+                    ) : (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <MailOutlineIcon
+                          fontSize="14px"
+                          sx={{ color: "rgba(3, 66, 117, 0.8)" }}
+                        />
+                        <CustomTypography
+                          variant="body2"
+                          color="text.secondary"
+                          fontSize="16px"
+                          sx={{ marginBottom: 0 }}
+                        >
+                          &nbsp;&nbsp;{company?.basicInformation?.cmpemail}
+                        </CustomTypography>
+                      </Box>
+                    )}
+
+                    {isEmpty(company?.basicInformation?.cmpwebsite) ? (
+                      ""
+                    ) : (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Image src="/url.png" alt="" width={16} height={16} />
+                        <CustomTypography
+                          variant="body2"
+                          color="text.secondary"
+                          fontSize="16px"
+                          sx={{ marginBottom: 0 }}
+                        >
+                          &nbsp;&nbsp;{company?.basicInformation?.cmpwebsite}
+                        </CustomTypography>
+                      </Box>
+                    )}
                   </Stack>
                 </CardContent>
               </Card>

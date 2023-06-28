@@ -3,7 +3,15 @@
 import React from "react";
 import Container from "@mui/material/Container";
 import Cookies from "js-cookie";
-import { Avatar, Box, Button, Fade, Menu, MenuItem, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Fade,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import Image from "next/image";
@@ -16,7 +24,7 @@ import { useCallback } from "react";
 const EmployerNavbar = () => {
   const { push } = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -48,12 +56,12 @@ const EmployerNavbar = () => {
             <Image
               src="/logo.png"
               alt="Your Company"
-              width="160"
+              width="140"
               height="35"
               onClick={() => {
                 push("/");
               }}
-              style={{cursor:'pointer'}}
+              style={{ cursor: "pointer", height: "35px", width: "auto" }}
             />
             <Box sx={{ flex: 1 }}>
               <Stack
@@ -67,28 +75,27 @@ const EmployerNavbar = () => {
               >
                 {/* <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
                 <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" /> */}
-                      <Button
-                          id="fade-button"
-                          aria-controls={open ? "fade-menu" : undefined}
-                          aria-haspopup="true"
-                          aria-expanded={open ? "true" : undefined}
-                          onClick={handleClick}
-                        >
+                <Button
+                  id="fade-button"
+                  aria-controls={open ? "fade-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
                   <Avatar sx={{ color: "#034275" }} />
-                        </Button>
-                  <Menu
-                          id="fade-menu"
-                          MenuListProps={{
-                            "aria-labelledby": "fade-button",
-                          }}
-                          anchorEl={anchorEl}
-                          open={open}
-                          onClose={handleClose}
-                          TransitionComponent={Fade}
-                          
-                        >
-                          <MenuItem onClick={logOut}>Logout</MenuItem>
-                        </Menu>
+                </Button>
+                <Menu
+                  id="fade-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem onClick={logOut}>Logout</MenuItem>
+                </Menu>
               </Stack>
             </Box>
           </Stack>

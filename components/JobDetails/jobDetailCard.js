@@ -406,14 +406,16 @@ const JobDetailCard = ({ ...props }) => {
                     ) : isEmployer ? (
                       ""
                     ) : (
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        className="activeButton"
-                        onClick={() => goToLogin()}
-                      >
-                        Sign In
-                      </Button>
+                      <Tooltip title="Sign In">
+                        <Button
+                          variant="contained"
+                          size="medium"
+                          className="activeButton"
+                          onClick={() => goToLogin()}
+                        >
+                          Sign In
+                        </Button>
+                      </Tooltip>
                     )}
                   </Stack>
                 </Box>
