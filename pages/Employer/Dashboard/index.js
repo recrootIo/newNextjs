@@ -1402,7 +1402,7 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-   {sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
+   {user.country !== 'LK' ?  sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
           <BasicButtonUp
             onClick={() => {
               handleClickOpen();
@@ -1410,7 +1410,7 @@ const EmpoyerDashboard = () => {
           >
             Upgrade To Premium
           </BasicButtonUp>
-        </Box>  : ''}
+        </Box> : ""  : ''}
         {user?.country === "LK" ? (
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -1633,4 +1633,5 @@ const EmpoyerDashboard = () => {
     </>
   );
 };
-export default EmpoyerDashboard;
+export default dynamic(() => Promise.resolve(EmpoyerDashboard), { ssr: false });
+
