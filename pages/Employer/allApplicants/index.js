@@ -56,7 +56,7 @@ import {
 } from "@mui/icons-material";
 import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
-import Employer from "..";
+import Employer from "../../../components/pages/index";
 import { useDispatch, useSelector } from "react-redux";
 import { EMPLOYEE_STATUS, REJECTED, SHORT_LISTED } from "@/utils/constants";
 import { useEffect } from "react";
@@ -741,7 +741,7 @@ const AllApplicants = () => {
 
   //   // Scroll to the target element
   //   targetElement.scrollIntoView({ behavior: "smooth" });
-  //   router.push("/Employer/AllApplicants", undefined, { shallow: true });
+  //   router.push("/employer/allApplicants", undefined, { shallow: true });
   // }
 
   const updateValue = async () => {

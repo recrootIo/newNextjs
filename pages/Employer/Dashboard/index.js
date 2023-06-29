@@ -51,7 +51,13 @@ import {
   getCompanyDetails,
   getapplCount,
 } from "@/redux/slices/companyslice";
-import { companyJobs, getfreeCount, jobId, setEditJob, upgradejob } from "@/redux/slices/job";
+import {
+  companyJobs,
+  getfreeCount,
+  jobId,
+  setEditJob,
+  upgradejob,
+} from "@/redux/slices/job";
 import { getSchedules } from "@/redux/slices/interviewslice";
 import moment from "moment";
 import { capitalizeFirstLetter } from "@/utils/HelperFunctions";
@@ -59,11 +65,13 @@ import axios from "axios";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import dynamic from "next/dynamic";
-import Employer from "..";
+import Employer from "../../../components/pages/index";
 
 const DatagridClient = dynamic(
   () => import("../../../components/Employers/DatagridClient"),
-  { ssr: false }
+  {
+    ssr: false,
+  }
 );
 
 import http from "@/redux/http-common";
@@ -82,7 +90,6 @@ const BasicButton = styled(Button)({
   // width: "50%",
   marginBottom: "10px",
   marginTop: "15px",
-  
 });
 const BasicButtonUp = styled(Button)({
   color: "#ffff",
@@ -94,7 +101,7 @@ const BasicButtonUp = styled(Button)({
   marginBottom: "10px",
   marginTop: "15px",
   boxShadow:
-    "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"
+    "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px",
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -394,7 +401,7 @@ const EmpoyerDashboard = () => {
   const handleEdit = () => {
     dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
       setTimeout(() => {
-        push(`/Employer/PostNewJob?jid=${jobid}`);
+        push(`/employer/postNewJob?jid=${jobid}`);
       }, 500)
     );
   };
@@ -410,7 +417,7 @@ const EmpoyerDashboard = () => {
     // dispatch(seeAll({ jobId: jobid, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/Employer/AllApplicants?jid=${jobid}`, { state: true });
+    push(`/employer/allApplicants?jid=${jobid}`, { state: true });
     // }, 500)
     // );
   };
@@ -498,11 +505,13 @@ const EmpoyerDashboard = () => {
       );
       dispatch(addCandidatesRequest(jobid));
     } else {
-      push(`/Employer/CandiDatabase?id=${jobid}`);
+      push(`/employer/candiDatabase?id=${jobid}`);
       // dispatch(jobCandidatesRequest(jobid));
     }
   };
+
   const [packType, setpackType] = useState("");
+
   const handleCloseJob = () => {
     if (packType === "free" || packType === "pro" || packType === "premium") {
       handleDeActivate();
@@ -516,9 +525,9 @@ const EmpoyerDashboard = () => {
 
   const handleUpgrade = (parms) => {
     dispatch(upgradejob([parms.id]));
-    push("/Employer/Jobpayment");
+    push("/employer/jobpayment");
   };
-  
+
   const columns = [
     { field: "id", headerName: "Id", width: 100, hide: true },
     { field: "_id", headerName: "Job", width: 120 },
@@ -770,16 +779,23 @@ const EmpoyerDashboard = () => {
       width: 200,
       renderCell: (parms) => (
         <>
-          <Button sx={{textTransform:'capitalize',color:'green'}}  onClick={() => {
-                    handleClose2();
-                    handleUpgrade(parms?.row);
-                  }}>
-                    Upgrade To Premium</Button>
+          <Button
+            sx={{ textTransform: "capitalize", color: "green" }}
+            onClick={() => {
+              handleClose2();
+              handleUpgrade(parms?.row);
+            }}
+          >
+            Upgrade To Premium
+          </Button>
         </>
       ),
     },
   ];
-  const updatedColumns = columns.filter((column) => column.headerName !== 'Upgrade')
+
+  const updatedColumns = columns.filter(
+    (column) => column.headerName !== "Upgrade"
+  );
 
   const handleGetRowId = (e) => {
     return e.id;
@@ -791,10 +807,10 @@ const EmpoyerDashboard = () => {
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
     company?.jobCounts?.premiumPayment === "Completed" ||
-    company?.package?.subscription_package === "Gold" || 
+    company?.package?.subscription_package === "Gold" ||
     company?.jobSlotGold === true ||
-    user?.country === 'IN'
-    
+    user?.country === "IN";
+
   const enableFeaturedJobs2 =
     // eslint-disable-next-line no-mixed-operators
     company?.package?.subscription_package === "SuperEmployer" ||
@@ -824,7 +840,7 @@ const EmpoyerDashboard = () => {
 
   const handleClose1 = () => {
     if (freejobs?.length > 0) {
-      dispatch(upgradejob(freejobs)).then(push("/Employer/Jobpayment"));
+      dispatch(upgradejob(freejobs)).then(push("/employer/jobpayment"));
     }
     setOpen1(false);
   };
@@ -1402,15 +1418,23 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
-   {user.country !== 'LK' ?  sectors?.length > 0 ?<Box sx={{ display: "flex", justifyContent: "flex-end", }}>
-          <BasicButtonUp
-            onClick={() => {
-              handleClickOpen();
-            }}
-          >
-            Upgrade To Premium
-          </BasicButtonUp>
-        </Box> : ""  : ''}
+        {user.country !== "LK" ? (
+          sectors?.length > 0 ? (
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <BasicButtonUp
+                onClick={() => {
+                  handleClickOpen();
+                }}
+              >
+                Upgrade To Premium
+              </BasicButtonUp>
+            </Box>
+          ) : (
+            ""
+          )
+        ) : (
+          ""
+        )}
         {user?.country === "LK" ? (
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -1524,7 +1548,7 @@ const EmpoyerDashboard = () => {
                 sx={{ display: "flex", justifyContent: "center" }}
                 getRowId={handleGetRowId}
                 rows={rows}
-                columns={user?.country === 'LK' ? updatedColumns : columns}
+                columns={user?.country === "LK" ? updatedColumns : columns}
               />
             </Box>
           </TabPanel>
@@ -1579,7 +1603,7 @@ const EmpoyerDashboard = () => {
                   {sectors?.map((sec, index) => (
                     <FormControlLabel
                       key={index}
-                      sx={{width:'fit-content'}}
+                      sx={{ width: "fit-content" }}
                       control={
                         <Checkbox
                           checked={freejobs.includes(sec?._id)}
@@ -1634,4 +1658,3 @@ const EmpoyerDashboard = () => {
   );
 };
 export default dynamic(() => Promise.resolve(EmpoyerDashboard), { ssr: false });
-

@@ -153,7 +153,7 @@ const Navbar = () => {
 
                   {userType === "Employer" ? (
                     <Link
-                      href="/Employer/Dashboard"
+                      href="/employer/dashboard"
                       style={{
                         fontSize: "17px",
                         color: "black",
@@ -169,7 +169,7 @@ const Navbar = () => {
 
                   {userType === "Candidate" ? (
                     <Link
-                      href={"/Candidate/Dashboard"}
+                      href={"/candidate/dashboard"}
                       style={{
                         fontSize: "17px",
                         color: "black",
@@ -310,7 +310,7 @@ const Navbar = () => {
               {userType === "Candidate" ? (
                 <ListItem
                   disablePadding
-                  onClick={() => navigate("/Candidate/Dashboard")}
+                  onClick={() => navigate("/candidate/dashboard")}
                 >
                   <ListItemButton>Candidate</ListItemButton>
                 </ListItem>

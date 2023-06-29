@@ -10,43 +10,64 @@ import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
 import cookies from "js-cookie";
 import axios from "axios";
+import { appWithTranslation } from "next-i18next";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["cyrillic"] });
 
-export default function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
+  console.log(pageProps, "Component");
+
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const { pathname, asPath, query } = router;
+
   const GetCountryIp = async () => {
     const userIp = cookies.get("user-ip") ?? "";
-    setLoading(true);
 
     try {
       await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
         const country = res?.data?.country;
 
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
-          const excluded = ["/lk/Employer/Dashboard"];
-          const newPaths = `/lk${router.asPath}`;
-          if (excluded.includes(newPaths) || router.asPath === "/") {
-            router.push(`/${router.asPath}`);
-          } else {
-            router.push(newPaths);
+          const targetUrl = { pathname, query, locale: "lk" };
+          const currentUrl = router.asPath;
+
+          if (targetUrl !== currentUrl) {
+            router.push(targetUrl, asPath, { locale: "lk" });
           }
         }
 
-        setLoading(false);
+        // if (country === "LK" && !router.asPath.startsWith("/lk/")) {
+        // const excluded = ["lk/Employer/Dashboard"];
+        // const newPaths = `lk${router.asPath}`;
+
+        // router.push({ pathname, query }, asPath, { locale: "lk" });
+
+        // if (excluded.includes(newPaths) || router.asPath === "/") {
+        //   if (newPaths === "lk/Employer/Dashboard") {
+        //     router.push(`Employer/Dashboard`);
+        //   } else {
+        //     router.push(`/${router.asPath}`);
+        //   }
+        // } else {
+        //   if (newPaths === "lk/Employer/Dashboard") {
+        //     router.push(`Employer/Dashboard`);
+        //   } else {
+        //     router.push(`/${router.asPath}`);
+        //    router.push({ pathname, query }, asPath, { locale: nextLocale });
+        //   }
+        // }
+        // }
       });
     } catch (error) {
-      setLoading(false);
       console.log("Error occurred while fetching country:", error);
     }
   };
 
   useEffect(() => {
     GetCountryIp();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -106,4 +127,6 @@ export default function App({ Component, pageProps }) {
       </ThemeProvider>
     </Provider>
   );
-}
+};
+
+export default appWithTranslation(App);
