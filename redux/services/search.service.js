@@ -104,6 +104,6 @@ const searchService = {
   ImmediateJobs,
   getImmediateOpenings,
   getSingleImmediateJobs,
-  getsaveCount
+  getsaveCount,
 };
 export default searchService;

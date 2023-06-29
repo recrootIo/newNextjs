@@ -17,8 +17,36 @@ import { getImageLogo, getSalary } from "../JobListings/SearchSection";
 import moment from "moment";
 import styles from "./newhome.module.css";
 import { useRouter } from "next/router";
+import { replaceSlashes } from "@/utils/HelperFunctions";
 
-const FeaturedJobCard = () => {
+const FeaturedJobCard = ({
+  immediate,
+  featureType,
+  jobRole,
+  company,
+  jobType,
+  essentialInformation,
+  salary,
+  jobTitle,
+  _id,
+  address,
+  applicationDeadline,
+}) => {
+  const router = useRouter();
+
+  const handleNavigate = () => {
+    router.push(
+      `/jobs/${replaceSlashes(jobTitle)}/${replaceSlashes(jobRole)}/${_id}`
+    );
+  };
+
+  const truncateStringWithEllipsis = (str) => {
+    if (str.length > 20) {
+      return str.substring(0, 20) + "...";
+    }
+    return str;
+  };
+
   return (
     <div>
       <Card className={styles.FeaturedjobsCard}>
@@ -51,10 +79,10 @@ const FeaturedJobCard = () => {
                 <CustomTypography
                   sx={{ fontSize: 19, fontWeight: "bold", color: "#034275" }}
                 >
-                  Graphic Designer
+                  {jobRole}
                 </CustomTypography>
                 <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
-                  ABC Company
+                  {company[0]?.company_name}
                 </CustomTypography>
               </Box>
             </Stack>
@@ -68,30 +96,31 @@ const FeaturedJobCard = () => {
                 mt: "10px",
               }}
             >
-              {/* {data?.immediate && ( */}
-              <Chip
-                label="Immediate"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#3771C8",
-                  color: "white",
-                  fontWeight: 600,
-                  height: "25px",
-                }}
-              />
-              {/* )}
-              {data?.featureType && ( */}
-              <Chip
-                label="featured"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#3771C8",
-                  color: "white",
-                  fontWeight: 600,
-                  height: "25px",
-                }}
-              />
-              {/* )} */}
+              {immediate && (
+                <Chip
+                  label="Immediate"
+                  sx={{
+                    borderRadius: "8px",
+                    backgroundColor: "#3771C8",
+                    color: "white",
+                    fontWeight: 600,
+                    height: "25px",
+                  }}
+                />
+              )}
+
+              {featureType && (
+                <Chip
+                  label="featured"
+                  sx={{
+                    borderRadius: "8px",
+                    backgroundColor: "#3771C8",
+                    color: "white",
+                    fontWeight: 600,
+                    height: "25px",
+                  }}
+                />
+              )}
             </Box>
             <Stack spacing={0.5}>
               <Box sx={{ display: "flex", mt: "10px" }}>
@@ -114,7 +143,7 @@ const FeaturedJobCard = () => {
                   className={styles.featuredInputText}
                   gutterBottom
                 >
-                  Kalkata, India
+                  {truncateStringWithEllipsis(address[0])}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -137,8 +166,7 @@ const FeaturedJobCard = () => {
                   className={styles.featuredInputText}
                   gutterBottom
                 >
-                  {" "}
-                  {/* {getSalary(data?.salary)} */}
+                  {getSalary(salary, true, "14px")}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -161,7 +189,7 @@ const FeaturedJobCard = () => {
                   className={styles.featuredInputText}
                   gutterBottom
                 >
-                  {/* {data?.jobType} */}
+                  {jobType}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex" }}>
@@ -184,7 +212,7 @@ const FeaturedJobCard = () => {
                   className={styles.featuredInputText}
                   gutterBottom
                 >
-                  {/* {data?.essentialInformation?.experience} */}
+                  {essentialInformation?.experience}
                 </CustomTypography>
               </Box>
             </Stack>
@@ -201,9 +229,7 @@ const FeaturedJobCard = () => {
                 className="viewDetailBtn"
                 variant="contained"
                 size="medium"
-                // onClick={() =>
-                //   handleNavigate(data?.jobTitle, data?.jobRole, data?._id)
-                // }
+                onClick={() => handleNavigate()}
               >
                 View Details
               </Button>
@@ -221,8 +247,7 @@ const FeaturedJobCard = () => {
                 variant="body2"
                 color="text.secondary"
               >
-                Expires{" "}
-                {/* {moment(data.applicationDeadline).endOf("day").fromNow()} */}
+                Expires {moment(applicationDeadline).endOf("day").fromNow()}
               </CustomTypography>
             </Box>
           </Box>
