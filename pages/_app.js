@@ -25,7 +25,6 @@ const App = ({ Component, pageProps }) => {
 
   const GetCountryIp = async () => {
     const userIp = cookies.get("user-ip") ?? "";
-    // setLoading(true);
 
     try {
       await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
@@ -61,18 +60,14 @@ const App = ({ Component, pageProps }) => {
         //   }
         // }
         // }
-
-        setLoading(false);
       });
     } catch (error) {
-      setLoading(false);
       console.log("Error occurred while fetching country:", error);
     }
   };
 
   useEffect(() => {
     GetCountryIp();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
