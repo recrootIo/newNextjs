@@ -69,7 +69,7 @@ function Employer({ children }) {
           })
         ).then(
           setTimeout(() => {
-            push("/Employer/PostNewJob");
+            push("/employer/PostNewJob");
           }, 500)
         );
         return;
@@ -117,7 +117,7 @@ function Employer({ children }) {
         })
       ).then(
         setTimeout(() => {
-          push("/Employer/PostNewJob");
+          push("/employer/postNewJob");
         }, 500)
       );
     } else {
@@ -139,7 +139,7 @@ function Employer({ children }) {
         })
       ).then(
         setTimeout(() => {
-          push("/Employer/PostNewJob");
+          push("/employer/postNewJob");
         }, 500)
       );
     }

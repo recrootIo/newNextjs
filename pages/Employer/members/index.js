@@ -57,7 +57,7 @@ import companyservice from "@/redux/services/company.service";
 import stepsStyle from "../../../components/Employers/styles.module.css";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
-import Employer from "..";
+import Employer from "../../../components/pages/index";
 import "react-phone-input-2/lib/bootstrap.css";
 import "react-phone-input-2/lib/style.css";
 
@@ -498,10 +498,10 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
-              cursor:'pointer'
+              cursor: "pointer",
             }}
             onClick={() => {
-              push("/Employer/CompanyProfile");
+              push("/employer/companyProfile");
             }}
           >
             <Box
@@ -594,9 +594,11 @@ const Members = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               borderRadius: "15px",
-              cursor:'pointer'
+              cursor: "pointer",
             }}
-            onClick={()=>{ push("/Employer/CompanyPreview");}}
+            onClick={() => {
+              push("/Employer/CompanyPreview");
+            }}
           >
             <Box
               sx={{
@@ -941,7 +943,10 @@ const Members = () => {
                             mt: { xs: "normal", sm: "0px !important" },
                           }}
                         >
-                          <FormControl disabled={member?.memberId === ""} sx={{ width: "100%", bgcolor: "white" }}>
+                          <FormControl
+                            disabled={member?.memberId === ""}
+                            sx={{ width: "100%", bgcolor: "white" }}
+                          >
                             <InputLabel
                               id="demo-simple-select-label"
                               sx={{ color: "#BAD4DF" }}
@@ -1056,7 +1061,7 @@ const Members = () => {
                 variant="outlined"
                 sx={{ width: "50%", height: "55px" }}
                 onClick={() => {
-                  push("/Employer/CompanyProfile");
+                  push("/employer/companyProfile");
                 }}
               >
                 Previous
@@ -1070,7 +1075,7 @@ const Members = () => {
                 }}
                 className="nextPreview"
                 onClick={() => {
-                  push("/Employer/CompanyPreview");
+                  push("/employer/companyPreview");
                 }}
               >
                 Next
