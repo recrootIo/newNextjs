@@ -292,6 +292,7 @@ const SearchSection = ({ ...props }) => {
     // page,
     variant,
   } = props;
+
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
@@ -334,6 +335,7 @@ const SearchSection = ({ ...props }) => {
   };
 
   const { page = 1 } = router.query;
+
   const getJobs = () => {
     dispatch(
       searchJobs({
@@ -373,6 +375,7 @@ const SearchSection = ({ ...props }) => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const handleSector = (re) => {
     const { name, checked } = re.target;
     let newJobs = selectedSector;

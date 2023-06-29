@@ -20,7 +20,7 @@ import BrandsWeWork from "@/components/NewHome/BrandsWeWork";
 import SuccessStories from "@/components/NewHome/SuccessStories";
 import WatchDemo from "@/components/NewHome/WatchDemo";
 
-export default function Home() {
+export default function Home({ locale }) {
   useEffect(() => {
     AOS.init();
   }, []);
@@ -41,7 +41,7 @@ export default function Home() {
         <IdentifyingBestCandidates />
         <SuccessPrecentage />
         <LevelUp />
-        <FeaturedJobs />
+        <FeaturedJobs locale={locale} />
         <WeAreProud />
         <BrandsWeWork />
         <SuccessStories />
@@ -52,3 +52,13 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const locale = context.locale;
+
+  return {
+    props: {
+      locale,
+    },
+  };
+};
