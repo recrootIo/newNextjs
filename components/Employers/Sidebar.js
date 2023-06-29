@@ -71,7 +71,7 @@ export default function EmployerSidebar() {
             })
           ).then(
             setTimeout(() => {
-              push("/Employer/PostNewJob");
+              push("/employer/postNewJob");
             }, 500)
           );
           return;
@@ -119,7 +119,7 @@ export default function EmployerSidebar() {
           })
         ).then(
           setTimeout(() => {
-            push("/Employer/PostNewJob");
+            push("/employer/postNewJob");
           }, 500)
         );
       } else {
@@ -141,7 +141,7 @@ export default function EmployerSidebar() {
           })
         ).then(
           setTimeout(() => {
-            push("/Employer/PostNewJob");
+            push("/employer/postNewJob");
           }, 500)
         );
       }
@@ -196,7 +196,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="companyProfile"
         >
-          <Link href={"/Employer/CompanyProfile"}>
+          <Link href={"/employer/companyProfile"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -229,7 +229,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="allApplicants"
         >
-          <Link href={"/Employer/AllApplicants"}>
+          <Link href={"/employer/allApplicants"}>
             <HoverListItemButton
               sx={{
                 background: select === "AllApplicants" ? background : "",
@@ -246,7 +246,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="interview"
         >
-          <Link href={"/Employer/ScheduledInterviews"}>
+          <Link href={"/employer/scheduledInterviews"}>
             <HoverListItemButton
               sx={{
                 background: select === "ScheduledInterviews" ? background : "",
@@ -263,7 +263,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="subscription"
         >
-          <Link href={"/Employer/Subscription"}>
+          <Link href={"/employer/subscription"}>
             <HoverListItemButton
               sx={{
                 background: select === "Subscription" ? background : "",
@@ -276,7 +276,7 @@ export default function EmployerSidebar() {
         </Tooltip>
 
         <Tooltip title="My Account" placement="right" className="account">
-          <Link href={"/Employer/MyAccount"}>
+          <Link href={"/employer/myAccount"}>
             <HoverListItemButton
               sx={{
                 background: select === "MyAccount" ? background : "",

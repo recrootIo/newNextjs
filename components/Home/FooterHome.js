@@ -62,7 +62,7 @@ const FooterHome = () => {
   //         })
   //       ).then(
   //         setTimeout(() => {
-  //           push("/Employer/PostNewJob");
+  //           push("/employer/postNewJob");
   //         }, 500)
   //       );
   //       return;
@@ -110,7 +110,7 @@ const FooterHome = () => {
   //       })
   //     ).then(
   //       setTimeout(() => {
-  //         push("/Employer/PostNewJob");
+  //         push("/employer/postNewJob");
   //       }, 500)
   //     );
   //   } else {
@@ -132,12 +132,11 @@ const FooterHome = () => {
   //       })
   //     ).then(
   //       setTimeout(() => {
-  //         push("/Employer/PostNewJob");
+  //         push("/employer/postNewJob");
   //       }, 500)
   //     );
   //   }
   // };
-
 
   return (
     <div className="footer">

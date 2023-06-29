@@ -71,7 +71,7 @@ import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
 import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
-import Employer from "..";
+import Employer from "../../../components/pages/index";
 import { useTheme } from "@mui/material/styles";
 import { isEmpty } from "lodash";
 import companyservice from "@/redux/services/company.service";
@@ -236,13 +236,11 @@ const CompanyProfile = () => {
     if (e.target.value === "") {
       return;
     }
-    dispatch(updateFinaldetails(final)).then((res)=>{
-console.log(res,'res')
-if (res?.meta?.requestStatus === "fulfilled") {
-  dispatch(
-    openAlert({ type: SUCCESS, message:msg })
-  )
-}
+    dispatch(updateFinaldetails(final)).then((res) => {
+      console.log(res, "res");
+      if (res?.meta?.requestStatus === "fulfilled") {
+        dispatch(openAlert({ type: SUCCESS, message: msg }));
+      }
     });
   };
   const handleBlurDes = (value) => {
@@ -377,7 +375,7 @@ if (res?.meta?.requestStatus === "fulfilled") {
               cursor: "pointer",
             }}
             onClick={() => {
-              push("/Employer/CompanyProfile");
+              push("/employer/companyProfile");
             }}
           >
             <Box

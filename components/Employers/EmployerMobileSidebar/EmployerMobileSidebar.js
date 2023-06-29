@@ -70,7 +70,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
           })
         ).then(
           setTimeout(() => {
-            router.push("/Employer/PostNewJob");
+            router.push("/employer/postNewJob");
           }, 500)
         );
         return;
@@ -116,7 +116,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
         })
       ).then(
         setTimeout(() => {
-          router.push("/Employer/PostNewJob");
+          router.push("/employer/postNewJob");
         }, 500)
       );
     }
@@ -180,7 +180,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
             <ListItemText primary="Dashboard" sx={{ color: "white" }} />
           </ListItemButton>
         </Link>
-        <Link href={"/Employer/CompanyProfile"}>
+        <Link href={"/employer/companyProfile"}>
           <ListItemButton
             sx={{
               display: "flex",
@@ -213,7 +213,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
           </ListItemIcon>
           <ListItemText primary="Post New Job" sx={{ color: "white" }} />
         </ListItemButton>
-        <Link href={"/Employer/AllApplicants"}>
+        <Link href={"/employer/allApplicants"}>
           <ListItemButton
             sx={{
               display: "flex",
@@ -228,7 +228,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
             <ListItemText primary="All Applicants" sx={{ color: "white" }} />
           </ListItemButton>
         </Link>
-        <Link href={"/Employer/ScheduledInterviews"}>
+        <Link href={"/employer/scheduledInterviews"}>
           <ListItemButton
             sx={{
               display: "flex",
@@ -246,7 +246,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
             />
           </ListItemButton>
         </Link>
-        <Link href={"/Employer/Subscription"}>
+        <Link href={"/employer/subscription"}>
           <ListItemButton
             sx={{ display: "flex", justifyContent: "center" }}
             onClick={() => handleListItemClick()}
@@ -257,7 +257,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
             <ListItemText primary="Subscription" sx={{ color: "white" }} />
           </ListItemButton>
         </Link>
-        <Link href={"/Employer/MyAccount"}>
+        <Link href={"/employer/myAccount"}>
           <ListItemButton
             sx={{ display: "flex", justifyContent: "center" }}
             onClick={() => handleListItemClick()}
