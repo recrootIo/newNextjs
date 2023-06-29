@@ -16,6 +16,7 @@ export const searchJobs = createAsyncThunk(
       // selectedCompanies,
       selectedSector,
       selectedCategory,
+      limit,
     },
     thunkAPI
   ) => {
@@ -29,7 +30,8 @@ export const searchJobs = createAsyncThunk(
         jobVariant,
         // selectedCompanies,
         selectedSector,
-        selectedCategory
+        selectedCategory,
+        limit
       );
       return response.data;
     } catch (error) {
@@ -240,7 +242,7 @@ const initialState = {
   typeOf: "home",
   pending: false,
   loading: false,
-  count:''
+  count: "",
 };
 
 const searchSlice = createSlice({
@@ -250,7 +252,7 @@ const searchSlice = createSlice({
     [searchJobs.fulfilled]: (state, action) => {
       state.searchDetails = action.payload.posts;
       state.totalPage = action.payload.totalPages;
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.typeOf = "home";
       state.loading = false;
     },
@@ -272,14 +274,14 @@ const searchSlice = createSlice({
       state.selectedJob = action.payload.posts[0];
       state.typeOf = "single";
       state.totalPage = Math.ceil(action.payload.metadata[0].total / 10);
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.pending = false;
     },
     [mainPaginationjobs.fulfilled]: (state, action) => {
       state.searchDetails = action.payload.posts;
       state.selectedJob = action.payload.posts[0];
       state.totalPage = action.payload.totalPages;
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.typeOf = "home";
       state.pending = false;
     },
@@ -289,7 +291,7 @@ const searchSlice = createSlice({
       state.typeOf = "cat";
       state.pending = false;
       state.totalPage = Math.ceil(action.payload.metadata[0].total / 10);
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
     },
     [getsingleCat.pending]: (state, action) => {
       state.pending = true;
@@ -301,7 +303,7 @@ const searchSlice = createSlice({
       state.searchDetails = action.payload.posts;
       state.selectedJob = action.payload.posts[0];
       state.totalPage = action.payload.totalPages;
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.typeOf = "search";
       state.pending = false;
     },
@@ -354,7 +356,7 @@ const searchSlice = createSlice({
         action.payload.data[0];
       state.totalPage = action.payload.totalPages;
       state.typeOf = "feature";
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.pending = false;
     },
     [searchJobsFromFeatured.pending]: (state, action) => {
@@ -377,7 +379,7 @@ const searchSlice = createSlice({
         state.searchDetails.find((item) => item._id === action.meta.arg) ||
         action.payload.data[0];
       state.totalPage = action.payload.totalPages;
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.typeOf = "immediate";
       state.pending = false;
     },
@@ -391,7 +393,7 @@ const searchSlice = createSlice({
       state.selectedJob = action.payload.posts[0];
       state.typeOf = "immediate";
       state.totalPage = action.payload.totalPages;
-      state.count=action.payload?.count
+      state.count = action.payload?.count;
       state.pending = false;
     },
     [getSingleImmediateJob.rejected]: (state, action) => {
