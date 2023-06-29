@@ -581,6 +581,10 @@ const IdentifyingBestCandidates = () => {
         <Box
           sx={{
             bgcolor: "#edfcff",
+            backgroundImage: `url("/newhome_images/water.png")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            zIndex: 2,
           }}
         >
           <Container>
