@@ -10,11 +10,12 @@ import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
 import cookies from "js-cookie";
 import axios from "axios";
+import { appWithTranslation } from "next-i18next";
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ["cyrillic"] });
 
-export default function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   console.log(pageProps, "Component");
 
   const [loading, setLoading] = useState(false);
@@ -131,4 +132,6 @@ export default function App({ Component, pageProps }) {
       </ThemeProvider>
     </Provider>
   );
-}
+};
+
+export default appWithTranslation(App);
