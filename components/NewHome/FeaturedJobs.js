@@ -16,7 +16,6 @@ const FeaturedJobs = () => {
             color: "#01313F",
             textAlign: "center",
             mb: "80px",
-            mt: "80px",
             textTransform: "uppercase",
           }}
         >
