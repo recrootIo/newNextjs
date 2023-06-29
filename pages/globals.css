@@ -166,6 +166,8 @@ body {
   box-shadow: 0;
   height: 130px;
   border-radius: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .numcardone {
@@ -209,6 +211,12 @@ body {
 
   .brandsBackgroundImage {
     height: 200px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .numcard {
+    width: 46%;
   }
 }
 

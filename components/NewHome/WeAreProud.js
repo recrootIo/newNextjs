@@ -40,7 +40,7 @@ const WeAreProud = () => {
                   fontWeight: 700,
                   color: "#01313F",
                   textAlign: "center",
-                  mb: "80px",
+                  mb: { xs: "20px", md: "80px" },
                   // mt: "80px",
                 }}
               >
@@ -84,7 +84,11 @@ const WeAreProud = () => {
                   width: "100%",
                   flexDirection: { md: "column", sm: "row", xs: "row" },
                   justifyContent: "center",
-                  alignItems: { md: "center", sm: "flex-end", xs: "flex-end" },
+                  alignItems: {
+                    md: "flex-end",
+                    sm: "flex-end",
+                    xs: "flex-end",
+                  },
                   flexWrap: "wrap",
                   gap: "20px",
                 }}
@@ -111,7 +115,14 @@ const WeAreProud = () => {
                 </Card>
 
                 <Card className="numcard numcardtwo userDetailCard">
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <CustomTypography
                       sx={{
                         fontSize: "35px",
@@ -123,7 +134,7 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <CustomTypography
-                      sx={{ fontSize: "18px" }}
+                      sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total candidates registered
@@ -145,15 +156,27 @@ const WeAreProud = () => {
               <Stack
                 sx={{
                   width: "100%",
+                  display: "flex",
                   flexDirection: { md: "column", sm: "row", xs: "row" },
                   justifyContent: "center",
-                  alignItems: { md: "center", sm: "flex-end", xs: "flex-end" },
+                  alignItems: {
+                    md: "center",
+                    sm: "flex-end",
+                    xs: "flex-end",
+                  },
                   flexWrap: "wrap",
                   gap: "20px",
                 }}
               >
                 <Card className="numcard numcardthree userDetailCard">
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <CustomTypography
                       sx={{
                         fontSize: "35px",
@@ -161,11 +184,15 @@ const WeAreProud = () => {
                         fontWeight: "700",
                       }}
                     >
-                      <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
+                      <CounterUpCom
+                        endValue={130}
+                        sectionSelect="OurNumHome"
+                        sx={{ textAlign: "center" }}
+                      />
                       +
                     </CustomTypography>
                     <CustomTypography
-                      sx={{ fontSize: "18px" }}
+                      sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total companies actively hiring
@@ -174,7 +201,14 @@ const WeAreProud = () => {
                 </Card>
 
                 <Card className="numcard numcardfour userDetailCard">
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <CustomTypography
                       sx={{
                         fontSize: "35px",
@@ -186,7 +220,7 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <CustomTypography
-                      sx={{ fontSize: "18px" }}
+                      sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total job categories available
@@ -195,7 +229,14 @@ const WeAreProud = () => {
                 </Card>
 
                 <Card className="numcard numcardfive userDetailCard">
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <CustomTypography
                       sx={{
                         fontSize: "35px",
@@ -207,7 +248,7 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <CustomTypography
-                      sx={{ fontSize: "18px" }}
+                      sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total job applications submitted

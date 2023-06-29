@@ -52,7 +52,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#FBF3E9",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -136,7 +136,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#DBFFF2",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -154,7 +154,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "70px",
+                        height: "60px",
                       }}
                     >
                       <Image
@@ -187,7 +187,7 @@ const IdentifyingBestCandidates = () => {
                         position: "absolute",
                         top: "15px",
                         right: "20px",
-                        transform: "rotate(90deg)",
+                        transform: "rotate(45deg)",
                       }}
                     />
                     <Image
@@ -221,7 +221,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#EAEBF4",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -272,7 +272,7 @@ const IdentifyingBestCandidates = () => {
                         position: "absolute",
                         top: "15px",
                         right: "20px",
-                        transform: "rotate(90deg)",
+                        transform: "rotate(105deg)",
                       }}
                     />
                     <Image
@@ -306,7 +306,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#E3F7FE",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -357,7 +357,7 @@ const IdentifyingBestCandidates = () => {
                         position: "absolute",
                         top: "15px",
                         right: "20px",
-                        transform: "rotate(90deg)",
+                        transform: "rotate(25deg)",
                       }}
                     />
                     <Image
@@ -390,7 +390,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#EAEBF4",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -441,7 +441,7 @@ const IdentifyingBestCandidates = () => {
                         position: "absolute",
                         top: "15px",
                         right: "20px",
-                        transform: "rotate(90deg)",
+                        transform: "rotate(70deg)",
                       }}
                     />
                     <Image
@@ -475,7 +475,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#FFEEEF",
                     borderRadius: "15px",
-                    minHeight: "182px",
+                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
                     position: "relative",
                   }}
                 >
@@ -526,7 +526,18 @@ const IdentifyingBestCandidates = () => {
                         position: "absolute",
                         top: "15px",
                         right: "20px",
-                        transform: "rotate(90deg)",
+                      }}
+                    />
+                    <Image
+                      src="/shaded-ring-ng.png"
+                      alt="Background image of the card"
+                      priority={true}
+                      width="40"
+                      height="40"
+                      style={{
+                        position: "absolute",
+                        top: "111px",
+                        right: "45px",
                       }}
                     />
                     <Image
@@ -559,13 +570,7 @@ const IdentifyingBestCandidates = () => {
           </Grid>
         </Grid>
       </Container>
-      <Box
-        sx={
-          {
-            // bgcolor: "#edfcff",
-          }
-        }
-      >
+      <Box>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 220">
           <path
             fill="#edfcff"
@@ -573,7 +578,11 @@ const IdentifyingBestCandidates = () => {
             d="M0,96L80,117.3C160,139,320,181,480,170.7C640,160,800,96,960,74.7C1120,53,1280,75,1360,85.3L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
           ></path>
         </svg>
-        <Box sx={{ bgcolor: "#edfcff" }}>
+        <Box
+          sx={{
+            bgcolor: "#edfcff",
+          }}
+        >
           <Container>
             <Grid container spacing={4}>
               <Grid
@@ -774,7 +783,7 @@ const IdentifyingBestCandidates = () => {
             <Grid
               item
               xs={12}
-              md={6}
+              lg={6}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -789,15 +798,17 @@ const IdentifyingBestCandidates = () => {
                 height="473"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} lg={6} sx={{ mt: { xs: "40px", lg: 0 } }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background:
-                        "linear-gradient(90deg, rgba(215,103,209,1) 0%, rgba(227,255,56,1) 0%, rgba(233,121,206,0.9948354341736695) 60%)",
+                      bgcolor: "#FBF3E9",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -817,11 +828,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/man-iconn.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="40"
+                            height="40"
                           />
                         </Grid>
                         <Grid
@@ -836,8 +847,8 @@ const IdentifyingBestCandidates = () => {
                           <CustomTypography
                             sx={{
                               fontSize: "13px",
-                              fontWeight: 400,
-                              color: "#fff",
+                              fontWeight: 600,
+                              color: "#01313F",
                               textAlign: "center",
                             }}
                           >
@@ -849,13 +860,15 @@ const IdentifyingBestCandidates = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background:
-                        "linear-gradient(90deg, rgba(61,74,215,1) 0%, rgba(23,210,208,1) 46%, rgba(66,183,224,0.9948354341736695) 100%)",
+                      bgcolor: "#DBFFF2",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -875,11 +888,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/web-search-icon.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="40"
+                            height="40"
                           />
                         </Grid>
                         <Grid
@@ -907,13 +920,15 @@ const IdentifyingBestCandidates = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background:
-                        "linear-gradient(90deg, rgba(36,0,0,1) 0%, rgba(214,235,10,1) 0%, rgba(224,66,154,0.9948354341736695) 77%)",
+                      bgcolor: "#EAEBF4",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -933,11 +948,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/filter-candidates-icon.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="40"
+                            height="40"
                           />
                         </Grid>
                         <Grid
@@ -965,13 +980,15 @@ const IdentifyingBestCandidates = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background:
-                        "linear-gradient(135deg, rgba(156, 204, 101, 0.8), rgba(2, 169, 247, 0.10))",
+                      bgcolor: "#FBF3E9",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -991,11 +1008,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/link-between-icon.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="40"
+                            height="40"
                           />
                         </Grid>
                         <Grid
@@ -1023,12 +1040,15 @@ const IdentifyingBestCandidates = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background: "linear-gradient(135deg, #9CCC65, #F48FB1)",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      bgcolor: "#FFEEEF",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -1048,11 +1068,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/support-icon.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="50"
+                            height="50"
                           />
                         </Grid>
                         <Grid
@@ -1079,13 +1099,15 @@ const IdentifyingBestCandidates = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Card
                     sx={{
-                      background:
-                        "linear-gradient(90deg, rgba(36,0,0,1) 0%, rgba(86,180,204,1) 0%, rgba(255,0,185,0.9864320728291317) 80%)",
+                      bgcolor: "#E3F7FE",
                       borderRadius: "15px",
                       minHeight: "110px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <CardContent
@@ -1105,11 +1127,11 @@ const IdentifyingBestCandidates = () => {
                           }}
                         >
                           <Image
-                            src="/newhome_images/manager-icon.png"
+                            src="/newhome_images/care-icon.png"
                             alt="Picture of the utilize best AI tools card"
                             priority={true}
-                            width="70"
-                            height="70"
+                            width="40"
+                            height="40"
                           />
                         </Grid>
                         <Grid

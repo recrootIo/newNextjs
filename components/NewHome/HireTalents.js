@@ -23,9 +23,17 @@ const HireTalents = () => {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: { xs: "center", md: "flex-start" },
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                alignItems: "center",
+              }}
+            >
               <CustomTypography
                 sx={{ fontSize: "42px", fontWeight: 700, color: "#FFFFFF" }}
               >

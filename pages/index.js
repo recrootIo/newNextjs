@@ -35,7 +35,12 @@ export default function Home() {
   return (
     <>
       <Header title={"HOME"} />
-      <Box sx={{ height: "100%", width: "100%" }}>
+      <Box
+        sx={{
+          height: "100%",
+          width: "100%",
+        }}
+      >
         <Navbar />
         <HireTalents />
         <IdentifyingBestCandidates />
