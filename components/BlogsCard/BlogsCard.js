@@ -103,7 +103,7 @@ const BlogsCard = ({blog,API_URL}) => {
                             roundedButtons={true}
                             title={blog?.title}
                             description={blog?.description}
-                            tag={blog?.tags} />
+                             />
       </CardActions>
     </Card>
   );

@@ -43,9 +43,9 @@ import {
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import JobDetails from "./JobDetails";
-import EssentialInformation from "./EssentialInformation";
-import JobPreview from "./JobPreview";
+import JobDetails from "././JobDetails";
+import EssentialInformation from "././EssentialInformation";
+import JobPreview from "././JobPreview";
 import { BOLD } from "@/theme/fonts";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import { logout } from "@/redux/slices/auth";
@@ -552,7 +552,7 @@ function PostnewJob() {
   const postPremJobs = () => {
     setopen(true);
     localStorage.setItem("jobDetail", JSON.stringify(final));
-    setopen(false), router.push("/Employer/Jobpayment?pre=true");
+    setopen(false), router.push("/Employer/jobpayment?pre=true");
   };
 
   const steps =

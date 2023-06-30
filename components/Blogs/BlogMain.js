@@ -174,7 +174,7 @@ const BlogDetails = ({ blog, tags, recent }) => {
                             roundedButtons={true}
                             title={blog?.title}
                             description={blog?.description}
-                            tag={blog?.tags} />
+                            />
                   {/* <IconButton aria-label="share">
                     <ShareIcon sx={{ color: "#0183C9", fontSize: "30px" }} />
                   </IconButton> */}
