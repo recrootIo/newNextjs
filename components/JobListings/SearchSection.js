@@ -52,12 +52,18 @@ import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
 import { replaceSlashes } from "@/utils/HelperFunctions";
 
-export const getSalary = (salary, defaults = true, font = 16) => {
+export const getSalary = (salary, defaults = true, font = 16, black = null) => {
   if (salary?.salaryType !== "noprovide") {
     return (
       <CustomTypography
         variant="body2"
-        sx={{ color: defaults ? "rgb(115, 115, 115)" : "#034275" }}
+        sx={{
+          color: black
+            ? "rgba(1, 49, 63, 0.8);"
+            : defaults
+            ? "rgb(115, 115, 115)"
+            : "#034275",
+        }}
         fontSize={font}
       >
         {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}
@@ -69,13 +75,17 @@ export const getSalary = (salary, defaults = true, font = 16) => {
   } else {
     return (
       <CustomTypography
+        fontSize={font}
         sx={{
           fontWeight: "400",
           fontSize: font,
           lineHeight: "24px",
-          color: defaults ? "rgb(115, 115, 115)" : "#034275",
+          color: black
+            ? "rgba(1, 49, 63, 0.8);"
+            : defaults
+            ? "rgb(115, 115, 115)"
+            : "#034275",
         }}
-        variant="p"
       >
         Salary - Negotiable
       </CustomTypography>

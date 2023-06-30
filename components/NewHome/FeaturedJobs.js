@@ -36,9 +36,7 @@ const FeaturedJobs = ({ locale }) => {
         limit: 8,
       })
     )
-      .then((res) => {
-        console.log(res, "res");
-      })
+      .then((res) => {})
       .catch((error) => {
         console.warn(error);
       });
