@@ -40,184 +40,168 @@ const FeaturedJobCard = ({
     );
   };
 
-  const truncateStringWithEllipsis = (str) => {
-    if (str.length > 20) {
-      return str.substring(0, 20) + "...";
+  const truncateStringWithEllipsis = (str, length = 20) => {
+    if (str.length > length) {
+      return str.substring(0, length) + "...";
     }
+
     return str;
   };
 
   return (
-    <div>
-      <Card className={styles.FeaturedjobsCard}>
-        <CardContent className={styles.FeaturedjobsCard} style={{ pb: 0 }}>
-          <Box>
-            <Stack
-              direction="row"
+    <Card className={styles.FeaturedjobsCard}>
+      <CardContent className={styles.FeaturedjobsCard} style={{ pb: 0 }}>
+        <Box>
+          <Stack
+            direction="row"
+            sx={{
+              p: "10px",
+              gap: "10px",
+              borderBottom: "1px solid rgba(3, 66, 117, 0.15)",
+            }}
+          >
+            <Avatar
+              className="featuredAvatar"
+              alt="logo"
+              // src={getImageLogo(data?.company?.companyLogo?.logo)}
               sx={{
-                p: "16px",
-                gap: "10px",
-                borderBottom: "1px solid rgba(3, 66, 117, 0.15)",
+                "& .MuiAvatar-img": {
+                  height: "25px",
+                  width: "25px",
+                },
+                height: "60px",
+                width: "60px",
               }}
-            >
-              <Avatar
-                className="featuredAvatar"
-                alt="logo"
-                // src={getImageLogo(data?.company?.companyLogo?.logo)}
-                sx={{
-                  "& .MuiAvatar-img": {
-                    height: "25px",
-                    width: "25px",
-                  },
-                  height: "60px",
-                  width: "60px",
-                }}
-              />
-              <Box
-                sx={{ display: "flex", flexDirection: "column", gap: "3px" }}
-              >
-                <CustomTypography
-                  sx={{ fontSize: 19, fontWeight: "bold", color: "#034275" }}
-                >
-                  {jobRole}
-                </CustomTypography>
-                <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
-                  {company[0]?.company_name}
-                </CustomTypography>
-              </Box>
-            </Stack>
+            />
+
             <Box
               sx={{
                 display: "flex",
-                gap: "5px",
-                justifyContent: "flex-start",
-                minHeight: "25px",
-                ml: "8px",
-                mt: "10px",
+                flexDirection: "column",
+                gap: "3px",
+                maxHeight: "100px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
               }}
             >
-              {immediate && (
-                <Chip
-                  label="Immediate"
-                  sx={{
-                    borderRadius: "8px",
-                    backgroundColor: "#3771C8",
-                    color: "white",
-                    fontWeight: 600,
-                    height: "25px",
-                  }}
-                />
-              )}
-
-              {featureType && (
-                <Chip
-                  label="featured"
-                  sx={{
-                    borderRadius: "8px",
-                    backgroundColor: "#3771C8",
-                    color: "white",
-                    fontWeight: 600,
-                    height: "25px",
-                  }}
-                />
-              )}
+              <CustomTypography
+                sx={{ fontSize: 19, fontWeight: "bold", color: "#034275" }}
+              >
+                {truncateStringWithEllipsis(jobRole, 13)}
+              </CustomTypography>
+              <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
+                {company[0]?.company_name}
+              </CustomTypography>
             </Box>
-            <Stack spacing={0.5}>
-              <Box sx={{ display: "flex", mt: "10px" }}>
-                <Image
-                  className={styles.featurediconImg}
-                  src="/location.png"
-                  alt=""
-                  width={14}
-                  height={14}
-                />
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredText}
-                  gutterBottom
-                >
-                  Location
-                </CustomTypography>
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredInputText}
-                  gutterBottom
-                >
-                  {truncateStringWithEllipsis(address[0])}
-                </CustomTypography>
-              </Box>
-              <Box sx={{ display: "flex" }}>
-                <Image
-                  className={styles.featurediconImg}
-                  src="/currency.png"
-                  alt=""
-                  width={14}
-                  height={14}
-                />
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredText}
-                  gutterBottom
-                >
-                  Salary
-                </CustomTypography>
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredInputText}
-                  gutterBottom
-                >
-                  {getSalary(salary, true, "14px")}
-                </CustomTypography>
-              </Box>
-              <Box sx={{ display: "flex" }}>
-                <Image
-                  className={styles.featurediconImg}
-                  src="/bag.png"
-                  alt=""
-                  width={14}
-                  height={14}
-                />
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredText}
-                  gutterBottom
-                >
-                  Job Type
-                </CustomTypography>
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredInputText}
-                  gutterBottom
-                >
-                  {jobType}
-                </CustomTypography>
-              </Box>
-              <Box sx={{ display: "flex" }}>
-                <Image
-                  className={styles.featurediconImg}
-                  src="/hourglass.png"
-                  alt=""
-                  width={14}
-                  height={14}
-                />
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredText}
-                  gutterBottom
-                >
-                  Exp
-                </CustomTypography>
-                <CustomTypography
-                  variant="body2"
-                  className={styles.featuredInputText}
-                  gutterBottom
-                >
-                  {essentialInformation?.experience}
-                </CustomTypography>
-              </Box>
-            </Stack>
-            <Box className="btnBox">
-              {/* <Button
+          </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "5px",
+              justifyContent: "flex-start",
+              minHeight: "25px",
+              ml: "8px",
+              mt: "10px",
+            }}
+          >
+            {immediate && (
+              <Chip
+                label="Immediate"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "#3771C8",
+                  color: "white",
+                  fontWeight: 600,
+                  height: "25px",
+                }}
+              />
+            )}
+
+            {featureType && (
+              <Chip
+                label="featured"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "#3771C8",
+                  color: "white",
+                  fontWeight: 600,
+                  height: "25px",
+                }}
+              />
+            )}
+          </Box>
+          <Stack spacing={0.5}>
+            <Box sx={{ display: "flex", mt: "10px" }}>
+              <Image
+                className={styles.featurediconImg}
+                src="/location.png"
+                alt=""
+                width={14}
+                height={14}
+              />
+
+              <CustomTypography
+                variant="body2"
+                className={styles.featuredInputText}
+                gutterBottom
+              >
+                {truncateStringWithEllipsis(address[0])}
+              </CustomTypography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Image
+                className={styles.featurediconImg}
+                src="/currency.png"
+                alt=""
+                width={14}
+                height={14}
+              />
+
+              <CustomTypography
+                className={styles.featuredInputText}
+                gutterBottom
+              >
+                {getSalary(salary, true, "16px", "color")}
+              </CustomTypography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Image
+                className={styles.featurediconImg}
+                src="/bag.png"
+                alt=""
+                width={14}
+                height={14}
+              />
+
+              <CustomTypography
+                variant="body2"
+                className={styles.featuredInputText}
+                gutterBottom
+              >
+                {jobType}
+              </CustomTypography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Image
+                className={styles.featurediconImg}
+                src="/hourglass.png"
+                alt=""
+                width={14}
+                height={14}
+              />
+
+              <CustomTypography
+                variant="body2"
+                className={styles.featuredInputText}
+                gutterBottom
+              >
+                {essentialInformation?.experience}
+              </CustomTypography>
+            </Box>
+          </Stack>
+          <Box className="btnBox">
+            {/* <Button
                 className="bookmarkBtn"
                 size="medium"
                 variant="outlined"
@@ -225,35 +209,34 @@ const FeaturedJobCard = ({
               >
                 <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
               </Button> */}
-              <Button
-                className="viewDetailBtn"
-                variant="contained"
-                size="medium"
-                onClick={() => handleNavigate()}
-              >
-                View Details
-              </Button>
-            </Box>
-            <Box className={styles.featuredTypoBox}>
-              <CustomTypography
-                className={styles.featuredTypo}
-                variant="body2"
-                color="text.secondary"
-              >
-                {/* {moment(data.createdAt).fromNow()} */}
-              </CustomTypography>
-              <CustomTypography
-                className={styles.featuredTypo}
-                variant="body2"
-                color="text.secondary"
-              >
-                Expires {moment(applicationDeadline).endOf("day").fromNow()}
-              </CustomTypography>
-            </Box>
+            <Button
+              className="viewDetailBtn"
+              variant="contained"
+              size="medium"
+              onClick={() => handleNavigate()}
+            >
+              View Details
+            </Button>
           </Box>
-        </CardContent>
-      </Card>
-    </div>
+          <Box className={styles.featuredTypoBox}>
+            <CustomTypography
+              className={styles.featuredTypo}
+              variant="body2"
+              color="text.secondary"
+            >
+              {/* {moment(data.createdAt).fromNow()} */}
+            </CustomTypography>
+            <CustomTypography
+              className={styles.featuredTypo}
+              variant="body2"
+              color="text.secondary"
+            >
+              Expires {moment(applicationDeadline).endOf("day").fromNow()}
+            </CustomTypography>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

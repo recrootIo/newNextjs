@@ -48,6 +48,7 @@
   background-image: url("/similar-jobs-card-bg.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  height: 365px;
 }
 
 .featuredAvatar {

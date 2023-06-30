@@ -16,7 +16,6 @@ const BrandsWeWork = () => {
     await newService
       .getCompanies()
       .then((res) => {
-        console.log(res.data, "companies");
         setBrands(res.data);
       })
       .catch(() => {
