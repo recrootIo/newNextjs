@@ -2,24 +2,20 @@ import React from "react";
 import { Box, Grid, Container, Button, CardContent, Card } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import styles from "./newhome.module.css";
 
 const LevelUp = () => {
   return (
     <Box
       sx={{
-        // backgroundImage: `url("/newhome_images/guaranteed-hiring-bg.svg")`,
-        // backgroundRepeat: "no-repeat",
-        // backgroundSize: "cover",
-        // bgcolor: "#edfcff",
-        // height: "725px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Box sx={{ bgcolor: "#FFEEEF", width: "100%" }}>
-        <Container sx={{ bgcolor: "#FFEEEF" }}>
+      <Box sx={{ bgcolor: "#FFF", width: "100%" }}>
+        <Container sx={{ bgcolor: "#FFF" }}>
           <CustomTypography
             sx={{
               fontSize: "33px",
@@ -27,10 +23,19 @@ const LevelUp = () => {
               color: "#01313F",
               textAlign: "center",
               mb: "120px",
+              position: "relative",
             }}
           >
             Ready to level up?
           </CustomTypography>
+          <Image
+            src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+            alt="Background bubble of guaranteed hiring section"
+            priority={true}
+            width="300"
+            height="300"
+            className={styles.Levelupbubblea}
+          />
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Card

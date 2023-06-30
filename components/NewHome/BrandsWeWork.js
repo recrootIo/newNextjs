@@ -68,7 +68,7 @@ const BrandsWeWork = () => {
             <Grid item xs={12}>
               <CustomTypography
                 sx={{
-                  fontSize: MAX,
+                  fontSize: "33px",
                   fontWeight: "900",
                   fontFamily: "Inter-Bold",
                 }}
@@ -83,7 +83,7 @@ const BrandsWeWork = () => {
                   textAlign: "center",
                   position: "relative",
                   fontWeight: "400",
-                  fontSize: "18px",
+                  fontSize: "16px",
                 }}
               >
                 Find great tech talent with customizable solutions from

@@ -6,7 +6,7 @@ import CounterUpCom from "../../ui-components/CounterUpCom/CounterUpCom";
 import { CustomTypography } from "../../ui-components/CustomTypography/CustomTypography";
 import { Grid, Stack, Card, CardContent, Container, Box } from "@mui/material";
 import Image from "next/image";
-// import "./homepage.css";
+import styles from "./newhome.module.css";
 
 const WeAreProud = () => {
   return (
@@ -24,21 +24,32 @@ const WeAreProud = () => {
           <Grid
             container
             className="numberclz"
-            sx={{ gap: { md: "1px", xs: "20px", sm: "20px" } }}
+            sx={{
+              gap: { md: "1px", xs: "20px", sm: "20px" },
+            }}
           >
             <Grid item xs={12} md={12}>
-              <CustomTypography
-                sx={{
-                  fontSize: "33px",
-                  fontWeight: 700,
-                  color: "#01313F",
-                  textAlign: "center",
-                  mb: { xs: "20px", md: "80px" },
-                  // mt: "80px",
-                }}
-              >
-                We are proud of our work
-              </CustomTypography>
+              <Box sx={{ position: "relative" }}>
+                <CustomTypography
+                  sx={{
+                    fontSize: "33px",
+                    fontWeight: 700,
+                    color: "#01313F",
+                    textAlign: "center",
+                    mb: { xs: "20px", md: "80px" },
+                  }}
+                >
+                  We are proud of our work
+                </CustomTypography>
+                <Image
+                  src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+                  alt="Background bubble of guaranteed hiring section"
+                  priority={true}
+                  width="300"
+                  height="300"
+                  className={styles.WeAreProudbubble}
+                />
+              </Box>
             </Grid>
             <Grid
               item
@@ -86,7 +97,7 @@ const WeAreProud = () => {
                   gap: "20px",
                 }}
               >
-                <Card className="numcard numcardone userDetailCard">
+                <Card className="numcardone userDetailCard">
                   <CardContent>
                     <CustomTypography
                       sx={{
@@ -107,7 +118,7 @@ const WeAreProud = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="numcard numcardtwo userDetailCard">
+                <Card className="numcardtwo userDetailCard">
                   <CardContent
                     sx={{
                       display: "flex",
@@ -161,7 +172,7 @@ const WeAreProud = () => {
                   gap: "20px",
                 }}
               >
-                <Card className="numcard numcardthree userDetailCard">
+                <Card className="numcardthree userDetailCard">
                   <CardContent
                     sx={{
                       display: "flex",
@@ -193,7 +204,7 @@ const WeAreProud = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="numcard numcardfour userDetailCard">
+                <Card className="numcardfour userDetailCard">
                   <CardContent
                     sx={{
                       display: "flex",
@@ -221,7 +232,7 @@ const WeAreProud = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="numcard numcardfive userDetailCard">
+                <Card className="numcardfive userDetailCard">
                   <CardContent
                     sx={{
                       display: "flex",

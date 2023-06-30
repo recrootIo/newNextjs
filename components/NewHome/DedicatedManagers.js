@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, Container, Button, Card, CardContent } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import styles from "./newhome.module.css";
 
 const DedicatedManagers = () => {
   return (
@@ -20,8 +21,17 @@ const DedicatedManagers = () => {
             flexDirection: "column",
             alignItems: "center",
             gap: "20px",
+            position: "relative",
           }}
         >
+          <Image
+            src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+            alt="Background bubble of guaranteed hiring section"
+            priority={true}
+            width="260"
+            height="260"
+            className={styles.DedicatedSectionbubblea}
+          />
           <CustomTypography
             sx={{
               fontSize: "33px",
@@ -174,9 +184,9 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
-                              transform: "rotate(160deg)",
+                              transform: "rotate(100deg)",
                             }}
                           />
                           <Image
@@ -269,14 +279,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Adds a human touch to the automated candidate
-                            discovery process
+                            Candidate discovery with human touch
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -391,7 +401,7 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
                               transform: "rotate(160deg)",
                             }}
@@ -486,14 +496,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Actively search for potential candidates through
-                            various channels
+                            Realize special job requirements
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -608,9 +618,9 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
-                              transform: "rotate(160deg)",
+                              transform: "rotate(50deg)",
                             }}
                           />
                           <Image
@@ -703,14 +713,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Perform initial candidate screening for
-                            qualifications, skills, and experience
+                            Candidate search through various channels
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -825,9 +835,9 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
-                              transform: "rotate(160deg)",
+                              transform: "rotate(120deg)",
                             }}
                           />
                           <Image
@@ -920,14 +930,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Act as a point of contact between the employer and
-                            the candidate
+                            Conduct initial screening
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -1042,9 +1052,9 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
-                              transform: "rotate(160deg)",
+                              transform: "rotate(220deg)",
                             }}
                           />
                           <Image
@@ -1137,13 +1147,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Assist in coordinating and scheduling interviews
+                            Enhance employer-candidate communication
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -1258,9 +1269,9 @@ const DedicatedManagers = () => {
                             height="20"
                             style={{
                               position: "absolute",
-                              top: "29px",
+                              top: "-3px",
                               left: "188px",
-                              transform: "rotate(160deg)",
+                              transform: "rotate(40deg)",
                             }}
                           />
                           <Image
@@ -1366,14 +1377,14 @@ const DedicatedManagers = () => {
                         >
                           <CustomTypography
                             sx={{
-                              fontSize: "13px",
+                              fontSize: "14px",
                               fontWeight: 600,
                               color: "#01313F",
                               textAlign: "center",
+                              zIndex: 1,
                             }}
                           >
-                            Ensure a smooth recruitment experience for employers
-                            by addressing any concerns
+                            Facilitate interview coordination and scheduling
                           </CustomTypography>
                         </Grid>
                       </Grid>

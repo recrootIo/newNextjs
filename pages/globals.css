@@ -161,7 +161,19 @@ body {
   min-height: 430px;
 }
 
-.numcard {
+.numcardone {
+  background-color: #fbf3e9;
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.numcardtwo {
+  background-color: #dbfff2;
   width: 240px;
   box-shadow: 0;
   height: 130px;
@@ -170,24 +182,34 @@ body {
   justify-content: center;
 }
 
-.numcardone {
-  background-color: #fbf3e9;
-}
-
-.numcardtwo {
-  background-color: #dbfff2;
-}
-
 .numcardthree {
   background-color: #e3f7fe;
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .numcardfour {
   background-color: #ffeeef;
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .numcardfive {
   background-color: #eaebf4;
+  width: 240px;
+  box-shadow: 0;
+  height: 130px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .brandsBackgroundImage {
@@ -205,7 +227,27 @@ body {
     min-height: 473px;
   }
 
-  .numcard {
+  .numcardone {
+    width: 217px;
+  }
+
+  .numcardtwo {
+    width: 217px;
+  }
+
+  .numcardthree {
+    width: 217px;
+  }
+
+  .numcardfour {
+    width: 217px;
+  }
+
+  .numcardfive {
+    width: 217px;
+  }
+
+  .numcardsix {
     width: 217px;
   }
 
@@ -215,7 +257,22 @@ body {
 }
 
 @media only screen and (max-width: 500px) {
-  .numcard {
+  .numcardone {
+    width: 46%;
+  }
+  .numcardtwo {
+    width: 46%;
+  }
+  .numcardthree {
+    width: 46%;
+  }
+  .numcardfour {
+    width: 46%;
+  }
+  .numcardfive {
+    width: 46%;
+  }
+  .numcardsix {
     width: 46%;
   }
 }
@@ -686,11 +743,11 @@ body {
   padding: 50px 0 0 0;
 }
 
-.numcard {
+/* .numcard {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .nichetech {
   /* background: linear-gradient(98.12deg, #034275 -3.27%, #02a9f7 93.69%); */

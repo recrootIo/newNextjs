@@ -115,4 +115,114 @@
   align-items: center;
 }
 
-/* */
+.clentStoriesbubble {
+  position: absolute;
+  top: -116px;
+  left: 800px;
+}
+
+.WeAreProudbubble {
+  position: absolute;
+  top: -118px;
+  left: 800px;
+}
+
+.identifyingcircle {
+  position: absolute;
+  top: -359px;
+  left: 777px;
+}
+
+.GuaranteedHiringBubble {
+  position: absolute;
+  top: -184px;
+  left: 1010px;
+}
+
+.DedicatedSectionbubblea {
+  position: absolute;
+  top: -151px;
+  left: 891px;
+}
+
+.Levelupbubblea {
+  position: absolute;
+  top: 4235px;
+  left: 855px;
+}
+
+.FeaturedJobsbubble {
+  position: absolute;
+  top: -450px;
+  left: 611px;
+}
+
+.GuaranteedHiringBubbleb {
+  position: absolute;
+  top: -3px;
+  left: 296px;
+}
+
+@media only screen and (max-width: 600px) {
+  .clentStoriesbubble {
+    display: none;
+  }
+  .WeAreProudbubble {
+    display: none;
+  }
+  .identifyingcircle {
+    display: none;
+  }
+  .GuaranteedHiringBubble {
+    display: none;
+  }
+  .DedicatedSectionbubblea {
+    display: none;
+  }
+  .Levelupbubblea {
+    display: none;
+  }
+  .FeaturedJobsbubble {
+    display: none;
+  }
+  .GuaranteedHiringBubbleb {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .clentStoriesbubble {
+    top: -176px;
+    left: 481px;
+    height: 250px;
+    width: 250px;
+  }
+  .WeAreProudbubble {
+    top: -113px;
+    left: 439px;
+    height: 250px;
+    width: 250px;
+  }
+  .identifyingcircle {
+    top: -266px;
+    left: 478px;
+  }
+  .GuaranteedHiringBubble {
+    top: -172px;
+    left: 577px;
+  }
+  .DedicatedSectionbubblea {
+    top: -239px;
+    left: 536px;
+  }
+  .Levelupbubblea {
+    display: none;
+  }
+  .FeaturedJobsbubble {
+    top: -239px;
+    left: 519px;
+  }
+  .GuaranteedHiringBubbleb {
+    display: none;
+  }
+}
