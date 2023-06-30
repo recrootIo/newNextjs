@@ -548,7 +548,6 @@ function PostnewJob() {
       : { index: 0, page: <JobDetails /> }
   );
   const [open, setopen] = useState(false);
-  console.log(final, "final");
   const postPremJobs = () => {
     setopen(true);
     localStorage.setItem("jobDetail", JSON.stringify(final));

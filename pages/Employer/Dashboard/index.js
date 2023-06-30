@@ -66,6 +66,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import dynamic from "next/dynamic";
 import Employer from "../../../components/pages/index";
+import { useRouter } from "next/navigation";
 
 const DatagridClient = dynamic(
   () => import("../../../components/Employers/DatagridClient"),
@@ -77,7 +78,7 @@ const DatagridClient = dynamic(
 import http from "@/redux/http-common";
 import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const BasicButton = styled(Button)({
@@ -525,7 +526,7 @@ const EmpoyerDashboard = () => {
 
   const handleUpgrade = (parms) => {
     dispatch(upgradejob([parms.id]));
-    push("/employer/jobpayment");
+    push("/Employer/jobpayment");
   };
 
   const columns = [
