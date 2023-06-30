@@ -82,7 +82,7 @@ function Jobpayment() {
             payment:finalPrice,
             country:country
         })).then(
-      push('/Employer/Jobpayment/Payment')
+      push('/Employer/jobpayment/Payment')
         )
     }
   return (

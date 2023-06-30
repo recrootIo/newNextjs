@@ -33,7 +33,7 @@ const [clientSecret, setClientSecret] = useState("");
 const token = Cookies.get('token')
 const choosePremium =  useSelector(data => data.jobs.choosePremium)
 const router = useRouter()
-    console.log(choosePremium,jobDet,'paymen6')
+console.log(choosePremium,jobDet,'paymen6')
   useEffect(() => {
     if(jobDet === ""  && choosePremium !== true){
       router.push('/Employer/Dashboard')

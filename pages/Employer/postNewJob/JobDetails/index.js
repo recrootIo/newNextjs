@@ -415,7 +415,6 @@ const JobDetails = () => {
     setTourOpen(() => company?.tours?.jobDetails);
   }, [company?.tours?.jobDetails]);
 
-  console.log(company?.tours, "company?.tours");
 
   return (
     <>
@@ -631,7 +630,7 @@ const JobDetails = () => {
                   <TextField
                     sx={style.txtinput}
                     {...params}
-                    label="Required Skills"
+                    label="Mandatory Skills"
                     onChange={(e) => {
                       inputChanged(e);
                     }}
@@ -736,7 +735,7 @@ const JobDetails = () => {
                   <TextField
                     sx={style.txtinput}
                     {...params}
-                    label="Mandotary Skills (Optional)"
+                    label="Desired Skills (Optional)"
                     onChange={(e) => {
                       inputChangedmand(e);
                     }}
