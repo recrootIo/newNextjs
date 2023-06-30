@@ -78,6 +78,7 @@ const DatagridClient = dynamic(
 import http from "@/redux/http-common";
 import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
+import { isEmpty } from "lodash";
 // import { useRouter } from "next/router";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
@@ -237,6 +238,12 @@ const EmpoyerDashboard = () => {
     dispatch(getCandidatesRequest());
     dispatch(getapplCount());
   }, [dispatch]);
+  useEffect(()=>{
+    const job = JSON.parse(localStorage.getItem("jobDetail"));
+   if (!isEmpty(job)) {
+    localStorage.removeItem("jobDetail");
+   }
+  })
   const sear = useSelector((state) => state?.sinterview?.schedules);
 
   const names = useSelector((state) => state?.apply?.names);
