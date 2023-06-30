@@ -323,29 +323,31 @@ const JobPreview = (props) => {
                 <CustomTypography className={styles.JobPreviewTypo}>
                   Mandotary Skills :
                 </CustomTypography>
-           {isEmpty(details.mandatorySkill) ?
-               <CustomTypography className={styles.JobPreviewData}>
-                  Not Provided
-                </CustomTypography> :
-                <Stack
-                  direction="row"
-                  flexWrap={"wrap"}
-                  gap={"10px"}
-                  spacing={2}
-                >
-                  {details &&
-                    details.mandatorySkill.map((skill) => (
-                      <>
-                        <Chip
-                          label={skill.skill}
-                          sx={{
-                            bgcolor: "#D4F0FC",
-                            marginLeft: "0px !important",
-                          }}
-                        />
-                      </>
-                    ))}
-                </Stack>}
+                {isEmpty(details.mandatorySkill) ? (
+                  <CustomTypography className={styles.JobPreviewData}>
+                    Not Provided
+                  </CustomTypography>
+                ) : (
+                  <Stack
+                    direction="row"
+                    flexWrap={"wrap"}
+                    gap={"10px"}
+                    spacing={2}
+                  >
+                    {details &&
+                      details.mandatorySkill.map((skill) => (
+                        <>
+                          <Chip
+                            label={skill.skill}
+                            sx={{
+                              bgcolor: "#D4F0FC",
+                              marginLeft: "0px !important",
+                            }}
+                          />
+                        </>
+                      ))}
+                  </Stack>
+                )}
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>
                 <CustomTypography className={styles.JobPreviewTypo}>
@@ -429,6 +431,7 @@ const JobPreview = (props) => {
           ) : (
             ""
           )}
+
           <Box
             sx={{
               bgcolor: "#2699FF",

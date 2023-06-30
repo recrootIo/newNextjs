@@ -24,8 +24,6 @@ const HoverListItemButton = styled(ListItemButton)`
 `;
 
 export default function EmployerSidebar() {
-  const background =
-    "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);";
   const dispatch = useDispatch();
   // const select = useSelector(data => data.company.selectedRoute)
   const router = useRouter();
@@ -147,6 +145,7 @@ export default function EmployerSidebar() {
       }
     }
   };
+
   const logOut = useCallback(() => {
     dispatch(logout()).then(() => {
       router.push("/");
@@ -159,6 +158,8 @@ export default function EmployerSidebar() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(select, "select");
   return (
     <Box
       sx={{
@@ -178,11 +179,14 @@ export default function EmployerSidebar() {
         </ListItemButton>
         <Divider variant="middle" color="gray" /> */}
 
-        <Link href={"/Employer/Dashboard"} className={"Dashboard"}>
+        <Link href={"/employer/dashboard"} className={"Dashboard"}>
           <Tooltip title="Dashboard" placement="right">
             <HoverListItemButton
               sx={{
-                background: select === "Dashboard" ? background : "",
+                background:
+                  select === "dashboard"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                    : "",
               }}
               onClick={() => handleListItemClick("Dashboard")}
             >
@@ -200,10 +204,8 @@ export default function EmployerSidebar() {
             <HoverListItemButton
               sx={{
                 background:
-                  select === "CompanyProfile" ||
-                  select === "Members" ||
-                  select === "CompanyPreview"
-                    ? background
+                  select === "companyProfile"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
                     : "",
               }}
               onClick={() => handleListItemClick("CompanyProfile")}
@@ -216,7 +218,10 @@ export default function EmployerSidebar() {
         <Tooltip title="Post New Job" placement="right" className="postNewJob">
           <HoverListItemButton
             sx={{
-              background: select === "PostNewJob" ? background : "",
+              background:
+                select === "postNewJob"
+                  ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                  : "",
             }}
             onClick={() => handleListItemClick("PostNewJob")}
           >
@@ -232,7 +237,10 @@ export default function EmployerSidebar() {
           <Link href={"/employer/allApplicants"}>
             <HoverListItemButton
               sx={{
-                background: select === "AllApplicants" ? background : "",
+                background:
+                  select === "allApplicants"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                    : "",
               }}
               onClick={() => handleListItemClick("AllApplicants")}
             >
@@ -249,7 +257,10 @@ export default function EmployerSidebar() {
           <Link href={"/employer/scheduledInterviews"}>
             <HoverListItemButton
               sx={{
-                background: select === "ScheduledInterviews" ? background : "",
+                background:
+                  select === "scheduledInterviews"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                    : "",
               }}
               onClick={() => handleListItemClick("ScheduledInterviews")}
             >
@@ -266,7 +277,10 @@ export default function EmployerSidebar() {
           <Link href={"/employer/subscription"}>
             <HoverListItemButton
               sx={{
-                background: select === "Subscription" ? background : "",
+                background:
+                  select === "subscription"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                    : "",
               }}
               onClick={() => handleListItemClick()}
             >
@@ -279,7 +293,10 @@ export default function EmployerSidebar() {
           <Link href={"/employer/myAccount"}>
             <HoverListItemButton
               sx={{
-                background: select === "MyAccount" ? background : "",
+                background:
+                  select === "myAccount"
+                    ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
+                    : "",
               }}
               onClick={() => handleListItemClick()}
             >

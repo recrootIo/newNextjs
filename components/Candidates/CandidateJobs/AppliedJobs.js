@@ -11,6 +11,7 @@ import Link from "next/link";
 import { getSalary } from "@/components/JobListings/SearchSection";
 
 const AppliedJobs = ({ appliedJobs }) => {
+  const router = useRouter();
   const getActive = (step) => {
     switch (step) {
       case "unview": {
@@ -35,6 +36,11 @@ const AppliedJobs = ({ appliedJobs }) => {
     const jobRole = applied?.jobRole[0];
     const _id = applied.jobId[0];
     return `/jobs/${jobTitle}/${jobRole}/${_id}`;
+  };
+
+  const getSimilarJobs = (applied) => {
+    const jobRole = applied?.jobRole[0];
+    router.push(`/jobs?title=${jobRole}`);
   };
 
   return (
@@ -68,12 +74,12 @@ const AppliedJobs = ({ appliedJobs }) => {
               sx={{
                 backgroundColor: "#F6FCFF",
                 borderRadius: "10px",
-                padding: { md: "30px 30px", xs: "16px 10px", sm: "16px 10px" },
+                padding: { md: "20px 30px", xs: "16px 10px", sm: "16px 10px" },
                 border: "1px solid #D3EAFF",
                 gap: "5px",
               }}
             >
-              <Stack
+              {/* <Stack
                 direction={"row"}
                 sx={{ justifyContent: "flex-end", alignItems: "center" }}
               >
@@ -86,7 +92,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                 >
                   Withdraw
                 </CustomTypography>
-              </Stack>
+              </Stack> */}
               <Stack
                 direction={"row"}
                 sx={{ alignItems: "center", gap: "10px" }}
@@ -103,6 +109,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     height: "29px",
+                    textTransform: "capitalize",
                   }}
                 >
                   <CustomTypography sx={{ color: NEUTRAL, fontSize: "12px" }}>
@@ -162,7 +169,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                     See Full Description
                   </CustomTypography>
                 </Link>
-
+                {/* 
                 <CustomTypography
                   sx={{
                     color: "gray",
@@ -171,10 +178,10 @@ const AppliedJobs = ({ appliedJobs }) => {
                   }}
                 >
                   430 Applications Received
-                </CustomTypography>
+                </CustomTypography> */}
               </Stack>
               <Divider />
-              <Stack sx={{ gap: "50px", mt: "20px" }}>
+              <Stack sx={{ gap: "20px", mt: "20px" }}>
                 <CustomTypography sx={{ fontFamily: BOLD }}>
                   Application Status
                 </CustomTypography>
@@ -182,19 +189,20 @@ const AppliedJobs = ({ appliedJobs }) => {
                   activeStep={getActive(applied.status)}
                   currentStep={applied.status}
                 />
+
                 <Stack
                   sx={{
-                    justifyContent: "space-between",
+                    justifyContent: "flex-end",
                     alignItems: "center",
                     flexDirection: {
                       md: "row",
                       sm: "column-reverse",
                       xs: "column-reverse",
                     },
-                    gap: "20px",
+                    gap: "10px",
                   }}
                 >
-                  <button
+                  {/* <button
                     style={{
                       backgroundColor: "#02A9F7",
                       color: NEUTRAL,
@@ -206,8 +214,10 @@ const AppliedJobs = ({ appliedJobs }) => {
                     }}
                   >
                     See Company Profile
-                  </button>
+                  </button> */}
+
                   <CustomTypography
+                    onClick={() => getSimilarJobs(applied)}
                     sx={{
                       textDecoration: "underline",
                       color: "#00339B",

@@ -317,7 +317,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => navigate("/pricing")}>
+                    <ListItemButton onClick={() => navigate("/Pricing")}>
                       Pricing
                     </ListItemButton>
                   </ListItem>
