@@ -22,7 +22,7 @@ const WatchDemo = () => {
         <Box className="nicheMinHight">
           <CustomTypography
             sx={{
-              fontSize: MAX,
+              fontSize: "33px",
               fontWeight: "700",
               fontFamily: "Inter-Bold",
               textAlign: "center",

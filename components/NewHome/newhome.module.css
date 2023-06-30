@@ -1,6 +1,6 @@
 .successGreyBox {
   border-radius: 20px;
-  background-color: #ebf3ff;
+  background-color: #c8cdfa;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +10,7 @@
 
 .successBlueBox {
   border-radius: 20px;
-  background-color: #dbfdff;
+  background-color: #bae7f7;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,4 +115,220 @@
   align-items: center;
 }
 
-/* */
+.clentStoriesbubble {
+  position: absolute;
+  top: -116px;
+  left: 800px;
+}
+
+.WeAreProudbubble {
+  position: absolute;
+  top: -118px;
+  left: 800px;
+}
+
+.identifyingcircle {
+  position: absolute;
+  top: -359px;
+  left: 777px;
+}
+
+.GuaranteedHiringBubble {
+  position: absolute;
+  top: -184px;
+  left: 1010px;
+}
+
+.DedicatedSectionbubblea {
+  position: absolute;
+  top: -151px;
+  left: 891px;
+}
+
+.Levelupbubblea {
+  position: absolute;
+  top: 4235px;
+  left: 855px;
+}
+
+.FeaturedJobsbubble {
+  position: absolute;
+  top: -450px;
+  left: 611px;
+}
+
+.GuaranteedHiringBubbleb {
+  position: absolute;
+  top: -3px;
+  left: 296px;
+}
+
+@media only screen and (max-width: 600px) {
+  .clentStoriesbubble {
+    display: none;
+  }
+  .WeAreProudbubble {
+    display: none;
+  }
+  .identifyingcircle {
+    display: none;
+  }
+  .GuaranteedHiringBubble {
+    display: none;
+  }
+  .DedicatedSectionbubblea {
+    display: none;
+  }
+  .Levelupbubblea {
+    display: none;
+  }
+  .FeaturedJobsbubble {
+    display: none;
+  }
+  .GuaranteedHiringBubbleb {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  .clentStoriesbubble {
+    top: -176px;
+    left: 481px;
+    height: 250px;
+    width: 250px;
+  }
+  .WeAreProudbubble {
+    top: -113px;
+    left: 439px;
+    height: 250px;
+    width: 250px;
+  }
+  .identifyingcircle {
+    top: -266px;
+    left: 478px;
+  }
+  .GuaranteedHiringBubble {
+    top: -172px;
+    left: 577px;
+  }
+  .DedicatedSectionbubblea {
+    top: -239px;
+    left: 536px;
+  }
+  .Levelupbubblea {
+    display: none;
+  }
+  .FeaturedJobsbubble {
+    top: -239px;
+    left: 519px;
+  }
+  .GuaranteedHiringBubbleb {
+    display: none;
+  }
+}
+
+.areYouRecruiterBtn {
+  align-items: center;
+  appearance: none;
+  background-clip: padding-box;
+  background-color: initial;
+  background-image: none;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: Eina01, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 24px;
+  margin: 0;
+  min-height: 64px;
+  outline: none;
+  overflow: visible;
+  padding: 19px 26px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: auto;
+  word-break: keep-all;
+  z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .areYouRecruiterBtn {
+    padding: 19px 32px;
+  }
+}
+
+.areYouRecruiterBtn:before,
+.areYouRecruiterBtn:after {
+  border-radius: 80px;
+}
+
+.areYouRecruiterBtn:before {
+  background-color: rgba(249, 58, 19, 0.32);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
+}
+
+.areYouRecruiterBtn:after {
+  background-color: initial;
+  background-image: linear-gradient(92.83deg, #007bff 0, #0056b3 100%);
+  bottom: 4px;
+  content: "";
+  display: block;
+  left: 4px;
+  overflow: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  transition: all 100ms ease-out;
+  z-index: -1;
+}
+
+.areYouRecruiterBtn:hover:not(:disabled):after {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition-timing-function: ease-in;
+}
+
+.areYouRecruiterBtn:active:not(:disabled) {
+  color: #ccc;
+}
+
+.areYouRecruiterBtn:active:not(:disabled):after {
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(92.83deg, #007bff 0, #0056b3 100%);
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+}
+
+.areYouRecruiterBtn:disabled {
+  cursor: default;
+   opacity: 0.24;
+}

@@ -42,7 +42,7 @@ const VerifyEmail = () => {
       Cookies.set("verifyCode", code.codes);
     }
   }, [code]);
-  const redirect = Cookies.get("Redirect");
+
   const handleVerify = () => {
     // eslint-disable-next-line eqeqeq
     if (vcode == otp) {

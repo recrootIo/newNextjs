@@ -21,7 +21,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 // import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/slices/auth";
 import Image from "next/image";
 import { openAlert } from "@/redux/slices/alert";
@@ -48,7 +48,7 @@ function Signin() {
   const { push } = useRouter();
   const router = useRouter();
 
-  const redirect = useRef();
+  const selector = useSelector((state) => state?.apply?.applyPath);
 
   const [showPassword, setshowPassword] = useState(false);
   const [values, setValues] = React.useState({
@@ -70,10 +70,6 @@ function Signin() {
     setValues({ ...values, [field]: value });
   };
 
-  useEffect(() => {
-    redirect.current = localStorage.getItem("redirect");
-  }, []);
-
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(login({ values }))
@@ -92,8 +88,8 @@ function Signin() {
 
         if (originalPromiseResult.User.recrootUserType === "Candidate") {
           if (originalPromiseResult.User.resume.resumeFileLocation.length > 0) {
-            if (redirect.current) {
-              push(redirect.current);
+            if (selector) {
+              push(selector);
             } else {
               push("/");
             }

@@ -27,12 +27,6 @@ export default function Home({ locale }) {
     AOS.init();
   }, []);
   const user = Cookies.get("token");
-  useEffect(() => {
-    const redirect = localStorage.getItem("redirect");
-    if (redirect !== null) {
-      localStorage.removeItem("redirect");
-    }
-  }, []);
 
   return (
     <>

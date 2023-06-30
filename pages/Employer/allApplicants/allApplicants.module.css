@@ -23,8 +23,8 @@
   /* background-image: url("/all-appplicants-bg.svg");
   background-repeat: "no-repeat";
   background-size: cover; */
-  background: green;
-  border-radius: 15px;
+  background: green !important;
+  border-radius: 15px !important;
 }
 .allApplicantsCardgood {
   width: 100%;
@@ -37,8 +37,8 @@
   /* background-image: url("/all-appplicants-bg.svg");
   background-repeat: "no-repeat";
   background-size: cover; */
-  background: orange;
-  border-radius: 15px;
+  background: orange !important;
+  border-radius: 15px !important;
 }
 
 .allApplicantsCardTypo {

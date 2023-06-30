@@ -51,6 +51,7 @@ import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
 import { replaceSlashes } from "@/utils/HelperFunctions";
+import { removeApplyPath } from "@/redux/slices/applyJobs";
 
 export const getSalary = (salary, defaults = true, font = 16, black = null) => {
   if (salary?.salaryType !== "noprovide") {
@@ -283,13 +284,6 @@ export const BootstrapDialogTitle = (props) => {
 };
 
 const SearchSection = ({ ...props }) => {
-  useEffect(() => {
-    const redirect = localStorage.getItem("redirect");
-    if (redirect !== null) {
-      localStorage.removeItem("redirect");
-    }
-  }, []);
-
   const {
     sectors,
     companies,
@@ -306,6 +300,15 @@ const SearchSection = ({ ...props }) => {
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
+  const selector = useSelector((state) => state?.apply?.applyPath);
+
+  useEffect(() => {
+    const redirect = selector;
+    if (redirect !== null) {
+      dispatch(removeApplyPath());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const loading = useSelector((state) => state.searchJobs.loading);
   // console.log(page,'pagessss')

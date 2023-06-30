@@ -3,6 +3,7 @@ import { Box, Grid, Container, Button, CardContent, Card } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import CelebrationOutlinedIcon from "@mui/icons-material/CelebrationOutlined";
+import styles from "./newhome.module.css";
 
 const IdentifyingBestCandidates = () => {
   return (
@@ -17,8 +18,29 @@ const IdentifyingBestCandidates = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              position: "relative",
             }}
           >
+            <Image
+              src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+              alt="Background bubble of guaranteed hiring section"
+              priority={true}
+              width="180"
+              height="180"
+              style={{
+                position: "absolute",
+                top: "515px",
+                left: "110px",
+              }}
+            />
+            <Image
+              src="/newhome_images/circle-vector.png"
+              alt="Background bubble of guaranteed hiring section"
+              priority={true}
+              width="300"
+              height="300"
+              className={styles.identifyingcircle}
+            />
             <Box>
               <Image
                 src="/newhome_images/identify-best-candidate-edit2.png"
@@ -52,7 +74,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#FBF3E9",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -70,7 +92,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -120,13 +142,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      Utilize the best AI tools in the industry
+                      Employ cutting-edge AI technology
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -136,7 +158,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#DBFFF2",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -154,7 +176,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -204,14 +226,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      Automate the discovery of the best candidates who meet the
-                      job criteria
+                      Automate optimal candidate discovery
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -221,7 +242,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#EAEBF4",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -239,7 +260,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -289,14 +310,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      Factors given high priority for matching: skills,
-                      experience, location, salary, and notice period
+                      Reach a wide-ranging talent pool
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -306,7 +326,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#E3F7FE",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -324,7 +344,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -374,13 +394,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      Reduce the chances of human bias in the selection process
+                      Minimize human bias in hiring
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -390,7 +410,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#EAEBF4",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -408,7 +428,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -458,14 +478,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      Efficient candidate selection minimizes screening time by
-                      prioritizing promising candidates.
+                      Speed up the hiring process
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -475,7 +494,7 @@ const IdentifyingBestCandidates = () => {
                   sx={{
                     bgcolor: "#FFEEEF",
                     borderRadius: "15px",
-                    minHeight: { xs: "182px", md: "236px", lg: "182px" },
+                    minHeight: { xs: "167px", md: "185px", lg: "167px" },
                     position: "relative",
                   }}
                 >
@@ -493,7 +512,7 @@ const IdentifyingBestCandidates = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        height: "60px",
+                        height: "72px",
                       }}
                     >
                       <Image
@@ -554,14 +573,13 @@ const IdentifyingBestCandidates = () => {
                     />
                     <CustomTypography
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "14px",
                         fontWeight: 600,
                         color: "#01313F",
                         textAlign: "center",
                       }}
                     >
-                      90% of our employers hire the right candidates within 24
-                      hours
+                      Achieves a 90%+ success rate
                     </CustomTypography>
                   </CardContent>
                 </Card>

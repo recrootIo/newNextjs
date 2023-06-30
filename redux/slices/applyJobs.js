@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import applyjob from "../services/applyjobs.service";
 // import { notifySuccess } from "../helpers/Toast";
-const applyjobsService = new applyjob()
+const applyjobsService = new applyjob();
 const initialState = {
   details: [],
   single: {},
@@ -21,6 +21,7 @@ const initialState = {
   seeCand: { jobId: "", state: false },
   rejectedEmail: null,
   selectedEmail: null,
+  applyPath: "",
 };
 
 export const applyJobsdet = createAsyncThunk(
@@ -129,7 +130,7 @@ export const clearState = createAsyncThunk("clearState/jobs", async () => {
 export const getEmailTemplapes = createAsyncThunk(
   "getTemplates/email",
   async (value) => {
-  console.log(value)
+    console.log(value);
     const res = await applyjobsService.getEmailTemplapes(value);
     return res.data;
   }
@@ -144,6 +145,20 @@ export const updateEmailTemplapes = createAsyncThunk(
       data
     );
     return res.data;
+  }
+);
+
+export const setApplyPath = createAsyncThunk(
+  "setApplyPath/jobs",
+  async (data) => {
+    return data;
+  }
+);
+
+export const removeApplyPath = createAsyncThunk(
+  "removeApplyPath/jobs",
+  async (data) => {
+    return data;
   }
 );
 
@@ -243,11 +258,18 @@ const applySlice = createSlice({
       state.seeCand = { jobId: "", state: false };
     },
     [getEmailTemplapes.fulfilled]: (state, action) => {
-        if (action.payload?.data?.type === 'rejected') {
+      if (action.payload?.data?.type === "rejected") {
         state.rejectedEmail = action.payload.data;
-      }else if (action.payload?.data?.type === 'shortlist') {
+      } else if (action.payload?.data?.type === "shortlist") {
         state.selectedEmail = action.payload.data;
       }
+    },
+
+    [setApplyPath.fulfilled]: (state, action) => {
+      state.applyPath = action.payload;
+    },
+    [removeApplyPath.fulfilled]: (state, action) => {
+      state.applyPath = "";
     },
   },
 });

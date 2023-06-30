@@ -3,6 +3,7 @@ import { Box, Grid, Container, Button, CardContent, Card } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import CelebrationOutlinedIcon from "@mui/icons-material/CelebrationOutlined";
+import styles from "./newhome.module.css";
 
 const GuaranteedHiring = () => {
   return (
@@ -29,8 +30,42 @@ const GuaranteedHiring = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                position: "relative",
               }}
             >
+              <Image
+                src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+                alt="Background bubble of guaranteed hiring section"
+                priority={true}
+                width="150"
+                height="150"
+                style={{
+                  position: "absolute",
+                  top: "580px",
+                  left: "111px",
+                }}
+              />
+              <Image
+                src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+                alt="Background bubble of guaranteed hiring section"
+                priority={true}
+                width="200"
+                height="200"
+                className={styles.GuaranteedHiringBubbleb}
+                style={{
+                  position: "absolute",
+                  top: "-3px",
+                  left: "296px",
+                }}
+              />
+              <Image
+                src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+                alt="Background bubble of guaranteed hiring section"
+                priority={true}
+                width="250"
+                height="250"
+                className={styles.GuaranteedHiringBubble}
+              />
               <Box
                 sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
               >
@@ -55,11 +90,20 @@ const GuaranteedHiring = () => {
                 </div>
               </Box>
               <Grid container spacing={2} sx={{ mt: "30px" }}>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#FBF3E9",
                       borderRadius: "50%",
                       display: "flex",
@@ -81,7 +125,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -92,11 +136,20 @@ const GuaranteedHiring = () => {
                     </Box>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#DBFFF2",
                       borderRadius: "50%",
                       display: "flex",
@@ -119,7 +172,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -130,11 +183,20 @@ const GuaranteedHiring = () => {
                     </Box>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#EAEBF4",
                       borderRadius: "50%",
                       display: "flex",
@@ -157,7 +219,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -168,11 +230,20 @@ const GuaranteedHiring = () => {
                     </Box>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#E3F7FE",
                       borderRadius: "50%",
                       display: "flex",
@@ -195,7 +266,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -206,11 +277,20 @@ const GuaranteedHiring = () => {
                     </Box>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#EAEBF4",
                       borderRadius: "50%",
                       display: "flex",
@@ -233,7 +313,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -244,11 +324,20 @@ const GuaranteedHiring = () => {
                     </Box>
                   </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Card
                     sx={{
-                      height: "185px",
-                      width: "185px",
+                      height: { xs: "168px", sm: "185px" },
+                      width: { xs: "168px", sm: "185px" },
                       bgcolor: "#FFEEEF",
                       borderRadius: "50%",
                       display: "flex",
@@ -271,7 +360,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
