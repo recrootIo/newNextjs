@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Container from "@mui/material/Container";
 // import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -20,7 +20,7 @@ import {
   Stack,
 } from "@mui/material";
 import { logout } from "@/redux/slices/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Fade from "@mui/material/Fade";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -76,6 +76,12 @@ const Navbar = () => {
     push(path);
   };
 
+  const photoss = useSelector(
+    (state) => state?.personal?.data && state.personal.data.profpicFileLocation
+  );
+
+  const company = useSelector((state) => state.company?.companyDetl);
+  const photoUrl = userType === 'Candidate' ? photoss?.photo && `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}` :company?.companyLogo?.logo &&  `http://localhost:3000/api/openProfpic?photo=${company?.companyLogo.logo}`
   return (
     <nav>
       <div
@@ -248,7 +254,7 @@ const Navbar = () => {
                           aria-expanded={open ? "true" : undefined}
                           onClick={handleClick}
                         >
-                          <Avatar />
+                          <Avatar src={photoUrl}/>
                         </Button>
                         <Menu
                           id="fade-menu"
@@ -317,7 +323,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton onClick={() => navigate("/pricing")}>
+                    <ListItemButton onClick={() => navigate("/Pricing")}>
                       Pricing
                     </ListItemButton>
                   </ListItem>

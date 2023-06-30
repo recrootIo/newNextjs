@@ -67,6 +67,7 @@ function Jobpayment() {
     const joblength = choosePremium === true ? 1 : jobDet?.length ;
     const finalPrice =  subscriptionPrice * joblength;
     const dispatch = useDispatch();
+    console.log(choosePremium,jobDet,'detail')
     useEffect(() => {
       const job = JSON.parse(localStorage.getItem("jobDetail"));
     if (choosePremium !== true && jobDet === '') {
@@ -74,7 +75,7 @@ function Jobpayment() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [jobDet,pre])
-    
+        console.log(choosePremium,jobDet,'detail')
     const  handleNavigate = ()=>{
         dispatch(upgradejobPayment({
             ids:jobDet,

@@ -205,11 +205,14 @@ const CompanyProfile = () => {
 
   const handleClose = () => {
     dispatch(cmpLogo(first));
-    dispatch(updateFinalPhoto(first)).then(
-      dispatch(
-        openAlert({ type: SUCCESS, message: "Your Company Logo Was Updated" })
-      )
-    );
+    dispatch(updateFinalPhoto(first)).then((res)=>{
+      if(res?.meta?.requestStatus === 'fulfilled'){
+        dispatch(getCompanyDetails())
+        dispatch(
+          openAlert({ type: SUCCESS, message: "Your Company Logo Was Updated" })
+        )
+      }
+    });
     setOpen(false);
   };
 

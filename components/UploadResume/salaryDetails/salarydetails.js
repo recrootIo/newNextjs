@@ -202,6 +202,7 @@ const Salary = ({ ...props }) => {
                 }}
                 sx={{ width: { xs: "50%", md: "80%" }, mr: "5px" }}
               />
+
               <FormControl sx={{ width: { xs: "50%", md: "20%" } }}>
                 <InputLabel id="demo-simple-select-required-label">
                   Denomination
@@ -221,6 +222,7 @@ const Salary = ({ ...props }) => {
                 </Select>
               </FormControl>
             </div>
+
             {currentSalary.salary && (
               <Stack direction={"row"} sx={{ justifyContent: "flex-start" }}>
                 <CustomTypography>
@@ -240,6 +242,7 @@ const Salary = ({ ...props }) => {
                 onChange={selectExpectedSalary}
                 sx={{ width: { xs: "50%", md: "80%" }, mr: "5px" }}
               />
+
               <FormControl sx={{ width: { xs: "50%", md: "20%" } }}>
                 <InputLabel id="demo-simple-select-required-label">
                   Denomination
@@ -259,6 +262,7 @@ const Salary = ({ ...props }) => {
                 </Select>
               </FormControl>
             </div>
+
             {expectedSalary.salary && (
               <Stack direction={"row"} sx={{ justifyContent: "flex-start" }}>
                 <CustomTypography>
@@ -297,7 +301,6 @@ const Salary = ({ ...props }) => {
                 Search For Jobs
               </Button>
 
-              {/* {url && ( */}
               <Button
                 onClick={() => actionNext(true)}
                 className={!enableNext ? "disabledButtons" : "nextBtn"}
@@ -312,7 +315,6 @@ const Salary = ({ ...props }) => {
               >
                 Apply
               </Button>
-              {/* )} */}
             </Stack>
           </Stack>
         </Box>

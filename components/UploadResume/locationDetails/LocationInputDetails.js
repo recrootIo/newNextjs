@@ -63,8 +63,6 @@ const LocationInputDetails = ({ ...props }) => {
     inputPersonalDetailsCountry?.state &&
     inputPersonalDetailsCountry?.city;
 
-  console.log(enableButton, "enableButton");
-
   return (
     <>
       <Container
@@ -122,6 +120,7 @@ const LocationInputDetails = ({ ...props }) => {
             >
               Great Effort!
             </CustomTypography>
+
             <CustomTypography className="resumeUploadText" gutterBottom>
               Lets input the location information
             </CustomTypography>
@@ -162,7 +161,9 @@ const LocationInputDetails = ({ ...props }) => {
                     },
                   }}
                 />
-                {inputPersonalDetailsCountry?.country && (
+                {(inputPersonalDetailsCountry?.country ||
+                  inputPersonalDetailsCountry?.state ||
+                  inputPersonalDetailsCountry?.city) && (
                   <Stack
                     direction={{ md: "row", xs: "column" }}
                     spacing={2}
@@ -179,7 +180,13 @@ const LocationInputDetails = ({ ...props }) => {
                         fullWidth
                         id="about"
                         placeholder="Country"
-                        value={inputPersonalDetailsCountry?.country}
+                        onChange={(e) =>
+                          setInputPersonalDetailsCountry((state) => ({
+                            ...state,
+                            country: e.target.value,
+                          }))
+                        }
+                        value={inputPersonalDetailsCountry?.state}
                         sx={{
                           backgroundColor: NEUTRAL,
                           width: { xs: "100%" },
