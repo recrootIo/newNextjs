@@ -49,6 +49,8 @@ const JobDetailCard = ({ ...props }) => {
     jobType,
     address = [],
     notice,
+    question,
+    queshow,
     _id,
     createdAt,
   } = props;
@@ -76,9 +78,10 @@ const JobDetailCard = ({ ...props }) => {
       router.push(`/uploadResume`);
       return;
     }
+
     if (data.profilePercentage < 70) {
       localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
-      router.push(`/Candidate/Dashboard`);
+      router.push(`/candidate/dashboard`);
 
       dispatch(
         setJobID({
