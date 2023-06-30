@@ -16,8 +16,6 @@ import { appWithTranslation } from "next-i18next";
 const inter = Inter({ subsets: ["cyrillic"] });
 
 const App = ({ Component, pageProps }) => {
-  console.log(pageProps, "Component");
-
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

@@ -587,8 +587,9 @@ function PostnewJob() {
                     Pages(index - 1, "add");
                   }}
                   key={label}
+                  sx={{ cursor: "pointer" }}
                 >
-                  <StepLabel>{label}</StepLabel>
+                  <StepLabel sx={{ cursor: "pointer" }}>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
