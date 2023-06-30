@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import Carousel from "react-elastic-carousel";
 import Image from "next/image";
 import { useRef } from "react";
+import styles from "./newhome.module.css";
 
 const SuccessStories = () => {
   const breakPoints = [
@@ -25,16 +26,26 @@ const SuccessStories = () => {
 
   return (
     <Container>
-      <CustomTypography
-        sx={{
-          fontSize: "33px",
-          fontWeight: 700,
-          color: "#01313F",
-          textAlign: "center",
-        }}
-      >
-        Client Success Stories
-      </CustomTypography>
+      <Box sx={{ position: "relative" }}>
+        <CustomTypography
+          sx={{
+            fontSize: "33px",
+            fontWeight: 700,
+            color: "#01313F",
+            textAlign: "center",
+          }}
+        >
+          Client Success Stories
+        </CustomTypography>
+        <Image
+          src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+          alt="Background bubble of guaranteed hiring section"
+          priority={true}
+          width="300"
+          height="300"
+          className={styles.clentStoriesbubble}
+        />
+      </Box>
       <Carousel
         breakPoints={breakPoints}
         enableAutoPlay
