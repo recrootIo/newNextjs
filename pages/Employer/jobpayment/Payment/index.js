@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import PaymentInt from '@/components/JobPay/PaymentInt';
+import { isEmpty } from 'lodash';
 
 const BasicButton = styled(Button)({
     color: "#ffff",
@@ -26,16 +27,15 @@ function Jobpaymentstatus() {
   const stripePromise = loadStripe(
     "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
   );
-  const jobPay =  useSelector(data => data.jobs.jobPayment)
-  const jobDet =  useSelector(data => data.jobs.upJob)
+  const jobLoc = Cookies.get('jobDet')
+  const jobPay = jobLoc && JSON.parse(jobLoc)
 
 const [clientSecret, setClientSecret] = useState("");
 const token = Cookies.get('token')
-const choosePremium =  useSelector(data => data.jobs.choosePremium)
 const router = useRouter()
-    console.log(choosePremium,jobDet,'paymen6')
   useEffect(() => {
-    if(jobDet === ""  && choosePremium !== true){
+    const job = JSON.parse(localStorage.getItem("jobDetail"));
+    if(isEmpty(jobPay) === true  && isEmpty(job) === true){
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
@@ -49,7 +49,7 @@ const router = useRouter()
       }
     }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
+      }, [jobPay])
   const appearance = {
     theme: "stripe",
   };

@@ -525,6 +525,7 @@ const EmpoyerDashboard = () => {
   };
 
   const handleUpgrade = (parms) => {
+    Cookies.set('jids',JSON.stringify([parms.id]))
     dispatch(upgradejob([parms.id]));
     push("/Employer/jobpayment");
   };
@@ -841,6 +842,7 @@ const EmpoyerDashboard = () => {
 
   const handleClose1 = () => {
     if (freejobs?.length > 0) {
+      Cookies.set('jids',JSON.stringify(freejobs))
       dispatch(upgradejob(freejobs)).then(push("/employer/jobpayment"));
     }
     setOpen1(false);
