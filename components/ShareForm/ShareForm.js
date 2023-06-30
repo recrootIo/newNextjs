@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ShareIcon from "@mui/icons-material/Share";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 
 const ShareForm = ({ ...props }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,21 +33,23 @@ const ShareForm = ({ ...props }) => {
 
   return (
     <>
-      <Button
-        className="bookmarkBtn"
-        size="small"
-        variant="outlined"
-        bgcolor="#02A9F7 !important"
-        aria-label="more"
-        id="long-button"
-        aria-controls={open ? "long-menu" : undefined}
-        aria-expanded={open ? "true" : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-        sx={{ padding: 0 }}
-      >
-        <ShareIcon sx={{ fontSize: "21px" }} />
-      </Button>
+      <Tooltip title="Share Job" placement="right">
+        <Button
+          className="bookmarkBtn"
+          size="small"
+          variant="outlined"
+          bgcolor="#02A9F7 !important"
+          aria-label="more"
+          id="long-button"
+          aria-controls={open ? "long-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+          sx={{ padding: 0 }}
+        >
+          <ShareIcon sx={{ fontSize: "21px" }} />
+        </Button>
+      </Tooltip>
 
       <Menu
         id="long-menu"

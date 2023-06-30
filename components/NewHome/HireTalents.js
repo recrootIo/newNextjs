@@ -23,9 +23,17 @@ const HireTalents = () => {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: { xs: "center", md: "flex-start" },
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                alignItems: "center",
+              }}
+            >
               <CustomTypography
                 sx={{ fontSize: "42px", fontWeight: 700, color: "#FFFFFF" }}
               >
@@ -51,7 +59,16 @@ const HireTalents = () => {
               </Button>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Box>
               <Image
                 src="/newhome_images/home-hiretalents-img.png"
