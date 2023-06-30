@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const CustomTypography = ({ children, ...props }) => {
   return (
-    <Typography className={inter.className} {...props}>
+    <Typography key={children} className={inter.className} {...props}>
       {children}
     </Typography>
   );

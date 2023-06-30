@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, Container, Button } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { useDispatch } from "react-redux";
+import { retrievePersonal } from "@/redux/slices/personal";
+import { companyJobs } from "@/redux/slices/job";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
+import Cookies from "js-cookie";
 
 const HireTalents = () => {
+  const dispatch = useDispatch()
+  const user = Cookies.get()
+  useEffect(() => {
+    localStorage.removeItem("Redirect");
+    if (user?.userType === "Candidate") {
+      dispatch(retrievePersonal());
+    }
+    if (
+      user?.userType === "Employer" ||
+      user?.userType === "Member"
+    ) {
+      dispatch(companyJobs());
+      dispatch(getCompanyDetails());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
   return (
     <Box
       sx={{
@@ -39,12 +60,14 @@ const HireTalents = () => {
               >
                 Hire Talents within 24 Hours
               </CustomTypography>
+              <div>
               <CustomTypography
                 sx={{ fontSize: "16px", fontWeight: 400, color: "#FFFFFF" }}
               >
                 Join us today and experience the power of hiring top-notch
                 talents instantly for your organization.
               </CustomTypography>
+              </div>
               <Button
                 variant="contained"
                 sx={{

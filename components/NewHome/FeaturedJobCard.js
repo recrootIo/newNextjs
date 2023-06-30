@@ -90,9 +90,11 @@ const FeaturedJobCard = ({
               >
                 {truncateStringWithEllipsis(jobRole, 13)}
               </CustomTypography>
+              <div>
               <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
                 {company[0]?.company_name}
               </CustomTypography>
+              </div>
             </Box>
           </Stack>
           <Box
@@ -226,6 +228,7 @@ const FeaturedJobCard = ({
             >
               {/* {moment(data.createdAt).fromNow()} */}
             </CustomTypography>
+            <div>
             <CustomTypography
               className={styles.featuredTypo}
               variant="body2"
@@ -233,6 +236,7 @@ const FeaturedJobCard = ({
             >
               Expires {moment(applicationDeadline).endOf("day").fromNow()}
             </CustomTypography>
+            </div>
           </Box>
         </Box>
       </CardContent>

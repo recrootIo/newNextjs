@@ -64,8 +64,8 @@ export function UploadPhoto(props) {
                 <Image
                   src={URL.createObjectURL(acceptedFiles[0])}
                   alt=""
-                  height={"300px"}
-                  width={"520px"}
+                  height={"300"}
+                  width={"520"}
                 />
               );
             }

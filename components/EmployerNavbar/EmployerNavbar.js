@@ -17,7 +17,7 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/auth";
 import { useCallback } from "react";
 
@@ -39,6 +39,8 @@ const EmployerNavbar = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const company = useSelector((state) => state.company?.companyDetl);
+const photoUrl = company?.companyLogo?.logo &&  `http://localhost:3000/api/openProfpic?photo=${company.companyLogo.logo}`
   return (
     <nav>
       <div
@@ -82,7 +84,7 @@ const EmployerNavbar = () => {
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
-                  <Avatar sx={{ color: "#034275" }} />
+                  <Avatar src={photoUrl} sx={{ color: "#034275" }} />
                 </Button>
                 <Menu
                   id="fade-menu"

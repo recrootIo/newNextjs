@@ -98,12 +98,14 @@ const WeAreProud = () => {
                       <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
+                    <div>
                     <CustomTypography
                       sx={{ fontSize: "18px" }}
                       fontWeight="500"
                     >
                       Total jobs
                     </CustomTypography>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -126,12 +128,14 @@ const WeAreProud = () => {
                       <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
+                    <div>
                     <CustomTypography
                       sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total candidates registered
                     </CustomTypography>
+                    </div>
                   </CardContent>
                 </Card>
               </Stack>
@@ -184,12 +188,14 @@ const WeAreProud = () => {
                       />
                       +
                     </CustomTypography>
+                    <div>
                     <CustomTypography
                       sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total companies actively hiring
                     </CustomTypography>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -212,12 +218,14 @@ const WeAreProud = () => {
                       <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
+                    <div>
                     <CustomTypography
                       sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total job categories available
                     </CustomTypography>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -240,12 +248,14 @@ const WeAreProud = () => {
                       <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
+                    <div>
                     <CustomTypography
                       sx={{ fontSize: "18px", textAlign: "center" }}
                       fontWeight="500"
                     >
                       Total job applications submitted
                     </CustomTypography>
+                    </div>
                   </CardContent>
                 </Card>
               </Stack>
