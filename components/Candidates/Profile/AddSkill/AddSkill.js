@@ -30,7 +30,7 @@ import { Form, Formik } from "formik";
 import CustomTextField from "@/components/Forms/CustomTextField";
 import * as Yup from "yup";
 import CalculatePercentage from "@/utils/CalculatePercentange";
-import { ADD, EDIT } from "@/utils/buttnTexts";
+import { ADD, UPDATE } from "@/utils/buttnTexts";
 
 const FORM_VALIDATION = Yup.object().shape({
   skillName: Yup.string().required("Skill Name field is required"),
@@ -125,7 +125,7 @@ const AddSkill = () => {
     }
   }, [skill]);
 
-  const buttonText = skill?._id ? EDIT : ADD;
+  const buttonText = skill?._id ? UPDATE : ADD;
 
   return (
     <div>

@@ -134,7 +134,7 @@ const JobPreview = (props) => {
           }}
         >
           <CustomTypography>
-            Click on &quot;Submit&quot; button to make your job post live on
+            Click on &quot;Next&quot; button to make your job post live on
             Recroot
           </CustomTypography>
           <Button onClick={() => closeTour()}>DONE</Button>

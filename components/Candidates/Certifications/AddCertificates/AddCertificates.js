@@ -28,7 +28,7 @@ import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import * as YUP from "yup";
 import CalculatePercentage from "@/utils/CalculatePercentange";
-import { ADD, EDIT } from "@/utils/buttnTexts";
+import { ADD, UPDATE } from "@/utils/buttnTexts";
 
 export const FORM_VALIDATION = YUP.object().shape({
   title: YUP.string().required("Title field Required"),
@@ -157,7 +157,7 @@ const AddCertificates = ({}) => {
     }
   }, [certOne]);
 
-  const buttonText = certOne?._id ? EDIT : ADD;
+  const buttonText = certOne?._id ? UPDATE : ADD;
 
   return (
     <div>
