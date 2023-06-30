@@ -45,7 +45,7 @@ const WatchDemo = () => {
                 textTransform: "uppercase",
               }}
             >
-              Watch Demo
+              Schedule a Demo
             </button>
           </Box>
         </Box>

@@ -11,7 +11,7 @@ const HireTalents = () => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: "1000px",
-        pt: "100px",
+        pt: "80px",
       }}
     >
       <Container>
@@ -31,11 +31,11 @@ const HireTalents = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
-                alignItems: "center",
+                alignItems: { xs: "center", md: "flex-start" },
               }}
             >
               <CustomTypography
-                sx={{ fontSize: "42px", fontWeight: 700, color: "#FFFFFF" }}
+                sx={{ fontSize: "45px", fontWeight: 700, color: "#FFFFFF" }}
               >
                 Hire Talents within 24 Hours
               </CustomTypography>
@@ -71,11 +71,11 @@ const HireTalents = () => {
           >
             <Box>
               <Image
-                src="/newhome_images/home-hiretalents-img.png"
+                src="/newhome_images/home-hiretalentssection-img.png"
                 alt="Picture of the Hire Talents"
                 priority={true}
-                width="626"
-                height="526"
+                width="726"
+                height="626"
                 // sizes="100vw"
               />
             </Box>
