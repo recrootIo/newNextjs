@@ -94,9 +94,30 @@ const AddResume = ({ ...props }) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 9) {
+      event.preventDefault();
+    }
+  };
+
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 9) {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <Container
+        onKeyDown={handleKeyDown}
         sx={{
           display: "flex",
           justifyContent: "center",

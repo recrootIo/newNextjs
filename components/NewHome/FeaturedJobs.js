@@ -15,6 +15,7 @@ import FeaturedJobCard from "./FeaturedJobCard";
 import { useDispatch, useSelector } from "react-redux";
 import { searchJobs } from "@/redux/slices/search";
 import { useRouter } from "next/router";
+import { isEmpty } from "lodash";
 
 const FeaturedJobs = ({ locale }) => {
   const dispatch = useDispatch();
@@ -51,6 +52,8 @@ const FeaturedJobs = ({ locale }) => {
   useEffect(() => {
     getJobs();
   }, []);
+
+  if (isEmpty(latestJobs)) return;
 
   return (
     <Box sx={{ bgcolor: "#EAEBF4" }}>

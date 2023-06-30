@@ -55,7 +55,7 @@ const AppliedJobs = ({ appliedJobs }) => {
             fontSize: "20px",
           }}
         >
-          Applied Job
+          Applied Jobs
         </CustomTypography>
       </Stack>
       <CardContent

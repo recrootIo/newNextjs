@@ -122,11 +122,10 @@ const UploadResume = () => {
         } else {
           setOpen(false);
         }
-        router.push("/");
+        router.push("/jobs");
       })
       .catch(() => {
         setOpen(false);
-
         openAlert({
           type: DANGER,
           message: "Information could not be saved saved successfully",
