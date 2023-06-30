@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { SUCCESS } from "@/utils/constants";
 import jobsService from "@/redux/services/job.service";
+import { removeApplyPath } from "@/redux/slices/applyJobs";
 
 const UploadResume = () => {
   // access cv details
@@ -28,7 +29,6 @@ const UploadResume = () => {
   const router = useRouter();
   const parallax = useRef();
   const getTheScreenCount = 5;
-  const url = useRef(null);
 
   const salary = useSelector((state) => state.apply?.salary);
   const coverSin = useSelector((state) => state.personal?.cover?._id);
@@ -38,6 +38,8 @@ const UploadResume = () => {
   const resumes_id =
     useSelector((state) => state?.personal?.data?.resume)?.resumeFileLocation[0]
       ?._id || false;
+  removeApplyPath;
+  const selector = useSelector((state) => state?.apply?.applyPath);
 
   const [createResume, setCreateResume] = useState({});
   const [totalExperience, setTotalExperience] = useState("");
@@ -64,13 +66,13 @@ const UploadResume = () => {
       window.onpopstate = null;
     };
   }, []);
+
   useEffect(() => {
     dispatch(retrievePersonal()).then((res) => {
       if (res?.payload?.resume?.resumeFileLocation?.length > 0) {
         parallax.current.scrollTo(1);
       }
     });
-    url.current = localStorage.getItem("redirect");
   }, [dispatch]);
 
   const saveAllData = (
@@ -114,11 +116,11 @@ const UploadResume = () => {
           })
         );
 
-        if (url.current && apply) {
+        if (selector && apply) {
           dispatch(retrievePersonal()).then(() => {
             applyFirstJob();
           });
-          localStorage.removeItem("redirect");
+          dispatch(removeApplyPath());
         } else {
           setOpen(false);
         }
@@ -180,15 +182,17 @@ const UploadResume = () => {
           setCreateResume={setCreateResume}
           position={4}
           saveAllData={saveAllData}
-          url={url.current}
+          url={selector}
         />
       ),
     },
   ];
 
+  console.log(selector, "selector");
+
   const applyFirstJob = async () => {
     const regex = /[\?&]jobid=([^&#]*)/i;
-    let match = regex.exec(url.current);
+    let match = regex.exec(selector);
     match = match ? match[1] : null;
     let job;
 
@@ -209,10 +213,11 @@ const UploadResume = () => {
       resumeId: resumes_id,
       salary: salary,
     };
+
     dispatch(applyJobs(final))
       .then(() => {
         setOpen(false);
-        localStorage.removeItem("redirect");
+        dispatch(removeApplyPath());
         router.push("/");
       })
       .catch(() => {

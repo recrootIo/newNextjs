@@ -39,6 +39,7 @@ import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 import { openAlert } from "@/redux/slices/alert";
 import styles from "./jobDetail.module.css";
 import moment from "moment";
+import { setApplyPath } from "@/redux/slices/applyJobs";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -54,8 +55,6 @@ const JobDetailCard = ({ ...props }) => {
     _id,
     createdAt,
   } = props;
-
-  console.log(props);
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
 
@@ -80,7 +79,7 @@ const JobDetailCard = ({ ...props }) => {
     }
 
     if (data.profilePercentage < 70) {
-      localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+      dispatch(setApplyPath(`/applyJob?jobid=${_id}`));
       router.push(`/candidate/dashboard`);
 
       dispatch(
@@ -98,7 +97,8 @@ const JobDetailCard = ({ ...props }) => {
   };
 
   const goToLogin = () => {
-    localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+    dispatch(setApplyPath(`/applyJob?jobid=${_id}`));
+
     router.push(`/signin`);
   };
 

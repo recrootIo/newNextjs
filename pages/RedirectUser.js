@@ -51,8 +51,8 @@ function RedirectUser() {
   //   const classes = useStyles();
   //   let navigate = useNavigate();
   const [recrootUserType] = useState("Candidate");
+  const selector = useSelector((state) => state?.apply?.applyPath);
   //   const { id } = useParams();
-  //   const redirect = localStorage.getItem("Redirect");
 
   const employerTypes = [EMPLOYER, RECRUITER];
 
@@ -71,8 +71,8 @@ function RedirectUser() {
             Router.push("/completeProfile");
           } else {
             if (resObject.data.User.resume.resumeFileLocation.length > 0) {
-              if (redirect !== null) {
-                Router.push(redirect);
+              if (selector !== null) {
+                Router.push(selector);
               } else {
                 Router.push("/");
               }

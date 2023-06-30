@@ -43,6 +43,7 @@ import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import ShareForm from "../ShareForm/ShareForm";
 import { openAlert } from "@/redux/slices/alert";
 import { isEmpty } from "lodash";
+import { setApplyPath } from "@/redux/slices/applyJobs";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -72,7 +73,7 @@ const JobDetail = ({ ...props }) => {
 
   const gotApply = () => {
     if (data.profilePercentage < 70) {
-      localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+      dispatch(setApplyPath(`/applyJob?jobid=${_id}`));
       router.push(`/Candidate/Dashboard`);
 
       dispatch(
@@ -90,7 +91,7 @@ const JobDetail = ({ ...props }) => {
   };
 
   const goToLogin = () => {
-    localStorage.setItem("redirect", `/applyJob?jobid=${_id}`);
+    dispatch(setApplyPath(`/applyJob?jobid=${_id}`));
     router.push(`/signin`);
   };
 

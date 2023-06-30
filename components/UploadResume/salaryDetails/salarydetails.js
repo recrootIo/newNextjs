@@ -280,7 +280,7 @@ const Salary = ({ ...props }) => {
                   sm: "column",
                   xs: "column",
                 },
-                justifyContent: "space-between",
+                justifyContent: url ? "space-between" : "flex-end",
                 alignItems: "flex-end",
                 mb: "120px",
                 gap: "10px",
@@ -301,20 +301,22 @@ const Salary = ({ ...props }) => {
                 Search For Jobs
               </Button>
 
-              <Button
-                onClick={() => actionNext(true)}
-                className={!enableNext ? "disabledButtons" : "nextBtn"}
-                sx={{
-                  height: "50px",
-                  width: { xs: "100%", sm: "30%" },
-                  textAlign: "center",
-                  textTransform: "capitalize",
-                }}
-                variant="contained"
-                disabled={!enableNext}
-              >
-                Apply
-              </Button>
+              {url && (
+                <Button
+                  onClick={() => actionNext(true)}
+                  className={!enableNext ? "disabledButtons" : "nextBtn"}
+                  sx={{
+                    height: "50px",
+                    width: { xs: "100%", sm: "30%" },
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                  }}
+                  variant="contained"
+                  disabled={!enableNext}
+                >
+                  Apply
+                </Button>
+              )}
             </Stack>
           </Stack>
         </Box>
