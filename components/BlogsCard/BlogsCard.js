@@ -9,8 +9,25 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import AssistantIcon from "@mui/icons-material/Assistant";
 import ShareIcon from "@mui/icons-material/Share";
 import { Box, IconButton } from "@mui/material";
+import Link from "next/link";
+import moment from "moment";
+import ShareForm from "../ShareForm/ShareForm";
 
-const BlogsCard = () => {
+const BlogsCard = ({blog,API_URL}) => {
+  function removeHtmlTags(text) {
+    // Create a regular expression to match all HTML tags.
+    const regex = /<\/?[^>]+>/g;
+  
+    // Replace all HTML tags with an empty string.
+    return text.replace(regex, "");
+  }
+  const imageUrl = `${API_URL}/getCompanyPhotos?compPhotos=${blog?.blogImage}`;
+  const handleUrl = (title, id) => {
+    var regexPattern = /\s+/g;
+    var ans = title.replace(regexPattern, "%20");
+    const current = window.location.href;
+    return `${current}/${ans}/${id}`;
+  };
   return (
     <Card
       variant="outlined"
@@ -19,13 +36,16 @@ const BlogsCard = () => {
         borderRadius: "20px",
         borderColor: "#D4F0FC",
         pb: "20px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
       }}
     >
       <CardMedia
         sx={{ height: 240 }}
-        image="/blogs-card-img.png"
         title="blogs image"
-      />
+        image={imageUrl}
+        />
       <CardContent>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", gap: "5px" }}>
@@ -34,7 +54,7 @@ const BlogsCard = () => {
               gutterBottom
               sx={{ fontSize: "16px", color: "#01313F" }}
             >
-              14-05 -2023
+             {moment(blog.updatedAt).format("DD-MM-YYYY")}
             </CustomTypography>
           </Box>
           <Box sx={{ display: "flex", gap: "5px" }}>
@@ -43,22 +63,24 @@ const BlogsCard = () => {
               gutterBottom
               sx={{ fontSize: "16px", color: "#01313F" }}
             >
-              Recruitment
+              {blog.category.category}
             </CustomTypography>
           </Box>
         </Box>
+        <Link
+        href={`/Blogs/${blog?.title}/${blog?._id}`}
+        style={{color:'white'}}
+                          >
+
         <CustomTypography
           gutterBottom
-          sx={{ mt: "30px", fontWeight: 700, fontSize: "18px" }}
+          sx={{ mt: "30px",color:'white',fontWeight: 700, fontSize: "18px" ,textTransform:'capitalize' }}
         >
-          How to Use Social Media to Find the Best
+          {blog.title}
         </CustomTypography>
-        <CustomTypography sx={{ color: "#01313F", fontSize: "17px" }}>
-          In today&apos;s digital age, social media platforms have become a
-          powerful tool for recruiters to find top talent.{" "}
-          <span style={{ color: "#1097CD", textDecoration: "underline" }}>
-            Read more
-          </span>
+                          </Link>
+        <CustomTypography sx={{ color: "#01313F", fontSize: "17px" ,height:'80px',overflow:'hidden'}}>
+        { removeHtmlTags(blog?.description)}
         </CustomTypography>
       </CardContent>
       <CardActions>
@@ -70,12 +92,18 @@ const BlogsCard = () => {
             width: "150px",
             borderRadius: "8px",
           }}
-        >
+        > <Link
+        className="read-more"
+        href={`/Blogs/${blog?.title}/${blog?._id}`}
+      >
           READ MORE
+      </Link>
         </Button>
-        <IconButton aria-label="share">
-          <ShareIcon sx={{ color: "#0183C9", fontSize: "30px" }} />
-        </IconButton>
+        <ShareForm   url={handleUrl(blog?.title, blog?._id)}
+                            roundedButtons={true}
+                            title={blog?.title}
+                            description={blog?.description}
+                            tag={blog?.tags} />
       </CardActions>
     </Card>
   );
