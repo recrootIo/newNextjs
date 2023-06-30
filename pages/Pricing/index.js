@@ -117,28 +117,25 @@ const planHeadSlot = {
 
 function Pricing() {
   const [jobSwitch, setjobSwitch] = useState("jPost");
-  const [countryData, setcountryData] = useState({
-    country:'LK'
-  });
+  const [countryData, setcountryData] = useState("");
   const [isTourOpen, setTourOpen] = React.useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get("https://ipapi.co/json/")
       .then((response) => {
-        console.log(response, "sss");
         let data = response.data;
-        // setcountryData(response.data);
-        // if (data?.country !== "LK") {
-        //   setjobSwitch("jSlot");
-        // }
-        // if (data?.country === "IN") {
-        //   setcounCheck(true);
-        // }
+        setcountryData(response.data);
+        if (data?.country !== "LK") {
+          setjobSwitch("jSlot");
+        }
+        if (data?.country === "IN") {
+          setcounCheck(true);
+        }
         dispatch(
           userCountry({
-            countryName: "Sri Lanka",
-            countryCurrecy:"LKR",
+            countryName: data.country_name,
+            countryCurrecy: data.currency,
           })
         );
       })
@@ -547,7 +544,7 @@ function Pricing() {
                     borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  {countryData.country ==='IN' ? (
+                  {countryData?.country ==='IN' ? (
                     <>
                       <sup style={{ fontSize: "30px" }}></sup>
                       <Typography

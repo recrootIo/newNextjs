@@ -41,6 +41,7 @@ import autoTable from "jspdf-autotable";
 import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
+import Cookies from "js-cookie";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 require("jspdf-autotable");
 
@@ -62,7 +63,12 @@ const columns = [
     field: "paymentAmount",
     headerName: "Amount ($)",
     width: "100",
-    ...usdPrice,
+    // ...usdPrice,
+    renderCell: (parms) => (
+      <>
+        <p>{parms?.row?.currancyType === 'USD' ? "$" : parms?.row?.currancyType === 'INR' ? <span>&#8377;</span> : parms?.row?.currancyType === 'LKR' ? 'Rs' :'$'}{parms?.value}</p>
+      </>
+    ),
   },
   {
     field: "paidPackage",
@@ -373,6 +379,7 @@ const Subscriptions = () => {
     updateValue();
   };
 
+  const country = Cookies.get('country')
   const accentColor = "#5cb7b7";
 
   const tourConfig = [
@@ -528,7 +535,14 @@ const Subscriptions = () => {
                                   &#8377;{" "}
                                   {paymentInfo.package.currant_package_price}
                                 </b>
-                              ) : (
+                              ) : 
+                              country === 'LK' ?
+                              (
+                                <b>
+                                  Rs {paymentInfo.package.currant_package_price}
+                                </b>
+                              ):
+                              (
                                 <b>
                                   $ {paymentInfo.package.currant_package_price}
                                 </b>
@@ -654,7 +668,13 @@ const Subscriptions = () => {
                                     &#8377;{" "}
                                     {paymentInfo.package.currant_package_price}
                                   </b>
-                                ) : (
+                                ) :
+                                country === 'LK' ?
+                              (
+                                <b>
+                                  Rs {paymentInfo.package.currant_package_price}
+                                </b>
+                              ): (
                                   <b>
                                     ${" "}
                                     {paymentInfo.package.currant_package_price}
@@ -794,7 +814,13 @@ const Subscriptions = () => {
                         invoiceInfo.paidPackage === "Premium" ? (
                         county ? (
                           <b>&#8377; {invoiceInfo.paymentAmount}</b>
-                        ) : (
+                        ) :
+                        country === 'LK' ?
+                              (
+                                <b>
+                                  Rs {invoiceInfo.paymentAmount}
+                                </b>
+                              ): (
                           <b>$ {invoiceInfo.paymentAmount}</b>
                         )
                       ) : (
@@ -817,7 +843,13 @@ const Subscriptions = () => {
                         invoiceInfo.paidPackage === "Premium" ? (
                         county ? (
                           <b>&#8377; {invoiceInfo.paymentAmount}</b>
-                        ) : (
+                        ) :
+                        country === 'LK' ?
+                              (
+                                <b>
+                                  Rs {invoiceInfo.paymentAmount}
+                                </b>
+                              ): (
                           <b>$ {invoiceInfo.paymentAmount}</b>
                         )
                       ) : (
@@ -859,7 +891,13 @@ const Subscriptions = () => {
                     invoiceInfo.paidPackage === "Premium" ? (
                     county ? (
                       <b>&#8377; {invoiceInfo.paymentAmount}</b>
-                    ) : (
+                    ) :
+                    country === 'LK' ?
+                              (
+                                <b>
+                                  Rs {invoiceInfo.paymentAmount}
+                                </b>
+                              ): (
                       <b>$ {invoiceInfo.paymentAmount}</b>
                     )
                   ) : (

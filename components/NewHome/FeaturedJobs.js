@@ -45,7 +45,9 @@ const FeaturedJobs = ({ locale }) => {
   };
 
   const handleNavigate = () => {
-    router.push(`/jobs?variant=featured&address=Sri+Lanka`);
+    router.push(
+      `/jobs?variant=featured&address=${locale === "lk" ? "Sri Lanka" : ""}`
+    );
   };
 
   useEffect(() => {
