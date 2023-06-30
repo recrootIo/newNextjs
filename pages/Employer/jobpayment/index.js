@@ -74,7 +74,7 @@ function Jobpayment() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [jobDet,pre])
-    
+        console.log(choosePremium,jobDet,'detail')
     const  handleNavigate = ()=>{
         dispatch(upgradejobPayment({
             ids:jobDet,
