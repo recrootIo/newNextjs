@@ -123,7 +123,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -170,7 +170,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -217,7 +217,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -264,7 +264,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -311,7 +311,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",
@@ -358,7 +358,7 @@ const GuaranteedHiring = () => {
                     <Box>
                       <CustomTypography
                         sx={{
-                          fontSize: "13px",
+                          fontSize: "14px",
                           fontWeight: 600,
                           color: "#01313F",
                           textAlign: "center",

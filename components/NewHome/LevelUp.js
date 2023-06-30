@@ -86,7 +86,7 @@ const LevelUp = () => {
                     >
                       <CustomTypography
                         sx={{
-                          fontSize: "28px",
+                          fontSize: "32px",
                           fontWeight: 700,
                           color: "#FFFFFF",
                           textAlign: "center",
@@ -94,17 +94,8 @@ const LevelUp = () => {
                       >
                         Are You a Recruiter?
                       </CustomTypography>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          color: "#01313F",
-                          bgcolor: "#FFFFFF !important",
-                          borderRadius: "10px",
-                          minWidth: "148px",
-                          fontWeight: 700,
-                        }}
-                      >
-                        Get Started
+                      <Button className={styles.areYouRecruiterBtn}>
+                        GET STARTED
                       </Button>
                     </Grid>
                   </Grid>
@@ -160,7 +151,7 @@ const LevelUp = () => {
                     >
                       <CustomTypography
                         sx={{
-                          fontSize: "28px",
+                          fontSize: "32px",
                           fontWeight: 700,
                           color: "#FFFFFF",
                           textAlign: "center",
@@ -168,16 +159,7 @@ const LevelUp = () => {
                       >
                         Are You a Candidate?
                       </CustomTypography>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          color: "#01313F",
-                          bgcolor: "#FFFFFF !important",
-                          borderRadius: "10px",
-                          minWidth: "148px",
-                          fontWeight: 700,
-                        }}
-                      >
+                      <Button className={styles.areYouRecruiterBtn}>
                         EXPLORE MORE
                       </Button>
                     </Grid>
