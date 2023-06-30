@@ -1,14 +1,21 @@
+/* eslint-disable @next/next/no-img-element */
 import FooterHome from "@/components/Home/FooterHome";
 import Navbar from "@/components/Navbar/Navbar";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Chip, Container, Divider, IconButton } from "@mui/material";
+import { Box, Chip, Container, Divider, Grid, IconButton, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AssistantIcon from "@mui/icons-material/Assistant";
 import ShareIcon from "@mui/icons-material/Share";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import ShareForm from "../ShareForm/ShareForm";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import moment from "moment";
+import Link from "next/link";
 
 const StyledMainTypo = styled(CustomTypography)({
   marginTop: "20px",
@@ -31,7 +38,16 @@ const StyledQuestionTypo = styled(CustomTypography)({
   color: "#01313F",
 });
 
-const BlogDetails = () => {
+const BlogDetails = ({ blog, tags, recent }) => {
+    const API_URL = 'https://preprod.recroot.au/api'
+  const imageUrl = `${API_URL}/getCompanyPhotos?compPhotos=${blog?.blogImage}`;
+  const router = useRouter()
+  const handleUrl = (title, id) => {
+    var regexPattern = /\s+/g;
+    var ans = title.replace(regexPattern, "%20");
+    const current = router.pathname
+    return `${current}/${ans}/${id}`;
+  };
   return (
     <div style={{ backgroundColor: "#F1F6F8" }}>
       <Navbar />
@@ -62,15 +78,17 @@ const BlogDetails = () => {
             </CustomTypography>
           </Container>
         </Box>
+        <Grid container spacing={2}>
+<Grid item xs={12} md={7} lg={8.5} >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Container>
             <Box sx={{ mt: "30px" }}>
               <Image
-                src="/blog-detail-img.png"
+                src={imageUrl}
                 alt=""
-                width={1000}
-                height={600}
-                style={{ width: "100%" }}
+                width={2000}
+                height={2000}
+                style={{ width: "auto",height:"auto",margin:'auto' }}
               />
             </Box>
           </Container>
@@ -101,7 +119,7 @@ const BlogDetails = () => {
                       gutterBottom
                       sx={{ fontSize: "16px", color: "#01313F" }}
                     >
-                      14-05 -2023
+             {moment(blog.updatedAt).format("DD-MM-YYYY")}
                     </CustomTypography>
                   </Box>
                   <Box sx={{ display: "flex", gap: "5px" }}>
@@ -110,7 +128,7 @@ const BlogDetails = () => {
                       gutterBottom
                       sx={{ fontSize: "16px", color: "#01313F" }}
                     >
-                      Recruitment
+                      {blog?.category?.category}
                     </CustomTypography>
                   </Box>
                 </Box>
@@ -123,7 +141,7 @@ const BlogDetails = () => {
                     color: "#034275",
                   }}
                 >
-                  The Benefits of Using Recruitment software
+                 {blog?.title}
                 </CustomTypography>
                 <Box
                   sx={{
@@ -143,141 +161,42 @@ const BlogDetails = () => {
                   >
                     Tags :
                   </CustomTypography>
-                  <Chip
-                    label="#Recruitmentsoftware"
-                    sx={{ bgcolor: "#D4F0FC" }}
-                  />
-                  <IconButton aria-label="share">
+                  {
+                    blog?.tags.map((tag,ind)=>(
+                        <Chip
+                        key={ind}
+                          label={`#${tag}`}
+                          sx={{ bgcolor: "#D4F0FC" }}
+                        />
+                    ))
+                  }
+                     <ShareForm   url={handleUrl(blog?.title, blog?._id)}
+                            roundedButtons={true}
+                            title={blog?.title}
+                            description={blog?.description}
+                            tag={blog?.tags} />
+                  {/* <IconButton aria-label="share">
                     <ShareIcon sx={{ color: "#0183C9", fontSize: "30px" }} />
-                  </IconButton>
+                  </IconButton> */}
                 </Box>
                 <Divider
                   sx={{ mt: "20px", bgcolor: "rgba(175, 209, 237, 0.69)" }}
                 />
               </Box>
+              <Box>
               <Box
-                sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" } }}
+                sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" }, mt:2}}
               >
-                <StyledSecondTypo gutterBottom>
-                  Recruitment is a complex and time-consuming process that
-                  involves multiple stages, from sourcing and screening
-                  candidates to interviewing and onboarding. In today&apos;s
-                  digital age, recruitment software has emerged as a powerful
-                  tool that can greatly streamline and enhance the hiring
-                  process. Let&apos;s explore the numerous benefits of using
-                  recruitment software, ranging from automating administrative
-                  tasks to improving the overall candidate experience.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Streamlining Administrative Tasks
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  One of the primary advantages of recruitment software is its
-                  ability to automate administrative tasks, saving valuable time
-                  and effort for recruiters. Tasks such as job posting, resume
-                  parsing, and candidate tracking can be efficiently managed
-                  through software, eliminating the need for manual data entry
-                  and reducing the risk of errors. This automation allows
-                  recruiters to focus more on strategic activities like
-                  candidate engagement and talent acquisition.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Centralizing Candidate Data
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  Recruitment software serves as a centralized repository for
-                  all candidate data, making it easily accessible and
-                  searchable. This enables recruiters to efficiently manage and
-                  organize applicant information, resumes, and interview notes
-                  in a systematic manner. With a few clicks, recruiters can
-                  retrieve specific candidate details, track progress, and
-                  collaborate seamlessly with hiring managers and team members.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Enhancing Collaboration and Communication
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  Recruitment software promotes effective collaboration and
-                  communication among various stakeholders involved in the
-                  hiring process. It allows recruiters and hiring managers to
-                  share feedback, exchange notes, and evaluate candidates
-                  collaboratively within the platform. Real-time updates and
-                  notifications ensure that all team members are on the same
-                  page, resulting in faster decision-making and a more
-                  streamlined hiring process.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Improving Candidate Sourcing and Screening
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  Recruitment software provides robust features for candidate
-                  sourcing and screening, enabling recruiters to identify the
-                  most suitable candidates efficiently. Advanced search
-                  capabilities, filtering options, and keyword matching
-                  algorithms help recruiters quickly identify qualified
-                  candidates from a vast pool of applicants. This saves time and
-                  effort, ensuring that recruiters focus on candidates who best
-                  match the job requirements.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Enhancing Candidate Experience
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  A positive candidate experience is crucial for attracting top
-                  talent and building a strong employer brand. Recruitment
-                  software facilitates a seamless and user-friendly application
-                  process for candidates. Features like mobile-friendly
-                  applications, automated responses, and personalized
-                  communication help create a positive impression and improve
-                  overall candidate satisfaction. Additionally, software can
-                  provide status updates to candidates, keeping them engaged and
-                  informed throughout the hiring process.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Leveraging Data and Analytics
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  Recruitment software provides valuable insights through data
-                  and analytics, empowering recruiters to make data-driven
-                  decisions. Key recruitment metrics, such as time-to-hire,
-                  cost-per-hire, and source of hire, can be easily tracked and
-                  analyzed. These insights enable recruiters to identify
-                  bottlenecks, optimize their hiring strategies, and
-                  continuously improve the recruitment process.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Ensuring Compliance and Security
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  Recruitment involves handling sensitive candidate data and
-                  ensuring compliance with data protection regulations.
-                  Recruitment software offers robust security measures,
-                  including data encryption, access controls, and regular
-                  backups, to safeguard candidate information. Additionally, it
-                  helps recruiters maintain compliance with privacy regulations,
-                  such as GDPR or CCPA, by providing tools and features designed
-                  to adhere to these requirements.
-                </StyledSecondTypo>
-                <StyledMainTypo gutterBottom>
-                  Recroot.io: A Cut Above the Rest
-                </StyledMainTypo>
-                <StyledSecondTypo gutterBottom>
-                  As a leading recruitment software, Recroot.io offers unique
-                  advantages that set it apart from the competition. With its
-                  intuitive interface, user-friendly design, and comprehensive
-                  feature set, Recroot.io simplifies the hiring process and
-                  maximizes efficiency. Its customizable workflows, tailored
-                  reporting, and seamless integrations ensure that recruiters
-                  can adapt the platform to their specific needs.
-                  Recroot.io&apos;s commitment to providing fast hiring within
-                  24 hours, data security, compliance, and dedicated customer
-                  support further reinforces its position as a trusted
-                  recruitment software provider.
-                </StyledSecondTypo>
+              <ReactQuill
+                  value={blog?.description}
+                  readOnly={true}
+                  theme={"bubble"}
+                />
+              </Box>
               </Box>
             </Box>
           </Container>
-          <Container>
+          {/* <Container>
             <Box
               sx={{
                 bgcolor: "#EBF9FF",
@@ -356,8 +275,41 @@ const BlogDetails = () => {
                 </Box>
               </Box>
             </Box>
-          </Container>
+          </Container> */}
         </Box>
+
+</Grid>
+<Grid item xs={12} md={5} lg={3.5} >
+<div className="blog-sidebar">
+                <aside className="widget widget-trend-post">
+                  <Typography className="widget-title">Recent Posts</Typography>
+                  {recent.map((rec,ind) => (
+                    <div key={ind} className="popular-post">
+                      <Link href={`/blogs/${rec?.title}/${rec?._id}`}>
+                        <img
+                          src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
+                          alt=""
+                          height={"20px"}
+                        />
+                        <h5>{rec.title}</h5>
+                        <span>
+                          {moment(rec.updatedAt).format("DD-MM-YYYY")}
+                        </span>
+                      </Link>
+                    </div>
+                  ))}
+                </aside>
+                <aside className="widget">
+                  <Typography className="widget-title">Tags</Typography>
+                  <div className="tags">
+                    {tags.map((tag) => (
+                      <Box key={tag} className={"tags-a"}>{`# ${tag}`}</Box>
+                    ))}
+                  </div>
+                </aside>
+              </div>
+</Grid>
+        </Grid>
       </Box>
       <FooterHome />
     </div>
