@@ -23,7 +23,7 @@ import {
 import { CustomTypography } from "../ui-components/CustomTypography/CustomTypography";
 import Checkbox from "@mui/material/Checkbox";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import { useDispatch } from "react-redux";
 // import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -42,14 +42,8 @@ import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 const StyledInput = styled(TextField)({
-  // height: "60px",
-  // border: "1px solid #c2c8d0",
-  // borderRadius: "8px",
   width: "95%",
   fontSize: "18px",
-  // fontWeight: "400",
-  // color: "#000",
-  // padding: "10px",
 });
 
 const StyledPasswordInput = styled("input")({
@@ -93,10 +87,10 @@ function Signup() {
   const StyledFirstCard = styled(Card)(
     userType === CANDIDATE
       ? {
-          background: "rgba(255, 255, 255, 0.3)",
+          background: "rgba(255, 255, 255, 0.5)",
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           backdropFilter: "blur(5px)",
-          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          border: " 1px solid rgba(255, 255, 255, 0.5)",
           width: "250px",
           // height: "250px",
           borderRadius: "20px",
@@ -118,10 +112,10 @@ function Signup() {
   const StyledCard = styled(Card)(
     userType === EMPLOYER
       ? {
-          background: "rgba(255, 255, 255, 0.3)",
+          background: "rgba(255, 255, 255, 0.5)",
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           backdropFilter: "blur(5px)",
-          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          border: " 1px solid rgba(255, 255, 255, 0.5)",
           width: "250px",
           // height: "250px",
           borderRadius: "20px",
@@ -143,10 +137,10 @@ function Signup() {
   const NonCard = styled(Card)(
     userType === RECRUITER
       ? {
-          background: "rgba(255, 255, 255, 0.3)",
+          background: "rgba(255, 255, 255, 0.5)",
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           backdropFilter: "blur(5px)",
-          border: " 1px solid rgba(255, 255, 255, 0.3)",
+          border: " 1px solid rgba(255, 255, 255, 0.5)",
           width: "250px",
           // height: "250px",
           borderRadius: "20px",
@@ -250,10 +244,18 @@ function Signup() {
     }
   };
 
+  // //zoom in function
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    wrapperRef.current.style.zoom = "80%";
+  }, []);
+
   return (
     <>
       <Header title={"SIGN UP"} />
       <Box
+        ref={wrapperRef}
         sx={{
           height: { md: "100%", xs: "100%" },
           p: { sm: "50px", xs: "0px" },
@@ -294,7 +296,6 @@ function Signup() {
                 sx={{
                   alignItems: "flex-start",
                   gap: "30px",
-                  padding: "10px",
                   justifyContent: "space-between",
                 }}
               >
@@ -309,6 +310,12 @@ function Signup() {
                   placeholder="blur"
                 />
               </Stack>
+              <CustomTypography
+                sx={{ color: "white", fontWeight: "600", fontSize: "1.05rem" }}
+              >
+                Choose your destiny: Employer, Candidate or a Recruiter? Sign up
+                and let the journey begin!
+              </CustomTypography>
               <Grid container spacing={2}>
                 <Grid
                   item
