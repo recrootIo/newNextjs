@@ -27,12 +27,10 @@ const SuccessStories = () => {
     <Container>
       <CustomTypography
         sx={{
-          fontSize: "30px",
+          fontSize: "33px",
           fontWeight: 700,
           color: "#01313F",
           textAlign: "center",
-          //   mb: "80px",
-          //   mt: "80px",
         }}
       >
         Client Success Stories

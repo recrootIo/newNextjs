@@ -55,7 +55,6 @@ const BrandsWeWork = () => {
       <Box
         className="brands"
         sx={{
-          mt: "30px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",

@@ -19,6 +19,8 @@ import WeAreProud from "@/components/NewHome/WeAreProud";
 import BrandsWeWork from "@/components/NewHome/BrandsWeWork";
 import SuccessStories from "@/components/NewHome/SuccessStories";
 import WatchDemo from "@/components/NewHome/WatchDemo";
+import GuaranteedHiring from "@/components/NewHome/GuaranteedHiring";
+import DedicatedManagers from "@/components/NewHome/DedicatedManagers";
 
 export default function Home({ locale }) {
   useEffect(() => {
@@ -44,6 +46,8 @@ export default function Home({ locale }) {
         <Navbar />
         <HireTalents />
         <IdentifyingBestCandidates />
+        <GuaranteedHiring />
+        <DedicatedManagers />
         <SuccessPrecentage />
         <LevelUp />
         <FeaturedJobs locale={locale} />
