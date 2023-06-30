@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
@@ -28,8 +28,8 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SchoolIcon from "@mui/icons-material/School";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import { useDispatch } from "react-redux";
-import { saveJobs } from "@/redux/slices/personal";
+import { useDispatch, useSelector } from "react-redux";
+import { getSavedJobs, saveJobs } from "@/redux/slices/personal";
 import Cookies from "js-cookie";
 import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
@@ -44,6 +44,8 @@ const StyledIconWrapper = styled(Box)({
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const dispatch = useDispatch();
   const userType = Cookies.get("userType");
+  const savedJobs = useSelector((state) => state.personal.savedJobs);
+  const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const extractFirstTwoTags = (data) => {
     const container = document?.createElement("div");
@@ -63,13 +65,17 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     },
   }));
 
+  useEffect(() => {
+    dispatch(getSavedJobs());
+  }, [dispatch]);
+
   const saveNewJobs = (id) => {
-    console.log(id);
     dispatch(saveJobs(id))
       .unwrap()
-      .then(
-        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
-      )
+      .then(() => {
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }));
+        dispatch(getSavedJobs());
+      })
       .catch((res) => console.log(res));
   };
 
@@ -105,6 +111,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
                     variant="outlined"
                     bgcolor="#02A9F7 !important"
                     onClick={() => saveNewJobs(lateJob?._id)}
+                    disabled={savedJobsId.includes(lateJob?._id)}
                   >
                     <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                   </Button>
