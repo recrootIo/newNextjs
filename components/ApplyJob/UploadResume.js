@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import {
   Backdrop,
@@ -56,6 +56,7 @@ import styles from "./applyJobs.module.css";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { useRouter } from "next/router";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { isEmpty } from "lodash";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -120,7 +121,13 @@ const BpRadio = (props) => {
 };
 
 const UploadResume = ({ ...props }) => {
-  const { setApplication, setCurrentScreen, jobTitle, hasQuestions ,currentScreen} = props;
+  const {
+    setApplication,
+    setCurrentScreen,
+    jobTitle,
+    hasQuestions,
+    currentScreen,
+  } = props;
   const dispatch = useDispatch();
   const router = useRouter();
   const resumeSin = useSelector((state) => state.personal.resume);
@@ -142,6 +149,29 @@ const UploadResume = ({ ...props }) => {
     resume: resumeSin && resumeSin?.resumeName,
     id: resumeSin && resumeSin?._id,
   });
+
+  const setDefaultResume = () => {
+    if (!isEmpty(resumes?.resumeFileLocation) && !selectedResume?.id) {
+      console.log("i was called", resumes?.resumeFileLocation);
+      const firstResume = resumes?.resumeFileLocation[0];
+      setSelectedResume({
+        resume: firstResume?.resumeName,
+        id: firstResume?._id,
+      });
+      dispatch(retrieveGetSinResume(firstResume?._id));
+      setApplication((state) => ({
+        ...state,
+        resumeId: firstResume?._id,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    setDefaultResume();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumes]);
+
+  console.log(selectedResume, "selectedResume", resumes, "resumes");
 
   const [covers, setCovers] = React.useState({
     cover: CoverSin && CoverSin.coverName,
@@ -199,7 +229,6 @@ const UploadResume = ({ ...props }) => {
             message: "Resume has been saved successfully",
           })
         );
-
 
         dispatch(retrievePersonal());
         dispatch(removeResume({}));
@@ -322,7 +351,12 @@ const UploadResume = ({ ...props }) => {
             <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
               {jobTitle}
             </CustomTypography>
-            <ApplyJobStepper setCurrentScreen={setCurrentScreen} hasQuestions={hasQuestions} currentScreen={currentScreen} activeStep={0} />
+            <ApplyJobStepper
+              setCurrentScreen={setCurrentScreen}
+              hasQuestions={hasQuestions}
+              currentScreen={currentScreen}
+              activeStep={0}
+            />
           </Stack>
 
           <Stack
