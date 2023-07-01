@@ -1,3 +1,4 @@
+import withAuth from "@/components/Auths/VerifyEmail";
 import Header from "@/components/Header";
 import FooterHome from "@/components/Home/FooterHome";
 import SubscribHome from "@/components/Home/SubscribHome";
@@ -105,4 +106,4 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default index;
+export default withAuth(index);
