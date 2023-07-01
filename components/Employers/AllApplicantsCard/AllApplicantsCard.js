@@ -143,7 +143,7 @@ const AllApplicantsCard = ({ users }) => {
           />
         );
       default:
-        return <></>;
+        return <Box sx={{ width: "24px" }}></Box>;
     }
   };
 
@@ -254,88 +254,63 @@ const AllApplicantsCard = ({ users }) => {
                   sx={{
                     display: "flex",
                     justifyContent: "flex-end",
+                    alignItems: "center",
                     mb: "10px",
                   }}
                 >
-                  {/* <ThumbUpOffAltIcon
-                  sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                />
-                <ThumbDownOffAltIcon
-                  sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                /> */}
-                  {/* 
-                {users?.status === "shortlist" ||
-                users?.status === "rejected" ? (
-                  <Checkbox
-                    {...label}
-                    icon={
-                      <ThumbUpIcon
-                        sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                      />
-                    }
-                    checked={users?.status === "rejected"}
-                    checkedIcon={
-                      <ThumbDownIcon
-                        sx={{ color: "#7AC1DA", fontSize: "30px" }}
-                      />
-                    }
-                  />
-                ) : (
-                  ""
-                )} */}
+                  <Box
+                    sx={{
+                      mb: "7px",
+                      display: { xs: "none", sm: "flex" },
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button
+                      sx={{
+                        minWidth: "10px !important",
+                        minHeight: "10px !important",
+                        padding: "5px !important",
+                        color: "#02a9f7",
+                        borderColor: "#02a9f7",
+                        fontSize: "18px",
+                      }}
+                      size="large"
+                      variant="outlined"
+                      bgcolor="#02A9F7 !important"
+                      onClick={async () => {
+                        const res = await fetch(recroot);
+                        const blob = await res.blob();
+                        download(blob, `${resume.resumeName}`);
+                      }}
+                    >
+                      <DownloadIcon sx={{ fontSize: "35px" }} />
+                    </Button>
+                    <Button
+                      className="viewDetails"
+                      variant="contained"
+                      size="medium"
+                      sx={{
+                        ml: "8px",
+                        height: "52px",
+                        width: "180px",
+                        bgcolor: "#02A9F7 !important",
+                        fontSize: "18px",
+                      }}
+                      onClick={() => navigate(users?._id, users?.status)}
+                    >
+                      View Details
+                    </Button>
+                  </Box>
+
                   {getStatusIcon(users?.status, users?._id)}
                 </Stack>
               </Box>
             </>
             // )
           }
-          sx={{ p: "16px 0 0 0" }}
+          sx={{ p: "16px 0 16px 0" }}
         />
         <CardContent sx={{ p: 0, pb: "16px !important" }}>
-          <Box
-            sx={{
-              mb: "7px",
-              display: { xs: "none", sm: "flex" },
-              justifyContent: "flex-end",
-            }}
-          >
-            <Button
-              sx={{
-                minWidth: "10px !important",
-                minHeight: "10px !important",
-                padding: "5px !important",
-                color: "#02a9f7",
-                borderColor: "#02a9f7",
-                fontSize: "18px",
-              }}
-              size="large"
-              variant="outlined"
-              bgcolor="#02A9F7 !important"
-              onClick={async () => {
-                const res = await fetch(recroot);
-                const blob = await res.blob();
-                download(blob, `${resume.resumeName}`);
-              }}
-            >
-              <DownloadIcon sx={{ fontSize: "35px" }} />
-            </Button>
-            <Button
-              className="viewDetails"
-              variant="contained"
-              size="medium"
-              sx={{
-                ml: "8px",
-                height: "52px",
-                width: "180px",
-                bgcolor: "#02A9F7 !important",
-                fontSize: "18px",
-              }}
-              onClick={() => navigate(users?._id, users?.status)}
-            >
-              View Details
-            </Button>
-          </Box>
-
           <Stack
             direction={{ xs: "column", md: "row" }}
             sx={{
