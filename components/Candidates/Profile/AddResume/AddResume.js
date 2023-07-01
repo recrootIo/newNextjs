@@ -47,6 +47,7 @@ const AddResume = () => {
     personalService
       .addResume(formData)
       .then((res) => {
+       if(res.status === 200){
         dispatch(
           openAlert({
             type: SUCCESS,
@@ -54,7 +55,12 @@ const AddResume = () => {
           })
         );
         dispatch(updateCurrentScreen(""));
-        CalculatePercentage();
+        dispatch(retrievePersonal()).then((res)=>{
+          if(res?.meta?.requestStatus === "fulfilled"){
+            CalculatePercentage()
+          }
+        })
+       }
       })
       .catch((error) => {
         dispatch(
@@ -64,9 +70,6 @@ const AddResume = () => {
           })
         );
       });
-    setTimeout(() => {
-      dispatch(retrievePersonal());
-    }, 1500);
   };
 
   return (

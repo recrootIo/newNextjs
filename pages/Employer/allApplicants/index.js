@@ -682,7 +682,7 @@ const AllApplicants = () => {
   };
 
   //date time picker
-const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
+  const loadingCount = ["1", "2", "3", "4", "5", "6", "0", "2", "3", "3", "3"];
   useEffect(() => {
     if (matching) {
       if (type === "strong") {
@@ -870,14 +870,10 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
                         className={styles.allApplicantsCardTypo}
-                        variant="h5"
                       >
                         Total Applicants
                       </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
+                      <CustomTypography className={styles.allApplicantsCardNum}>
                         {count}
                       </CustomTypography>
                     </CardContent>
@@ -886,14 +882,10 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
                         className={styles.allApplicantsCardTypo}
-                        variant="h5"
                       >
                         Total Shortlisted
                       </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
+                      <CustomTypography className={styles.allApplicantsCardNum}>
                         {shortCount}
                       </CustomTypography>
                     </CardContent>
@@ -902,14 +894,10 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
                         className={styles.allApplicantsCardTypo}
-                        variant="h5"
                       >
                         Total Unviewed
                       </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
+                      <CustomTypography className={styles.allApplicantsCardNum}>
                         {unview}
                       </CustomTypography>
                     </CardContent>
@@ -918,14 +906,10 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
                         className={styles.allApplicantsCardTypo}
-                        variant="h5"
                       >
                         Total Rejected
                       </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
+                      <CustomTypography className={styles.allApplicantsCardNum}>
                         {rejectcount}
                       </CustomTypography>
                     </CardContent>
@@ -984,11 +968,12 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem key={variant.jobRole} disablePadding>
+                          <ListItem  key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
                               onClick={(e) => handleName(e, variant)}
                               dense
+                              sx={{ cursor: "auto"}}
                             >
                               <ListItemIcon>
                                 <Checkbox
@@ -1479,16 +1464,21 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
                 <Stack spacing={2}>
-                  {loading ? 
+                  {loading ? (
                     loadingCount.map((a, index) => (
                       <LoadingSearchCards key={index} />
-                    )) :
-                    user.length === 0 ? <Typography textAlign={'center'}>No Candidates Found</Typography> :
-                  user.map((usr, index) => (
-                    <div id={usr?._id} key={index}>
-                      <AllApplicantsCard key={index} users={usr} />
-                    </div>
-                  ))}
+                    ))
+                  ) : user.length === 0 ? (
+                    <Typography textAlign={"center"}>
+                      No Candidates Found
+                    </Typography>
+                  ) : (
+                    user.map((usr, index) => (
+                      <div id={usr?._id} key={index}>
+                        <AllApplicantsCard key={index} users={usr} />
+                      </div>
+                    ))
+                  )}
                 </Stack>
               </Box>
               <Box

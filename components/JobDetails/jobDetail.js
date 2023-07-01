@@ -71,7 +71,7 @@ const JobDetail = ({ ...props }) => {
 
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
-  const appliedJob = appliedJobs.find((i) => i.jobId[0]);
+  const appliedJob = appliedJobs.find((i) => i.jobId[0] === _id);
   const isUserType = data?.recrootUserType === CANDIDATE;
   const savedJobsId = savedJobs.map((i) => i.job?._id);
 
@@ -174,7 +174,7 @@ const JobDetail = ({ ...props }) => {
                   >
                     {isApplied
                       ? `Applied ${moment(appliedJob.createdAt)
-                          .endOf("day")
+                          .endOf("hour")
                           .fromNow()}`
                       : data.profilePercentage < 70
                       ? "Complete Profile"

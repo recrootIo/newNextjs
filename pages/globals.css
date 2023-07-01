@@ -275,6 +275,10 @@ body {
   .numcardsix {
     width: 46%;
   }
+  .applyconfirmationImg {
+    height: 200px;
+    width: auto;
+  }
 }
 
 .rec-dot_active {

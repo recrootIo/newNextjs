@@ -71,8 +71,9 @@ export function Uploader(props) {
                     <Image
                       src={"/pdfImage.png"}
                       alt=""
-                      height={300}
-                      width={400}
+                      height={200}
+                      width={300}
+                      style={{margin:'auto'}}
                     />
                     <Typography>{props?.pdf?.name}</Typography>
                   </>
@@ -81,8 +82,9 @@ export function Uploader(props) {
                     <Image
                       src={"/pdfImage.png"}
                       alt=""
-                      height={300}
-                      width={400}
+                      height={200}
+                      width={300}
+                      style={{margin:'auto'}}
                     />
                     <Typography>{props?.pdfC?.name}</Typography>
                   </>
@@ -92,7 +94,7 @@ export function Uploader(props) {
                       <BackupIcon sx={{ fontSize: "6em" }} />
                     </span>
                     <span>
-                      Drag & drop some files here, or
+                      Drag & drop some files here, or{" "}
                       <span style={{ color: "#4F9AFF" }}>
                         click here to select files
                       </span>
