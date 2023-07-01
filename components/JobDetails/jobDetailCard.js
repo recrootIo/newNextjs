@@ -41,6 +41,7 @@ import { openAlert } from "@/redux/slices/alert";
 import styles from "./jobDetail.module.css";
 import moment from "moment";
 import { setApplyPath } from "@/redux/slices/applyJobs";
+import { isEmpty } from "lodash";
 
 const JobDetailCard = ({ ...props }) => {
   const {
@@ -65,12 +66,12 @@ const JobDetailCard = ({ ...props }) => {
 
   const appliedIds = appliedJobs.map((i) => i.jobId[0]);
   const isApplied = appliedIds.includes(_id);
-  const appliedJob = appliedJobs.find((i) => i.jobId[0]);
+  const appliedJob = appliedJobs.find((i) => i.jobId[0] === _id);
   const isUserType = data?.recrootUserType === CANDIDATE;
   const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const [loginCallBackURL, setLoginCallBackURL] = useState("");
-
+console.log(appliedJob,'jobs')
   useEffect(() => {
     setLoginCallBackURL(`${window.location}`);
   }, []);
@@ -122,8 +123,9 @@ const JobDetailCard = ({ ...props }) => {
       })
       .catch((res) => console.log(res));
   };
-
-  const compImage = company?.companyLogo?.logo
+  
+   console.log(company?.companyLogo?.logo,'logo')
+  const compImage = !isEmpty(company?.companyLogo?.logo)
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
 
@@ -323,7 +325,7 @@ const JobDetailCard = ({ ...props }) => {
                                 color: "#034275",
                               }}
                             >
-                              {add}
+                              {add?.address}
                             </CustomTypography>
                           </Stack>
                         </Grid>
@@ -406,7 +408,7 @@ const JobDetailCard = ({ ...props }) => {
                       >
                         {isApplied
                           ? `Applied ${moment(appliedJob.createdAt)
-                              .endOf("day")
+                              .endOf("hour")
                               .fromNow()}`
                           : data.profilePercentage < 70
                           ? "Complete Profile"

@@ -71,8 +71,9 @@ export function Uploader(props) {
                     <Image
                       src={"/pdfImage.png"}
                       alt=""
-                      height={300}
-                      width={400}
+                      height={200}
+                      width={300}
+                      style={{margin:'auto'}}
                     />
                     <Typography>{props?.pdf?.name}</Typography>
                   </>
@@ -81,8 +82,9 @@ export function Uploader(props) {
                     <Image
                       src={"/pdfImage.png"}
                       alt=""
-                      height={300}
-                      width={400}
+                      height={200}
+                      width={300}
+                      style={{margin:'auto'}}
                     />
                     <Typography>{props?.pdfC?.name}</Typography>
                   </>

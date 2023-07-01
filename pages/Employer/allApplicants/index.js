@@ -984,11 +984,12 @@ const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem key={variant.jobRole} disablePadding>
+                          <ListItem  key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
                               onClick={(e) => handleName(e, variant)}
                               dense
+                              sx={{ cursor: "auto"}}
                             >
                               <ListItemIcon>
                                 <Checkbox
