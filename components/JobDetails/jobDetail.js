@@ -286,7 +286,7 @@ const JobDetail = ({ ...props }) => {
                 }}
               >
                 <CardHeader
-                  title="Key Skills"
+                  title="Mandatory Skills"
                   titleTypographyProps={{
                     fontSize: 18,
                     fontWeight: "bold",
@@ -318,7 +318,7 @@ const JobDetail = ({ ...props }) => {
                   }}
                 >
                   <CardHeader
-                    title="Mandatory Skills"
+                    title="Desired Skills"
                     titleTypographyProps={{
                       fontSize: 18,
                       fontWeight: "bold",

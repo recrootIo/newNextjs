@@ -291,7 +291,7 @@ const JobPreview = (props) => {
                 }}
               >
                 <CustomTypography className={styles.JobPreviewTypo}>
-                  Required Skills :
+                Mandatory Skills :
                 </CustomTypography>
                 <Stack
                   direction="row"
@@ -321,7 +321,7 @@ const JobPreview = (props) => {
                 }}
               >
                 <CustomTypography className={styles.JobPreviewTypo}>
-                  Mandotary Skills :
+                Desired Skills :
                 </CustomTypography>
                 {isEmpty(details.mandatorySkill) ? (
                   <CustomTypography className={styles.JobPreviewData}>
