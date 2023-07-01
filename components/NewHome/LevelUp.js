@@ -26,7 +26,7 @@ const LevelUp = () => {
               position: "relative",
             }}
           >
-            Ready to level up?
+            Ready To Level Up?
           </CustomTypography>
           <Image
             src="/newhome_images/guaranteed-hiring-blue-bubble.png"

@@ -65,7 +65,7 @@ const IdentifyingBestCandidates = () => {
               <CustomTypography
                 sx={{ fontSize: "33px", fontWeight: 700, color: "#01313F" }}
               >
-                Identifying Best Candidates with AI
+                Identify Best Candidates with AI
               </CustomTypography>
             </Box>
             <Grid container spacing={2} sx={{ mt: "20px" }}>
@@ -579,7 +579,7 @@ const IdentifyingBestCandidates = () => {
                         textAlign: "center",
                       }}
                     >
-                      Achieves a 90%+ success rate
+                      Achieve a 90%+ success rate
                     </CustomTypography>
                   </CardContent>
                 </Card>

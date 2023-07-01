@@ -37,7 +37,7 @@ const SuccessPrecentage = () => {
               position: "relative",
             }}
           >
-            Our success Percentage across Countries
+            Our Success Percentage Across Countries
           </CustomTypography>
           <div>
             <CustomTypography
@@ -51,7 +51,7 @@ const SuccessPrecentage = () => {
             >
               {" "}
               We are proud to be the only recruitment platform with hiring
-              Success Percentage in the high 90s
+              success percentage in the high 90s
             </CustomTypography>
           </div>
         </Box>
@@ -152,7 +152,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3} sx={{ mt: { xs: "80px", md: "0px" } }}>
-              <Box className={styles.successGreyBox}>
+              <Box className={styles.successOrangeBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -188,7 +188,7 @@ const SuccessPrecentage = () => {
                 <Box
                   sx={{
                     borderRadius: "10px",
-                    bgcolor: "#D2E3FE",
+                    bgcolor: "#f7debe;",
                     width: "100%",
                   }}
                 >
@@ -199,7 +199,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3} sx={{ mt: { xs: "80px", md: "0px" } }}>
-              <Box className={styles.successBlueBox}>
+              <Box className={styles.successGreyBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -247,7 +247,7 @@ const SuccessPrecentage = () => {
           </Grid>
           <Grid container spacing={2} sx={{ mt: { xs: "80px", md: "120px" } }}>
             <Grid item xs={6} md={3}>
-              <Box className={styles.successGreyBox}>
+              <Box className={styles.successBlueBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -294,7 +294,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3}>
-              <Box className={styles.successBlueBox}>
+              <Box className={styles.successOrangeBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -329,7 +329,7 @@ const SuccessPrecentage = () => {
                 <Box
                   sx={{
                     borderRadius: "10px",
-                    bgcolor: "#B0F8FD",
+                    bgcolor: "#f7debe;",
                     width: "100%",
                   }}
                 >

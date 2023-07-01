@@ -18,6 +18,16 @@
   position: relative;
 }
 
+.successOrangeBox {
+  border-radius: 20px;
+  background-color: #ffeeef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  position: relative;
+}
+
 .successImgBox {
   height: 64px;
   display: flex;
