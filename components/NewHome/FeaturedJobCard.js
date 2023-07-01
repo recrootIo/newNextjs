@@ -86,14 +86,32 @@ const FeaturedJobCard = ({
               }}
             >
               <CustomTypography
-                sx={{ fontSize: 19, fontWeight: "bold", color: "#034275" }}
+                sx={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: "#034275",
+                  display: { md: "flex", sm: "none", xs: "none" },
+                }}
               >
-                {truncateStringWithEllipsis(jobRole, 13)}
+                {truncateStringWithEllipsis(jobRole, 16)}
               </CustomTypography>
+              <CustomTypography
+                sx={{
+                  fontSize: 17,
+                  fontWeight: "bold",
+                  color: "#034275",
+                  display: { md: "none", sm: "flex", xs: "flex" },
+                }}
+              >
+                {truncateStringWithEllipsis(jobRole, 25)}
+              </CustomTypography>
+
               <div>
-              <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
-                {company[0]?.company_name}
-              </CustomTypography>
+                <CustomTypography
+                  sx={{ fontSize: 15, color: "#034275", fontWeight: "600" }}
+                >
+                  {company[0]?.company_name}
+                </CustomTypography>
               </div>
             </Box>
           </Stack>
@@ -229,13 +247,13 @@ const FeaturedJobCard = ({
               {/* {moment(data.createdAt).fromNow()} */}
             </CustomTypography>
             <div>
-            <CustomTypography
-              className={styles.featuredTypo}
-              variant="body2"
-              color="text.secondary"
-            >
-              Expires {moment(applicationDeadline).endOf("day").fromNow()}
-            </CustomTypography>
+              <CustomTypography
+                className={styles.featuredTypo}
+                variant="body2"
+                color="text.secondary"
+              >
+                Expires {moment(applicationDeadline).endOf("day").fromNow()}
+              </CustomTypography>
             </div>
           </Box>
         </Box>

@@ -25,7 +25,7 @@ const App = ({ Component, pageProps }) => {
     const userIp = cookies.get("user-ip") ?? "";
 
     try {
-      await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
+      await axios.get(`https://ipapi.co/101.100.160.0/json`).then((res) => {
         const country = res?.data?.country;
 
         if (country === "LK" && !router.asPath.startsWith("/lk/")) {
