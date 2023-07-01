@@ -52,6 +52,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
+import { updateTour } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -215,6 +216,7 @@ const EssentialInformation = () => {
   const updateValue = async () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ jobEssential: false });
+    dispatch(updateTour("jobEssential"));
   };
 
   const closeTour = () => {

@@ -894,7 +894,13 @@ const EmpoyerDashboard = () => {
                 justifyContent: "center",
               }}
             >
-              <Image src="/welcome.png" width={250} height={250} alt="" />
+              <Image
+                src="/welcome.png"
+                width={250}
+                height={250}
+                alt=""
+                priority={true}
+              />
               <CustomTypography sx={{ fontSize: "20px", fontWeight: "900" }}>
                 Hi {user?.firstName}, Welcome to Recroot!
               </CustomTypography>
