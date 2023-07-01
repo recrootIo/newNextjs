@@ -290,9 +290,12 @@ const EssentialInformation = () => {
         </CustomTypography>
         <Divider sx={{ bgcolor: "rgba(122, 193, 218, 0.6)", mb: "40px" }} />
         <Stack spacing={3}>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            id="add_careerlevel"
+          >
             <FormControl
-              id="add_careerlevel"
               sx={{
                 ...style.txtinput,
                 bgcolor: "white",
@@ -414,7 +417,7 @@ const EssentialInformation = () => {
                   style={{ width: { xs: "100%", sm: "50%" }, bgcolor: "white" }}
                   label="Deadline"
                   name="applicationDeadline"
-                  inputFormat="dd/MM/yyyy"
+                  format="MMM/dd/yyyy"
                   minDate={new Date()}
                   maxDate={full === "jSlot" ? "" : futureDate}
                   value={

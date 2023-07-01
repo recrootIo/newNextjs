@@ -42,7 +42,6 @@ const DedicatedManagers = () => {
           >
             Dedicated Candidate Managers
           </CustomTypography>
-          <div>
           <CustomTypography
             sx={{
               fontSize: "16px",
@@ -56,7 +55,6 @@ const DedicatedManagers = () => {
             to the automated talent discovery process to ensure our employers
             find the right candidates for their job openings.
           </CustomTypography>
-          </div>
           <Grid container spacing={2}>
             <Grid
               item

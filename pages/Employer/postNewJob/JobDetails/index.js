@@ -414,6 +414,12 @@ const JobDetails = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.jobDetails);
   }, [company?.tours?.jobDetails]);
+  useEffect(()=>{
+    const job = JSON.parse(localStorage.getItem("jobDetail"));
+   if (!isEmpty(job)) {
+    localStorage.removeItem("jobDetail");
+   }
+  })
 
 
   return (

@@ -44,6 +44,7 @@ import { openAlert } from "@/redux/slices/alert";
 import { SUCCESS } from "@/utils/constants";
 import styles from "./candiDashboard.module.css";
 import Header from "@/components/Header";
+import withAuth from "@/components/Auths/VerifyEmail";
 const StyledListItemText = styled(ListItemText)`
   & .MuiTypography-root {
     font-family: Inter;
@@ -438,4 +439,4 @@ const Index = () => {
   );
 };
 
-export default React.memo(Index);
+export default withAuth(React.memo(Index));

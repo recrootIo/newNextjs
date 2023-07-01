@@ -11,12 +11,17 @@ const CandidateDatabaseListPage = ({...props}) => {
         id="style-5"
         sx={{ width: "100%", pr: "10px", mb: "40px" }}
       >
-        <Stack spacing={3} sx={{ mt: "30px" }}>
+       {props?.candidates.length === 0 ?  <>
+              We are successfully extracting candidates based on your job
+              description and guarantee to populate matching candidates within
+              12 hours.
+            </> :
+       <Stack spacing={3} sx={{ mt: "30px" }}>
           {props?.candidates?.map((can,index)=>(
             <CandiDatabaseCard key={index} can={can} handle={props?.handleProfile}/>
           ))
           }
-        </Stack>
+        </Stack>}
       </Box>
       <Box
         sx={{

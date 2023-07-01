@@ -560,7 +560,7 @@ function PostnewJob() {
     country === "LK" ||
     Cid !== undefined
       ? ["Job Details", "Essential Information", "Preview"]
-      : ["Job Details", "Essential Information", "Preview", "Choose Payment"];
+      : ["Job Details", "Essential Information", "Preview", "Choose Plan"];
   return (
     <Employer>
       <Box>

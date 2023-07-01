@@ -162,14 +162,31 @@ function Chooseplan(props) {
               <Box
                 sx={{
                   width: "100%",
+                  display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <CustomTypography sx={{ textAlign: "center" }}>
-                  {" "}
-                  Success Rate: 43%
-                </CustomTypography>
+                <Box
+                  sx={{
+                    width: "60%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "5px",
+                    bgcolor: "#DBFFF2",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <CustomTypography
+                    sx={{
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {" "}
+                    Success Rate: 43%
+                  </CustomTypography>
+                </Box>
               </Box>
               <Divider variant="middle" light sx={{ width: "90%" }} />
               <Box
@@ -296,7 +313,7 @@ function Chooseplan(props) {
                     ) : (
                       <BasicButton
                         variant="outlined"
-                        onClick={props.photoUrl}
+                        onClick={props.postJobs}
                         sx={{ width: "191px" }}
                       >
                         Submit
@@ -395,10 +412,35 @@ function Chooseplan(props) {
                 p: "0px 16px 0px 16px",
               }}
             >
-              <CustomTypography sx={{ textAlign: "center" }}>
-                {" "}
-                Success Rate: 90%
-              </CustomTypography>
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "60%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "5px",
+                    bgcolor: "#DBFFF2",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <CustomTypography
+                    sx={{
+                      textAlign: "center",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {" "}
+                    Success Rate: 90%
+                  </CustomTypography>
+                </Box>
+              </Box>
               <Divider variant="middle" light />
               <Box
                 sx={{

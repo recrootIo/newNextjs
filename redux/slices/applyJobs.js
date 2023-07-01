@@ -22,6 +22,7 @@ const initialState = {
   rejectedEmail: null,
   selectedEmail: null,
   applyPath: "",
+  loading:false
 };
 
 export const applyJobsdet = createAsyncThunk(

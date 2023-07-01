@@ -67,7 +67,7 @@ export const getSalary = (salary, defaults = true, font = 16, black = null) => {
         }}
         fontSize={font}
       >
-        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}
+        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}{" "}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
         {salary?.salaryType === "hourly" ? "Per Hour" : ""}
         {salary?.salaryType === "yearly" ? "Yearly" : ""}

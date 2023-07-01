@@ -13,7 +13,7 @@ import {
   styled,
 } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
-import React from "react";
+import React, { useState } from "react";
 import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import { NEW_PRICING_PLAN } from "@/utils/constants";
@@ -24,6 +24,7 @@ import { upgradejobPayment } from "@/redux/slices/job";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
+import { isEmpty } from "lodash";
 
 const StyledButton = styled(Button)({
   color: "#ffff",
@@ -55,8 +56,8 @@ const packageList = [
   "Job expires in 1 month",
 ];
 function Jobpayment() {
-    const jobDet =  useSelector(data => data.jobs.upJob)
-    const choosePremium =  useSelector(data => data.jobs.choosePremium)
+  const jobLoc = Cookies.get('jids')
+    const jobDet = jobLoc &&  JSON.parse(jobLoc)
     const country = Cookies.get('country')
     const {push} = useRouter()
     const router = useRouter()
@@ -64,19 +65,27 @@ function Jobpayment() {
 
     const county = country === 'IN'
     const subscriptionPrice = county ? 1600 : 35
-    const joblength = choosePremium === true ? 1 : jobDet?.length ;
+    const [joblength, setjoblength] = useState('')
     const finalPrice =  subscriptionPrice * joblength;
     const dispatch = useDispatch();
-    console.log(choosePremium,jobDet,'detail')
     useEffect(() => {
       const job = JSON.parse(localStorage.getItem("jobDetail"));
-    if (choosePremium !== true && jobDet === '') {
+      if (!isEmpty(job)) {
+        setjoblength(1)
+      }else{
+       setjoblength(jobDet?.length)
+      }
+    if (isEmpty(job) === true && isEmpty(jobDet) === true) {
         push('/Employer/Dashboard')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [jobDet,pre])
-        console.log(choosePremium,jobDet,'detail')
     const  handleNavigate = ()=>{
+      Cookies.set('jobDet',JSON.stringify({
+        ids:jobDet,
+        payment:finalPrice,
+        country:country
+    }))
         dispatch(upgradejobPayment({
             ids:jobDet,
             payment:finalPrice,

@@ -37,22 +37,22 @@ const SuccessPrecentage = () => {
               position: "relative",
             }}
           >
-            Our success Percentage across Countries
+            Our Success Percentage Across Countries
           </CustomTypography>
           <div>
-          <CustomTypography
-            sx={{
-              fontSize: "16px",
-              fontWeight: 400,
-              color: "#01313F",
-              textAlign: "center",
-              mt: "12px",
-            }}
-          >
-            {" "}
-            We are proud to be the only recruitment platform with hiring Success
-            Percentage in the high 90s
-          </CustomTypography>
+            <CustomTypography
+              sx={{
+                fontSize: "16px",
+                fontWeight: 400,
+                color: "#01313F",
+                textAlign: "center",
+                mt: "12px",
+              }}
+            >
+              {" "}
+              We are proud to be the only recruitment platform with hiring
+              success percentage in the high 90s
+            </CustomTypography>
           </div>
         </Box>
         <Box sx={{ mt: "150px" }}>
@@ -152,7 +152,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3} sx={{ mt: { xs: "80px", md: "0px" } }}>
-              <Box className={styles.successGreyBox}>
+              <Box className={styles.successOrangeBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -188,7 +188,7 @@ const SuccessPrecentage = () => {
                 <Box
                   sx={{
                     borderRadius: "10px",
-                    bgcolor: "#D2E3FE",
+                    bgcolor: "#f7debe;",
                     width: "100%",
                   }}
                 >
@@ -199,7 +199,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3} sx={{ mt: { xs: "80px", md: "0px" } }}>
-              <Box className={styles.successBlueBox}>
+              <Box className={styles.successGreyBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -247,7 +247,7 @@ const SuccessPrecentage = () => {
           </Grid>
           <Grid container spacing={2} sx={{ mt: { xs: "80px", md: "120px" } }}>
             <Grid item xs={6} md={3}>
-              <Box className={styles.successGreyBox}>
+              <Box className={styles.successBlueBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -294,7 +294,7 @@ const SuccessPrecentage = () => {
               </Box>
             </Grid>
             <Grid item xs={6} md={3}>
-              <Box className={styles.successBlueBox}>
+              <Box className={styles.successOrangeBox}>
                 <Box className={styles.successImgBox}>
                   <Image
                     src="/newhome_images/succces-precentage-circle-bg.png"
@@ -329,7 +329,7 @@ const SuccessPrecentage = () => {
                 <Box
                   sx={{
                     borderRadius: "10px",
-                    bgcolor: "#B0F8FD",
+                    bgcolor: "#f7debe;",
                     width: "100%",
                   }}
                 >
@@ -438,10 +438,8 @@ const SuccessPrecentage = () => {
       </Container>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 220">
         <path
-
           fill="#FFF"
-          fill-opacity="1"
-
+          fillOpacity="1"
           d="M0,96L80,117.3C160,139,320,181,480,170.7C640,160,800,96,960,74.7C1120,53,1280,75,1360,85.3L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
         ></path>
       </svg>

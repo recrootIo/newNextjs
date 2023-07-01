@@ -33,6 +33,8 @@ const token = Cookies.get('token')
             headers: { "x-access-token": `${token}` },
           }
             ).then((res)=>{
+              Cookies.remove('jobDet')
+              Cookies.remove('jids')
                 console.log(res)
             })}
         if (newJob === 'true') {

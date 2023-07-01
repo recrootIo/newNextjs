@@ -21,6 +21,7 @@ import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import { useEffect, useState } from "react";
 import {
   fetchAppliedJobs,
+  getSavedJobs,
   retrievePersonal,
   saveJobs,
   setJobID,
@@ -57,6 +58,7 @@ const JobDetailCard = ({ ...props }) => {
   } = props;
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
+  const savedJobs = useSelector((state) => state.personal.savedJobs);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -65,6 +67,7 @@ const JobDetailCard = ({ ...props }) => {
   const isApplied = appliedIds.includes(_id);
   const appliedJob = appliedJobs.find((i) => i.jobId[0]);
   const isUserType = data?.recrootUserType === CANDIDATE;
+  const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const [loginCallBackURL, setLoginCallBackURL] = useState("");
 
@@ -105,6 +108,7 @@ const JobDetailCard = ({ ...props }) => {
   useEffect(() => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
+    dispatch(getSavedJobs());
   }, [dispatch]);
 
   const userType = Cookies.get("userType");
@@ -112,9 +116,10 @@ const JobDetailCard = ({ ...props }) => {
   const handleBookmark = () => {
     dispatch(saveJobs(_id))
       .unwrap()
-      .then(
-        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
-      )
+      .then(() => {
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }));
+        dispatch(getSavedJobs());
+      })
       .catch((res) => console.log(res));
   };
 
@@ -379,6 +384,7 @@ const JobDetailCard = ({ ...props }) => {
                             fontSize: "14px",
                             padding: 0,
                           }}
+                          disabled={savedJobsId.includes(_id)}
                           onClick={() => handleBookmark()}
                         >
                           <BookmarkBorderIcon sx={{ fontSize: "38px" }} />

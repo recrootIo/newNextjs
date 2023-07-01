@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://arinnovate.au
+Host: https://preprod.recroot.au
 
 # Sitemaps
-Sitemap: https://arinnovate.au/sitemap.xml
+Sitemap: https://preprod.recroot.au/sitemap.xml

@@ -19,6 +19,7 @@ import FooterHome from "@/components/Home/FooterHome";
 import EmployerMobileSidebar from "@/components/Employers/EmployerMobileSidebar/EmployerMobileSidebar";
 import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
+import withAuth from "../Auths/VerifyEmail";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -68,9 +69,7 @@ function Employer({ children }) {
             queshow: "",
           })
         ).then(
-          setTimeout(() => {
-            push("/employer/PostNewJob");
-          }, 500)
+            push("/Employer/PostNewJob")
         );
         return;
       }
@@ -116,9 +115,7 @@ function Employer({ children }) {
           packageType: "",
         })
       ).then(
-        setTimeout(() => {
-          push("/employer/postNewJob");
-        }, 500)
+          push("/Employer/postNewJob")
       );
     } else {
       dispatch(
@@ -133,14 +130,13 @@ function Employer({ children }) {
             },
           ],
           requiredSkill: [],
+          mandatorySkill: [],
           address: [],
           featureType: false,
-          queshow: "",
+          queshow: "false",
         })
       ).then(
-        setTimeout(() => {
-          push("/employer/postNewJob");
-        }, 500)
+          push("/Employer/postNewJob")
       );
     }
   };
@@ -279,4 +275,4 @@ function Employer({ children }) {
     </div>
   );
 }
-export default Employer;
+export default withAuth(Employer);

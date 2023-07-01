@@ -101,7 +101,7 @@ function Signin() {
           originalPromiseResult.User.recrootUserType === "Member" ||
           originalPromiseResult.User.recrootUserType === RECRUITER
         ) {
-          push("/");
+          push("/Employer/Dashboard");
           dispatch(
             openAlert({
               type: SUCCESS,

@@ -40,7 +40,7 @@ import CustomTextField from "@/components/Forms/CustomTextField";
 import CustomPickers from "@/components/Forms/CustomPickers";
 import CalculatePercentage from "@/utils/CalculatePercentange";
 import { convertFormat } from "@/utils/HelperFunctions";
-import { ADD, EDIT } from "@/utils/buttnTexts";
+import { ADD, UPDATE } from "@/utils/buttnTexts";
 
 const FORM_VALIDATION = Yup.object().shape({
   graduate: Yup.string().required("Graduate field is required"),
@@ -168,7 +168,7 @@ const AddEducation = () => {
     }
   }, [education]);
 
-  const btnText = education?._id ? EDIT : ADD;
+  const btnText = education?._id ? UPDATE : ADD;
 
   return (
     <div>

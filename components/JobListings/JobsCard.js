@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { PRIMARY } from "@/theme/colors";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
@@ -28,11 +28,12 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SchoolIcon from "@mui/icons-material/School";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import { useDispatch } from "react-redux";
-import { saveJobs } from "@/redux/slices/personal";
+import { useDispatch, useSelector } from "react-redux";
+import { getSavedJobs, saveJobs } from "@/redux/slices/personal";
 import Cookies from "js-cookie";
 import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
 
 const StyledIconWrapper = styled(Box)({
   display: "flex",
@@ -44,6 +45,8 @@ const StyledIconWrapper = styled(Box)({
 const JobsCard = ({ handleNavigate, ...lateJob }) => {
   const dispatch = useDispatch();
   const userType = Cookies.get("userType");
+  const savedJobs = useSelector((state) => state.personal.savedJobs);
+  const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const extractFirstTwoTags = (data) => {
     const container = document?.createElement("div");
@@ -63,15 +66,45 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     },
   }));
 
+  useEffect(() => {
+    dispatch(getSavedJobs());
+  }, [dispatch]);
+
+  /**
+   *
+   * @param {*} strng
+   * @returns
+   */
+  const reduceLength = (strng) => {
+    if (strng?.length > 100) return `${strng?.slice(0, 60)}...`;
+    return strng;
+  };
+
+  /**
+   *
+   * @param {*} address
+   * @returns
+   */
+  const getAddress = (address) => {
+    if (address.length > 1) {
+      const newAddress = address[0].split(",");
+      return reduceLength(newAddress[newAddress.length - 1]);
+    } else {
+      return reduceLength(address[0]);
+    }
+  };
+
   const saveNewJobs = (id) => {
-    console.log(id);
     dispatch(saveJobs(id))
       .unwrap()
-      .then(
-        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
-      )
+      .then(() => {
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }));
+        dispatch(getSavedJobs());
+      })
       .catch((res) => console.log(res));
   };
+
+  console.log(lateJob, "lateJob");
 
   return (
     <Card className="jobCard">
@@ -105,6 +138,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
                     variant="outlined"
                     bgcolor="#02A9F7 !important"
                     onClick={() => saveNewJobs(lateJob?._id)}
+                    disabled={savedJobsId.includes(lateJob?._id)}
                   >
                     <BookmarkBorderIcon sx={{ fontSize: "21px" }} />
                   </Button>
@@ -196,17 +230,18 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
             </Stack>
           )}
 
-          {lateJob?.essentialInformation?.qualification && (
+          {lateJob?.address && (
             <Stack
               direction={"row"}
               sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
             >
-              <SchoolIcon />
+              <AddLocationIcon />
               <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-                {lateJob?.essentialInformation?.qualification}
+                {getAddress(lateJob?.address)}
               </CustomTypography>
             </Stack>
           )}
+
           {lateJob.createdAt && (
             <Stack
               direction={"row"}

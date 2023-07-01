@@ -6,20 +6,18 @@ import { useDispatch } from "react-redux";
 import { retrievePersonal } from "@/redux/slices/personal";
 import { companyJobs } from "@/redux/slices/job";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
+import Link from "next/link";
 import Cookies from "js-cookie";
 
 const HireTalents = () => {
-  const dispatch = useDispatch()
-  const user = Cookies.get()
+  const dispatch = useDispatch();
+  const user = Cookies.get();
   useEffect(() => {
     localStorage.removeItem("Redirect");
     if (user?.userType === "Candidate") {
       dispatch(retrievePersonal());
     }
-    if (
-      user?.userType === "Employer" ||
-      user?.userType === "Member"
-    ) {
+    if (user?.userType === "Employer" || user?.userType === "Member") {
       dispatch(companyJobs());
       dispatch(getCompanyDetails());
     }
@@ -61,25 +59,35 @@ const HireTalents = () => {
                 Hire Talents within 24 Hours
               </CustomTypography>
               <div>
-              <CustomTypography
-                sx={{ fontSize: "16px", fontWeight: 400, color: "#FFFFFF" }}
-              >
-                Join us today and experience the power of hiring top-notch
-                talents instantly for your organization.
-              </CustomTypography>
+                <CustomTypography
+                  sx={{ fontSize: "16px", fontWeight: 400, color: "#FFFFFF" }}
+                >
+                  Join us today and experience the power of hiring top-notch
+                  talents instantly for your organization.
+                </CustomTypography>
               </div>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: "10px",
-                  bgcolor: "#D4F0FC !important",
-                  color: "#01313F",
-                  fontWeight: 700,
-                  width: "235px",
+              <Link
+                href="/signup"
+                style={{
+                  fontSize: "17px",
+                  color: "black",
+                  fontWeight: 600,
                 }}
+                prefetch
               >
-                Get Started
-              </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: "10px",
+                    bgcolor: "#D4F0FC !important",
+                    color: "#01313F",
+                    fontWeight: 700,
+                    width: "235px",
+                  }}
+                >
+                  Get Started
+                </Button>
+              </Link>
             </Box>
           </Grid>
           <Grid

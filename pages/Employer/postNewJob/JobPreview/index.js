@@ -134,7 +134,7 @@ const JobPreview = (props) => {
           }}
         >
           <CustomTypography>
-            Click on &quot;Submit&quot; button to make your job post live on
+            Click on &quot;Next&quot; button to make your job post live on
             Recroot
           </CustomTypography>
           <Button onClick={() => closeTour()}>DONE</Button>
@@ -490,7 +490,7 @@ const JobPreview = (props) => {
                   Application Deadline :
                 </CustomTypography>
                 <CustomTypography className={styles.JobPreviewData}>
-                  {details && moment(details.applicationDeadline).format("L")}
+                  {details && moment(details.applicationDeadline).format("ll")}
                 </CustomTypography>
               </Box>
               <Box sx={{ display: "flex", gap: "10px" }}>

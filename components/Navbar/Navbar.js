@@ -81,7 +81,12 @@ const Navbar = () => {
   );
 
   const company = useSelector((state) => state.company?.companyDetl);
-  const photoUrl = userType === 'Candidate' ? photoss?.photo && `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}` :company?.companyLogo?.logo &&  `http://localhost:3000/api/openProfpic?photo=${company?.companyLogo.logo}`
+  const photoUrl =
+    userType === "Candidate"
+      ? photoss?.photo &&
+        `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}`
+      : company?.companyLogo?.logo &&
+        `http://localhost:3000/api/openProfpic?photo=${company?.companyLogo.logo}`;
   return (
     <nav>
       <div
@@ -159,7 +164,7 @@ const Navbar = () => {
 
                   {userType === "Employer" ? (
                     <Link
-                      href="/employer/dashboard"
+                      href="/Employer/Dashboard"
                       style={{
                         fontSize: "17px",
                         color: "black",
@@ -175,14 +180,14 @@ const Navbar = () => {
 
                   {userType === "Candidate" ? (
                     <Link
-                      href={"/candidate/dashboard"}
+                      href={"/Candidate/Dashboard"}
                       style={{
                         fontSize: "17px",
                         color: "black",
                         fontWeight: 600,
                       }}
                     >
-                      Candidate
+                      My Profile
                     </Link>
                   ) : (
                     <>
@@ -254,7 +259,7 @@ const Navbar = () => {
                           aria-expanded={open ? "true" : undefined}
                           onClick={handleClick}
                         >
-                          <Avatar src={photoUrl}/>
+                          <Avatar src={photoUrl} />
                         </Button>
                         <Menu
                           id="fade-menu"
@@ -316,9 +321,9 @@ const Navbar = () => {
               {userType === "Candidate" ? (
                 <ListItem
                   disablePadding
-                  onClick={() => navigate("/candidate/dashboard")}
+                  onClick={() => navigate("/Candidate/Dashboard")}
                 >
-                  <ListItemButton>Candidate</ListItemButton>
+                  <ListItemButton>My Profile</ListItemButton>
                 </ListItem>
               ) : (
                 <>
