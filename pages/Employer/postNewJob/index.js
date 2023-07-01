@@ -401,7 +401,7 @@ function PostnewJob() {
           dispatch(
             openAlert({
               type: ERROR,
-              message: "Please Provide Required Skills",
+              message: "Please Provide Mandatory Skills",
             })
           );
           return;
