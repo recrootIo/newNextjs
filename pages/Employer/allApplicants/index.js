@@ -85,6 +85,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import companyservice from "@/redux/services/company.service";
 import moment from "moment";
+import LoadingSearchCards from "@/components/JobListings/LoadingSearchCards";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const shadow =
@@ -681,7 +682,7 @@ const AllApplicants = () => {
   };
 
   //date time picker
-
+const loadingCount = ['1','2','3','4','5','6','0','2','3','3','3']
   useEffect(() => {
     if (matching) {
       if (type === "strong") {
@@ -1478,7 +1479,12 @@ const AllApplicants = () => {
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
                 <Stack spacing={2}>
-                  {user.map((usr, index) => (
+                  {loading ? 
+                    loadingCount.map((a, index) => (
+                      <LoadingSearchCards key={index} />
+                    )) :
+                    user.length === 0 ? <Typography textAlign={'center'}>No Candidates Found</Typography> :
+                  user.map((usr, index) => (
                     <div id={usr?._id} key={index}>
                       <AllApplicantsCard key={index} users={usr} />
                     </div>

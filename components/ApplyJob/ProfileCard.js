@@ -43,8 +43,21 @@ const ProfileCard = ({ ...props }) => {
 
   useEffect(() => {
     dispatch(retrievePersonal());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
+  useEffect(() => {
+    setFinal({
+      resumeId: resumeSin?._id,
+      coverId: CoverSin && CoverSin?._id,
+      candidateId: details && details?._id,
+      jobId: _id,
+      question: question,
+      companyId: companyId,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [details])
+  
   const submit = () => {
     dispatch(applyJobs(final))
       .unwrap()
