@@ -1172,7 +1172,7 @@ const AboutUs = () => {
           </Box>
         </Container>
       </Box>
-      <Box>
+      {/* <Box>
         <Container>
           <CustomTypography
             sx={{
@@ -1314,7 +1314,7 @@ const AboutUs = () => {
             </Grid>
           </Box>
         </Container>
-      </Box>
+      </Box> */}
       <Box>
         <Container>
           <CustomTypography

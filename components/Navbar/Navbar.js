@@ -239,7 +239,7 @@ const Navbar = () => {
                       >
                         Sign In
                       </Link>
-                      <Link
+                      {/* <Link
                         href="/signup"
                         style={{
                           fontSize: "17px",
@@ -249,7 +249,7 @@ const Navbar = () => {
                         prefetch
                       >
                         Sign Up
-                      </Link>
+                      </Link> */}
                     </>
                   ) : (
                     <>

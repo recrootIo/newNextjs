@@ -3,6 +3,7 @@ import { Box, Grid, Container, Button, CardContent, Card } from "@mui/material";
 import Image from "next/image";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import styles from "./newhome.module.css";
+import Link from "next/link";
 
 const LevelUp = () => {
   return (
@@ -94,9 +95,19 @@ const LevelUp = () => {
                       >
                         Are You a Recruiter?
                       </CustomTypography>
-                      <Button className={styles.areYouRecruiterBtn}>
-                        GET STARTED
-                      </Button>
+                      <Link
+                        href="/signup"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                        prefetch
+                      >
+                        <Button className={styles.areYouRecruiterBtn}>
+                          GET STARTED
+                        </Button>
+                      </Link>
                     </Grid>
                   </Grid>
                 </CardContent>
@@ -159,9 +170,19 @@ const LevelUp = () => {
                       >
                         Are You a Candidate?
                       </CustomTypography>
-                      <Button className={styles.areYouRecruiterBtn}>
-                        EXPLORE MORE
-                      </Button>
+                      <Link
+                        href="/signup"
+                        style={{
+                          fontSize: "17px",
+                          color: "black",
+                          fontWeight: 600,
+                        }}
+                        prefetch
+                      >
+                        <Button className={styles.areYouRecruiterBtn}>
+                          EXPLORE MORE
+                        </Button>
+                      </Link>
                     </Grid>
                   </Grid>
                 </CardContent>

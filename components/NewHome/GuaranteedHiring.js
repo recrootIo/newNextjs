@@ -79,15 +79,6 @@ const GuaranteedHiring = () => {
                 >
                   Guaranteed Hiring
                 </CustomTypography>
-                <div>
-                <CustomTypography
-                  sx={{ fontSize: "16px", fontWeight: 400, color: "#01313F" }}
-                >
-                  We are the only recruitment platform that ensures our
-                  employers hire the right candidates for their open positions,
-                  with a success rate of over 90%.
-                </CustomTypography>
-                </div>
               </Box>
               <Grid container spacing={2} sx={{ mt: "30px" }}>
                 <Grid
@@ -131,7 +122,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        AI-powered talent acquisition solution
+                        AI-driven candidate-job match
                       </CustomTypography>
                     </Box>
                   </Card>
@@ -178,7 +169,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        Access to the candidate database
+                        Filtered candidate pool
                       </CustomTypography>
                     </Box>
                   </Card>
@@ -225,7 +216,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        Ensure timely recruitment
+                        Rapid 24-hour hiring
                       </CustomTypography>
                     </Box>
                   </Card>
@@ -257,12 +248,13 @@ const GuaranteedHiring = () => {
                     }}
                   >
                     <Image
-                      src="/newhome_images/ensure-success-icon.png"
-                      alt="Ensure success icon of the Guaranteed hiring cards"
+                      src="/newhome_images/time-saving-icon.png"
+                      alt="Time saving icon of the Guaranteed hiring cards"
                       priority={true}
                       width="46"
                       height="46"
                     />
+
                     <Box>
                       <CustomTypography
                         sx={{
@@ -272,7 +264,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        Ensure a 90%+ success rate
+                        Competitive pricing option
                       </CustomTypography>
                     </Box>
                   </Card>
@@ -304,12 +296,13 @@ const GuaranteedHiring = () => {
                     }}
                   >
                     <Image
-                      src="/newhome_images/customer-service-icon.png"
+                      src="/newhome_images/ensure-success-icon.png"
                       alt="Ensure success icon of the Guaranteed hiring cards"
                       priority={true}
                       width="46"
                       height="46"
                     />
+
                     <Box>
                       <CustomTypography
                         sx={{
@@ -319,7 +312,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        Assistance from candidate managers
+                        Request more resumes at will
                       </CustomTypography>
                     </Box>
                   </Card>
@@ -351,8 +344,8 @@ const GuaranteedHiring = () => {
                     }}
                   >
                     <Image
-                      src="/newhome_images/time-saving-icon.png"
-                      alt="Time saving icon of the Guaranteed hiring cards"
+                      src="/newhome_images/customer-service-icon.png"
+                      alt="Ensure success icon of the Guaranteed hiring cards"
                       priority={true}
                       width="46"
                       height="46"
@@ -366,7 +359,7 @@ const GuaranteedHiring = () => {
                           textAlign: "center",
                         }}
                       >
-                        Maximize time savings in hiring
+                        Dedicated account managers
                       </CustomTypography>
                     </Box>
                   </Card>

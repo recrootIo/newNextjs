@@ -36,7 +36,7 @@ const WeAreProud = () => {
                     fontWeight: 700,
                     color: "#01313F",
                     textAlign: "center",
-                    mb: { xs: "20px", md: "80px" },
+                    mb: { xs: "20px", md: "30px" },
                   }}
                 >
                   We Are Proud Of Our Work

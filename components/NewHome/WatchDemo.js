@@ -29,7 +29,7 @@ const WatchDemo = () => {
             }}
             gutterBottom
           >
-            Learn How Our Platform Work
+            How Our Platform Work
           </CustomTypography>
           <Box sx={{ textAlign: "center", marginTop: "20px" }}>
             <button
