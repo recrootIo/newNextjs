@@ -7,7 +7,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { BOLD } from "@/theme/fonts";
 import ApplyJobStepper from "@/components/ApplyJobStepper/ApplyJobStepper";
 import { useRouter } from "next/router";
-import { Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import Image from "next/image";
 
 const styles = {
@@ -17,13 +17,13 @@ const styles = {
     justifyContent: "center",
     height: "50vh",
   },
-  image: {
-    maxWidth: "100%",
-    maxHeight: "100%",
-    backgroundImage: `url("/successImgBg.svg")`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-  },
+  // image: {
+  //   maxWidth: "100%",
+  //   maxHeight: "100%",
+  //   backgroundImage: `url("/successImgBg.svg")`,
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundSize: "cover",
+  // },
 };
 
 const ApplyConfirmation = () => {
@@ -53,62 +53,99 @@ const ApplyConfirmation = () => {
         }}
       ></Box>
 
-      <Stack
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "40px",
-          mt: "20px",
-          mb: "60px",
-        }}
-      >
-        <ApplyJobStepper activeStep={2} />
-      </Stack>
-
-      <div style={styles.container}>
-        <Image
-          src={"/applyConfirmation-Img.png"}
-          alt=""
-          height={325}
-          width={245}
-          style={styles.image}
-        />
-      </div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Image src={"/tickImg.png"} alt="" height={65} width={80} />
-        <CustomTypography variant="body1" gutterBottom>
-          Your Application is Submitted
-        </CustomTypography>
-        <CustomTypography
-          variant="h4"
-          gutterBottom
-          sx={{ color: "#2699FF", fontFamily: BOLD ,textAlign:'center'}}
-        >
-          Thank You For Applying
-        </CustomTypography>
-        <Button
-          variant="contained"
+      <Container>
+        <Stack
           sx={{
-            bgcolor: "#015FB1 !important",
-            width: "40%",
-            height: "50px",
-            textTransform: "capitalize",
-            mt: "50px",
-            mb: "100px",
-            fontSize: "16px",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "40px",
+            mt: "20px",
           }}
-          onClick={() => goBack()}
         >
-          Search For More Jobs
-        </Button>
-      </Box>
+          <ApplyJobStepper activeStep={2} />
+        </Stack>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Grid container spacing={2} sx={{ mt: "30px" }}>
+            <Grid
+              item
+              xs={6}
+              sx={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                backgroundImage: `url("/successImgBg.svg")`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                backgroundPosition: "center",
+              }}
+            >
+              <div style={styles.container}>
+                <Image
+                  src={"/applyConfirmation-Img.png"}
+                  alt=""
+                  height={425}
+                  width={345}
+                  style={styles.image}
+                />
+              </div>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <Image src={"/tickImg.png"} alt="" height={65} width={80} />
+                <CustomTypography variant="body1" gutterBottom>
+                  Your Application is Submitted
+                </CustomTypography>
+                <CustomTypography
+                  variant="h4"
+                  gutterBottom
+                  sx={{
+                    color: "#2699FF",
+                    fontFamily: BOLD,
+                    textAlign: "center",
+                  }}
+                >
+                  Thank You For Applying
+                </CustomTypography>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#015FB1 !important",
+                    width: "60%",
+                    height: "50px",
+                    textTransform: "capitalize",
+                    mt: "50px",
+                    fontSize: "16px",
+                  }}
+                  onClick={() => goBack()}
+                >
+                  Search For More Jobs
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
     </div>
   );
 };

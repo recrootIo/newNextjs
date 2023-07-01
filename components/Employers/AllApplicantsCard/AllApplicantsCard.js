@@ -143,7 +143,7 @@ const AllApplicantsCard = ({ users }) => {
           />
         );
       default:
-        return <></>;
+        return <Box sx={{ width: "24px" }}></Box>;
     }
   };
 
