@@ -81,7 +81,12 @@ const Navbar = () => {
   );
 
   const company = useSelector((state) => state.company?.companyDetl);
-  const photoUrl = userType === 'Candidate' ? photoss?.photo && `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}` :company?.companyLogo?.logo &&  `http://localhost:3000/api/openProfpic?photo=${company?.companyLogo.logo}`
+  const photoUrl =
+    userType === "Candidate"
+      ? photoss?.photo &&
+        `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}`
+      : company?.companyLogo?.logo &&
+        `http://localhost:3000/api/openProfpic?photo=${company?.companyLogo.logo}`;
   return (
     <nav>
       <div
@@ -182,7 +187,7 @@ const Navbar = () => {
                         fontWeight: 600,
                       }}
                     >
-                      Candidate
+                      My Profile
                     </Link>
                   ) : (
                     <>
@@ -254,7 +259,7 @@ const Navbar = () => {
                           aria-expanded={open ? "true" : undefined}
                           onClick={handleClick}
                         >
-                          <Avatar src={photoUrl}/>
+                          <Avatar src={photoUrl} />
                         </Button>
                         <Menu
                           id="fade-menu"
@@ -318,7 +323,7 @@ const Navbar = () => {
                   disablePadding
                   onClick={() => navigate("/Candidate/Dashboard")}
                 >
-                  <ListItemButton>Candidate</ListItemButton>
+                  <ListItemButton>My Profile</ListItemButton>
                 </ListItem>
               ) : (
                 <>
