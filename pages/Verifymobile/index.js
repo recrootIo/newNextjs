@@ -65,7 +65,7 @@ const VerifyEmail = () => {
         if (country === "LK") {
           push("/Pricing");
         } else {
-          push("/Employer/postNewJob");
+          push("/Employer/PostNewJob");
         }
       } else if (
         loggedInUser.User.recrootUserType === "Candidate" &&

@@ -68,9 +68,7 @@ export default function EmployerSidebar() {
               featureType: false,
               queshow: "false",
             })
-          ).then(
-              push("/Employer/postNewJob")
-          );
+          ).then(push("/Employer/PostNewJob"));
           return;
         }
         // eslint-disable-next-line no-mixed-operators
@@ -115,9 +113,7 @@ export default function EmployerSidebar() {
             queshow: "false",
             packageType: "",
           })
-        ).then(
-            push("/Employer/postNewJob")
-        );
+        ).then(push("/Employer/PostNewJob"));
       } else {
         dispatch(
           setEditJob({
@@ -136,9 +132,7 @@ export default function EmployerSidebar() {
             featureType: false,
             queshow: "false",
           })
-        ).then(
-            push("/Employer/postNewJob")
-        );
+        ).then(push("/Employer/PostNewJob"));
       }
     }
   };
@@ -196,7 +190,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="companyProfile"
         >
-          <Link href={"/Employer/companyProfile"}>
+          <Link href={"/Employer/CompanyProfile"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -230,7 +224,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="allApplicants"
         >
-          <Link href={"/Employer/allApplicants"}>
+          <Link href={"/Employer/AllApplicants"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -250,7 +244,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="interview"
         >
-          <Link href={"/Employer/scheduledInterviews"}>
+          <Link href={"/Employer/ScheduledInterviews"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -270,7 +264,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="subscription"
         >
-          <Link href={"/Employer/subscription"}>
+          <Link href={"/Employer/Subscription"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -278,7 +272,7 @@ export default function EmployerSidebar() {
                     ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
                     : "",
               }}
-              onClick={() => handleListItemClick()}
+              onClick={() => handleListItemClick("Subscription")}
             >
               <Image src="/subscription.png" alt="" width="40" height="40" />
             </HoverListItemButton>
@@ -286,7 +280,7 @@ export default function EmployerSidebar() {
         </Tooltip>
 
         <Tooltip title="My Account" placement="right" className="account">
-          <Link href={"/Employer/myAccount"}>
+          <Link href={"/Employer/MyAccount"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -294,7 +288,7 @@ export default function EmployerSidebar() {
                     ? "linear-gradient(90deg, rgba(38, 153, 255, 0.3) 0%, #03E7F4 111.15%);"
                     : "",
               }}
-              onClick={() => handleListItemClick()}
+              onClick={() => handleListItemClick("MyAccount")}
             >
               <Image src="/myAccount.png" alt="" width="40" height="40" />
             </HoverListItemButton>

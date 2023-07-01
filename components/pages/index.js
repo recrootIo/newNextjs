@@ -68,9 +68,7 @@ function Employer({ children }) {
             featureType: false,
             queshow: "",
           })
-        ).then(
-            push("/Employer/PostNewJob")
-        );
+        ).then(push("/Employer/PostNewJob"));
         return;
       }
       // eslint-disable-next-line no-mixed-operators
@@ -114,9 +112,7 @@ function Employer({ children }) {
           queshow: "true",
           packageType: "",
         })
-      ).then(
-          push("/Employer/postNewJob")
-      );
+      ).then(push("/Employer/PostNewJob"));
     } else {
       dispatch(
         setEditJob({
@@ -135,9 +131,7 @@ function Employer({ children }) {
           featureType: false,
           queshow: "false",
         })
-      ).then(
-          push("/Employer/postNewJob")
-      );
+      ).then(push("/Employer/PostNewJob"));
     }
   };
 

@@ -173,7 +173,7 @@ const CompanyPreview = () => {
               cursor: "pointer",
             }}
             onClick={() => {
-              push("/employer/companyProfile");
+              push("/Employer/CompanyProfile");
             }}
           >
             <Box

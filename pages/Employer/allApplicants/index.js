@@ -742,7 +742,7 @@ const AllApplicants = () => {
 
   //   // Scroll to the target element
   //   targetElement.scrollIntoView({ behavior: "smooth" });
-  //   router.push("/employer/allApplicants", undefined, { shallow: true });
+  //   router.push("/Employer/AllApplicants", undefined, { shallow: true });
   // }
 
   const updateValue = async () => {
@@ -968,12 +968,12 @@ const AllApplicants = () => {
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem  key={variant.jobRole} disablePadding>
+                          <ListItem key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
                               onClick={(e) => handleName(e, variant)}
                               dense
-                              sx={{ cursor: "auto"}}
+                              sx={{ cursor: "auto" }}
                             >
                               <ListItemIcon>
                                 <Checkbox

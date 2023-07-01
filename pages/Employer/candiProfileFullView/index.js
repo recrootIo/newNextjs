@@ -281,7 +281,7 @@ const CandiFullProfileView = () => {
       router.back();
     } else {
       router.back();
-      // router.push(`/employer/allApplicants?aid=${appdata?._id}`);
+      // router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
     }
   };
 

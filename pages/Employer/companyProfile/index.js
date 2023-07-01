@@ -205,12 +205,12 @@ const CompanyProfile = () => {
 
   const handleClose = () => {
     dispatch(cmpLogo(first));
-    dispatch(updateFinalPhoto(first)).then((res)=>{
-      if(res?.meta?.requestStatus === 'fulfilled'){
-        dispatch(getCompanyDetails())
+    dispatch(updateFinalPhoto(first)).then((res) => {
+      if (res?.meta?.requestStatus === "fulfilled") {
+        dispatch(getCompanyDetails());
         dispatch(
           openAlert({ type: SUCCESS, message: "Your Company Logo Was Updated" })
-        )
+        );
       }
     });
     setOpen(false);
@@ -378,7 +378,7 @@ const CompanyProfile = () => {
               cursor: "pointer",
             }}
             onClick={() => {
-              push("/employer/companyProfile");
+              push("/Employer/CompanyProfile");
             }}
           >
             <Box
