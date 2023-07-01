@@ -92,7 +92,7 @@ export function Uploader(props) {
                       <BackupIcon sx={{ fontSize: "6em" }} />
                     </span>
                     <span>
-                      Drag & drop some files here, or
+                      Drag & drop some files here, or{" "}
                       <span style={{ color: "#4F9AFF" }}>
                         click here to select files
                       </span>
