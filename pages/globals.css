@@ -162,54 +162,54 @@ body {
 }
 
 .numcardone {
-  background-color: #fbf3e9;
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #fbf3e9 !important;
+  width: 240px !important;
+  box-shadow: 0 !important;
+  height: 130px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .numcardtwo {
-  background-color: #dbfff2;
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
+  background-color: #dbfff2 !important;
+  width: 240px !important;
+  box-shadow: 0 !important;
+  height: 130px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .numcardthree {
-  background-color: #e3f7fe;
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
+  background-color: #e3f7fe !important;
+  width: 240px !important;
+  box-shadow: 0 !important;
+  height: 130px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .numcardfour {
-  background-color: #ffeeef;
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
+  background-color: #ffeeef !important;
+  width: 240px !important;
+  box-shadow: 0 !important;
+  height: 130px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .numcardfive {
-  background-color: #eaebf4;
-  width: 240px;
-  box-shadow: 0;
-  height: 130px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
+  background-color: #eaebf4 !important;
+  width: 240px !important;
+  box-shadow: 0 !important;
+  height: 130px !important;
+  border-radius: 15px !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .brandsBackgroundImage {
