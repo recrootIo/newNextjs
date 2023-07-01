@@ -414,7 +414,7 @@ const EssentialInformation = () => {
                   style={{ width: { xs: "100%", sm: "50%" }, bgcolor: "white" }}
                   label="Deadline"
                   name="applicationDeadline"
-                  inputFormat="dd/MM/yyyy"
+                  format="MMM/dd/yyyy"
                   minDate={new Date()}
                   maxDate={full === "jSlot" ? "" : futureDate}
                   value={

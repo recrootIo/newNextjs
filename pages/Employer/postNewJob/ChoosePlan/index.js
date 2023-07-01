@@ -296,7 +296,7 @@ function Chooseplan(props) {
                     ) : (
                       <BasicButton
                         variant="outlined"
-                        onClick={props.photoUrl}
+                        onClick={props.postJobs}
                         sx={{ width: "191px" }}
                       >
                         Submit

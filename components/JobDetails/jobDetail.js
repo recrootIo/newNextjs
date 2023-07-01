@@ -34,6 +34,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAppliedJobs,
+  getSavedJobs,
   retrievePersonal,
   saveJobs,
   setJobID,
@@ -61,7 +62,9 @@ const JobDetail = ({ ...props }) => {
     count,
     appcount,
   } = props;
+
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
+  const savedJobs = useSelector((state) => state.personal.savedJobs);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -70,6 +73,7 @@ const JobDetail = ({ ...props }) => {
   const isApplied = appliedIds.includes(_id);
   const appliedJob = appliedJobs.find((i) => i.jobId[0]);
   const isUserType = data?.recrootUserType === CANDIDATE;
+  const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const gotApply = () => {
     if (data.profilePercentage < 70) {
@@ -98,6 +102,7 @@ const JobDetail = ({ ...props }) => {
   useEffect(() => {
     dispatch(fetchAppliedJobs());
     dispatch(retrievePersonal());
+    dispatch(getSavedJobs());
   }, [dispatch]);
 
   const [loginCallBackURL, setLoginCallBackURL] = useState("");
@@ -109,14 +114,17 @@ const JobDetail = ({ ...props }) => {
   const handleBookmark = () => {
     dispatch(saveJobs(_id))
       .unwrap()
-      .then(
-        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }))
-      )
+      .then(() => {
+        dispatch(openAlert({ type: SUCCESS, message: "Added to saved jobs" }));
+        dispatch(getSavedJobs());
+      })
       .catch((res) => console.log(res));
   };
+
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
+
   return (
     <Box
       sx={{
@@ -192,6 +200,7 @@ const JobDetail = ({ ...props }) => {
                     size="small"
                     variant="outlined"
                     bgcolor="#02A9F7 !important"
+                    disabled={savedJobsId.includes(_id)}
                     onClick={() => handleBookmark()}
                   >
                     <BookmarkBorderIcon sx={{ fontSize: "21px" }} />

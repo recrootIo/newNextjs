@@ -52,7 +52,7 @@ const FeaturedJobs = ({ locale }) => {
 
   useEffect(() => {
     getJobs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isEmpty(latestJobs)) return;
@@ -62,7 +62,7 @@ const FeaturedJobs = ({ locale }) => {
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 220">
         <path
           fill="#FFF"
-          fill-opacity="1"
+          fillOpacity="1"
           d="M0,96L80,117.3C160,139,320,181,480,170.7C640,160,800,96,960,74.7C1120,53,1280,75,1360,85.3L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
         ></path>
       </svg>
