@@ -23,7 +23,7 @@ const LevelUp = () => {
               fontWeight: 700,
               color: "#01313F",
               textAlign: "center",
-              mb: "120px",
+              mb: { xs: "120px", sm: "150px", md: "120px" },
               position: "relative",
             }}
           >
@@ -54,7 +54,7 @@ const LevelUp = () => {
                       xs={12}
                       md={6}
                       sx={{
-                        height: "300px",
+                        height: { xs: "250px", md: "300px" },
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -66,11 +66,7 @@ const LevelUp = () => {
                         priority={true}
                         width="306"
                         height="406"
-                        style={{
-                          position: "absolute",
-                          zIndex: 2,
-                          top: "-90px",
-                        }}
+                        className={styles.recruiterCardImg}
                       />
                     </Grid>
                     <Grid
@@ -113,7 +109,7 @@ const LevelUp = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ mt: { xs: "100px", md: "0px" } }}>
+            <Grid item xs={12} md={6} sx={{ mt: { xs: "120px", md: "0px" } }}>
               <Card
                 sx={{
                   bgcolor: "#0DBDE0",
@@ -129,7 +125,7 @@ const LevelUp = () => {
                       xs={12}
                       md={6}
                       sx={{
-                        height: "300px",
+                        height: { xs: "250px", md: "300px" },
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -141,11 +137,7 @@ const LevelUp = () => {
                         priority={true}
                         width="246"
                         height="370"
-                        style={{
-                          position: "absolute",
-                          zIndex: 1,
-                          top: "-90px",
-                        }}
+                        className={styles.candidateCardImg}
                       />
                     </Grid>
                     <Grid

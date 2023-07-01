@@ -32,6 +32,7 @@ const BrandsWeWork = () => {
     }
     return "/logo4.png";
   };
+  console.log(getLogo, "get");
 
   const breakPoints = [
     // { width: 451, itemsToShow: 1 },
@@ -118,32 +119,168 @@ const BrandsWeWork = () => {
             }}
             itemsToShow={3}
           >
-            {brands.map((brand, index) => (
-              <Box
-                key={index}
-                sx={{
-                  backgroundImage: "url(/Polygon1.png)",
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  height: "205px",
-                  width: "180px",
-                  justifyContent: "center",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box className="brandsLogos">
-                  <Image
-                    src={getLogo(brand?.logo)}
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    className="brandsImages"
-                    alt=""
-                  />
-                </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/OpenLM-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
               </Box>
-            ))}
+            </Box>
+
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/PRISHUSOFT-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/unique-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/kratical-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/Time-saving-travel-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/tqs-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundImage: "url(/Polygon1.png)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "205px",
+                width: "180px",
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box className="brandsLogos">
+                <Image
+                  src="/newhome_images/grow-start-logo.jpeg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="brandsImages"
+                  alt=""
+                />
+              </Box>
+            </Box>
           </Carousel>
         </Stack>
       </Container>

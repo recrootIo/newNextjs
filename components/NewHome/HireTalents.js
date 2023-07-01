@@ -29,8 +29,8 @@ const HireTalents = () => {
         backgroundImage: `url("/newhome_images/new-home-topbg.png")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "1000px",
-        pt: "80px",
+        height: { xs: "800px", sm: "1000px" },
+        pt: { xs: "50px", md: "80px" },
       }}
     >
       <Container>
@@ -38,7 +38,7 @@ const HireTalents = () => {
           <Grid
             item
             xs={12}
-            md={6}
+            lg={6}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -103,7 +103,7 @@ const HireTalents = () => {
           <Grid
             item
             xs={12}
-            md={6}
+            lg={6}
             sx={{
               display: "flex",
               justifyContent: "center",

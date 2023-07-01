@@ -40,7 +40,7 @@ body {
 }
 
 .loginLogo {
-  height: 33px;
+  height: 37px;
 }
 
 .linkedinButton {
@@ -921,6 +921,11 @@ body {
 }
 
 .loginLogo {
+  width: auto;
+}
+
+.footerLogo {
+  height: 37px;
   width: auto;
 }
 
