@@ -219,7 +219,9 @@ const Navbar = () => {
                         onClose={handleCloseEmp}
                         TransitionComponent={Fade}
                       >
-                        <MenuItem>Pricing</MenuItem>
+                        <MenuItem onClick={() => navigate("/Pricing")}>
+                          Pricing
+                        </MenuItem>
                       </Menu>
                     </>
                   )}

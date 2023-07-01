@@ -409,7 +409,7 @@ const EmpoyerDashboard = () => {
   const handleEdit = () => {
     dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
       setTimeout(() => {
-        push(`/Employer/postNewJob?jid=${jobid}`);
+        push(`/Employer/PostNewJob?jid=${jobid}`);
       }, 500)
     );
   };
@@ -425,7 +425,7 @@ const EmpoyerDashboard = () => {
     // dispatch(seeAll({ jobId: jobid, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/Employer/allApplicants?jid=${jobid}`, { state: true });
+    push(`/Employer/AllApplicants?jid=${jobid}`, { state: true });
     // }, 500)
     // );
   };

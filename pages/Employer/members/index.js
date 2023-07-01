@@ -501,7 +501,7 @@ const Members = () => {
               cursor: "pointer",
             }}
             onClick={() => {
-              push("/employer/companyProfile");
+              push("/Employer/CompanyProfile");
             }}
           >
             <Box
@@ -1061,7 +1061,7 @@ const Members = () => {
                 variant="outlined"
                 sx={{ width: "50%", height: "55px" }}
                 onClick={() => {
-                  push("/employer/companyProfile");
+                  push("/Employer/CompanyProfile");
                 }}
               >
                 Previous
