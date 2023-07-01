@@ -174,7 +174,7 @@ const JobDetail = ({ ...props }) => {
                   >
                     {isApplied
                       ? `Applied ${moment(appliedJob.createdAt)
-                          .endOf("hour")
+                          .startOf("hour")
                           .fromNow()}`
                       : data.profilePercentage < 70
                       ? "Complete Profile"

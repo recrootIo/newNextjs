@@ -56,7 +56,7 @@ const SavedJobs = () => {
     return disabled
       ? "Complete Profile"
       : appliedIdcheck
-      ? `Applied ${moment(appliedJob.createdAt).endOf("day").fromNow()}`
+      ? `Applied ${moment(appliedJob.createdAt).startOf("hour").fromNow()}`
       : "Apply";
   };
 
