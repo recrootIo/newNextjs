@@ -150,7 +150,11 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          CalculatePercentage();
+          dispatch(retrievePersonal()).then((res)=>{
+            if(res?.meta?.requestStatus === "fulfilled"){
+              CalculatePercentage()
+            }
+          })
         }
       })
       .catch((error) => {
