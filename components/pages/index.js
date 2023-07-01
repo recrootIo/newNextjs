@@ -19,6 +19,7 @@ import FooterHome from "@/components/Home/FooterHome";
 import EmployerMobileSidebar from "@/components/Employers/EmployerMobileSidebar/EmployerMobileSidebar";
 import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
+import withAuth from "../Auths/VerifyEmail";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -273,4 +274,4 @@ function Employer({ children }) {
     </div>
   );
 }
-export default Employer;
+export default withAuth(Employer);

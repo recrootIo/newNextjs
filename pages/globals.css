@@ -2341,3 +2341,7 @@ a {
   top: 4px;
   margin-right: 9px;
 }
+
+.ql-clipboard {
+  display: none !important;
+}
