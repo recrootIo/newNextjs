@@ -41,38 +41,38 @@ const initialState = {
     salarySet: [],
     skillSet: [],
     jobTitles: [],
-    commSet:[]
+    commSet: [],
   },
   billings: {},
   advanceSearch: false,
   searchBar: true,
-  requestJobs:[],
-  taskbyjob:{},
-  cadidatesId:[],
-  reqLoad:false,
-  matchingData:{
-    strongData:[],
-    strongCount:[],
-    goodData:[],
-    goodCount:[],
-    minData:[],
-    minCount:[],
+  requestJobs: [],
+  taskbyjob: {},
+  cadidatesId: [],
+  reqLoad: false,
+  matchingData: {
+    strongData: [],
+    strongCount: [],
+    goodData: [],
+    goodCount: [],
+    minData: [],
+    minCount: [],
   },
-  matchingAppl:{
-    strongData:[],
-    strongCount:[],
-    goodData:[],
-    goodCount:[],
-    minData:[],
-    minCount:[],
+  matchingAppl: {
+    strongData: [],
+    strongCount: [],
+    goodData: [],
+    goodCount: [],
+    minData: [],
+    minCount: [],
   },
-  matchType:'strong',
-  matchJobid:'',
-  navbar:false,
-  rejectCount:0,
-  shortlistCount:0,
-  totalCount:0,
-  selectedRoute:'Dashboard'
+  matchType: "strong",
+  matchJobid: "",
+  navbar: false,
+  rejectCount: 0,
+  shortlistCount: 0,
+  totalCount: 0,
+  selectedRoute: "Dashboard",
 };
 
 export const cmpLogo = createAsyncThunk("logo", async (data11) => {
@@ -289,24 +289,24 @@ export const candidatesIdreq = createAsyncThunk(
     return value;
   }
 );
-export const matchShow = createAsyncThunk(
-  "matchsjoe/ids",
-  async (value) => {
-    return value;
-  }
-);
-export const matchJid = createAsyncThunk(
-  "jidmatch/ids",
-  async (value) => {
-    return value;
-  }
-);
+export const matchShow = createAsyncThunk("matchsjoe/ids", async (value) => {
+  return value;
+});
+export const matchJid = createAsyncThunk("jidmatch/ids", async (value) => {
+  return value;
+});
+
 export const selectRoute = createAsyncThunk(
   "selectRoute/ids",
   async (value) => {
     return value;
   }
 );
+
+export const updateTour = createAsyncThunk("tours/set", async (value) => {
+  return value;
+});
+
 const cmpSlice = createSlice({
   name: "company",
   initialState,
@@ -394,27 +394,35 @@ const cmpSlice = createSlice({
       state.loading = true;
       state.matchingAppl.strongData = [];
       state.matchingAppl.goodData = [];
-      state.matchingAppl.minData = []
+      state.matchingAppl.minData = [];
     },
     [getMaching.fulfilled]: (state, action) => {
       state.loading = false;
       state.navbar = true;
-      state.matchingData.strongData = action.payload.candidates[0]?.strongMatches;
-      state.matchingData.strongCount = action.payload.candidates[0]?.strongMatchesCount;
+      state.matchingData.strongData =
+        action.payload.candidates[0]?.strongMatches;
+      state.matchingData.strongCount =
+        action.payload.candidates[0]?.strongMatchesCount;
       state.matchingData.goodData = action.payload.candidates[0]?.goodMatches;
-      state.matchingData.goodCount = action.payload.candidates[0]?.goodMatchesCount;
+      state.matchingData.goodCount =
+        action.payload.candidates[0]?.goodMatchesCount;
       state.matchingData.minData = action.payload.candidates[0]?.minimumMatches;
-      state.matchingData.minCount = action.payload.candidates[0]?.minimumMatchesCount;
+      state.matchingData.minCount =
+        action.payload.candidates[0]?.minimumMatchesCount;
     },
     [getMachingAppl.fulfilled]: (state, action) => {
       state.loading = false;
       state.navbar = true;
-      state.matchingAppl.strongData = action.payload.candidates[0]?.strongMatches;
-      state.matchingAppl.strongCount = action.payload.candidates[0]?.strongMatchesCount;
+      state.matchingAppl.strongData =
+        action.payload.candidates[0]?.strongMatches;
+      state.matchingAppl.strongCount =
+        action.payload.candidates[0]?.strongMatchesCount;
       state.matchingAppl.goodData = action.payload.candidates[0]?.goodMatches;
-      state.matchingAppl.goodCount = action.payload.candidates[0]?.goodMatchesCount;
+      state.matchingAppl.goodCount =
+        action.payload.candidates[0]?.goodMatchesCount;
       state.matchingAppl.minData = action.payload.candidates[0]?.minimumMatches;
-      state.matchingAppl.minCount = action.payload.candidates[0]?.minimumMatchesCount;
+      state.matchingAppl.minCount =
+        action.payload.candidates[0]?.minimumMatchesCount;
     },
     [getCompanyDetails.fulfilled]: (state, action) => {
       state.companyDetl = action.payload;
@@ -469,9 +477,12 @@ const cmpSlice = createSlice({
       state.srdata = { ...state.srdata, ...action.payload };
     },
     [getapplCount.fulfilled]: (state, action) => {
-      state.rejectCount =action.payload.rejectCount;
+      state.rejectCount = action.payload.rejectCount;
       state.shortlistCount = action.payload.shortlistCount;
-      state.totalCount =action.payload.totalCount;
+      state.totalCount = action.payload.totalCount;
+    },
+    [updateTour.fulfilled]: (state, action) => {
+      state.companyDetl.tours[action.payload] = false;
     },
   },
 });

@@ -29,6 +29,7 @@ import moment from "moment";
 import companyservice from "@/redux/services/company.service";
 import { setpremium } from "@/redux/slices/job";
 import { isEmpty } from "lodash";
+import { updateTour } from "@/redux/slices/companyslice";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -83,12 +84,15 @@ const JobPreview = (props) => {
     props.Pages(index);
   };
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setpremium(false));
   }, [dispatch]);
+
   const updateValue = async () => {
     const companyService = new companyservice();
     await companyService.updateTourValue({ jobPreview: false });
+    dispatch(updateTour("jobPreview"));
   };
 
   const closeTour = () => {
@@ -134,7 +138,7 @@ const JobPreview = (props) => {
           }}
         >
           <CustomTypography>
-            Click on &quot;Next&quot; button to make your job post live on
+            Click on &quot;Submit&quot; button to make your job post live on
             Recroot
           </CustomTypography>
           <Button onClick={() => closeTour()}>DONE</Button>
@@ -146,14 +150,16 @@ const JobPreview = (props) => {
   const company = useSelector((state) => state?.company?.companyDetl);
 
   useEffect(() => {
-    setTourOpen(() => company?.tours?.jobPreview);
+    setTourOpen(() => company?.tours?.jobPreview || false);
   }, [company?.tours?.jobPreview]);
+
   useEffect(() => {
     const element = document.getElementById("top");
     element.scrollIntoView({
       behavior: "smooth",
     });
   }, []);
+
   return (
     <>
       <CardContent sx={{ position: "relative" }}>
@@ -291,7 +297,7 @@ const JobPreview = (props) => {
                 }}
               >
                 <CustomTypography className={styles.JobPreviewTypo}>
-                Mandatory Skills :
+                  Mandatory Skills :
                 </CustomTypography>
                 <Stack
                   direction="row"
@@ -321,7 +327,7 @@ const JobPreview = (props) => {
                 }}
               >
                 <CustomTypography className={styles.JobPreviewTypo}>
-                Desired Skills :
+                  Desired Skills :
                 </CustomTypography>
                 {isEmpty(details.mandatorySkill) ? (
                   <CustomTypography className={styles.JobPreviewData}>
