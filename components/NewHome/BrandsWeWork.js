@@ -73,7 +73,7 @@ const BrandsWeWork = () => {
                   fontFamily: "Inter-Bold",
                 }}
               >
-                Brands We work
+                Brands We Work
               </CustomTypography>
             </Grid>
             <Grid item xs={12}>

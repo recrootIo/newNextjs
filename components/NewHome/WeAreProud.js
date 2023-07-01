@@ -39,7 +39,7 @@ const WeAreProud = () => {
                     mb: { xs: "20px", md: "80px" },
                   }}
                 >
-                  We are proud of our work
+                  We Are Proud Of Our Work
                 </CustomTypography>
                 <Image
                   src="/newhome_images/guaranteed-hiring-blue-bubble.png"
@@ -110,12 +110,12 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <div>
-                    <CustomTypography
-                      sx={{ fontSize: "18px" }}
-                      fontWeight="500"
-                    >
-                      Total jobs
-                    </CustomTypography>
+                      <CustomTypography
+                        sx={{ fontSize: "18px" }}
+                        fontWeight="500"
+                      >
+                        Total jobs
+                      </CustomTypography>
                     </div>
                   </CardContent>
                 </Card>
@@ -140,12 +140,12 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <div>
-                    <CustomTypography
-                      sx={{ fontSize: "18px", textAlign: "center" }}
-                      fontWeight="500"
-                    >
-                      Total candidates registered
-                    </CustomTypography>
+                      <CustomTypography
+                        sx={{ fontSize: "18px", textAlign: "center" }}
+                        fontWeight="500"
+                      >
+                        Total candidates registered
+                      </CustomTypography>
                     </div>
                   </CardContent>
                 </Card>
@@ -200,12 +200,12 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <div>
-                    <CustomTypography
-                      sx={{ fontSize: "18px", textAlign: "center" }}
-                      fontWeight="500"
-                    >
-                      Total companies actively hiring
-                    </CustomTypography>
+                      <CustomTypography
+                        sx={{ fontSize: "18px", textAlign: "center" }}
+                        fontWeight="500"
+                      >
+                        Total companies actively hiring
+                      </CustomTypography>
                     </div>
                   </CardContent>
                 </Card>
@@ -230,12 +230,12 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <div>
-                    <CustomTypography
-                      sx={{ fontSize: "18px", textAlign: "center" }}
-                      fontWeight="500"
-                    >
-                      Total job categories available
-                    </CustomTypography>
+                      <CustomTypography
+                        sx={{ fontSize: "18px", textAlign: "center" }}
+                        fontWeight="500"
+                      >
+                        Total job categories available
+                      </CustomTypography>
                     </div>
                   </CardContent>
                 </Card>
@@ -260,12 +260,12 @@ const WeAreProud = () => {
                       +
                     </CustomTypography>
                     <div>
-                    <CustomTypography
-                      sx={{ fontSize: "18px", textAlign: "center" }}
-                      fontWeight="500"
-                    >
-                      Total job applications submitted
-                    </CustomTypography>
+                      <CustomTypography
+                        sx={{ fontSize: "18px", textAlign: "center" }}
+                        fontWeight="500"
+                      >
+                        Total job applications submitted
+                      </CustomTypography>
                     </div>
                   </CardContent>
                 </Card>
