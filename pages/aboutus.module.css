@@ -1,18 +1,18 @@
 .technologiesCard {
-  width: 100%;
-  height: 120px;
-  border-radius: 8px;
-  background-color: #d4f0fc;
-  box-shadow: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100% !important;
+  height: 120px !important;
+  border-radius: 8px !important;
+  background-color: #d4f0fc !important;
+  box-shadow: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .technologiesCardcontent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .discovertheFeaturesTypoBox {
