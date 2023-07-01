@@ -317,8 +317,7 @@ function Signup() {
                     fontSize: "1.1rem",
                   }}
                 >
-                  Choose your destiny: Employer, Candidate or a Recruiter? Sign
-                  up and let the journey begin!
+                  Choose your profile
                 </CustomTypography>
                 <Grid container spacing={2}>
                   <Grid

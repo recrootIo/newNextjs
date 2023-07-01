@@ -25,7 +25,7 @@ const GuaranteedHiring = () => {
             <Grid
               item
               xs={12}
-              md={6}
+              lg={6}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -371,7 +371,7 @@ const GuaranteedHiring = () => {
               xs={12}
               md={6}
               sx={{
-                display: "flex",
+                display: { xs: "none", lg: "flex" },
                 justifyContent: "center",
                 alignItems: "center",
               }}

@@ -8,6 +8,14 @@ const WatchDemo = () => {
   const tablet = useMediaQuery("(max-width:909px)");
   const background = tablet ? "" : `url(/searchlepi.png),url(/searchbar.png)`;
 
+  const handleCloseUserMenuDemo = () => {
+    window.open(
+      "https://calendly.com/arinnovate/demo-of-recroot-platform",
+      "_blank",
+      "noreferrer"
+    );
+  };
+
   return (
     <div className={styles.watchDemo}>
       <Container
@@ -33,6 +41,7 @@ const WatchDemo = () => {
           </CustomTypography>
           <Box sx={{ textAlign: "center", marginTop: "20px" }}>
             <button
+              onClick={handleCloseUserMenuDemo}
               style={{
                 height: "62px",
                 backgroundColor: "#DDF2FA",

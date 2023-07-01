@@ -130,7 +130,7 @@ const FeaturedJobCard = ({
                 label="Immediate"
                 sx={{
                   borderRadius: "8px",
-                  backgroundColor: "#3771C8",
+                  backgroundColor: "#296ac4",
                   color: "white",
                   fontWeight: 600,
                   height: "25px",
@@ -143,7 +143,7 @@ const FeaturedJobCard = ({
                 label="featured"
                 sx={{
                   borderRadius: "8px",
-                  backgroundColor: "#3771C8",
+                  backgroundColor: "#c45a29",
                   color: "white",
                   fontWeight: 600,
                   height: "25px",
