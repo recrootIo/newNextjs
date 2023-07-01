@@ -37,6 +37,30 @@ const IdentifyingBestCandidates = () => {
               src="/newhome_images/guaranteed-hiring-blue-bubble.png"
               alt="Background bubble of guaranteed hiring section"
               priority={true}
+              width="200"
+              height="200"
+              className={styles.identifybubblec}
+            />
+            <Image
+              src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+              alt="Background bubble of guaranteed hiring section"
+              priority={true}
+              width="200"
+              height="200"
+              className={styles.identifybubbleb}
+            />
+            <Image
+              src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+              alt="Background bubble of guaranteed hiring section"
+              priority={true}
+              width="300"
+              height="300"
+              className={styles.identifybubblea}
+            />
+            <Image
+              src="/newhome_images/guaranteed-hiring-blue-bubble.png"
+              alt="Background bubble of guaranteed hiring section"
+              priority={true}
               width="180"
               height="180"
               style={{
