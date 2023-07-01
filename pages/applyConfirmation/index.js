@@ -15,15 +15,8 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "50vh",
+    // height: "50vh",
   },
-  // image: {
-  //   maxWidth: "100%",
-  //   maxHeight: "100%",
-  //   backgroundImage: `url("/successImgBg.svg")`,
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // },
 };
 
 const ApplyConfirmation = () => {
@@ -39,19 +32,10 @@ const ApplyConfirmation = () => {
         backgroundImage: `url("/Successful applied for jo bg.svg")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
+        minHeight: "100vh",
       }}
     >
       <Navbar />
-      <Box
-        sx={{
-          height: "100px",
-          backgroundImage: 'url("/blue-background-bg.png")',
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          display: "flex",
-          alignItems: "center",
-        }}
-      ></Box>
 
       <Container>
         <Stack
@@ -64,87 +48,92 @@ const ApplyConfirmation = () => {
         >
           <ApplyJobStepper activeStep={2} />
         </Stack>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
+        <Grid
+          container
+          spacing={2}
+          sx={{ mt: { xs: "5px", sm: " 50px", md: "0px" } }}
         >
-          <Grid container spacing={2} sx={{ mt: "30px" }}>
-            <Grid
-              item
-              xs={6}
-              sx={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                backgroundImage: `url("/successImgBg.svg")`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-                backgroundPosition: "center",
-              }}
-            >
-              <div style={styles.container}>
-                <Image
-                  src={"/applyConfirmation-Img.png"}
-                  alt=""
-                  height={425}
-                  width={345}
-                  style={styles.image}
-                />
-              </div>
-            </Grid>
-            <Grid
-              item
-              xs={6}
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              backgroundImage: `url("/successImgBg.svg")`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain",
+              backgroundPosition: "center",
+            }}
+          >
+            <div style={styles.container}>
+              <Image
+                src={"/applyConfirmation-Img.png"}
+                alt=""
+                height={245}
+                width={165}
+                style={styles.image}
+              />
+            </div>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-start",
                 alignItems: "center",
+                flexDirection: "column",
               }}
             >
-              <Box
+              <Image src={"/tickImg.png"} alt="" height={45} width={60} />
+              <CustomTypography
+                variant="body1"
+                gutterBottom
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
+                  fontWeight: 700,
+                  fontSize: "16px",
                 }}
               >
-                <Image src={"/tickImg.png"} alt="" height={65} width={80} />
-                <CustomTypography variant="body1" gutterBottom>
-                  Your Application is Submitted
-                </CustomTypography>
-                <CustomTypography
-                  variant="h4"
-                  gutterBottom
-                  sx={{
-                    color: "#2699FF",
-                    fontFamily: BOLD,
-                    textAlign: "center",
-                  }}
-                >
-                  Thank You For Applying
-                </CustomTypography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#015FB1 !important",
-                    width: "60%",
-                    height: "50px",
-                    textTransform: "capitalize",
-                    mt: "50px",
-                    fontSize: "16px",
-                  }}
-                  onClick={() => goBack()}
-                >
-                  Search For More Jobs
-                </Button>
-              </Box>
-            </Grid>
+                Your Application is Submitted
+              </CustomTypography>
+              <CustomTypography
+                variant="h4"
+                gutterBottom
+                sx={{
+                  color: "#2699FF",
+                  fontFamily: BOLD,
+                  textAlign: "center",
+                }}
+              >
+                Thank You For Applying
+              </CustomTypography>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#015FB1 !important",
+                  width: "60%",
+                  height: "50px",
+                  textTransform: "capitalize",
+                  mt: "10px",
+                  mb: "50px",
+                  fontSize: "16px",
+                }}
+                onClick={() => goBack()}
+              >
+                Search For More Jobs
+              </Button>
+            </Box>
           </Grid>
-        </Box>
+        </Grid>
       </Container>
     </div>
   );
