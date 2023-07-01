@@ -33,6 +33,7 @@ import { getSavedJobs, saveJobs } from "@/redux/slices/personal";
 import Cookies from "js-cookie";
 import { CANDIDATE, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
 
 const StyledIconWrapper = styled(Box)({
   display: "flex",
@@ -69,6 +70,30 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
     dispatch(getSavedJobs());
   }, [dispatch]);
 
+  /**
+   *
+   * @param {*} strng
+   * @returns
+   */
+  const reduceLength = (strng) => {
+    if (strng?.length > 100) return `${strng?.slice(0, 60)}...`;
+    return strng;
+  };
+
+  /**
+   *
+   * @param {*} address
+   * @returns
+   */
+  const getAddress = (address) => {
+    if (address.length > 1) {
+      const newAddress = address[0].split(",");
+      return reduceLength(newAddress[newAddress.length - 1]);
+    } else {
+      return reduceLength(address[0]);
+    }
+  };
+
   const saveNewJobs = (id) => {
     dispatch(saveJobs(id))
       .unwrap()
@@ -78,6 +103,8 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
       })
       .catch((res) => console.log(res));
   };
+
+  console.log(lateJob, "lateJob");
 
   return (
     <Card className="jobCard">
@@ -203,17 +230,18 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
             </Stack>
           )}
 
-          {lateJob?.essentialInformation?.qualification && (
+          {lateJob?.address && (
             <Stack
               direction={"row"}
               sx={{ gap: "10px", color: "#034275", alignItems: "center" }}
             >
-              <SchoolIcon />
+              <AddLocationIcon />
               <CustomTypography variant="body2" color={"#034275"} fontSize={15}>
-                {lateJob?.essentialInformation?.qualification}
+                {getAddress(lateJob?.address)}
               </CustomTypography>
             </Stack>
           )}
+
           {lateJob.createdAt && (
             <Stack
               direction={"row"}
