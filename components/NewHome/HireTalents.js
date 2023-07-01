@@ -8,10 +8,12 @@ import { companyJobs } from "@/redux/slices/job";
 import { getCompanyDetails } from "@/redux/slices/companyslice";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import ProfileCompletion from "../Candidates/ProfileCompletion/ProfileCompletion";
 
 const HireTalents = () => {
   const dispatch = useDispatch();
   const user = Cookies.get();
+
   useEffect(() => {
     localStorage.removeItem("Redirect");
     if (user?.userType === "Candidate") {
@@ -23,6 +25,7 @@ const HireTalents = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
   return (
     <Box
       sx={{
@@ -34,6 +37,7 @@ const HireTalents = () => {
       }}
     >
       <Container>
+        <ProfileCompletion />
         <Grid container spacing={2}>
           <Grid
             item
