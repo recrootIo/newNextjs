@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -29,6 +29,20 @@ const styles = {
 const ApplyConfirmation = () => {
   const router = useRouter();
 
+  useEffect(() => {
+    const disableBackNavigation = () => {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = () => {
+        window.history.go(1);
+      };
+    };
+
+    disableBackNavigation();
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
   const goBack = () => {
     router.push(`/jobs`);
   };

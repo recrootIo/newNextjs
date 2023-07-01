@@ -918,7 +918,7 @@ const CompanyProfile = () => {
                   name="utube"
                   onChange={(e) => handleLinks(e)}
                   onBlur={(e) => handleBlur(e, "Youtube Link Was Updated")}
-                  value={links && links.utube}
+                  value={links && links?.utube}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">

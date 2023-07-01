@@ -106,10 +106,10 @@ const EditPersonalDetails = () => {
     workPrefence: resume?.workPrefence,
     languages: resume?.languages,
     notice: resume?.notice,
-    utube: resume.socialMediaLink.utube,
-    twitter: resume.socialMediaLink.twitter,
-    linkin: resume.socialMediaLink.linkin,
-    fb: resume.socialMediaLink.fb,
+    utube: resume?.socialMediaLink?.utube,
+    twitter: resume?.socialMediaLink?.twitter,
+    linkin: resume?.socialMediaLink?.linkin,
+    fb: resume?.socialMediaLink?.fb,
   };
 
   const dispatch = useDispatch();
@@ -245,10 +245,10 @@ const EditPersonalDetails = () => {
                   languages: values?.languages,
                   notice: values?.notice,
                   socialMediaLink: {
-                    utube: values.utube,
-                    twitter: values.twitter,
-                    linkin: values.linkin,
-                    fb: values.fb,
+                    utube: values?.utube,
+                    twitter: values?.twitter,
+                    linkin: values?.linkin,
+                    fb: values?.fb,
                   },
                 };
                 handleEdit(updatedValues);

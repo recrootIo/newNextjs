@@ -38,6 +38,7 @@ const Submitted = () => {
     router.push(`/jobs`);
   };
 
+  
   return (
     <div
       style={{
