@@ -266,8 +266,8 @@ function Pricing() {
         ? packageDetails.pricing.us
         : counCheck
         ? packageDetails.pricing.rs
-        : countryData.country === 'LK' ?
-        packageDetails.pricing.lk
+        : countryData.country === "LK"
+        ? packageDetails.pricing.lk
         : packageDetails.pricing.us;
     console.log(price, "ppp");
     const newPackage = {
@@ -544,7 +544,7 @@ function Pricing() {
                     borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  {countryData?.country ==='IN' ? (
+                  {countryData?.country === "IN" ? (
                     <>
                       <sup style={{ fontSize: "30px" }}></sup>
                       <Typography
@@ -561,9 +561,7 @@ function Pricing() {
                         &#8377; <span>{PRO_PLAN.pricing.rs}</span>
                       </Typography>
                     </>
-                  ) :
-                  countryData.country === 'LK' ?
-                  (
+                  ) : countryData.country === "LK" ? (
                     <>
                       <Typography
                         sx={{
@@ -576,7 +574,7 @@ function Pricing() {
                           m: "auto",
                         }}
                       >
-                      &#8360; <span>{PRO_PLAN.pricing.lk}</span>
+                        &#8360; <span>{PRO_PLAN.pricing.lk}</span>
                       </Typography>
                     </>
                   ) : (
@@ -604,7 +602,7 @@ function Pricing() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{ alignItems: "flex-start" }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon
@@ -654,7 +652,7 @@ function Pricing() {
                     borderBottom: "1px dashed #A9A9AA",
                   }}
                 >
-                  {countryData.country === 'IN' ? (
+                  {countryData.country === "IN" ? (
                     <>
                       <Typography
                         sx={{
@@ -670,9 +668,7 @@ function Pricing() {
                         &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
                       </Typography>
                     </>
-                  ) :
-                  countryData.country === 'LK' ?
-                  (
+                  ) : countryData.country === "LK" ? (
                     <>
                       <Typography
                         sx={{
@@ -688,8 +684,7 @@ function Pricing() {
                         &#8360; <span>{PREMIUM_PACKAGE.pricing.lk}</span>
                       </Typography>
                     </>
-                  ):
-                   (
+                  ) : (
                     <>
                       <Typography
                         sx={{
@@ -714,7 +709,7 @@ function Pricing() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{ alignItems: "flex-start" }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon
@@ -771,7 +766,9 @@ function Pricing() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{
+                            alignItems: "flex-start",
+                          }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon
