@@ -186,22 +186,16 @@ const FooterHome = () => {
                 }}
               >
                 <Image
-                  src="/footer_logo.svg"
-                  alt=""
-                  height={159}
-                  style={{ marginRight: "10px" }}
-                  width={45}
+                  src="/whiteLogo.png"
+                  alt="Recroot Logo of the footer"
+                  priority={true}
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="footerLogo"
+                  blurDataURL="URL"
+                  placeholder="blur"
                 />
-                <CustomTypography
-                  variant="h3"
-                  sx={{
-                    color: "white",
-                    fontWeight: "700",
-                    fontSize: { md: "32px", xs: "20px" },
-                  }}
-                >
-                  RECROOT
-                </CustomTypography>
               </div>
               <div className="para">
                 <StyledTypo sx={{ fontSize: "18px" }}>

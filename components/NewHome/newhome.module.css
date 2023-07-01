@@ -178,6 +178,18 @@
   left: 296px;
 }
 
+.recruiterCardImg {
+  position: absolute;
+  z-index: 2;
+  top: -90px;
+}
+
+.candidateCardImg {
+  position: absolute;
+  z-index: 2;
+  top: -90px;
+}
+
 @media only screen and (max-width: 600px) {
   .clentStoriesbubble {
     display: none;
@@ -202,6 +214,14 @@
   }
   .GuaranteedHiringBubbleb {
     display: none;
+  }
+  .recruiterCardImg {
+    height: 330px;
+    width: auto;
+  }
+  .candidateCardImg {
+    height: 330px;
+    width: auto;
   }
 }
 
@@ -239,6 +259,12 @@
   }
   .GuaranteedHiringBubbleb {
     display: none;
+  }
+  .recruiterCardImg {
+    top: -131px;
+  }
+  .candidateCardImg {
+    top: -120px;
   }
 }
 

@@ -9,6 +9,18 @@ const IdentifyingBestCandidates = () => {
   return (
     <Box>
       <Container sx={{ pb: "40px" }}>
+        <CustomTypography
+          sx={{
+            fontSize: "33px",
+            fontWeight: 700,
+            color: "#01313F",
+            textAlign: { xs: "center", sm: "center" },
+            display: { xs: "block", md: "none" },
+            mb: "30px",
+          }}
+        >
+          Identify Best Candidates with AI
+        </CustomTypography>
         <Grid container spacing={2}>
           <Grid
             item
@@ -61,18 +73,17 @@ const IdentifyingBestCandidates = () => {
               alignItems: "center",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              <CustomTypography
-                sx={{
-                  fontSize: "33px",
-                  fontWeight: 700,
-                  color: "#01313F",
-                  textAlign: { xs: "center", sm: "left" },
-                }}
-              >
-                Identify Best Candidates with AI
-              </CustomTypography>
-            </Box>
+            <CustomTypography
+              sx={{
+                fontSize: "33px",
+                fontWeight: 700,
+                color: "#01313F",
+                textAlign: { xs: "center", sm: "left" },
+                display: { xs: "none", md: "block" },
+              }}
+            >
+              Identify Best Candidates with AI
+            </CustomTypography>
             <Grid container spacing={2} sx={{ mt: "20px" }}>
               <Grid item xs={6} md={4}>
                 <Card
