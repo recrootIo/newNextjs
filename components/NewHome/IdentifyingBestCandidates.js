@@ -63,7 +63,12 @@ const IdentifyingBestCandidates = () => {
           >
             <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
               <CustomTypography
-                sx={{ fontSize: "33px", fontWeight: 700, color: "#01313F" }}
+                sx={{
+                  fontSize: "33px",
+                  fontWeight: 700,
+                  color: "#01313F",
+                  textAlign: { xs: "center", sm: "left" },
+                }}
               >
                 Identify Best Candidates with AI
               </CustomTypography>
@@ -148,7 +153,7 @@ const IdentifyingBestCandidates = () => {
                         textAlign: "center",
                       }}
                     >
-                      Employ cutting-edge AI technology
+                      Cutting-edge AI technology
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -232,7 +237,7 @@ const IdentifyingBestCandidates = () => {
                         textAlign: "center",
                       }}
                     >
-                      Automate optimal candidate discovery
+                      Automated candidate discovery
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -316,7 +321,7 @@ const IdentifyingBestCandidates = () => {
                         textAlign: "center",
                       }}
                     >
-                      Reach a wide-ranging talent pool
+                      Reach wide-ranging talent pool
                     </CustomTypography>
                   </CardContent>
                 </Card>
@@ -579,7 +584,7 @@ const IdentifyingBestCandidates = () => {
                         textAlign: "center",
                       }}
                     >
-                      Achieve a 90%+ success rate
+                      Enjoy 90%+ success rate
                     </CustomTypography>
                   </CardContent>
                 </Card>

@@ -47,7 +47,7 @@ export default function Home({ locale }) {
         <FeaturedJobs locale={locale} />
         <WeAreProud />
         <BrandsWeWork />
-        <SuccessStories />
+        {/* <SuccessStories /> */}
         <WatchDemo />
         <SubscribHome />
         <FooterHome />

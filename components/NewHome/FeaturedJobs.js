@@ -73,8 +73,6 @@ const FeaturedJobs = ({ locale }) => {
             fontWeight: 700,
             color: "#01313F",
             textAlign: "center",
-            mb: "80px",
-            textTransform: "uppercase",
           }}
         >
           Featured Jobs

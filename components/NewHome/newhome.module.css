@@ -269,7 +269,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
-  width: auto;
+  width: 250px;
   word-break: keep-all;
   z-index: 0;
 }
@@ -287,6 +287,7 @@
 
 .areYouRecruiterBtn:before {
   background-color: rgba(249, 58, 19, 0.32);
+  color: #fff;
   content: "";
   display: block;
   height: 100%;

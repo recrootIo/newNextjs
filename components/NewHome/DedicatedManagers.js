@@ -40,7 +40,7 @@ const DedicatedManagers = () => {
               textAlign: "center",
             }}
           >
-            Dedicated Candidate Managers
+            Candidate Managers
           </CustomTypography>
           <CustomTypography
             sx={{
@@ -503,7 +503,7 @@ const DedicatedManagers = () => {
                               zIndex: 1,
                             }}
                           >
-                            Realize special job requirements
+                            Cater to special job requirement
                           </CustomTypography>
                         </Grid>
                       </Grid>
@@ -1154,7 +1154,7 @@ const DedicatedManagers = () => {
                               zIndex: 1,
                             }}
                           >
-                            Enhance employer-candidate communication
+                            Facilitate employer-candidate communication
                           </CustomTypography>
                         </Grid>
                       </Grid>

@@ -26,7 +26,7 @@ const HireTalents = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `url("/newhome_images/hire-talents-bg.svg")`,
+        backgroundImage: `url("/newhome_images/new-home-topbg.png")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         height: "1000px",
@@ -54,13 +54,23 @@ const HireTalents = () => {
               }}
             >
               <CustomTypography
-                sx={{ fontSize: "45px", fontWeight: 700, color: "#FFFFFF" }}
+                sx={{
+                  fontSize: "45px",
+                  fontWeight: 700,
+                  color: "#FFFFFF",
+                  textAlign: { xs: "center", sm: "left" },
+                }}
               >
                 Hire Talents within 24 Hours
               </CustomTypography>
               <div>
                 <CustomTypography
-                  sx={{ fontSize: "16px", fontWeight: 400, color: "#FFFFFF" }}
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    color: "#FFFFFF",
+                    textAlign: { xs: "center", sm: "left" },
+                  }}
                 >
                   Join us today and experience the power of hiring top-notch
                   talents instantly for your organization.
@@ -107,7 +117,6 @@ const HireTalents = () => {
                 priority={true}
                 width="726"
                 height="626"
-                // sizes="100vw"
               />
             </Box>
           </Grid>

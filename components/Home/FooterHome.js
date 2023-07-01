@@ -290,10 +290,12 @@ const FooterHome = () => {
                   </StyledTypo>
                 </div>
                 <div className="abt">
+                  <Link href={"/aboutus"}>
+                    <StyledTypo>About Us</StyledTypo>
+                  </Link>
                   <Link href={"/blogs"}>
                     <StyledTypo>Blogs</StyledTypo>
                   </Link>
-                  <StyledTypo>Videos</StyledTypo>
                   <Link href={"/FAQ"}>
                     <StyledTypo>FAQ</StyledTypo>
                   </Link>
