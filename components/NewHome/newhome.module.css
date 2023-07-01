@@ -190,6 +190,24 @@
   top: -90px;
 }
 
+.identifybubblea {
+  position: absolute;
+  top: -279px;
+  left: 878px;
+}
+
+.identifybubbleb {
+  position: absolute;
+  top: -274px;
+  left: 562px;
+}
+
+.identifybubblec {
+  position: absolute;
+  top: -85px;
+  left: 716px;
+}
+
 @media only screen and (max-width: 600px) {
   .clentStoriesbubble {
     display: none;
@@ -215,6 +233,15 @@
   .GuaranteedHiringBubbleb {
     display: none;
   }
+  .identifybubblea {
+    display: none;
+  }
+  .identifybubbleb {
+    display: none;
+  }
+  .identifybubblec {
+    display: none;
+  }
   .recruiterCardImg {
     height: 330px;
     width: auto;
@@ -226,6 +253,12 @@
 }
 
 @media only screen and (min-width: 601px) and (max-width: 900px) {
+  .candidateCardImg {
+    top: -127px;
+  }
+  .recruiterCardImg {
+    top: -149px;
+  }
   .clentStoriesbubble {
     top: -176px;
     left: 481px;
@@ -259,6 +292,18 @@
   }
   .GuaranteedHiringBubbleb {
     display: none;
+  }
+  .identifybubblea {
+    top: -279px;
+    left: 295px;
+  }
+  .identifybubbleb {
+    top: -85px;
+    left: 558px;
+  }
+  .identifybubblec {
+    top: -339px;
+    left: 513px;
   }
 }
 
@@ -302,6 +347,18 @@
   }
   .candidateCardImg {
     top: -120px;
+  }
+  .identifybubblea {
+    top: -279px;
+    left: 295px;
+  }
+  .identifybubbleb {
+    top: -85px;
+    left: 558px;
+  }
+  .identifybubblec {
+    top: -339px;
+    left: 513px;
   }
 }
 
