@@ -130,9 +130,10 @@ function Employer({ children }) {
             },
           ],
           requiredSkill: [],
+          mandatorySkill: [],
           address: [],
           featureType: false,
-          queshow: "",
+          queshow: "false",
         })
       ).then(
           push("/Employer/postNewJob")

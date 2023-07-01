@@ -63,9 +63,10 @@ export default function EmployerSidebar() {
                 },
               ],
               requiredSkill: [],
+              mandatorySkill: [],
               address: [],
               featureType: false,
-              queshow: "",
+              queshow: "false",
             })
           ).then(
               push("/Employer/postNewJob")
@@ -108,9 +109,10 @@ export default function EmployerSidebar() {
               },
             ],
             requiredSkill: [],
+            mandatorySkill: [],
             address: [],
             featureType: false,
-            queshow: "true",
+            queshow: "false",
             packageType: "",
           })
         ).then(
@@ -129,9 +131,10 @@ export default function EmployerSidebar() {
               },
             ],
             requiredSkill: [],
+            mandatorySkill: [],
             address: [],
             featureType: false,
-            queshow: "",
+            queshow: "false",
           })
         ).then(
             push("/Employer/postNewJob")
