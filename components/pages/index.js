@@ -68,9 +68,7 @@ function Employer({ children }) {
             queshow: "",
           })
         ).then(
-          setTimeout(() => {
-            push("/employer/PostNewJob");
-          }, 500)
+            push("/Employer/PostNewJob")
         );
         return;
       }
@@ -116,9 +114,7 @@ function Employer({ children }) {
           packageType: "",
         })
       ).then(
-        setTimeout(() => {
-          push("/employer/postNewJob");
-        }, 500)
+          push("/Employer/postNewJob")
       );
     } else {
       dispatch(
@@ -138,9 +134,7 @@ function Employer({ children }) {
           queshow: "",
         })
       ).then(
-        setTimeout(() => {
-          push("/employer/postNewJob");
-        }, 500)
+          push("/Employer/postNewJob")
       );
     }
   };
