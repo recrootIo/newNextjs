@@ -116,7 +116,11 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
-          CalculatePercentage();
+          dispatch(retrievePersonal()).then((res)=>{
+            if(res?.meta?.requestStatus === "fulfilled"){
+              CalculatePercentage()
+            }
+          })
         }
       })
       .catch((error) => {
@@ -131,6 +135,7 @@ const AddExperience = () => {
 
   React.useEffect(() => {
     setInitialValues(() => resume);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addMyExperience = (values) => {

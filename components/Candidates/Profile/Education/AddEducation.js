@@ -116,7 +116,11 @@ const AddEducation = () => {
           );
           gotoHome();
           dispatch(GetCandsPrefInfo());
-          CalculatePercentage();
+          dispatch(retrievePersonal()).then((res)=>{
+            if(res?.meta?.requestStatus === "fulfilled"){
+              CalculatePercentage()
+            }
+          })
         }
       })
       .catch((error) => {
@@ -158,6 +162,7 @@ const AddEducation = () => {
   React.useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setInitialValues(() => education);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

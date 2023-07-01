@@ -48,9 +48,9 @@ const Resume = ({ ...resume }) => {
           type: SUCCESS,
           message: "Resume has been deleted",
         })
-      );
+      )
+      CalculatePercentage();
     });
-    CalculatePercentage();
   };
 
   const closeMessage = () => {
