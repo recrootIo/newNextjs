@@ -238,12 +238,12 @@ const EmpoyerDashboard = () => {
     dispatch(getCandidatesRequest());
     dispatch(getapplCount());
   }, [dispatch]);
-  useEffect(()=>{
+  useEffect(() => {
     const job = JSON.parse(localStorage.getItem("jobDetail"));
-   if (!isEmpty(job)) {
-    localStorage.removeItem("jobDetail");
-   }
-  })
+    if (!isEmpty(job)) {
+      localStorage.removeItem("jobDetail");
+    }
+  });
   const sear = useSelector((state) => state?.sinterview?.schedules);
 
   const names = useSelector((state) => state?.apply?.names);
@@ -532,39 +532,38 @@ const EmpoyerDashboard = () => {
   };
 
   const handleUpgrade = (parms) => {
-    Cookies.set('jids',JSON.stringify([parms.id]))
+    Cookies.set("jids", JSON.stringify([parms.id]));
     dispatch(upgradejob([parms.id]));
     push("/Employer/jobpayment");
   };
 
   const columns = [
-    { field: "id", headerName: "Id", width: 100, hide: true },
-    { field: "_id", headerName: "Job", width: 120 },
+    { field: "_id", headerName: "Job", width: 60 },
     { field: "title", headerName: "Title", width: 260 },
-    {
-      field: "jobtype",
-      headerName: "Job type",
-      width: 130,
-    },
-    {
-      field: "Location",
-      headerName: "Location",
-      width: 130,
-    },
+    // {
+    //   field: "jobtype",
+    //   headerName: "Job type",
+    //   width: 130,
+    // },
+    // {
+    //   field: "Location",
+    //   headerName: "Location",
+    //   width: 130,
+    // },
     {
       field: "posteddate",
       headerName: "Posted date",
-      width: 130,
+      width: 120,
     },
     {
       field: "deadline",
       headerName: "Deadline",
-      width: 130,
+      width: 120,
     },
     {
       field: "packType",
       headerName: "Package Type",
-      width: 140,
+      width: 120,
       renderCell: (parms) => (
         <p>
           {parms?.value === "premium"
@@ -586,7 +585,7 @@ const EmpoyerDashboard = () => {
     {
       field: "status",
       headerName: "Status",
-      width: 140,
+      width: 80,
       renderCell: (parms) => (
         <>
           <p>
@@ -849,7 +848,7 @@ const EmpoyerDashboard = () => {
 
   const handleClose1 = () => {
     if (freejobs?.length > 0) {
-      Cookies.set('jids',JSON.stringify(freejobs))
+      Cookies.set("jids", JSON.stringify(freejobs));
       dispatch(upgradejob(freejobs)).then(push("/employer/jobpayment"));
     }
     setOpen1(false);
@@ -1547,8 +1546,20 @@ const EmpoyerDashboard = () => {
                 variant="fullWidth"
                 centered
               >
-                <Tab label="Normal Jobs" {...a11yProps(0)} />
-                <Tab label="Featured Jobs" {...a11yProps(1)} />
+                <Tab
+                  label="Normal Jobs"
+                  {...a11yProps(0)}
+                  sx={{
+                    color: value !== 0 ? "white" : "initial",
+                  }}
+                />
+                <Tab
+                  label="Featured Jobs"
+                  {...a11yProps(1)}
+                  sx={{
+                    color: value !== 1 ? "white" : "initial",
+                  }}
+                />
               </Tabs>
             </Box>
           </AppBar>
