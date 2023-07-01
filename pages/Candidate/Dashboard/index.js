@@ -100,7 +100,7 @@ const Index = () => {
 
     if (section === "resume_section") {
       element = document.getElementById("resume_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -109,7 +109,7 @@ const Index = () => {
 
     if (section === "personal_details_section") {
       element = document.getElementById("personal_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -118,7 +118,7 @@ const Index = () => {
 
     if (section === "education_details_section") {
       element = document.getElementById("education_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -127,7 +127,7 @@ const Index = () => {
 
     if (section === "experience_details_section") {
       element = document.getElementById("experience_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -136,7 +136,7 @@ const Index = () => {
 
     if (section === "skills_details_section") {
       element = document.getElementById("skills_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -145,7 +145,7 @@ const Index = () => {
 
     if (section === "projects_details_section") {
       element = document.getElementById("projects_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -154,7 +154,7 @@ const Index = () => {
 
     if (section === "traning_details_section") {
       element = document.getElementById("traning_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -163,7 +163,7 @@ const Index = () => {
 
     if (section === "certificate_details_section") {
       element = document.getElementById("certificate_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -172,7 +172,7 @@ const Index = () => {
 
     if (section === "appliedJob_details_section") {
       element = document.getElementById("appliedJob_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
@@ -181,7 +181,7 @@ const Index = () => {
 
     if (section === "savedJob_details_section") {
       element = document.getElementById("savedJob_details_section");
-      element.scrollIntoView({
+      element?.scrollIntoView({
         behavior: "smooth",
       });
       setMobileOpen(false);
