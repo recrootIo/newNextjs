@@ -373,13 +373,24 @@ const CandidatePage = () => {
                         width={138}
                         style={{ position: "absolute", zIndex: "1" }}
                       />
-                      <Image
+                      {/* <Image
                         src={"/candipage_images/create-an-account-img.png"}
                         alt=""
                         height={70}
                         width={78}
                         style={{ position: "absolute", zIndex: "2" }}
-                      />
+                      /> */}
+                      <CustomTypography
+                        sx={{
+                          color: "white",
+                          fontSize: "45px",
+                          fontWeight: 600,
+                          position: "absolute",
+                          zIndex: "2",
+                        }}
+                      >
+                        1
+                      </CustomTypography>
                     </Box>
                     <Box sx={{ mt: "80px", minHeight: "200px" }}>
                       <CustomTypography
@@ -389,7 +400,7 @@ const CandidatePage = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Create an Account
+                        1. Create an Account
                       </CustomTypography>
                       <CustomTypography
                         sx={{
@@ -399,7 +410,7 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        1. Start your job search journey by creating a candidate
+                        Start your job search journey by creating a candidate
                         account on Recroot to gain access to the platform.
                       </CustomTypography>
                     </Box>
@@ -484,7 +495,8 @@ const CandidatePage = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Build your profile with a minimum of 70% completion rate
+                        2. Build your profile with a minimum of 70% completion
+                        rate
                       </CustomTypography>
                       <CustomTypography
                         sx={{
@@ -494,7 +506,7 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        2. Complete your profile up to 70% by uploading a resume
+                        Complete your profile up to 70% by uploading a resume
                         and filling out other mandatory information like notice
                         period, work preference, salary expectations, etc.
                       </CustomTypography>
@@ -575,7 +587,7 @@ const CandidatePage = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Explore job listings
+                        3. Explore job listings
                       </CustomTypography>
                       <CustomTypography
                         sx={{
@@ -585,10 +597,10 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        3. Browse through the thousands of job listings
-                        available on Recroot using advanced search filters,
-                        ensuring that you find positions that match your
-                        interests and qualifications.
+                        Browse through the thousands of job listings available
+                        on Recroot using advanced search filters, ensuring that
+                        you find positions that match your interests and
+                        qualifications.
                       </CustomTypography>
                     </Box>
                   </Box>
@@ -668,7 +680,7 @@ const CandidatePage = () => {
                           fontWeight: 600,
                         }}
                       >
-                        Apply to jobs
+                        4. Apply to jobs
                       </CustomTypography>
                       <CustomTypography
                         sx={{
@@ -678,7 +690,7 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        4. If you find suitable job openings, proceed to apply
+                        If you find suitable job openings, proceed to apply
                         directly through the Recroot portal.
                       </CustomTypography>
                     </Box>
