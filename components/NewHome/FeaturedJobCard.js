@@ -64,10 +64,10 @@ const FeaturedJobCard = ({
               alt="logo"
               src={getImageLogo(company[0]?.companyLogo?.logo)}
               sx={{
-                "& .MuiAvatar-img": {
-                  height: "16px",
-                  width: "51px",
-                },
+                // "& .MuiAvatar-img": {
+                //   height: "16px",
+                //   width: "51px",
+                // },
                 height: "60px",
                 width: "60px",
               }}
