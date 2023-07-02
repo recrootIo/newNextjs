@@ -31,7 +31,7 @@ function Loader() {
           height="200"
           style={{ height: "300px", width: "auto" }}
         /> */}
-        <img alt="" src={"/logorecR-logo.png"} style={{ height: "300px" }} />
+        <img alt="" src={"/R-logorec.png"} style={{ height: "300px" }} />
         <div className="custom-loader"></div>
       </Box>
     </Box>
