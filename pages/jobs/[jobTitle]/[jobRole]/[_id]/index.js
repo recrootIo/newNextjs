@@ -45,7 +45,7 @@ export const getServerSideProps = async (context) => {
     .catch((error) => console.log(error));
 
   await searchService
-    .getLatestJObs(1, [], [], jobRole, "", "", "", "", "", 10)
+    .getLatestJObs(1, [], [], "", "", "", "", "", jobTitle, 10)
     .then((res) => {
       similar = res.data.posts;
     })
