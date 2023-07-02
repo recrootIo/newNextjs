@@ -23,15 +23,11 @@ function Loader() {
           gap: "30px",
         }}
       >
-        {/* <Image
-          src="/logorecR-logo.png"
-          alt="Logo og the page loader"
-          priority={true}
-          width="300"
-          height="200"
-          style={{ height: "300px", width: "auto" }}
-        /> */}
-        <img alt="" src={"/R-logorec.png"} style={{ height: "300px" }} />
+        {/* <img
+            src="/recrootlogo-R-white.png"
+            alt="Logo of the page loader"
+            className="logo-image"
+          /> */}
         <div className="custom-loader"></div>
       </Box>
     </Box>
