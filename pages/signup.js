@@ -799,6 +799,24 @@ function Signup() {
                                 required
                                 label="sector"
                                 onChange={handleChange}
+                                MenuProps={{
+                                  anchorOrigin: {
+                                    vertical: "bottom", // Position of the menu relative to the input field
+                                    horizontal: "left", // Position of the menu relative to the input field
+                                  },
+                                  transformOrigin: {
+                                    vertical: "top", // Position of the selected item relative to the input field
+                                    horizontal: "left", // Position of the selected item relative to the input field
+                                  },
+                                  getContentAnchorEl: null, // Prevents the menu from repositioning when the selected item changes
+                                  PaperProps: {
+                                    style: {
+                                      maxHeight: "200px",
+                                      left: "1065px !important",
+                                      bottom: 0,
+                                    },
+                                  },
+                                }}
                               >
                                 {SECTORS.map((job, ind) => (
                                   <MenuItem key={ind} value={job}>
