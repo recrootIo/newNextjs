@@ -46,7 +46,7 @@ export default function Home({ locale }) {
         <LevelUp />
         <FeaturedJobs locale={locale} />
         <WeAreProud />
-        <BrandsWeWork />
+        {/* <BrandsWeWork /> */}
         {/* <SuccessStories /> */}
         <WatchDemo />
         <SubscribHome />

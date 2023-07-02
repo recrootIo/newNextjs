@@ -15,6 +15,7 @@ import SubscribHome from "@/components/Home/SubscribHome";
 import FooterHome from "@/components/Home/FooterHome";
 import styles from "./candidatePage.module.css";
 import { useState } from "react";
+import Link from "next/link";
 import BrowseCategory from "@/components/BrowseCategories/browseCategory";
 
 const CandidatePage = () => {
@@ -73,18 +74,20 @@ const CandidatePage = () => {
               >
                 Embark on a transformative job search journey by joining us now!
               </CustomTypography>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#FAFDFF !important",
-                  color: "#01313F",
-                  fontWeight: 700,
-                  fontSize: "12px",
-                  mt: "20px",
-                }}
-              >
-                Search Jobs
-              </Button>
+              <Link href={"/jobs"}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#FAFDFF !important",
+                    color: "#01313F",
+                    fontWeight: 700,
+                    fontSize: "12px",
+                    mt: "20px",
+                  }}
+                >
+                  Search Jobs
+                </Button>
+              </Link>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box
