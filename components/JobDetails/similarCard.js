@@ -44,10 +44,6 @@ const SimilarJobCard = ({ ...props }) => {
                 alt="logo"
                 src={getImageLogo(data?.company[0]?.companyLogo?.logo)}
                 sx={{
-                  "& .MuiAvatar-img": {
-                    height: "16px",
-                    width: "51px",
-                  },
                   height: "60px",
                   width: "60px",
                 }}
@@ -87,12 +83,13 @@ const SimilarJobCard = ({ ...props }) => {
                   }}
                 />
               )}
+
               {data?.featureType && (
                 <Chip
                   label="featured"
                   sx={{
                     borderRadius: "8px",
-                    backgroundColor: "#3771C8",
+                    backgroundColor: "#c45a29",
                     color: "white",
                     fontWeight: 600,
                     height: "25px",
