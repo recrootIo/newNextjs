@@ -163,7 +163,7 @@ const LevelUp = () => {
                         Are You a Candidate?
                       </CustomTypography>
                       <Link
-                        href="/signup"
+                        href="/CandidatePage"
                         style={{
                           fontSize: "17px",
                           color: "black",
