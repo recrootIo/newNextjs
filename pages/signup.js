@@ -317,7 +317,7 @@ function Signup() {
                     fontSize: "1.1rem",
                   }}
                 >
-                  Choose your profile
+                  To start the signup process, please select your profile by clicking on the image.
                 </CustomTypography>
                 <Grid container spacing={2}>
                   <Grid
