@@ -7,6 +7,7 @@ import { LAZY, MID } from "@/theme/spacings";
 import { BOLD } from "@/theme/fonts";
 import { useDispatch } from "react-redux";
 import { updateCurrentScreen } from "@/redux/slices/candidate";
+import { isEmpty } from "lodash";
 
 const PersonalDetail = ({ ...data }) => {
   const { email, firstName, jobTitle, lastName, mobile, resume } = data;
@@ -18,6 +19,8 @@ const PersonalDetail = ({ ...data }) => {
   const gotToEditPersonalDetails = () => {
     dispatch(updateCurrentScreen("personalDetails"));
   };
+
+  console.log(resume?.workPrefence, "resume?.workPrefence");
 
   return (
     <StyledCard variant="outlined" id="personal_details_section">
@@ -172,16 +175,33 @@ const PersonalDetail = ({ ...data }) => {
                 </CustomTypography>
               </Stack>
 
-              <Stack direction={"row"} sx={{ gap: MID }}>
-                <CustomTypography sx={{ fontWeight: "900" }}>
-                  Work Preference:
-                </CustomTypography>
-                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
-                  {resume?.workPrefence.map((pre, index) => (
-                    <CustomTypography key={index}>{pre}</CustomTypography>
-                  ))}
+              {Array.isArray(resume?.workPrefence) ? (
+                <Stack direction={"row"} sx={{ gap: MID }}>
+                  <CustomTypography sx={{ fontWeight: "900" }}>
+                    Work Preference:
+                  </CustomTypography>
+                  <Stack
+                    direction={"row"}
+                    sx={{ gap: "5px", flexWrap: "wrap" }}
+                  >
+                    {resume?.workPrefence.map((pre, index) => (
+                      <CustomTypography key={index}>{pre}</CustomTypography>
+                    ))}
+                  </Stack>
                 </Stack>
-              </Stack>
+              ) : (
+                <Stack direction={"row"} sx={{ gap: MID }}>
+                  <CustomTypography sx={{ fontWeight: "900" }}>
+                    Work Preference:
+                  </CustomTypography>
+                  <Stack
+                    direction={"row"}
+                    sx={{ gap: "5px", flexWrap: "wrap" }}
+                  >
+                    <CustomTypography>{resume?.workPrefence}</CustomTypography>
+                  </Stack>
+                </Stack>
+              )}
 
               <Stack direction={"row"} sx={{ gap: MID, flexWrap: "wrap" }}>
                 <CustomTypography sx={{ fontWeight: "900" }}>

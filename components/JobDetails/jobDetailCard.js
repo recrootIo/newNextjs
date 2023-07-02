@@ -71,7 +71,7 @@ const JobDetailCard = ({ ...props }) => {
   const savedJobsId = savedJobs.map((i) => i.job?._id);
 
   const [loginCallBackURL, setLoginCallBackURL] = useState("");
-console.log(appliedJob,'jobs')
+
   useEffect(() => {
     setLoginCallBackURL(`${window.location}`);
   }, []);
@@ -123,8 +123,7 @@ console.log(appliedJob,'jobs')
       })
       .catch((res) => console.log(res));
   };
-  
-   console.log(company?.companyLogo?.logo,'logo')
+
   const compImage = !isEmpty(company?.companyLogo?.logo)
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
@@ -325,7 +324,7 @@ console.log(appliedJob,'jobs')
                                 color: "#034275",
                               }}
                             >
-                              {add?.address}
+                              {add}
                             </CustomTypography>
                           </Stack>
                         </Grid>

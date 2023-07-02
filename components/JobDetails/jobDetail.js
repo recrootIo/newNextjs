@@ -242,7 +242,7 @@ const JobDetail = ({ ...props }) => {
                       <CalendarMonthIcon fontSize="16px" />{" "}
                       {moment(createdAt).fromNow()}
                     </CustomTypography>
-                    <CustomTypography
+                    {/* <CustomTypography
                       variant="body2"
                       sx={{
                         fontSize: 16,
@@ -252,7 +252,7 @@ const JobDetail = ({ ...props }) => {
                     >
                       <FavoriteBorderIcon fontSize="16px" /> {count} People
                       Interested
-                    </CustomTypography>
+                    </CustomTypography> */}
                     <CustomTypography
                       variant="body2"
                       sx={{
@@ -454,25 +454,6 @@ const JobDetail = ({ ...props }) => {
                       </CustomTypography>
                     </Box> */}
                   <Stack spacing={1} sx={{ mt: "25px" }}>
-                    {isEmpty(company?.basicInformation?.cmpemail) ? (
-                      ""
-                    ) : (
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <MailOutlineIcon
-                          fontSize="14px"
-                          sx={{ color: "rgba(3, 66, 117, 0.8)" }}
-                        />
-                        <CustomTypography
-                          variant="body2"
-                          color="text.secondary"
-                          fontSize="16px"
-                          sx={{ marginBottom: 0 }}
-                        >
-                          &nbsp;&nbsp;{company?.basicInformation?.cmpemail}
-                        </CustomTypography>
-                      </Box>
-                    )}
-
                     {isEmpty(company?.basicInformation?.cmpwebsite) ? (
                       ""
                     ) : (

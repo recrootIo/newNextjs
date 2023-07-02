@@ -22,6 +22,8 @@ const nextConfig = {
       "preprod.recroot.au",
       "arinnovate",
       "extraordinary-melba-a931eb.netlify.app",
+      "recroot.io",
+      "api.arinnovate.io",
     ],
   },
 };
