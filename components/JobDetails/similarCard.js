@@ -21,9 +21,11 @@ import { useRouter } from "next/router";
 const SimilarJobCard = ({ ...props }) => {
   const { data } = props;
   const router = useRouter();
+
   const handleNavigate = (jobTitle, jobRole, _id) => {
     router.push(`/jobs/${jobTitle}/${jobRole}/${_id}`);
   };
+
   return (
     <div>
       <Card className={styles.similarCard}>
@@ -40,12 +42,8 @@ const SimilarJobCard = ({ ...props }) => {
               <Avatar
                 className="similarAvatar"
                 alt="logo"
-                src={getImageLogo(data?.company?.companyLogo?.logo)}
+                src={getImageLogo(data?.company[0]?.companyLogo?.logo)}
                 sx={{
-                  "& .MuiAvatar-img": {
-                    height: "25px",
-                    width: "25px",
-                  },
                   height: "60px",
                   width: "60px",
                 }}
@@ -85,12 +83,13 @@ const SimilarJobCard = ({ ...props }) => {
                   }}
                 />
               )}
+
               {data?.featureType && (
                 <Chip
                   label="featured"
                   sx={{
                     borderRadius: "8px",
-                    backgroundColor: "#3771C8",
+                    backgroundColor: "#c45a29",
                     color: "white",
                     fontWeight: 600,
                     height: "25px",

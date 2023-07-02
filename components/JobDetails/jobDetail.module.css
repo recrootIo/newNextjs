@@ -87,7 +87,7 @@
 .similarTopic {
   padding-top: 50px;
   text-align: center;
-  font-size: 30px;
+  font-size: 30px !important;
   font-family: "Inter-Bold";
 }
 
