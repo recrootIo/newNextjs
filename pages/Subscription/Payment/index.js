@@ -22,12 +22,12 @@ import styles from "../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
-const stripePromise = loadStripe(
-  "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
-);
 // const stripePromise = loadStripe(
-//   "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
+//   "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
 // );
+const stripePromise = loadStripe(
+  "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
+);
 const BasicButton = styled(Button)({
   color: "#ffff",
   padding: "20px",
@@ -71,7 +71,7 @@ function Subpayment() {
       moment(company?.package_end_date).format("L") >
         moment(new Date()).format("L")
     ) {
-      fetch("https://preprod.recroot.au/api/createPayment", {
+      fetch("https://api.arinnovate.io/api/createPayment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -93,7 +93,7 @@ function Subpayment() {
         .then((data) => setClientSecret(data.clientSecret))
         .then(localStorage.setItem("paymentInfo", clientSecret));
     } else {
-      fetch("https://preprod.recroot.au/api/createPayment", {
+      fetch("https://api.arinnovate.io/api/createPayment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

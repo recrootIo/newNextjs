@@ -190,7 +190,7 @@ const CandiFullProfileView = () => {
   const match = useMediaQuery("(max-width:1050px)");
   const resume = useSelector((state) => state.apply.resume);
   const scheduleinterview = useSelector((state) => state.sinterview.partcInt);
-  const recroot = `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+  const recroot = `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
@@ -199,7 +199,7 @@ const CandiFullProfileView = () => {
 
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
-      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
 
@@ -258,7 +258,7 @@ const CandiFullProfileView = () => {
   const saveNote = () => {
     axios
       .post(
-        `https://preprod.recroot.au/api/postNote/${appdata._id}`,
+        `https://api.arinnovate.io/api/postNote/${appdata._id}`,
         { notes: notes },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -1732,7 +1732,7 @@ const CandiFullProfileView = () => {
                                   <IconButton
                                     onClick={async () => {
                                       const res = await fetch(
-                                        `https://preprod.recroot.au/api/downloadResume?resume=${cert?.certificatepath?.replace(
+                                        `https://api.arinnovate.io/api/downloadResume?resume=${cert?.certificatepath?.replace(
                                           /\\/g,
                                           "/"
                                         )}`

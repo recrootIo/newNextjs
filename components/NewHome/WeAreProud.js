@@ -106,7 +106,7 @@ const WeAreProud = () => {
                         fontWeight: "700",
                       }}
                     >
-                      <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
+                      <CounterUpCom endValue={650} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
                     <div>
@@ -136,7 +136,7 @@ const WeAreProud = () => {
                         fontWeight: "700",
                       }}
                     >
-                      <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
+                      <CounterUpCom endValue={80000} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
                     <div>
@@ -193,7 +193,7 @@ const WeAreProud = () => {
                       }}
                     >
                       <CounterUpCom
-                        endValue={130}
+                        endValue={95}
                         sectionSelect="OurNumHome"
                         sx={{ textAlign: "center" }}
                       />
@@ -256,7 +256,7 @@ const WeAreProud = () => {
                         fontWeight: "700",
                       }}
                     >
-                      <CounterUpCom endValue={130} sectionSelect="OurNumHome" />
+                      <CounterUpCom endValue={75000} sectionSelect="OurNumHome" />
                       +
                     </CustomTypography>
                     <div>

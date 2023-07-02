@@ -70,7 +70,7 @@ export default function PaymentInt(props) {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: `https://extraordinary-melba-a931eb.netlify.app/Employer/Jobpayment/Success?newJob=${choosePremium}`,
+          return_url: `https://recroot.io/Employer/Jobpayment/Success?newJob=${choosePremium}`,
           
         },
       });
@@ -83,7 +83,7 @@ export default function PaymentInt(props) {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: `https://extraordinary-melba-a931eb.netlify.app/Employer/Jobpayment/Success${url}`,
+          return_url: `https://recroot.io/Employer/Jobpayment/Success${url}`,
           
         },
       });

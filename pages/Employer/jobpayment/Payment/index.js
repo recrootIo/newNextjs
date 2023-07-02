@@ -24,8 +24,11 @@ const BasicButton = styled(Button)({
     marginBottom: "10px",
   });
 function Jobpaymentstatus() {
+  // const stripePromise = loadStripe(
+  //   "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
+  // );
   const stripePromise = loadStripe(
-    "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
+    "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
   );
   const jobLoc = Cookies.get('jobDet')
   const jobPay = jobLoc && JSON.parse(jobLoc)
@@ -39,7 +42,7 @@ const router = useRouter()
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
-        axios.post(`https://preprod.recroot.au/api/addnewjobpayment`,jobPay, {
+        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,jobPay, {
           headers: { "x-access-token": `${token}` },
         }).then((res)=>{
           setClientSecret(res?.data?.clientSecret)

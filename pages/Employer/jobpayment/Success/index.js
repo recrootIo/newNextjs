@@ -29,7 +29,7 @@ function SuccessJobPay() {
 const token = Cookies.get('token')
     useEffect(() => {
       if(array.length > 0){  axios.post(
-          `${'https://preprod.recroot.au/api/'}updateJobPayment`,value, {
+          `${'https://api.arinnovate.io/api/'}updateJobPayment`,value, {
             headers: { "x-access-token": `${token}` },
           }
             ).then((res)=>{
@@ -40,7 +40,7 @@ const token = Cookies.get('token')
         if (newJob === 'true') {
           const user = JSON.parse(localStorage.getItem("User"));
           axios.post(
-            `${'https://preprod.recroot.au/api/'}updateJobPaymentNew`,{
+            `${'https://api.arinnovate.io/api/'}updateJobPaymentNew`,{
               clientSecret:payment_intent_client_secret,
               job:JSON.parse(localStorage.getItem("jobDetail")),
               companyId:user?.User?.companyId
