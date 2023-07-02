@@ -44,7 +44,6 @@ const FeaturedJobCard = ({
     if (str.length > length) {
       return str.substring(0, length) + "...";
     }
-
     return str;
   };
 
@@ -63,12 +62,12 @@ const FeaturedJobCard = ({
             <Avatar
               className="featuredAvatar"
               alt="logo"
-              // src={getImageLogo(data?.company?.companyLogo?.logo)}
+              src={getImageLogo(company[0]?.companyLogo?.logo)}
               sx={{
-                "& .MuiAvatar-img": {
-                  height: "25px",
-                  width: "25px",
-                },
+                // "& .MuiAvatar-img": {
+                //   height: "16px",
+                //   width: "51px",
+                // },
                 height: "60px",
                 width: "60px",
               }}
