@@ -8,7 +8,7 @@ import React from "react";
 const index = ({ ...props }) => {
   return (
     <>
-      <Header title={"forgotPassword"} />
+      <Header title={"Reset Password"} />
       <BackBar enableBack={false} />
       <ResetPassword {...props} />
     </>
@@ -22,8 +22,11 @@ export const getServerSideProps = async (context) => {
     const response = await axios.get(
       `https://api.arinnovate.io/reset-password/${id}/${token}`
     );
+
+    console.log(response, "response");
+
     if (response.data === "NotVerified") {
-      context.res.writeHead(302, { Location: "/forgotPass" });
+      context.res.writeHead(302, { Location: "/forgotPassword" });
       context.res.end();
     }
   } catch (error) {
