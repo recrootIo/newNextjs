@@ -15,9 +15,18 @@ import SubscribHome from "@/components/Home/SubscribHome";
 import FooterHome from "@/components/Home/FooterHome";
 import styles from "./candidatePage.module.css";
 import { useState } from "react";
+import Link from "next/link";
 import BrowseCategory from "@/components/BrowseCategories/browseCategory";
 
 const CandidatePage = () => {
+  const handleCloseUserMenuDemo = () => {
+    window.open(
+      "https://calendly.com/arinnovate/demo-of-recroot-platform",
+      "_blank",
+      "noreferrer"
+    );
+  };
+
   return (
     <>
       <Navbar />
@@ -65,18 +74,20 @@ const CandidatePage = () => {
               >
                 Embark on a transformative job search journey by joining us now!
               </CustomTypography>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#FAFDFF !important",
-                  color: "#01313F",
-                  fontWeight: 700,
-                  fontSize: "12px",
-                  mt: "20px",
-                }}
-              >
-                Search Jobs
-              </Button>
+              <Link href={"/jobs"}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#FAFDFF !important",
+                    color: "#01313F",
+                    fontWeight: 700,
+                    fontSize: "12px",
+                    mt: "20px",
+                  }}
+                >
+                  Search Jobs
+                </Button>
+              </Link>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box
@@ -300,7 +311,7 @@ const CandidatePage = () => {
         </Container>
       </Box>
       <BrowseCategory />
-      <Box>
+      <Box sx={{ mb: "90px" }}>
         <Container>
           <CustomTypography
             sx={{
@@ -388,13 +399,13 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        Start your job search journey by creating a candidate
+                        1. Start your job search journey by creating a candidate
                         account on Recroot to gain access to the platform.
                       </CustomTypography>
                     </Box>
                   </Box>
                 </Box>
-                <Box sx={{ display: { xs: "none", md: "block" } }}>
+                {/* <Box sx={{ display: { xs: "none", md: "block" } }}>
                   <Image
                     src={"/candipage_images/create-an-account-arrow-img.png"}
                     alt=""
@@ -407,7 +418,7 @@ const CandidatePage = () => {
                       left: "575px",
                     }}
                   />
-                </Box>
+                </Box> */}
               </Grid>
               <Grid
                 item
@@ -483,14 +494,14 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        Complete your profile up to 70% by uploading a resume
+                        2. Complete your profile up to 70% by uploading a resume
                         and filling out other mandatory information like notice
                         period, work preference, salary expectations, etc.
                       </CustomTypography>
                     </Box>
                   </Box>
                 </Box>
-                <Box sx={{ display: { xs: "none", md: "block" } }}>
+                {/* <Box sx={{ display: { xs: "none", md: "block" } }}>
                   <Image
                     src={"/candipage_images/build-your-profile-arrow-img.png"}
                     alt=""
@@ -502,7 +513,7 @@ const CandidatePage = () => {
                       zIndex: "1",
                     }}
                   />
-                </Box>
+                </Box> */}
               </Grid>
               <Grid
                 item
@@ -574,15 +585,15 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        Browse through the thousands of job listings available
-                        on Recroot using advanced search filters, ensuring that
-                        you find positions that match your interests and
-                        qualifications.
+                        3. Browse through the thousands of job listings
+                        available on Recroot using advanced search filters,
+                        ensuring that you find positions that match your
+                        interests and qualifications.
                       </CustomTypography>
                     </Box>
                   </Box>
                 </Box>
-                <Box sx={{ display: { xs: "none", md: "block" } }}>
+                {/* <Box sx={{ display: { xs: "none", md: "block" } }}>
                   <Image
                     src={"/candipage_images/explore-job-arrow-img.png"}
                     alt=""
@@ -594,7 +605,7 @@ const CandidatePage = () => {
                       left: "857px",
                     }}
                   />
-                </Box>
+                </Box> */}
               </Grid>
               <Grid
                 item
@@ -667,7 +678,7 @@ const CandidatePage = () => {
                           mt: "20px",
                         }}
                       >
-                        If you find suitable job openings, proceed to apply
+                        4. If you find suitable job openings, proceed to apply
                         directly through the Recroot portal.
                       </CustomTypography>
                     </Box>
@@ -678,7 +689,7 @@ const CandidatePage = () => {
           </Box>
         </Container>
       </Box>
-      <Box>
+      {/* <Box>
         <Container>
           <CustomTypography
             sx={{
@@ -826,8 +837,8 @@ const CandidatePage = () => {
             </Grid>
           </Box>
         </Container>
-      </Box>
-      <Box sx={{ pb: "70px" }}>
+      </Box> */}
+      {/* <Box sx={{ pb: "70px" }}>
         <Container>
           <CustomTypography
             sx={{
@@ -847,10 +858,10 @@ const CandidatePage = () => {
             >
               Tips
             </span>
-          </CustomTypography>
-          <Box>
-            <Grid container spacing={2}>
-              <Grid
+          </CustomTypography> */}
+      {/* <Box>
+            <Grid container spacing={2}> */}
+      {/* <Grid
                 item
                 xs={12}
                 md={4}
@@ -879,12 +890,6 @@ const CandidatePage = () => {
                     }}
                   />
                   <CardContent>
-                    {/* <Image
-                      src={"/candipage_images/career-advice-andtips-img.webp"}
-                      alt=""
-                      height={323}
-                      width={660}
-                    /> */}
 
                     <Box
                       sx={{
@@ -938,8 +943,8 @@ const CandidatePage = () => {
                     </CustomTypography>
                   </CardContent>
                 </Card>
-              </Grid>
-              <Grid
+              </Grid> */}
+      {/* <Grid
                 item
                 xs={12}
                 md={4}
@@ -968,13 +973,6 @@ const CandidatePage = () => {
                     }}
                   />
                   <CardContent>
-                    {/* <Image
-                      src={"/candipage_images/career-advice-andtips-img.webp"}
-                      alt=""
-                      height={323}
-                      width={660}
-                    /> */}
-
                     <Box
                       sx={{
                         display: "flex",
@@ -1027,8 +1025,8 @@ const CandidatePage = () => {
                     </CustomTypography>
                   </CardContent>
                 </Card>
-              </Grid>
-              <Grid
+              </Grid> */}
+      {/* <Grid
                 item
                 xs={12}
                 md={4}
@@ -1057,12 +1055,6 @@ const CandidatePage = () => {
                     }}
                   />
                   <CardContent>
-                    {/* <Image
-                      src={"/candipage_images/career-advice-andtips-img.webp"}
-                      alt=""
-                      height={323}
-                      width={660}
-                    /> */}
 
                     <Box
                       sx={{
@@ -1116,13 +1108,16 @@ const CandidatePage = () => {
                     </CustomTypography>
                   </CardContent>
                 </Card>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      </Box>
+              </Grid> */}
+      {/* </Grid>
+      //     </Box> */}
+      {/* </Container> */}
+      {/* </Box> */}
       <Box
-        sx={{ bgcolor: "#1097CD", p: { xs: "50px 0px 50px 0px", md: "50px" } }}
+        sx={{
+          bgcolor: "#1097CD",
+          p: { xs: "50px 0px 50px 0px", md: "50px" },
+        }}
       >
         <Container>
           <Grid container spacing={2}>
@@ -1179,6 +1174,7 @@ const CandidatePage = () => {
                 managers by scheduling a conversation at your convenience.
               </CustomTypography>
               <Button
+                onClick={handleCloseUserMenuDemo}
                 variant="contained"
                 sx={{
                   bgcolor: "#FAFDFF !important",
