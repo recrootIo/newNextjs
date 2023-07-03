@@ -69,12 +69,12 @@ const BlogsCard = ({blog,API_URL}) => {
         </Box>
         <Link
         href={`/Blogs/${blog?.title}/${blog?._id}`}
-        style={{color:'white'}}
+        style={{color:'black'}}
                           >
 
         <CustomTypography
           gutterBottom
-          sx={{ mt: "30px",color:'white',fontWeight: 700, fontSize: "18px" ,textTransform:'capitalize' }}
+          sx={{ mt: "30px",color:'black',fontWeight: 700, fontSize: "18px" ,textTransform:'capitalize' }}
         >
           {blog.title}
         </CustomTypography>

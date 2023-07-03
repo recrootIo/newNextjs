@@ -133,7 +133,6 @@ const CandiFullProfileView = () => {
       setLoading(true);
       getCanddet();
     }
-    // .then((res) => console.log(res));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appId, canId]);
 
@@ -160,7 +159,7 @@ const CandiFullProfileView = () => {
       dispatch(getSinResume(res.data?.resumeId));
       const ids = {
         cid: res.data?.candidateId?._id,
-        jid: res.data?.jobId,
+        jid: res.data?.jobId?._id,
       };
       dispatch(getSchedulesInterview(ids));
       setLoading(false);
@@ -234,9 +233,11 @@ const CandiFullProfileView = () => {
   useEffect(() => {
     const ids = {
       cid: appdata?.candidateId?._id,
-      jid: appdata?.jobId,
+      jid: appdata?.jobId?._id,
     };
-    dispatch(getSchedulesInterview(ids));
+    if (ids?.cid) {
+      dispatch(getSchedulesInterview(ids));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interviewshow]);
 
@@ -346,8 +347,6 @@ const CandiFullProfileView = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.applicantView);
   }, [company?.tours?.applicantView]);
-
-  console.log(candidate, "candidate");
 
   return (
     <>

@@ -31,6 +31,7 @@ import http from "@/redux/http-common";
 import { openAlert } from "@/redux/slices/alert";
 import { ERROR, SUCCESS } from "@/utils/constants";
 import { retrievePersonal } from "@/redux/slices/personal";
+import Cookies from "js-cookie";
 
 const style = {
   passinput: {
@@ -152,6 +153,7 @@ const MyAccount = () => {
     http
       .put("updateUser", user)
       .then((res) => {
+        Cookies.set('firstName',user?.firstName)
         dispatch(openAlert({ type: SUCCESS, message: res?.data?.message }));
         if (res.status === 200) {
           dispatch(retrievePersonal());
