@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  styled,
 } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
@@ -20,7 +21,11 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/auth";
 import { useCallback } from "react";
-
+const StyledAvatar = styled(Avatar)(({}) => ({
+  "& .MuiAvatar-img": {
+    objectFit: "contain",
+  },
+}));
 const EmployerNavbar = () => {
   const { push } = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -84,7 +89,7 @@ const photoUrl = company?.companyLogo?.logo &&  `https://api.arinnovate.io/api/o
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
                 >
-                  <Avatar src={photoUrl} sx={{ color: "#034275" }} />
+                  <StyledAvatar src={photoUrl} sx={{ color: "#034275" }} />
                 </Button>
                 <Menu
                   id="fade-menu"

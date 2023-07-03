@@ -700,7 +700,7 @@ function Signup() {
                                 id="accountId-error"
                                 sx={{
                                   width: {
-                                    sm: "400px",
+                                    sm: "250px",
                                     xs: "100%",
                                     marginLeft: "0px",
                                   },
@@ -712,13 +712,13 @@ function Signup() {
                             {!errors.password && (
                               <FormHelperText
                                 id="accountpAss-error"
-                                // sx={{
-                                //   width: {
-                                //     sm: "400px",
-                                //     xs: "100%",
-                                //     marginLeft: "0px",
-                                //   },
-                                // }}
+                                sx={{
+                                  width: {
+                                    sm: "250px",
+                                    xs: "100%",
+                                    marginLeft: "0px",
+                                  },
+                                }}
                               >
                                 Password must contain at least one uppercase
                                 character, one lowercase character, one special

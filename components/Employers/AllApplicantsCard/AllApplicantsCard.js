@@ -79,11 +79,11 @@ const AllApplicantsCard = ({ users }) => {
         .updateAppStatus(id, { status: "viewed" })
         .then((res) => {
           if (res.status === 200) {
-            router.push(`/Employer/CandiProfileFullView?appId=${id}`);
+            router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
-      router.push(`/Employer/CandiProfileFullView?appId=${id}`);
+      router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
   };
   const type = useSelector((state) => state.company.matchType);
