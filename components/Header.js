@@ -10,7 +10,7 @@ const Header = ({ title, description }) => {
 };
 
 Header.defaultProps = {
-  title: "Home",
+  title: "Recroot",
   description:
     "Recroot is a Next Gen Jobs Platform Connecting Organisations with Remote Tech Professionals through Permanent, Contract and Freelancing Recruitment Solutions.",
 };
