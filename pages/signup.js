@@ -554,25 +554,6 @@ function Signup() {
                         }}
                       >
                         <button
-                          onClick={handleClick}
-                          className="linkedinButton"
-                        >
-                          <span>
-                            <Image
-                              src={"/linkedInLogo.png"}
-                              alt=""
-                              height={20}
-                              width={20}
-                            />
-                          </span>
-                          <span
-                            style={{ marginTop: "6px", fontFamily: "Inter" }}
-                          >
-                            Sign up with LinkedIn
-                          </span>
-                        </button>
-
-                        <button
                           onClick={() => {
                             handleClick("google");
                           }}
@@ -592,6 +573,25 @@ function Signup() {
                             sign up with Google
                           </span>
                         </button>
+                        <button
+                          onClick={handleClick}
+                          className="linkedinButton"
+                        >
+                          <span>
+                            <Image
+                              src={"/linkedInLogo.png"}
+                              alt=""
+                              height={20}
+                              width={20}
+                            />
+                          </span>
+                          <span
+                            style={{ marginTop: "6px", fontFamily: "Inter" }}
+                          >
+                            Sign up with LinkedIn
+                          </span>
+                        </button>
+
                       </Stack>
 
                       <Divider>OR</Divider>

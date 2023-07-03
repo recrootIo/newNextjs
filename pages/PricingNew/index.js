@@ -49,6 +49,7 @@ import styles from "../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { RECRUITER } from "@/utils/UserConstants";
+import { isEmpty } from "lodash";
 
 const normal = {
   fontFamily: "'Inter'",
@@ -734,7 +735,7 @@ function PricingNew() {
                           alignItems: "center",
                         }}
                       >
-                        {user === undefined ? (
+                        {isEmpty(user)  ? (
                           <BasicButton
                             variant="outlined"
                             sx={{ width: "191px" }}
@@ -992,7 +993,7 @@ function PricingNew() {
                         alignItems: "center",
                       }}
                     >
-                      {user === undefined ? (
+                      {isEmpty(user) ? (
                         <BasicButton variant="outlined" sx={{ width: "191px" }}>
                           Sign In
                         </BasicButton>

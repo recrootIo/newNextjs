@@ -10,6 +10,7 @@ import {
   FormControl,
   Card,
   CardContent,
+  CircularProgress,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import InputLabel from "@mui/material/InputLabel";
@@ -41,6 +42,7 @@ const FORM_VALIDATION = Yup.object().shape({
 const AddSkill = () => {
   const dispatch = useDispatch();
   const { skill } = useSelector((state) => state?.personal);
+  const [load, setload] = React.useState(false);
 
   const [INITIAL_VALUES, setInitialValues] = React.useState({
     skillName: skill?.skillName,
@@ -68,6 +70,7 @@ const AddSkill = () => {
   }, [skill]);
 
   const addNewSkill = (values) => {
+    setload(true)
     candidateServices
       .addSkill(values)
       .then((res) => {
@@ -79,6 +82,7 @@ const AddSkill = () => {
             })
           );
           gotoHome();
+          setload(false)
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
               CalculatePercentage()
@@ -97,6 +101,7 @@ const AddSkill = () => {
   };
 
   const editNewSkill = (values) => {
+    setload(true)
     candidateServices
       .editSkills(values, values?.id)
       .then((res) => {
@@ -108,6 +113,7 @@ const AddSkill = () => {
             })
           );
           gotoHome();
+          setload(false)
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
               CalculatePercentage()
@@ -138,7 +144,7 @@ const AddSkill = () => {
   return (
     <div>
       <Container>
-        <Card variant="outlined">
+        <Card variant="outlined"> 00
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -152,8 +158,7 @@ const AddSkill = () => {
             >
               Back
             </Button>
-          </Box>
-
+          </Box> 0
           <CardContent
             sx={{
               p: { md: "50px", xs: "22px", sm: "22px" },
@@ -228,13 +233,21 @@ const AddSkill = () => {
                         >
                           Cancel
                         </Button>
-                        <Button
+                     {!load ?   <Button
                           variant="contained"
                           sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                           onClick={() => submitForm()}
                         >
                           {buttonText}
                         </Button>
+                        :
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                        >
+                          <CircularProgress color='inherit' />
+                        </Button>
+                        }
                       </Stack>
                     </Stack>
                   </Form>

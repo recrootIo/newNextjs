@@ -675,6 +675,7 @@ const CandiFullProfileView = () => {
                         fontSize: "18px",
                         fontWeight: 500,
                         color: "white",
+                        width: "200px", overflowWrap: "anywhere"
                       }}
                     >
                       {candidate?.resume?.socialMediaLink?.linkin}
@@ -693,7 +694,7 @@ const CandiFullProfileView = () => {
                       sx={{
                         fontSize: "18px",
                         fontWeight: 500,
-                        color: "white",
+                        color: "white",width: "200px", overflowWrap: "anywhere"
                       }}
                     >
                       {candidate?.resume?.socialMediaLink?.twitter}

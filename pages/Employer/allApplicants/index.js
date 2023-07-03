@@ -212,7 +212,6 @@ const AllApplicants = () => {
       setSelected(parsedStatus);
     }
   }, [router.query]);
-
   useEffect(() => {
     if (matching) {
       const value = {
@@ -364,8 +363,8 @@ const AllApplicants = () => {
       );
       setids([...ids, value._id]);
       if (titls.length === 1) {
-        setSelectedTemp({ ...selectedTemp, jobTitle: titls });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: titls });
+        setSelectedTemp({ ...selectedTemp, jobTitle: titls[0] });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: titls[0] });
       }
       const queryString = JSON.stringify([
         ...titles,
@@ -389,8 +388,8 @@ const AllApplicants = () => {
       setTitles(() => [...newJobs]);
       setids(newIds);
       if (newIds.length === 1) {
-        setSelectedTemp({ ...selectedTemp, jobTitle: newIds });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: newIds });
+        setSelectedTemp({ ...selectedTemp, jobTitle: newIds[0] });
+        setRejectedTemp({ ...rejectedTemp, jobTitle: newIds[0] });
       }
       const queryString = JSON.stringify(newJobs);
       const url = `${window.location.pathname}?array=${encodeURIComponent(
@@ -557,7 +556,7 @@ const AllApplicants = () => {
   const handleDialogAction = () => {
     setModelopen(!Modelopen);
     const value = {
-      id: rejectedTemp?.jobTitle[0],
+      id: rejectedTemp?.jobTitle,
       type: "rejected",
     };
     dispatch(getEmailTemplapes(value)).then((res) => {
@@ -629,7 +628,7 @@ const AllApplicants = () => {
   const handleShortlistedDialogAction = () => {
     setShortlistedModelopen(!ShortlistedModelopen);
     const value = {
-      id: rejectedTemp?.jobTitle[0],
+      id: rejectedTemp?.jobTitle,
       type: "shortlist",
     };
     dispatch(getEmailTemplapes(value)).then((res) => {

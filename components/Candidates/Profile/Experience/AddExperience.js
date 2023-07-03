@@ -10,6 +10,7 @@ import {
   CardContent,
   Box,
   FormControl,
+  CircularProgress,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import InputLabel from "@mui/material/InputLabel";
@@ -76,6 +77,7 @@ const FORM_VALIDATION = Yup.object().shape({
 const AddExperience = () => {
   const resume = useSelector((state) => state.personal.exper);
   const dispatch = useDispatch();
+  const [load, setload] = React.useState(false);
 
   const [INITIAL_VALUES, setInitialValues] = React.useState({
     companyName: resume?.companyName,
@@ -105,6 +107,7 @@ const AddExperience = () => {
   };
 
   const editMyExperience = (values) => {
+    setload(true)
     candidateServices
       .editExperience(values, values?._id)
       .then((res) => {
@@ -116,6 +119,7 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
+          setload(false)
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
               CalculatePercentage()
@@ -139,6 +143,7 @@ const AddExperience = () => {
   }, []);
 
   const addMyExperience = (values) => {
+    setload(true)
     candidateServices
       .addExperience(values)
       .then((res) => {
@@ -150,6 +155,7 @@ const AddExperience = () => {
             })
           );
           dispatch(updateCurrentScreen(""));
+          setload(false)
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
               CalculatePercentage()
@@ -373,13 +379,20 @@ const AddExperience = () => {
                         >
                           Cancel
                         </Button>
+                    {!load ? 
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                           onClick={() => submitForm()}
                         >
                           {buttonText}
-                        </Button>
+                        </Button> : 
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                        >
+                          <CircularProgress color='inherit' />
+                        </Button>}
                       </Stack>
                     </Stack>
                   </Form>

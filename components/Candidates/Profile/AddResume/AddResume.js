@@ -8,6 +8,7 @@ import {
   Container,
   Card,
   CardContent,
+  CircularProgress,
 } from "@mui/material";
 // import { useMemo } from "react";
 // import { useDropzone } from "react-dropzone";
@@ -25,6 +26,7 @@ import CalculatePercentage from "@/utils/CalculatePercentange";
 
 const AddResume = () => {
   const [pdf, setPdf] = React.useState();
+  const [load, setload] = React.useState(false);
   // const [fileNames, setFileNames] = React.useState("");
 
   const dispatch = useDispatch();
@@ -40,6 +42,7 @@ const AddResume = () => {
   };
 
   const send = (file) => {
+    setload(true)
     let formData = new FormData();
     formData.append("resume", file);
     // console.log(formData, "formData");
@@ -55,6 +58,7 @@ const AddResume = () => {
           })
         );
         dispatch(updateCurrentScreen(""));
+        setload(false)
         dispatch(retrievePersonal()).then((res)=>{
           if(res?.meta?.requestStatus === "fulfilled"){
             CalculatePercentage()
@@ -112,6 +116,7 @@ const AddResume = () => {
             <Stack spacing={2} sx={{ mt: "50px" }}>
               <Upload handleChange={handleChange} pdf={pdf} />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
+               {load === false ?
                 <Button
                   variant="contained"
                   className={pdf ? "activeButton" : "disabledButtons"}
@@ -120,7 +125,15 @@ const AddResume = () => {
                   onClick={() => send(pdf)}
                 >
                   Add
-                </Button>
+                </Button> :
+                <Button
+                  variant="contained"
+                  className={pdf ? "activeButton" : "disabledButtons"}
+                  disabled={!pdf}
+                  sx={{ width: "50%" }}
+                >
+                  <CircularProgress color='inherit'/>
+                </Button>}
               </Box>
             </Stack>
           </CardContent>

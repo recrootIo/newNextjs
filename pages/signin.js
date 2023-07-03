@@ -248,23 +248,7 @@ function Signin() {
                       flexDirection: { md: "row", sm: "column", xs: "column" },
                     }}
                   >
-                    <button onClick={handleClick} className="linkedinButton">
-                      <span>
-                        <Image
-                          src={"/linkedInLogo.png"}
-                          alt=""
-                          height="20"
-                          width="20"
-                          blurDataURL="URL"
-                          placeholder="blur"
-                        />
-                      </span>
-                      <span style={{ marginTop: "6px" }}>
-                        Log in with LinkedIn
-                      </span>
-                    </button>
-
-                    <button
+                                        <button
                       onClick={() => {
                         handleClick("google");
                       }}
@@ -282,6 +266,21 @@ function Signin() {
                       </span>
                       <span style={{ marginTop: "1px" }}>
                         Log in with Google
+                      </span>
+                    </button>
+                    <button onClick={handleClick} className="linkedinButton">
+                      <span>
+                        <Image
+                          src={"/linkedInLogo.png"}
+                          alt=""
+                          height="20"
+                          width="20"
+                          blurDataURL="URL"
+                          placeholder="blur"
+                        />
+                      </span>
+                      <span style={{ marginTop: "6px" }}>
+                        Log in with LinkedIn
                       </span>
                     </button>
                   </Stack>

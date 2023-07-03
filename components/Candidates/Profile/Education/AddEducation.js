@@ -12,6 +12,7 @@ import {
   // Radio,
   // RadioGroup,
   FormControl,
+  CircularProgress,
   // InputLabel,
   // Select,
 } from "@mui/material";
@@ -89,6 +90,7 @@ const AddEducation = () => {
     _id: education?._id,
   });
   const [title, setTitle] = React.useState("Add Education");
+  const [load, setload] = React.useState(false);
 
   const gotoHome = () => {
     dispatch(updateCurrentScreen(""));
@@ -104,6 +106,7 @@ const AddEducation = () => {
   };
 
   const addEducation = (educationDetails) => {
+    setload(true)
     candidateServices
       .addPersonalEducation(educationDetails)
       .then((res) => {
@@ -115,6 +118,7 @@ const AddEducation = () => {
             })
           );
           gotoHome();
+          setload(false)
           dispatch(GetCandsPrefInfo());
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
@@ -134,6 +138,7 @@ const AddEducation = () => {
   };
 
   const editEducation = (educationDetails) => {
+    setload(true)
     candidateServices
       .editPersonalEducation(educationDetails, educationDetails?._id)
       .then((res) => {
@@ -145,6 +150,7 @@ const AddEducation = () => {
             })
           );
           gotoHome();
+          setload(false)
           dispatch(GetCandsPrefInfo());
           dispatch(retrievePersonal()).then((res)=>{
             if(res?.meta?.requestStatus === "fulfilled"){
@@ -384,13 +390,20 @@ const AddEducation = () => {
                         >
                           Cancel
                         </Button>
+                       {load === false ?
                         <Button
                           variant="contained"
                           sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
                           onClick={() => submitForm()}
                         >
                           {btnText}
-                        </Button>
+                        </Button>:
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                        >
+                       <CircularProgress color=	'inherit' />
+                        </Button>}
                       </Stack>
                     </Stack>
                   </Form>
