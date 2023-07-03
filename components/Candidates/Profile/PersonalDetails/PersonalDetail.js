@@ -115,7 +115,7 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Youtube :
                 </CustomTypography>
-                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" ,overflowWrap: 'anywhere'}}>
                   {resume?.socialMediaLink?.utube}
                 </Stack>
               </Stack>
@@ -124,7 +124,7 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Twitter :
                 </CustomTypography>
-                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" ,overflowWrap: 'anywhere' }}>
                   {resume?.socialMediaLink?.twitter}
                 </Stack>
               </Stack>
@@ -207,7 +207,7 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   Facebook :
                 </CustomTypography>
-                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" ,overflowWrap: 'anywhere' }}>
                   {resume?.socialMediaLink?.fb}
                 </Stack>
               </Stack>
@@ -216,7 +216,7 @@ const PersonalDetail = ({ ...data }) => {
                 <CustomTypography sx={{ fontWeight: "900" }}>
                   LinkedIn :
                 </CustomTypography>
-                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" }}>
+                <Stack direction={"row"} sx={{ gap: "5px", flexWrap: "wrap" ,overflowWrap: 'anywhere'}}>
                   {resume?.socialMediaLink?.linkin}
                 </Stack>
               </Stack>
