@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/auth";
 import { useCallback } from "react";
+import { isEmpty } from "lodash";
 const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
     objectFit: "contain",
@@ -37,6 +38,7 @@ const EmployerNavbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const  user = Cookies.get()
   const logOut = useCallback(() => {
     handleClose();
     dispatch(logout()).then(() => {
@@ -82,7 +84,7 @@ const photoUrl = company?.companyLogo?.logo &&  `https://preprod.recroot.au/api/
               >
                 {/* <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
                 <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" /> */}
-                <Button
+               {!isEmpty(user) && <Button
                   id="fade-button"
                   aria-controls={open ? "fade-menu" : undefined}
                   aria-haspopup="true"
@@ -90,7 +92,7 @@ const photoUrl = company?.companyLogo?.logo &&  `https://preprod.recroot.au/api/
                   onClick={handleClick}
                 >
                   <StyledAvatar src={photoUrl} sx={{ color: "#034275" }} />
-                </Button>
+                </Button>}
                 <Menu
                   id="fade-menu"
                   MenuListProps={{

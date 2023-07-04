@@ -16,8 +16,10 @@ import {
 import { Box, Stack, styled } from "@mui/system";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import Image from "next/image";
 import { useState } from "react";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import CheckCircleOutlineTwoToneIcon from "@mui/icons-material/CheckCircleOutlineTwoTone";
 import {
   CONTACT,
   CONTACT_PACKAGE,
@@ -47,6 +49,8 @@ import styles from "../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import { RECRUITER } from "@/utils/UserConstants";
+import { isEmpty } from "lodash";
+import FooterHome from "@/components/Home/FooterHome";
 
 const normal = {
   fontFamily: "'Inter'",
@@ -115,7 +119,7 @@ const planHeadSlot = {
   m: "auto 0 0 0",
 };
 
-function Pricing() {
+function PricingNew() {
   const [jobSwitch, setjobSwitch] = useState("jPost");
   const [countryData, setcountryData] = useState("");
   const [isTourOpen, setTourOpen] = React.useState(false);
@@ -126,9 +130,6 @@ function Pricing() {
       .then((response) => {
         let data = response.data;
         setcountryData(response.data);
-        if (data?.country !== "LK") {
-          setjobSwitch("jSlot");
-        }
         if (data?.country === "IN") {
           setcounCheck(true);
         }
@@ -269,7 +270,6 @@ function Pricing() {
         : countryData.country === "LK"
         ? packageDetails.pricing.lk
         : packageDetails.pricing.us;
-    console.log(price, "ppp");
     const newPackage = {
       title: packageDetails.name,
       package: packages,
@@ -404,7 +404,6 @@ function Pricing() {
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        {countryData?.country === "LK" ? (
           <Box
             sx={{
               border: "1px solid #034275",
@@ -435,15 +434,13 @@ function Pricing() {
                 Job Slot
               </Typography>
             </Box>
-          </Box>
-        ) : (
-          ""
-        )}
+          </Box> 
       </Box>
       <Box>
         {jobSwitch === "jPost" ? (
           <Grid
             container
+            spacing={2}
             sx={{
               gap: "13px",
               padding: "12px",
@@ -451,343 +448,758 @@ function Pricing() {
               m: "35px 0 50px 0",
             }}
           >
-            {freePres ? (
-              ""
-            ) : (
+              { countryData?.country !== "LK" ? 
               <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
-                <Box
+              <Card
                   sx={{
-                    background: "#F4FBFE",
-                    borderRadius: "20px",
-                    minHeight: "520px",
-                    position: "relative",
-                    transition: "all .3s ease-out 0s",
+                    p: "20px",
                     display: "flex",
                     flexDirection: "column",
+                    alignItems: "center",
+                    gap: "15px",
+                    boxShadow: "rgba(17, 12, 46, 0.15) 0px 10px 10px 0px",
+                    borderRadius: "15px",
+                    width: { xs: "100%", md: "100%" },
+                    p: "0px !important",
+                    height: "100%",
                   }}
                 >
-                  <Box
+                  <Grid
+                    container
+                    spacing={2}
                     sx={{
-                      height: "80px",
-                      background: "#02A9F7",
-                      borderRadius: "20px 20px 0px 0px",
-                      display: "flex",
-                      borderBottom: "1px solid #e1e4ea",
+                      bgcolor: "#FFEEEF",
+                      width: "100%",
+                      p: "16px, 16px 0px 16px",
+                      ml: "0px !important",
                     }}
                   >
-                    <Typography sx={planHead}>{FREE}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      borderBottom: "1px dashed #A9A9AA",
-                    }}
-                  >
-                    <Divider />
-                  </Box>
-                  <Box sx={{ mt: "10px", pt: "5px" }}>
-                    <ul style={{ marginBottom: "20px" }}>
-                      {FREE_PACKAGE.packageList.map((de, id) => (
-                        <li key={id}>
-                          <Stack
-                            direction={"row"}
-                            sx={{ alignItems: "center" }}
-                            gap={2}
-                          >
-                            <CheckCircleRoundedIcon
-                              fontSize="small"
-                              sx={{ color: "#31B9F8" }}
-                            />
-                            {de}
-                          </Stack>
-                        </li>
-                      ))}
-                    </ul>
-                  </Box>
-                  <Box sx={{ m: "auto 0 5px 0" }}>
-                    <StyledButton
-                      onClick={() => handleClickOpen2(FREE_PACKAGE)}
+                    <Grid
+                      item
+                      xs={7}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
                     >
-                      Choose plan
-                    </StyledButton>
+                      <Box>
+                        <CustomTypography
+                          sx={{
+                            fontWeight: 600,
+                            textAlign: "center",
+                            fontSize: "25px",
+                          }}
+                        >
+                          Free
+                        </CustomTypography>
+                      </Box>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={5}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        src="/premium-package-img.png"
+                        alt="Picture of Free package card"
+                        priority={true}
+                        width="126"
+                        height="126"
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                      gap: "15px",
+                      minHeight: "220px",
+                      width: "100%",
+                      p: "0px 16px 0px 16px",
+                    }}
+                  >
+                
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "5px",
+                        width: "100%",
+                      }}
+                    >
+                      <CheckCircleOutlineTwoToneIcon
+                        fontSize="small"
+                        color="primary"
+                      />
+                      <CustomTypography sx={{ textAlign: "left" }}>
+                        {" "}
+                        3 job posts per day
+                      </CustomTypography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "5px",
+                        width: "100%",
+                      }}
+                    >
+                      <CheckCircleOutlineTwoToneIcon
+                        fontSize="small"
+                        color="primary"
+                      />
+                      <CustomTypography sx={{ textAlign: "left" }}>
+                        {" "}
+                        Job expires in 48 hours
+                      </CustomTypography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        gap: "5px",
+                        width: "100%",
+                      }}
+                    >
+                      <CheckCircleOutlineTwoToneIcon
+                        fontSize="small"
+                        color="primary"
+                      />
+                      <CustomTypography sx={{ textAlign: "left" }}>
+                        {" "}
+                        10 job applicants per job
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      p: "0px 16px 0px 16px",
+                      bgcolor: "#EBF3FF",
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      minHeight: "72px",
+                    }}
+                  >
+                    <Grid container spacing={2} sx={{ height: "100%" }}>
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        {countryData?.country === "IN" ? (
+                          <CustomTypography
+                            sx={{
+                              textAlign: "center",
+                              fontWeight: 600,
+                              fontSize: "18px",
+                            }}
+                          >
+                            {" "}
+                            0 &#8377;
+                          </CustomTypography>
+                        ) : (
+                          <CustomTypography
+                            sx={{
+                              textAlign: "center",
+                              fontWeight: 600,
+                              fontSize: "18px",
+                            }}
+                          >
+                            {" "}
+                            0 $
+                          </CustomTypography>
+                        )}
+                      </Grid>
+                      <Grid
+                        item
+                        xs={6}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {isEmpty(user)  ? (
+                          <BasicButton
+                            variant="outlined"
+                            sx={{ width: "191px" }}
+                            onClick={()=>{push('/signin')}}
+                          >
+                            Sign In
+                          </BasicButton>
+                        ) : (
+                          <BasicButton
+                            variant="outlined"
+                            sx={{ width: "191px" }}
+                            onClick={()=>{push('/Employer/postNewJob')}}
+                          >
+                            Continue
+                          </BasicButton>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Card>
+              </Grid>
+                :""}
+          {countryData?.country !== "LK" ?  <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+              <Card
+                sx={{
+                  p: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "15px",
+                  boxShadow: "rgba(17, 12, 46, 0.15) 0px 10px 10px 0px",
+                  borderRadius: "15px",
+                  width: { xs: "100%", md: "100%" },
+                  p: "0px !important",
+                  height: "100%",
+                }}
+              >
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{
+                    bgcolor: "#EAEBF4",
+                    p: "16px, 16px 0px 16px",
+                    width: "100%",
+                    ml: "0px !important",
+                    minHeight: "130px",
+                  }}
+                >
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box>
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 600,
+                          textAlign: "center",
+                          fontSize: "25px",
+                        }}
+                      >
+                        Premium
+                      </CustomTypography>
+                    </Box>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      src="/free-package-img.png"
+                      alt="Picture of Free package card"
+                      priority={true}
+                      width="496"
+                      height="326"
+                    />
+                  </Grid>
+                </Grid>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "15px",
+                    flexGrow: 1,
+                    minHeight: "200px",
+                    p: "0px 16px 0px 16px",
+                  }}
+                >
+                  {/* <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: "60%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "5px",
+                        bgcolor: "#DBFFF2",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <CustomTypography
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {" "}
+                        Success Rate: 90%
+                      </CustomTypography>
+                    </Box>
+                  </Box>
+                  <Divider variant="middle" light /> */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <CheckCircleOutlineTwoToneIcon
+                      fontSize="small"
+                      color="primary"
+                    />
+                    <CustomTypography sx={{ textAlign: "left" }}>
+                      Make job a featured job
+                    </CustomTypography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <CheckCircleOutlineTwoToneIcon
+                      fontSize="small"
+                      color="primary"
+                    />
+                    <CustomTypography sx={{ textAlign: "left" }}>
+                      Unlimited job applicants
+                    </CustomTypography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      gap: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <CheckCircleOutlineTwoToneIcon
+                      fontSize="small"
+                      color="primary"
+                    />
+                    <CustomTypography
+                      sx={{
+                        textAlign: "left",
+                        overflowWrap: "break-word",
+                        // width: "200px",
+                      }}
+                    >
+                      20 relevent profiles from candidate database
+                    </CustomTypography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      gap: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <CheckCircleOutlineTwoToneIcon
+                      fontSize="small"
+                      color="primary"
+                    />
+                    <CustomTypography sx={{ textAlign: "left" }}>
+                      Job expires in 1 month
+                    </CustomTypography>
                   </Box>
                 </Box>
-              </Grid>
-            )}
-            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
-              <Box
-                sx={{
-                  background: "#F4FBFE",
-                  borderRadius: "20px",
-                  minHeight: "520px",
-                  position: "relative",
-                  transition: "all .3s ease-out 0s",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
                 <Box
                   sx={{
-                    height: "80px",
-                    background: "#02A9F7",
-                    borderRadius: "20px 20px 0px 0px",
+                    p: "0px 16px 0px 16px",
+                    bgcolor: "#EBF3FF",
+                    width: "100%",
                     display: "flex",
-                    borderBottom: "1px solid #e1e4ea",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "72px",
                   }}
                 >
-                  <Typography sx={planHead}>{PRO}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    p: "30px",
-                    display: "flex",
-                    borderBottom: "1px dashed #A9A9AA",
-                  }}
-                >
-                  {countryData?.country === "IN" ? (
-                    <>
-                      <sup style={{ fontSize: "30px" }}></sup>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        &#8377; <span>{PRO_PLAN.pricing.rs}</span>
-                      </Typography>
-                    </>
-                  ) : countryData.country === "LK" ? (
-                    <>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        &#8360; <span>{PRO_PLAN.pricing.lk}</span>
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        $ <span>{PRO_PLAN.pricing.us}</span>
-                      </Typography>
-                    </>
-                  )}
-                  <Divider />
-                </Box>
-                <Box sx={{ mt: "10px", pt: "5px" }}>
-                  <ul style={{ marginBottom: "20px" }}>
-                    {PRO_PLAN.packageList.map((de, id) => (
-                      <li key={id}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "flex-start" }}
-                          gap={2}
-                        >
-                          <CheckCircleRoundedIcon
-                            fontSize="small"
-                            sx={{ color: "#31B9F8" }}
-                          />
-                          {de}
-                        </Stack>
-                      </li>
-                    ))}
-                  </ul>
-                </Box>
-                <Box sx={{ m: "auto 0 5px 0" }}>
-                  <StyledButton onClick={() => handleSubmit(PRO_PLAN)}>
-                    Choose plan
-                  </StyledButton>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
-              <Box
-                sx={{
-                  background: "#F4FBFE",
-                  borderRadius: "20px",
-                  minHeight: "520px",
-                  position: "relative",
-                  transition: "all .3s ease-out 0s",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  sx={{
-                    height: "80px",
-                    background: "#02A9F7",
-                    borderRadius: "20px 20px 0px 0px",
-                    display: "flex",
-                    borderBottom: "1px solid #e1e4ea",
-                  }}
-                >
-                  <Typography sx={planHead}>{PREMIUM}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    p: "30px",
-                    display: "flex",
-                    borderBottom: "1px dashed #A9A9AA",
-                  }}
-                >
-                  {countryData.country === "IN" ? (
-                    <>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
-                      </Typography>
-                    </>
-                  ) : countryData.country === "LK" ? (
-                    <>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        &#8360; <span>{PREMIUM_PACKAGE.pricing.lk}</span>
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography
-                        sx={{
-                          fontFamily: "'Inter'",
-                          fontStyle: "normal",
-                          fontWeight: 600,
-                          fontSize: "35px",
-                          lineHeight: "40px",
-                          color: "#034275",
-                          m: "auto",
-                        }}
-                      >
-                        $ <span>{PREMIUM_PACKAGE.pricing.us}</span>
-                      </Typography>
-                    </>
-                  )}
-                  <Divider />
-                </Box>
-                <Box sx={{ mt: "10px", pt: "5px" }}>
-                  <ul style={{ marginBottom: "20px" }}>
-                    {PREMIUM_PACKAGE.packageList.map((de, id) => (
-                      <li key={id}>
-                        <Stack
-                          direction={"row"}
-                          sx={{ alignItems: "flex-start" }}
-                          gap={2}
-                        >
-                          <CheckCircleRoundedIcon
-                            fontSize="small"
-                            sx={{ color: "#31B9F8" }}
-                          />
-                          {de}
-                        </Stack>
-                      </li>
-                    ))}
-                  </ul>
-                </Box>
-                <Box sx={{ m: "auto 0 5px 0" }}>
-                  <StyledButton onClick={() => handleSubmit(PREMIUM_PACKAGE)}>
-                    Choose plan
-                  </StyledButton>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
-              <Box
-                sx={{
-                  background: "#F4FBFE",
-                  borderRadius: "20px",
-                  minHeight: "520px",
-                  position: "relative",
-                  transition: "all .3s ease-out 0s",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <Box
-                  sx={{
-                    height: "80px",
-                    background: "#02A9F7",
-                    borderRadius: "20px 20px 0px 0px",
-                    display: "flex",
-                    borderBottom: "1px solid #e1e4ea",
-                  }}
-                >
-                  <Typography sx={planHead}>{CONTACT}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    borderBottom: "1px dashed #A9A9AA",
-                  }}
-                >
-                  <Divider />
-                </Box>
-                <Box sx={{ mt: "10px", pt: "5px" }}>
-                  <ul style={{ marginBottom: "20px" }}>
-                    {CONTACT_PACKAGE.packageList.map((de, id) => (
-                      <li key={id}>
-                        <Stack
-                          direction={"row"}
+                  <Grid container spacing={2} sx={{ height: "100%" }}>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      {countryData?.country === "IN" ? (
+                        <CustomTypography
                           sx={{
-                            alignItems: "flex-start",
+                            textAlign: "center",
+                            fontWeight: 600,
+                            fontSize: "18px",
                           }}
-                          gap={2}
                         >
-                          <CheckCircleRoundedIcon
-                            fontSize="small"
-                            sx={{ color: "#31B9F8" }}
-                          />
-                          {de}
-                        </Stack>
-                      </li>
-                    ))}
-                  </ul>
+                          {" "}
+                          1600 &#8377;
+                        </CustomTypography>
+                      ) : (
+                        <CustomTypography
+                          sx={{
+                            textAlign: "center",
+                            fontWeight: 600,
+                            fontSize: "18px",
+                          }}
+                        >
+                          {" "}
+                          35 $
+                        </CustomTypography>
+                      )}
+                    </Grid>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {isEmpty(user) ? (
+                        <BasicButton variant="outlined"
+                        onClick={()=>{push('/signin')}} sx={{ width: "191px" }}>
+                          Sign In
+                        </BasicButton>
+                      ) : (
+                            <BasicButton variant="outlined" 
+                            onClick={()=>{push('/Employer/postNewJob')}} sx={{ width: "191px" }}>
+                          Continue
+                        </BasicButton>
+                      )}
+                    </Grid>
+                  </Grid>
                 </Box>
-                <Box sx={{ m: "auto 0 5px 0" }}>
-                  <StyledButton onClick={() => handleClickOpen()}>
-                    Contact Us
-                  </StyledButton>
-                </Box>
-              </Box>
-            </Grid>
+              </Card>
+            </Grid> : 
+            <>
+               <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+               <Box
+                 sx={{
+                   background: "#F4FBFE",
+                   borderRadius: "20px",
+                   minHeight: "520px",
+                   position: "relative",
+                   transition: "all .3s ease-out 0s",
+                   display: "flex",
+                   flexDirection: "column",
+                 }}
+               >
+                 <Box
+                   sx={{
+                     height: "80px",
+                     background: "#02A9F7",
+                     borderRadius: "20px 20px 0px 0px",
+                     display: "flex",
+                     borderBottom: "1px solid #e1e4ea",
+                   }}
+                 >
+                   <Typography sx={planHead}>{PRO}</Typography>
+                 </Box>
+                 <Box
+                   sx={{
+                     p: "30px",
+                     display: "flex",
+                     borderBottom: "1px dashed #A9A9AA",
+                   }}
+                 >
+                   {countryData?.country === "IN" ? (
+                     <>
+                       <sup style={{ fontSize: "30px" }}></sup>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         &#8377; <span>{PRO_PLAN.pricing.rs}</span>
+                       </Typography>
+                     </>
+                   ) : countryData.country === "LK" ? (
+                     <>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         &#8360; <span>{PRO_PLAN.pricing.lk}</span>
+                       </Typography>
+                     </>
+                   ) : (
+                     <>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         $ <span>{PRO_PLAN.pricing.us}</span>
+                       </Typography>
+                     </>
+                   )}
+                   <Divider />
+                 </Box>
+                 <Box sx={{ mt: "10px", pt: "5px" }}>
+                   <ul style={{ marginBottom: "20px" }}>
+                     {PRO_PLAN.packageList.map((de, id) => (
+                       <li key={id}>
+                         <Stack
+                           direction={"row"}
+                           sx={{ alignItems: "flex-start" }}
+                           gap={2}
+                         >
+                           <CheckCircleRoundedIcon
+                             fontSize="small"
+                             sx={{ color: "#31B9F8" }}
+                           />
+                           {de}
+                         </Stack>
+                       </li>
+                     ))}
+                   </ul>
+                 </Box>
+                 <Box sx={{ m: "auto 0 5px 0" }}>
+                  {isEmpty(user) ?
+                   <StyledButton onClick={() =>push('/signin')}>
+                     Sign In
+                   </StyledButton>:
+                   <StyledButton onClick={() => handleSubmit(PRO_PLAN)}>
+                     Choose plan
+                   </StyledButton>}
+                 </Box>
+               </Box>
+             </Grid>
+             <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+               <Box
+                 sx={{
+                   background: "#F4FBFE",
+                   borderRadius: "20px",
+                   minHeight: "520px",
+                   position: "relative",
+                   transition: "all .3s ease-out 0s",
+                   display: "flex",
+                   flexDirection: "column",
+                 }}
+               >
+                 <Box
+                   sx={{
+                     height: "80px",
+                     background: "#02A9F7",
+                     borderRadius: "20px 20px 0px 0px",
+                     display: "flex",
+                     borderBottom: "1px solid #e1e4ea",
+                   }}
+                 >
+                   <Typography sx={planHead}>{PREMIUM}</Typography>
+                 </Box>
+                 <Box
+                   sx={{
+                     p: "30px",
+                     display: "flex",
+                     borderBottom: "1px dashed #A9A9AA",
+                   }}
+                 >
+                   {countryData.country === "IN" ? (
+                     <>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         &#8377; <span>{PREMIUM_PACKAGE.pricing.rs}</span>
+                       </Typography>
+                     </>
+                   ) : countryData.country === "LK" ? (
+                     <>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         &#8360; <span>{PREMIUM_PACKAGE.pricing.lk}</span>
+                       </Typography>
+                     </>
+                   ) : (
+                     <>
+                       <Typography
+                         sx={{
+                           fontFamily: "'Inter'",
+                           fontStyle: "normal",
+                           fontWeight: 600,
+                           fontSize: "35px",
+                           lineHeight: "40px",
+                           color: "#034275",
+                           m: "auto",
+                         }}
+                       >
+                         $ <span>{PREMIUM_PACKAGE.pricing.us}</span>
+                       </Typography>
+                     </>
+                   )}
+                   <Divider />
+                 </Box>
+                 <Box sx={{ mt: "10px", pt: "5px" }}>
+                   <ul style={{ marginBottom: "20px" }}>
+                     {PREMIUM_PACKAGE.packageList.map((de, id) => (
+                       <li key={id}>
+                         <Stack
+                           direction={"row"}
+                           sx={{ alignItems: "flex-start" }}
+                           gap={2}
+                         >
+                           <CheckCircleRoundedIcon
+                             fontSize="small"
+                             sx={{ color: "#31B9F8" }}
+                           />
+                           {de}
+                         </Stack>
+                       </li>
+                     ))}
+                   </ul>
+                 </Box>
+                 <Box sx={{ m: "auto 0 5px 0" }}>
+                {isEmpty(user) ?  
+                 <StyledButton onClick={() =>push('/signin')}>
+                     Sign In
+                   </StyledButton> :
+                   <StyledButton onClick={() => handleSubmit(PREMIUM_PACKAGE)}>
+                     Choose plan
+                   </StyledButton> }
+                 </Box>
+               </Box>
+             </Grid>
+             <Grid item lg={2.9} md={3.7} sm={6} xs={12}>
+               <Box
+                 sx={{
+                   background: "#F4FBFE",
+                   borderRadius: "20px",
+                   minHeight: "520px",
+                   position: "relative",
+                   transition: "all .3s ease-out 0s",
+                   display: "flex",
+                   flexDirection: "column",
+                 }}
+               >
+                 <Box
+                   sx={{
+                     height: "80px",
+                     background: "#02A9F7",
+                     borderRadius: "20px 20px 0px 0px",
+                     display: "flex",
+                     borderBottom: "1px solid #e1e4ea",
+                   }}
+                 >
+                   <Typography sx={planHead}>{CONTACT}</Typography>
+                 </Box>
+                 <Box
+                   sx={{
+                     display: "flex",
+                     borderBottom: "1px dashed #A9A9AA",
+                   }}
+                 >
+                   <Divider />
+                 </Box>
+                 <Box sx={{ mt: "10px", pt: "5px" }}>
+                   <ul style={{ marginBottom: "20px" }}>
+                     {CONTACT_PACKAGE.packageList.map((de, id) => (
+                       <li key={id}>
+                         <Stack
+                           direction={"row"}
+                           sx={{
+                             alignItems: "flex-start",
+                           }}
+                           gap={2}
+                         >
+                           <CheckCircleRoundedIcon
+                             fontSize="small"
+                             sx={{ color: "#31B9F8" }}
+                           />
+                           {de}
+                         </Stack>
+                       </li>
+                     ))}
+                   </ul>
+                 </Box>
+                 <Box sx={{ m: "auto 0 5px 0" }}>
+                   <StyledButton onClick={() => handleClickOpen()}>
+                     Contact Us
+                   </StyledButton>
+                 </Box>
+               </Box>
+             </Grid>
+            </>
+             }
           </Grid>
         ) : (
           <Grid
@@ -872,9 +1284,12 @@ function Pricing() {
                   </ul>
                 </Box>
                 <Box sx={{ m: "auto 0 5px 0" }}>
+                {isEmpty(user) ?  <StyledButton onClick={() =>push('signin')}>
+                    Sign in
+                  </StyledButton> :
                   <StyledButton onClick={() => handleSubmit(GROWTH_PACKAGE)}>
                     Choose plan
-                  </StyledButton>
+                  </StyledButton> }
                 </Box>
               </Box>
             </Grid>
@@ -951,9 +1366,12 @@ function Pricing() {
                   </ul>
                 </Box>
                 <Box sx={{ m: "auto 0 5px 0" }}>
+               {isEmpty(user) ?   <StyledButton onClick={() => push('/signin')}>
+                    Sign In
+                  </StyledButton> :
                   <StyledButton onClick={() => handleSubmit(GOLD_PACKAGE)}>
                     Choose plan
-                  </StyledButton>
+                  </StyledButton>}
                 </Box>
               </Box>
             </Grid>
@@ -1147,7 +1565,7 @@ function Pricing() {
           </BasicButton>
         </DialogActions>
       </Dialog>
-
+      <FooterHome />
       <Tour
         onRequestClose={closeTour}
         disableInteraction={true}
@@ -1162,4 +1580,4 @@ function Pricing() {
   );
 }
 
-export default Pricing;
+export default PricingNew;

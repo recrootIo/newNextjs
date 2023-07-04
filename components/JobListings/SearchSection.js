@@ -317,7 +317,7 @@ const SearchSection = ({ ...props }) => {
   const [names, setNames] = useState(
     isEmpty(jobType?.[0]) ? [] : jobType || []
   );
-  const [exper, setExper] = useState(experience || []);
+  const [exper, setExper] = useState(experience);
   const [titlef, setTitlef] = useState("");
   const [title, setTitle] = useState(props.title || "");
   const [addressf, setAddressf] = useState("");
@@ -461,19 +461,11 @@ const SearchSection = ({ ...props }) => {
 
   const handleExperience = (re) => {
     const { name, checked } = re.target;
-    let newJobs = exper;
-
-    if (checked) {
-      newJobs.push(name);
-    } else {
-      newJobs = exper.filter((arr) => name != arr);
-    }
-
-    setExper(() => [...newJobs]);
+    setExper(name);
   };
 
   const clearSearch = () => {
-    setExper(() => []);
+    setExper("");
     setNames(() => []);
     setSelectedSector([]);
     setJobVariant("");
@@ -599,13 +591,13 @@ const SearchSection = ({ ...props }) => {
   // };
 
   const handleDeleteExp = (e) => {
-    const newNames = exper.filter((n) => e !== n);
+   setExper("")
 
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      experience: newNames,
+      experience: "",
       page: 1,
     };
 
@@ -617,8 +609,6 @@ const SearchSection = ({ ...props }) => {
       undefined,
       { shallow: true }
     );
-
-    setExper(() => [...newNames]);
   };
 
   const handleDeleteNames = (e) => {
@@ -864,11 +854,9 @@ const SearchSection = ({ ...props }) => {
                         )} */}
 
                         {!isEmpty(exper) &&
-                          exper.map((ex, index) => (
                             <Chip
                               onDelete={(ex) => handleDeleteExp(ex)}
-                              key={ex}
-                              label={ex}
+                              label={exper}
                               color="primary"
                               style={{
                                 fontWeight: 500,
@@ -878,7 +866,7 @@ const SearchSection = ({ ...props }) => {
                                 color: "rgba(3, 66, 117, 0.69)",
                               }}
                             />
-                          ))}
+                          }
 
                         {selectedCategory.map((e) => (
                           <Chip
@@ -992,20 +980,20 @@ const SearchSection = ({ ...props }) => {
                         </TabPanel> */}
                         <TabPanel value={value} index={2}>
                           <FormControl>
-                            {USER_EXPERIENCES.map((ex, index) => (
-                              <StyledFormLabel
+                          <RadioGroup
+                            onChange={handleExperience}
+                            value={exper}
+                          >
+                            {USER_EXPERIENCES.map((com, index) => (
+                              <FormControlLabel
                                 key={index}
-                                control={
-                                  <BpCheckbox
-                                    size="small"
-                                    checked={exper.includes(ex)}
-                                    name={ex}
-                                    onChange={handleExperience}
-                                  />
-                                }
-                                label={ex}
+                                control={<BpRadio size="small" />}
+                                label={com}
+                                value={com}
+                                name={com}
                               />
                             ))}
+                          </RadioGroup>
                           </FormControl>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
@@ -1125,11 +1113,10 @@ const SearchSection = ({ ...props }) => {
                     />
                   )} */}
 
-                  {exper.map((e) => (
+                  {!isEmpty(exper)  &&
                     <Chip
-                      key={e}
-                      label={e}
-                      onDelete={() => handleDeleteExp(e)}
+                    label={exper}
+                    onDelete={() => handleDeleteExp()}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1139,7 +1126,7 @@ const SearchSection = ({ ...props }) => {
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
                     />
-                  ))}
+                  }
 
                   {selectedCategory.map((e) => (
                     <Chip
