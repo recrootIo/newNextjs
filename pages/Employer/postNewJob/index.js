@@ -128,7 +128,7 @@ function PostnewJob() {
       return;
     }
   };
-
+console.log(companyDet,'details')
   React.useEffect(() => {
     dispatch(companyJobs());
     dispatch(getfreeCount());
@@ -249,6 +249,7 @@ function PostnewJob() {
     } else {
       dispatch(addJobsNew(final))
         .then((res) => {
+          dispatch(setpremium(false));
           if (res.error !== undefined) {
             res.error.message === "Request failed with status code 401" ||
             "Request failed with status code 403"
@@ -292,6 +293,7 @@ function PostnewJob() {
                   message: "Your job has been posted successfully",
                 })
               );
+              
               setTimeout(() => {
                 dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
               }, 500);

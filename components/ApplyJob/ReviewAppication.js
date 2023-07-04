@@ -371,7 +371,7 @@ function ReviewAppication({ ...props }) {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` https://api.arinnovate.io/api/downloadResume?resume=${resumeSin.resume.replace(
+                              ` https://preprod.recroot.au/api/downloadResume?resume=${resumeSin.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`

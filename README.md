@@ -12,11 +12,11 @@ yarn dev
 pnpm dev
 ```
 
-Open [https://api.arinnovate.io](https://api.arinnovate.io) with your browser to see the result.
+Open [https://preprod.recroot.au](https://preprod.recroot.au) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [https://api.arinnovate.io/api/hello](https://api.arinnovate.io/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [https://preprod.recroot.au/api/hello](https://preprod.recroot.au/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 

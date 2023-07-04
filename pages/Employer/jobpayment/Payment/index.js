@@ -24,12 +24,12 @@ const BasicButton = styled(Button)({
     marginBottom: "10px",
   });
 function Jobpaymentstatus() {
-  // const stripePromise = loadStripe(
-  //   "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
-  // );
   const stripePromise = loadStripe(
-    "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
+    "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
   );
+  // const stripePromise = loadStripe(
+  //   "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
+  // );
   const jobLoc = Cookies.get('jobDet')
   const jobPay = jobLoc && JSON.parse(jobLoc)
 
@@ -38,11 +38,12 @@ const token = Cookies.get('token')
 const router = useRouter()
   useEffect(() => {
     const job = JSON.parse(localStorage.getItem("jobDetail"));
+    const compny = JSON.parse(localStorage.getItem("User"));
     if(isEmpty(jobPay) === true  && isEmpty(job) === true){
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
-        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,jobPay, {
+        axios.post(`https://preprod.recroot.au/api/addnewjobpayment`,{jobarr:jobPay,jobDetails:job,companyId:compny?.User?.companyId}, {
           headers: { "x-access-token": `${token}` },
         }).then((res)=>{
           setClientSecret(res?.data?.clientSecret)
@@ -52,7 +53,7 @@ const router = useRouter()
       }
     }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [jobPay])
+      }, [])
   const appearance = {
     theme: "stripe",
   };
