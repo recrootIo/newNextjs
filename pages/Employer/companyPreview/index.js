@@ -435,7 +435,7 @@ const CompanyPreview = () => {
                 </Box>
               </Box>
             </Box>
-            <Box className={styles.PreviewTypoContainer}>
+       {!isEmpty(final?.members)  ? <Box className={styles.PreviewTypoContainer}>
               {final?.members?.map((mem, index) => (
                 <>
                   <Box className={styles.PreviewTypoBox}>
@@ -458,7 +458,7 @@ const CompanyPreview = () => {
                   <Divider />
                 </>
               ))}
-            </Box>
+            </Box> : ""}
             <Box className={styles.PreviewTypoContainer}>
               <Box className={styles.PreviewTypoBox}>
                 <LinkedInIcon sx={{ color: "#00339b" }} />

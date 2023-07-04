@@ -27,6 +27,7 @@ export const getSchedules = createAsyncThunk("get/train", async () => {
   return res.data;
 });
 export const getSchedulesInterview = createAsyncThunk("get/scheduled", async ({cid,jid}) => {
+  console.log(cid,jid,'jjjjjjj')
   const res = await interviewservice.getScheduleInt(cid,jid);
   return res.data;
 });
