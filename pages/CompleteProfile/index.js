@@ -249,7 +249,7 @@ function CompleteProfile() {
               // navigate("/resume", { replace: false });
             } else {
               window.location.replace(
-                `https://recroot.io/Pricing`
+                `https://recroot.io/Employer/Dashboard`
               );
               // navigate("/", { replace: false });
             }
@@ -383,7 +383,7 @@ function CompleteProfile() {
                       name="sector"
                       required
                       label="sector"
-                      onChange={handleChange}
+                      onChange={handleChange("sector")}
                       variant="outlined"
                     >
                       {SECTORS.map((job, ind) => (
