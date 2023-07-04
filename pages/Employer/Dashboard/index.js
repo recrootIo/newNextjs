@@ -539,6 +539,24 @@ const EmpoyerDashboard = () => {
 
   const columns = [
     { field: "_id", headerName: "Job", width: 60 },
+    {
+      // field: "status",
+      headerName: "Upgrade",
+      width: 200,
+      renderCell: (parms) => (
+        <>
+          <Button
+            sx={{ textTransform: "capitalize", color: "green" }}
+            onClick={() => {
+              handleClose2();
+              handleUpgrade(parms?.row);
+            }}
+          >
+            Upgrade To Premium
+          </Button>
+        </>
+      ),
+    },
     { field: "title", headerName: "Title", width: 260 },
     // {
     //   field: "jobtype",
@@ -758,7 +776,8 @@ const EmpoyerDashboard = () => {
                   ? "Deactivate"
                   : "Deactivate"}
               </MenuItem>
-              {isValuePresentInArray(requestJobs, jobid) === true ? (
+              { premium === false ? "" :
+               isValuePresentInArray(requestJobs, jobid) === true ? (
                 <MenuItem
                   onClick={() => {
                     handleRequest("requested");
@@ -781,24 +800,7 @@ const EmpoyerDashboard = () => {
           </>
         ),
     },
-    {
-      // field: "status",
-      headerName: "Upgrade",
-      width: 200,
-      renderCell: (parms) => (
-        <>
-          <Button
-            sx={{ textTransform: "capitalize", color: "green" }}
-            onClick={() => {
-              handleClose2();
-              handleUpgrade(parms?.row);
-            }}
-          >
-            Upgrade To Premium
-          </Button>
-        </>
-      ),
-    },
+
   ];
 
   const updatedColumns = columns.filter(
