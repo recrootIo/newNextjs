@@ -186,7 +186,7 @@ const LocationInputDetails = ({ ...props }) => {
                             country: e.target.value,
                           }))
                         }
-                        value={inputPersonalDetailsCountry?.state}
+                        value={inputPersonalDetailsCountry?.country}
                         sx={{
                           backgroundColor: NEUTRAL,
                           width: { xs: "100%" },
