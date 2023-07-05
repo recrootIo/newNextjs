@@ -86,14 +86,19 @@ function RedirectUser() {
 
         if (resObject.data.User) {
           if (
-            employerTypes.includes(resObject.data.User.recrootUserType) ===
-            "Employer"
+          resObject.data.User.recrootUserType === "Employer" || resObject.data.User.recrootUserType === RECRUITER ||resObject.data.User.recrootUserType === "Member"
           ) {
-            router.push("/");
+            router.push("/Employer/Dashboard");
             // }
-          } else {
+          } else if(resObject.data.User.recrootUserType === "TempSocial"){
+            router.push("/CompleteProfile");
+          }else if(resObject.data.User.recrootUserType === "Candidate"){
+            if (resObject.data.User.resume?.resumeFileLocation?.length === 0) {
             router.push("/uploadResume");
-          }
+            }else{
+            router.push("/");
+            }
+           }
         }
       })
       .catch((err) => {

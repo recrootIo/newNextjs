@@ -217,48 +217,51 @@ const AllApplicants = () => {
       const value = {
         id: jid,
         page: 1,
+        status:[]
       };
       dispatch(getMachingAppl(value));
       return;
+    }else{
+      dispatch(applyJobsdet(""))
+        .then((res) => {
+          if (res.error !== undefined) {
+            res.error.message === "Request failed with status code 401" ||
+            "Request failed with status code 403"
+              ? dispatch(logout()).then(() => {
+                  router.push(
+                    {
+                      pathname: "/signin",
+                      query: { name: "session" },
+                    },
+                    "/signin"
+                  );
+                })
+              : console.log("error");
+          }
+        })
+        .catch((error) => {
+          if (
+            error.message === "Request failed with status code 401" ||
+            "Request failed with status code 403"
+          ) {
+            dispatch(logout()).then(() => {
+              router.push(
+                {
+                  pathname: "/signin",
+                  query: { name: "session" },
+                },
+                "/signin"
+              );
+            });
+          }
+        });
+      dispatch(getJobsfil());
     }
-    dispatch(applyJobsdet(""))
-      .then((res) => {
-        if (res.error !== undefined) {
-          res.error.message === "Request failed with status code 401" ||
-          "Request failed with status code 403"
-            ? dispatch(logout()).then(() => {
-                router.push(
-                  {
-                    pathname: "/signin",
-                    query: { name: "session" },
-                  },
-                  "/signin"
-                );
-              })
-            : console.log("error");
-        }
-      })
-      .catch((error) => {
-        if (
-          error.message === "Request failed with status code 401" ||
-          "Request failed with status code 403"
-        ) {
-          dispatch(logout()).then(() => {
-            router.push(
-              {
-                pathname: "/signin",
-                query: { name: "session" },
-              },
-              "/signin"
-            );
-          });
-        }
-      });
-    dispatch(getJobsfil());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, jid]);
 
   const type = useSelector((state) => state.company.matchType);
+
 
   const handleClear = (val) => {
     dispatch(matchShow(val));
@@ -805,7 +808,45 @@ const AllApplicants = () => {
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);
   }, [comp?.tours?.allApplicant]);
-
+  useEffect(() => {
+     setRejectedTemp({
+       jobTitle: jid,
+       type: REJECTED,
+       subject: "Status of Your Job Application",
+       emailBody: defaultRej,
+       date: "",
+       setting: "As_soon_as_reject",
+       cand: "Hi",
+     });
+     setSelectedTemp({
+       jobTitle: jid,
+       type: SHORT_LISTED,
+       subject: "",
+       emailBody: "",
+       date: "",
+       setting: "Do_not_send",
+     });
+     setIsShown(false);}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  , [jid])
+  const [matchstatus, setmatchstatus] = useState([])
+  const handleNameStatusMatch = (e, value) => {
+    let newArray = [...matchstatus];
+    if (e.target.checked) {
+      newArray.push(value);
+      setmatchstatus(newArray)
+    } else {
+      newArray = newArray.filter((res) => res !== value);
+      setmatchstatus(newArray)
+    }
+    const values= {
+      id: jid,
+      page: 1,
+      status:newArray
+    };
+    dispatch(getMachingAppl(values));
+  };
+console.log(selectedTemp,rejectedTemp,'temo')
   return (
     <>
       <Employer>
@@ -1424,7 +1465,435 @@ const AllApplicants = () => {
                   </div>
                 </Stack>
               )}
+        { matching ? <Stack
+                  className="filtersJob"
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={2}
+                  sx={{ mb: "30px", width: { xs: "100%", md: "50%" } }}
+                >
+               <Button
+                    endIcon={<BeenhereIcon />}
+                    onClick={handleClickStatus}
+                    id="demo-customized-button"
+                    aria-controls={open2 ? "demo-customized-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open2 ? "true" : undefined}
+                    variant="contained"
+                    disableElevation
+                    aria-describedby={id1}
+                    sx={{
+                      bgcolor: "#1097CD !important",
+                      width: { xs: "100%", md: "50%" },
+                    }}
+                  >
+                    Filter By status
+                  </Button>
+                  <Menu
+                    id="demo-customized-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "demo-customized-button",
+                    }}
+                    anchorEl={anchorEl1}
+                    open={open2}
+                    onClose={handleClose1}
+                    disablePortal={true}
+                    sx={{
+                      maxHeight: "400px",
+                      "& .MuiMenu-paper": {
+                        marginTop: "0px !important",
+                        borderRadius: "0px",
+                      },
+                    }}
+                  >
+                    {EMPLOYEE_STATUS.map((variant) => (
+                      <MenuItem
+                        key={variant}
+                        sx={{ width: "200px", cursor: "auto" }}
+                        onClick={(e) => handleNameStatusMatch(e, variant)}
+                      >
+                        <Checkbox
+                          checked={
+                            matchstatus.findIndex(
+                              (item) => item === variant
+                            ) >= 0
+                          }
+                        />
+                        <ListItemText
+                          primary={variant}
+                          sx={{ textTransform: "capitalize" }}
+                        />
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                  <div style={{ display: isShown ? "none" : "block" }}>
+                    <Button
+                      id="demo-customized-button"
+                      variant="contained"
+                      aria-controls={
+                        emailActionOpen ? "demo-positioned-menu" : undefined
+                      }
+                      aria-haspopup="true"
+                      aria-expanded={emailActionOpen ? "true" : undefined}
+                      onClick={emailActionHandleClick}
+                      disableElevation
+                      sx={{
+                        bgcolor: "#1097CD !important",
+                        width: { xs: "100%" },
+                      }}
+                      endIcon={
+                        <Settings
+                          sx={{
+                            bgcolor: "primary",
+                          }}
+                        />
+                      }
+                    >
+                      Feedback Email Settings
+                    </Button>
+                    <Menu
+                      id="demo-customized-menu"
+                      aria-labelledby="demo-positioned-button"
+                      anchorEl={emailAction}
+                      open={emailActionOpen}
+                      onClose={emailActionHandleClose}
+                      // anchorOrigin={{
+                      //   vertical: "top",
+                      //   horizontal: "left",
+                      // }}
+                      // transformOrigin={{
+                      //   vertical: "top",
+                      //   horizontal: "left",
+                      // }}
+                    >
+                      <MenuItem onClick={handleDialogAction}>
+                        Email - Rejected Candidates
+                      </MenuItem>
+                      <MenuItem onClick={handleShortlistedDialogAction}>
+                        Email - Shortlist Candidates
+                      </MenuItem>
+                    </Menu>
+                    <Dialog
+                      fullWidth
+                      open={Modelopen}
+                      onClose={handleDialogAction}
+                    >
+                      <Box sx={{ p: "40px" }}>
+                        <Typography variant="h5" sx={{ textAlign: "center" }}>
+                          Email - Rejected Candidates
+                        </Typography>
 
+                        <Box
+                          component="form"
+                          sx={{
+                            "& > :not(style)": { width: "100%" },
+                            mt: "10px",
+                          }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TextField
+                            sx={{ mt: 3 }}
+                            id="Email subject"
+                            label="Email subject"
+                            variant="outlined"
+                            onChange={(e) =>
+                              setRejectedTemp((state) => ({
+                                ...state,
+                                subject: e.target.value,
+                              }))
+                            }
+                            value={rejectedTemp.subject || ""}
+                          />
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            mt: "10px",
+                          }}
+                        >
+                          <EditorToolbar />
+                          {typeof window !== "undefined" && (
+                            <ReactQuill
+                              value={rejectedTemp.emailBody}
+                              onChange={(e) => {
+                                setRejectedTemp((state) => ({
+                                  ...state,
+                                  emailBody: e,
+                                }));
+                              }}
+                              theme={"snow"}
+                              className="textareaQuestion"
+                              modules={modules}
+                              formats={formats}
+                            />
+                          )}
+
+                          <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">
+                              <Typography variant="subtitle1">
+                                Sending settings
+                              </Typography>
+                            </FormLabel>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={rejectedTemp?.setting}
+                              onChange={(e) => {
+                                setRejectedTemp((state) => ({
+                                  ...state,
+                                  setting: e.target.value,
+                                }));
+                              }}
+                              sx={{ justifyContent: "space-around" }}
+                            >
+                              <FormControlLabel
+                                value="Do_not_send"
+                                control={<Radio />}
+                                label="Do not send"
+                              />
+                              <FormControlLabel
+                                value="As_soon_as_reject"
+                                control={<Radio />}
+                                label="As soon as reject"
+                              />
+                              {/* <FormControlLabel
+                          value="Schedule_email"
+                          control={<Radio />}
+                          label="Schedule email"
+                        /> */}
+                            </RadioGroup>
+                          </FormControl>
+
+                          {rejectedTemp?.setting === "Schedule_email" && (
+                            <Box>
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <DesktopDateTimePicker
+                                  label="Select Date and Time"
+                                  // inputFormat="MM/dd/yyyy"
+                                  minDate={new Date()}
+                                  value={rejectedTemp?.date}
+                                  onChange={(e) => {
+                                    setRejectedTemp((state) => ({
+                                      ...state,
+                                      date: moment(e).format(),
+                                    }));
+                                  }}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      sx={styles.naminput}
+                                    />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                          )}
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            mt: "10px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            sx={{ backgroundColor: "#4fa9ff !important" }}
+                            type="submit"
+                            onClick={() => updateRejectedEmails()}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            onClick={() => {
+                              setModelopen(false);
+                              setRejectedTemp({
+                                jobTitle: rejectedTemp?.jobTitle,
+                                type: REJECTED,
+                                subject: "",
+                                emailBody: "",
+                                date: "",
+                                setting: "Do_not_send",
+                              });
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Dialog>
+
+                    <Dialog
+                      fullWidth
+                      open={ShortlistedModelopen}
+                      onClose={handleShortlistedDialogAction}
+                    >
+                      <Box sx={{ p: "40px" }}>
+                        <Typography variant="h5" sx={{ textAlign: "center" }}>
+                          Email - Shortlisted Candidates
+                        </Typography>
+
+                        <Box
+                          component="form"
+                          sx={{
+                            "& > :not(style)": { width: "100%" },
+                            mt: "10px",
+                          }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TextField
+                            sx={{ mt: 3 }}
+                            id="Email subject"
+                            label="Email subject"
+                            variant="outlined"
+                            onChange={(e) =>
+                              setSelectedTemp((state) => ({
+                                ...state,
+                                subject: e.target.value,
+                              }))
+                            }
+                            value={selectedTemp.subject || ""}
+                          />
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "10px",
+                            mt: "10px",
+                          }}
+                        >
+                          <EditorToolbar />
+                          {typeof window !== "undefined" && (
+                            <ReactQuill
+                              value={selectedTemp.emailBody}
+                              onChange={(e) => {
+                                setSelectedTemp((state) => ({
+                                  ...state,
+                                  emailBody: e,
+                                }));
+                              }}
+                              theme={"snow"}
+                              className="textareaQuestion"
+                              modules={modules}
+                              formats={formats}
+                            />
+                          )}
+
+                          <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">
+                              <Typography variant="subtitle1">
+                                Sending settings
+                              </Typography>
+                            </FormLabel>
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-controlled-radio-buttons-group"
+                              name="controlled-radio-buttons-group"
+                              value={selectedTemp?.setting}
+                              onChange={(e) => {
+                                setSelectedTemp((state) => ({
+                                  ...state,
+                                  setting: e.target.value,
+                                }));
+                              }}
+                              sx={{ justifyContent: "space-around" }}
+                            >
+                              <FormControlLabel
+                                value="Do_not_send"
+                                control={<Radio />}
+                                label="Do not send"
+                              />
+                              <FormControlLabel
+                                value="As_soon_as_short"
+                                control={<Radio />}
+                                label="As soon as Shortlist"
+                              />
+                              {/* <FormControlLabel
+                          value="Schedule_email"
+                          control={<Radio />}
+                          label="Schedule email"
+                        /> */}
+                            </RadioGroup>
+                          </FormControl>
+
+                          {selectedTemp?.setting === "Schedule_email" && (
+                            <Box>
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <DesktopDateTimePicker
+                                  label="Select Date and Time"
+                                  // inputFormat="MM/dd/yyyy"
+                                  minDate={new Date()}
+                                  name="date"
+                                  value={selectedTemp?.date}
+                                  onChange={(e) => {
+                                    setSelectedTemp((state) => ({
+                                      ...state,
+                                      date: moment(e).format(),
+                                    }));
+                                  }}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      sx={styles.naminput}
+                                    />
+                                  )}
+                                />
+                              </LocalizationProvider>
+                            </Box>
+                          )}
+                        </Box>
+
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            mt: "10px",
+                            gap: "5px",
+                          }}
+                        >
+                          <Button
+                            variant="contained"
+                            sx={{ backgroundColor: "#4fa9ff !important" }}
+                            type="submit"
+                            onClick={() => updateShortlistedEmails()}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            onClick={() => {
+                              setShortlistedModelopen(false);
+                              setSelectedTemp({
+                                jobTitle: selectedTemp?.jobTitle,
+                                type: SHORT_LISTED,
+                                subject: "",
+                                emailBody: "",
+                                date: "",
+                                setting: "Do_not_send",
+                              });
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Dialog>
+                  </div>
+                </Stack> : ""}
               <Stack
                 direction="row"
                 sx={{ flexWrap: "wrap", gap: "10px" }}
@@ -1463,14 +1932,14 @@ const AllApplicants = () => {
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
                 <Stack spacing={2}>
-                  {loading ? (
-                    loadingCount.map((a, index) => (
-                      <LoadingSearchCards key={index} />
-                    ))
-                  ) : user.length === 0 ? (
+                  { user.length === 0 ? (
                     <Typography textAlign={"center"}>
                       No Candidates Found
                     </Typography>
+                  ) : loading ? (
+                    loadingCount.map((a, index) => (
+                      <LoadingSearchCards key={index} />
+                    ))
                   ) : (
                     user.map((usr, index) => (
                       <div id={usr?._id} key={index}>
