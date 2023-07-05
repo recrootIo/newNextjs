@@ -60,7 +60,7 @@ const dispatch = useDispatch()
               })
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [array,newJob])
+      }, [elements,newJob])
       const companyDet = useSelector((state) => state.company.companyDetl);
 
       function hasEmptyElementInObjects(obj1, obj2, obj3) {
