@@ -42,6 +42,7 @@ import { useTheme } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import companyservice from "@/redux/services/company.service";
 import Cookies from "js-cookie";
+import { isEmpty } from "lodash";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 require("jspdf-autotable");
 
@@ -59,6 +60,12 @@ const usdPrice = {
 
 const columns = [
   { field: "id", headerName: "Payment Id", width: "250" },
+  { field: "jobName", headerName: "Job Title", width: "250" ,
+  renderCell: (parms) => (
+    <>
+    {isEmpty(parms?.value) ? "N/A" : parms?.value}
+    </>
+  ) },
   {
     field: "paymentAmount",
     headerName: "Amount ($)",
@@ -96,7 +103,7 @@ const columns = [
     width: "150",
     renderCell: (parms) => (
       <>
-        <p>{moment(parms?.value).format("L")}</p>
+        <p>{isEmpty(parms?.value) ? "N/A" : moment(parms?.value).format("L")}</p>
       </>
     ),
   },
@@ -328,7 +335,10 @@ const Subscriptions = () => {
         .get(`/getSuscribeDetails/${rs.User.companyId}`)
         .then(function (response) {
           setPaymentInfo(response.data);
-          setPaymentRows(response.data.payments);
+         
+          setPaymentRows( response.data.payments.sort((a, b) => {
+            return new Date(b.paymentDate) - new Date(a.paymentDate);
+        }));
           const lastItem =
             response.data.payments[response.data.payments.length - 1];
           if (lastItem) {
