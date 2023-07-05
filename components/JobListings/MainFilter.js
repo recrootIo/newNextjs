@@ -179,19 +179,12 @@ const MainFilter = ({ ...props }) => {
 
   const handleExperience = (re) => {
     const { name, checked } = re.target;
-    let newJobs = exper;
-    if (checked) {
-      setExper([...new Set([...exper, name])]);
-      newJobs.push(name);
-    } else {
-      newJobs = exper.filter((arr) => name != arr);
-      setExper(() => [...newJobs]);
-    }
+    setExper(name)
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      experience: [...new Set(newJobs)],
+      experience:name,
       page: 1,
     };
 
@@ -435,22 +428,17 @@ const MainFilter = ({ ...props }) => {
             pb: "0px !important",
           }}
         >
-          {/* <RadioGroup onChange={handleExperience} value={exper[0] || null}> */}
-          {USER_EXPERIENCES.map((ex, index) => (
-            <FormControlLabel
-              key={index}
-              control={
-                <BpCheckbox
-                  size="small"
-                  onChange={handleExperience}
-                  name={ex}
-                  checked={exper.includes(ex)}
-                />
-              }
-              label={ex}
-            />
-          ))}
-          {/* </RadioGroup> */}
+        <RadioGroup onChange={handleExperience} value={exper}>
+          {USER_EXPERIENCES.map((com, index) => (
+                              <FormControlLabel
+                                key={index}
+                                control={<BpRadio size="small" />}
+                                label={com}
+                                value={com}
+                                name={com}
+                              />
+                            ))}
+          </RadioGroup>
         </CardContent>
       </Collapse>
       <Divider className="divider" variant="middle" />

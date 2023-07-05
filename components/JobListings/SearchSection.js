@@ -316,7 +316,7 @@ const SearchSection = ({ ...props }) => {
   const [names, setNames] = useState(
     isEmpty(jobType?.[0]) ? [] : jobType || []
   );
-  const [exper, setExper] = useState(experience || []);
+  const [exper, setExper] = useState(experience);
   const [titlef, setTitlef] = useState("");
   const [title, setTitle] = useState(props.title || "");
   const [addressf, setAddressf] = useState("");
@@ -463,19 +463,11 @@ setJobVariant(variant)
 
   const handleExperience = (re) => {
     const { name, checked } = re.target;
-    let newJobs = exper;
-
-    if (checked) {
-      newJobs.push(name);
-    } else {
-      newJobs = exper.filter((arr) => name != arr);
-    }
-
-    setExper(() => [...newJobs]);
+    setExper(name);
   };
 
   const clearSearch = () => {
-    setExper(() => []);
+    setExper("");
     setNames(() => []);
     setSelectedSector([]);
     setJobVariant("");
@@ -601,13 +593,13 @@ setJobVariant(variant)
   // };
 
   const handleDeleteExp = (e) => {
-    const newNames = exper.filter((n) => e !== n);
+   setExper("")
 
     const { ...otherParams } = router.query;
 
     const updatedQueryParams = {
       ...otherParams,
-      experience: newNames,
+      experience: "",
       page: 1,
     };
 
@@ -619,8 +611,6 @@ setJobVariant(variant)
       undefined,
       { shallow: true }
     );
-
-    setExper(() => [...newNames]);
   };
 
   const handleDeleteNames = (e) => {
@@ -867,11 +857,9 @@ setJobVariant(variant)
                         )} */}
 
                         {!isEmpty(exper) &&
-                          exper.map((ex, index) => (
                             <Chip
                               onDelete={(ex) => handleDeleteExp(ex)}
-                              key={ex}
-                              label={ex}
+                              label={exper}
                               color="primary"
                               style={{
                                 fontWeight: 500,
@@ -881,7 +869,7 @@ setJobVariant(variant)
                                 color: "rgba(3, 66, 117, 0.69)",
                               }}
                             />
-                          ))}
+                          }
 
                         {selectedCategory.map((e) => (
                           <Chip
@@ -995,20 +983,20 @@ setJobVariant(variant)
                         </TabPanel> */}
                         <TabPanel value={value} index={2}>
                           <FormControl>
-                            {USER_EXPERIENCES.map((ex, index) => (
-                              <StyledFormLabel
+                          <RadioGroup
+                            onChange={handleExperience}
+                            value={exper}
+                          >
+                            {USER_EXPERIENCES.map((com, index) => (
+                              <FormControlLabel
                                 key={index}
-                                control={
-                                  <BpCheckbox
-                                    size="small"
-                                    checked={exper.includes(ex)}
-                                    name={ex}
-                                    onChange={handleExperience}
-                                  />
-                                }
-                                label={ex}
+                                control={<BpRadio size="small" />}
+                                label={com}
+                                value={com}
+                                name={com}
                               />
                             ))}
+                          </RadioGroup>
                           </FormControl>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
@@ -1128,11 +1116,10 @@ setJobVariant(variant)
                     />
                   )} */}
 
-                  {exper.map((e) => (
+                  {!isEmpty(exper)  &&
                     <Chip
-                      key={e}
-                      label={e}
-                      onDelete={() => handleDeleteExp(e)}
+                    label={exper}
+                    onDelete={() => handleDeleteExp()}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1142,7 +1129,7 @@ setJobVariant(variant)
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
                     />
-                  ))}
+                  }
 
                   {selectedCategory.map((e) => (
                     <Chip
