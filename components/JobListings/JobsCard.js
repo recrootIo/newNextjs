@@ -126,7 +126,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
           color: "#034275",
         }}
         title={lateJob?.jobRole}
-        subheader={<Link href={""}>{lateJob?.company[0]?.company_name}</Link>}
+        subheader={<Link href={""}>{lateJob?.company[0]?.basicInformation?.cmpname}</Link>}
         action={
           <>
             <Box className="searchRstBtn" sx={{ mb: "7px" }}>

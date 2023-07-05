@@ -32,6 +32,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 const Navbar = () => {
   // const { data: session } = useSession()
   const { push } = useRouter();
+  const router = useRouter();
   // const user = JSON.parse(localStorage.getItem("User")) || "";
   const user = Cookies.get("token");
   const userType = Cookies.get("userType");
@@ -51,7 +52,7 @@ const Navbar = () => {
   const logOut = useCallback(() => {
     handleClose();
     dispatch(logout()).then(() => {
-      push("/");
+      window.location.href = "/"
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
