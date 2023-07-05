@@ -71,6 +71,7 @@ import {
   getEmailTemplapes,
   getJobsfil,
   getSinDetails,
+  getSinResume,
   updateEmailTemplapes,
 } from "@/redux/slices/applyJobs";
 import { logout } from "@/redux/slices/auth";
@@ -826,7 +827,7 @@ const AllApplicants = () => {
        date: "",
        setting: "Do_not_send",
      });
-     setIsShown(false);}
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   , [jid])
   const [matchstatus, setmatchstatus] = useState([])
@@ -846,7 +847,6 @@ const AllApplicants = () => {
     };
     dispatch(getMachingAppl(values));
   };
-console.log(selectedTemp,rejectedTemp,'temo')
   return (
     <>
       <Employer>
@@ -1525,7 +1525,7 @@ console.log(selectedTemp,rejectedTemp,'temo')
                       </MenuItem>
                     ))}
                   </Menu>
-                  <div style={{ display: isShown ? "none" : "block" }}>
+                  <div style={{ display: "block" }}>
                     <Button
                       id="demo-customized-button"
                       variant="contained"
