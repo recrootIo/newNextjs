@@ -97,16 +97,16 @@ const columns = [
       </>
     ),
   },
-  {
-    field: "packageEndDate",
-    headerName: "Package End Date",
-    width: "150",
-    renderCell: (parms) => (
-      <>
-        <p>{isEmpty(parms?.value) ? "N/A" : moment(parms?.value).format("L")}</p>
-      </>
-    ),
-  },
+  // {
+  //   field: "packageEndDate",
+  //   headerName: "Package End Date",
+  //   width: "150",
+  //   renderCell: (parms) => (
+  //     <>
+  //       <p>{isEmpty(parms?.value) ? "N/A" : moment(parms?.value).format("L")}</p>
+  //     </>
+  //   ),
+  // },
   // {
   //   field: "action",
   //   headerName: "Action",
