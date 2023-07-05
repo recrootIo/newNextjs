@@ -69,12 +69,12 @@ import {
 } from "@/redux/slices/companyslice";
 import { ERROR, SECTORS, SUCCESS } from "@/utils/constants";
 import { openAlert } from "@/redux/slices/alert";
-import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
 import Employer from "../../../components/pages/index";
 import { useTheme } from "@mui/material/styles";
 import { isEmpty } from "lodash";
 import companyservice from "@/redux/services/company.service";
+import { useRouter } from "next/router";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const style = {
@@ -165,7 +165,7 @@ const CompanyProfile = () => {
     setFirst(file);
     setFileNames(file.name);
   }
-  const { push } = useRouter();
+  const router = useRouter();
   const basicadd = (e) => {
     const { name, value } = e.target;
     setBasic({ ...basic, [name]: value });
@@ -276,7 +276,7 @@ const CompanyProfile = () => {
       objectFit: "contain",
     },
   }));
-  console.log(basicin.cmpemail, "email");
+
   const theme = useTheme();
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -378,7 +378,7 @@ const CompanyProfile = () => {
               cursor: "pointer",
             }}
             onClick={() => {
-              push("/Employer/CompanyProfile");
+              router.push("/Employer/CompanyProfile");
             }}
           >
             <Box
@@ -437,7 +437,7 @@ const CompanyProfile = () => {
                 );
                 return;
               }
-              push("/Employer/Members");
+              router.push("/Employer/Members");
             }}
           >
             <Box
@@ -486,7 +486,7 @@ const CompanyProfile = () => {
                 );
                 return;
               }
-              push("/Employer/CompanyPreview");
+              router.push("/Employer/CompanyPreview");
             }}
           >
             <Box
@@ -976,7 +976,7 @@ const CompanyProfile = () => {
                     );
                     return;
                   }
-                  push("/Employer/Members");
+                  router.push("/Employer/Members");
                 }}
               >
                 Next

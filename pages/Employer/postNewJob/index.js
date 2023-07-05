@@ -128,7 +128,6 @@ function PostnewJob() {
       return;
     }
   };
-console.log(companyDet,'details')
   React.useEffect(() => {
     dispatch(companyJobs());
     dispatch(getfreeCount());
@@ -170,7 +169,10 @@ console.log(companyDet,'details')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const country = Cookies.get("country");
-
+  function hasEmptyElement(obj) {
+    return Object.values(obj).some(value => value === null || value === undefined || value === '');
+  }
+  console.log(companyDet,'detsss')
   const postJobs = () => {
     dispatch(applyJobsdet());
     if (
@@ -225,6 +227,48 @@ console.log(companyDet,'details')
                 })
               );
               setTimeout(() => {
+                if (hasEmptyElement(companyDet.basicInformation)) {
+                  
+                  router.push("/Employer/companyProfile").then(
+                    dispatch(
+                      openAlert({
+                        type: ERROR,
+                        message: "Please Update Basic Information",
+                      })
+                  )
+                  );
+                  return
+                }
+                if (hasEmptyElement(companyDet.companyInformation)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Company Information",
+                    })
+                  );
+                  return
+                }
+                if (hasEmptyElement(companyDet.links)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Social Media Links",
+                    })
+                  );
+                  return
+                }
+                if (isEmpty(companyDet.address)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Company Location",
+                    })
+                  );
+                  return
+                }
                 dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
               }, 500);
             }
@@ -295,6 +339,48 @@ console.log(companyDet,'details')
               );
               
               setTimeout(() => {
+                if (hasEmptyElement(companyDet.basicInformation)) {
+                  
+                  router.push("/Employer/companyProfile").then(
+                    dispatch(
+                      openAlert({
+                        type: ERROR,
+                        message: "Please Update Basic Information",
+                      })
+                  )
+                  );
+                  return
+                }
+                if (hasEmptyElement(companyDet.companyInformation)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Company Information",
+                    })
+                  );
+                  return
+                }
+                if (hasEmptyElement(companyDet.links)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Social Media Links",
+                    })
+                  );
+                  return
+                }
+                if (isEmpty(companyDet.address)) {
+                  router.push("/Employer/companyProfile")
+                  dispatch(
+                    openAlert({
+                      type: ERROR,
+                      message: "Please Update Company Location",
+                    })
+                  );
+                  return
+                }
                 dispatch(getJobsfil()).then(router.push("/Employer/Dashboard"));
               }, 500);
             }
