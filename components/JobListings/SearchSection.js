@@ -296,7 +296,6 @@ const SearchSection = ({ ...props }) => {
     // page,
     variant,
   } = props;
-
   const latestJobs = useSelector((state) => state.searchJobs.searchDetails);
   const totalPage = useSelector((state) => state.searchJobs.totalPage);
   const count = useSelector((state) => state.searchJobs.count);
@@ -331,6 +330,9 @@ const SearchSection = ({ ...props }) => {
     setAddressf(props.address);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+useEffect(() => {
+setJobVariant(variant)
+}, [variant])
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -357,7 +359,7 @@ const SearchSection = ({ ...props }) => {
         exper: exper,
         title,
         address,
-        jobVariant: jobVariant,
+        jobVariant: variant,
         // selectedCompanies,
         selectedSector,
         selectedCategory,
@@ -658,6 +660,7 @@ const SearchSection = ({ ...props }) => {
     exper,
     selectedCategory,
     selectedSector,
+    variant
   ]);
 
   return (

@@ -259,7 +259,7 @@ function CompleteProfile() {
               // navigate("/resume", { replace: false });
             } else {
               window.location.replace(
-                `https://recroot.io/Pricing`
+                `https://recroot.io/Employer/Dashboard`
               );
               // navigate("/", { replace: false });
             }
