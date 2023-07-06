@@ -80,11 +80,13 @@ const [resume, setresume] = useState()
         .updateAppStatus(id, { status: "viewed" })
         .then((res) => {
           if (res.status === 200) {
-            router.push(`/Employer/candiProfileFullView?appId=${id}`);
+            window.open(`http://localhost:3001/Employer/candiProfileFullView?appId=${id}`)
+            // router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
-      router.push(`/Employer/candiProfileFullView?appId=${id}`);
+      window.open(`http://localhost:3001/Employer/candiProfileFullView?appId=${id}`)
+      // router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
   };
   const type = useSelector((state) => state.company.matchType);
