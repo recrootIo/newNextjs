@@ -57,7 +57,7 @@ const AllApplicantsCard = ({ users }) => {
   const user = Cookies.get();
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
   const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const [resume, setresume] = useState()
     })}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-  const recroot = resume && `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+  const recroot = resume && `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
@@ -102,7 +102,7 @@ const [resume, setresume] = useState()
   const handleReject = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        `https://preprod.recroot.au/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -116,7 +116,7 @@ const [resume, setresume] = useState()
   const handleShort = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        `https://preprod.recroot.au/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )

@@ -42,7 +42,7 @@ const router = useRouter()
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
-        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,jobPay, {
+        axios.post(`https://preprod.recroot.au/api/addnewjobpayment`,jobPay, {
           headers: { "x-access-token": `${token}` },
         }).then((res)=>{
           setClientSecret(res?.data?.clientSecret)

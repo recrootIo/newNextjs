@@ -91,7 +91,7 @@ function CompleteProfile() {
   const enableAction = phoneNumber && phoneNumber.length >= 10;
 
   const getUser = () => {
-    fetch("https://api.arinnovate.io/login/success", {
+    fetch("https://preprod.recroot.au/login/success", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -128,7 +128,7 @@ function CompleteProfile() {
   //       email: values.email,
   //       password: values.password,
   //     };
-  //     axios.post("https://api.arinnovate.io/register", userObject).then(
+  //     axios.post("https://preprod.recroot.au/register", userObject).then(
   //       (res) => {
   //         if (res.status == 200) {
   //           console.log("DFg");
@@ -195,7 +195,7 @@ function CompleteProfile() {
         phoneNumber: phoneNumber,
       };
       axios
-        .post("https://api.arinnovate.io/api/completeProfile", userObject)
+        .post("https://preprod.recroot.au/api/completeProfile", userObject)
         .then((res) => {
           if (res.status === 200) {
             console.log(res);
@@ -225,7 +225,7 @@ function CompleteProfile() {
             });
             if (userType === "TempSocial") {
               window.location.replace(
-                `https://recroot.io/completeProfile`
+                `http://extraordinary-melba-a931eb.netlify.app/completeProfile`
               );
               // navigate("/resume", { replace: false });
             }
@@ -234,22 +234,22 @@ function CompleteProfile() {
                 loggedInUser?.User?.resume?.resumeFileLocation?.length === 0
               ) {
                 window.location.replace(
-                  `https://recroot.io/uploadResume`
+                  `http://extraordinary-melba-a931eb.netlify.app/uploadResume`
                 );
               } else {
                 if (Redirect !== null) {
                   window.location.replace(
-                    `https://recroot.io${Redirect}`
+                    `http://extraordinary-melba-a931eb.netlify.app${Redirect}`
                   );
                 }
                 window.location.replace(
-                  `https://recroot.io/`
+                  `http://extraordinary-melba-a931eb.netlify.app/`
                 );
               }
               // navigate("/resume", { replace: false });
             } else {
               window.location.replace(
-                `https://recroot.io/Employer/Dashboard`
+                `http://extraordinary-melba-a931eb.netlify.app/Employer/Dashboard`
               );
               // navigate("/", { replace: false });
             }

@@ -433,7 +433,7 @@ const EmpoyerDashboard = () => {
   const handleActivate = () => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "active" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -469,7 +469,7 @@ const EmpoyerDashboard = () => {
   const handleDeActivate = () => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
+        `https://preprod.recroot.au/api/updateJobStatus/${jobid}`,
         { status: "inactive" },
         { headers: { "x-access-token": `${user.token}` } }
       )
