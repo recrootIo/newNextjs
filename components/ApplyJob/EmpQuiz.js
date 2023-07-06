@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import {
   Button,
@@ -15,26 +15,45 @@ import ApplyJobStepper from "../ApplyJobStepper/ApplyJobStepper";
 import { BOLD } from "@/theme/fonts";
 import styles from "./applyJobs.module.css";
 
-const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen ,currentScreen}) => {
+const EmpQuiz = ({
+  questions,
+  jobTitle,
+  setFinal,
+  setCurrentScreen,
+  currentScreen,
+}) => {
+  const [newQuestions, setNewQuestion] = useState([]);
+
+  useEffect(() => {
+    setNewQuestion(() => [...questions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleRadio = (e, id) => {
-    const newMemChange = questions.map((i) => {
+    const newQuestions1 = newQuestions.map((i) => {
       if (id === i.id) {
         i = { ...i, [e.target.name]: e.target.value };
         i.id = id;
       }
       return i;
     });
-    setFinal((state) => ({ ...state, question: newMemChange }));
+
+    setNewQuestion(() => [...newQuestions1]);
   };
 
   const checkAnswers = () => {
-    for (let answerObj of questions) {
+    for (let answerObj of newQuestions) {
       let answer = answerObj?.answer?.toLowerCase(); // Convert the answer to lowercase for case-insensitive comparison
       if (answer !== "yes" && answer !== "no") {
         return false; // Return false if the answer is neither "yes" nor "no"
       }
     }
     return true; // Return true if all answers are either "yes" or "no"
+  };
+
+  const goToNext = () => {
+    setFinal((state) => ({ ...state, question: [...newQuestions] }));
+    setCurrentScreen("review");
   };
 
   return (
@@ -71,7 +90,11 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen ,currentScree
           <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
             {jobTitle}
           </CustomTypography>
-          <ApplyJobStepper setCurrentScreen={setCurrentScreen} currentScreen={currentScreen} activeStep={1} />
+          <ApplyJobStepper
+            setCurrentScreen={setCurrentScreen}
+            currentScreen={currentScreen}
+            activeStep={1}
+          />
         </Stack>
 
         <Grid container sx={{ gap: "10px" }}>
@@ -165,7 +188,7 @@ const EmpQuiz = ({ questions, jobTitle, setFinal, setCurrentScreen ,currentScree
               <button
                 variant="outlined"
                 onClick={() => {
-                  setCurrentScreen("review");
+                  goToNext();
                 }}
                 disabled={!checkAnswers()}
                 className={
