@@ -61,16 +61,17 @@ const AllApplicantsCard = ({ users }) => {
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
   const dispatch = useDispatch();
-  const resume = useSelector((state) => state.apply.resume);
+const [resume, setresume] = useState()
   useEffect(() => {
-    dispatch(getSinResume(users?.resumeId));
+  if(users?.resumeId){ new applyJobService().getResume(users?.resumeId).then((res)=>{
+      setresume(res.data?.resume?.resumeFileLocation[0])
+    })}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-  const recroot = `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+  const recroot = resume && `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
     /\\/g,
     "/"
   )}`;
-
   const router = useRouter();
   const { jid } = router.query;
   const navigate = (id, status) => {
