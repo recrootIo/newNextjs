@@ -838,7 +838,7 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("strong")}
                     className={styles.allApplicantsCardstrong}
-                    style={{ boxShadow: type === "strong" ? shadow : "" }}
+                    style={{ boxShadow: type === "strong" ? shadow : "",cursor:'pointer' }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
@@ -858,7 +858,7 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("good")}
                     className={styles.allApplicantsCardgood}
-                    style={{ boxShadow: type === "good" ? shadow : "" }}
+                    style={{ boxShadow: type === "good" ? shadow : "",cursor:'pointer' }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
