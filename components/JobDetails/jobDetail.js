@@ -62,6 +62,9 @@ const JobDetail = ({ ...props }) => {
     _id,
     count,
     appcount,
+    address,
+    jobType,
+    essentialInformation
   } = props;
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
@@ -125,7 +128,9 @@ const JobDetail = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
-
+    function removeHtmlTags(str) {
+      return str.replace(/<[^>]*>/g, '');
+    }
   return (
     <Box
       sx={{
@@ -133,35 +138,35 @@ const JobDetail = ({ ...props }) => {
       }}
     >
       <JobPostingJsonLd
-        datePosted="2020-01-06T03:37:40Z"
-        description="Company is looking for a software developer...."
+        datePosted={createdAt}
+        description={removeHtmlTags(jobDescription)}
         hiringOrganization={{
-          name: "company name",
-          sameAs: "www.company-website-url.dev",
+          name: `${company?.basicInformation?.cmpname}`,
+          sameAs: `${isEmpty(company?.basicInformation?.cmpwebsite) ? "?null" : company?.basicInformation?.cmpwebsite}`,
         }}
         jobLocation={{
-          streetAddress: "17 street address",
-          addressLocality: "Paris",
-          addressRegion: "Ile-de-France",
-          postalCode: "75001",
-          addressCountry: "France",
+          streetAddress: "?null",
+          addressLocality: `${address[0]}`,
+          addressRegion: "?null",
+          postalCode: "?null",
+          addressCountry: "?null",
         }}
-        title="Job Title"
-        baseSalary={{
-          currency: "EUR",
-          value: 40, // Can also be a salary range, like [40, 50]
-          unitText: "HOUR",
-        }}
-        employmentType="FULL_TIME"
-        jobLocationType="TELECOMMUTE"
-        validThrough="2020-01-06"
-        applicantLocationRequirements="FR"
+        title={jobRole}
+        // baseSalary={{
+        //   currency: "EUR",
+        //   value: 40, // Can also be a salary range, like [40, 50]
+        //   unitText: "HOUR",
+        // }}
+        employmentType={jobType}
+        jobLocationType={essentialInformation?.qualification}
+        validThrough={moment(applicationDeadline).format('L')}
+        applicantLocationRequirements="?null"
         experienceRequirements={{
           occupational: {
-            minimumMonthsOfExperience: 12,
+            minimumMonthsOfExperience: "?null",
           },
           educational: {
-            credentialCategory: "high school",
+            credentialCategory:`${essentialInformation?.qualification}`,
           },
           experienceInPlaceOfEducation: true,
         }}
