@@ -145,11 +145,11 @@ const JobDetail = ({ ...props }) => {
           sameAs: `${isEmpty(company?.basicInformation?.cmpwebsite) ? "?null" : company?.basicInformation?.cmpwebsite}`,
         }}
         jobLocation={{
-          streetAddress: "?null",
+          // streetAddress: "?null",
           addressLocality: `${address[0]}`,
-          addressRegion: "?null",
-          postalCode: "?null",
-          addressCountry: "?null",
+          addressRegion:  `${address[0]}`,
+          // postalCode: "?null",
+          // addressCountry: "?null",
         }}
         title={jobRole}
         // baseSalary={{
@@ -158,13 +158,13 @@ const JobDetail = ({ ...props }) => {
         //   unitText: "HOUR",
         // }}
         employmentType={jobType}
-        jobLocationType={essentialInformation?.qualification}
+        // jobLocationType={essentialInformation?.qualification}
         validThrough={moment(applicationDeadline).format('L')}
-        applicantLocationRequirements="?null"
+        // applicantLocationRequirements="?null"
         experienceRequirements={{
-          occupational: {
-            minimumMonthsOfExperience: "?null",
-          },
+          // occupational: {
+          //   minimumMonthsOfExperience: "?null",
+          // },
           educational: {
             credentialCategory:`${essentialInformation?.qualification}`,
           },
