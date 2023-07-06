@@ -45,6 +45,7 @@ import ShareForm from "../ShareForm/ShareForm";
 import { openAlert } from "@/redux/slices/alert";
 import { isEmpty } from "lodash";
 import { setApplyPath } from "@/redux/slices/applyJobs";
+import { JobPostingJsonLd } from "next-seo";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -131,6 +132,40 @@ const JobDetail = ({ ...props }) => {
         mt: "20px",
       }}
     >
+      <JobPostingJsonLd
+        datePosted="2020-01-06T03:37:40Z"
+        description="Company is looking for a software developer...."
+        hiringOrganization={{
+          name: "company name",
+          sameAs: "www.company-website-url.dev",
+        }}
+        jobLocation={{
+          streetAddress: "17 street address",
+          addressLocality: "Paris",
+          addressRegion: "Ile-de-France",
+          postalCode: "75001",
+          addressCountry: "France",
+        }}
+        title="Job Title"
+        baseSalary={{
+          currency: "EUR",
+          value: 40, // Can also be a salary range, like [40, 50]
+          unitText: "HOUR",
+        }}
+        employmentType="FULL_TIME"
+        jobLocationType="TELECOMMUTE"
+        validThrough="2020-01-06"
+        applicantLocationRequirements="FR"
+        experienceRequirements={{
+          occupational: {
+            minimumMonthsOfExperience: 12,
+          },
+          educational: {
+            credentialCategory: "high school",
+          },
+          experienceInPlaceOfEducation: true,
+        }}
+      />
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
