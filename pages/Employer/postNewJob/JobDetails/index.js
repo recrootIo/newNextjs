@@ -44,6 +44,7 @@ import {
   jobPackType,
   quesSend,
   roleSet,
+  setpremium,
   skillSet,
   skillSetmand,
   titleSet,
@@ -90,10 +91,12 @@ const JobDetails = () => {
   const title = useSelector((state) => state.jobs?.jobTitle);
   const pack = useSelector((state) => state.jobs?.packageType);
   useEffect(() => {
+    dispatch(setpremium(false));
     const element = document.getElementById("top");
     element.scrollIntoView({
       behavior: "smooth",
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     axios

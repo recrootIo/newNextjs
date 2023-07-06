@@ -21,6 +21,7 @@ import SuccessStories from "@/components/NewHome/SuccessStories";
 import WatchDemo from "@/components/NewHome/WatchDemo";
 import GuaranteedHiring from "@/components/NewHome/GuaranteedHiring";
 import DedicatedManagers from "@/components/NewHome/DedicatedManagers";
+import { Toolbar } from "@mui/material";
 
 export default function Home({ locale }) {
   useEffect(() => {
@@ -37,7 +38,14 @@ export default function Home({ locale }) {
           width: "100%",
         }}
       >
+        <Box sx={{  position: "fixed",
+  zIndex: 100,
+  width:'100%',
+  boxShadow:
+    "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"}}>
         <Navbar />
+        </Box>
+        <Toolbar />
         <HireTalents />
         <IdentifyingBestCandidates />
         <GuaranteedHiring />

@@ -45,6 +45,8 @@ import ShareForm from "../ShareForm/ShareForm";
 import { openAlert } from "@/redux/slices/alert";
 import { isEmpty } from "lodash";
 import { setApplyPath } from "@/redux/slices/applyJobs";
+import Cookies from "js-cookie";
+import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -124,7 +126,10 @@ const JobDetail = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
+  const userType = Cookies.get("userType");
 
+const employerTypes = [EMPLOYER, RECRUITER];
+  const isEmployer = employerTypes.includes(userType);
   return (
     <Box
       sx={{
@@ -180,7 +185,9 @@ const JobDetail = ({ ...props }) => {
                       ? "Complete Profile"
                       : " Apply now"}
                   </Button>
-                ) : (
+                ): isEmployer ? (
+                      ""
+                    ) : (
                   <Tooltip title="Sign In" placement="right">
                     <Button
                       variant="contained"

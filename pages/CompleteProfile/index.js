@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
-import "react-phone-input-2/lib/style.css";
+// import "react-phone-input-2/lib/style.css";
 import { styles } from "../../components/CompleteProfile/completeSignupStyle";
 import { ERROR, SECTORS } from "@/utils/constants";
 import { isEmpty } from "lodash";
@@ -31,16 +31,25 @@ import { openAlert } from "@/redux/slices/alert";
 import { validator } from "../../components/CompleteProfile/Validator";
 import Cookies from "js-cookie";
 import { EMPLOYER, RECRUITER } from "@/utils/UserConstants";
-
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  }
+};
 const ColorButton = styled(Button)(({ theme }) => ({
-  // "&:focus": {
-  //   backgroundColor: "white",
-  //   color: "#4F9AFF",
-  // },
-  // "&:active": {
-  //   backgroundColor: "white",
-  //   color: "#4F9AFF",
-  // },
+  "&:focus": {
+    backgroundColor: "white",
+    color: "#4F9AFF",
+  },
+  "&:active": {
+    backgroundColor: "white",
+    color: "#4F9AFF",
+  },
 }));
 const StyledButton = withStyles(() => ({
   // root: {
@@ -73,6 +82,7 @@ const BasicButton = styled(Button)({
   fontWeight: 700,
   fontSize: "20px",
   color: "white !important",
+  
 });
 function CompleteProfile() {
   const [errors, setErrors] = useState({});
@@ -292,7 +302,7 @@ function CompleteProfile() {
             >
               <div
                 style={{
-                  fontSize: "24px",
+                  fontSize: "18px",
                   fontWeight: "700",
                   lineHeight: "35px",
                   letterSpacing: "1.5px",
@@ -301,7 +311,7 @@ function CompleteProfile() {
                 Candidate
               </div>
             </ColorButton>
-            {/* <ColorButton
+            <ColorButton
               sx={styles.topbtn}
               variant="outlined"
               className={
@@ -311,16 +321,15 @@ function CompleteProfile() {
             >
               <div
                 style={{
-                  fontSize: "24px",
+                  fontSize: "18px",
                   fontWeight: "700",
-                  fontFamily: "GreycliffCF-Bold",
                   lineHeight: "35px",
                   letterSpacing: "1.5px",
                 }}
               >
                 Employer
               </div>
-            </ColorButton> */}
+            </ColorButton> 
           </Box>
           <Typography sx={styles.sinup}>Account Type</Typography>
           <Typography sx={styles.candsub}>
@@ -385,6 +394,7 @@ function CompleteProfile() {
                       label="sector"
                       onChange={handleChange("sector")}
                       variant="outlined"
+                      MenuProps={MenuProps}
                     >
                       {SECTORS.map((job, ind) => (
                         <MenuItem key={ind} value={job}>
@@ -433,10 +443,9 @@ function CompleteProfile() {
                     fontWeight: 700,
                     fontSize: "20px",
                   }}
-                  disabled={!enableAction}
                 >
                   Complete
-                </BasicButton>
+                </BasicButton> 
               </Grid>
             </Grid>
           </form>

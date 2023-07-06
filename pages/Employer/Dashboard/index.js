@@ -425,7 +425,7 @@ const EmpoyerDashboard = () => {
     // dispatch(seeAll({ jobId: jobid, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/Employer/AllApplicants?jid=${jobid}`, { state: true });
+    push(`/Employer/allApplicants?jid=${jobid}`, { state: true });
     // }, 500)
     // );
   };

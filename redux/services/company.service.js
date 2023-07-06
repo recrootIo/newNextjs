@@ -53,7 +53,8 @@ class companyservice {
   }
 
   getMatchingApplicants(value) {
-    return http.get(`/matchApplicant/${value?.id}?page=${value?.page}`);
+    console.log(value,'val')
+    return http.post(`/matchApplicant/${value?.id}?page=${value?.page}`,value);
   }
 
   getAllInfoSectors() {

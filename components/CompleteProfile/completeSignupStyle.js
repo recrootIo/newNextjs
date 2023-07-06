@@ -20,12 +20,14 @@ export const styles = {
     marginTop: { md: "50px", xs: "20px" },
   },
   btncand: {
-    border: "1px solid white",
+    border: "1px solid white !important",
     color: "white !important",
     width: { lg: "480px" },
     height: { lg: "76px" },
     textTransform: "capitalize",
-    p:'10px'
+    p:'10px !important',
+    borderRadius: "5px !important"
+    
   },
   mntxt: {
     fontSize: "24px",
@@ -61,6 +63,7 @@ export const styles = {
     paddingBottom: { md: "0", xs: "20px" },
     paddingTop: { md: "0", xs: "20px" },
     justifyContent: "space-evenly",
+    gap:'5px'
   },
   topbtn: {
     border: "1px solid #fff",

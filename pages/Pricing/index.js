@@ -1,4 +1,3 @@
-import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import {
   Card,
   Dialog,
@@ -51,6 +50,7 @@ import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypogra
 import { RECRUITER } from "@/utils/UserConstants";
 import { isEmpty } from "lodash";
 import FooterHome from "@/components/Home/FooterHome";
+import Navbar from "@/components/Navbar/Navbar";
 
 const normal = {
   fontFamily: "'Inter'",
@@ -333,7 +333,7 @@ function PricingNew() {
 
   return (
     <div>
-      <EmployerNavbar />
+      <Navbar />
       <Box
         sx={{
           backgroundImage: 'url("/EmployerDashboardBG.svg")',

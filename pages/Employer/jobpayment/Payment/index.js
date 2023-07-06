@@ -38,11 +38,12 @@ const token = Cookies.get('token')
 const router = useRouter()
   useEffect(() => {
     const job = JSON.parse(localStorage.getItem("jobDetail"));
+    const compny = JSON.parse(localStorage.getItem("User"));
     if(isEmpty(jobPay) === true  && isEmpty(job) === true){
       router.push('/Employer/Dashboard')
     }else{
       if(jobPay.payment !== ''){
-        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,jobPay, {
+        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,{jobarr:jobPay,jobDetails:job,companyId:compny?.User?.companyId}, {
           headers: { "x-access-token": `${token}` },
         }).then((res)=>{
           setClientSecret(res?.data?.clientSecret)
@@ -52,7 +53,7 @@ const router = useRouter()
       }
     }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [jobPay])
+      }, [])
   const appearance = {
     theme: "stripe",
   };

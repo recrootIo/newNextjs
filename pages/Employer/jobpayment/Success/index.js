@@ -1,11 +1,14 @@
 import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar';
-import { Box, Button, Card, CardContent, Container, Typography, styled } from '@mui/material';
-import React from 'react'
+import { Box, Button, Card, CardContent, Container, FormHelperText, Typography, styled } from '@mui/material';
+import React, { useState } from 'react'
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { isEmpty } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCompanyDetails } from '@/redux/slices/companyslice';
 const BasicButton = styled(Button)({
     color: "#ffff",
     padding: "20px",
@@ -24,10 +27,13 @@ function SuccessJobPay() {
     const array = elements ? elements.split(',') : [];
     const value = {
         ids:array,
-        clientSecret:payment_intent_client_secret
+        clientSecret:payment_intent_client_secret,
+        companyId:Cookies.get('companyId')
     }
 const token = Cookies.get('token')
+const dispatch = useDispatch()
     useEffect(() => {
+    dispatch(getCompanyDetails())
       if(array.length > 0){  axios.post(
           `${'https://api.arinnovate.io/api/'}updateJobPayment`,value, {
             headers: { "x-access-token": `${token}` },
@@ -54,7 +60,32 @@ const token = Cookies.get('token')
               })
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [array,newJob])
+      }, [elements,newJob])
+      const companyDet = useSelector((state) => state.company.companyDetl);
+
+      function hasEmptyElementInObjects(obj1, obj2, obj3) {
+        const objects = [obj1, obj2, obj3];
+        
+        for (const obj of objects) {
+          if (hasEmptyElement(obj)) {
+            return true;
+          }
+        }
+        
+        return false;
+      }
+      
+      function hasEmptyElement(obj) {
+        return Object.values(obj).some(value => isEmpty(value) );
+      }
+    const [comp, setcomp] = useState(false)
+    useEffect(() => {
+   if (!isEmpty(companyDet)) {
+    setcomp(hasEmptyElementInObjects(companyDet?.basicInformation,companyDet?.companyInformation,companyDet?.links) || isEmpty(companyDet?.address))
+   }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [companyDet])
+    
   return (
     <div>
          <EmployerNavbar />
@@ -110,7 +141,22 @@ const token = Cookies.get('token')
             <Typography variant="h" component="div" className="tts">
               This Transaction was successfull
             </Typography>
-            <BasicButton
+          {comp ?
+          <>
+          <BasicButton
+              variant="contained"
+              className="goto-button"
+              disableElevation
+              onClick={() => {
+                router.push('/Employer/companyProfile');
+              }}
+            >
+              Go To Company Profile
+            </BasicButton> 
+            <FormHelperText>*Update Company Profile</FormHelperText>
+          </>
+            :
+           <BasicButton
               variant="contained"
               className="goto-button"
               disableElevation
@@ -120,6 +166,7 @@ const token = Cookies.get('token')
             >
               Go To Dashboard
             </BasicButton>
+            }
           </CardContent>
         </Card>
       </Container>

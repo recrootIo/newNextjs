@@ -63,7 +63,6 @@
 }
 .FeaturedjobsCard:hover {
   box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2) !important;
-  cursor: pointer;
 }
 
 .featuredAvatar {
