@@ -45,6 +45,7 @@ import ShareForm from "../ShareForm/ShareForm";
 import { openAlert } from "@/redux/slices/alert";
 import { isEmpty } from "lodash";
 import { setApplyPath } from "@/redux/slices/applyJobs";
+import { JobPostingJsonLd } from "next-seo";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const JobDetail = ({ ...props }) => {
@@ -61,6 +62,9 @@ const JobDetail = ({ ...props }) => {
     _id,
     count,
     appcount,
+    address,
+    jobType,
+    essentialInformation
   } = props;
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
@@ -124,13 +128,49 @@ const JobDetail = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
-
+    function removeHtmlTags(str) {
+      return str.replace(/<[^>]*>/g, '');
+    }
   return (
     <Box
       sx={{
         mt: "20px",
       }}
     >
+      <JobPostingJsonLd
+        datePosted={createdAt}
+        description={removeHtmlTags(jobDescription)}
+        hiringOrganization={{
+          name: `${company?.basicInformation?.cmpname}`,
+          sameAs: `${isEmpty(company?.basicInformation?.cmpwebsite) ? "?null" : company?.basicInformation?.cmpwebsite}`,
+        }}
+        jobLocation={{
+          streetAddress: "?null",
+          addressLocality: `${address[0]}`,
+          addressRegion: "?null",
+          postalCode: "?null",
+          addressCountry: "?null",
+        }}
+        title={jobRole}
+        // baseSalary={{
+        //   currency: "EUR",
+        //   value: 40, // Can also be a salary range, like [40, 50]
+        //   unitText: "HOUR",
+        // }}
+        employmentType={jobType}
+        jobLocationType={essentialInformation?.qualification}
+        validThrough={moment(applicationDeadline).format('L')}
+        applicantLocationRequirements="?null"
+        experienceRequirements={{
+          occupational: {
+            minimumMonthsOfExperience: "?null",
+          },
+          educational: {
+            credentialCategory:`${essentialInformation?.qualification}`,
+          },
+          experienceInPlaceOfEducation: true,
+        }}
+      />
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
