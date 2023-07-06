@@ -228,7 +228,7 @@ const AllApplicants = () => {
         dispatch(getMachingAppl(value));
         return;
       }else{
-        dispatch(applyJobsdet({page:cuurpage}))
+        dispatch(applyJobsdet({page:page}))
           .then((res) => {
             if (res.error !== undefined) {
               res.error.message === "Request failed with status code 401" ||
