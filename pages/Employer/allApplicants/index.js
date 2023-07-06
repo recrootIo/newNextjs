@@ -70,7 +70,9 @@ import {
   applyJobsdetFilter,
   getEmailTemplapes,
   getJobsfil,
+  getSinCover,
   getSinDetails,
+  getSinResume,
   updateEmailTemplapes,
 } from "@/redux/slices/applyJobs";
 import { logout } from "@/redux/slices/auth";
