@@ -547,7 +547,7 @@ const EmpoyerDashboard = () => {
     {
       // field: "status",
       headerName: "Upgrade",
-      width: 200,
+      width: 100,
       renderCell: (parms) => (
         <>
           <Button

@@ -80,12 +80,12 @@ const [resume, setresume] = useState()
         .updateAppStatus(id, { status: "viewed" })
         .then((res) => {
           if (res.status === 200) {
-            window.open(`http://localhost:3001/Employer/candiProfileFullView?appId=${id}`)
+            window.open(`https://recroot.io/Employer/candiProfileFullView?appId=${id}`)
             // router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
-      window.open(`http://localhost:3001/Employer/candiProfileFullView?appId=${id}`)
+      window.open(`https://recroot.io/Employer/candiProfileFullView?appId=${id}`)
       // router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
   };
