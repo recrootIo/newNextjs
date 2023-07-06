@@ -47,7 +47,7 @@ const EmployerNavbar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const company = useSelector((state) => state.company?.companyDetl);
-const photoUrl = company?.companyLogo?.logo &&  `https://preprod.recroot.au/api/openProfpic?photo=${company.companyLogo.logo}`
+const photoUrl = company?.companyLogo?.logo &&  `https://api.arinnovate.io/api/openProfpic?photo=${company.companyLogo.logo}`
   return (
     <nav>
       <div
