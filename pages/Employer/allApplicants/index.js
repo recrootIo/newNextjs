@@ -342,6 +342,8 @@ const AllApplicants = () => {
     } else {
       dispatch(applyJobsdet(reqObject));
     }
+    scrollToTop()
+    scrollToDiv()
   };
 
   const handleName = (e, value) => {
@@ -547,8 +549,15 @@ const AllApplicants = () => {
       page: page,
     };
     dispatch(getMachingAppl(value)).then(setcuurpage(page));
+    scrollToTop()
+    scrollToDiv()
   };
-
+  const divRef = useRef(null);
+  const scrollToTop = () => {
+    if (divRef.current) {
+      divRef.current.scrollTop = 0;
+    }
+  };
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl1);
   const id1 = open2 ? "simple-popover" : undefined;
@@ -807,7 +816,12 @@ const AllApplicants = () => {
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);
   }, [comp?.tours?.allApplicant]);
-
+  const scrollToDiv = () => {
+    const element = document.getElementById('style-5');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <>
       <Employer>
@@ -918,6 +932,7 @@ const AllApplicants = () => {
                 </Stack>
               )}
               <Divider
+                  id="style-5"
                 sx={{ mt: "30px", mb: "30px", borderColor: "#D4F0FC" }}
               />
               {matching ? (
@@ -1460,6 +1475,7 @@ const AllApplicants = () => {
                 ))}
               </Stack>
               <Box
+                ref={divRef}
                 className={styles.scrollbar}
                 id="style-5"
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
