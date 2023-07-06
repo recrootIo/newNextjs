@@ -413,7 +413,7 @@ const AllApplicants = () => {
       }
       const reqObject = {
         page: 1,
-        data: { status: selectedStatus, job: [newIds] },
+        data: { status: selectedStatus, job: newIds },
       };
       dispatch(applyJobsdet(reqObject));
       const queryString = JSON.stringify(newJobs);
@@ -432,7 +432,7 @@ const AllApplicants = () => {
         { shallow: true } // This option prevents the page from rerendering
       );
     }
-
+   handleClose()
   };
   useEffect(() => {
     const reqObject = {
@@ -502,6 +502,7 @@ const AllApplicants = () => {
       );
     }
     setSelected(() => [...newArray]);
+    handleClose1()
   };
 
   function roundAndIncrease(decimalNumber) {
@@ -980,10 +981,9 @@ const AllApplicants = () => {
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem key={variant.jobRole} disablePadding>
+                          <ListItem onClick={(e) => handleName(e, variant)} key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
-                              onClick={(e) => handleName(e, variant)}
                               dense
                               sx={{ cursor: "auto" }}
                             >
