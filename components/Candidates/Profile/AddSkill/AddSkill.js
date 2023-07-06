@@ -70,7 +70,7 @@ const AddSkill = () => {
   }, [skill]);
 
   const addNewSkill = (values) => {
-    setload(true)
+    setload(true);
     candidateServices
       .addSkill(values)
       .then((res) => {
@@ -82,12 +82,12 @@ const AddSkill = () => {
             })
           );
           gotoHome();
-          setload(false)
-          dispatch(retrievePersonal()).then((res)=>{
-            if(res?.meta?.requestStatus === "fulfilled"){
-              CalculatePercentage()
+          setload(false);
+          dispatch(retrievePersonal()).then((res) => {
+            if (res?.meta?.requestStatus === "fulfilled") {
+              CalculatePercentage();
             }
-          })
+          });
         }
       })
       .catch(() => {
@@ -101,7 +101,7 @@ const AddSkill = () => {
   };
 
   const editNewSkill = (values) => {
-    setload(true)
+    setload(true);
     candidateServices
       .editSkills(values, values?.id)
       .then((res) => {
@@ -113,12 +113,12 @@ const AddSkill = () => {
             })
           );
           gotoHome();
-          setload(false)
-          dispatch(retrievePersonal()).then((res)=>{
-            if(res?.meta?.requestStatus === "fulfilled"){
-              CalculatePercentage()
+          setload(false);
+          dispatch(retrievePersonal()).then((res) => {
+            if (res?.meta?.requestStatus === "fulfilled") {
+              CalculatePercentage();
             }
-          })
+          });
         }
       })
       .catch((error) => {
@@ -144,7 +144,7 @@ const AddSkill = () => {
   return (
     <div>
       <Container>
-        <Card variant="outlined"> 00
+        <Card variant="outlined">
           <Box sx={{ bgcolor: "#2699FF" }}>
             <Button
               variant="text"
@@ -158,7 +158,7 @@ const AddSkill = () => {
             >
               Back
             </Button>
-          </Box> 0
+          </Box>
           <CardContent
             sx={{
               p: { md: "50px", xs: "22px", sm: "22px" },
@@ -233,21 +233,22 @@ const AddSkill = () => {
                         >
                           Cancel
                         </Button>
-                     {!load ?   <Button
-                          variant="contained"
-                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                          onClick={() => submitForm()}
-                        >
-                          {buttonText}
-                        </Button>
-                        :
-                        <Button
-                          variant="contained"
-                          sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
-                        >
-                          <CircularProgress color='inherit' />
-                        </Button>
-                        }
+                        {!load ? (
+                          <Button
+                            variant="contained"
+                            sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                            onClick={() => submitForm()}
+                          >
+                            {buttonText}
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            sx={{ bgcolor: "#015FB1 !important", width: "50%" }}
+                          >
+                            <CircularProgress color="inherit" />
+                          </Button>
+                        )}
                       </Stack>
                     </Stack>
                   </Form>
