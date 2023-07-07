@@ -67,6 +67,8 @@ const JobDetail = ({ ...props }) => {
     essentialInformation,
   } = props;
 
+  console.log(jobDescription, "jd");
+
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
   const savedJobs = useSelector((state) => state.personal.savedJobs);
 
@@ -128,9 +130,9 @@ const JobDetail = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
-  function removeHtmlTags(str) {
-    return str.replace(/<[^>]*>/g, "");
-  }
+  // function removeHtmlTags(str) {
+  //   return str.replace(/<[^>]*>/g, "");
+  // }
   return (
     <Box
       sx={{
@@ -139,7 +141,7 @@ const JobDetail = ({ ...props }) => {
     >
       <JobPostingJsonLd
         datePosted={createdAt}
-        description={removeHtmlTags(jobDescription)}
+        description={jobDescription}
         hiringOrganization={{
           name: `${company?.basicInformation?.cmpname}`,
           sameAs: `${
