@@ -47,7 +47,7 @@ const ResetPassword = ({ id, token }) => {
 
   const handleSubmit = (e) => {
     axios
-      .post(`http://localhost:3000/reset-password/${id}/${token}`, {
+      .post(`https://api.arinnovate.io/reset-password/${id}/${token}`, {
         password: e.password,
       })
       .then(function (response) {
