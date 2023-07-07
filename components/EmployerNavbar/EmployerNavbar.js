@@ -49,7 +49,7 @@ const EmployerNavbar = () => {
   const company = useSelector((state) => state.company?.companyDetl);
   const photoUrl =
     company?.companyLogo?.logo &&
-    `http://localhost:3000/api/openProfpic?photo=${company.companyLogo.logo}`;
+    ` https://api.arinnovate.io/api/openProfpic?photo=${company.companyLogo.logo}`;
   return (
     <nav>
       <div

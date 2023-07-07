@@ -270,7 +270,7 @@ const SelectResume = () => {
                     sx={{ fontSize: "14px", float: "right", color: PRIMARY }}
                     onClick={async () => {
                       const res = await fetch(
-                        ` http://localhost:3000/api/downloadResume?resume=${resumeSin.resume.replace(
+                        `  https://api.arinnovate.io/api/downloadResume?resume=${resumeSin.resume.replace(
                           /\\/g,
                           "/"
                         )}`
@@ -488,7 +488,7 @@ const SelectResume = () => {
                         }}
                         onClick={async () => {
                           const res = await fetch(
-                            ` http://localhost:3000/api/downloadCover?cover=${CoverSin.cover.replace(
+                            `  https://api.arinnovate.io/api/downloadCover?cover=${CoverSin.cover.replace(
                               /\\/g,
                               "/"
                             )}`

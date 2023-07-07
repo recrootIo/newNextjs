@@ -186,7 +186,7 @@ const InterviewCalendar = (props) => {
       Time.meetlink !== ""
     ) {
       axios
-        .post("http://localhost:3000/api/updateInterview", Time, {
+        .post(" https://api.arinnovate.io/api/updateInterview", Time, {
           headers: { "x-access-token": `${user.token}` },
         })
         .then((data) => {

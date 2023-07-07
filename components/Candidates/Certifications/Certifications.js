@@ -559,7 +559,7 @@ const Certifications = () => {
                             <IconButton
                               onClick={async () => {
                                 const res = await fetch(
-                                  `  http://localhost:3000/api/downloadCertificate?certificate=${cet.certificatepath.replace(
+                                  `   https://api.arinnovate.io/api/downloadCertificate?certificate=${cet.certificatepath.replace(
                                     /\\/g,
                                     "/"
                                   )}`

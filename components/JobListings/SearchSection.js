@@ -95,7 +95,7 @@ export const getSalary = (salary, defaults = true, font = 16, black = null) => {
 };
 
 export const getImageLogo = (url) => {
-  return `http://localhost:3000/api/getCompanyPhotos?compPhotos=${url}`;
+  return ` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${url}`;
 };
 
 // dialog box for mobile filter

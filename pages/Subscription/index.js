@@ -110,7 +110,7 @@ function SubscribePrice() {
 
     axios
       .put(
-        `http://localhost:3000/api/${User?.companyId}/applyPromoCode`,
+        ` https://api.arinnovate.io/api/${User?.companyId}/applyPromoCode`,
         data,
         {
           headers,

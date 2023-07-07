@@ -127,7 +127,7 @@ const EditPersonalDetails = () => {
   const requestTitles = (e) => {
     setTitleLoading(true);
     axios
-      .get(`http://localhost:3000/api/getTitles?searchTitle=${e}`, {
+      .get(` https://api.arinnovate.io/api/getTitles?searchTitle=${e}`, {
         headers: { "x-access-token": `${user.token}` },
       })
       .then((response) => {
