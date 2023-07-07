@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const response = await axios.get(
-      `http://localhost:3000/reset-password/${id}/${token}`
+      `https://api.arinnovate.io/reset-password/${id}/${token}`
     );
 
     console.log(response, "response");

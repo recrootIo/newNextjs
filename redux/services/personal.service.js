@@ -164,7 +164,7 @@ const editVerify = (value) => {
   return http.put(`verifyEmail`, value);
 };
 const resendCode = (value) => {
-  return axios.put(`http://localhost:3000/resendCode`, value);
+  return axios.put(`https://api.arinnovate.io/resendCode`, value);
 };
 const getRetrenchedCandidates = () => {
   return http.get(`getRetrenchCandidates`);

@@ -200,15 +200,15 @@ const AllApplicants = () => {
   const { jid } = router.query;
   // const jid = undefined;
   const matching = jid !== undefined;
-  const [cuurpage, setcuurpage] = useState('');
+  const [cuurpage, setcuurpage] = useState("");
   useEffect(() => {
     const { array } = router.query;
     const { status } = router.query;
     const { page } = router.query;
     if (page) {
-  setcuurpage(page)
+      setcuurpage(page);
     }
-    if (array || status) {      
+    if (array || status) {
       if (array) {
         const parsedArray = JSON.parse(array);
         setTitles(parsedArray);
@@ -218,8 +218,7 @@ const AllApplicants = () => {
         const parsedStatus = JSON.parse(status);
         setSelected(parsedStatus);
       }
-    }
-    else{
+    } else {
       if (matching) {
         const value = {
           id: jid,
@@ -227,8 +226,8 @@ const AllApplicants = () => {
         };
         dispatch(getMachingAppl(value));
         return;
-      }else{
-        dispatch(applyJobsdet({page:page}))
+      } else {
+        dispatch(applyJobsdet({ page: page }))
           .then((res) => {
             if (res.error !== undefined) {
               res.error.message === "Request failed with status code 401" ||
@@ -266,10 +265,8 @@ const AllApplicants = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query,jid]);
-  useEffect(() => {
-
-  }, [dispatch, jid]);
+  }, [router.query, jid]);
+  useEffect(() => {}, [dispatch, jid]);
   const type = useSelector((state) => state.company.matchType);
 
   const handleClear = (val) => {
@@ -337,35 +334,35 @@ const AllApplicants = () => {
 
   const seeAll = useSelector((state) => state.apply.seeCand);
   const handleChange = (e, value) => {
-   setcuurpage(value)
+    setcuurpage(value);
     const reqObject = {
       page: value,
       data: { status: selectedStatus, job: ids },
       jobid: seeAll?.jobId,
     };
     const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        page: value,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
+    const updatedQueryParams = {
+      ...otherParams,
+      page: value,
+    };
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true } // This option prevents the page from rerendering
+    );
     if (seeAll?.state === true) {
       dispatch(applyJobsdetFilter(reqObject));
     } else {
       dispatch(applyJobsdet(reqObject));
     }
-    scrollToTop()
-    scrollToDiv()
+    scrollToTop();
+    scrollToDiv();
   };
   const handleName = (e, value) => {
-    const {  checked } = e.target;
+    const { checked } = e.target;
     if (checked) {
       const titls = [...ids, value._id];
       setTitles(
@@ -391,7 +388,7 @@ const AllApplicants = () => {
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
-        array: queryString ,
+        array: queryString,
         page: 1,
       };
       router.push(
@@ -420,7 +417,7 @@ const AllApplicants = () => {
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
-        array: queryString ,
+        array: queryString,
         page: 1,
       };
       router.push(
@@ -432,7 +429,7 @@ const AllApplicants = () => {
         { shallow: true } // This option prevents the page from rerendering
       );
     }
-   handleClose()
+    handleClose();
   };
   useEffect(() => {
     const reqObject = {
@@ -440,7 +437,7 @@ const AllApplicants = () => {
       data: { status: selectedStatus, job: ids },
     };
     if (isEmpty(selectedStatus) && isEmpty(ids)) {
-      setUser(details)
+      setUser(details);
     } else {
       dispatch(applyJobsdet(reqObject));
     }
@@ -461,13 +458,13 @@ const AllApplicants = () => {
     if (e.target.checked) {
       newArray.push(value);
       const queryString = JSON.stringify([...selectedStatus, value]);
-      
-    const { ...otherParams } = router.query;
-    const updatedQueryParams = {
-      ...otherParams,
-      status: queryString ,
-      page: 1,
-    };
+
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        status: queryString,
+        page: 1,
+      };
       router.push(
         {
           pathname: router.pathname,
@@ -489,7 +486,7 @@ const AllApplicants = () => {
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
-        status: queryString ,
+        status: queryString,
         page: 1,
       };
       router.push(
@@ -502,7 +499,7 @@ const AllApplicants = () => {
       );
     }
     setSelected(() => [...newArray]);
-    handleClose1()
+    handleClose1();
   };
 
   function roundAndIncrease(decimalNumber) {
@@ -522,8 +519,8 @@ const AllApplicants = () => {
       page: page,
     };
     dispatch(getMachingAppl(value)).then(setcuurpage(page));
-    scrollToTop()
-    scrollToDiv()
+    scrollToTop();
+    scrollToDiv();
   };
   const divRef = useRef(null);
   const scrollToTop = () => {
@@ -684,7 +681,7 @@ const AllApplicants = () => {
   const handleDelete = (indexToRemove, typ, idds) => {
     console.info(idds, "You clicked the delete icon.");
     if (typ === "titl") {
-      const idis = ids.filter((element) => !idds.includes(element))
+      const idis = ids.filter((element) => !idds.includes(element));
       setids(idis);
       setTitles(titles.filter((_, index) => index !== indexToRemove));
       const reqObject = {
@@ -698,7 +695,7 @@ const AllApplicants = () => {
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
-        array: queryString ,
+        array: queryString,
         page: 1,
       };
       router.push(
@@ -710,7 +707,9 @@ const AllApplicants = () => {
         { shallow: true } // This option prevents the page from rerendering
       );
     } else {
-      const status = selectedStatus.filter((_, index) => index !== indexToRemove)
+      const status = selectedStatus.filter(
+        (_, index) => index !== indexToRemove
+      );
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
       const reqObject = {
         page: 1,
@@ -723,7 +722,7 @@ const AllApplicants = () => {
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
-        status: queryString ,
+        status: queryString,
         page: 1,
       };
       router.push(
@@ -814,9 +813,9 @@ const AllApplicants = () => {
     setTourOpen(() => comp?.tours?.allApplicant);
   }, [comp?.tours?.allApplicant]);
   const scrollToDiv = () => {
-    const element = document.getElementById('style-5');
+    const element = document.getElementById("style-5");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
   return (
@@ -838,7 +837,10 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("strong")}
                     className={styles.allApplicantsCardstrong}
-                    style={{ boxShadow: type === "strong" ? shadow : "",cursor:'pointer' }}
+                    style={{
+                      boxShadow: type === "strong" ? shadow : "",
+                      cursor: "pointer",
+                    }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
@@ -858,7 +860,10 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("good")}
                     className={styles.allApplicantsCardgood}
-                    style={{ boxShadow: type === "good" ? shadow : "",cursor:'pointer' }}
+                    style={{
+                      boxShadow: type === "good" ? shadow : "",
+                      cursor: "pointer",
+                    }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
@@ -929,7 +934,7 @@ const AllApplicants = () => {
                 </Stack>
               )}
               <Divider
-                  id="style-5"
+                id="style-5"
                 sx={{ mt: "30px", mb: "30px", borderColor: "#D4F0FC" }}
               />
               {matching ? (
@@ -981,7 +986,11 @@ const AllApplicants = () => {
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem onClick={(e) => handleName(e, variant)} key={variant.jobRole} disablePadding>
+                          <ListItem
+                            onClick={(e) => handleName(e, variant)}
+                            key={variant.jobRole}
+                            disablePadding
+                          >
                             <ListItemButton
                               role={undefined}
                               dense
@@ -1111,7 +1120,7 @@ const AllApplicants = () => {
                         Email - Rejected Candidates
                       </MenuItem>
                       <MenuItem onClick={handleShortlistedDialogAction}>
-                        Email - Shortlist Candidates
+                        Email - Shortlisted Candidates
                       </MenuItem>
                     </Menu>
                     <Dialog

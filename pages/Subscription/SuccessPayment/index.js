@@ -32,7 +32,7 @@ function SucessPayment() {
   var subscriptioncompanyId = Cookies.get("companyId");
   useEffect(() => {
     if (name !== undefined) {
-      fetch(" https://api.arinnovate.io/api/updatePaymentRecord", {
+      fetch("https://api.arinnovate.io/api/updatePaymentRecord", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

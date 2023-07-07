@@ -61,8 +61,7 @@ const CandidatePage = () => {
                   textAlign: { xs: "center", md: "left" },
                 }}
               >
-                Find your path to success with{" "}
-                <span style={{ fontStyle: "italic" }}>Recroot</span>
+                Find your path to success with Recroot
               </CustomTypography>
               <CustomTypography
                 sx={{

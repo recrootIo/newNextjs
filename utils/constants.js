@@ -425,7 +425,7 @@ export const PRO_PLAN = {
   pricing: {
     rs: 600,
     us: 15,
-    lk:3200
+    lk: 3200,
   },
   type: JOB_POST,
 };
@@ -445,7 +445,7 @@ export const PREMIUM_PACKAGE = {
   pricing: {
     rs: 1600,
     us: 35,
-    lk:6500
+    lk: 6500,
   },
   type: JOB_POST,
 };
@@ -508,9 +508,9 @@ export const NEW_PRICING_PLAN = {
 
 export const CANDIDATE = "Candidate";
 
-export const SHORT_LISTED = "shortlist";
+export const SHORT_LISTED = "shortlisted";
 export const REJECTED = "rejected";
-export const UNVIEW = "unview";
+export const UNVIEW = "unviewed";
 export const VIEWED = "viewed";
 export const EMPLOYEE_STATUS = [SHORT_LISTED, REJECTED, UNVIEW, VIEWED];
 

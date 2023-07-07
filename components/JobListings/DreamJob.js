@@ -16,7 +16,15 @@ const DreamJob = () => {
                 fontWeight={700}
                 gutterBottom
               >
-                Find your Dream Job
+                Explore Your Dream Job Here
+              </CustomTypography>
+              <CustomTypography
+                className="dreamjobsubTypo"
+                fontWeight={700}
+                gutterBottom
+              >
+                Let’s begin your journey toward professional success with us
+                today!
               </CustomTypography>
             </Box>
           </Grid>

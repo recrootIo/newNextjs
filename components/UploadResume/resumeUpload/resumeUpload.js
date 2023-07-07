@@ -168,8 +168,8 @@ const AddResume = ({ ...props }) => {
                 className="resumeUploadText"
                 gutterBottom
               >
-                Use our uploader to save your resume and search and apply for
-                thousand of jobs without uploading resume each time
+                Use our uploader to save your resume and search for and apply to
+                thousands of jobs without uploading your resume each time.
               </CustomTypography>
             </Box>
           </Stack>

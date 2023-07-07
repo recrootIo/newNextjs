@@ -238,9 +238,9 @@ function Signup() {
 
   const handleClick = (val) => {
     if (val === "google") {
-      window.location.replace("http://localhost:3000/auth/google");
+      window.location.replace("https://api.arinnovate.io/auth/google");
     } else {
-      window.location.replace("http://localhost:3000/auth/linkedin");
+      window.location.replace("https://api.arinnovate.io/auth/linkedin");
     }
   };
 
@@ -528,7 +528,7 @@ function Signup() {
                               textTransform: "capitalize",
                             }}
                           >
-                            Sign Up Already have an account?
+                            Already have an account?
                           </CustomTypography>
                           <Link href="/signin">
                             <CustomTypography

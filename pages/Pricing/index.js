@@ -1293,7 +1293,7 @@ function PricingNew() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{ alignItems: "flex-start" }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon
@@ -1378,7 +1378,7 @@ function PricingNew() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{ alignItems: "flex-start" }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon
@@ -1441,7 +1441,7 @@ function PricingNew() {
                       <li key={id}>
                         <Stack
                           direction={"row"}
-                          sx={{ alignItems: "center" }}
+                          sx={{ alignItems: "flex-start" }}
                           gap={2}
                         >
                           <CheckCircleRoundedIcon

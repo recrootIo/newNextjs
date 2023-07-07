@@ -91,7 +91,7 @@ function CompleteProfile() {
   const enableAction = phoneNumber && phoneNumber.length >= 10;
 
   const getUser = () => {
-    fetch("http://localhost:3000/login/success", {
+    fetch("https://api.arinnovate.io/login/success", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -128,7 +128,7 @@ function CompleteProfile() {
   //       email: values.email,
   //       password: values.password,
   //     };
-  //     axios.post("http://localhost:3000/register", userObject).then(
+  //     axios.post(" https://api.arinnovate.io/register", userObject).then(
   //       (res) => {
   //         if (res.status == 200) {
   //           console.log("DFg");

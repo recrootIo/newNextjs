@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const API_URL = "http://localhost:3000/";
+const API_URL = "https://api.arinnovate.io/";
 
 const register = (
   email,
