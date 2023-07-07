@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Blogs = () => {
-  const API_URL = "https://api.arinnovate.io/api";
+  const API_URL = " https://api.arinnovate.io/api";
 
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);
@@ -111,8 +111,8 @@ const Blogs = () => {
    * @param {*} event
    * @param {*} value
    */
-  const handleChange = (e,value) => {
-    console.log(value,'vallll')
+  const handleChange = (e, value) => {
+    console.log(value, "vallll");
     setCurrent(() => value);
     if (selectedCate) {
       getBlogsCategories(selectedCate?._id, value);
@@ -209,7 +209,6 @@ const Blogs = () => {
 
   const emptyBlogs = filteringBlogs.length < 1;
 
-  
   return (
     <div>
       <Navbar />
@@ -241,154 +240,148 @@ const Blogs = () => {
       </Box>
       <Container>
         <Grid container>
-        <Grid item xs={12} sm={6} md={4} lg={9}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: "10px",
-            mt: "40px",
-            
-          }}
-        >
-          <Search>
+          <Grid item xs={12} sm={6} md={4} lg={9}>
             <Box
               sx={{
                 display: "flex",
-                bgcolor: "white",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                height: "50px",
-                width: { xs: "100%", md: "100%" },
-                paddingLeft: "10px",
-                paddingRight: "10px",
-                border: "1px solid rgba(118, 118, 118, 0.3)",
-                borderRadius: "5px",
+                flexDirection: { xs: "column", md: "row" },
+                gap: "10px",
+                mt: "40px",
               }}
             >
-              <StyledInputBase
-                placeholder="Search Here"
-                inputProps={{ "aria-label": "search" }}
-                value={search}
-                onChange={searchHandler}
-              />
-              <IconButton    onClick={() => searchAction()}>
-              <SearchIcon
-                sx={{ color: "#0183C9", height: "35px", width: "auto" }}
-              />
-              </IconButton>
+              <Search>
+                <Box
+                  sx={{
+                    display: "flex",
+                    bgcolor: "white",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    height: "50px",
+                    width: { xs: "100%", md: "100%" },
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    border: "1px solid rgba(118, 118, 118, 0.3)",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <StyledInputBase
+                    placeholder="Search Here"
+                    inputProps={{ "aria-label": "search" }}
+                    value={search}
+                    onChange={searchHandler}
+                  />
+                  <IconButton onClick={() => searchAction()}>
+                    <SearchIcon
+                      sx={{ color: "#0183C9", height: "35px", width: "auto" }}
+                    />
+                  </IconButton>
+                </Box>
+              </Search>
             </Box>
-          </Search>
-        </Box>
-        <Box
-          sx={{
-            mt: "40px",
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row", md: "row" },
-            gap: "20px",
-            flexWrap: "wrap",
-            justifyContent: "space-around"
-          }}
-        >
-          {
-filteringBlogs?.map((blog,ind)=>(
-  <BlogsCard key={ind} blog={blog} API_URL={API_URL}/>
-
-))
-          }
-      
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: "40px" }}>
-          <Pagination
-            count={countedPages?.length}
-            shape="rounded"
-            hidePrevButton
-            hideNextButton
-            onChange={handleChange}
-          />
-        </Box>
+            <Box
+              sx={{
+                mt: "40px",
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row", md: "row" },
+                gap: "20px",
+                flexWrap: "wrap",
+                justifyContent: "space-around",
+              }}
+            >
+              {filteringBlogs?.map((blog, ind) => (
+                <BlogsCard key={ind} blog={blog} API_URL={API_URL} />
+              ))}
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: "40px" }}>
+              <Pagination
+                count={countedPages?.length}
+                shape="rounded"
+                hidePrevButton
+                hideNextButton
+                onChange={handleChange}
+              />
+            </Box>
           </Grid>
-          <Grid item xs={12} md={4.5} lg={3} sx={{mt:5}}>
-          <div
-                className="blog-sidebar"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <aside className="widget widget-categories">
-                  <Typography fontWeight={600}>Categories</Typography>
-                  <Stack>
-                    {categories.map((cate,ind) => (
-                      <Stack key={ind} direction={"row"}>
-                        <FormGroup>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={
-                                  cate?.category === selectedCate?.category
-                                }
-                                tabIndex={-1}
-                                disableRipple
-                                onClick={(e) =>
-                                  categoryHandler(cate, e.target.checked)
-                                }
-                                size="small"
-                              />
-                            }
-                            label={cate?.category}
-                            sx={{
-                              fontSize: "10px",
-                              lineHeight: "40px",
-                              fontWeight: 500,
-                              color: "#5d5a67",
-                              ":hover": {
-                                // color: PRIMARY,
-                              },
-                            }}
-                          />
-                        </FormGroup>
-                      </Stack>
-                    ))}
-                  </Stack>
-                </aside>
-                <aside className="widget widget-trend-post">
-                  <Typography fontWeight={600}>Recent Posts</Typography>
-                  {recentPost.map((rec,ind) => (
-                    <Link key={ind} href={`/blogs/${rec?.title}/${rec?._id}`}>
-                      <div className="popular-post">
-                        <Image
-                          src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
-                          alt=""
-                          height={20}
-                          width={0}
+          <Grid item xs={12} md={4.5} lg={3} sx={{ mt: 5 }}>
+            <div
+              className="blog-sidebar"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <aside className="widget widget-categories">
+                <Typography fontWeight={600}>Categories</Typography>
+                <Stack>
+                  {categories.map((cate, ind) => (
+                    <Stack key={ind} direction={"row"}>
+                      <FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={
+                                cate?.category === selectedCate?.category
+                              }
+                              tabIndex={-1}
+                              disableRipple
+                              onClick={(e) =>
+                                categoryHandler(cate, e.target.checked)
+                              }
+                              size="small"
+                            />
+                          }
+                          label={cate?.category}
+                          sx={{
+                            fontSize: "10px",
+                            lineHeight: "40px",
+                            fontWeight: 500,
+                            color: "#5d5a67",
+                            ":hover": {
+                              // color: PRIMARY,
+                            },
+                          }}
                         />
-
-                        <h5>{rec.title}</h5>
-                        <span>
-                          {moment(rec.updatedAt).format("DD-MM-YYYY")}
-                        </span>
-                      </div>
-                    </Link>
+                      </FormGroup>
+                    </Stack>
                   ))}
-                </aside>
-                <aside className="widget">
-                  <Typography fontWeight={600}>Tags</Typography>
-                  <div className="tags">
-                    {tags.map((tag,ind) => (
-                      <Box
+                </Stack>
+              </aside>
+              <aside className="widget widget-trend-post">
+                <Typography fontWeight={600}>Recent Posts</Typography>
+                {recentPost.map((rec, ind) => (
+                  <Link key={ind} href={`/blogs/${rec?.title}/${rec?._id}`}>
+                    <div className="popular-post">
+                      <Image
+                        src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
+                        alt=""
+                        height={20}
+                        width={0}
+                      />
+
+                      <h5>{rec.title}</h5>
+                      <span>{moment(rec.updatedAt).format("DD-MM-YYYY")}</span>
+                    </div>
+                  </Link>
+                ))}
+              </aside>
+              <aside className="widget">
+                <Typography fontWeight={600}>Tags</Typography>
+                <div className="tags">
+                  {tags.map((tag, ind) => (
+                    <Box
                       key={ind}
-                        className={
-                          selectedTags.includes(tag) ? "tags-active" : "tags-a"
-                        }
-                        onClick={() => onClickChips(tag)}
-                      >{`# ${tag}`}</Box>
-                    ))}
-                  </div>
-                </aside>
-              </div>
+                      className={
+                        selectedTags.includes(tag) ? "tags-active" : "tags-a"
+                      }
+                      onClick={() => onClickChips(tag)}
+                    >
+                      {`# ${tag}`}
+                    </Box>
+                  ))}
+                </div>
+              </aside>
+            </div>
           </Grid>
         </Grid>
-    
       </Container>
       <FooterHome />
     </div>

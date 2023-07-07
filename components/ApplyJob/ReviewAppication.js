@@ -169,7 +169,11 @@ function ReviewAppication({ ...props }) {
           <CustomTypography sx={{ fontFamily: BOLD }} variant="h4">
             {jobTitle}
           </CustomTypography>
-          <ApplyJobStepper hasQuestions={hasQuestions} setCurrentScreen={setCurrentScreen} activeStep={hasQuestions ? 1 :2} />
+          <ApplyJobStepper
+            hasQuestions={hasQuestions}
+            setCurrentScreen={setCurrentScreen}
+            activeStep={hasQuestions ? 1 : 2}
+          />
         </Stack>
 
         <Box sx={{ marginTop: "60px" }}>
@@ -371,7 +375,7 @@ function ReviewAppication({ ...props }) {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` https://api.arinnovate.io/api/downloadResume?resume=${resumeSin.resume.replace(
+                              `  https://api.arinnovate.io/api/downloadResume?resume=${resumeSin.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`

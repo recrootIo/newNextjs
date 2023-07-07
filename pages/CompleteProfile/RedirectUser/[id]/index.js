@@ -62,7 +62,7 @@ function RedirectUser() {
   // const redirect = null;
   const getUser = () => {
     axios
-      .get(`https://api.arinnovate.io/getUser/${id}`)
+      .get(`http://localhost:3000/getUser/${id}`)
       .then((resObject) => {
         axios.get("https://ipapi.co/json/").then((response) => {
           Cookies.set("country", response.data?.country);
@@ -86,19 +86,21 @@ function RedirectUser() {
 
         if (resObject.data.User) {
           if (
-          resObject.data.User.recrootUserType === "Employer" || resObject.data.User.recrootUserType === RECRUITER ||resObject.data.User.recrootUserType === "Member"
+            resObject.data.User.recrootUserType === "Employer" ||
+            resObject.data.User.recrootUserType === RECRUITER ||
+            resObject.data.User.recrootUserType === "Member"
           ) {
             router.push("/Employer/Dashboard");
             // }
-          } else if(resObject.data.User.recrootUserType === "TempSocial"){
+          } else if (resObject.data.User.recrootUserType === "TempSocial") {
             router.push("/CompleteProfile");
-          }else if(resObject.data.User.recrootUserType === "Candidate"){
+          } else if (resObject.data.User.recrootUserType === "Candidate") {
             if (resObject.data.User.resume?.resumeFileLocation?.length === 0) {
-            router.push("/uploadResume");
-            }else{
-            router.push("/");
+              router.push("/uploadResume");
+            } else {
+              router.push("/");
             }
-           }
+          }
         }
       })
       .catch((err) => {

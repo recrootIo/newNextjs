@@ -57,21 +57,25 @@ const AllApplicantsCard = ({ users }) => {
   const user = Cookies.get();
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? ` https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
   const dispatch = useDispatch();
-const [resume, setresume] = useState()
+  const [resume, setresume] = useState();
   useEffect(() => {
-  if(users?.resumeId){ new applyJobService().getResume(users?.resumeId).then((res)=>{
-      setresume(res.data?.resume?.resumeFileLocation[0])
-    })}
+    if (users?.resumeId) {
+      new applyJobService().getResume(users?.resumeId).then((res) => {
+        setresume(res.data?.resume?.resumeFileLocation[0]);
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-  const recroot = resume && `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
-    /\\/g,
-    "/"
-  )}`;
+  const recroot =
+    resume &&
+    ` https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+      /\\/g,
+      "/"
+    )}`;
   const router = useRouter();
   const { jid } = router.query;
   const navigate = (id, status) => {
@@ -80,12 +84,16 @@ const [resume, setresume] = useState()
         .updateAppStatus(id, { status: "viewed" })
         .then((res) => {
           if (res.status === 200) {
-            window.open(`https://recroot.io/Employer/candiProfileFullView?appId=${id}`)
+            window.open(
+              `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
+            );
             // router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
-      window.open(`https://recroot.io/Employer/candiProfileFullView?appId=${id}`)
+      window.open(
+        `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
+      );
       // router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
   };
@@ -104,7 +112,7 @@ const [resume, setresume] = useState()
   const handleReject = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        ` https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -118,7 +126,7 @@ const [resume, setresume] = useState()
   const handleShort = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        ` https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )
