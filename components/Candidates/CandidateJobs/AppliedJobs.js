@@ -127,7 +127,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                   fontSize={16}
                   sx={{ color: "gray" }}
                 >
-                  {applied?.jobType[0]}
+                  {/* {applied?.jobType[0]} */}
                 </CustomTypography>
                 <CustomTypography
                   variant="body2"
@@ -143,7 +143,7 @@ const AppliedJobs = ({ appliedJobs }) => {
                   fontSize={16}
                   sx={{ color: "gray" }}
                 >
-                  {applied?.experience[0].experience}
+                  {/* {applied?.experience[0].experience} */}
                 </CustomTypography>
                 <CustomTypography sx={{ color: "gray" }} fontSize={15}>
                   {getSalary(applied?.salary[0])}

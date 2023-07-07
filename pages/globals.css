@@ -2176,8 +2176,7 @@ a {
 }
 
 .tags-a {
-  display: inline-block;
-  height: 34px;
+  min-height: 34px;
   background: #f8f8f8;
   border-radius: 3px;
   text-align: center;
@@ -2191,8 +2190,7 @@ a {
 }
 
 .tags-active {
-  display: inline-block;
-  height: 34px;
+  min-height: 34px;
   background: #2b70fa;
   border-radius: 3px;
   text-align: center;

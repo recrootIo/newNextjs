@@ -201,7 +201,7 @@ function Addinterview({ users, setinterviewshow }) {
     ) {
       if (!sear._id) {
         axios
-          .post("https://api.arinnovate.io/api/addinterview", Time, {
+          .post("http://localhost:3000/api/addinterview", Time, {
             headers: { "x-access-token": `${user.token}` },
           })
           .then((data) => {
@@ -232,7 +232,7 @@ function Addinterview({ users, setinterviewshow }) {
           });
       } else {
         axios
-          .post("https://api.arinnovate.io/api/updateInterview", Time, {
+          .post("http://localhost:3000/api/updateInterview", Time, {
             headers: { "x-access-token": `${user.token}` },
           })
           .then((data) => {

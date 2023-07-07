@@ -110,7 +110,7 @@ function SubscribePrice() {
 
     axios
       .put(
-        `https://api.arinnovate.io/api/${User?.companyId}/applyPromoCode`,
+        `http://localhost:3000/api/${User?.companyId}/applyPromoCode`,
         data,
         {
           headers,
@@ -359,9 +359,9 @@ function SubscribePrice() {
                               "Indian Rupee",
                               2
                             )
-                          :lakn ?
-                          `Rs.${subscriptionPrice}.00`:
-                           currencyConvert(subscriptionPrice, "US Dollar", 2)
+                          : lakn
+                          ? `Rs.${subscriptionPrice}.00`
+                          : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(
                             subscriptionPrice,
                             "US Dollar",
@@ -528,9 +528,9 @@ function SubscribePrice() {
                               subscriptionPrice,
                               "Indian Rupee",
                               2
-                            ) :
-                            lakn ?
-                            `Rs.${subscriptionPrice}.00`
+                            )
+                          : lakn
+                          ? `Rs.${subscriptionPrice}.00`
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
                     </CustomTypography>
@@ -605,11 +605,9 @@ function SubscribePrice() {
                               subscriptionPrice,
                               "Indian Rupee",
                               2
-                            ) :
-                            lakn ?
-                            
-                            `Rs.${subscriptionPrice}.00`
-                             
+                            )
+                          : lakn
+                          ? `Rs.${subscriptionPrice}.00`
                           : currencyConvert(subscriptionPrice, "US Dollar", 2)
                         : currencyConvert(subscriptionPrice, "US Dollar", 2)}
                     </CustomTypography>

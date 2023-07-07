@@ -3,7 +3,15 @@ import FooterHome from "@/components/Home/FooterHome";
 import Navbar from "@/components/Navbar/Navbar";
 import { BOLD } from "@/theme/fonts";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
-import { Box, Chip, Container, Divider, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -39,13 +47,13 @@ const StyledQuestionTypo = styled(CustomTypography)({
 });
 
 const BlogDetails = ({ blog, tags, recent }) => {
-    const API_URL = 'https://api.arinnovate.io/api'
+  const API_URL = "http://localhost:3000/api";
   const imageUrl = `${API_URL}/getCompanyPhotos?compPhotos=${blog?.blogImage}`;
-  const router = useRouter()
+  const router = useRouter();
   const handleUrl = (title, id) => {
     var regexPattern = /\s+/g;
     var ans = title.replace(regexPattern, "%20");
-    const current = router.pathname
+    const current = router.pathname;
     return `${current}/${ans}/${id}`;
   };
   return (
@@ -79,124 +87,130 @@ const BlogDetails = ({ blog, tags, recent }) => {
           </Container>
         </Box>
         <Grid container spacing={2}>
-<Grid item xs={12} md={7} lg={8.5} >
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Container>
-            <Box sx={{ mt: "30px" }}>
-              <Image
-                src={imageUrl}
-                alt=""
-                width={2000}
-                height={2000}
-                style={{ width: "auto",height:"auto",margin:'auto' }}
-              />
-            </Box>
-          </Container>
-          <Container>
-            <Box
-              sx={{
-                height: "auto",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                pb: "30px",
-                pt: "20px",
-                pl: { xs: "10px", md: 0 },
-                pr: { xs: "10px", md: 0 },
-              }}
-            >
-              <Box
-                sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" } }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ display: "flex", gap: "5px" }}>
-                    <AccessTimeIcon sx={{ color: "#02A9F7" }} />
-                    <CustomTypography
-                      gutterBottom
-                      sx={{ fontSize: "16px", color: "#01313F" }}
-                    >
-             {moment(blog.updatedAt).format("DD-MM-YYYY")}
-                    </CustomTypography>
-                  </Box>
-                  <Box sx={{ display: "flex", gap: "5px" }}>
-                    <AssistantIcon sx={{ color: "#02A9F7" }} />
-                    <CustomTypography
-                      gutterBottom
-                      sx={{ fontSize: "16px", color: "#01313F" }}
-                    >
-                      {blog?.category?.category}
-                    </CustomTypography>
-                  </Box>
+          <Grid item xs={12} md={7} lg={8.5}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Container>
+                <Box sx={{ mt: "30px" }}>
+                  <Image
+                    src={imageUrl}
+                    alt=""
+                    width={2000}
+                    height={2000}
+                    style={{ width: "auto", height: "auto", margin: "auto" }}
+                  />
                 </Box>
-                <CustomTypography
-                  gutterBottom
-                  sx={{
-                    mt: "30px",
-                    fontWeight: 700,
-                    fontSize: "30px",
-                    color: "#034275",
-                  }}
-                >
-                 {blog?.title}
-                </CustomTypography>
+              </Container>
+              <Container>
                 <Box
                   sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: { xs: "5px", sm: "20px" },
+                    height: "auto",
+                    borderTopLeftRadius: "20px",
+                    borderTopRightRadius: "20px",
+                    pb: "30px",
+                    pt: "20px",
+                    pl: { xs: "10px", md: 0 },
+                    pr: { xs: "10px", md: 0 },
                   }}
                 >
-                  <CustomTypography
+                  <Box
                     sx={{
-                      fontWeight: 500,
-                      fontSize: "16px",
-                      color: "#01313F",
-                      whiteSpace: "nowrap",
+                      ml: { xs: 0, md: "130px" },
+                      mr: { xs: 0, md: "130px" },
                     }}
                   >
-                    Tags :
-                  </CustomTypography>
-                  {
-                    blog?.tags.map((tag,ind)=>(
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Box sx={{ display: "flex", gap: "5px" }}>
+                        <AccessTimeIcon sx={{ color: "#02A9F7" }} />
+                        <CustomTypography
+                          gutterBottom
+                          sx={{ fontSize: "16px", color: "#01313F" }}
+                        >
+                          {moment(blog.updatedAt).format("DD-MM-YYYY")}
+                        </CustomTypography>
+                      </Box>
+                      <Box sx={{ display: "flex", gap: "5px" }}>
+                        <AssistantIcon sx={{ color: "#02A9F7" }} />
+                        <CustomTypography
+                          gutterBottom
+                          sx={{ fontSize: "16px", color: "#01313F" }}
+                        >
+                          {blog?.category?.category}
+                        </CustomTypography>
+                      </Box>
+                    </Box>
+                    <CustomTypography
+                      gutterBottom
+                      sx={{
+                        mt: "30px",
+                        fontWeight: 700,
+                        fontSize: "30px",
+                        color: "#034275",
+                      }}
+                    >
+                      {blog?.title}
+                    </CustomTypography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: { xs: "5px", sm: "20px" },
+                      }}
+                    >
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: "16px",
+                          color: "#01313F",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Tags :
+                      </CustomTypography>
+                      {blog?.tags.map((tag, ind) => (
                         <Chip
-                        key={ind}
+                          key={ind}
                           label={`#${tag}`}
                           sx={{ bgcolor: "#D4F0FC" }}
                         />
-                    ))
-                  }
-                     <ShareForm   url={handleUrl(blog?.title, blog?._id)}
-                            roundedButtons={true}
-                            title={blog?.title}
-                            description={blog?.description}
-                            />
-                  {/* <IconButton aria-label="share">
+                      ))}
+                      <ShareForm
+                        url={handleUrl(blog?.title, blog?._id)}
+                        roundedButtons={true}
+                        title={blog?.title}
+                        description={blog?.description}
+                      />
+                      {/* <IconButton aria-label="share">
                     <ShareIcon sx={{ color: "#0183C9", fontSize: "30px" }} />
                   </IconButton> */}
+                    </Box>
+                    <Divider
+                      sx={{ mt: "20px", bgcolor: "rgba(175, 209, 237, 0.69)" }}
+                    />
+                  </Box>
+                  <Box>
+                    <Box
+                      sx={{
+                        ml: { xs: 0, md: "130px" },
+                        mr: { xs: 0, md: "130px" },
+                        mt: 2,
+                      }}
+                    >
+                      <ReactQuill
+                        value={blog?.description}
+                        readOnly={true}
+                        theme={"bubble"}
+                      />
+                    </Box>
+                  </Box>
                 </Box>
-                <Divider
-                  sx={{ mt: "20px", bgcolor: "rgba(175, 209, 237, 0.69)" }}
-                />
-              </Box>
-              <Box>
-              <Box
-                sx={{ ml: { xs: 0, md: "130px" }, mr: { xs: 0, md: "130px" }, mt:2}}
-              >
-              <ReactQuill
-                  value={blog?.description}
-                  readOnly={true}
-                  theme={"bubble"}
-                />
-              </Box>
-              </Box>
-            </Box>
-          </Container>
-          {/* <Container>
+              </Container>
+              {/* <Container>
             <Box
               sx={{
                 bgcolor: "#EBF9FF",
@@ -276,39 +290,36 @@ const BlogDetails = ({ blog, tags, recent }) => {
               </Box>
             </Box>
           </Container> */}
-        </Box>
-
-</Grid>
-<Grid item xs={12} md={5} lg={3.5} >
-<div className="blog-sidebar">
-                <aside className="widget widget-trend-post">
-                  <Typography className="widget-title">Recent Posts</Typography>
-                  {recent.map((rec,ind) => (
-                    <div key={ind} className="popular-post">
-                      <Link href={`/blogs/${rec?.title}/${rec?._id}`}>
-                        <img
-                          src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
-                          alt=""
-                          height={"20px"}
-                        />
-                        <h5>{rec.title}</h5>
-                        <span>
-                          {moment(rec.updatedAt).format("DD-MM-YYYY")}
-                        </span>
-                      </Link>
-                    </div>
-                  ))}
-                </aside>
-                <aside className="widget">
-                  <Typography className="widget-title">Tags</Typography>
-                  <div className="tags">
-                    {tags.map((tag) => (
-                      <Box key={tag} className={"tags-a"}>{`# ${tag}`}</Box>
-                    ))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={5} lg={3.5}>
+            <div className="blog-sidebar">
+              <aside className="widget widget-trend-post">
+                <Typography className="widget-title">Recent Posts</Typography>
+                {recent.map((rec, ind) => (
+                  <div key={ind} className="popular-post">
+                    <Link href={`/blogs/${rec?.title}/${rec?._id}`}>
+                      <img
+                        src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
+                        alt=""
+                        height={"20px"}
+                      />
+                      <h5>{rec.title}</h5>
+                      <span>{moment(rec.updatedAt).format("DD-MM-YYYY")}</span>
+                    </Link>
                   </div>
-                </aside>
-              </div>
-</Grid>
+                ))}
+              </aside>
+              <aside className="widget">
+                <Typography className="widget-title">Tags</Typography>
+                <div className="tags">
+                  {tags.map((tag) => (
+                    <Box key={tag} className={"tags-a"}>{`# ${tag}`}</Box>
+                  ))}
+                </div>
+              </aside>
+            </div>
+          </Grid>
         </Grid>
       </Box>
       <FooterHome />

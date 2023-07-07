@@ -3,8 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const http = axios.create({
-  baseURL: "https://api.arinnovate.io/api/",
-  // baseURL: "https://api.arinnovate.io/api/",
+  baseURL: "http://localhost:3000/api/",
+  // baseURL: "http://localhost:3000/api/",
   headers: {
     "Content-type": "application/json",
   },
