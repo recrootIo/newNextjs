@@ -25,7 +25,7 @@ const BrandsWeWork = () => {
 
   const getLogo = (logo) => {
     if (logo) {
-      return ` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo}`;
+      return `https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo}`;
       // return await http
       //   .get(`getCompanyPhotos?compPhotos=${logo}`)
       //   .then((res) => res);

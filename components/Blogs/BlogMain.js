@@ -47,7 +47,7 @@ const StyledQuestionTypo = styled(CustomTypography)({
 });
 
 const BlogDetails = ({ blog, tags, recent }) => {
-  const API_URL = " https://api.arinnovate.io/api";
+  const API_URL = "https://api.arinnovate.io/api";
   const imageUrl = `${API_URL}/getCompanyPhotos?compPhotos=${blog?.blogImage}`;
   const router = useRouter();
   const handleUrl = (title, id) => {

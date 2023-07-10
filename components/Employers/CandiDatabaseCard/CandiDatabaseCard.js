@@ -169,7 +169,7 @@ const CandiDatabaseCard = ({ ...props }) => {
   const matches = useMediaQuery("(max-width:600px)");
   const cvUrl =
     candi?.resume?.resumeFileLocation?.length > 0
-      ? ` https://api.arinnovate.io/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}`
+      ? `https://api.arinnovate.io/api/downloadResume?resume=${candi?.resume?.resumeFileLocation[0]?.resume}`
       : "";
   const isItPdfFile = cvUrl.includes("pdf");
   return (
@@ -192,7 +192,7 @@ const CandiDatabaseCard = ({ ...props }) => {
             alt="logo"
             src={
               candi?.profpicFileLocation?.photo &&
-              ` https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+              `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
             }
             size={300}
           />

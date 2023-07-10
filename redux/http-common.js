@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 
 const http = axios.create({
   baseURL: "https://api.arinnovate.io/api/",
-  // baseURL: " https://api.arinnovate.io/api/",
+  // baseURL: "https://api.arinnovate.io/api/",
   headers: {
     "Content-type": "application/json",
   },

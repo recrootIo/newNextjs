@@ -58,7 +58,7 @@ const AllApplicantsCard = ({ users }) => {
   const user = Cookies.get();
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? ` https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const AllApplicantsCard = ({ users }) => {
   }, [users]);
   const recroot =
     resume &&
-    ` https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
@@ -113,7 +113,7 @@ const AllApplicantsCard = ({ users }) => {
   const handleReject = (id) => {
     axios
       .put(
-        ` https://api.arinnovate.io/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -127,7 +127,7 @@ const AllApplicantsCard = ({ users }) => {
   const handleShort = (id) => {
     axios
       .put(
-        ` https://api.arinnovate.io/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )

@@ -195,7 +195,7 @@ function CompleteProfile() {
         phoneNumber: phoneNumber,
       };
       axios
-        .post(" https://api.arinnovate.io/api/completeProfile", userObject)
+        .post("https://api.arinnovate.io/api/completeProfile", userObject)
         .then((res) => {
           if (res.status === 200) {
             console.log(res);
