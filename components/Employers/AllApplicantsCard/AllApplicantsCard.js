@@ -41,6 +41,7 @@ import axios from "axios";
 import { REJECTED, SHORT_LISTED } from "@/utils/constants";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { isEmpty } from "lodash";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -63,8 +64,8 @@ const AllApplicantsCard = ({ users }) => {
   const dispatch = useDispatch();
   const [resume, setresume] = useState();
   useEffect(() => {
-    if (users?.resumeId) {
-      new applyJobService().getResume(users?.resumeId).then((res) => {
+    if (users) {
+      new applyJobService().getResume(isEmpty(users?.resumeId) ? users?.candidateId?.resume?.resumeFileLocation[0]?._id : users?.resumeId).then((res) => {
         setresume(res.data?.resume?.resumeFileLocation[0]);
       });
     }

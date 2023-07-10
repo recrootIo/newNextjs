@@ -156,7 +156,7 @@ const CandiFullProfileView = () => {
       setNote(res.data?.notes);
       setstatus(res.data.status);
       setcandidate(res.data?.candidateId);
-      dispatch(getSinResume(res.data?.resumeId));
+      dispatch(getSinResume(isEmpty(res.data?.resumeId) ? res.data?.candidateId?.resume?.resumeFileLocation[0]?._id : res.data?.resumeId));
       const ids = {
         cid: res.data?.candidateId?._id,
         jid: res.data?.jobId?._id,

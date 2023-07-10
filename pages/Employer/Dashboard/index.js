@@ -430,7 +430,7 @@ const EmpoyerDashboard = () => {
     // dispatch(seeAll({ jobId: params?.id, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/Employer/AllApplicants?jid=${params?.id}`, { state: true });
+    push(`/Employer/allApplicants?jid=${params?.id}`, { state: true });
     //   }, 500)
     // );
   };
