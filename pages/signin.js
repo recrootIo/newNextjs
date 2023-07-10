@@ -156,9 +156,9 @@ function Signin() {
 
   const handleClick = (val) => {
     if (val === "google") {
-      window.location.replace("http://localhost:3000/auth/google");
+      window.location.replace("https://api.arinnovate.io/auth/google");
     } else {
-      window.location.replace("http://localhost:3000/auth/linkedin");
+      window.location.replace("https://api.arinnovate.io/auth/linkedin");
     }
   };
   const { name } = router.query;
