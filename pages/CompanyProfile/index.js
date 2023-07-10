@@ -20,7 +20,6 @@ export default function CompanyProfile() {
       >
         <Navbar />
         <CompanyHeader />
-        <SubscribHome />
         <FooterHome />
       </Box>
     </>

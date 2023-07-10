@@ -19,6 +19,17 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
 import styles from "./companyprofileview.module.css";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+
+function srcset(image, size, rows = 1, cols = 1) {
+  return {
+    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+    srcSet: `${image}?w=${size * cols}&h=${
+      size * rows
+    }&fit=crop&auto=format&dpr=2 2x`,
+  };
+}
 
 const CompanyOverview = () => {
   return (
@@ -267,7 +278,7 @@ const CompanyOverview = () => {
         <CustomTypography className={styles.ComProfileSubtitleTypo}>
           Team and Culture
         </CustomTypography>
-        <Grid container spacing={2}>
+        {/* <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <Image
               src="/companyprofile_images/company-cul-img-1.png"
@@ -313,7 +324,27 @@ const CompanyOverview = () => {
               priority={true}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
+        <ImageList
+          sx={{ width: "100%", height: 400 }}
+          variant="quilted"
+          cols={3}
+          rowHeight={200}
+        >
+          {itemData.map((item) => (
+            <ImageListItem
+              key={item.img}
+              cols={item.cols || 1}
+              rows={item.rows || 1}
+            >
+              <img
+                {...srcset(item.img, 200, item.rows, item.cols)}
+                alt={item.title}
+                loading="lazy"
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
       </Container>
       <Container>
         <CustomTypography className={styles.ComProfileSubtitleTypo}>
@@ -327,9 +358,11 @@ const CompanyOverview = () => {
             backgroundSize: "cover",
             borderRadius: "10px",
             p: "40px 30px 40px 30px",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ width: { xs: "100%", md: "80%" } }}>
             <Grid item xs={12} sm={6}>
               <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
                 <Box sx={{ width: "30px" }}>
@@ -596,3 +629,26 @@ const CompanyOverview = () => {
 };
 
 export default dynamic(() => Promise.resolve(CompanyOverview), { ssr: false });
+
+const itemData = [
+  {
+    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    title: "Breakfast",
+    rows: 2,
+    cols: 1,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+    title: "Burger",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+    title: "Coffee",
+    rows: 2,
+    cols: 1,
+  },
+  {
+    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+    title: "Camera",
+  },
+];

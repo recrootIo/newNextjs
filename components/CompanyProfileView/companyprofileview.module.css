@@ -46,15 +46,8 @@
 
 .comBenefitsTypo {
   text-align: center;
-  margin-top: 40px;
   color: #01313f;
   font-weight: 600;
-}
-
-@media (max-width: 600px) {
-  .comBenefitsTypo {
-    margin-top: 30px;
-  }
 }
 
 .CompanyjobsCard {

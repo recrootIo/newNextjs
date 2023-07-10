@@ -34,11 +34,11 @@ const JobsCard = ({
 }) => {
   const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push(
-      `/jobs/${replaceSlashes(jobTitle)}/${replaceSlashes(jobRole)}/${_id}`
-    );
-  };
+  // const handleNavigate = () => {
+  //   router.push(
+  //     `/jobs/${replaceSlashes(jobTitle)}/${replaceSlashes(jobRole)}/${_id}`
+  //   );
+  // };
 
   return (
     <Card className={styles.CompanyjobsCard}>
@@ -211,7 +211,7 @@ const JobsCard = ({
               className="viewDetailBtn"
               variant="contained"
               size="medium"
-              onClick={() => handleNavigate()}
+              // onClick={() => handleNavigate()}
             >
               View Details
             </Button>

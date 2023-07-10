@@ -119,6 +119,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>
@@ -135,6 +138,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>
@@ -152,6 +158,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>
@@ -168,6 +177,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>
@@ -184,6 +196,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>
@@ -200,6 +215,9 @@ const WhyJoinUs = () => {
                   height: "100%",
                   width: "100%",
                   minHeight: "90px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <CustomTypography className={styles.comBenefitsTypo}>

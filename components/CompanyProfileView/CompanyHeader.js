@@ -88,7 +88,7 @@ const CompanyHeader = () => {
     <>
       <Box
         sx={{
-          height: "270px",
+          height: "185px",
           backgroundImage:
             'url("/companyprofile_images/companyProfile-bg.png")',
           backgroundRepeat: "no-repeat",
