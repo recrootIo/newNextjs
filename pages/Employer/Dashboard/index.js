@@ -43,7 +43,12 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import Cookies from "js-cookie";
-import { applyJobsdet, getJobsfil } from "@/redux/slices/applyJobs";
+import {
+  applyJobsdet,
+  applyJobsdetFilter,
+  getJobsfil,
+  seeAll,
+} from "@/redux/slices/applyJobs";
 import { logout } from "@/redux/slices/auth";
 import {
   addCandidatesRequest,
@@ -416,24 +421,24 @@ const EmpoyerDashboard = () => {
 
   const user = Cookies.get();
 
-  const handleAppilcants = () => {
+  const handleAppilcants = (params) => {
     // const details = {
     //   page: 1,
     //   status: [],
-    //   jobid: jobid,
+    //   jobid: params?.id,
     // };
-    // dispatch(seeAll({ jobId: jobid, state: true }));
+    // dispatch(seeAll({ jobId: params?.id, state: true }));
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
-    push(`/Employer/AllApplicants?jid=${jobid}`, { state: true });
-    // }, 500)
+    push(`/Employer/AllApplicants?jid=${params?.id}`, { state: true });
+    //   }, 500)
     // );
   };
 
   const handleActivate = () => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
+        ` https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
         { status: "active" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -469,7 +474,7 @@ const EmpoyerDashboard = () => {
   const handleDeActivate = () => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
+        ` https://api.arinnovate.io/api/updateJobStatus/${jobid}`,
         { status: "inactive" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -542,7 +547,7 @@ const EmpoyerDashboard = () => {
     {
       // field: "status",
       headerName: "Upgrade",
-      width: 200,
+      width: 100,
       renderCell: (parms) => (
         <>
           <Button
@@ -552,69 +557,8 @@ const EmpoyerDashboard = () => {
               handleUpgrade(parms?.row);
             }}
           >
-            Upgrade To Premium
+            Upgrade
           </Button>
-        </>
-      ),
-    },
-    { field: "title", headerName: "Title", width: 260 },
-    // {
-    //   field: "jobtype",
-    //   headerName: "Job type",
-    //   width: 130,
-    // },
-    // {
-    //   field: "Location",
-    //   headerName: "Location",
-    //   width: 130,
-    // },
-    {
-      field: "posteddate",
-      headerName: "Posted date",
-      width: 120,
-    },
-    {
-      field: "deadline",
-      headerName: "Deadline",
-      width: 120,
-    },
-    {
-      field: "packType",
-      headerName: "Package Type",
-      width: 120,
-      renderCell: (parms) => (
-        <p>
-          {parms?.value === "premium"
-            ? "Premium"
-            : parms?.value === "pro"
-            ? "Pro Plan"
-            : parms?.value === "free"
-            ? "Free"
-            : parms?.value === "jSlot"
-            ? "Job Slot"
-            : parms?.row?.premium === false
-            ? "Free"
-            : parms?.row?.premium === true
-            ? "Premium"
-            : "N/A"}
-        </p>
-      ),
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 80,
-      renderCell: (parms) => (
-        <>
-          <p>
-            {(parms?.row?.packType === "free" && parms?.value === "Inactive") ||
-            (parms?.row?.packType === "pro" && parms?.value === "Inactive") ||
-            (parms?.row?.packType === "premium" && parms?.value === "Inactive")
-              ? "Closed"
-              : parms.value === "Active"
-              ? "Active"
-              : "Inactive"}
-          </p>
         </>
       ),
     },
@@ -638,7 +582,7 @@ const EmpoyerDashboard = () => {
             >
               Action <ArrowDropDownCircleRounded style={{ marginLeft: 10 }} />
             </Button>
-            <Menu
+            {/* <Menu
               id="basic-menu"
               anchorEl={anchorEl2}
               open={open2}
@@ -648,13 +592,14 @@ const EmpoyerDashboard = () => {
               <MenuItem
                 onClick={() => {
                   handleClose2();
+
                   handleAppilcants();
                 }}
                 value="applicNTS"
               >
                 See Applicants
               </MenuItem>
-            </Menu>
+            </Menu> */}
           </>
         ) : capitalizeFirstLetter(parms.row.status) ===
           capitalizeFirstLetter("inactive") ? (
@@ -688,7 +633,7 @@ const EmpoyerDashboard = () => {
               >
                 Edit Job
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   handleClose2();
                   handleAppilcants();
@@ -696,7 +641,7 @@ const EmpoyerDashboard = () => {
                 value="applicNTS"
               >
                 See Applicants
-              </MenuItem>
+              </MenuItem> */}
 
               {packType === null ? (
                 ""
@@ -752,7 +697,7 @@ const EmpoyerDashboard = () => {
               >
                 Edit Jobs
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   handleClose();
                   handleAppilcants();
@@ -760,7 +705,7 @@ const EmpoyerDashboard = () => {
                 value="applicNTS"
               >
                 See Applicants
-              </MenuItem>
+              </MenuItem> */}
 
               <MenuItem
                 onClick={() => {
@@ -776,8 +721,9 @@ const EmpoyerDashboard = () => {
                   ? "Deactivate"
                   : "Deactivate"}
               </MenuItem>
-              { premium === false ? "" :
-               isValuePresentInArray(requestJobs, jobid) === true ? (
+              {premium === false ? (
+                ""
+              ) : isValuePresentInArray(requestJobs, jobid) === true ? (
                 <MenuItem
                   onClick={() => {
                     handleRequest("requested");
@@ -800,7 +746,85 @@ const EmpoyerDashboard = () => {
           </>
         ),
     },
-
+    {
+      field: "applicants",
+      headerName: "Applicants",
+      width: 130,
+      renderCell: (parms) => (
+        <>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              handleClose();
+              handleAppilcants(parms);
+            }}
+          >
+            View
+          </Button>
+        </>
+      ),
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 80,
+      renderCell: (parms) => (
+        <>
+          <p>
+            {(parms?.row?.packType === "free" && parms?.value === "Inactive") ||
+            (parms?.row?.packType === "pro" && parms?.value === "Inactive") ||
+            (parms?.row?.packType === "premium" && parms?.value === "Inactive")
+              ? "Closed"
+              : parms.value === "Active"
+              ? "Active"
+              : "Inactive"}
+          </p>
+        </>
+      ),
+    },
+    { field: "title", headerName: "Title", width: 260 },
+    // {
+    //   field: "jobtype",
+    //   headerName: "Job type",
+    //   width: 130,
+    // },
+    // {
+    //   field: "Location",
+    //   headerName: "Location",
+    //   width: 130,
+    // },
+    {
+      field: "posteddate",
+      headerName: "Posted date",
+      width: 120,
+    },
+    {
+      field: "deadline",
+      headerName: "Deadline",
+      width: 120,
+    },
+    {
+      field: "packType",
+      headerName: "Package Type",
+      width: 120,
+      renderCell: (parms) => (
+        <p>
+          {parms?.value === "premium"
+            ? "Premium"
+            : parms?.value === "pro"
+            ? "Pro Plan"
+            : parms?.value === "free"
+            ? "Free"
+            : parms?.value === "jSlot"
+            ? "Job Slot"
+            : parms?.row?.premium === false
+            ? "Free"
+            : parms?.row?.premium === true
+            ? "Premium"
+            : "N/A"}
+        </p>
+      ),
+    },
   ];
 
   const updatedColumns = columns.filter(
@@ -1435,6 +1459,7 @@ const EmpoyerDashboard = () => {
             </Card>
           </Grid>
         </Grid>
+
         {user.country !== "LK" ? (
           sectors?.length > 0 ? (
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -1452,6 +1477,7 @@ const EmpoyerDashboard = () => {
         ) : (
           ""
         )}
+
         {user?.country === "LK" ? (
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -1501,7 +1527,6 @@ const EmpoyerDashboard = () => {
             <Card
               sx={{
                 width: "100%",
-
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
@@ -1561,6 +1586,7 @@ const EmpoyerDashboard = () => {
                     color: value !== 0 ? "white" : "initial",
                   }}
                 />
+
                 <Tab
                   label="Featured Jobs"
                   {...a11yProps(1)}
@@ -1571,6 +1597,7 @@ const EmpoyerDashboard = () => {
               </Tabs>
             </Box>
           </AppBar>
+
           <TabPanel id="simple-tab-0" value={value} index={0}>
             <Box sx={{ height: "550px", width: "100%" }}>
               <DatagridClient
@@ -1581,6 +1608,7 @@ const EmpoyerDashboard = () => {
               />
             </Box>
           </TabPanel>
+
           <TabPanel value={value} index={1}>
             {enableFeaturedJobs ? (
               <DatagridClient

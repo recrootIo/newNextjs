@@ -95,7 +95,7 @@ export const getSalary = (salary, defaults = true, font = 16, black = null) => {
 };
 
 export const getImageLogo = (url) => {
-  return `https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${url}`;
+  return ` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${url}`;
 };
 
 // dialog box for mobile filter
@@ -330,9 +330,9 @@ const SearchSection = ({ ...props }) => {
     setAddressf(props.address);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-useEffect(() => {
-setJobVariant(variant)
-}, [variant])
+  useEffect(() => {
+    setJobVariant(variant);
+  }, [variant]);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -593,7 +593,7 @@ setJobVariant(variant)
   // };
 
   const handleDeleteExp = (e) => {
-   setExper("")
+    setExper("");
 
     const { ...otherParams } = router.query;
 
@@ -660,7 +660,7 @@ setJobVariant(variant)
     exper,
     selectedCategory,
     selectedSector,
-    variant
+    variant,
   ]);
 
   return (
@@ -856,20 +856,20 @@ setJobVariant(variant)
                           />
                         )} */}
 
-                        {!isEmpty(exper) &&
-                            <Chip
-                              onDelete={(ex) => handleDeleteExp(ex)}
-                              label={exper}
-                              color="primary"
-                              style={{
-                                fontWeight: 500,
-                                marginTop: "10px",
-                                marginRight: "10px",
-                                backgroundColor: "#D4F0FC",
-                                color: "rgba(3, 66, 117, 0.69)",
-                              }}
-                            />
-                          }
+                        {!isEmpty(exper) && (
+                          <Chip
+                            onDelete={(ex) => handleDeleteExp(ex)}
+                            label={exper}
+                            color="primary"
+                            style={{
+                              fontWeight: 500,
+                              marginTop: "10px",
+                              marginRight: "10px",
+                              backgroundColor: "#D4F0FC",
+                              color: "rgba(3, 66, 117, 0.69)",
+                            }}
+                          />
+                        )}
 
                         {selectedCategory.map((e) => (
                           <Chip
@@ -983,20 +983,20 @@ setJobVariant(variant)
                         </TabPanel> */}
                         <TabPanel value={value} index={2}>
                           <FormControl>
-                          <RadioGroup
-                            onChange={handleExperience}
-                            value={exper}
-                          >
-                            {USER_EXPERIENCES.map((com, index) => (
-                              <FormControlLabel
-                                key={index}
-                                control={<BpRadio size="small" />}
-                                label={com}
-                                value={com}
-                                name={com}
-                              />
-                            ))}
-                          </RadioGroup>
+                            <RadioGroup
+                              onChange={handleExperience}
+                              value={exper}
+                            >
+                              {USER_EXPERIENCES.map((com, index) => (
+                                <FormControlLabel
+                                  key={index}
+                                  control={<BpRadio size="small" />}
+                                  label={com}
+                                  value={com}
+                                  name={com}
+                                />
+                              ))}
+                            </RadioGroup>
                           </FormControl>
                         </TabPanel>
                         <TabPanel value={value} index={3}>
@@ -1116,10 +1116,10 @@ setJobVariant(variant)
                     />
                   )} */}
 
-                  {!isEmpty(exper)  &&
+                  {!isEmpty(exper) && (
                     <Chip
-                    label={exper}
-                    onDelete={() => handleDeleteExp()}
+                      label={exper}
+                      onDelete={() => handleDeleteExp()}
                       color="primary"
                       style={{
                         fontWeight: 500,
@@ -1129,7 +1129,7 @@ setJobVariant(variant)
                         color: "rgba(3, 66, 117, 0.69)",
                       }}
                     />
-                  }
+                  )}
 
                   {selectedCategory.map((e) => (
                     <Chip

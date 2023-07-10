@@ -441,7 +441,7 @@ const UploadResume = ({ ...props }) => {
                         <IconButton
                           onClick={async () => {
                             const res = await fetch(
-                              ` https://api.arinnovate.io/api/downloadResume?resume=${resume.resume.replace(
+                              `  https://api.arinnovate.io/api/downloadResume?resume=${resume.resume.replace(
                                 /\\/g,
                                 "/"
                               )}`
@@ -647,7 +647,7 @@ const UploadResume = ({ ...props }) => {
                         }}
                         onClick={async () => {
                           const res = await fetch(
-                            ` https://api.arinnovate.io/api/downloadCover?cover=${CoverSin.cover.replace(
+                            `  https://api.arinnovate.io/api/downloadCover?cover=${CoverSin.cover.replace(
                               /\\/g,
                               "/"
                             )}`

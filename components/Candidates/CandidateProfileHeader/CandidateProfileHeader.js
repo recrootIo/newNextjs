@@ -100,7 +100,7 @@ const CandidateProfileHeader = (data) => {
     if (photoss === undefined) {
     } else {
       setSrcsjjj(
-        `https://api.arinnovate.io/api/openProfpic?photo=${photoss.photo}`
+        ` https://api.arinnovate.io/api/openProfpic?photo=${photoss.photo}`
       );
     }
 

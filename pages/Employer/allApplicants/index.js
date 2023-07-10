@@ -200,35 +200,57 @@ const AllApplicants = () => {
   const { jid } = router.query;
   // const jid = undefined;
   const matching = jid !== undefined;
-
+  const [cuurpage, setcuurpage] = useState('');
   useEffect(() => {
     const { array } = router.query;
     const { status } = router.query;
-    if (array) {
-      const parsedArray = JSON.parse(array);
-      setTitles(parsedArray);
-      setids(parsedArray.map((obj) => obj._id));
+    const { page } = router.query;
+    if (page) {
+  setcuurpage(page)
     }
-    if (status) {
-      const parsedStatus = JSON.parse(status);
-      setSelected(parsedStatus);
+    if (array || status) {      
+      if (array) {
+        const parsedArray = JSON.parse(array);
+        setTitles(parsedArray);
+        setids(parsedArray.map((obj) => obj._id));
+      }
+      if (status) {
+        const parsedStatus = JSON.parse(status);
+        setSelected(parsedStatus);
+      }
     }
-  }, [router.query]);
-  useEffect(() => {
-    if (matching) {
-      const value = {
-        id: jid,
-        page: 1,
-      };
-      dispatch(getMachingAppl(value));
-      return;
-    }
-    dispatch(applyJobsdet(""))
-      .then((res) => {
-        if (res.error !== undefined) {
-          res.error.message === "Request failed with status code 401" ||
-          "Request failed with status code 403"
-            ? dispatch(logout()).then(() => {
+    else{
+      if (matching) {
+        const value = {
+          id: jid,
+          page: 1,
+        };
+        dispatch(getMachingAppl(value));
+        return;
+      }else{
+        dispatch(applyJobsdet({page:page}))
+          .then((res) => {
+            if (res.error !== undefined) {
+              res.error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+                ? dispatch(logout()).then(() => {
+                    router.push(
+                      {
+                        pathname: "/signin",
+                        query: { name: "session" },
+                      },
+                      "/signin"
+                    );
+                  })
+                : console.log("error");
+            }
+          })
+          .catch((error) => {
+            if (
+              error.message === "Request failed with status code 401" ||
+              "Request failed with status code 403"
+            ) {
+              dispatch(logout()).then(() => {
                 router.push(
                   {
                     pathname: "/signin",
@@ -236,30 +258,18 @@ const AllApplicants = () => {
                   },
                   "/signin"
                 );
-              })
-            : console.log("error");
-        }
-      })
-      .catch((error) => {
-        if (
-          error.message === "Request failed with status code 401" ||
-          "Request failed with status code 403"
-        ) {
-          dispatch(logout()).then(() => {
-            router.push(
-              {
-                pathname: "/signin",
-                query: { name: "session" },
-              },
-              "/signin"
-            );
+              });
+            }
           });
-        }
-      });
-    dispatch(getJobsfil());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, jid]);
+        dispatch(getJobsfil());
+      }
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query,jid]);
+  useEffect(() => {
+
+  }, [dispatch, jid]);
   const type = useSelector((state) => state.company.matchType);
 
   const handleClear = (val) => {
@@ -327,29 +337,35 @@ const AllApplicants = () => {
 
   const seeAll = useSelector((state) => state.apply.seeCand);
   const handleChange = (e, value) => {
-    const onlyTitles = titles.map((o) => o.jobRole);
-    let data = names.filter((item) => onlyTitles.includes(item.jobRole));
-    const arr = data.map((object) => object._id);
-
+   setcuurpage(value)
     const reqObject = {
       page: value,
-      data: { status: selectedStatus, job: arr },
+      data: { status: selectedStatus, job: ids },
       jobid: seeAll?.jobId,
     };
-
+    const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        page: value,
+      };
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     if (seeAll?.state === true) {
       dispatch(applyJobsdetFilter(reqObject));
     } else {
       dispatch(applyJobsdet(reqObject));
     }
+    scrollToTop()
+    scrollToDiv()
   };
-
   const handleName = (e, value) => {
-    // const value = val
-    const { name, checked } = e.target;
-    // const {
-    //   target: { value },
-    // } = event;
+    const {  checked } = e.target;
     if (checked) {
       const titls = [...ids, value._id];
       setTitles(
@@ -372,18 +388,20 @@ const AllApplicants = () => {
         ...titles,
         { _id: value._id, jobRole: value.jobRole, createdAt: value.createdAt },
       ]);
-      const url = `${window.location.pathname}?array=${encodeURIComponent(
-        queryString
-      )}`;
-      router.push(url, undefined, { shallow: false });
-      // router.push(
-      //   {
-      //     pathname: router.pathname,
-      //     query: { array: queryString },
-      //   },
-      //   undefined,
-      //   { shallow: true } // This option prevents the page from rerendering
-      // );
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        array: queryString ,
+        page: 1,
+      };
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     } else {
       let newJobs = titles.filter((arr) => value._id != arr._id);
       let newIds = ids.filter((arr) => value._id != arr);
@@ -393,87 +411,41 @@ const AllApplicants = () => {
         setSelectedTemp({ ...selectedTemp, jobTitle: newIds[0] });
         setRejectedTemp({ ...rejectedTemp, jobTitle: newIds[0] });
       }
+      const reqObject = {
+        page: 1,
+        data: { status: selectedStatus, job: newIds },
+      };
+      dispatch(applyJobsdet(reqObject));
       const queryString = JSON.stringify(newJobs);
-      const url = `${window.location.pathname}?array=${encodeURIComponent(
-        queryString
-      )}`;
-      router.push(url, url, { shallow: true });
-      // router.push(
-      //   {
-      //     pathname: router.pathname,
-      //     query: { array: queryString },
-      //   },
-      //   undefined,
-      //   { shallow: true } // This option prevents the page from rerendering
-      // );
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        array: queryString ,
+        page: 1,
+      };
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
     }
-
-    // if (Array.isArray(value._id[0])) {
-    //   value = {
-    //     jobRole: value?.jobRole,
-    //     _id: value._id[0],
-    //   };
-    // }
-    // const hasbeenSelected = titles.some(
-    //   (item) => item.jobRole === value?.jobRole
-    // );
-    // const result = value._id.some((item) => Array.isArray(item))
-    //   ? ids.some((str) => value._id[0].includes(str))
-    //   : ids.some((str) => value._id.includes(str));
-    // let newArray = [...titles];
-    // let arr3 = [...ids];
-    // if (hasbeenSelected) {
-    //   newArray = newArray.filter((f) => f.jobRole !== value.jobRole);
-    // } else {
-    //   newArray.push(value);
-    // }
-    // if (value._id.some((item) => Array.isArray(item))) {
-    //   if (result === true) {
-    //     arr3 = arr3.filter((str) => !value._id[0].includes(str));
-    //   } else {
-    //     value._id[0].forEach((item) => {
-    //       if (!arr3.includes(item)) {
-    //         arr3.push(item);
-    //       }
-    //     });
-    //   }
-    // } else {
-    //   if (result === true) {
-    //     arr3 = arr3.filter((str) => !value._id.includes(str));
-    //   } else {
-    //     value._id.forEach((item) => {
-    //       if (!arr3.includes(item)) {
-    //         arr3.push(item);
-    //       }
-    //     });
-    //   }
-    // }
-    // setTitles(() => [...newArray]);
-    // setids(() => [...arr3]);
-    // if (newArray?.length === 1) {
-    //   if (newArray[0]._id.some((item) => Array.isArray(item))) {
-    //     setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id[0] });
-    //     setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id[0] });
-    //   } else {
-    //     setSelectedTemp({ ...selectedTemp, jobTitle: newArray[0]._id });
-    //     setRejectedTemp({ ...rejectedTemp, jobTitle: newArray[0]._id });
-    //   }
-    // }
-    // const reqObject = {
-    //   page: 1,
-    //   data: { status: selectedStatus, job: arr3 || [] },
-    // };
-    // dispatch(applyJobsdet(reqObject));
+   handleClose()
   };
   useEffect(() => {
     const reqObject = {
-      page: 1,
+      page: cuurpage,
       data: { status: selectedStatus, job: ids },
     };
-    dispatch(applyJobsdet(reqObject));
+    if (isEmpty(selectedStatus) && isEmpty(ids)) {
+      setUser(details)
+    } else {
+      dispatch(applyJobsdet(reqObject));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids, selectedStatus]);
-
   useEffect(() => {
     if (titles.length === 1) {
       setIsShown(false);
@@ -489,44 +461,48 @@ const AllApplicants = () => {
     if (e.target.checked) {
       newArray.push(value);
       const queryString = JSON.stringify([...selectedStatus, value]);
+      
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      status: queryString ,
+      page: 1,
+    };
       router.push(
         {
           pathname: router.pathname,
-          query: { status: queryString },
+          query: updatedQueryParams,
         },
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
     } else {
       newArray = newArray.filter((res) => res !== value);
+      const reqObject = {
+        page: 1,
+        data: { status: newArray, job: ids },
+      };
+      dispatch(applyJobsdet(reqObject));
       const queryString = JSON.stringify(
         newArray.filter((res) => res !== value)
       );
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        status: queryString ,
+        page: 1,
+      };
       router.push(
         {
           pathname: router.pathname,
-          query: { status: queryString },
+          query: updatedQueryParams,
         },
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
     }
-    // setSelected(() => [...newArray]);
-
-    // const onlyTitles = titles.map((o) => o.jobRole);
-    // let data = names.filter((item) => onlyTitles.includes(item.jobRole));
-    // const arr = data.map((object) => object._id);
-
-    // const reqObject = {
-    //   page: 1,
-    //   data: { status: newArray, job: arr },
-    //   jobid: seeAll?.jobId,
-    // };
-    // if (seeAll?.state === true) {
-    //   dispatch(applyJobsdetFilter(reqObject));
-    // } else {
-    //   dispatch(applyJobsdet(reqObject));
-    // }
+    setSelected(() => [...newArray]);
+    handleClose1()
   };
 
   function roundAndIncrease(decimalNumber) {
@@ -540,15 +516,21 @@ const AllApplicants = () => {
     return roundedNumber;
   }
 
-  const [cuurpage, setcuurpage] = useState(1);
   const handleChangePage = (e, page) => {
     const value = {
       id: jid,
       page: page,
     };
     dispatch(getMachingAppl(value)).then(setcuurpage(page));
+    scrollToTop()
+    scrollToDiv()
   };
-
+  const divRef = useRef(null);
+  const scrollToTop = () => {
+    if (divRef.current) {
+      divRef.current.scrollTop = 0;
+    }
+  };
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl1);
   const id1 = open2 ? "simple-popover" : undefined;
@@ -702,28 +684,52 @@ const AllApplicants = () => {
   const handleDelete = (indexToRemove, typ, idds) => {
     console.info(idds, "You clicked the delete icon.");
     if (typ === "titl") {
-      setids(ids.filter((element) => !idds.includes(element)));
+      const idis = ids.filter((element) => !idds.includes(element))
+      setids(idis);
       setTitles(titles.filter((_, index) => index !== indexToRemove));
+      const reqObject = {
+        page: 1,
+        data: { status: selectedStatus, job: idis },
+      };
+      dispatch(applyJobsdet(reqObject));
       const queryString = JSON.stringify(
         titles.filter((_, index) => index !== indexToRemove)
       );
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        array: queryString ,
+        page: 1,
+      };
       router.push(
         {
           pathname: router.pathname,
-          query: { array: queryString },
+          query: updatedQueryParams,
         },
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
     } else {
+      const status = selectedStatus.filter((_, index) => index !== indexToRemove)
       setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
+      const reqObject = {
+        page: 1,
+        data: { status: status, job: ids },
+      };
+      dispatch(applyJobsdet(reqObject));
       const queryString = JSON.stringify(
         selectedStatus.filter((_, index) => index !== indexToRemove)
       );
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        status: queryString ,
+        page: 1,
+      };
       router.push(
         {
           pathname: router.pathname,
-          query: { status: queryString },
+          query: updatedQueryParams,
         },
         undefined,
         { shallow: true } // This option prevents the page from rerendering
@@ -807,7 +813,12 @@ const AllApplicants = () => {
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);
   }, [comp?.tours?.allApplicant]);
-
+  const scrollToDiv = () => {
+    const element = document.getElementById('style-5');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <>
       <Employer>
@@ -827,7 +838,7 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("strong")}
                     className={styles.allApplicantsCardstrong}
-                    style={{ boxShadow: type === "strong" ? shadow : "" }}
+                    style={{ boxShadow: type === "strong" ? shadow : "",cursor:'pointer' }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
@@ -847,7 +858,7 @@ const AllApplicants = () => {
                   <Card
                     onClick={() => handleClear("good")}
                     className={styles.allApplicantsCardgood}
-                    style={{ boxShadow: type === "good" ? shadow : "" }}
+                    style={{ boxShadow: type === "good" ? shadow : "",cursor:'pointer' }}
                   >
                     <CardContent sx={{ pb: "16px !important" }}>
                       <CustomTypography
@@ -918,6 +929,7 @@ const AllApplicants = () => {
                 </Stack>
               )}
               <Divider
+                  id="style-5"
                 sx={{ mt: "30px", mb: "30px", borderColor: "#D4F0FC" }}
               />
               {matching ? (
@@ -969,10 +981,9 @@ const AllApplicants = () => {
                         const labelId = `checkbox-list-label-$
                           {variant.jobRole}`;
                         return (
-                          <ListItem key={variant.jobRole} disablePadding>
+                          <ListItem onClick={(e) => handleName(e, variant)} key={variant.jobRole} disablePadding>
                             <ListItemButton
                               role={undefined}
-                              onClick={(e) => handleName(e, variant)}
                               dense
                               sx={{ cursor: "auto" }}
                             >
@@ -1460,6 +1471,7 @@ const AllApplicants = () => {
                 ))}
               </Stack>
               <Box
+                ref={divRef}
                 className={styles.scrollbar}
                 id="style-5"
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}

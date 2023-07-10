@@ -355,7 +355,7 @@ const CompanyPreview = () => {
                 >
                   <StyledAvatar
                     alt=""
-                    src={`https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo}`}
+                    src={` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo}`}
                     sx={{ height: "228px", width: "228px" }}
                   />
                 </Box>
@@ -435,30 +435,38 @@ const CompanyPreview = () => {
                 </Box>
               </Box>
             </Box>
-       {!isEmpty(final?.members)  ? <Box className={styles.PreviewTypoContainer}>
-              {final?.members?.map((mem, index) => (
-                <>
-                  <Box className={styles.PreviewTypoBox}>
-                    <BoyIcon className={styles.PreviewIcon} />
-                    <CustomTypography
-                      variant="subtitle2"
-                      className={styles.PreviewTypo}
-                      sx={{ width: "50%" }}
-                    >
-                      &nbsp;&nbsp;{mem?.fname}
-                    </CustomTypography>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <CustomTypography
-                      variant="subtitle2"
-                      className={styles.PreviewTypo}
-                    >
-                      &nbsp;&nbsp;{mem?.role}
-                    </CustomTypography>
-                  </Box>
-                  <Divider />
-                </>
-              ))}
-            </Box> : ""}
+            {!isEmpty(final?.members) ? (
+              <Box className={styles.PreviewTypoContainer}>
+                {final?.members?.map((mem, index) => (
+                  <>
+                    <Box className={styles.PreviewTypoBox}>
+                      <BoyIcon className={styles.PreviewIcon} />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                        sx={{ width: "50%" }}
+                      >
+                        &nbsp;&nbsp;{mem?.fname}
+                      </CustomTypography>
+                      <Divider
+                        orientation="vertical"
+                        variant="middle"
+                        flexItem
+                      />
+                      <CustomTypography
+                        variant="subtitle2"
+                        className={styles.PreviewTypo}
+                      >
+                        &nbsp;&nbsp;{mem?.role}
+                      </CustomTypography>
+                    </Box>
+                    <Divider />
+                  </>
+                ))}
+              </Box>
+            ) : (
+              ""
+            )}
             <Box className={styles.PreviewTypoContainer}>
               <Box className={styles.PreviewTypoBox}>
                 <LinkedInIcon sx={{ color: "#00339b" }} />

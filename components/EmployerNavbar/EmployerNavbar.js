@@ -38,7 +38,7 @@ const EmployerNavbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const  user = Cookies.get()
+  const user = Cookies.get();
   const logOut = useCallback(() => {
     handleClose();
     dispatch(logout()).then(() => {
@@ -47,7 +47,9 @@ const EmployerNavbar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const company = useSelector((state) => state.company?.companyDetl);
-const photoUrl = company?.companyLogo?.logo &&  `https://api.arinnovate.io/api/openProfpic?photo=${company.companyLogo.logo}`
+  const photoUrl =
+    company?.companyLogo?.logo &&
+    ` https://api.arinnovate.io/api/openProfpic?photo=${company.companyLogo.logo}`;
   return (
     <nav>
       <div
@@ -84,15 +86,17 @@ const photoUrl = company?.companyLogo?.logo &&  `https://api.arinnovate.io/api/o
               >
                 {/* <CommentOutlinedIcon className="hidden h-8 w-auto lg:block" />
                 <NotificationsNoneOutlinedIcon className="hidden h-8 w-auto lg:block" /> */}
-               {!isEmpty(user) && <Button
-                  id="fade-button"
-                  aria-controls={open ? "fade-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  <StyledAvatar src={photoUrl} sx={{ color: "#034275" }} />
-                </Button>}
+                {!isEmpty(user) && (
+                  <Button
+                    id="fade-button"
+                    aria-controls={open ? "fade-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                  >
+                    <StyledAvatar src={photoUrl} sx={{ color: "#034275" }} />
+                  </Button>
+                )}
                 <Menu
                   id="fade-menu"
                   MenuListProps={{

@@ -43,7 +43,7 @@ const ProfileCard = ({ ...props }) => {
 
   useEffect(() => {
     dispatch(retrievePersonal());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
@@ -54,10 +54,10 @@ const ProfileCard = ({ ...props }) => {
       jobId: _id,
       question: question,
       companyId: companyId,
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [details])
-  
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const submit = () => {
     dispatch(applyJobs(final))
       .unwrap()
@@ -74,7 +74,7 @@ const ProfileCard = ({ ...props }) => {
       .catch((error) => {
         openAlert({
           type: ERROR,
-          message: error.response.data.message || "Something went wrong",
+          message: error?.response?.data?.message || "Something went wrong",
         });
       });
   };
@@ -109,7 +109,6 @@ const ProfileCard = ({ ...props }) => {
 
     return (
       <EmpQuiz
-        setApplication={setFinal}
         setCurrentScreen={setCurrentScreen}
         submit={submit}
         questions={final.question}
