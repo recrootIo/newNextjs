@@ -123,6 +123,19 @@ const App = ({ Component, pageProps }) => {
           }
         `}</style>
       </ThemeProvider>
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-7F7LTF5XJN"
+      />
+      <Script strategy="afterInteractive" id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-7F7LTF5XJN');
+        `}
+      </Script>
     </Provider>
   );
 };
