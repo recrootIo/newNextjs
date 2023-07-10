@@ -17,16 +17,16 @@ export default class MyDocument extends Document {
           /> */}
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {this.props.emotionStyleTags}
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F7LTF5XJN"></script>
-          <script>
+    { <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F7LTF5XJN"></script>}
+     { <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
           
             gtag('config', 'G-7F7LTF5XJN');
-          </script>
+          </script>}
           <!--Start of Tawk.to Script-->
-          <script type="text/javascript">
+            {  <script type="text/javascript">
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
             (function(){
             var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -36,7 +36,7 @@ export default class MyDocument extends Document {
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
             })();
-            </script>
+            </script>}
         </Head>
           {/* //        <script type="text/javascript">
           //   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
