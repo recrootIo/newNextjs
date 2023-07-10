@@ -18,10 +18,10 @@ export default class MyDocument extends Document {
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {this.props.emotionStyleTags}
           <Script
-            strategy="afterInteractive"
+            strategy="beforeInteractive"
             src="https://www.googletagmanager.com/gtag/js?id=G-7F7LTF5XJN"
           />
-          <Script strategy="afterInteractive" id="google-analytics">
+          <Script strategy="beforeInteractive" id="google-analytics">
             {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
           gtag('config', 'G-7F7LTF5XJN');
         `}
           </Script>
-          <Script strategy="afterInteractive" id="google-analytics">
+          <Script strategy="beforeInteractive" id="google-analytics">
             {`
            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
            (function(){
