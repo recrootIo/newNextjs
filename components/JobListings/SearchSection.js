@@ -50,7 +50,7 @@ import { useRouter } from "next/router";
 import { USER_EXPERIENCES, WORK_PREFERENCE } from "@/utils/constants";
 import JobsCard from "./JobsCard";
 import { isEmpty } from "lodash";
-import { replaceSlashes } from "@/utils/HelperFunctions";
+import { currencyConvert, replaceSlashes } from "@/utils/HelperFunctions";
 import { removeApplyPath } from "@/redux/slices/applyJobs";
 
 export const getSalary = (salary, defaults = true, font = 16, black = null) => {
@@ -67,7 +67,7 @@ export const getSalary = (salary, defaults = true, font = 16, black = null) => {
         }}
         fontSize={font}
       >
-        {salary?.salaryCrrancy} {salary?.minSalary} - {salary?.maxSalary}{" "}
+       {salary?.salaryCrrancy?.length > 2 ? `${currencyConvert(salary?.minSalary,salary?.salaryCrrancy,2)} ${salary?.salaryDenomination}` : `${salary?.salaryCrrancy} ${salary?.minSalary}`} - {salary?.salaryCrrancy?.length > 2 ? `${salary?.maxSalary} ${salary?.salaryDenomination}` : salary?.maxSalary}{" "}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
         {salary?.salaryType === "hourly" ? "Per Hour" : ""}
         {salary?.salaryType === "yearly" ? "Yearly" : ""}

@@ -42,6 +42,7 @@ import {
 import moment from "moment";
 import {
   CAREER_LEVEL,
+  DENOMINATIONS,
   EDUCATION_LEVELS,
   NoticePeriod,
   USER_EXPERIENCES,
@@ -98,6 +99,7 @@ const EssentialInformation = () => {
     minSalary: jobs.salary && jobs.salary.minSalary,
     maxSalary: jobs.salary && jobs.salary.maxSalary,
     salaryCrrancy: jobs.salary && jobs.salary.salaryCrrancy,
+    salaryDenomination: jobs.salary && jobs.salary.salaryDenomination,
   });
   useEffect(() => {
     if (full === "jSlot") {
@@ -543,6 +545,7 @@ const EssentialInformation = () => {
           jobs?.salary?.salaryType === undefined ? (
             ""
           ) : (
+            <>
             <Stack direction="row" spacing={2}>
               <FormControl
                 id="add_salaryCurrency"
@@ -568,7 +571,7 @@ const EssentialInformation = () => {
                   helperText={errors.salaryCrrancy}
                 >
                   {CURRENCY.map((cur, ind) => (
-                    <MenuItem key={ind} value={cur.symbol}>
+                    <MenuItem key={ind} value={cur.country}>
                       {cur.country}-{cur.symbol}
                     </MenuItem>
                   ))}
@@ -579,7 +582,34 @@ const EssentialInformation = () => {
                   </FormHelperText>
                 )}
               </FormControl>
-              <TextField
+              <FormControl   sx={{
+                  ...style.txtinput,
+                  bgcolor: "white",
+                  width: "50%",
+                }}>
+                <InputLabel id="demo-simple-select-required-label">
+                  Denomination
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-required-label"
+                  id="demo-simple-select-required"
+                  name="salaryDenomination"
+                  value={jobs.salary && jobs.salary.salaryDenomination}
+                  label="Denomination *"
+                  onChange={(e) => {
+                    handleChangesSalary(e);
+                  }}
+                >
+                  {DENOMINATIONS.map((data, ind) => (
+                    <MenuItem key={ind} value={data}>
+                      {data}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+            <Stack direction="row" spacing={2}>
+                            <TextField
                 id="add_minSalary"
                 label="Min Salary"
                 value={jobs.salary && jobs.salary.minSalary}
@@ -595,7 +625,7 @@ const EssentialInformation = () => {
                 sx={{
                   ...style.txtinput,
                   bgcolor: "white",
-                  width: "25%",
+                  width: "50%",
                 }}
               />
               <TextField
@@ -614,10 +644,11 @@ const EssentialInformation = () => {
                 sx={{
                   ...style.txtinput,
                   bgcolor: "white",
-                  width: "25%",
+                  width: "50%",
                 }}
               />
             </Stack>
+            </>
           )}
           {(companyDet?.jobSlotGold === true && full === "jSlot") ||
           companyDet?.package?.subscription_package === "SuperEmployer" ? (

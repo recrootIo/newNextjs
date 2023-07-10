@@ -414,7 +414,7 @@ const EmpoyerDashboard = () => {
   const handleEdit = () => {
     dispatch(setEditJob(names.filter((i) => i._id === jobid)[0])).then(
       setTimeout(() => {
-        push(`/Employer/PostNewJob?jid=${jobid}`);
+        push(`/Employer/postNewJob?jid=${jobid}`);
       }, 500)
     );
   };
