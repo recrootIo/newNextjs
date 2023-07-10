@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { candidatesForrequest, candidatesIdreq, getSearchCandidate, jobCandidatesRequest } from "@/redux/slices/companyslice";
 import { getCandi } from "@/redux/slices/applyJobs";
+import { singleJobs } from "@/redux/slices/job";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -115,6 +116,7 @@ const {push} = useRouter()
   useEffect(() => {
     if (id) {
       dispatch(jobCandidatesRequest(id));
+      dispatch(singleJobs(id))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

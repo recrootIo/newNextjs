@@ -1,9 +1,14 @@
 import * as React from "react";
-import { Box, Pagination, Stack } from "@mui/material";
+import { Box, Pagination, Stack, Typography } from "@mui/material";
 import CandiDatabaseCard from "@/components/Employers/CandiDatabaseCard/CandiDatabaseCard";
 import styles from "./CandidateDatabaseList.module.css";
+import { useSelector } from "react-redux";
+import LoadingSearchCards from "@/components/JobListings/LoadingSearchCards";
 
 const CandidateDatabaseListPage = ({...props}) => {
+  const job = useSelector(data => data.jobs)
+  const load = useSelector(data => data.company.loading)
+  const len = [1,2,3,4,5,6,7,8,9,7];
   return (
     <>
       <Box
@@ -11,7 +16,15 @@ const CandidateDatabaseListPage = ({...props}) => {
         id="style-5"
         sx={{ width: "100%", pr: "10px", mb: "40px" }}
       >
-       {props?.candidates.length === 0 ?  <>
+        <Typography variant="h5" textAlign={'center'} fontWeight={600}>{job?.jobRole}</Typography>
+       {load ? (
+                    len.map((a, index) => (
+                      <Stack key={index} flexDirection={'column'} gap={'20px'}>
+                        <LoadingSearchCards key={index} />
+                      </Stack>
+                    ))
+                  ) :
+       props?.candidates.length === 0 ?  <>
               We are successfully extracting candidates based on your job
               description and guarantee to populate matching candidates within
               12 hours.
