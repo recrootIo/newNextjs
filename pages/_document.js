@@ -19,7 +19,7 @@ export default class MyDocument extends Document {
           {this.props.emotionStyleTags}
           <Script
             strategy="beforeInteractive"
-            src="https://www.googletagmanager.com/gtag/js?id=G-CWZ5WYXB7V"
+            src="https://www.googletagmanager.com/gtag/js?id=G-7F7LTF5XJN"
           />
           <Script strategy="beforeInteractive" id="google-analytics">
             {`
@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', 'G-CWZ5WYXB7V');
+          gtag('config', 'G-7F7LTF5XJN');
         `}
           </Script>
           <Script strategy="beforeInteractive" id="google-analytics">
