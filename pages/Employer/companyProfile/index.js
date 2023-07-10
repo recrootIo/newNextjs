@@ -33,7 +33,7 @@ import {
   Dialog,
   Avatar,
   useMediaQuery,
-  FormHelperText,
+  Formhelpertext,
   styled,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
@@ -45,6 +45,11 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import {
+  ControlPointDuplicateRounded,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import EditorToolbar, {
   modules,
   formats,
@@ -409,7 +414,56 @@ const CompanyProfile = () => {
                 sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
                 variant="h5"
               >
-                Basic Info
+                Company Overview
+              </CustomTypography>
+            </CardContent>
+          </Card>
+          <Card
+            sx={{
+              width: "100%",
+              height: { xs: "150px", sm: "190px" },
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              textAlign: "center",
+              backgroundImage: 'url("/inactivejobs-bg.svg")',
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              borderRadius: "15px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              if (isEmpty(basicin?.cmpemail)) {
+                dispatch(
+                  openAlert({
+                    type: ERROR,
+                    message: "Please Provide Company Email",
+                  })
+                );
+                return;
+              }
+              push("/Employer/Members");
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mt: "25px",
+              }}
+            >
+              {isMobile ? (
+                <Image src="/members-img.png" alt="" width="42" height="50" />
+              ) : (
+                <Image src="/members-img.png" alt="" width="60" height="62" />
+              )}
+            </Box>
+            <CardContent>
+              <CustomTypography
+                sx={{ color: "white", fontSize: { xs: "17px", sm: "30px" } }}
+                variant="h5"
+              >
+                Why Join Us
               </CustomTypography>
             </CardContent>
           </Card>
@@ -546,7 +600,7 @@ const CompanyProfile = () => {
                   <StyledAvatar
                     src={
                       logo && logo.logo !== undefined
-                        ? ` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo.logo}`
+                        ? ` http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo.logo}`
                         : URL.createObjectURL(logo)
                     }
                     sx={{
@@ -663,10 +717,10 @@ const CompanyProfile = () => {
                 sx={{
                   color: "#034275",
                   fontFamily: BOLD,
-                  fontSize: "28px",
+                  fontSize: "24px",
                 }}
               >
-                Basic Info
+                About the Company
               </CustomTypography>
               <Stack
                 direction="row"
@@ -693,40 +747,96 @@ const CompanyProfile = () => {
               </Stack>
             </Box>
             <Stack spacing={2}>
-              <TextField
-                InputLabelProps={{ style: { color: "black" } }}
-                sx={{ ...style.naminput, bgcolor: "white" }}
-                id="outlined-basic"
-                label="Company Name"
-                placeholder="Enter Company Name"
-                variant="outlined"
-                name="cmpname"
-                onChange={(e) => basicadd(e)}
-                onBlur={(e) => handleBlur(e, "Company Name Was Updated")}
-                value={basicin?.cmpname || ""}
-                error={errors.cmpname ? true : false}
-                helperText={errors.cmpname}
-              />
-              <TextField
-                InputLabelProps={{ style: { color: "black" } }}
-                sx={{ ...style.naminput, bgcolor: "white" }}
-                id="outlined-basic"
-                label="Email"
-                type="email"
-                placeholder="Enter Email ID"
-                variant="outlined"
-                name="cmpemail"
-                onChange={(e) => basicadd(e)}
-                onBlur={(e) => handleBlur(e, "Company Email Was Updated")}
-                value={
-                  basicin !== null && basicin !== undefined
-                    ? basicin.cmpemail
-                    : ""
-                }
-                required
-                error={errors.cmpemail ? true : false}
-                helperText={errors.cmpemail}
-              />
+              <Stack direction="row" spacing={2}>
+                <TextField
+                  InputLabelProps={{ style: { color: "black" } }}
+                  sx={{ ...style.naminput, bgcolor: "white", width: "100%" }}
+                  id="outlined-basic"
+                  label="Company Name"
+                  placeholder="Enter Company Name"
+                  variant="outlined"
+                  name="cmpname"
+                  onChange={(e) => basicadd(e)}
+                  onBlur={(e) => handleBlur(e, "Company Name Was Updated")}
+                  value={basicin?.cmpname || ""}
+                  error={errors.cmpname ? true : false}
+                  helpertext={errors.cmpname}
+                />
+                <TextField
+                  InputLabelProps={{ style: { color: "black" } }}
+                  sx={{ ...style.naminput, bgcolor: "white", width: "100%" }}
+                  id="outlined-basic"
+                  label="CEO"
+                  placeholder="Enter the CEO's name in your company"
+                  variant="outlined"
+                />
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <FormControl
+                  sx={{ ...style.naminput, bgcolor: "white", width: "100%" }}
+                >
+                  <InputLabel
+                    id="demo-simple-select-label"
+                    sx={{ color: "black" }}
+                  >
+                    Sector
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Sector"
+                    sx={selectstyle.naminputSelect}
+                    name="infosector"
+                    onChange={(e) => companyadd(e)}
+                    value={cmpin?.infosector || ""}
+                    error={errors.infosector ? true : false}
+                    helpertext={errors.infosector}
+                    onBlur={(e) => handleBlur(e, "Company Sector Was Updated")}
+                  >
+                    {SECTORS.map((sec, index) => (
+                      <MenuItem key={index} value={sec}>
+                        {sec}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {!!errors.infosector && (
+                    <Formhelpertext error id="accountId-error">
+                      {errors.infosector}
+                    </Formhelpertext>
+                  )}
+                </FormControl>
+                <TextField
+                  InputLabelProps={{ style: { color: "black" } }}
+                  sx={{ ...style.naminput, bgcolor: "white", width: "100%" }}
+                  id="outlined-basic"
+                  label="Founded (Year)"
+                  placeholder="Select the year your company was found"
+                  variant="outlined"
+                />
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <TextField
+                  InputLabelProps={{ style: { color: "black" } }}
+                  sx={{ ...style.naminput, bgcolor: "white" }}
+                  id="outlined-basic"
+                  label="Email"
+                  type="email"
+                  placeholder="Enter Email ID"
+                  variant="outlined"
+                  name="cmpemail"
+                  onChange={(e) => basicadd(e)}
+                  onBlur={(e) => handleBlur(e, "Company Email Was Updated")}
+                  value={
+                    basicin !== null && basicin !== undefined
+                      ? basicin.cmpemail
+                      : ""
+                  }
+                  required
+                  error={errors.cmpemail ? true : false}
+                  helpertext={errors.cmpemail}
+                />
+                {/* <Location /> */}
+              </Stack>
               <TextField
                 InputLabelProps={{ style: { color: "black" } }}
                 sx={{ ...style.naminput, bgcolor: "white" }}
@@ -745,54 +855,11 @@ const CompanyProfile = () => {
               />
               <Divider variant="middle" />
             </Stack>
-            <CustomTypography
-              sx={{
-                color: "#034275",
-                fontFamily: BOLD,
-                fontSize: "28px",
-                mt: "20px",
-              }}
-            >
-              Company Information
+            <CustomTypography variant="body2" sx={styles.sectxt}>
+              Company Description
             </CustomTypography>
             <Box sx={styles.infofld}>
-              <FormControl sx={{ ...style.naminput, bgcolor: "white" }}>
-                <InputLabel
-                  id="demo-simple-select-label"
-                  sx={{ color: "black" }}
-                >
-                  Sector
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Sector"
-                  sx={selectstyle.naminputSelect}
-                  name="infosector"
-                  onChange={(e) => companyadd(e)}
-                  value={cmpin?.infosector || ""}
-                  error={errors.infosector ? true : false}
-                  helperText={errors.infosector}
-                  onBlur={(e) => handleBlur(e, "Company Sector Was Updated")}
-                >
-                  {SECTORS.map((sec, index) => (
-                    <MenuItem key={index} value={sec}>
-                      {sec}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {!!errors.infosector && (
-                  <FormHelperText error id="accountId-error">
-                    {errors.infosector}
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Box>
-            <Box sx={styles.infofld}>
-              <CustomTypography variant="body2" sx={styles.sectxt}>
-                Company Description
-              </CustomTypography>
-              <Box
+              {/* <Box
                 sx={{
                   width: "100%",
                   minHeight: "320px",
@@ -813,7 +880,155 @@ const CompanyProfile = () => {
                     style={{ height: "250px" }}
                   />
                 )}
-              </Box>
+              </Box> */}
+            </Box>
+            <Box>
+              <CustomTypography
+                sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
+              >
+                Upload a video (Optional)
+              </CustomTypography>
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: "10px", textTransform: "capitalize" }}
+                >
+                  Select File
+                </Button>
+                <CustomTypography
+                  sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
+                >
+                  OR
+                </CustomTypography>
+                <TextField
+                  InputLabelProps={{ style: { color: "black" } }}
+                  sx={{ ...style.naminput, bgcolor: "white", flexGrow: 1 }}
+                  id="outlined-basic"
+                  label="Vedio URL"
+                  placeholder="Enter OR the URL of the video"
+                  variant="outlined"
+                />
+              </Stack>
+            </Box>
+            <Box display="block" sx={styles.infofld}>
+              <CustomTypography variant="body2" sx={styles.sectxt}>
+                Locations
+              </CustomTypography>
+              <CustomTypography
+                sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
+              >
+                Enter other locations your company operates (If any)
+              </CustomTypography>
+              <Location />
+            </Box>
+            <Box display="block" sx={styles.infofld}>
+              <CustomTypography variant="body2" sx={styles.sectxt}>
+                Leaders in the Company
+              </CustomTypography>
+              <CustomTypography
+                sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
+              >
+                Highlight influential leaders in your company's profile Add
+              </CustomTypography>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Box
+                    sx={{
+                      height: "200px",
+                      width: "200px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "1px solid red",
+                    }}
+                  ></Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Stack spacing={2}>
+                    <Stack direction="row" spacing={2}>
+                      <TextField
+                        InputLabelProps={{ style: { color: "black" } }}
+                        sx={{
+                          ...style.naminput,
+                          bgcolor: "white",
+                          width: "100%",
+                        }}
+                        id="outlined-basic"
+                        label="First Name"
+                        placeholder="Enter the first name"
+                        variant="outlined"
+                      />
+                      <TextField
+                        InputLabelProps={{ style: { color: "black" } }}
+                        sx={{
+                          ...style.naminput,
+                          bgcolor: "white",
+                          width: "100%",
+                        }}
+                        id="outlined-basic"
+                        label="Last Name"
+                        placeholder="Enter the last name"
+                        variant="outlined"
+                      />
+                    </Stack>
+                    <TextField
+                      InputLabelProps={{ style: { color: "black" } }}
+                      sx={{
+                        ...style.naminput,
+                        bgcolor: "white",
+                        width: "100%",
+                      }}
+                      id="outlined-basic"
+                      label="Designation"
+                      placeholder="Enter the designation"
+                      variant="outlined"
+                    />
+                  </Stack>
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <IconButton variant="contained" sx={styles.addbtn}>
+                    <ControlPointDuplicateRounded
+                      sx={{
+                        fontSize: { sm: "1.5rem", xs: "1.5rem" },
+                        color: "#4fa9ff",
+                      }}
+                    />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box display="block" sx={styles.infofld}>
+              <CustomTypography variant="body2" sx={styles.sectxt}>
+                Team and Culture
+              </CustomTypography>
+              <CustomTypography
+                sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
+              >
+                Highlight your company's teamand culture through a profile
+                gallery
+              </CustomTypography>
+              <Box></Box>
             </Box>
             <Box display="block" sx={styles.infofld}>
               <CustomTypography variant="body2" sx={styles.sectxt}>
@@ -849,7 +1064,7 @@ const CompanyProfile = () => {
                   }}
                   value={links && links.fb}
                   error={errors.fb ? true : false}
-                  helperText={errors.fb}
+                  helpertext={errors.fb}
                 />
 
                 <TextField
@@ -876,7 +1091,7 @@ const CompanyProfile = () => {
                   }}
                   value={links && links.twitter}
                   error={errors.twitter ? true : false}
-                  helperText={errors.twitter}
+                  helpertext={errors.twitter}
                 />
                 <TextField
                   InputLabelProps={{ style: { color: "black" } }}
@@ -903,7 +1118,7 @@ const CompanyProfile = () => {
                   }}
                   required
                   // error={errors.linkin ? true : false}
-                  // helperText={errors.linkin}
+                  // helpertext={errors.linkin}
                 />
                 <TextField
                   InputLabelProps={{ style: { color: "black" } }}
@@ -934,12 +1149,6 @@ const CompanyProfile = () => {
                   }}
                 />
               </Box>
-            </Box>
-            <Box display="block" sx={styles.infofld}>
-              <CustomTypography variant="body2" sx={styles.sectxt}>
-                Location
-              </CustomTypography>
-              <Location />
             </Box>
             <Stack
               direction="row"

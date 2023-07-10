@@ -50,7 +50,7 @@ function Jobpaymentstatus() {
     } else {
       if (jobPay.payment !== "") {
         axios
-          .post(` https://api.arinnovate.io/api/addnewjobpayment`, jobPay, {
+          .post(` http://localhost:3000/api/addnewjobpayment`, jobPay, {
             headers: { "x-access-token": `${token}` },
           })
           .then((res) => {

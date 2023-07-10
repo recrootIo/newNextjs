@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Blogs = () => {
-  const API_URL = " https://api.arinnovate.io/api";
+  const API_URL = " http://localhost:3000/api";
 
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);

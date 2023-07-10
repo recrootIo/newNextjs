@@ -355,7 +355,7 @@ const CompanyPreview = () => {
                 >
                   <StyledAvatar
                     alt=""
-                    src={` https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo}`}
+                    src={` http://localhost:3000/api/getCompanyPhotos?compPhotos=${logo}`}
                     sx={{ height: "228px", width: "228px" }}
                   />
                 </Box>

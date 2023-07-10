@@ -34,12 +34,12 @@ export default function Location(props) {
     let updatedField = [...location].filter((fiel) => fiel.id !== id);
     setLocation(updatedField);
     dispatch(countryInfor(updatedField));
-    dispatch(openAlert(
-      {
-        type:ERROR,
-        message:"Company Location Was Removed"
-      }
-    ))
+    dispatch(
+      openAlert({
+        type: ERROR,
+        message: "Company Location Was Removed",
+      })
+    );
     dispatch(updateFinaldetails({ ...final, locate: updatedField }));
   };
 
@@ -57,12 +57,12 @@ export default function Location(props) {
       return;
     }
     dispatch(updateFinaldetails({ ...final, locate: newMemChange }));
-    dispatch(openAlert(
-      {
-        type:SUCCESS,
-        message:"Company Location Was Updated"
-      }
-    ))
+    dispatch(
+      openAlert({
+        type: SUCCESS,
+        message: "Company Location Was Updated",
+      })
+    );
   };
 
   return (
@@ -105,12 +105,10 @@ export default function Location(props) {
                           ...provided,
                           boxShadow: 0,
                           height: "40px",
-                          
                         }),
                         singleValue: (provided) => ({
                           ...provided,
                           boxShadow: 0,
-                          
                         }),
                       },
                     }}
