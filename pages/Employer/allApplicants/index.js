@@ -55,48 +55,24 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { BOLD } from "@/theme/fonts";
 import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
-import {
-  CleaningServicesOutlined,
-  Settings,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+
 import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 import Employer from "../../../components/pages/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DENOMINATIONS,
-  EMPLOYEE_STATUS,
   NoticePeriod,
-  REJECTED,
-  SHORT_LISTED,
-  THOUSAND,
   USER_EXPERIENCES,
   WORK_PREFERENCE,
 } from "@/utils/constants";
 import { useEffect } from "react";
 import {
   ApplicantsFilters,
-  getCompanyDetails,
-  getMachingAppl,
   getMatchApplicantsFilter,
   getRecommended,
-  matchShow,
-  updateApplicantFilters,
 } from "@/redux/slices/companyslice";
-import {
-  applyJobsdet,
-  applyJobsdetFilter,
-  getEmailTemplapes,
-  getJobsfil,
-  getSinCover,
-  getSinDetails,
-  getSinResume,
-  updateEmailTemplapes,
-} from "@/redux/slices/applyJobs";
-import { logout } from "@/redux/slices/auth";
-import { isEmpty } from "lodash";
+
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
@@ -115,7 +91,6 @@ import {
 import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from "react-google-places-autocomplete";
-import AddIcon from "@mui/icons-material/Add";
 import { v4 as uuidv4 } from "uuid";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import ReplayIcon from "@mui/icons-material/Replay";
@@ -126,6 +101,7 @@ import {
   OTHER_CURRENCIES,
 } from "@/utils/currency";
 import { currencyConvert } from "@/utils/HelperFunctions";
+import RefreshIcon from "@mui/icons-material/Refresh";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 export const TabPanel = (props) => {
@@ -736,7 +712,12 @@ const AllApplicants = () => {
                   />
                   <Button
                     variant="outlined"
-                    sx={{ backgroundColor: "#00339b !important" }}
+                    sx={{
+                      backgroundColor: "#00339b !important",
+                      width: "80px",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                     onClick={() => handleChange(null, 1)}
                   >
                     <SearchIcon
@@ -772,7 +753,7 @@ const AllApplicants = () => {
                       <FilterAltIcon fontSize="large" />
                     </IconButton>
                     <IconButton onClick={() => clearAll()}>
-                      <ReplayIcon fontSize="large" />
+                      <RefreshIcon fontSize="large" />
                     </IconButton>
                   </Stack>
                 )}
