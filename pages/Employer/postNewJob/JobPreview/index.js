@@ -523,25 +523,25 @@ const JobPreview = (props) => {
               details?.salary?.salaryType !== "noprovide" ? (
                 <>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <CustomTypography>Salary :</CustomTypography>
-                    <CustomTypography sx={styles.contentprv}>
+                  <CustomTypography className={styles.JobPreviewTypo}>Salary :</CustomTypography>
+                  <CustomTypography className={styles.JobPreviewData}>
                       {salaryType && capitalizeFirstLetter(salaryType)} (
                       {details && details.salary.minSalary} to{" "}
-                      {details && details.salary.maxSalary})
+                      {details && details.salary.maxSalary}) {isEmpty(details.salary.salaryDenomination) ? "" : details.salary.salaryDenomination}
                     </CustomTypography>
                   </Box>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <CustomTypography>Salary Currency : </CustomTypography>
-                    <CustomTypography sx={styles.contentprv}>
-                      {details && details.salary.salaryCrrancy}
+                  <CustomTypography className={styles.JobPreviewTypo}>Salary Currency : </CustomTypography>
+                  <CustomTypography className={styles.JobPreviewData}>
+                      {details && details.salary.salaryCrrancy} 
                     </CustomTypography>
                   </Box>
                 </>
               ) : (
                 <>
                   <Box sx={{ display: "flex", gap: "10px" }}>
-                    <CustomTypography>Salary :</CustomTypography>
-                    <CustomTypography sx={styles.contentprv}>
+                  <CustomTypography className={styles.JobPreviewTypo}>Salary :</CustomTypography>
+                  <CustomTypography className={styles.JobPreviewData}>
                       Negotiable
                     </CustomTypography>
                   </Box>
