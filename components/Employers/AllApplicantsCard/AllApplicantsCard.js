@@ -15,12 +15,7 @@ import {
   Divider,
   Grid,
 } from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
-import dynamic from "next/dynamic";
 import moment from "moment";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { PRIMARY } from "@/theme/colors";
 import React, { useEffect } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
@@ -28,14 +23,10 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { useDispatch, useSelector } from "react-redux";
 import download from "downloadjs";
-import { getSinResume } from "@/redux/slices/applyJobs";
 import applyJobService from "@/redux/services/applyjobs.service";
 import { useRouter } from "next/router";
-import { useMediaQuery } from "@mui/material";
 import axios from "axios";
 import {
   INTERVIEWING,
@@ -54,7 +45,6 @@ import { makeStyles } from "@mui/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
@@ -104,7 +94,8 @@ const AllApplicantsCard = ({
   const dispatch = useDispatch();
   const [resume, setresume] = useState();
   const [open, setOpen] = React.useState(false);
-  const [matchingArray, setMatchingArray] = React.useState([]);
+
+  console.log(matchingSkill, "matchingSkill");
 
   const user = Cookies.get();
 
@@ -179,11 +170,13 @@ const AllApplicantsCard = ({
    * @returns
    */
   const getCalculatedSkills = () => {
-    const skills = users.candidateId.resume.skills.map(
-      (skill) => skill.skillName
+    const skills = users.candidateId.resume.skills.map((skill) =>
+      skill.skillName.toLowerCase()
     );
+    const loverCaseSkills = matchingSkill.map((s) => s.toLowerCase());
+
     const matchingElements = skills.filter((skill) =>
-      matchingSkill.includes(skill)
+      loverCaseSkills.includes(skill)
     );
 
     return matchingElements.length;
@@ -399,8 +392,7 @@ const AllApplicantsCard = ({
     );
   };
 
-  const addEllipsis = (text) => {
-    const maxLength = 320;
+  const addEllipsis = (text, maxLength) => {
     let modifiedText = text;
 
     if (text.length > maxLength) {
@@ -439,12 +431,11 @@ const AllApplicantsCard = ({
 
   const skillPoints = getCalculatedSkills();
 
-  console.log(result, "result");
   return (
     <Tooltip
       title={
         users?.status === "shortlist"
-          ? "Applicant has been Short listed"
+          ? "Applicant has been Shortlisted"
           : users?.status === "rejected"
           ? "Applicant has been Rejected"
           : ""
@@ -574,21 +565,6 @@ const AllApplicantsCard = ({
           <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
             <Grid md={4}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <AssignmentIndIcon sx={{ color: "#1097CD" }} />
-                <CustomTypography
-                  sx={{
-                    fontWeight: "400",
-                    fontSize: "16px",
-                    lineHeight: "24px",
-                    color: "#1097CD",
-                  }}
-                >
-                  {users?.jobId?.jobRole}
-                </CustomTypography>
-              </Box>
-            </Grid>
-            <Grid md={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
                 <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
                 <CustomTypography
                   sx={{
@@ -603,6 +579,25 @@ const AllApplicantsCard = ({
               </Box>
             </Grid>
             <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "2px" }}>
+                <AssignmentIndIcon sx={{ color: "#1097CD" }} />
+                <Stack direction={"row"} sx={{ gap: "5px" }}>
+                  {users?.candidateId?.resume?.workPrefence.map((w, index) => (
+                    <CustomTypography
+                      key={index}
+                      sx={{
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                      }}
+                    >
+                      {w} ,
+                    </CustomTypography>
+                  ))}
+                </Stack>
+              </Box>
+            </Grid>
+            <Grid md={4}>
               {address && (
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <AddLocationIcon sx={{ color: "#1097CD" }} />
@@ -614,7 +609,7 @@ const AllApplicantsCard = ({
                       color: "rgba(1, 49, 63, 0.8)",
                     }}
                   >
-                    {address}
+                    {addEllipsis(address, 25)}
                   </CustomTypography>
                 </Box>
               )}
@@ -660,53 +655,7 @@ const AllApplicantsCard = ({
               p: "0 20px",
             }}
           >
-            {addEllipsis(users?.candidateId?.about)}
-          </Box>
-
-          <Box
-            sx={{
-              mb: "7px",
-              display: { xs: "flex", sm: "none" },
-              justifyContent: "flex-end",
-              p: "0 20px",
-            }}
-          >
-            <Button
-              sx={{
-                minWidth: "10px !important",
-                minHeight: "10px !important",
-                padding: "5px !important",
-                color: "#02a9f7",
-                borderColor: "#02a9f7",
-                fontSize: "18px",
-              }}
-              size="large"
-              variant="outlined"
-              bgcolor="#02A9F7 !important"
-              onClick={async () => {
-                const res = await fetch(recroot);
-                const blob = await res.blob();
-                download(blob, `${resume.resumeName}`);
-              }}
-            >
-              <DownloadIcon sx={{ fontSize: "35px" }} />
-            </Button>
-            <Button
-              variant="contained"
-              size="medium"
-              sx={{
-                ml: "8px",
-                height: "52px",
-                flexGrow: 1,
-                bgcolor: "#02A9F7 !important",
-                fontSize: { xs: "13px", md: "18px" },
-                whiteSpace: "nowrap",
-              }}
-              className="viewDetails"
-              onClick={() => navigate(users?._id, users?.status)}
-            >
-              View Details
-            </Button>
+            {addEllipsis(users?.candidateId?.about, 320)}
           </Box>
 
           <CustomTypography
@@ -818,7 +767,9 @@ const AllApplicantsCard = ({
                   Screening Questions :
                 </CustomTypography>
                 <CustomTypography sx={{ color: "#1565C0", fontSize: "15px" }}>
-                  {countAnswers(users)}
+                  {users?.jobId?.queshow === "false"
+                    ? "N/A"
+                    : countAnswers(users)}
                 </CustomTypography>
               </Stack>
             </Box>

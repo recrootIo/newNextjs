@@ -84,7 +84,7 @@ const JobDetailCard = ({ ...props }) => {
 
     if (data.profilePercentage < 70) {
       dispatch(setApplyPath(`/applyJob?jobid=${_id}`));
-      router.push(`/candidate/dashboard`);
+      router.push(`/Candidate/Dashboard`);
 
       dispatch(
         setJobID({

@@ -76,7 +76,6 @@ import {
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import companyservice from "@/redux/services/company.service";
 import LoadingSearchCards from "@/components/JobListings/LoadingSearchCards";
 import SearchIcon from "@mui/icons-material/Search";
@@ -143,6 +142,13 @@ export const StyledTab = styled(Tab)`
     text-transform: capitalize;
   }
 `;
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    width: "90%",
+  },
+}));
 
 const AllApplicants = () => {
   const dispatch = useDispatch();
@@ -246,7 +252,6 @@ const AllApplicants = () => {
       const data = { status, name };
       dispatch(getRecommended({ id: jid, page, data }));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jid, page, status]);
 
@@ -267,7 +272,7 @@ const AllApplicants = () => {
         { shallow: true } // This option prevents the page from rerendering
       );
     } else {
-      addAllToFilter();
+      addAllToFilter(status);
       const data = { status, name };
       dispatch(getRecommended({ id: jid, page, data }));
     }
@@ -524,32 +529,54 @@ const AllApplicants = () => {
 
   const addFilterStatus = (e) => {
     setStatus(() => e.target.value);
-    addAllToFilter(e.target.value);
-    handleChange(null, 1);
+    // addAllToFilter(e.target.value);
+    // handleChange(null, 1);
   };
 
   const clearFields = (field, item) => {
     let newFilters = { ...filtaration };
     if (field === "address") {
       newFilters.location = { city: "", country: "", state: "" };
+      setAddress("");
+      setInputPersonalDetailsCountry({
+        country: "",
+        state: "",
+        city: "",
+      });
     }
 
     if (field === "salary") {
       newFilters.salary = "";
       newFilters.salaryCurrency = "";
       newFilters.denomination = "";
+      setSalary({
+        salary: "",
+        denomination: "",
+      });
+      setCurrency("");
     }
 
     if (field === "skillSet" || field === "workPrefence") {
       let filteredArray = [];
       if (field === "skillSet") {
+        setTempSkill([]);
         filteredArray = newFilters.skillSet.filter((a) => item !== a.skill);
       } else {
+        setNames([]);
         filteredArray = newFilters.workPrefence.filter((a) => item !== a);
       }
+
       newFilters[field] = filteredArray;
     } else {
       newFilters[field] = "";
+    }
+
+    // setSelectedNotice;
+    if (field === "notice") {
+      setSelectedNotice("");
+    }
+    if (field === "exper") {
+      setSelectedExperience("");
     }
 
     dispatch(ApplicantsFilters({ ...newFilters }));
@@ -558,7 +585,7 @@ const AllApplicants = () => {
   };
 
   const changeApplicantType = (type) => {
-    handleChange(null, 1);
+    handleChange(status, 1);
     setCandidatesType(type);
   };
 
@@ -694,7 +721,7 @@ const AllApplicants = () => {
                 direction={"row"}
                 sx={{
                   justifyContent: "space-between",
-                  alignItems: "flex-end",
+                  alignItems: "center",
                   gap: "10px",
                 }}
               >
@@ -702,7 +729,7 @@ const AllApplicants = () => {
                   <InputBase
                     variant="outlined"
                     sx={{ ml: 1, flex: 1, height: "54px !important" }}
-                    placeholder="Search"
+                    placeholder="Search Applicant Name"
                     inputProps={{ "aria-label": "Location" }}
                     onChange={(e) => {
                       // dispatch(updateApplicantFilters("name", e.target.value));
@@ -710,6 +737,7 @@ const AllApplicants = () => {
                     }}
                     value={name}
                   />
+
                   <Button
                     variant="outlined"
                     sx={{
@@ -740,7 +768,7 @@ const AllApplicants = () => {
                     onChange={addFilterStatus}
                   >
                     <MenuItem value={""}>All</MenuItem>
-                    <MenuItem value={"shortlist"}>Short Listed</MenuItem>
+                    <MenuItem value={"shortlist"}>Shortlisted</MenuItem>
                     <MenuItem value={"rejected"}>Rejected</MenuItem>
                     <MenuItem value={"viewed"}>Viewed</MenuItem>
                     <MenuItem value={"unview"}>Unviewed</MenuItem>
@@ -748,13 +776,24 @@ const AllApplicants = () => {
                 </FormControl>
 
                 {candidatesType === "allApplicants" && (
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
-                    <IconButton onClick={() => setOpenFilter(!openFilter)}>
+                  <Stack
+                    direction={"row"}
+                    sx={{ gap: "10px", justifyContent: "center" }}
+                  >
+                    <Button
+                      variant="outlined"
+                      sx={{ height: "56px" }}
+                      onClick={() => setOpenFilter(!openFilter)}
+                    >
                       <FilterAltIcon fontSize="large" />
-                    </IconButton>
-                    <IconButton onClick={() => clearAll()}>
+                    </Button>
+                    <Button
+                      sx={{ height: "56px" }}
+                      variant="outlined"
+                      onClick={() => clearAll()}
+                    >
                       <RefreshIcon fontSize="large" />
-                    </IconButton>
+                    </Button>
                   </Stack>
                 )}
               </Stack>
@@ -1065,7 +1104,18 @@ const AllApplicants = () => {
                                 </FormGroup>
                               </Box>
                             </TabPanel>
-                            <TabPanel value={value} index={3} title={"Salary"}>
+                            <TabPanel
+                              value={value}
+                              index={3}
+                              title={"Salary"}
+                              clearAction={() => {
+                                setCurrency("");
+                                setSalary({
+                                  salary: "",
+                                  denomination: "",
+                                });
+                              }}
+                            >
                               {/* Currency of your Salary */}
 
                               <FormControl variant="outlined" fullWidth>
@@ -1242,7 +1292,7 @@ const AllApplicants = () => {
                               value={value}
                               index={5}
                               title={"Notice Period"}
-                              clearAction={() => clearAddress()}
+                              clearAction={() => setSelectedNotice("")}
                             >
                               <FormGroup>
                                 <FormControl>
