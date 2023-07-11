@@ -560,10 +560,8 @@ const cmpSlice = createSlice({
     },
     [getRecommended.fulfilled]: (state, action) => {
       state.loadingRecommended = false;
-
       state.matchingAppl.recommendedApplicants = action.payload?.candidates;
-      state.matchingAppl.recommendedApplicantsCount =
-        action.payload?.totalCounts;
+      state.matchingAppl.recommendedApplicantsCount = action.payload?.totalCounts;
     },
     [getRecommended.pending]: (state, action) => {
       state.loadingRecommended = true;
