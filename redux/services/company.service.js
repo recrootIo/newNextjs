@@ -53,7 +53,10 @@ class companyservice {
   }
 
   getMatchingApplicants(value) {
-    return http.get(`/matchApplicant/${value?.id}?page=${value?.page}`);
+    return http.post(
+      `/matchApplicant/${value?.id}?page=${value?.page}`,
+      value?.data
+    );
   }
 
   getAllInfoSectors() {
@@ -68,6 +71,19 @@ class companyservice {
   updateTourValue(data) {
     const rs = JSON.parse(localStorage.getItem("User"));
     return http.post(`/updateTourValue/${rs?.User?.companyId}`, data);
+  }
+  getMatchingCriterias(jobId) {
+    return http.post(`/matchApplicantNew/${jobId}`);
+  }
+  getMatchingSkills(jobId) {
+    return http.get(`/matchSkills/${jobId}`);
+  }
+  getMatchApplicantsFilter(value) {
+    const page = value?.page || 1;
+    return http.post(
+      `/matchApplicantsFilter/${value?.jid}?page=${page}`,
+      value?.data
+    );
   }
 }
 

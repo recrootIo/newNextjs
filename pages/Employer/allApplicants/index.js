@@ -35,6 +35,13 @@ import {
   FormLabel,
   Typography,
   Dialog,
+  InputBase,
+  Tabs,
+  Tab,
+  Autocomplete,
+  CircularProgress,
+  styled,
+  ListSubheader,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import WorkIcon from "@mui/icons-material/Work";
@@ -58,12 +65,25 @@ import styles from "./allApplicants.module.css";
 import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 import Employer from "../../../components/pages/index";
 import { useDispatch, useSelector } from "react-redux";
-import { EMPLOYEE_STATUS, REJECTED, SHORT_LISTED } from "@/utils/constants";
+import {
+  DENOMINATIONS,
+  EMPLOYEE_STATUS,
+  NoticePeriod,
+  REJECTED,
+  SHORT_LISTED,
+  THOUSAND,
+  USER_EXPERIENCES,
+  WORK_PREFERENCE,
+} from "@/utils/constants";
 import { useEffect } from "react";
 import {
+  ApplicantsFilters,
   getCompanyDetails,
   getMachingAppl,
+  getMatchApplicantsFilter,
+  getRecommended,
   matchShow,
+  updateApplicantFilters,
 } from "@/redux/slices/companyslice";
 import {
   applyJobsdet,
@@ -79,395 +99,189 @@ import { logout } from "@/redux/slices/auth";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
 import { useRouter } from "next/router";
-import EditorToolbar, {
-  modules,
-  formats,
-} from "@/components/EditorToolbar/EditorToolbar";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import companyservice from "@/redux/services/company.service";
-import moment from "moment";
 import LoadingSearchCards from "@/components/JobListings/LoadingSearchCards";
+import SearchIcon from "@mui/icons-material/Search";
+import Header from "@/components/Header";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import {
+  a11yProps,
+  BpCheckbox,
+  BpRadio,
+  StyledFormLabel,
+} from "@/components/JobListings/SearchSection";
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+} from "react-google-places-autocomplete";
+import AddIcon from "@mui/icons-material/Add";
+import { v4 as uuidv4 } from "uuid";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import ReplayIcon from "@mui/icons-material/Replay";
+import { NEUTRAL } from "@/theme/colors";
+import {
+  COMMON_CURRENCIES,
+  INDIAN_CURRENCY,
+  OTHER_CURRENCIES,
+} from "@/utils/currency";
+import { currencyConvert } from "@/utils/HelperFunctions";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
-const shadow =
-  "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
-const AllApplicants = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [isTourOpen, setTourOpen] = React.useState(false);
+export const TabPanel = (props) => {
+  const { children, value, index, title, clearAction, ...other } = props;
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
-
-  const [isShown, setIsShown] = useState(true);
-  // const classes = useStyles();
-  const dispatch = useDispatch();
-  // const { jid } = useParams();
-  const { names, single } = useSelector((state) => state.apply);
-  const {
-    details,
-    currentPage,
-    totalPage,
-    count,
-    loading,
-    unview,
-    rejectcount,
-    shortCount,
-    selectedId,
-    rejectedEmail,
-    selectedEmail,
-  } = useSelector((state) => state.apply);
-  const [user, setUser] = useState(details);
-  const [titles, setTitles] = useState([]);
-  const [ids, setids] = useState([]);
-  const [selectedStatus, setSelected] = useState([]);
-  const match = useSelector((state) => state.company.matchingAppl);
-  const loading2 = useSelector((data) => data.company.loading);
-  const company = useSelector(
-    (data) => data.company?.companyDetl?.basicInformation
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+      // style={{ padding: "0 15px" }}
+    >
+      <Stack
+        direction={"row"}
+        sx={{
+          backgroundColor: "#F2F8FD",
+          padding: "15px",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <CustomTypography sx={{ fontWeight: "700" }}>{title}</CustomTypography>
+        <IconButton onClick={() => clearAction()}>
+          <HighlightOffIcon color="primary" fontSize="small" />
+        </IconButton>
+      </Stack>
+      <Box sx={{ padding: "15px 20px" }}> {children}</Box>
+    </div>
   );
-  // eslint-disable-next-line no-unused-vars
-  const [filteredStatuses, setFilteredStatuses] = useState([]);
-  const [rejectedTemp, setRejectedTemp] = useState({
-    jobTitle: "",
-    type: REJECTED,
-    subject: "",
-    emailBody: "",
-    date: "",
-    setting: "As_soon_as_reject",
-    cand: "Hi",
-  });
-  const [selectedTemp, setSelectedTemp] = useState({
-    jobTitle: "",
-    type: SHORT_LISTED,
-    subject: "",
-    emailBody: "",
-    date: "",
-    setting: "Do_not_send",
-    cand: "Hi",
-  });
-  // const filteredTitle = names.filter(
-  //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
-  //   );
-  var name = [...names];
-  // var output = [];
-  // var output = name.reduce(function (o, cur) {
-  //   // Get the index of the key-value pair.
-  //   var occurs = o.reduce(function (n, item, i) {
-  //     return item.jobRole === cur.jobRole ? i : n;
-  //   }, -1);
+};
 
-  //   // If the name is found,
-  //   if (occurs >= 0) {
-  //     // append the current value to its list of values.
-  //     o[occurs]._id = [o[occurs]._id.concat(cur._id)];
+export const StyledTab = styled(Tab)`
+  && {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    -webkit-justify-content: flex-start !important;
+    text-transform: capitalize;
+  }
+`;
 
-  //     // Otherwise,
-  //   } else {
-  //     // add the current item to o (but make sure the value is an array).
-  //     var obj = {
-  //       jobRole: cur.jobRole,
-  //       _id: [cur._id],
-  //     };
-  //     o = o.concat([obj]);
-  //   }
-
-  //   return o;
-  // }, []);
-
-  // let mergedArray = names.reduce((accumulator, currentValue) => {
-  //   let existingObject = accumulator.find(item => item.jobRole === currentValue.jobRole);
-
-  //   if (!existingObject) {
-  //     accumulator.router.push(currentValue);
-  //   } else {
-  //     console.log(existingObject,'exist')
-  //     existingObject.jobTitle = Math.max(existingObject.jobTitle, currentValue.jobTitle);
-  //     existingObject._id += `, ${currentValue._id}`;
-  //   }
-
-  //   return accumulator;
-  // }, []);
-  // console.log(rejectedEmail, "rejectedEmail");
-
-  // const filteredTitle = names.filter(
-  //   (v, i, a) => a.findIndex((v2) => v2?.jobRole === v?.jobRole) === i
-  // );
-  // const router.push = useNavigate()
-  // const {router.push} = useRouter()
+const AllApplicants = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const { jid } = router.query;
-  // const jid = undefined;
-  const matching = jid !== undefined;
-  const [cuurpage, setcuurpage] = useState('');
+  const { page, jid, title } = router.query;
+  const comp = useSelector((state) => state?.company?.companyDetl);
+  const {
+    allApplicants = [],
+    allApplicantsCount = 0,
+    recommendedApplicants = [],
+    recommendedApplicantsCount = 0,
+  } = useSelector((state) => state.company.matchingAppl);
+  const filtaration = useSelector(
+    (state) => state.company.allApplicantsFilters
+  );
+
+  const { loadingRecommended, loadingAllApplicants } = useSelector(
+    (state) => state.company
+  );
+
+  const newCompanyservice = new companyservice();
+
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", "pTpYIFKqYkVkRSBgriOF1KTp4kNrHRpe");
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow",
+    headers: myHeaders,
+  };
+
+  const {
+    //   details,
+    //   currentPage,
+    //   totalPage,
+    //   count,
+    loading,
+    //   unview,
+    //   rejectcount,
+    //   shortCount,
+    //   selectedId,
+    //   rejectedEmail,
+    //   selectedEmail,
+  } = useSelector((state) => state.apply);
+
+  const [isTourOpen, setTourOpen] = React.useState(false);
+  const [role, setRole] = useState({ skill: "", id: uuidv4() });
+  const [matchingDetails, setMatchingDetails] = React.useState({});
+  const [matchingSkill, setMatchingSkills] = React.useState([]);
+  const [openFilter, setOpenFilter] = React.useState(false);
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [arrskills, setArrskills] = useState([]);
+  const [timer, setTimer] = useState(null);
+  const [candidatesType, setCandidatesType] = useState("allApplicants");
+
+  const [names, setNames] = useState(filtaration.workPrefence);
+  const [selectedExperience, setSelectedExperience] = useState(
+    filtaration?.exper
+  );
+  const [selectedNotice, setSelectedNotice] = useState(filtaration.notice);
+  const [address, setAddress] = React.useState(null);
+  const [inputPersonalDetailsCountry, setInputPersonalDetailsCountry] =
+    useState({
+      country: filtaration.location.country,
+      state: filtaration.location.state,
+      city: filtaration.location.city,
+    });
+  const [currency, setCurrency] = React.useState();
+  const [salary, setSalary] = React.useState({
+    denomination: filtaration.denomination,
+    salary: filtaration.salary,
+  });
+  const [name, setName] = useState(filtaration.name);
+  const [tempSkills, setTempSkill] = useState(filtaration.skillSet);
+  const [status, setStatus] = useState(filtaration.status);
+  const [load, setLoad] = React.useState(false);
+
+  /**
+   * get matching details
+   */
+  const getMatchingCriteria = async () => {
+    await newCompanyservice
+      .getMatchingCriterias(jid)
+      .then((res) => {
+        setMatchingDetails(() => res.data?.candidates[0]);
+      })
+      .catch((res) => console.log(res, "getMatchingCriteria"));
+
+    await newCompanyservice
+      .getMatchingSkills(jid)
+      .then((res) => {
+        setMatchingSkills(() => res.data.skills);
+      })
+      .catch((res) => console.log(res, "getMatchingSkills"));
+  };
+
   useEffect(() => {
-    const { array } = router.query;
-    const { status } = router.query;
-    const { page } = router.query;
-    if (page) {
-  setcuurpage(page)
-    }
-    if (array || status) {      
-      if (array) {
-        const parsedArray = JSON.parse(array);
-        setTitles(parsedArray);
-        setids(parsedArray.map((obj) => obj._id));
-      }
-      if (status) {
-        const parsedStatus = JSON.parse(status);
-        setSelected(parsedStatus);
-      }
-    }
-    else{
-      if (matching) {
-        const value = {
-          id: jid,
-          page: 1,
-        };
-        dispatch(getMachingAppl(value));
-        return;
-      }else{
-        dispatch(applyJobsdet({page:page}))
-          .then((res) => {
-            if (res.error !== undefined) {
-              res.error.message === "Request failed with status code 401" ||
-              "Request failed with status code 403"
-                ? dispatch(logout()).then(() => {
-                    router.push(
-                      {
-                        pathname: "/signin",
-                        query: { name: "session" },
-                      },
-                      "/signin"
-                    );
-                  })
-                : console.log("error");
-            }
-          })
-          .catch((error) => {
-            if (
-              error.message === "Request failed with status code 401" ||
-              "Request failed with status code 403"
-            ) {
-              dispatch(logout()).then(() => {
-                router.push(
-                  {
-                    pathname: "/signin",
-                    query: { name: "session" },
-                  },
-                  "/signin"
-                );
-              });
-            }
-          });
-        dispatch(getJobsfil());
-      }
+    if (jid) {
+      addAllToFilter(status);
+      getMatchingCriteria();
+      const data = { status, name };
+      dispatch(getRecommended({ id: jid, page, data }));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query,jid]);
-  useEffect(() => {
+  }, [jid, page, status]);
 
-  }, [dispatch, jid]);
-  const type = useSelector((state) => state.company.matchType);
-
-  const handleClear = (val) => {
-    dispatch(matchShow(val));
-    const value = {
-      id: jid,
-      page: 1,
-    };
-    if (cuurpage > 1) {
-      dispatch(getMachingAppl(value)).then(setcuurpage(1));
-    }
-  };
-  useEffect(() => {
-    if (!matching) {
-      setUser(details);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matching, details]);
-
-  const getDetaulUser = () => {
-    const defaultUser = user[0];
-    const isUserAvailable = user.find((usr) => usr._id === selectedId);
-    if (isUserAvailable) return isUserAvailable;
-
-    return defaultUser;
-  };
-
-  useEffect(() => {
-    dispatch(getSinDetails(getDetaulUser()));
-    dispatch(getCompanyDetails());
-    dispatch(getEmailTemplapes());
-    if (!isEmpty(user)) dispatch(getSinDetails(getDetaulUser()));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
-  useEffect(() => {
-    if (single?.resumeId && single?.coverId) {
-      dispatch(getSinResume(single?.resumeId));
-      dispatch(getSinCover(single?.coverId));
-    }
-  }, [dispatch, single]);
-  const strongCount = isEmpty(match?.strongCount)
-    ? 0
-    : match?.strongCount[0]?.count;
-  const goodCount = isEmpty(match?.goodCount) ? 0 : match?.goodCount[0]?.count;
-  const minCount = isEmpty(match?.minCount) ? 0 : match?.minCount[0]?.count;
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorEl1, setAnchorEl1] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClickStatus = (event) => {
-    setAnchorEl1(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClose1 = () => {
-    setAnchorEl1(null);
-  };
-
-  const seeAll = useSelector((state) => state.apply.seeCand);
   const handleChange = (e, value) => {
-   setcuurpage(value)
-    const reqObject = {
-      page: value,
-      data: { status: selectedStatus, job: ids },
-      jobid: seeAll?.jobId,
-    };
-    const { ...otherParams } = router.query;
+    if (page > 1) {
+      const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
         page: value,
       };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
-    if (seeAll?.state === true) {
-      dispatch(applyJobsdetFilter(reqObject));
-    } else {
-      dispatch(applyJobsdet(reqObject));
-    }
-    scrollToTop()
-    scrollToDiv()
-  };
-  const handleName = (e, value) => {
-    const {  checked } = e.target;
-    if (checked) {
-      const titls = [...ids, value._id];
-      setTitles(
-        // On autofill we get a stringified value.
-        [
-          ...titles,
-          {
-            _id: value._id,
-            jobRole: value.jobRole,
-            createdAt: value.createdAt,
-          },
-        ]
-      );
-      setids([...ids, value._id]);
-      if (titls.length === 1) {
-        setSelectedTemp({ ...selectedTemp, jobTitle: titls[0] });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: titls[0] });
-      }
-      const queryString = JSON.stringify([
-        ...titles,
-        { _id: value._id, jobRole: value.jobRole, createdAt: value.createdAt },
-      ]);
-      const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        array: queryString ,
-        page: 1,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
-    } else {
-      let newJobs = titles.filter((arr) => value._id != arr._id);
-      let newIds = ids.filter((arr) => value._id != arr);
-      setTitles(() => [...newJobs]);
-      setids(newIds);
-      if (newIds.length === 1) {
-        setSelectedTemp({ ...selectedTemp, jobTitle: newIds[0] });
-        setRejectedTemp({ ...rejectedTemp, jobTitle: newIds[0] });
-      }
-      const reqObject = {
-        page: 1,
-        data: { status: selectedStatus, job: newIds },
-      };
-      dispatch(applyJobsdet(reqObject));
-      const queryString = JSON.stringify(newJobs);
-      const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        array: queryString ,
-        page: 1,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
-    }
-   handleClose()
-  };
-  useEffect(() => {
-    const reqObject = {
-      page: cuurpage,
-      data: { status: selectedStatus, job: ids },
-    };
-    if (isEmpty(selectedStatus) && isEmpty(ids)) {
-      setUser(details)
-    } else {
-      dispatch(applyJobsdet(reqObject));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ids, selectedStatus]);
-  useEffect(() => {
-    if (titles.length === 1) {
-      setIsShown(false);
-    } else {
-      setSelectedTemp({ ...selectedTemp, jobTitle: "" });
-      setIsShown(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titles]);
 
-  const handleNameStatus = (e, value) => {
-    let newArray = [...selectedStatus];
-    if (e.target.checked) {
-      newArray.push(value);
-      const queryString = JSON.stringify([...selectedStatus, value]);
-      
-    const { ...otherParams } = router.query;
-    const updatedQueryParams = {
-      ...otherParams,
-      status: queryString ,
-      page: 1,
-    };
       router.push(
         {
           pathname: router.pathname,
@@ -477,280 +291,22 @@ const AllApplicants = () => {
         { shallow: true } // This option prevents the page from rerendering
       );
     } else {
-      newArray = newArray.filter((res) => res !== value);
-      const reqObject = {
-        page: 1,
-        data: { status: newArray, job: ids },
-      };
-      dispatch(applyJobsdet(reqObject));
-      const queryString = JSON.stringify(
-        newArray.filter((res) => res !== value)
-      );
-      const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        status: queryString ,
-        page: 1,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
+      addAllToFilter();
+      const data = { status, name };
+      dispatch(getRecommended({ id: jid, page, data }));
     }
-    setSelected(() => [...newArray]);
-    handleClose1()
+
+    scrollToTop();
+    scrollToDiv();
   };
 
-  function roundAndIncrease(decimalNumber) {
-    let roundedNumber = Math.round(decimalNumber);
-    if (
-      decimalNumber - roundedNumber < 0.5 &&
-      decimalNumber - roundedNumber > 0
-    ) {
-      roundedNumber++;
-    }
-    return roundedNumber;
-  }
-
-  const handleChangePage = (e, page) => {
-    const value = {
-      id: jid,
-      page: page,
-    };
-    dispatch(getMachingAppl(value)).then(setcuurpage(page));
-    scrollToTop()
-    scrollToDiv()
-  };
   const divRef = useRef(null);
+
   const scrollToTop = () => {
     if (divRef.current) {
       divRef.current.scrollTop = 0;
     }
   };
-  const open = Boolean(anchorEl);
-  const open2 = Boolean(anchorEl1);
-  const id1 = open2 ? "simple-popover" : undefined;
-
-  // Rejected email content modal
-  const [Modelopen, setModelopen] = React.useState(false);
-  const handleDialogAction = () => {
-    setModelopen(!Modelopen);
-    const value = {
-      id: rejectedTemp?.jobTitle,
-      type: "rejected",
-    };
-    dispatch(getEmailTemplapes(value)).then((res) => {
-      if (res?.payload?.data === null) {
-        setRejectedTemp({
-          jobTitle: rejectedTemp?.jobTitle,
-          type: REJECTED,
-          subject: "Status of Your Job Application",
-          emailBody: defaultRej,
-          date: "",
-          setting: "As_soon_as_reject",
-          cand: "Hi",
-        });
-      }
-    });
-  };
-  const defaultRej = `<p> We hope this email finds you well. We appreciate the time and effort you put into applying for the <span style="font-weight: 600">${titles[0]?.jobRole}</span> position at <span style="font-weight: 600">${company?.cmpname}</span>. We carefully reviewed your application and qualifications, after thorough consideration, we regret to inform you that we have decided not to move forward with your application at this time. We received a large number of qualified candidates, and the selection process was highly competitive. Although your qualifications and experience are commendable, we have chosen to proceed with other candidates whose skills and expertise more closely align with our current needs.</p></br>
-  <p>We understand that this news may be disappointing, and we want to assure you that this decision was not a reflection of your abilities or potential. The selection process is a challenging one, and we are compelled to make difficult choices based on the specific requirements of the role and the overall fit within our organization.</p></br>
-  <p>Please note that we will keep your application on file for future reference should any suitable opportunities arise. We encourage you to continue to explore our career opportunities and submit applications for roles that match your skills and interests.</p></br>
-  <p>We sincerely appreciate your interest in our company and wish you every success in your job search. Should you have any questions or require further feedback regarding your application, please feel free to reach out to us. We would be more than happy to provide any assistance or insights that may be helpful.</p></br>
-  <p>Once again, thank you for your time and consideration. 
-   </p>`;
-  useEffect(() => {
-    setRejectedTemp({
-      ...rejectedTemp,
-      emailBody:
-        rejectedEmail?.emailBody === undefined
-          ? defaultRej
-          : rejectedEmail?.emailBody,
-      type: rejectedEmail?.type || REJECTED,
-      setting:
-        rejectedEmail?.setting === undefined
-          ? "As_soon_as_reject"
-          : rejectedEmail?.setting,
-      subject:
-        rejectedEmail?.subject === undefined
-          ? "Status of Your Job Application"
-          : rejectedEmail?.subject,
-      date: rejectedEmail?.date,
-      cand: rejectedEmail?.cand === undefined ? "Hi" : rejectedEmail?.cand,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rejectedEmail, Modelopen]);
-  useEffect(() => {
-    setSelectedTemp({
-      ...rejectedTemp,
-      emailBody: selectedEmail?.emailBody,
-      type: selectedEmail?.type || SHORT_LISTED,
-      setting: selectedEmail?.setting || "",
-      subject: selectedEmail?.subject,
-      date: selectedEmail?.date,
-      cand: selectedEmail?.cand === undefined ? "Hi" : selectedEmail?.cand,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedEmail]);
-
-  const [emailAction, setemailAction] = React.useState(null);
-  const emailActionOpen = Boolean(emailAction);
-  const emailActionHandleClick = (event) => {
-    setemailAction(event.currentTarget);
-  };
-  const emailActionHandleClose = () => {
-    setemailAction(null);
-  };
-
-  //Shortlisted email content modal
-  const [ShortlistedModelopen, setShortlistedModelopen] = React.useState(false);
-
-  const handleShortlistedDialogAction = () => {
-    setShortlistedModelopen(!ShortlistedModelopen);
-    const value = {
-      id: rejectedTemp?.jobTitle,
-      type: "shortlist",
-    };
-    dispatch(getEmailTemplapes(value)).then((res) => {
-      if (res?.payload?.data === null) {
-        setSelectedTemp({
-          jobTitle: selectedTemp?.jobTitle,
-          type: SHORT_LISTED,
-          subject: "",
-          emailBody: "",
-          date: "",
-          setting: "Do_not_send",
-          cand: "Hi",
-        });
-      }
-    });
-  };
-
-  //zoom in function
-  const wrapperRef = useRef(null);
-
-  // useEffect(() => {
-  //   wrapperRef.current.style.zoom = "80%";
-  // }, []);
-  const updateRejectedEmails = () => {
-    dispatch(updateEmailTemplapes(rejectedTemp));
-    setRejectedTemp({
-      jobTitle: rejectedTemp?.jobTitle,
-      type: REJECTED,
-      subject: "",
-      emailBody: "",
-      date: "",
-      setting: "Do_not_send",
-      cand: "Hi",
-    });
-    handleDialogAction();
-  };
-
-  const updateShortlistedEmails = () => {
-    dispatch(updateEmailTemplapes(selectedTemp));
-    handleShortlistedDialogAction();
-    setSelectedTemp({
-      jobTitle: selectedTemp?.jobTitle,
-      type: SHORT_LISTED,
-      subject: "",
-      emailBody: "",
-      date: "",
-      setting: "Do_not_send",
-      cand: "Hi",
-    });
-  };
-
-  //date time picker
-  const loadingCount = ["1", "2", "3", "4", "5", "6", "0", "2", "3", "3", "3"];
-  useEffect(() => {
-    if (matching) {
-      if (type === "strong") {
-        setUser(match?.strongData);
-      }
-      if (type === "good") {
-        setUser(match?.goodData);
-      }
-      if (type === "minimum") {
-        setUser(match?.minData);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matching, type, loading2]);
-
-  const handleDelete = (indexToRemove, typ, idds) => {
-    console.info(idds, "You clicked the delete icon.");
-    if (typ === "titl") {
-      const idis = ids.filter((element) => !idds.includes(element))
-      setids(idis);
-      setTitles(titles.filter((_, index) => index !== indexToRemove));
-      const reqObject = {
-        page: 1,
-        data: { status: selectedStatus, job: idis },
-      };
-      dispatch(applyJobsdet(reqObject));
-      const queryString = JSON.stringify(
-        titles.filter((_, index) => index !== indexToRemove)
-      );
-      const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        array: queryString ,
-        page: 1,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
-    } else {
-      const status = selectedStatus.filter((_, index) => index !== indexToRemove)
-      setSelected(selectedStatus.filter((_, index) => index !== indexToRemove));
-      const reqObject = {
-        page: 1,
-        data: { status: status, job: ids },
-      };
-      dispatch(applyJobsdet(reqObject));
-      const queryString = JSON.stringify(
-        selectedStatus.filter((_, index) => index !== indexToRemove)
-      );
-      const { ...otherParams } = router.query;
-      const updatedQueryParams = {
-        ...otherParams,
-        status: queryString ,
-        page: 1,
-      };
-      router.push(
-        {
-          pathname: router.pathname,
-          query: updatedQueryParams,
-        },
-        undefined,
-        { shallow: true } // This option prevents the page from rerendering
-      );
-    }
-  };
-  // const { aid } = router.query;
-  // useEffect(() => {
-  //   if (aid) {
-  //     scrollToDiv(aid);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [aid]);
-  // function scrollToDiv(div) {
-  //   // Get the target div element
-  //   const targetElement = document.getElementById(div);
-
-  //   // Scroll to the target element
-  //   targetElement.scrollIntoView({ behavior: "smooth" });
-  //   router.push("/Employer/AllApplicants", undefined, { shallow: true });
-  // }
 
   const updateValue = async () => {
     const companyService = new companyservice();
@@ -761,8 +317,6 @@ const AllApplicants = () => {
     setTourOpen(false);
     updateValue();
   };
-
-  const accentColor = "#5cb7b7";
 
   const tourConfig = [
     {
@@ -809,20 +363,250 @@ const AllApplicants = () => {
     },
   ];
 
-  const comp = useSelector((state) => state?.company?.companyDetl);
   useEffect(() => {
     setTourOpen(() => comp?.tours?.allApplicant);
   }, [comp?.tours?.allApplicant]);
+
   const scrollToDiv = () => {
-    const element = document.getElementById('style-5');
+    const element = document.getElementById("style-5");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleExperience = (re) => {
+    const { name, checked } = re.target;
+    setSelectedExperience(name);
+  };
+
+  const handleNotice = (re) => {
+    const { name, checked } = re.target;
+    setSelectedNotice(name);
+  };
+
+  const handleName = (re) => {
+    const { name, checked } = re.target;
+    let newJobs = [...names];
+
+    if (checked) {
+      newJobs.push(name);
+    } else {
+      newJobs = names.filter((arr) => name != arr);
+    }
+
+    setNames(() => [...newJobs]);
+  };
+
+  const handleSelect = async (selected) => {
+    const results = await geocodeByAddress(selected?.label);
+    console.log(handleSelect, "handleSelect");
+    setInputPersonalDetailsCountry({
+      country: results[0].address_components.find((c) =>
+        c.types.includes("country")
+      )?.long_name,
+      state: results[0].address_components.find((c) =>
+        c.types.includes("administrative_area_level_1")
+      )?.long_name,
+      city: results[0].address_components.find((c) =>
+        c.types.includes("locality")
+      )?.long_name,
+    });
+  };
+
+  const clearAddress = () => {
+    setAddress("");
+    setInputPersonalDetailsCountry(() => ({
+      country: null,
+      state: null,
+      city: null,
+    }));
+  };
+
+  const selectCurrency = (e) => {
+    setCurrency(e.target.value);
+  };
+
+  const skillApi = (skil) => {
+    fetch(`https://api.apilayer.com/skills?q=${skil}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setArrskills(result);
+      })
+      .catch((error) => console.warn("error", error));
+  };
+
+  const inputChanged = (e) => {
+    if (e.target.value === "") {
+      setArrskills([]);
+      setLoad(false);
+      return;
+    }
+    setLoad(true);
+    clearTimeout(timer);
+    const newTimer = setTimeout(() => {
+      if (e.target.value === "") {
+        setArrskills([]);
+        return;
+      }
+      skillApi(e.target.value);
+    }, 500);
+
+    setTimer(newTimer);
+  };
+
+  const addSkill = () => {
+    setTempSkill((state) => [...state, role]);
+    setRole({ skill: "", id: uuidv4() });
+  };
+
+  const handleDelete = (e) => {
+    let newTemps = tempSkills.filter((a) => a.skill !== e);
+    setTempSkill(() => [...newTemps]);
+  };
+
+  const addAllToFilter = (newStatus = "", customPage = null) => {
+    const allApplicantsFilters = {
+      workPrefence: names,
+      skillSet: tempSkills,
+      location: {
+        city: inputPersonalDetailsCountry.city,
+        country: inputPersonalDetailsCountry.country,
+        state: inputPersonalDetailsCountry.state,
+      },
+      notice: selectedNotice,
+      salaryCurrency: currency,
+      denomination: salary.denomination,
+      salary: salary.salary,
+      exper: selectedExperience,
+      status: newStatus,
+      name: name,
+    };
+    dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
+
+    dispatch(
+      getMatchApplicantsFilter({
+        jid,
+        page: customPage || page,
+        data: allApplicantsFilters,
+      })
+    );
+  };
+
+  const getCandidateSalary = (candidate) => {
+    const salaryDetails = `${currencyConvert(
+      candidate.salary,
+      candidate?.salaryCurrency
+    )} ${candidate?.denomination}`;
+
+    return salaryDetails;
+  };
+
+  const clearAll = () => {
+    const allApplicantsFilters = {
+      workPrefence: [],
+      skillSet: [],
+      location: {
+        city: "",
+        country: "",
+        state: "",
+      },
+      notice: "",
+      salaryCurrency: "",
+      denomination: "",
+      salary: "",
+      exper: "",
+      name: "",
+    };
+    dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
+    dispatch(getRecommended({ id: jid, page: 1 }));
+    dispatch(
+      getMatchApplicantsFilter({ jid, page: 1, data: allApplicantsFilters })
+    );
+    setInputPersonalDetailsCountry(() => ({
+      city: "",
+      state: "",
+      country: "",
+    }));
+    setSelectedNotice("");
+    setTempSkill([]);
+    setNames([]);
+    setSelectedNotice("");
+    setSelectedExperience("");
+    setAddress("");
+    setCurrency("");
+    setSalary({
+      denomination: filtaration.denomination,
+      salary: filtaration.salary,
+    });
+    setName("");
+    setStatus("");
+  };
+
+  const addFilterStatus = (e) => {
+    setStatus(() => e.target.value);
+    addAllToFilter(e.target.value);
+    handleChange(null, 1);
+  };
+
+  const clearFields = (field, item) => {
+    let newFilters = { ...filtaration };
+    if (field === "address") {
+      newFilters.location = { city: "", country: "", state: "" };
+    }
+
+    if (field === "salary") {
+      newFilters.salary = "";
+      newFilters.salaryCurrency = "";
+      newFilters.denomination = "";
+    }
+
+    if (field === "skillSet" || field === "workPrefence") {
+      let filteredArray = [];
+      if (field === "skillSet") {
+        filteredArray = newFilters.skillSet.filter((a) => item !== a.skill);
+      } else {
+        filteredArray = newFilters.workPrefence.filter((a) => item !== a);
+      }
+      newFilters[field] = filteredArray;
+    } else {
+      newFilters[field] = "";
+    }
+
+    dispatch(ApplicantsFilters({ ...newFilters }));
+    dispatch(getMatchApplicantsFilter({ jid, page: 1, data: newFilters }));
+    // addAllToFilter(status);
+  };
+
+  const changeApplicantType = (type) => {
+    handleChange(null, 1);
+    setCandidatesType(type);
+  };
+
+  const pages =
+    candidatesType === "allApplicants"
+      ? Math.ceil(allApplicantsCount / 10)
+      : Math.ceil(recommendedApplicantsCount / 10);
+  const getPagesCount = pages < 0 ? 1 : pages;
+  const accentColor = "#5cb7b7";
+  const loadingSection =
+    candidatesType === "allApplicants"
+      ? loadingAllApplicants
+      : loadingRecommended;
+  const loadingCount = ["1", "2", "3", "4", "5", "6", "0", "2", "3", "3", "3"];
+
+  const displayData =
+    candidatesType === "allApplicants" ? allApplicants : recommendedApplicants;
+
   return (
     <>
-      <Employer>
+      <Header title={"Applicants"} />
+      <Employer title={title}>
         <Card
+          variant="outlined"
           sx={{
             width: "100%",
             backgroundColor: "#F2F8FD",
@@ -833,667 +617,726 @@ const AllApplicants = () => {
         >
           <CardContent>
             <Box>
-              {matching ? (
-                <Stack direction="row" spacing={2}>
-                  <Card
-                    onClick={() => handleClear("strong")}
-                    className={styles.allApplicantsCardstrong}
-                    style={{ boxShadow: type === "strong" ? shadow : "",cursor:'pointer' }}
-                  >
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                        variant="h5"
-                      >
-                        Strong Match
-                      </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
-                        {strongCount}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                  <Card
-                    onClick={() => handleClear("good")}
-                    className={styles.allApplicantsCardgood}
-                    style={{ boxShadow: type === "good" ? shadow : "",cursor:'pointer' }}
-                  >
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                        variant="h5"
-                      >
-                        Good Match
-                      </CustomTypography>
-                      <CustomTypography
-                        className={styles.allApplicantsCardNum}
-                        variant="h5"
-                      >
-                        {goodCount}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                </Stack>
-              ) : (
-                <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                  <Card className={styles.allApplicantsCard}>
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                      >
-                        Total Applicants
-                      </CustomTypography>
-                      <CustomTypography className={styles.allApplicantsCardNum}>
-                        {count}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                  <Card className={styles.allApplicantsCard}>
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                      >
-                        Total Shortlisted
-                      </CustomTypography>
-                      <CustomTypography className={styles.allApplicantsCardNum}>
-                        {shortCount}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                  <Card className={styles.allApplicantsCard}>
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                      >
-                        Total Unviewed
-                      </CustomTypography>
-                      <CustomTypography className={styles.allApplicantsCardNum}>
-                        {unview}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                  <Card className={styles.allApplicantsCard}>
-                    <CardContent sx={{ pb: "16px !important" }}>
-                      <CustomTypography
-                        className={styles.allApplicantsCardTypo}
-                      >
-                        Total Rejected
-                      </CustomTypography>
-                      <CustomTypography className={styles.allApplicantsCardNum}>
-                        {rejectcount}
-                      </CustomTypography>
-                    </CardContent>
-                  </Card>
-                </Stack>
-              )}
+              <Stack direction={"row"} sx={{ gap: "10px" }}>
+                <Card
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/activejob-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                    cursor: "pointer",
+                    border: "0",
+                    boxShadow:
+                      candidatesType === "allApplicants"
+                        ? "0 0px 8px rgba(0,0,0,0.30), 0 6px 7px rgba(0,0,0,0.22)"
+                        : "",
+                  }}
+                  onClick={() => {
+                    changeApplicantType("allApplicants");
+                  }}
+                  variant="outlined"
+                >
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "20px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      All Applicants
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "33px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {allApplicantsCount}
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+
+                <Card
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/activejob-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                    cursor: "pointer",
+                    border: "0",
+                    boxShadow:
+                      candidatesType === "recommendedApplicants"
+                        ? "0 0px 8px rgba(0,0,0,0.30), 0 6px 7px rgba(0,0,0,0.22)"
+                        : "",
+                  }}
+                  variant="outlined"
+                  onClick={() => {
+                    changeApplicantType("recommendedApplicants");
+                  }}
+                >
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "20px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Recommended Applicants
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "33px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {recommendedApplicantsCount}
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
+              </Stack>
+
               <Divider
-                  id="style-5"
+                id="style-5"
                 sx={{ mt: "30px", mb: "30px", borderColor: "#D4F0FC" }}
               />
-              {matching ? (
-                ""
-              ) : (
-                <Stack
-                  className="filtersJob"
-                  direction={{ xs: "column", md: "row" }}
-                  spacing={2}
-                  sx={{ mb: "30px", width: { xs: "100%", md: "50%" } }}
+
+              <Stack
+                direction={"row"}
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  gap: "10px",
+                }}
+              >
+                <Box className={styles.searchField}>
+                  <InputBase
+                    variant="outlined"
+                    sx={{ ml: 1, flex: 1, height: "54px !important" }}
+                    placeholder="Search"
+                    inputProps={{ "aria-label": "Location" }}
+                    onChange={(e) => {
+                      // dispatch(updateApplicantFilters("name", e.target.value));
+                      setName(e.target.value);
+                    }}
+                    value={name}
+                  />
+                  <Button
+                    variant="outlined"
+                    sx={{ backgroundColor: "#00339b !important" }}
+                    onClick={() => handleChange(null, 1)}
+                  >
+                    <SearchIcon
+                      className="searchIcon"
+                      sx={{ cursor: "pointer", color: "white" }}
+                    />
+                  </Button>
+                </Box>
+                <FormControl
+                  sx={{ width: "40% !important" }}
+                  variant="outlined"
                 >
-                  <Button
-                    id="demo-customized-button"
-                    aria-controls={open ? "demo-customized-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    variant="contained"
-                    disableElevation
-                    onClick={handleClick}
-                    endIcon={<WorkIcon />}
-                    sx={{
-                      bgcolor: "#1097CD !important",
-                      width: { xs: "100%", md: "50%" },
-                    }}
+                  <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={status}
+                    label="Status"
+                    sx={{ backgroundColor: "white" }}
+                    onChange={addFilterStatus}
                   >
-                    Filter by Jobs
-                  </Button>
-                  <Menu
-                    id="demo-customized-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    sx={{
-                      maxHeight: "400px",
-                      "& .MuiMenu-paper": {
-                        marginTop: "0px !important",
-                        borderRadius: "0px",
-                      },
-                    }}
-                  >
-                    <List
-                      sx={{
-                        width: "100%",
-                        maxWidth: 360,
-                        bgcolor: "background.paper",
-                      }}
-                    >
-                      {name.map((variant) => {
-                        const labelId = `checkbox-list-label-$
-                          {variant.jobRole}`;
-                        return (
-                          <ListItem onClick={(e) => handleName(e, variant)} key={variant.jobRole} disablePadding>
-                            <ListItemButton
-                              role={undefined}
-                              dense
-                              sx={{ cursor: "auto" }}
-                            >
-                              <ListItemIcon>
-                                <Checkbox
-                                  edge="start"
-                                  checked={
-                                    titles.findIndex(
-                                      (item) => item._id === variant._id
-                                    ) >= 0
-                                  }
-                                  disableRipple
-                                  inputProps={{
-                                    "aria-labelledby": labelId,
-                                  }}
-                                />
-                              </ListItemIcon>
-                              <ListItemText
-                                id={labelId}
-                                primary={`${variant?.jobRole} (${moment(
-                                  variant?.createdAt
-                                ).format("LLL")})`}
-                              />
-                            </ListItemButton>
-                          </ListItem>
-                        );
-                      })}
-                    </List>
-                  </Menu>
-                  <Button
-                    endIcon={<BeenhereIcon />}
-                    onClick={handleClickStatus}
-                    id="demo-customized-button"
-                    aria-controls={open2 ? "demo-customized-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open2 ? "true" : undefined}
-                    variant="contained"
-                    disableElevation
-                    aria-describedby={id1}
-                    sx={{
-                      bgcolor: "#1097CD !important",
-                      width: { xs: "100%", md: "50%" },
-                    }}
-                  >
-                    Filter By status
-                  </Button>
-                  <Menu
-                    id="demo-customized-menu"
-                    MenuListProps={{
-                      "aria-labelledby": "demo-customized-button",
-                    }}
-                    anchorEl={anchorEl1}
-                    open={open2}
-                    onClose={handleClose1}
-                    disablePortal={true}
-                    sx={{
-                      maxHeight: "400px",
-                      "& .MuiMenu-paper": {
-                        marginTop: "0px !important",
-                        borderRadius: "0px",
-                      },
-                    }}
-                  >
-                    {EMPLOYEE_STATUS.map((variant) => (
-                      <MenuItem
-                        key={variant}
-                        sx={{ width: "200px", cursor: "auto" }}
-                        onClick={(e) => handleNameStatus(e, variant)}
-                      >
-                        <Checkbox
-                          checked={
-                            selectedStatus.findIndex(
-                              (item) => item === variant
-                            ) >= 0
-                          }
-                        />
-                        <ListItemText
-                          primary={variant}
-                          sx={{ textTransform: "capitalize" }}
-                        />
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                  <div style={{ display: isShown ? "none" : "block" }}>
-                    <Button
-                      id="demo-customized-button"
-                      variant="contained"
-                      aria-controls={
-                        emailActionOpen ? "demo-positioned-menu" : undefined
-                      }
-                      aria-haspopup="true"
-                      aria-expanded={emailActionOpen ? "true" : undefined}
-                      onClick={emailActionHandleClick}
-                      disableElevation
-                      sx={{
-                        bgcolor: "#1097CD !important",
-                        width: { xs: "100%" },
-                      }}
-                      endIcon={
-                        <Settings
-                          sx={{
-                            bgcolor: "primary",
-                          }}
-                        />
-                      }
-                    >
-                      Feedback Email Settings
-                    </Button>
-                    <Menu
-                      id="demo-customized-menu"
-                      aria-labelledby="demo-positioned-button"
-                      anchorEl={emailAction}
-                      open={emailActionOpen}
-                      onClose={emailActionHandleClose}
-                      // anchorOrigin={{
-                      //   vertical: "top",
-                      //   horizontal: "left",
-                      // }}
-                      // transformOrigin={{
-                      //   vertical: "top",
-                      //   horizontal: "left",
-                      // }}
-                    >
-                      <MenuItem onClick={handleDialogAction}>
-                        Email - Rejected Candidates
-                      </MenuItem>
-                      <MenuItem onClick={handleShortlistedDialogAction}>
-                        Email - Shortlist Candidates
-                      </MenuItem>
-                    </Menu>
-                    <Dialog
-                      fullWidth
-                      open={Modelopen}
-                      onClose={handleDialogAction}
-                    >
-                      <Box sx={{ p: "40px" }}>
-                        <Typography variant="h5" sx={{ textAlign: "center" }}>
-                          Email - Rejected Candidates
-                        </Typography>
+                    <MenuItem value={""}>All</MenuItem>
+                    <MenuItem value={"shortlist"}>Short Listed</MenuItem>
+                    <MenuItem value={"rejected"}>Rejected</MenuItem>
+                    <MenuItem value={"viewed"}>Viewed</MenuItem>
+                    <MenuItem value={"unview"}>Unviewed</MenuItem>
+                  </Select>
+                </FormControl>
 
-                        <Box
-                          component="form"
-                          sx={{
-                            "& > :not(style)": { width: "100%" },
-                            mt: "10px",
-                          }}
-                          noValidate
-                          autoComplete="off"
-                        >
-                          <TextField
-                            sx={{ mt: 3 }}
-                            id="Email subject"
-                            label="Email subject"
-                            variant="outlined"
-                            onChange={(e) =>
-                              setRejectedTemp((state) => ({
-                                ...state,
-                                subject: e.target.value,
-                              }))
-                            }
-                            value={rejectedTemp.subject || ""}
-                          />
-                        </Box>
+                {candidatesType === "allApplicants" && (
+                  <Stack direction={"row"} sx={{ gap: "10px" }}>
+                    <IconButton onClick={() => setOpenFilter(!openFilter)}>
+                      <FilterAltIcon fontSize="large" />
+                    </IconButton>
+                    <IconButton onClick={() => clearAll()}>
+                      <ReplayIcon fontSize="large" />
+                    </IconButton>
+                  </Stack>
+                )}
+              </Stack>
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "10px",
-                            mt: "10px",
-                          }}
-                        >
-                          <EditorToolbar />
-                          {typeof window !== "undefined" && (
-                            <ReactQuill
-                              value={rejectedTemp.emailBody}
-                              onChange={(e) => {
-                                setRejectedTemp((state) => ({
-                                  ...state,
-                                  emailBody: e,
-                                }));
-                              }}
-                              theme={"snow"}
-                              className="textareaQuestion"
-                              modules={modules}
-                              formats={formats}
-                            />
-                          )}
+              {candidatesType === "allApplicants" && (
+                <Stack
+                  direction={"row"}
+                  sx={{ mt: "10px", gap: "10px", flexWrap: "wrap" }}
+                >
+                  {filtaration.exper && (
+                    <Chip
+                      label={filtaration.exper}
+                      variant="outlined"
+                      onDelete={() => clearFields("exper")}
+                    />
+                  )}
 
-                          <FormControl>
-                            <FormLabel id="demo-controlled-radio-buttons-group">
-                              <Typography variant="subtitle1">
-                                Sending settings
-                              </Typography>
-                            </FormLabel>
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-controlled-radio-buttons-group"
-                              name="controlled-radio-buttons-group"
-                              value={rejectedTemp?.setting}
-                              onChange={(e) => {
-                                setRejectedTemp((state) => ({
-                                  ...state,
-                                  setting: e.target.value,
-                                }));
-                              }}
-                              sx={{ justifyContent: "space-around" }}
-                            >
-                              <FormControlLabel
-                                value="Do_not_send"
-                                control={<Radio />}
-                                label="Do not send"
-                              />
-                              <FormControlLabel
-                                value="As_soon_as_reject"
-                                control={<Radio />}
-                                label="As soon as reject"
-                              />
-                              {/* <FormControlLabel
-                          value="Schedule_email"
-                          control={<Radio />}
-                          label="Schedule email"
-                        /> */}
-                            </RadioGroup>
-                          </FormControl>
+                  {filtaration.notice && (
+                    <Chip
+                      label={filtaration.notice}
+                      variant="outlined"
+                      // onClick={handleClick}
+                      onDelete={() => clearFields("notice")}
+                    />
+                  )}
 
-                          {rejectedTemp?.setting === "Schedule_email" && (
-                            <Box>
-                              <LocalizationProvider
-                                dateAdapter={AdapterDateFns}
-                              >
-                                <DesktopDateTimePicker
-                                  label="Select Date and Time"
-                                  // inputFormat="MM/dd/yyyy"
-                                  minDate={new Date()}
-                                  value={rejectedTemp?.date}
-                                  onChange={(e) => {
-                                    setRejectedTemp((state) => ({
-                                      ...state,
-                                      date: moment(e).format(),
-                                    }));
-                                  }}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      sx={styles.naminput}
-                                    />
-                                  )}
-                                />
-                              </LocalizationProvider>
-                            </Box>
-                          )}
-                        </Box>
+                  {filtaration.location.country &&
+                    filtaration.location.city &&
+                    filtaration.location.state && (
+                      <Chip
+                        label={`${filtaration.location.city}, ${filtaration.location.state},  ${filtaration.location.country}`}
+                        variant="outlined"
+                        // onClick={handleClick}
+                        onDelete={() => clearFields("address")}
+                      />
+                    )}
 
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            mt: "10px",
-                            gap: "5px",
-                          }}
-                        >
-                          <Button
-                            variant="contained"
-                            sx={{ backgroundColor: "#4fa9ff !important" }}
-                            type="submit"
-                            onClick={() => updateRejectedEmails()}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            onClick={() => {
-                              setModelopen(false);
-                              setRejectedTemp({
-                                jobTitle: rejectedTemp?.jobTitle,
-                                type: REJECTED,
-                                subject: "",
-                                emailBody: "",
-                                date: "",
-                                setting: "Do_not_send",
-                              });
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Dialog>
+                  {filtaration.salary &&
+                    filtaration.salaryCurrency &&
+                    filtaration.denomination && (
+                      <Chip
+                        label={`${getCandidateSalary(filtaration)}`}
+                        variant="outlined"
+                        // onClick={handleClick}
+                        onDelete={() => clearFields("salary")}
+                      />
+                    )}
 
-                    <Dialog
-                      fullWidth
-                      open={ShortlistedModelopen}
-                      onClose={handleShortlistedDialogAction}
-                    >
-                      <Box sx={{ p: "40px" }}>
-                        <Typography variant="h5" sx={{ textAlign: "center" }}>
-                          Email - Shortlisted Candidates
-                        </Typography>
+                  {filtaration.workPrefence.map((w, index) => (
+                    <Chip
+                      key={index}
+                      label={w}
+                      variant="outlined"
+                      onDelete={() => clearFields("workPrefence", w)}
+                    />
+                  ))}
 
-                        <Box
-                          component="form"
-                          sx={{
-                            "& > :not(style)": { width: "100%" },
-                            mt: "10px",
-                          }}
-                          noValidate
-                          autoComplete="off"
-                        >
-                          <TextField
-                            sx={{ mt: 3 }}
-                            id="Email subject"
-                            label="Email subject"
-                            variant="outlined"
-                            onChange={(e) =>
-                              setSelectedTemp((state) => ({
-                                ...state,
-                                subject: e.target.value,
-                              }))
-                            }
-                            value={selectedTemp.subject || ""}
-                          />
-                        </Box>
-
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "10px",
-                            mt: "10px",
-                          }}
-                        >
-                          <EditorToolbar />
-                          {typeof window !== "undefined" && (
-                            <ReactQuill
-                              value={selectedTemp.emailBody}
-                              onChange={(e) => {
-                                setSelectedTemp((state) => ({
-                                  ...state,
-                                  emailBody: e,
-                                }));
-                              }}
-                              theme={"snow"}
-                              className="textareaQuestion"
-                              modules={modules}
-                              formats={formats}
-                            />
-                          )}
-
-                          <FormControl>
-                            <FormLabel id="demo-controlled-radio-buttons-group">
-                              <Typography variant="subtitle1">
-                                Sending settings
-                              </Typography>
-                            </FormLabel>
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-controlled-radio-buttons-group"
-                              name="controlled-radio-buttons-group"
-                              value={selectedTemp?.setting}
-                              onChange={(e) => {
-                                setSelectedTemp((state) => ({
-                                  ...state,
-                                  setting: e.target.value,
-                                }));
-                              }}
-                              sx={{ justifyContent: "space-around" }}
-                            >
-                              <FormControlLabel
-                                value="Do_not_send"
-                                control={<Radio />}
-                                label="Do not send"
-                              />
-                              <FormControlLabel
-                                value="As_soon_as_short"
-                                control={<Radio />}
-                                label="As soon as Shortlist"
-                              />
-                              {/* <FormControlLabel
-                          value="Schedule_email"
-                          control={<Radio />}
-                          label="Schedule email"
-                        /> */}
-                            </RadioGroup>
-                          </FormControl>
-
-                          {selectedTemp?.setting === "Schedule_email" && (
-                            <Box>
-                              <LocalizationProvider
-                                dateAdapter={AdapterDateFns}
-                              >
-                                <DesktopDateTimePicker
-                                  label="Select Date and Time"
-                                  // inputFormat="MM/dd/yyyy"
-                                  minDate={new Date()}
-                                  name="date"
-                                  value={selectedTemp?.date}
-                                  onChange={(e) => {
-                                    setSelectedTemp((state) => ({
-                                      ...state,
-                                      date: moment(e).format(),
-                                    }));
-                                  }}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      sx={styles.naminput}
-                                    />
-                                  )}
-                                />
-                              </LocalizationProvider>
-                            </Box>
-                          )}
-                        </Box>
-
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            mt: "10px",
-                            gap: "5px",
-                          }}
-                        >
-                          <Button
-                            variant="contained"
-                            sx={{ backgroundColor: "#4fa9ff !important" }}
-                            type="submit"
-                            onClick={() => updateShortlistedEmails()}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            onClick={() => {
-                              setShortlistedModelopen(false);
-                              setSelectedTemp({
-                                jobTitle: selectedTemp?.jobTitle,
-                                type: SHORT_LISTED,
-                                subject: "",
-                                emailBody: "",
-                                date: "",
-                                setting: "Do_not_send",
-                              });
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Dialog>
-                  </div>
+                  {filtaration.skillSet.map((w, index) => (
+                    <Chip
+                      key={index}
+                      label={w?.skill}
+                      variant="outlined"
+                      onDelete={() => clearFields("skillSet", w?.skill)}
+                    />
+                  ))}
                 </Stack>
               )}
 
-              <Stack
-                direction="row"
-                sx={{ flexWrap: "wrap", gap: "10px" }}
-                spacing={2}
-              >
-                {titles.map((tit, index) => (
-                  <Chip
-                    key={index}
-                    label={`${tit?.jobRole}`}
-                    onDelete={() => {
-                      handleDelete(index, "titl", tit?._id);
-                    }}
-                    sx={{ bgcolor: "#1097CD", color: "white" }}
-                  />
-                ))}
-              </Stack>
-              <Stack
-                direction="row"
-                sx={{ mt: 1, flexWrap: "wrap", gap: "10px" }}
-                spacing={2}
-              >
-                {selectedStatus?.map((sts, index) => (
-                  <Chip
-                    key={index}
-                    label={sts}
-                    onDelete={() => {
-                      handleDelete(index, "sts");
-                    }}
-                    sx={{ bgcolor: "#D4F0FC", color: "#01313F" }}
-                  />
-                ))}
-              </Stack>
               <Box
                 ref={divRef}
                 className={styles.scrollbar}
                 id="style-5"
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
-                <Stack spacing={2}>
-                  {loading ? (
+                <Stack spacing={3}>
+                  {openFilter && candidatesType === "allApplicants" && (
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Grid container>
+                          <Grid item md={4}>
+                            <Tabs
+                              orientation="vertical"
+                              variant="scrollable"
+                              value={value}
+                              onChange={handleTabChange}
+                              aria-label="Vertical tabs example"
+                              sx={{ borderRight: 1, borderColor: "divider" }}
+                            >
+                              <StyledTab
+                                label="Experience"
+                                {...a11yProps(0)}
+                                iconPosition="start"
+                              />
+                              <StyledTab
+                                label="Location"
+                                {...a11yProps(1)}
+                                iconPosition="start"
+                              />
+                              <StyledTab
+                                label="Work Preference"
+                                {...a11yProps(2)}
+                                iconPosition="start"
+                              />
+                              <StyledTab
+                                label="Salary"
+                                {...a11yProps(3)}
+                                iconPosition="start"
+                              />
+                              <StyledTab
+                                label="Skills"
+                                {...a11yProps(4)}
+                                iconPosition="start"
+                              />
+                              <StyledTab
+                                label="Notice Period"
+                                {...a11yProps(5)}
+                                iconPosition="start"
+                              />
+                            </Tabs>
+                          </Grid>
+                          <Grid
+                            item
+                            md={8}
+                            sx={{ maxHeight: "300px", overflow: "auto" }}
+                          >
+                            <TabPanel
+                              value={value}
+                              index={0}
+                              sx={{ padding: "10px" }}
+                              title={"Experience"}
+                              clearAction={() => setSelectedExperience("")}
+                            >
+                              <FormGroup>
+                                <FormControl>
+                                  <RadioGroup
+                                    onChange={handleExperience}
+                                    value={selectedExperience}
+                                  >
+                                    {USER_EXPERIENCES.map((com, index) => (
+                                      <FormControlLabel
+                                        key={index}
+                                        control={<BpRadio size="small" />}
+                                        label={com}
+                                        value={com}
+                                        name={com}
+                                      />
+                                    ))}
+                                  </RadioGroup>
+                                </FormControl>
+                              </FormGroup>
+                            </TabPanel>
+                            <TabPanel
+                              value={value}
+                              index={1}
+                              title={"Location"}
+                              clearAction={() => clearAddress()}
+                            >
+                              <Stack sx={{ mt: "10px" }}>
+                                <GooglePlacesAutocomplete
+                                  style={{ width: "100%", marginTop: "10px" }}
+                                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                                  selectProps={{
+                                    isClearable: true,
+                                    placeholder: "Enter Location",
+                                    value: address,
+                                    onChange: (val) => {
+                                      setAddress(val);
+                                      handleSelect(val);
+                                    },
+                                    onSelect: { handleSelect },
+                                    styles: {
+                                      input: (provided) => ({
+                                        ...provided,
+                                        height: "2.8em",
+                                        paddingTop: "10px",
+                                      }),
+                                      option: (provided) => ({
+                                        ...provided,
+                                        height: "2.8em",
+                                      }),
+                                      singleValue: (provided) => ({
+                                        ...provided,
+                                        height: "2.8em",
+                                        paddingTop: "10px",
+                                      }),
+                                    },
+                                  }}
+                                />
+                                {(inputPersonalDetailsCountry?.country ||
+                                  inputPersonalDetailsCountry?.state ||
+                                  inputPersonalDetailsCountry?.city) && (
+                                  <Stack
+                                    direction={{ md: "row", xs: "column" }}
+                                    spacing={2}
+                                    marginTop={2}
+                                    sx={{
+                                      alignItems: "flex-start",
+                                      width: { xs: "100%" },
+                                    }}
+                                  >
+                                    <FormControl fullWidth>
+                                      <CustomTypography fontSize="10px">
+                                        Country
+                                      </CustomTypography>
+                                      <TextField
+                                        autoComplete="given-name"
+                                        name="country"
+                                        fullWidth
+                                        id="about"
+                                        placeholder="Country"
+                                        onChange={(e) =>
+                                          setInputPersonalDetailsCountry(
+                                            (state) => ({
+                                              ...state,
+                                              country: e.target.value,
+                                            })
+                                          )
+                                        }
+                                        value={
+                                          inputPersonalDetailsCountry?.country
+                                        }
+                                        sx={{
+                                          backgroundColor: NEUTRAL,
+                                          width: { xs: "100%" },
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormControl fullWidth>
+                                      <CustomTypography fontSize="10px">
+                                        State
+                                      </CustomTypography>
+                                      <TextField
+                                        autoComplete="given-name"
+                                        name="state"
+                                        fullWidth
+                                        id="about"
+                                        placeholder="State"
+                                        sx={{
+                                          backgroundColor: NEUTRAL,
+                                          width: { xs: "100%" },
+                                        }}
+                                        onChange={(e) =>
+                                          setInputPersonalDetailsCountry(
+                                            (state) => ({
+                                              ...state,
+                                              state: e.target.value,
+                                            })
+                                          )
+                                        }
+                                        value={
+                                          inputPersonalDetailsCountry?.state
+                                        }
+                                      />
+                                    </FormControl>
+                                    <FormControl fullWidth>
+                                      <CustomTypography fontSize="10px">
+                                        City
+                                      </CustomTypography>
+                                      <TextField
+                                        autoComplete="given-name"
+                                        name="city"
+                                        fullWidth
+                                        id="about"
+                                        placeholder="City"
+                                        sx={{
+                                          backgroundColor: NEUTRAL,
+                                          width: { xs: "100%" },
+                                        }}
+                                        onChange={(e) =>
+                                          setInputPersonalDetailsCountry(
+                                            (state) => ({
+                                              ...state,
+                                              city: e.target.value,
+                                            })
+                                          )
+                                        }
+                                        value={
+                                          inputPersonalDetailsCountry?.city
+                                        }
+                                      />
+                                    </FormControl>
+                                  </Stack>
+                                )}
+                              </Stack>
+                            </TabPanel>
+                            <TabPanel
+                              value={value}
+                              index={2}
+                              title={"Work Preference"}
+                              clearAction={() => setNames([])}
+                            >
+                              <Box sx={{ width: { sm: "300px", xs: "100px" } }}>
+                                <FormGroup>
+                                  {WORK_PREFERENCE.map((reference, index) => (
+                                    <StyledFormLabel
+                                      key={index}
+                                      control={
+                                        <BpCheckbox
+                                          size="small"
+                                          name={reference}
+                                          onChange={(e) => handleName(e)}
+                                          checked={names.includes(reference)}
+                                        />
+                                      }
+                                      label={reference}
+                                    />
+                                  ))}
+                                </FormGroup>
+                              </Box>
+                            </TabPanel>
+                            <TabPanel value={value} index={3} title={"Salary"}>
+                              {/* Currency of your Salary */}
+
+                              <FormControl variant="outlined" fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                  Salary Currency
+                                </InputLabel>
+                                <Select
+                                  defaultValue=""
+                                  id="grouped-select"
+                                  // label="Currency of your Salary"
+                                  onChange={selectCurrency}
+                                  sx={{
+                                    backgroundColor: NEUTRAL,
+                                    width: "100%",
+                                  }}
+                                  value={currency}
+                                >
+                                  <ListSubheader>Common</ListSubheader>
+                                  {COMMON_CURRENCIES.map((o, id) => (
+                                    <MenuItem value={o.country} key={id}>
+                                      {o.country} {o.symbol}
+                                    </MenuItem>
+                                  ))}
+                                  <ListSubheader>Other</ListSubheader>
+                                  {OTHER_CURRENCIES.map((o, id) => (
+                                    <MenuItem value={o.country} key={id}>
+                                      {o.country} {o.symbol}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+
+                              <Stack
+                                direction={"row"}
+                                sx={{ alignItems: "center", mt: "10px" }}
+                              >
+                                <TextField
+                                  id="outlined-number"
+                                  label="Expected Annual Salary"
+                                  type="number"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                  value={salary.salary}
+                                  onChange={(e) =>
+                                    setSalary((state) => ({
+                                      ...state,
+                                      salary: e.target.value,
+                                    }))
+                                  }
+                                  sx={{
+                                    width: { xs: "50%", md: "80%" },
+                                    mr: "5px",
+                                  }}
+                                />
+
+                                <FormControl
+                                  sx={{ width: { xs: "50%", md: "20%" } }}
+                                >
+                                  <InputLabel id="demo-simple-select-required-label">
+                                    Denomination
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-required-label"
+                                    id="demo-simple-select-required"
+                                    value={salary.denomination}
+                                    label="Denomination *"
+                                    onChange={(e, a) => {
+                                      setSalary((state) => ({
+                                        ...state,
+                                        denomination: a.props.value,
+                                      }));
+                                    }}
+                                  >
+                                    {DENOMINATIONS.map((data, ind) => (
+                                      <MenuItem key={ind} value={data}>
+                                        {data}
+                                      </MenuItem>
+                                    ))}
+                                  </Select>
+                                </FormControl>
+                              </Stack>
+                            </TabPanel>
+                            <TabPanel value={value} index={4} title={"Skills"}>
+                              <Stack
+                                direction={"row"}
+                                sx={{ gap: "10px", mt: "10px" }}
+                              >
+                                <Autocomplete
+                                  freeSolo
+                                  id="free-solo-2-demo"
+                                  disableClearable={false}
+                                  name="skills"
+                                  sx={{
+                                    bgcolor: "white",
+                                    width: { xs: "95%", md: "80%" },
+                                  }}
+                                  value={role.skill}
+                                  onBlurCapture={(e) =>
+                                    setRole({
+                                      skill: e.target.value,
+                                      id: uuidv4(),
+                                    })
+                                  }
+                                  open={open}
+                                  onOpen={() => {
+                                    setOpen(true);
+                                  }}
+                                  onClose={() => {
+                                    setOpen(false);
+                                  }}
+                                  options={arrskills.map((option) => option)}
+                                  loading={loading}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      label="Mandatory Skills"
+                                      onChange={(e) => {
+                                        inputChanged(e);
+                                      }}
+                                      name="jobRole"
+                                      InputProps={{
+                                        ...params.InputProps,
+                                        type: "search",
+                                        endAdornment: (
+                                          <React.Fragment>
+                                            {loading && load ? (
+                                              <CircularProgress
+                                                color="inherit"
+                                                size={20}
+                                              />
+                                            ) : null}
+                                          </React.Fragment>
+                                        ),
+                                      }}
+                                    />
+                                  )}
+                                />
+                                <Button
+                                  sx={{
+                                    width: "20%",
+                                    bgcolor: "white !important",
+                                    color: "#01313F",
+                                    textTransform: "capitalize",
+                                    display: { xs: "none", md: "block" },
+                                    whiteSpace: "nowrap",
+                                  }}
+                                  //sx={styles.roleblue2}
+                                  onClick={() => {
+                                    addSkill();
+                                  }}
+                                  variant="outlined"
+                                >
+                                  Add
+                                </Button>
+                              </Stack>
+
+                              <Stack
+                                direction={"row"}
+                                sx={{ mt: "10px", gap: "10px" }}
+                              >
+                                {tempSkills.map((s, index) => (
+                                  <Chip
+                                    key={index}
+                                    label={s.skill}
+                                    variant="outlined"
+                                    // onClick={handleClick}
+                                    onDelete={() => handleDelete(s.skill)}
+                                  />
+                                ))}
+                              </Stack>
+                            </TabPanel>
+                            <TabPanel
+                              value={value}
+                              index={5}
+                              title={"Notice Period"}
+                              clearAction={() => clearAddress()}
+                            >
+                              <FormGroup>
+                                <FormControl>
+                                  <RadioGroup
+                                    onChange={handleNotice}
+                                    value={selectedNotice}
+                                  >
+                                    {NoticePeriod.map((com, index) => (
+                                      <FormControlLabel
+                                        key={index}
+                                        control={<BpRadio size="small" />}
+                                        label={com}
+                                        value={com}
+                                        name={com}
+                                      />
+                                    ))}
+                                  </RadioGroup>
+                                </FormControl>
+                              </FormGroup>
+                            </TabPanel>
+                          </Grid>
+                        </Grid>
+
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            variant="outlined"
+                            onClick={() => setOpenFilter(!openFilter)}
+                            sx={{ width: "50% !important" }}
+                          >
+                            Close
+                          </Button>
+
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              addAllToFilter();
+                              setOpenFilter(!openFilter);
+                            }}
+                            sx={{
+                              backgroundColor: "#00339B !important",
+                              width: "50% !important",
+                            }}
+                          >
+                            Apply
+                          </Button>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {loadingSection ? (
                     loadingCount.map((a, index) => (
                       <LoadingSearchCards key={index} />
                     ))
-                  ) : user.length === 0 ? (
+                  ) : displayData.length === 0 ? (
                     <Typography textAlign={"center"}>
                       No Candidates Found
                     </Typography>
                   ) : (
-                    user.map((usr, index) => (
+                    displayData.map((usr, index) => (
                       <div id={usr?._id} key={index}>
-                        <AllApplicantsCard key={index} users={usr} />
+                        <AllApplicantsCard
+                          key={index}
+                          users={usr}
+                          matchingDetails={matchingDetails}
+                          matchingSkill={matchingSkill}
+                          candidatesType={candidatesType}
+                          order={index}
+                        />
                       </div>
                     ))
                   )}
                 </Stack>
               </Box>
+
               <Box
                 sx={{
                   display: "flex",
@@ -1502,43 +1345,14 @@ const AllApplicants = () => {
                   width: "100%",
                 }}
               >
-                {matching ? (
-                  <Stack sx={{ mt: "25px" }}>
-                    {type === "strong" ? (
-                      <Pagination
-                        count={Number(roundAndIncrease(strongCount / 10)) || 1}
-                        page={Number(cuurpage) || 1}
-                        color="primary"
-                        onChange={handleChangePage}
-                      />
-                    ) : type === "good" ? (
-                      <Pagination
-                        count={Number(roundAndIncrease(goodCount / 10)) || 1}
-                        page={Number(cuurpage) || 1}
-                        color="primary"
-                        onChange={handleChangePage}
-                      />
-                    ) : type === "minimum" ? (
-                      <Pagination
-                        count={roundAndIncrease(minCount / 10) || 1}
-                        page={cuurpage || 1}
-                        color="primary"
-                        onChange={handleChangePage}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </Stack>
-                ) : (
-                  <Pagination
-                    count={Number(totalPage) || 1}
-                    page={Number(currentPage) || 1}
-                    color="primary"
-                    onChange={handleChange}
-                    hidePrevButton
-                    hideNextButton
-                  />
-                )}
+                <Pagination
+                  count={Number(getPagesCount) || 1}
+                  page={Number(page) || 1}
+                  color="primary"
+                  onChange={handleChange}
+                  hidePrevButton
+                  hideNextButton
+                />
               </Box>
             </Box>
           </CardContent>
