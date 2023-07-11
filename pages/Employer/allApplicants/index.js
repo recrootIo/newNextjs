@@ -653,6 +653,14 @@ const AllApplicants = () => {
       newFilters.location = { city: "", country: "", state: "" };
       setInputPersonalDetailsCountry({ city: "", country: "", state: "" })
     }
+    if (field === "notice") {
+      newFilters.notice = "";
+      setSelectedNotice("")
+    }
+    if (field === "exper") {
+      newFilters.exper = "";
+      setSelectedExperience("")
+    }
 
     if (field === "salary") {
       newFilters.salary = "";
@@ -882,7 +890,7 @@ const handleFilter=()=>{
                         fontWeight: "600",
                       }}
                     >
-                      {reqJob?.Candidates?.length}
+                      {data?.totalCounts}
                     </CustomTypography>
                   </CardContent>
                 </Card>
