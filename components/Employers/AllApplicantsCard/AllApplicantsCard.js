@@ -54,6 +54,7 @@ import { makeStyles } from "@mui/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
@@ -159,7 +160,15 @@ const AllApplicantsCard = ({
       }
     }
 
-    // setMatchingArray(() => [...result]);
+    result.sort((a, b) => {
+      if (a.match && !b.match) {
+        return -1;
+      } else if (!a.match && b.match) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
 
     return { count, result };
   };
@@ -187,14 +196,14 @@ const AllApplicantsCard = ({
         .then((res) => {
           if (res.status === 200) {
             window.open(
-              `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
+              `https://arinnovate.au/Employer/candiProfileFullView?appId=${id}`
             );
             // router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
       window.open(
-        `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
+        `https://arinnovate.au/Employer/candiProfileFullView?appId=${id}`
       );
       // router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
@@ -260,7 +269,7 @@ const AllApplicantsCard = ({
             }}
           >
             <CustomTypography sx={{ fontSize: "13px" }}>
-              Short Listed
+              Shortlisted
             </CustomTypography>
           </span>
         );
@@ -344,7 +353,7 @@ const AllApplicantsCard = ({
     }
 
     if (item.item === 2) {
-      text = "skill Matches";
+      text = "Skill Matches";
     }
 
     if (item.item === 3) {
@@ -368,7 +377,7 @@ const AllApplicantsCard = ({
     }
 
     if (item.item === 8) {
-      text = "States";
+      text = "State";
     }
 
     return (
@@ -388,6 +397,17 @@ const AllApplicantsCard = ({
         </Grid>
       </Grid>
     );
+  };
+
+  const addEllipsis = (text) => {
+    const maxLength = 320;
+    let modifiedText = text;
+
+    if (text.length > maxLength) {
+      modifiedText = text.slice(0, maxLength) + "...";
+    }
+
+    return modifiedText;
   };
 
   /**
@@ -418,8 +438,8 @@ const AllApplicantsCard = ({
       );
 
   const skillPoints = getCalculatedSkills();
-  console.log(result, "result");
 
+  console.log(result, "result");
   return (
     <Tooltip
       title={
@@ -440,18 +460,6 @@ const AllApplicantsCard = ({
         }}
       >
         <CardHeader
-          avatar={
-            <StyledAvatar
-              sx={{
-                objectFit: "cover",
-                height: "60px",
-                width: "60px",
-                border: "1px solid #2699ff",
-              }}
-              src={getImageUrl(users)}
-              size={300}
-            />
-          }
           titleTypographyProps={{
             fontSize: 19,
             fontWeight: "bold",
@@ -461,27 +469,37 @@ const AllApplicantsCard = ({
             fontSize: 16,
             color: "#034275",
           }}
-          title={`${users?.candidateId?.firstName} ${users?.candidateId?.lastName}`}
-          subheader={users?.candidateId?.jobTitle}
-          action={
-            <Box>
+          sx={{ p: "5px 20px 10px 20px" }}
+        />
+        <CardContent sx={{ p: 0, pb: "0 !important" }}>
+          <Box sx={{ p: "0 20px", mb: "10px" }}>
+            <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
               <Stack
                 direction={"row"}
-                sx={{
-                  justifyContent: "flex-end",
-                  gap: "10px",
-                  alignItems: "center",
-                }}
+                sx={{ alignItems: "center", gap: "10px" }}
               >
-                {getStatusSpan(users?.status)}
-                <IconButton onClick={() => handleShort(users?._id)}>
-                  <ThumbUpOffAltIcon sx={{ cursor: "pointer" }} />
-                </IconButton>
-                <IconButton onClick={() => handleReject(users?._id)}>
-                  <ThumbDownOffAltIcon sx={{ cursor: "pointer" }} />
-                </IconButton>
+                <StyledAvatar
+                  sx={{
+                    objectFit: "cover",
+                    height: "60px",
+                    width: "60px",
+                    border: "1px solid #2699ff",
+                  }}
+                  src={getImageUrl(users)}
+                  size={300}
+                />
+                <Stack>
+                  <CustomTypography
+                    sx={{ fontSize: 19, fontWeight: "bold", color: "#034275" }}
+                  >
+                    {users?.candidateId?.firstName}{" "}
+                    {users?.candidateId?.lastName}
+                  </CustomTypography>
+                  <CustomTypography sx={{ fontSize: 16, color: "#034275" }}>
+                    {users?.candidateId?.jobTitle}
+                  </CustomTypography>
+                </Stack>
               </Stack>
-
               <Stack
                 direction="row"
                 spacing={2}
@@ -501,6 +519,7 @@ const AllApplicantsCard = ({
                     color: "#02a9f7",
                     borderColor: "#02a9f7",
                     fontSize: "18px",
+                    height: "45px",
                   }}
                   size="large"
                   variant="outlined"
@@ -520,7 +539,7 @@ const AllApplicantsCard = ({
                   size="medium"
                   sx={{
                     ml: "8px",
-                    height: "52px",
+                    height: "45px",
                     width: "180px",
                     bgcolor: "#02A9F7 !important",
                     fontSize: "18px",
@@ -530,51 +549,47 @@ const AllApplicantsCard = ({
                   View Details
                 </Button>
               </Stack>
-            </Box>
-          }
-          sx={{ p: "12px 20px 16px 20px" }}
-        />
-        <CardContent sx={{ p: 0, pb: "0 !important" }}>
+            </Stack>
+          </Box>
+
           <Stack
-            direction={{ xs: "column", md: "row" }}
+            direction={"row"}
             sx={{
-              gap: { xs: "10px", md: "59px" },
-              mb: { xs: 0, sm: "10px" },
-              mt: { xs: "30px", sm: 0 },
+              justifyContent: "flex-end",
+              gap: "10px",
+              alignItems: "center",
+              margin: "10px 0",
               p: "0 20px",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <AssignmentIndIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "#1097CD",
-                }}
-              >
-                {users?.jobId?.jobRole}
-              </CustomTypography>
-            </Box>
+            {getStatusSpan(users?.status)}
+            <IconButton onClick={() => handleShort(users?._id)}>
+              <ThumbUpOffAltIcon sx={{ cursor: "pointer" }} />
+            </IconButton>
+            <IconButton onClick={() => handleReject(users?._id)}>
+              <ThumbDownOffAltIcon sx={{ cursor: "pointer" }} />
+            </IconButton>
+          </Stack>
 
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                {users?.candidateId?.resume?.notice}
-              </CustomTypography>
-            </Box>
-
-            {address && (
+          <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
+            <Grid md={4}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <AddLocationIcon sx={{ color: "#1097CD" }} />
+                <AssignmentIndIcon sx={{ color: "#1097CD" }} />
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "#1097CD",
+                  }}
+                >
+                  {users?.jobId?.jobRole}
+                </CustomTypography>
+              </Box>
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
                 <CustomTypography
                   sx={{
                     fontWeight: "400",
@@ -583,62 +598,69 @@ const AllApplicantsCard = ({
                     color: "rgba(1, 49, 63, 0.8)",
                   }}
                 >
-                  {address}
+                  {users?.candidateId?.resume?.notice}
                 </CustomTypography>
               </Box>
-            )}
-          </Stack>
-
-          <Stack
-            direction={"row"}
-            sx={{
-              gap: { xs: "10px", md: "59px" },
-              margin: "10px 0",
-              p: "0 20px",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <HourglassTopIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                Experience - {users?.candidateId?.resume?.totalWorkExperience}{" "}
-                Years
-              </CustomTypography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <CurrencyExchangeIcon sx={{ color: "#1097CD" }} />{" "}
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                {getCandidateSalary(users?.candidateId?.resume)}
-              </CustomTypography>
-            </Box>
-          </Stack>
+            </Grid>
+            <Grid md={4}>
+              {address && (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <AddLocationIcon sx={{ color: "#1097CD" }} />
+                  <CustomTypography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "rgba(1, 49, 63, 0.8)",
+                    }}
+                  >
+                    {address}
+                  </CustomTypography>
+                </Box>
+              )}
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <HourglassTopIcon sx={{ color: "#1097CD" }} />
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(1, 49, 63, 0.8)",
+                  }}
+                >
+                  Experience - {users?.candidateId?.resume?.totalWorkExperience}{" "}
+                  Years
+                </CustomTypography>
+              </Box>
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                <CurrencyExchangeIcon sx={{ color: "#1097CD" }} />{" "}
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(1, 49, 63, 0.8)",
+                  }}
+                >
+                  {getCandidateSalary(users?.candidateId?.resume)}
+                </CustomTypography>
+              </Box>
+            </Grid>
+          </Grid>
 
           <Box
-            color="rgba(1, 49, 63, 0.8)"
+            color="gray"
             sx={{
               mt: "25px",
               fontSize: "16px",
-              overflow: "hidden",
-              maxHeight: "100px",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
               p: "0 20px",
             }}
           >
-            {users?.candidateId?.about}
+            {addEllipsis(users?.candidateId?.about)}
           </Box>
 
           <Box
@@ -704,7 +726,7 @@ const AllApplicantsCard = ({
             direction={"row"}
             sx={{ backgroundColor: "#D4F0FC", width: "100%", p: "10px 20px" }}
           >
-            <Box sx={{ width: "30%" }}>
+            <Box sx={{ width: "33%" }}>
               <Stack
                 direction={"row"}
                 sx={{ gap: "10px", alignItems: "center" }}
@@ -721,9 +743,6 @@ const AllApplicantsCard = ({
                   arrow
                   onClose={handleTooltipOpen}
                   open={open}
-                  disableFocusListener
-                  disableHoverListener
-                  disableTouchListener
                   title={
                     <React.Fragment>
                       <Divider>
@@ -771,8 +790,17 @@ const AllApplicantsCard = ({
                 </CustomWidthTooltip>
               </Stack>
             </Box>
-            <Box sx={{ width: "30%" }}>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
+            <Box
+              sx={{
+                width: "33%",
+                // borderLeft: "1px solid gray",
+                // borderRight: "1px solid gray",
+              }}
+            >
+              <Stack
+                direction={"row"}
+                sx={{ gap: "10px", justifyContent: "center" }}
+              >
                 <CustomTypography sx={{ fontSize: "15px" }}>
                   Matching Skills :
                 </CustomTypography>
@@ -781,8 +809,11 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Stack>
             </Box>
-            <Box sx={{ width: "40%" }}>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
+            <Box sx={{ width: "33%" }}>
+              <Stack
+                direction={"row"}
+                sx={{ gap: "10px", justifyContent: "flex-end" }}
+              >
                 <CustomTypography sx={{ fontSize: "15px" }}>
                   Screening Questions :
                 </CustomTypography>
