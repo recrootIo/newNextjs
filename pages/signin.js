@@ -248,7 +248,7 @@ function Signin() {
                       flexDirection: { md: "row", sm: "column", xs: "column" },
                     }}
                   >
-                                        <button
+                    <button
                       onClick={() => {
                         handleClick("google");
                       }}

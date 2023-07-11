@@ -268,11 +268,9 @@ function Subpayment() {
                   subscriptionpackage === "Premium" ? (
                     Coutry === "INR" ? (
                       <span>&#8377;</span>
-                    ) : 
-                    Coutry === "LKR" ? 
-                    'Rs.'
-                    :
-                    (
+                    ) : Coutry === "LKR" ? (
+                      "Rs."
+                    ) : (
                       "$"
                     )
                   ) : (

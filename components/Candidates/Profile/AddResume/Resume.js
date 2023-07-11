@@ -48,7 +48,7 @@ const Resume = ({ ...resume }) => {
           type: SUCCESS,
           message: "Resume has been deleted",
         })
-      )
+      );
       CalculatePercentage();
     });
   };
@@ -98,7 +98,7 @@ const Resume = ({ ...resume }) => {
                 sx={{ color: "#00339B", cursor: "pointer" }}
                 onClick={async () => {
                   const res = await fetch(
-                    ` https://api.arinnovate.io/api/downloadResume?resume=${cv?.resume?.replace(
+                    `https://api.arinnovate.io/api/downloadResume?resume=${cv?.resume?.replace(
                       /\\/g,
                       "/"
                     )}`
@@ -120,7 +120,7 @@ const Resume = ({ ...resume }) => {
                 <IconButton
                   onClick={async () => {
                     const res = await fetch(
-                      ` https://api.arinnovate.io/api/downloadResume?resume=${cv.resume.replace(
+                      `https://api.arinnovate.io/api/downloadResume?resume=${cv.resume.replace(
                         /\\/g,
                         "/"
                       )}`

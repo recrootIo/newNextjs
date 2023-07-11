@@ -215,7 +215,11 @@ const AddSkill = () => {
                           error={errors.Compitance}
                         >
                           {LEVELS.map((l, index) => (
-                            <MenuItem key={index} value={l}>
+                            <MenuItem
+                              key={index}
+                              value={l}
+                              sx={{ textTransform: "capitalize" }}
+                            >
                               {l}
                             </MenuItem>
                           ))}

@@ -224,33 +224,23 @@ function CompleteProfile() {
               expires: 1,
             });
             if (userType === "TempSocial") {
-              window.location.replace(
-                `https://recroot.io/completeProfile`
-              );
+              window.location.replace(`https://recroot.io/completeProfile`);
               // navigate("/resume", { replace: false });
             }
             if (userType === "Candidate") {
               if (
                 loggedInUser?.User?.resume?.resumeFileLocation?.length === 0
               ) {
-                window.location.replace(
-                  `https://recroot.io/uploadResume`
-                );
+                window.location.replace(`https://recroot.io/uploadResume`);
               } else {
                 if (Redirect !== null) {
-                  window.location.replace(
-                    `https://recroot.io${Redirect}`
-                  );
+                  window.location.replace(`https://recroot.io${Redirect}`);
                 }
-                window.location.replace(
-                  `https://recroot.io/`
-                );
+                window.location.replace(`https://recroot.io/`);
               }
               // navigate("/resume", { replace: false });
             } else {
-              window.location.replace(
-                `https://recroot.io/Employer/Dashboard`
-              );
+              window.location.replace(`https://recroot.io/Employer/Dashboard`);
               // navigate("/", { replace: false });
             }
           }

@@ -18,6 +18,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  styled,
 } from "@mui/material";
 import { logout } from "@/redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +29,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+const StyledAvatar = styled(Avatar)(({}) => ({
+  "& .MuiAvatar-img": {
+    objectFit: "contain",
+  },
+}));
 
 const Navbar = () => {
   // const { data: session } = useSession()
@@ -261,7 +267,25 @@ const Navbar = () => {
                           aria-expanded={open ? "true" : undefined}
                           onClick={handleClick}
                         >
-                          <Avatar src={photoUrl} />
+                          {/* <Image
+                            src={photoUrl}
+                            alt="Your Company"
+                            width="140"
+                            height="35"
+                            // onClick={() => {
+                            //   push("/");
+                            // }}
+                            style={{
+                              cursor: "pointer",
+                              height: "35px",
+                              width: "auto",
+                            }}
+                          /> */}
+                          {/* <Avatar src={photoUrl} /> */}
+                          <StyledAvatar
+                            src={photoUrl}
+                            sx={{ color: "#034275" }}
+                          />
                         </Button>
                         <Menu
                           id="fade-menu"

@@ -181,7 +181,9 @@ const FeaturedJobCard = ({
                 className={styles.featuredInputText}
                 gutterBottom
               >
-                {getSalary(salary, true, "16px", "color")}
+                {truncateStringWithEllipsis(
+                  getSalary(salary, true, "16px", "color")
+                )}
               </CustomTypography>
             </Box>
             <Box sx={{ display: "flex" }}>

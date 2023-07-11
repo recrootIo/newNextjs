@@ -64,8 +64,10 @@ const JobDetail = ({ ...props }) => {
     appcount,
     address,
     jobType,
-    essentialInformation
+    essentialInformation,
   } = props;
+
+  console.log(jobDescription, "jd");
 
   const { appliedJobs = [], data } = useSelector((state) => state?.personal);
   const savedJobs = useSelector((state) => state.personal.savedJobs);
@@ -128,9 +130,9 @@ const JobDetail = ({ ...props }) => {
   const compImage = company?.companyLogo?.logo
     ? getImageLogo(company?.companyLogo?.logo)
     : "/defaultCompany.svg";
-    function removeHtmlTags(str) {
-      return str.replace(/<[^>]*>/g, '');
-    }
+  // function removeHtmlTags(str) {
+  //   return str.replace(/<[^>]*>/g, "");
+  // }
   return (
     <Box
       sx={{
@@ -139,15 +141,19 @@ const JobDetail = ({ ...props }) => {
     >
       <JobPostingJsonLd
         datePosted={createdAt}
-        description={removeHtmlTags(jobDescription)}
+        description={jobDescription}
         hiringOrganization={{
           name: `${company?.basicInformation?.cmpname}`,
-          sameAs: `${isEmpty(company?.basicInformation?.cmpwebsite) ? "?null" : company?.basicInformation?.cmpwebsite}`,
+          sameAs: `${
+            isEmpty(company?.basicInformation?.cmpwebsite)
+              ? "?null"
+              : company?.basicInformation?.cmpwebsite
+          }`,
         }}
         jobLocation={{
           // streetAddress: "?null",
           addressLocality: `${address[0]}`,
-          addressRegion:  `${address[0]}`,
+          addressRegion: `${address[0]}`,
           // postalCode: "?null",
           // addressCountry: "?null",
         }}
@@ -159,14 +165,14 @@ const JobDetail = ({ ...props }) => {
         // }}
         employmentType={jobType}
         // jobLocationType={essentialInformation?.qualification}
-        validThrough={moment(applicationDeadline).format('L')}
+        validThrough={moment(applicationDeadline).format("L")}
         // applicantLocationRequirements="?null"
         experienceRequirements={{
           // occupational: {
           //   minimumMonthsOfExperience: "?null",
           // },
           educational: {
-            credentialCategory:`${essentialInformation?.qualification}`,
+            credentialCategory: `${essentialInformation?.qualification}`,
           },
           experienceInPlaceOfEducation: true,
         }}
@@ -458,11 +464,21 @@ const JobDetail = ({ ...props }) => {
                     ""
                   ) : (
                     <Box sx={{ height: "300px", overflow: "hidden", mt: 1 }}>
-                      <ReactQuill
-                        value={company?.companyInformation?.infodes}
-                        readOnly={true}
-                        theme={"bubble"}
-                      />
+                      <div
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 12,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        <ReactQuill
+                          value={company?.companyInformation?.infodes}
+                          readOnly={true}
+                          theme={"bubble"}
+                        />
+                      </div>
                     </Box>
                   )}
                   {/* <CustomTypography

@@ -161,11 +161,11 @@ const EditPersonalDetails = () => {
           );
           dispatch(updateCurrentScreen(""));
           dispatch(getCandsPrefInfo());
-          dispatch(retrievePersonal()).then((res)=>{
-            if(res?.meta?.requestStatus === "fulfilled"){
-              CalculatePercentage()
+          dispatch(retrievePersonal()).then((res) => {
+            if (res?.meta?.requestStatus === "fulfilled") {
+              CalculatePercentage();
             }
-          })
+          });
         }
       })
       .catch(() => {
@@ -254,7 +254,7 @@ const EditPersonalDetails = () => {
                     fb: values?.fb,
                   },
                 };
-                console.log(updatedValues,'values')
+                console.log(updatedValues, "values");
                 handleEdit(updatedValues);
               }}
             >

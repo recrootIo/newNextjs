@@ -1,28 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
-import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar';
-import { Box, Button, Card, Container, Typography, styled } from '@mui/material';
-import { Elements } from '@stripe/react-stripe-js';
-import axios from 'axios';
-import React from 'react'
-import { useEffect } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import PaymentInt from '@/components/JobPay/PaymentInt';
-import { isEmpty } from 'lodash';
+import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Typography,
+  styled,
+} from "@mui/material";
+import { Elements } from "@stripe/react-stripe-js";
+import axios from "axios";
+import React from "react";
+import { useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import PaymentInt from "@/components/JobPay/PaymentInt";
+import { isEmpty } from "lodash";
 
 const BasicButton = styled(Button)({
-    color: "#ffff",
-    padding: "20px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#4fa9ff !important",
-    textTransform: "capitalize",
-    // width: "50%",
-    marginBottom: "10px",
-  });
+  color: "#ffff",
+  padding: "20px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  // width: "50%",
+  marginBottom: "10px",
+});
 function Jobpaymentstatus() {
   // const stripePromise = loadStripe(
   //   "pk_test_51LE9NmCCnqCKl0oMYfMTugAqtMepaC4DkHyTyklan9jfncWHCbXN2LxLhTZUniqUyfusJqXMaT5055WXHLI54zvJ00F7xxXAg2"
@@ -30,37 +37,39 @@ function Jobpaymentstatus() {
   const stripePromise = loadStripe(
     "pk_live_51LE9NmCCnqCKl0oMoqKZX6gl5E9SEnw4MARENHnb4YNkUTZ1PJ17rAXY2J7jdKgdiD9KdIjwbbDZ4PSPsKr2JU4A00lom585CK"
   );
-  const jobLoc = Cookies.get('jobDet')
-  const jobPay = jobLoc && JSON.parse(jobLoc)
+  const jobLoc = Cookies.get("jobDet");
+  const jobPay = jobLoc && JSON.parse(jobLoc);
 
-const [clientSecret, setClientSecret] = useState("");
-const token = Cookies.get('token')
-const router = useRouter()
+  const [clientSecret, setClientSecret] = useState("");
+  const token = Cookies.get("token");
+  const router = useRouter();
   useEffect(() => {
     const job = JSON.parse(localStorage.getItem("jobDetail"));
-    if(isEmpty(jobPay) === true  && isEmpty(job) === true){
-      router.push('/Employer/Dashboard')
-    }else{
-      if(jobPay.payment !== ''){
-        axios.post(`https://api.arinnovate.io/api/addnewjobpayment`,jobPay, {
-          headers: { "x-access-token": `${token}` },
-        }).then((res)=>{
-          setClientSecret(res?.data?.clientSecret)
-        })
-      }else{
-      router.push('/Employer/Dashboard')
+    if (isEmpty(jobPay) === true && isEmpty(job) === true) {
+      router.push("/Employer/Dashboard");
+    } else {
+      if (jobPay.payment !== "") {
+        axios
+          .post(`https://api.arinnovate.io/api/addnewjobpayment`, jobPay, {
+            headers: { "x-access-token": `${token}` },
+          })
+          .then((res) => {
+            setClientSecret(res?.data?.clientSecret);
+          });
+      } else {
+        router.push("/Employer/Dashboard");
       }
     }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [jobPay])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobPay]);
   const appearance = {
     theme: "stripe",
   };
-    const options = {
-        clientSecret,
-        appearance,
-      };
-  const country = Cookies.get('country')
+  const options = {
+    clientSecret,
+    appearance,
+  };
+  const country = Cookies.get("country");
   // const queryString = jobPay?.ids.join(',');
   // const url = `/?elements=${queryString}`;
   return (
@@ -156,13 +165,7 @@ const router = useRouter()
                     color: "#fff",
                   }}
                 >
-                  { (
-                    country === "IN" ? (
-                      <span>&#8377;</span>
-                    ) : (
-                      "$"
-                    )
-                  )}
+                  {country === "IN" ? <span>&#8377;</span> : "$"}
                   <b>{jobPay?.payment}</b> / Month
                 </Typography>
                 <BasicButton
@@ -177,7 +180,7 @@ const router = useRouter()
               <Box sx={{ p: 3 }}>
                 {clientSecret && (
                   <Elements options={options} stripe={stripePromise}>
-                 <PaymentInt options={options} jobPay={jobPay}/>
+                    <PaymentInt options={options} jobPay={jobPay} />
                   </Elements>
                 )}
               </Box>
@@ -186,7 +189,7 @@ const router = useRouter()
         </Card>
       </Container>
     </div>
-  )
+  );
 }
 
-export default Jobpaymentstatus
+export default Jobpaymentstatus;

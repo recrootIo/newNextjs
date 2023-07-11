@@ -1,63 +1,77 @@
-import EmployerNavbar from '@/components/EmployerNavbar/EmployerNavbar';
-import { Box, Button, Card, CardContent, Container, Typography, styled } from '@mui/material';
-import React from 'react'
+import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Typography,
+  styled,
+} from "@mui/material";
+import React from "react";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import { useEffect } from 'react';
-import Cookies from 'js-cookie';
+import { useRouter } from "next/router";
+import axios from "axios";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 const BasicButton = styled(Button)({
-    color: "#ffff",
-    padding: "20px",
-    borderRadius: "10px",
-    border: "2px solid #e7eaef",
-    background: "#4fa9ff !important",
-    textTransform: "capitalize",
-    // width: "50%",
-    marginBottom: "10px",
-  });
+  color: "#ffff",
+  padding: "20px",
+  borderRadius: "10px",
+  border: "2px solid #e7eaef",
+  background: "#4fa9ff !important",
+  textTransform: "capitalize",
+  // width: "50%",
+  marginBottom: "10px",
+});
 function SuccessJobPay() {
-    const router = useRouter();
-    const { elements } = router.query;
-    const { newJob } = router.query;
-    const { payment_intent_client_secret } = router.query;
-    const array = elements ? elements.split(',') : [];
-    const value = {
-        ids:array,
-        clientSecret:payment_intent_client_secret
+  const router = useRouter();
+  const { elements } = router.query;
+  const { newJob } = router.query;
+  const { payment_intent_client_secret } = router.query;
+  const array = elements ? elements.split(",") : [];
+  const value = {
+    ids: array,
+    clientSecret: payment_intent_client_secret,
+  };
+  const token = Cookies.get("token");
+  useEffect(() => {
+    if (array.length > 0) {
+      axios
+        .post(`${"https://api.arinnovate.io/api/"}updateJobPayment`, value, {
+          headers: { "x-access-token": `${token}` },
+        })
+        .then((res) => {
+          Cookies.remove("jobDet");
+          Cookies.remove("jids");
+          console.log(res);
+        });
     }
-const token = Cookies.get('token')
-    useEffect(() => {
-      if(array.length > 0){  axios.post(
-          `${'https://api.arinnovate.io/api/'}updateJobPayment`,value, {
+    if (newJob === "true") {
+      const user = JSON.parse(localStorage.getItem("User"));
+      axios
+        .post(
+          `${"https://api.arinnovate.io/api/"}updateJobPaymentNew`,
+          {
+            clientSecret: payment_intent_client_secret,
+            job: JSON.parse(localStorage.getItem("jobDetail")),
+            companyId: user?.User?.companyId,
+          },
+          {
             headers: { "x-access-token": `${token}` },
           }
-            ).then((res)=>{
-              Cookies.remove('jobDet')
-              Cookies.remove('jids')
-                console.log(res)
-            })}
-        if (newJob === 'true') {
-          const user = JSON.parse(localStorage.getItem("User"));
-          axios.post(
-            `${'https://api.arinnovate.io/api/'}updateJobPaymentNew`,{
-              clientSecret:payment_intent_client_secret,
-              job:JSON.parse(localStorage.getItem("jobDetail")),
-              companyId:user?.User?.companyId
-            }, {
-              headers: { "x-access-token": `${token}` },
-            }
-              ).then((res)=>{
-                if (res.status === 200) {
-                  localStorage.removeItem("jobDetail");
-                }
-              })
-        }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [array,newJob])
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            localStorage.removeItem("jobDetail");
+          }
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [array, newJob]);
   return (
     <div>
-         <EmployerNavbar />
+      <EmployerNavbar />
       <Box
         sx={{
           backgroundImage: 'url("/EmployerDashboardBG.svg")',
@@ -115,7 +129,7 @@ const token = Cookies.get('token')
               className="goto-button"
               disableElevation
               onClick={() => {
-                router.push('/Employer/Dashboard');
+                router.push("/Employer/Dashboard");
               }}
             >
               Go To Dashboard
@@ -124,7 +138,7 @@ const token = Cookies.get('token')
         </Card>
       </Container>
     </div>
-  )
+  );
 }
 
-export default SuccessJobPay
+export default SuccessJobPay;

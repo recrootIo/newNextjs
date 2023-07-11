@@ -591,7 +591,6 @@ function Signup() {
                             Sign up with LinkedIn
                           </span>
                         </button>
-
                       </Stack>
 
                       <Divider>OR</Divider>

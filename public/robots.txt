@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://api.arinnovate.io
+Host:https://api.arinnovate.io
 
 # Sitemaps
-Sitemap: https://api.arinnovate.io/sitemap.xml
+Sitemap:https://api.arinnovate.io/sitemap.xml
