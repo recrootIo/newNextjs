@@ -55,7 +55,7 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import styles from "./allApplicants.module.css";
-import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
+import AllApplicantsCard from "@/components/Employers/CandiDBcard/CandiDBCard";
 import Employer from "../../../components/pages/index";
 import { useDispatch, useSelector } from "react-redux";
 import { EMPLOYEE_STATUS, REJECTED, SHORT_LISTED } from "@/utils/constants";

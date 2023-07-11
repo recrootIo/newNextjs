@@ -57,7 +57,6 @@ import EmployerNavbar from "@/components/EmployerNavbar/EmployerNavbar";
 import Image from "next/image";
 
 import styles from "./allApplicants.module.css";
-import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 import Employer from "../../../components/pages/index";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -69,8 +68,15 @@ import {
 import { useEffect } from "react";
 import {
   ApplicantsFilters,
+  candidatesForrequest,
+  candidatesIdreq,
+  getCompanyDetails,
+  getMachingAppl,
   getMatchApplicantsFilter,
   getRecommended,
+  jobCandidatesRequest,
+  matchShow,
+  updateApplicantFilters,
 } from "@/redux/slices/companyslice";
 
 import { useRef } from "react";
@@ -102,6 +108,8 @@ import {
 } from "@/utils/currency";
 import { currencyConvert } from "@/utils/HelperFunctions";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import CandiDBCard from "@/components/Employers/CandiDBcard/CandiDBCard";
+import AllApplicantsCard from "@/components/Employers/AllApplicantsCard/AllApplicantsCard";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 export const TabPanel = (props) => {
@@ -161,6 +169,9 @@ const AllApplicants = () => {
 
   const { loadingRecommended, loadingAllApplicants } = useSelector(
     (state) => state.company
+  );
+  const loadingCand = useSelector(
+    (state) => state.company.loading
   );
 
   const newCompanyservice = new companyservice();
@@ -246,12 +257,36 @@ const AllApplicants = () => {
       const data = { status, name };
       dispatch(getRecommended({ id: jid, page, data }));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jid, page, status]);
 
+  const reqJob = useSelector((data) => data.company.taskbyjob);
+  useEffect(() => {
+    if (jid) {
+      dispatch(jobCandidatesRequest(jid));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jid]);
+  useEffect(() => {
+    if (reqJob?.stage === "completed") {
+      const value = {
+        id: reqJob?.Candidates,
+        page:1,
+        filter:filtaration
+      };
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(value));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reqJob]);
   const handleChange = (e, value) => {
-    if (page > 1) {
+    if(candidatesType === 'candiDB'){
+      const values = {
+        id: reqJob?.Candidates,
+        page:value,
+        filter:filtaration,
+        name:name
+      };
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
@@ -266,10 +301,30 @@ const AllApplicants = () => {
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
-    } else {
-      addAllToFilter();
-      const data = { status, name };
-      dispatch(getRecommended({ id: jid, page, data }));
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(values));
+      return
+    }else{
+      if (page > 1) {
+        const { ...otherParams } = router.query;
+        const updatedQueryParams = {
+          ...otherParams,
+          page: value,
+        };
+  
+        router.push(
+          {
+            pathname: router.pathname,
+            query: updatedQueryParams,
+          },
+          undefined,
+          { shallow: true } // This option prevents the page from rerendering
+        );
+      } else {
+        addAllToFilter();
+        const data = { status, name };
+        dispatch(getRecommended({ id: jid, page, data }));
+      }
     }
 
     scrollToTop();
@@ -277,7 +332,6 @@ const AllApplicants = () => {
   };
 
   const divRef = useRef(null);
-
   const scrollToTop = () => {
     if (divRef.current) {
       divRef.current.scrollTop = 0;
@@ -379,7 +433,6 @@ const AllApplicants = () => {
 
   const handleSelect = async (selected) => {
     const results = await geocodeByAddress(selected?.label);
-    console.log(handleSelect, "handleSelect");
     setInputPersonalDetailsCountry({
       country: results[0].address_components.find((c) =>
         c.types.includes("country")
@@ -461,6 +514,7 @@ const AllApplicants = () => {
       status: newStatus,
       name: name,
     };
+    
     dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
 
     dispatch(
@@ -470,6 +524,48 @@ const AllApplicants = () => {
         data: allApplicantsFilters,
       })
     );
+  };
+  const addAllToFilterCanddb = (newStatus = "", customPage = null) => {
+    const allApplicantsFilters = {
+      workPrefence: names,
+      skillSet: tempSkills,
+      location: {
+        city: inputPersonalDetailsCountry.city,
+        country: inputPersonalDetailsCountry.country,
+        state: inputPersonalDetailsCountry.state,
+      },
+      notice: selectedNotice,
+      salaryCurrency: currency,
+      denomination: salary.denomination,
+      salary: salary.salary,
+      exper: selectedExperience,
+      status: newStatus,
+      name: name,
+    };
+
+    dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
+
+    const value = {
+      id: reqJob?.Candidates,
+      page:1,
+      filter:allApplicantsFilters
+    };
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      page: 1,
+    };
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true } // This option prevents the page from rerendering
+    );
+    dispatch(candidatesIdreq(reqJob?.Candidates));
+    dispatch(candidatesForrequest(value));
   };
 
   const getCandidateSalary = (candidate) => {
@@ -498,6 +594,29 @@ const AllApplicants = () => {
       name: "",
     };
     dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
+    if (candidatesType === "candiDB") {
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        page: 1,
+      };
+
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
+      const value = {
+        id: reqJob?.Candidates,
+        page:1,
+        filter:allApplicantsFilters
+      };
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(value));
+    }
     dispatch(getRecommended({ id: jid, page: 1 }));
     dispatch(
       getMatchApplicantsFilter({ jid, page: 1, data: allApplicantsFilters })
@@ -532,31 +651,62 @@ const AllApplicants = () => {
     let newFilters = { ...filtaration };
     if (field === "address") {
       newFilters.location = { city: "", country: "", state: "" };
+      setInputPersonalDetailsCountry({ city: "", country: "", state: "" })
     }
 
     if (field === "salary") {
       newFilters.salary = "";
       newFilters.salaryCurrency = "";
       newFilters.denomination = "";
+      setSalary({
+        denomination: "",
+        salary: "",
+      })
     }
 
     if (field === "skillSet" || field === "workPrefence") {
       let filteredArray = [];
       if (field === "skillSet") {
         filteredArray = newFilters.skillSet.filter((a) => item !== a.skill);
+        setTempSkill(filteredArray)
       } else {
         filteredArray = newFilters.workPrefence.filter((a) => item !== a);
+        setNames(filteredArray)
       }
       newFilters[field] = filteredArray;
     } else {
       newFilters[field] = "";
     }
+  if (candidatesType === "candiDB") {
+    dispatch(ApplicantsFilters({ ...newFilters }));
+    const value = {
+      id: reqJob?.Candidates,
+      page:1,
+      filter:newFilters
+    };
+    const { ...otherParams } = router.query;
+    const updatedQueryParams = {
+      ...otherParams,
+      page: 1,
+    };
 
+    router.push(
+      {
+        pathname: router.pathname,
+        query: updatedQueryParams,
+      },
+      undefined,
+      { shallow: true } // This option prevents the page from rerendering
+    );
+    dispatch(candidatesIdreq(reqJob?.Candidates));
+    dispatch(candidatesForrequest(value));
+    return
+  }
     dispatch(ApplicantsFilters({ ...newFilters }));
     dispatch(getMatchApplicantsFilter({ jid, page: 1, data: newFilters }));
     // addAllToFilter(status);
   };
-
+  const data = useSelector((data) => data.company.search);
   const changeApplicantType = (type) => {
     handleChange(null, 1);
     setCandidatesType(type);
@@ -564,7 +714,8 @@ const AllApplicants = () => {
 
   const pages =
     candidatesType === "allApplicants"
-      ? Math.ceil(allApplicantsCount / 10)
+      ? Math.ceil(allApplicantsCount / 10) :
+      candidatesType === "candiDB" ? data?.totalPages
       : Math.ceil(recommendedApplicantsCount / 10);
   const getPagesCount = pages < 0 ? 1 : pages;
   const accentColor = "#5cb7b7";
@@ -575,8 +726,16 @@ const AllApplicants = () => {
   const loadingCount = ["1", "2", "3", "4", "5", "6", "0", "2", "3", "3", "3"];
 
   const displayData =
-    candidatesType === "allApplicants" ? allApplicants : recommendedApplicants;
-
+    candidatesType === "allApplicants" ? allApplicants : candidatesType === "candiDB" ? data?.candidates : recommendedApplicants;
+const handleFilter=()=>{
+  if (candidatesType === 'candiDB') {
+    addAllToFilterCanddb();
+    setOpenFilter(!openFilter);
+  }else{
+    addAllToFilter();
+    setOpenFilter(!openFilter);
+  }
+}
   return (
     <>
       <Header title={"Applicants"} />
@@ -683,6 +842,50 @@ const AllApplicants = () => {
                     </CustomTypography>
                   </CardContent>
                 </Card>
+                <Card
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    textAlign: "center",
+                    backgroundImage: 'url("/activejob-bg.svg")',
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: "15px",
+                    cursor: "pointer",
+                    border: "0",
+                    boxShadow:
+                      candidatesType === "candiDB"
+                        ? "0 0px 8px rgba(0,0,0,0.30), 0 6px 7px rgba(0,0,0,0.22)"
+                        : "",
+                  }}
+                  variant="outlined"
+                  onClick={() => {
+                    changeApplicantType("candiDB");
+                  }}
+                >
+                  <CardContent>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "20px",
+                        fontWeight: "600",
+                      }}
+                    >
+                     Candidate Database
+                    </CustomTypography>
+                    <CustomTypography
+                      sx={{
+                        color: "white",
+                        fontSize: "33px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {reqJob?.Candidates?.length}
+                    </CustomTypography>
+                  </CardContent>
+                </Card>
               </Stack>
 
               <Divider
@@ -693,7 +896,7 @@ const AllApplicants = () => {
               <Stack
                 direction={"row"}
                 sx={{
-                  justifyContent: "space-between",
+                  justifyContent:candidatesType === "candiDB" ? "center" : "space-between",
                   alignItems: "flex-end",
                   gap: "10px",
                 }}
@@ -726,7 +929,8 @@ const AllApplicants = () => {
                     />
                   </Button>
                 </Box>
-                <FormControl
+               {candidatesType === "candiDB" ? "": 
+               <FormControl
                   sx={{ width: "40% !important" }}
                   variant="outlined"
                 >
@@ -736,7 +940,7 @@ const AllApplicants = () => {
                     id="demo-simple-select"
                     value={status}
                     label="Status"
-                    sx={{ backgroundColor: "white" }}
+                    sx={{backgroundColor:"white"}}
                     onChange={addFilterStatus}
                   >
                     <MenuItem value={""}>All</MenuItem>
@@ -745,9 +949,9 @@ const AllApplicants = () => {
                     <MenuItem value={"viewed"}>Viewed</MenuItem>
                     <MenuItem value={"unview"}>Unviewed</MenuItem>
                   </Select>
-                </FormControl>
+                </FormControl>}
 
-                {candidatesType === "allApplicants" && (
+                {candidatesType === "allApplicants" || candidatesType === "candiDB"  ? (
                   <Stack direction={"row"} sx={{ gap: "10px" }}>
                     <IconButton onClick={() => setOpenFilter(!openFilter)}>
                       <FilterAltIcon fontSize="large" />
@@ -756,10 +960,10 @@ const AllApplicants = () => {
                       <RefreshIcon fontSize="large" />
                     </IconButton>
                   </Stack>
-                )}
+                ) : ""}
               </Stack>
 
-              {candidatesType === "allApplicants" && (
+              {candidatesType === "allApplicants" || candidatesType === "candiDB" ? (
                 <Stack
                   direction={"row"}
                   sx={{ mt: "10px", gap: "10px", flexWrap: "wrap" }}
@@ -821,7 +1025,7 @@ const AllApplicants = () => {
                     />
                   ))}
                 </Stack>
-              )}
+              ) : ""}
 
               <Box
                 ref={divRef}
@@ -830,7 +1034,7 @@ const AllApplicants = () => {
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
                 <Stack spacing={3}>
-                  {openFilter && candidatesType === "allApplicants" && (
+                  {openFilter && (candidatesType === "allApplicants" || candidatesType === "candiDB"  ? (
                     <Card variant="outlined">
                       <CardContent>
                         <Grid container>
@@ -1278,8 +1482,7 @@ const AllApplicants = () => {
                           <Button
                             variant="contained"
                             onClick={() => {
-                              addAllToFilter();
-                              setOpenFilter(!openFilter);
+                             handleFilter()
                             }}
                             sx={{
                               backgroundColor: "#00339B !important",
@@ -1291,9 +1494,9 @@ const AllApplicants = () => {
                         </Stack>
                       </CardContent>
                     </Card>
-                  )}
+                  ) : "")}
 
-                  {loadingSection ? (
+                  {candidatesType === "candiDB" ? "" : loadingSection ? (
                     loadingCount.map((a, index) => (
                       <LoadingSearchCards key={index} />
                     ))
@@ -1315,6 +1518,26 @@ const AllApplicants = () => {
                       </div>
                     ))
                   )}
+                  {candidatesType === "candiDB" ? loadingCand ? (
+                    loadingCount.map((a, index) => (
+                      <LoadingSearchCards key={index} />
+                    ))
+                  ) : displayData.length === 0 ? (
+                    <Typography textAlign={"center"}>
+                      No Candidates Found
+                    </Typography>
+                  ) : (
+                    displayData.map((usr, index) => (
+                      <div id={usr?._id} key={index}>
+                        <CandiDBCard
+                          key={index}
+                          users={usr}
+                          candidatesType={candidatesType}
+                          order={index}
+                        />
+                      </div>
+                    ))
+                  ) : ""}
                 </Stack>
               </Box>
 

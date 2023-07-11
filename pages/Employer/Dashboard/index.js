@@ -431,7 +431,7 @@ const EmpoyerDashboard = () => {
     // dispatch(applyJobsdetFilter(details)).then(
     //   setTimeout(() => {
     push(
-      `/Employer/AllApplicants?jid=${params?.id}&title=${params.row?.title}&page=1`,
+      `/Employer/allApplicants?jid=${params?.id}&title=${params.row?.title}&page=1`,
       {
         state: true,
       }
