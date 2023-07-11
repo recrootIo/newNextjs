@@ -82,7 +82,6 @@ import {
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import companyservice from "@/redux/services/company.service";
 import LoadingSearchCards from "@/components/JobListings/LoadingSearchCards";
 import SearchIcon from "@mui/icons-material/Search";
@@ -152,6 +151,13 @@ export const StyledTab = styled(Tab)`
   }
 `;
 
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    width: "90%",
+  },
+}));
+
 const AllApplicants = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -170,9 +176,8 @@ const AllApplicants = () => {
   const { loadingRecommended, loadingAllApplicants } = useSelector(
     (state) => state.company
   );
-  const loadingCand = useSelector(
-    (state) => state.company.loading
-  );
+  const loadingCand = useSelector((state) => state.company.loading);
+  const reqJob = useSelector((data) => data.company.taskbyjob);
 
   const newCompanyservice = new companyservice();
 
@@ -260,32 +265,33 @@ const AllApplicants = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jid, page, status]);
 
-  const reqJob = useSelector((data) => data.company.taskbyjob);
   useEffect(() => {
     if (jid) {
       dispatch(jobCandidatesRequest(jid));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jid]);
+
   useEffect(() => {
     if (reqJob?.stage === "completed") {
       const value = {
         id: reqJob?.Candidates,
-        page:1,
-        filter:filtaration
+        page: 1,
+        filter: filtaration,
       };
       dispatch(candidatesIdreq(reqJob?.Candidates));
       dispatch(candidatesForrequest(value));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reqJob]);
+
   const handleChange = (e, value) => {
-    if(candidatesType === 'candiDB'){
+    if (candidatesType === "candiDB") {
       const values = {
         id: reqJob?.Candidates,
-        page:value,
-        filter:filtaration,
-        name:name
+        page: value,
+        filter: filtaration,
+        name: name,
       };
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
@@ -301,17 +307,18 @@ const AllApplicants = () => {
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
+
       dispatch(candidatesIdreq(reqJob?.Candidates));
       dispatch(candidatesForrequest(values));
-      return
-    }else{
+      return;
+    } else {
       if (page > 1) {
         const { ...otherParams } = router.query;
         const updatedQueryParams = {
           ...otherParams,
           page: value,
         };
-  
+
         router.push(
           {
             pathname: router.pathname,
@@ -321,7 +328,7 @@ const AllApplicants = () => {
           { shallow: true } // This option prevents the page from rerendering
         );
       } else {
-        addAllToFilter();
+        addAllToFilter(status);
         const data = { status, name };
         dispatch(getRecommended({ id: jid, page, data }));
       }
@@ -514,7 +521,7 @@ const AllApplicants = () => {
       status: newStatus,
       name: name,
     };
-    
+
     dispatch(ApplicantsFilters({ ...allApplicantsFilters }));
 
     dispatch(
@@ -547,8 +554,8 @@ const AllApplicants = () => {
 
     const value = {
       id: reqJob?.Candidates,
-      page:1,
-      filter:allApplicantsFilters
+      page: 1,
+      filter: allApplicantsFilters,
     };
     const { ...otherParams } = router.query;
     const updatedQueryParams = {
@@ -611,8 +618,8 @@ const AllApplicants = () => {
       );
       const value = {
         id: reqJob?.Candidates,
-        page:1,
-        filter:allApplicantsFilters
+        page: 1,
+        filter: allApplicantsFilters,
       };
       dispatch(candidatesIdreq(reqJob?.Candidates));
       dispatch(candidatesForrequest(value));
@@ -643,15 +650,20 @@ const AllApplicants = () => {
 
   const addFilterStatus = (e) => {
     setStatus(() => e.target.value);
-    addAllToFilter(e.target.value);
-    handleChange(null, 1);
+    // addAllToFilter(e.target.value);
+    // handleChange(null, 1);
   };
 
   const clearFields = (field, item) => {
     let newFilters = { ...filtaration };
     if (field === "address") {
       newFilters.location = { city: "", country: "", state: "" };
-      setInputPersonalDetailsCountry({ city: "", country: "", state: "" })
+      setAddress("");
+      setInputPersonalDetailsCountry({
+        country: "",
+        state: "",
+        city: "",
+      });
     }
 
     if (field === "salary") {
@@ -659,63 +671,79 @@ const AllApplicants = () => {
       newFilters.salaryCurrency = "";
       newFilters.denomination = "";
       setSalary({
-        denomination: "",
         salary: "",
-      })
+        denomination: "",
+      });
+      setCurrency("");
     }
 
     if (field === "skillSet" || field === "workPrefence") {
       let filteredArray = [];
       if (field === "skillSet") {
+        setTempSkill([]);
         filteredArray = newFilters.skillSet.filter((a) => item !== a.skill);
-        setTempSkill(filteredArray)
+        setTempSkill(filteredArray);
       } else {
+        setNames([]);
         filteredArray = newFilters.workPrefence.filter((a) => item !== a);
-        setNames(filteredArray)
+        setNames(filteredArray);
       }
+
       newFilters[field] = filteredArray;
     } else {
       newFilters[field] = "";
     }
-  if (candidatesType === "candiDB") {
-    dispatch(ApplicantsFilters({ ...newFilters }));
-    const value = {
-      id: reqJob?.Candidates,
-      page:1,
-      filter:newFilters
-    };
-    const { ...otherParams } = router.query;
-    const updatedQueryParams = {
-      ...otherParams,
-      page: 1,
-    };
 
-    router.push(
-      {
-        pathname: router.pathname,
-        query: updatedQueryParams,
-      },
-      undefined,
-      { shallow: true } // This option prevents the page from rerendering
-    );
-    dispatch(candidatesIdreq(reqJob?.Candidates));
-    dispatch(candidatesForrequest(value));
-    return
-  }
+    // setSelectedNotice;
+    if (field === "notice") {
+      setSelectedNotice("");
+    }
+    if (field === "exper") {
+      setSelectedExperience("");
+    }
+
+    if (candidatesType === "candiDB") {
+      dispatch(ApplicantsFilters({ ...newFilters }));
+      const value = {
+        id: reqJob?.Candidates,
+        page: 1,
+        filter: newFilters,
+      };
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        page: 1,
+      };
+
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(value));
+      return;
+    }
+
     dispatch(ApplicantsFilters({ ...newFilters }));
     dispatch(getMatchApplicantsFilter({ jid, page: 1, data: newFilters }));
     // addAllToFilter(status);
   };
+
   const data = useSelector((data) => data.company.search);
   const changeApplicantType = (type) => {
-    handleChange(null, 1);
+    handleChange(status, 1);
     setCandidatesType(type);
   };
 
   const pages =
     candidatesType === "allApplicants"
-      ? Math.ceil(allApplicantsCount / 10) :
-      candidatesType === "candiDB" ? data?.totalPages
+      ? Math.ceil(allApplicantsCount / 10)
+      : candidatesType === "candiDB"
+      ? data?.totalPages
       : Math.ceil(recommendedApplicantsCount / 10);
   const getPagesCount = pages < 0 ? 1 : pages;
   const accentColor = "#5cb7b7";
@@ -726,16 +754,20 @@ const AllApplicants = () => {
   const loadingCount = ["1", "2", "3", "4", "5", "6", "0", "2", "3", "3", "3"];
 
   const displayData =
-    candidatesType === "allApplicants" ? allApplicants : candidatesType === "candiDB" ? data?.candidates : recommendedApplicants;
-const handleFilter=()=>{
-  if (candidatesType === 'candiDB') {
-    addAllToFilterCanddb();
-    setOpenFilter(!openFilter);
-  }else{
-    addAllToFilter();
-    setOpenFilter(!openFilter);
-  }
-}
+    candidatesType === "allApplicants"
+      ? allApplicants
+      : candidatesType === "candiDB"
+      ? data?.candidates
+      : recommendedApplicants;
+  const handleFilter = () => {
+    if (candidatesType === "candiDB") {
+      addAllToFilterCanddb();
+      setOpenFilter(!openFilter);
+    } else {
+      addAllToFilter();
+      setOpenFilter(!openFilter);
+    }
+  };
   return (
     <>
       <Header title={"Applicants"} />
@@ -873,7 +905,7 @@ const handleFilter=()=>{
                         fontWeight: "600",
                       }}
                     >
-                     Candidate Database
+                      Candidate Database
                     </CustomTypography>
                     <CustomTypography
                       sx={{
@@ -896,7 +928,8 @@ const handleFilter=()=>{
               <Stack
                 direction={"row"}
                 sx={{
-                  justifyContent:candidatesType === "candiDB" ? "center" : "space-between",
+                  justifyContent:
+                    candidatesType === "candiDB" ? "center" : "space-between",
                   alignItems: "flex-end",
                   gap: "10px",
                 }}
@@ -905,7 +938,7 @@ const handleFilter=()=>{
                   <InputBase
                     variant="outlined"
                     sx={{ ml: 1, flex: 1, height: "54px !important" }}
-                    placeholder="Search"
+                    placeholder="Search Applicant Name"
                     inputProps={{ "aria-label": "Location" }}
                     onChange={(e) => {
                       // dispatch(updateApplicantFilters("name", e.target.value));
@@ -913,6 +946,7 @@ const handleFilter=()=>{
                     }}
                     value={name}
                   />
+
                   <Button
                     variant="outlined"
                     sx={{
@@ -929,41 +963,61 @@ const handleFilter=()=>{
                     />
                   </Button>
                 </Box>
-               {candidatesType === "candiDB" ? "": 
-               <FormControl
-                  sx={{ width: "40% !important" }}
-                  variant="outlined"
-                >
-                  <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={status}
-                    label="Status"
-                    sx={{backgroundColor:"white"}}
-                    onChange={addFilterStatus}
+                {candidatesType === "candiDB" ? (
+                  ""
+                ) : (
+                  <FormControl
+                    sx={{ width: "40% !important" }}
+                    variant="outlined"
                   >
-                    <MenuItem value={""}>All</MenuItem>
-                    <MenuItem value={"shortlist"}>Short Listed</MenuItem>
-                    <MenuItem value={"rejected"}>Rejected</MenuItem>
-                    <MenuItem value={"viewed"}>Viewed</MenuItem>
-                    <MenuItem value={"unview"}>Unviewed</MenuItem>
-                  </Select>
-                </FormControl>}
+                    <InputLabel id="demo-simple-select-label">
+                      Filter
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={status}
+                      label="Status"
+                      sx={{ backgroundColor: "white" }}
+                      onChange={addFilterStatus}
+                    >
+                      <MenuItem value={""}>All</MenuItem>
+                      <MenuItem value={"shortlist"}>Shortlisted</MenuItem>
+                      <MenuItem value={"rejected"}>Rejected</MenuItem>
+                      <MenuItem value={"viewed"}>Viewed</MenuItem>
+                      <MenuItem value={"unview"}>Unviewed</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
 
-                {candidatesType === "allApplicants" || candidatesType === "candiDB"  ? (
-                  <Stack direction={"row"} sx={{ gap: "10px" }}>
-                    <IconButton onClick={() => setOpenFilter(!openFilter)}>
+                {candidatesType === "allApplicants" ||
+                candidatesType === "candiDB" ? (
+                  <Stack
+                    direction={"row"}
+                    sx={{ gap: "10px", justifyContent: "center" }}
+                  >
+                    <Button
+                      variant="outlined"
+                      sx={{ height: "56px" }}
+                      onClick={() => setOpenFilter(!openFilter)}
+                    >
                       <FilterAltIcon fontSize="large" />
-                    </IconButton>
-                    <IconButton onClick={() => clearAll()}>
+                    </Button>
+                    <Button
+                      sx={{ height: "56px" }}
+                      variant="outlined"
+                      onClick={() => clearAll()}
+                    >
                       <RefreshIcon fontSize="large" />
-                    </IconButton>
+                    </Button>
                   </Stack>
-                ) : ""}
+                ) : (
+                  ""
+                )}
               </Stack>
 
-              {candidatesType === "allApplicants" || candidatesType === "candiDB" ? (
+              {candidatesType === "allApplicants" ||
+              candidatesType === "candiDB" ? (
                 <Stack
                   direction={"row"}
                   sx={{ mt: "10px", gap: "10px", flexWrap: "wrap" }}
@@ -1025,7 +1079,9 @@ const handleFilter=()=>{
                     />
                   ))}
                 </Stack>
-              ) : ""}
+              ) : (
+                ""
+              )}
 
               <Box
                 ref={divRef}
@@ -1034,469 +1090,492 @@ const handleFilter=()=>{
                 sx={{ mt: "20px", mb: "30px", width: "100%", pr: "10px" }}
               >
                 <Stack spacing={3}>
-                  {openFilter && (candidatesType === "allApplicants" || candidatesType === "candiDB"  ? (
-                    <Card variant="outlined">
-                      <CardContent>
-                        <Grid container>
-                          <Grid item md={4}>
-                            <Tabs
-                              orientation="vertical"
-                              variant="scrollable"
-                              value={value}
-                              onChange={handleTabChange}
-                              aria-label="Vertical tabs example"
-                              sx={{ borderRight: 1, borderColor: "divider" }}
+                  {openFilter &&
+                    (candidatesType === "allApplicants" ||
+                    candidatesType === "candiDB" ? (
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Grid container>
+                            <Grid item md={4}>
+                              <Tabs
+                                orientation="vertical"
+                                variant="scrollable"
+                                value={value}
+                                onChange={handleTabChange}
+                                aria-label="Vertical tabs example"
+                                sx={{ borderRight: 1, borderColor: "divider" }}
+                              >
+                                <StyledTab
+                                  label="Experience"
+                                  {...a11yProps(0)}
+                                  iconPosition="start"
+                                />
+                                <StyledTab
+                                  label="Location"
+                                  {...a11yProps(1)}
+                                  iconPosition="start"
+                                />
+                                <StyledTab
+                                  label="Work Preference"
+                                  {...a11yProps(2)}
+                                  iconPosition="start"
+                                />
+                                <StyledTab
+                                  label="Salary"
+                                  {...a11yProps(3)}
+                                  iconPosition="start"
+                                />
+                                <StyledTab
+                                  label="Skills"
+                                  {...a11yProps(4)}
+                                  iconPosition="start"
+                                />
+                                <StyledTab
+                                  label="Notice Period"
+                                  {...a11yProps(5)}
+                                  iconPosition="start"
+                                />
+                              </Tabs>
+                            </Grid>
+                            <Grid
+                              item
+                              md={8}
+                              sx={{ maxHeight: "300px", overflow: "auto" }}
                             >
-                              <StyledTab
-                                label="Experience"
-                                {...a11yProps(0)}
-                                iconPosition="start"
-                              />
-                              <StyledTab
-                                label="Location"
-                                {...a11yProps(1)}
-                                iconPosition="start"
-                              />
-                              <StyledTab
-                                label="Work Preference"
-                                {...a11yProps(2)}
-                                iconPosition="start"
-                              />
-                              <StyledTab
-                                label="Salary"
-                                {...a11yProps(3)}
-                                iconPosition="start"
-                              />
-                              <StyledTab
-                                label="Skills"
-                                {...a11yProps(4)}
-                                iconPosition="start"
-                              />
-                              <StyledTab
-                                label="Notice Period"
-                                {...a11yProps(5)}
-                                iconPosition="start"
-                              />
-                            </Tabs>
-                          </Grid>
-                          <Grid
-                            item
-                            md={8}
-                            sx={{ maxHeight: "300px", overflow: "auto" }}
-                          >
-                            <TabPanel
-                              value={value}
-                              index={0}
-                              sx={{ padding: "10px" }}
-                              title={"Experience"}
-                              clearAction={() => setSelectedExperience("")}
-                            >
-                              <FormGroup>
-                                <FormControl>
-                                  <RadioGroup
-                                    onChange={handleExperience}
-                                    value={selectedExperience}
-                                  >
-                                    {USER_EXPERIENCES.map((com, index) => (
-                                      <FormControlLabel
+                              <TabPanel
+                                value={value}
+                                index={0}
+                                sx={{ padding: "10px" }}
+                                title={"Experience"}
+                                clearAction={() => setSelectedExperience("")}
+                              >
+                                <FormGroup>
+                                  <FormControl>
+                                    <RadioGroup
+                                      onChange={handleExperience}
+                                      value={selectedExperience}
+                                    >
+                                      {USER_EXPERIENCES.map((com, index) => (
+                                        <FormControlLabel
+                                          key={index}
+                                          control={<BpRadio size="small" />}
+                                          label={com}
+                                          value={com}
+                                          name={com}
+                                        />
+                                      ))}
+                                    </RadioGroup>
+                                  </FormControl>
+                                </FormGroup>
+                              </TabPanel>
+                              <TabPanel
+                                value={value}
+                                index={1}
+                                title={"Location"}
+                                clearAction={() => clearAddress()}
+                              >
+                                <Stack sx={{ mt: "10px" }}>
+                                  <GooglePlacesAutocomplete
+                                    style={{ width: "100%", marginTop: "10px" }}
+                                    apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
+                                    selectProps={{
+                                      isClearable: true,
+                                      placeholder: "Enter Location",
+                                      value: address,
+                                      onChange: (val) => {
+                                        setAddress(val);
+                                        handleSelect(val);
+                                      },
+                                      onSelect: { handleSelect },
+                                      styles: {
+                                        input: (provided) => ({
+                                          ...provided,
+                                          height: "2.8em",
+                                          paddingTop: "10px",
+                                        }),
+                                        option: (provided) => ({
+                                          ...provided,
+                                          height: "2.8em",
+                                        }),
+                                        singleValue: (provided) => ({
+                                          ...provided,
+                                          height: "2.8em",
+                                          paddingTop: "10px",
+                                        }),
+                                      },
+                                    }}
+                                  />
+                                  {(inputPersonalDetailsCountry?.country ||
+                                    inputPersonalDetailsCountry?.state ||
+                                    inputPersonalDetailsCountry?.city) && (
+                                    <Stack
+                                      direction={{ md: "row", xs: "column" }}
+                                      spacing={2}
+                                      marginTop={2}
+                                      sx={{
+                                        alignItems: "flex-start",
+                                        width: { xs: "100%" },
+                                      }}
+                                    >
+                                      <FormControl fullWidth>
+                                        <CustomTypography fontSize="10px">
+                                          Country
+                                        </CustomTypography>
+                                        <TextField
+                                          autoComplete="given-name"
+                                          name="country"
+                                          fullWidth
+                                          id="about"
+                                          placeholder="Country"
+                                          onChange={(e) =>
+                                            setInputPersonalDetailsCountry(
+                                              (state) => ({
+                                                ...state,
+                                                country: e.target.value,
+                                              })
+                                            )
+                                          }
+                                          value={
+                                            inputPersonalDetailsCountry?.country
+                                          }
+                                          sx={{
+                                            backgroundColor: NEUTRAL,
+                                            width: { xs: "100%" },
+                                          }}
+                                        />
+                                      </FormControl>
+                                      <FormControl fullWidth>
+                                        <CustomTypography fontSize="10px">
+                                          State
+                                        </CustomTypography>
+                                        <TextField
+                                          autoComplete="given-name"
+                                          name="state"
+                                          fullWidth
+                                          id="about"
+                                          placeholder="State"
+                                          sx={{
+                                            backgroundColor: NEUTRAL,
+                                            width: { xs: "100%" },
+                                          }}
+                                          onChange={(e) =>
+                                            setInputPersonalDetailsCountry(
+                                              (state) => ({
+                                                ...state,
+                                                state: e.target.value,
+                                              })
+                                            )
+                                          }
+                                          value={
+                                            inputPersonalDetailsCountry?.state
+                                          }
+                                        />
+                                      </FormControl>
+                                      <FormControl fullWidth>
+                                        <CustomTypography fontSize="10px">
+                                          City
+                                        </CustomTypography>
+                                        <TextField
+                                          autoComplete="given-name"
+                                          name="city"
+                                          fullWidth
+                                          id="about"
+                                          placeholder="City"
+                                          sx={{
+                                            backgroundColor: NEUTRAL,
+                                            width: { xs: "100%" },
+                                          }}
+                                          onChange={(e) =>
+                                            setInputPersonalDetailsCountry(
+                                              (state) => ({
+                                                ...state,
+                                                city: e.target.value,
+                                              })
+                                            )
+                                          }
+                                          value={
+                                            inputPersonalDetailsCountry?.city
+                                          }
+                                        />
+                                      </FormControl>
+                                    </Stack>
+                                  )}
+                                </Stack>
+                              </TabPanel>
+                              <TabPanel
+                                value={value}
+                                index={2}
+                                title={"Work Preference"}
+                                clearAction={() => setNames([])}
+                              >
+                                <Box
+                                  sx={{ width: { sm: "300px", xs: "100px" } }}
+                                >
+                                  <FormGroup>
+                                    {WORK_PREFERENCE.map((reference, index) => (
+                                      <StyledFormLabel
                                         key={index}
-                                        control={<BpRadio size="small" />}
-                                        label={com}
-                                        value={com}
-                                        name={com}
+                                        control={
+                                          <BpCheckbox
+                                            size="small"
+                                            name={reference}
+                                            onChange={(e) => handleName(e)}
+                                            checked={names.includes(reference)}
+                                          />
+                                        }
+                                        label={reference}
                                       />
                                     ))}
-                                  </RadioGroup>
-                                </FormControl>
-                              </FormGroup>
-                            </TabPanel>
-                            <TabPanel
-                              value={value}
-                              index={1}
-                              title={"Location"}
-                              clearAction={() => clearAddress()}
-                            >
-                              <Stack sx={{ mt: "10px" }}>
-                                <GooglePlacesAutocomplete
-                                  style={{ width: "100%", marginTop: "10px" }}
-                                  apiKey="AIzaSyCLT3fP1-59v2VUVoifXXJX-MQ0HA55Jp4"
-                                  selectProps={{
-                                    isClearable: true,
-                                    placeholder: "Enter Location",
-                                    value: address,
-                                    onChange: (val) => {
-                                      setAddress(val);
-                                      handleSelect(val);
-                                    },
-                                    onSelect: { handleSelect },
-                                    styles: {
-                                      input: (provided) => ({
-                                        ...provided,
-                                        height: "2.8em",
-                                        paddingTop: "10px",
-                                      }),
-                                      option: (provided) => ({
-                                        ...provided,
-                                        height: "2.8em",
-                                      }),
-                                      singleValue: (provided) => ({
-                                        ...provided,
-                                        height: "2.8em",
-                                        paddingTop: "10px",
-                                      }),
-                                    },
-                                  }}
-                                />
-                                {(inputPersonalDetailsCountry?.country ||
-                                  inputPersonalDetailsCountry?.state ||
-                                  inputPersonalDetailsCountry?.city) && (
-                                  <Stack
-                                    direction={{ md: "row", xs: "column" }}
-                                    spacing={2}
-                                    marginTop={2}
-                                    sx={{
-                                      alignItems: "flex-start",
-                                      width: { xs: "100%" },
-                                    }}
-                                  >
-                                    <FormControl fullWidth>
-                                      <CustomTypography fontSize="10px">
-                                        Country
-                                      </CustomTypography>
-                                      <TextField
-                                        autoComplete="given-name"
-                                        name="country"
-                                        fullWidth
-                                        id="about"
-                                        placeholder="Country"
-                                        onChange={(e) =>
-                                          setInputPersonalDetailsCountry(
-                                            (state) => ({
-                                              ...state,
-                                              country: e.target.value,
-                                            })
-                                          )
-                                        }
-                                        value={
-                                          inputPersonalDetailsCountry?.country
-                                        }
-                                        sx={{
-                                          backgroundColor: NEUTRAL,
-                                          width: { xs: "100%" },
-                                        }}
-                                      />
-                                    </FormControl>
-                                    <FormControl fullWidth>
-                                      <CustomTypography fontSize="10px">
-                                        State
-                                      </CustomTypography>
-                                      <TextField
-                                        autoComplete="given-name"
-                                        name="state"
-                                        fullWidth
-                                        id="about"
-                                        placeholder="State"
-                                        sx={{
-                                          backgroundColor: NEUTRAL,
-                                          width: { xs: "100%" },
-                                        }}
-                                        onChange={(e) =>
-                                          setInputPersonalDetailsCountry(
-                                            (state) => ({
-                                              ...state,
-                                              state: e.target.value,
-                                            })
-                                          )
-                                        }
-                                        value={
-                                          inputPersonalDetailsCountry?.state
-                                        }
-                                      />
-                                    </FormControl>
-                                    <FormControl fullWidth>
-                                      <CustomTypography fontSize="10px">
-                                        City
-                                      </CustomTypography>
-                                      <TextField
-                                        autoComplete="given-name"
-                                        name="city"
-                                        fullWidth
-                                        id="about"
-                                        placeholder="City"
-                                        sx={{
-                                          backgroundColor: NEUTRAL,
-                                          width: { xs: "100%" },
-                                        }}
-                                        onChange={(e) =>
-                                          setInputPersonalDetailsCountry(
-                                            (state) => ({
-                                              ...state,
-                                              city: e.target.value,
-                                            })
-                                          )
-                                        }
-                                        value={
-                                          inputPersonalDetailsCountry?.city
-                                        }
-                                      />
-                                    </FormControl>
-                                  </Stack>
-                                )}
-                              </Stack>
-                            </TabPanel>
-                            <TabPanel
-                              value={value}
-                              index={2}
-                              title={"Work Preference"}
-                              clearAction={() => setNames([])}
-                            >
-                              <Box sx={{ width: { sm: "300px", xs: "100px" } }}>
-                                <FormGroup>
-                                  {WORK_PREFERENCE.map((reference, index) => (
-                                    <StyledFormLabel
-                                      key={index}
-                                      control={
-                                        <BpCheckbox
-                                          size="small"
-                                          name={reference}
-                                          onChange={(e) => handleName(e)}
-                                          checked={names.includes(reference)}
-                                        />
-                                      }
-                                      label={reference}
-                                    />
-                                  ))}
-                                </FormGroup>
-                              </Box>
-                            </TabPanel>
-                            <TabPanel value={value} index={3} title={"Salary"}>
-                              {/* Currency of your Salary */}
-
-                              <FormControl variant="outlined" fullWidth>
-                                <InputLabel id="demo-simple-select-label">
-                                  Salary Currency
-                                </InputLabel>
-                                <Select
-                                  defaultValue=""
-                                  id="grouped-select"
-                                  // label="Currency of your Salary"
-                                  onChange={selectCurrency}
-                                  sx={{
-                                    backgroundColor: NEUTRAL,
-                                    width: "100%",
-                                  }}
-                                  value={currency}
-                                >
-                                  <ListSubheader>Common</ListSubheader>
-                                  {COMMON_CURRENCIES.map((o, id) => (
-                                    <MenuItem value={o.country} key={id}>
-                                      {o.country} {o.symbol}
-                                    </MenuItem>
-                                  ))}
-                                  <ListSubheader>Other</ListSubheader>
-                                  {OTHER_CURRENCIES.map((o, id) => (
-                                    <MenuItem value={o.country} key={id}>
-                                      {o.country} {o.symbol}
-                                    </MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-
-                              <Stack
-                                direction={"row"}
-                                sx={{ alignItems: "center", mt: "10px" }}
+                                  </FormGroup>
+                                </Box>
+                              </TabPanel>
+                              <TabPanel
+                                value={value}
+                                index={3}
+                                title={"Salary"}
+                                clearAction={() => {
+                                  setCurrency("");
+                                  setSalary({
+                                    salary: "",
+                                    denomination: "",
+                                  });
+                                }}
                               >
-                                <TextField
-                                  id="outlined-number"
-                                  label="Expected Annual Salary"
-                                  type="number"
-                                  InputLabelProps={{
-                                    shrink: true,
-                                  }}
-                                  value={salary.salary}
-                                  onChange={(e) =>
-                                    setSalary((state) => ({
-                                      ...state,
-                                      salary: e.target.value,
-                                    }))
-                                  }
-                                  sx={{
-                                    width: { xs: "50%", md: "80%" },
-                                    mr: "5px",
-                                  }}
-                                />
+                                {/* Currency of your Salary */}
 
-                                <FormControl
-                                  sx={{ width: { xs: "50%", md: "20%" } }}
-                                >
-                                  <InputLabel id="demo-simple-select-required-label">
-                                    Denomination
+                                <FormControl variant="outlined" fullWidth>
+                                  <InputLabel id="demo-simple-select-label">
+                                    Salary Currency
                                   </InputLabel>
                                   <Select
-                                    labelId="demo-simple-select-required-label"
-                                    id="demo-simple-select-required"
-                                    value={salary.denomination}
-                                    label="Denomination *"
-                                    onChange={(e, a) => {
-                                      setSalary((state) => ({
-                                        ...state,
-                                        denomination: a.props.value,
-                                      }));
+                                    defaultValue=""
+                                    id="grouped-select"
+                                    // label="Currency of your Salary"
+                                    onChange={selectCurrency}
+                                    sx={{
+                                      backgroundColor: NEUTRAL,
+                                      width: "100%",
                                     }}
+                                    value={currency}
                                   >
-                                    {DENOMINATIONS.map((data, ind) => (
-                                      <MenuItem key={ind} value={data}>
-                                        {data}
+                                    <ListSubheader>Common</ListSubheader>
+                                    {COMMON_CURRENCIES.map((o, id) => (
+                                      <MenuItem value={o.country} key={id}>
+                                        {o.country} {o.symbol}
+                                      </MenuItem>
+                                    ))}
+                                    <ListSubheader>Other</ListSubheader>
+                                    {OTHER_CURRENCIES.map((o, id) => (
+                                      <MenuItem value={o.country} key={id}>
+                                        {o.country} {o.symbol}
                                       </MenuItem>
                                     ))}
                                   </Select>
                                 </FormControl>
-                              </Stack>
-                            </TabPanel>
-                            <TabPanel value={value} index={4} title={"Skills"}>
-                              <Stack
-                                direction={"row"}
-                                sx={{ gap: "10px", mt: "10px" }}
-                              >
-                                <Autocomplete
-                                  freeSolo
-                                  id="free-solo-2-demo"
-                                  disableClearable={false}
-                                  name="skills"
-                                  sx={{
-                                    bgcolor: "white",
-                                    width: { xs: "95%", md: "80%" },
-                                  }}
-                                  value={role.skill}
-                                  onBlurCapture={(e) =>
-                                    setRole({
-                                      skill: e.target.value,
-                                      id: uuidv4(),
-                                    })
-                                  }
-                                  open={open}
-                                  onOpen={() => {
-                                    setOpen(true);
-                                  }}
-                                  onClose={() => {
-                                    setOpen(false);
-                                  }}
-                                  options={arrskills.map((option) => option)}
-                                  loading={loading}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      label="Mandatory Skills"
-                                      onChange={(e) => {
-                                        inputChanged(e);
-                                      }}
-                                      name="jobRole"
-                                      InputProps={{
-                                        ...params.InputProps,
-                                        type: "search",
-                                        endAdornment: (
-                                          <React.Fragment>
-                                            {loading && load ? (
-                                              <CircularProgress
-                                                color="inherit"
-                                                size={20}
-                                              />
-                                            ) : null}
-                                          </React.Fragment>
-                                        ),
-                                      }}
-                                    />
-                                  )}
-                                />
-                                <Button
-                                  sx={{
-                                    width: "20%",
-                                    bgcolor: "white !important",
-                                    color: "#01313F",
-                                    textTransform: "capitalize",
-                                    display: { xs: "none", md: "block" },
-                                    whiteSpace: "nowrap",
-                                  }}
-                                  //sx={styles.roleblue2}
-                                  onClick={() => {
-                                    addSkill();
-                                  }}
-                                  variant="outlined"
+
+                                <Stack
+                                  direction={"row"}
+                                  sx={{ alignItems: "center", mt: "10px" }}
                                 >
-                                  Add
-                                </Button>
-                              </Stack>
-
-                              <Stack
-                                direction={"row"}
-                                sx={{ mt: "10px", gap: "10px" }}
-                              >
-                                {tempSkills.map((s, index) => (
-                                  <Chip
-                                    key={index}
-                                    label={s.skill}
-                                    variant="outlined"
-                                    // onClick={handleClick}
-                                    onDelete={() => handleDelete(s.skill)}
+                                  <TextField
+                                    id="outlined-number"
+                                    label="Expected Annual Salary"
+                                    type="number"
+                                    InputLabelProps={{
+                                      shrink: true,
+                                    }}
+                                    value={salary.salary}
+                                    onChange={(e) =>
+                                      setSalary((state) => ({
+                                        ...state,
+                                        salary: e.target.value,
+                                      }))
+                                    }
+                                    sx={{
+                                      width: { xs: "50%", md: "80%" },
+                                      mr: "5px",
+                                    }}
                                   />
-                                ))}
-                              </Stack>
-                            </TabPanel>
-                            <TabPanel
-                              value={value}
-                              index={5}
-                              title={"Notice Period"}
-                              clearAction={() => clearAddress()}
-                            >
-                              <FormGroup>
-                                <FormControl>
-                                  <RadioGroup
-                                    onChange={handleNotice}
-                                    value={selectedNotice}
+
+                                  <FormControl
+                                    sx={{ width: { xs: "50%", md: "20%" } }}
                                   >
-                                    {NoticePeriod.map((com, index) => (
-                                      <FormControlLabel
-                                        key={index}
-                                        control={<BpRadio size="small" />}
-                                        label={com}
-                                        value={com}
-                                        name={com}
+                                    <InputLabel id="demo-simple-select-required-label">
+                                      Denomination
+                                    </InputLabel>
+                                    <Select
+                                      labelId="demo-simple-select-required-label"
+                                      id="demo-simple-select-required"
+                                      value={salary.denomination}
+                                      label="Denomination *"
+                                      onChange={(e, a) => {
+                                        setSalary((state) => ({
+                                          ...state,
+                                          denomination: a.props.value,
+                                        }));
+                                      }}
+                                    >
+                                      {DENOMINATIONS.map((data, ind) => (
+                                        <MenuItem key={ind} value={data}>
+                                          {data}
+                                        </MenuItem>
+                                      ))}
+                                    </Select>
+                                  </FormControl>
+                                </Stack>
+                              </TabPanel>
+                              <TabPanel
+                                value={value}
+                                index={4}
+                                title={"Skills"}
+                              >
+                                <Stack
+                                  direction={"row"}
+                                  sx={{ gap: "10px", mt: "10px" }}
+                                >
+                                  <Autocomplete
+                                    freeSolo
+                                    id="free-solo-2-demo"
+                                    disableClearable={false}
+                                    name="skills"
+                                    sx={{
+                                      bgcolor: "white",
+                                      width: { xs: "95%", md: "80%" },
+                                    }}
+                                    value={role.skill}
+                                    onBlurCapture={(e) =>
+                                      setRole({
+                                        skill: e.target.value,
+                                        id: uuidv4(),
+                                      })
+                                    }
+                                    open={open}
+                                    onOpen={() => {
+                                      setOpen(true);
+                                    }}
+                                    onClose={() => {
+                                      setOpen(false);
+                                    }}
+                                    options={arrskills.map((option) => option)}
+                                    loading={loading}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        label="Mandatory Skills"
+                                        onChange={(e) => {
+                                          inputChanged(e);
+                                        }}
+                                        name="jobRole"
+                                        InputProps={{
+                                          ...params.InputProps,
+                                          type: "search",
+                                          endAdornment: (
+                                            <React.Fragment>
+                                              {loading && load ? (
+                                                <CircularProgress
+                                                  color="inherit"
+                                                  size={20}
+                                                />
+                                              ) : null}
+                                            </React.Fragment>
+                                          ),
+                                        }}
                                       />
-                                    ))}
-                                  </RadioGroup>
-                                </FormControl>
-                              </FormGroup>
-                            </TabPanel>
+                                    )}
+                                  />
+                                  <Button
+                                    sx={{
+                                      width: "20%",
+                                      bgcolor: "white !important",
+                                      color: "#01313F",
+                                      textTransform: "capitalize",
+                                      display: { xs: "none", md: "block" },
+                                      whiteSpace: "nowrap",
+                                    }}
+                                    //sx={styles.roleblue2}
+                                    onClick={() => {
+                                      addSkill();
+                                    }}
+                                    variant="outlined"
+                                  >
+                                    Add
+                                  </Button>
+                                </Stack>
+
+                                <Stack
+                                  direction={"row"}
+                                  sx={{ mt: "10px", gap: "10px" }}
+                                >
+                                  {tempSkills.map((s, index) => (
+                                    <Chip
+                                      key={index}
+                                      label={s.skill}
+                                      variant="outlined"
+                                      // onClick={handleClick}
+                                      onDelete={() => handleDelete(s.skill)}
+                                    />
+                                  ))}
+                                </Stack>
+                              </TabPanel>
+                              <TabPanel
+                                value={value}
+                                index={5}
+                                title={"Notice Period"}
+                                clearAction={() => setSelectedNotice("")}
+                              >
+                                <FormGroup>
+                                  <FormControl>
+                                    <RadioGroup
+                                      onChange={handleNotice}
+                                      value={selectedNotice}
+                                    >
+                                      {NoticePeriod.map((com, index) => (
+                                        <FormControlLabel
+                                          key={index}
+                                          control={<BpRadio size="small" />}
+                                          label={com}
+                                          value={com}
+                                          name={com}
+                                        />
+                                      ))}
+                                    </RadioGroup>
+                                  </FormControl>
+                                </FormGroup>
+                              </TabPanel>
+                            </Grid>
                           </Grid>
-                        </Grid>
 
-                        <Stack direction="row" spacing={2}>
-                          <Button
-                            variant="outlined"
-                            onClick={() => setOpenFilter(!openFilter)}
-                            sx={{ width: "50% !important" }}
-                          >
-                            Close
-                          </Button>
+                          <Stack direction="row" spacing={2}>
+                            <Button
+                              variant="outlined"
+                              onClick={() => setOpenFilter(!openFilter)}
+                              sx={{ width: "50% !important" }}
+                            >
+                              Close
+                            </Button>
 
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                             handleFilter()
-                            }}
-                            sx={{
-                              backgroundColor: "#00339B !important",
-                              width: "50% !important",
-                            }}
-                          >
-                            Apply
-                          </Button>
-                        </Stack>
-                      </CardContent>
-                    </Card>
-                  ) : "")}
+                            <Button
+                              variant="contained"
+                              onClick={() => {
+                                handleFilter();
+                              }}
+                              sx={{
+                                backgroundColor: "#00339B !important",
+                                width: "50% !important",
+                              }}
+                            >
+                              Apply
+                            </Button>
+                          </Stack>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      ""
+                    ))}
 
-                  {candidatesType === "candiDB" ? "" : loadingSection ? (
+                  {candidatesType === "candiDB" ? (
+                    ""
+                  ) : loadingSection ? (
                     loadingCount.map((a, index) => (
                       <LoadingSearchCards key={index} />
                     ))
@@ -1518,26 +1597,30 @@ const handleFilter=()=>{
                       </div>
                     ))
                   )}
-                  {candidatesType === "candiDB" ? loadingCand ? (
-                    loadingCount.map((a, index) => (
-                      <LoadingSearchCards key={index} />
-                    ))
-                  ) : displayData.length === 0 ? (
-                    <Typography textAlign={"center"}>
-                      No Candidates Found
-                    </Typography>
+                  {candidatesType === "candiDB" ? (
+                    loadingCand ? (
+                      loadingCount.map((a, index) => (
+                        <LoadingSearchCards key={index} />
+                      ))
+                    ) : displayData.length === 0 ? (
+                      <Typography textAlign={"center"}>
+                        No Candidates Found
+                      </Typography>
+                    ) : (
+                      displayData.map((usr, index) => (
+                        <div id={usr?._id} key={index}>
+                          <CandiDBCard
+                            key={index}
+                            users={usr}
+                            candidatesType={candidatesType}
+                            order={index}
+                          />
+                        </div>
+                      ))
+                    )
                   ) : (
-                    displayData.map((usr, index) => (
-                      <div id={usr?._id} key={index}>
-                        <CandiDBCard
-                          key={index}
-                          users={usr}
-                          candidatesType={candidatesType}
-                          order={index}
-                        />
-                      </div>
-                    ))
-                  ) : ""}
+                    ""
+                  )}
                 </Stack>
               </Box>
 
