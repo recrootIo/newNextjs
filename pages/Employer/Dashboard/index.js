@@ -728,16 +728,7 @@ const EmpoyerDashboard = () => {
               </MenuItem>
               {premium === false ? (
                 ""
-              ) : isValuePresentInArray(requestJobs, jobid) === true ? (
-                <MenuItem
-                  onClick={() => {
-                    handleRequest("requested");
-                  }}
-                  sx={{ color: "green" }}
-                >
-                  Candidate Database
-                </MenuItem>
-              ) : (
+              ) : isValuePresentInArray(requestJobs, jobid) === true ? "": (
                 <MenuItem
                   onClick={() => {
                     handleRequest("addrequest");
