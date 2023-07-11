@@ -60,7 +60,7 @@ function RedirectUser() {
   const { id } = router.query;
   const getUser = () => {
     axios
-      .get(`https://api.arinnovate.io/getUser/${id}`)
+      .get(`https://preprod.recroot.au/getUser/${id}`)
       .then((resObject) => {
         localStorage.setItem("User", JSON.stringify(resObject.data));
         dispatch(setUserFromGoogle(resObject.data));
