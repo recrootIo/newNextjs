@@ -336,7 +336,7 @@ const JobsCard = ({ handleNavigate, ...lateJob }) => {
               variant="body2"
               color="text.secondary"
             >
-              {moment(lateJob.createdAt).fromNow()} days ago
+              {moment(lateJob.createdAt).fromNow()}
             </CustomTypography>
           </Box>
         </Box>
