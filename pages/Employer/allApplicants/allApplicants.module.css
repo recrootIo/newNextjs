@@ -91,3 +91,15 @@
     background-size: cover;
   }
 }
+
+.searchField {
+  background-color: white;
+  display: flex;
+  border-radius: 4px;
+  height: 56px;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 60%;
+  border: 1px solid rgba(3, 66, 117, 0.3);
+  padding: 4px;
+}

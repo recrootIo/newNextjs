@@ -23,7 +23,7 @@ import withAuth from "../Auths/VerifyEmail";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
-function Employer({ children }) {
+function Employer({ children, title }) {
   const [getUser, setUser] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
@@ -142,6 +142,8 @@ function Employer({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const displayText = title ? title : getUser?.firstName;
+
   return (
     <div>
       <Head>
@@ -208,7 +210,7 @@ function Employer({ children }) {
                   // sx={{ display: { xs: "flex", md: "none" } }}
                   // className="tourConfig"
                 >
-                  Hello {getUser?.firstName}
+                  {title ? displayText : ` Hello ${getUser?.firstName}`}
                 </CustomTypography>
               )}
             </Box>
@@ -243,7 +245,7 @@ function Employer({ children }) {
                     gutterBottom
                     className="tourConfig"
                   >
-                    Hello {getUser?.firstName}
+                    {title ? displayText : ` Hello ${getUser?.firstName}`}
                   </CustomTypography>
                 )}
                 <Button

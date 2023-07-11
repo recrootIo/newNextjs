@@ -53,16 +53,16 @@ const initialState = {
   matchingData: {
     strongData: [],
     strongCount: [],
-    goodData: [],
-    goodCount: [],
+    allApplicants: [],
+    allApplicantsCount: 0,
     minData: [],
     minCount: [],
   },
   matchingAppl: {
-    strongData: [],
-    strongCount: [],
-    goodData: [],
-    goodCount: [],
+    recommendedApplicants: [],
+    recommendedApplicantsCount: 0,
+    allApplicants: [],
+    allApplicantsCount: 0,
     minData: [],
     minCount: [],
   },
@@ -73,6 +73,24 @@ const initialState = {
   shortlistCount: 0,
   totalCount: 0,
   selectedRoute: "Dashboard",
+  allApplicantsFilters: {
+    workPrefence: [],
+    skillSet: [],
+    location: {
+      city: "",
+      country: "",
+      state: "",
+    },
+    notice: "",
+    salaryCurrency: "",
+    denomination: "",
+    salary: "",
+    exper: "",
+    status: "",
+    name: "",
+  },
+  loadingAllApplicants: false,
+  loadingRecommended: false,
 };
 
 export const cmpLogo = createAsyncThunk("logo", async (data11) => {
@@ -254,13 +272,7 @@ export const getMaching = createAsyncThunk(
     return res.data;
   }
 );
-export const getMachingAppl = createAsyncThunk(
-  "matchind/aplCand",
-  async (value) => {
-    const res = await companyservice.getMatchingApplicants(value);
-    return res.data;
-  }
-);
+
 export const candidatesForrequest = createAsyncThunk(
   "canidates/requstCandidates",
   async (value) => {
@@ -306,6 +318,51 @@ export const selectRoute = createAsyncThunk(
 export const updateTour = createAsyncThunk("tours/set", async (value) => {
   return value;
 });
+
+export const ApplicantsFilters = createAsyncThunk(
+  "applicants/set",
+  async (value) => {
+    return value;
+  }
+);
+
+export const getMachingAppl = createAsyncThunk(
+  "matchind/aplCand",
+  async (value) => {
+    const res = await companyservice.getMatchingApplicants(value);
+    return res.data;
+  }
+);
+
+// getMatchApplicantsFilter
+export const getMatchApplicantsFilter = createAsyncThunk(
+  "matching/filters",
+  async (value) => {
+    const res = await companyservice.getMatchApplicantsFilter(value);
+    return res.data;
+  }
+);
+
+// getMatchApplicantsFilter
+export const getRecommended = createAsyncThunk(
+  "matching/recommended",
+  async (value) => {
+    const res = await companyservice.getMatchingApplicants(value);
+    return res.data;
+  }
+);
+
+export const updateStatus = createAsyncThunk("setStatus/jobs", async (data) => {
+  console.log(data);
+  return data;
+});
+
+export const updateApplicantFilters = createAsyncThunk(
+  "matching/filtersUpdated",
+  async (data) => {
+    return data;
+  }
+);
 
 const cmpSlice = createSlice({
   name: "company",
@@ -392,9 +449,6 @@ const cmpSlice = createSlice({
     },
     [getMachingAppl.pending]: (state, action) => {
       state.loading = true;
-      state.matchingAppl.strongData = [];
-      state.matchingAppl.goodData = [];
-      state.matchingAppl.minData = [];
     },
     [getMaching.fulfilled]: (state, action) => {
       state.loading = false;
@@ -403,26 +457,25 @@ const cmpSlice = createSlice({
         action.payload.candidates[0]?.strongMatches;
       state.matchingData.strongCount =
         action.payload.candidates[0]?.strongMatchesCount;
-      state.matchingData.goodData = action.payload.candidates[0]?.goodMatches;
-      state.matchingData.goodCount =
+
+      //all applicants
+      state.matchingData.allApplicants =
+        action.payload.candidates[0]?.goodMatches;
+      state.matchingData.allApplicantsCount =
         action.payload.candidates[0]?.goodMatchesCount;
+
       state.matchingData.minData = action.payload.candidates[0]?.minimumMatches;
       state.matchingData.minCount =
         action.payload.candidates[0]?.minimumMatchesCount;
     },
     [getMachingAppl.fulfilled]: (state, action) => {
       state.loading = false;
-      state.navbar = true;
-      state.matchingAppl.strongData =
-        action.payload.candidates[0]?.strongMatches;
-      state.matchingAppl.strongCount =
-        action.payload.candidates[0]?.strongMatchesCount;
-      state.matchingAppl.goodData = action.payload.candidates[0]?.goodMatches;
-      state.matchingAppl.goodCount =
-        action.payload.candidates[0]?.goodMatchesCount;
-      state.matchingAppl.minData = action.payload.candidates[0]?.minimumMatches;
-      state.matchingAppl.minCount =
-        action.payload.candidates[0]?.minimumMatchesCount;
+
+      //all applicants
+      state.matchingAppl.allApplicants =
+        action.payload.candidates[0]?.goodMatches;
+      state.matchingAppl.allApplicantsCount =
+        action.payload.candidates[0]?.goodMatchesCount[0]?.count;
     },
     [getCompanyDetails.fulfilled]: (state, action) => {
       state.companyDetl = action.payload;
@@ -483,6 +536,45 @@ const cmpSlice = createSlice({
     },
     [updateTour.fulfilled]: (state, action) => {
       state.companyDetl.tours[action.payload] = false;
+    },
+    [ApplicantsFilters.fulfilled]: (state, action) => {
+      state.allApplicantsFilters = action.payload;
+    },
+    [updateApplicantFilters.fulfilled]: (state, action) => {
+      const { field, value } = action.payload;
+
+      state.allApplicantsFilters = {
+        ...state.allApplicantsFilters,
+        [field]: value,
+      };
+    },
+    [getMatchApplicantsFilter.fulfilled]: (state, action) => {
+      state.loadingAllApplicants = false;
+
+      //all applicants
+      state.matchingAppl.allApplicants = action.payload?.candidates;
+      state.matchingAppl.allApplicantsCount = action.payload?.totalCounts;
+    },
+    [getMatchApplicantsFilter.pending]: (state, action) => {
+      state.loadingAllApplicants = true;
+    },
+    [getRecommended.fulfilled]: (state, action) => {
+      state.loadingRecommended = false;
+
+      state.matchingAppl.recommendedApplicants = action.payload?.candidates;
+      state.matchingAppl.recommendedApplicantsCount =
+        action.payload?.totalCounts;
+    },
+    [getRecommended.pending]: (state, action) => {
+      state.loadingRecommended = true;
+    },
+    [updateStatus.fulfilled]: (state, action) => {
+      const { status, candidatesType, order } = action.payload;
+      if (candidatesType === "allApplicants") {
+        state.matchingAppl.allApplicants[order].status = status;
+      } else {
+        state.matchingAppl.recommendedApplicants[order].status = status;
+      }
     },
   },
 });

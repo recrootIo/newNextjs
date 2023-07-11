@@ -22,7 +22,7 @@ const initialState = {
   rejectedEmail: null,
   selectedEmail: null,
   applyPath: "",
-  loading:false
+  loading: false,
 };
 
 export const applyJobsdet = createAsyncThunk(
@@ -240,12 +240,7 @@ const applySlice = createSlice({
       state.details[newDetail].notes = notes;
       state.selectedId = _id;
     },
-    [updateStatus.fulfilled]: (state, action) => {
-      const { status, _id } = action.payload;
-      const newDetail = state.details.findIndex((det) => det._id === _id);
-      state.details[newDetail].status = status;
-      state.selectedId = _id;
-    },
+
     [updatCountes.fulfilled]: (state, action) => {
       const { totalCount, count, shortCount, rejectcount, unview } =
         action.payload;

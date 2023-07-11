@@ -218,13 +218,13 @@ export default function EmployerSidebar() {
             <Image src="/jobs.png" alt="" width="40" height="40" />
           </HoverListItemButton>
         </Tooltip>
-
+        {/* 
         <Tooltip
           title="All Applicants"
           placement="right"
           className="allApplicants"
         >
-          <Link href={"/Employer/allApplicants"}>
+          <Link href={"/Employer/AllApplicants?SeeAll=all"}>
             <HoverListItemButton
               sx={{
                 background:
@@ -237,7 +237,7 @@ export default function EmployerSidebar() {
               <Image src="/team.png" alt="" width="40" height="40" />
             </HoverListItemButton>
           </Link>
-        </Tooltip>
+        </Tooltip> */}
 
         <Tooltip
           title="Scheduled Interviews"
