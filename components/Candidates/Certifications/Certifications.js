@@ -559,7 +559,7 @@ const Certifications = () => {
                             <IconButton
                               onClick={async () => {
                                 const res = await fetch(
-                                  `https://preprod.recroot.au/api/downloadCertificate?certificate=${cet.certificatepath.replace(
+                                  `https://api.arinnovate.io/api/downloadCertificate?certificate=${cet.certificatepath.replace(
                                     /\\/g,
                                     "/"
                                   )}`

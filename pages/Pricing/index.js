@@ -194,7 +194,7 @@ function PricingNew() {
   const handleSubmitContact = (e) => {
     e.preventDefault();
     axios
-      .post("https://preprod.recroot.au/api/addContactus", contactus)
+      .post("https://api.arinnovate.io/api/addContactus", contactus)
       .then(function (response) {
         dispatch(
           openAlert({

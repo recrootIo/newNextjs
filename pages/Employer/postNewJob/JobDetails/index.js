@@ -97,7 +97,7 @@ const JobDetails = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("https://preprod.recroot.au/api/getTypesJobs", {
+      .get("https://api.arinnovate.io/api/getTypesJobs", {
         headers: { "x-access-token": `${user?.token}` },
       })
       .then((response) => setType(response.data));
