@@ -432,9 +432,8 @@ const EmpoyerDashboard = () => {
     //   setTimeout(() => {
     push(
       `/Employer/AllApplicants?jid=${params?.id}&title=${params.row?.title}&page=1`,
-      {
-        state: true,
-      }
+      undefined,
+      { shallow: true }
     );
     //   }, 500)
     // );
@@ -728,7 +727,9 @@ const EmpoyerDashboard = () => {
               </MenuItem>
               {premium === false ? (
                 ""
-              ) : isValuePresentInArray(requestJobs, jobid) === true ? "": (
+              ) : isValuePresentInArray(requestJobs, jobid) === true ? (
+                ""
+              ) : (
                 <MenuItem
                   onClick={() => {
                     handleRequest("addrequest");
