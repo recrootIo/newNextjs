@@ -464,7 +464,12 @@ const AllApplicantsCard = ({
         />
         <CardContent sx={{ p: 0, pb: "0 !important" }}>
           <Box sx={{ p: "0 20px", mb: "10px" }}>
-            <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
+            <Stack
+              sx={{
+                justifyContent: "space-between",
+                flexDirection: { md: "row", sm: "column", xs: "column" },
+              }}
+            >
               <Stack
                 direction={"row"}
                 sx={{ alignItems: "center", gap: "10px" }}
@@ -563,7 +568,7 @@ const AllApplicantsCard = ({
           </Stack>
 
           <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
-            <Grid md={4}>
+            <Grid md={4} xs={12} sm={12}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
                 <CustomTypography
@@ -578,7 +583,7 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Box>
             </Grid>
-            <Grid md={4}>
+            <Grid md={4} xs={12} sm={12}>
               <Box sx={{ display: "flex", alignItems: "center", gap: "2px" }}>
                 <AssignmentIndIcon sx={{ color: "#1097CD" }} />
                 <Stack direction={"row"} sx={{ gap: "5px" }}>
@@ -597,7 +602,7 @@ const AllApplicantsCard = ({
                 </Stack>
               </Box>
             </Grid>
-            <Grid md={4}>
+            <Grid md={4} xs={12} sm={12}>
               {address && (
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <AddLocationIcon sx={{ color: "#1097CD" }} />
@@ -614,7 +619,7 @@ const AllApplicantsCard = ({
                 </Box>
               )}
             </Grid>
-            <Grid md={4}>
+            <Grid md={4} xs={12} sm={12}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <HourglassTopIcon sx={{ color: "#1097CD" }} />
                 <CustomTypography
@@ -630,7 +635,7 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Box>
             </Grid>
-            <Grid md={4}>
+            <Grid md={4} xs={12} sm={12}>
               <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
                 <CurrencyExchangeIcon sx={{ color: "#1097CD" }} />{" "}
                 <CustomTypography
@@ -672,13 +677,25 @@ const AllApplicantsCard = ({
           </CustomTypography>
 
           <Stack
-            direction={"row"}
-            sx={{ backgroundColor: "#D4F0FC", width: "100%", p: "10px 20px" }}
+            sx={{
+              backgroundColor: "#D4F0FC",
+              width: "100%",
+              p: "10px 20px",
+              flexDirection: { md: "row", sm: "column", xs: "column" },
+            }}
           >
-            <Box sx={{ width: "33%" }}>
+            <Box sx={{ width: { md: "33%", sm: "100%", xs: "100%" } }}>
               <Stack
                 direction={"row"}
-                sx={{ gap: "10px", alignItems: "center" }}
+                sx={{
+                  gap: "10px",
+                  alignItems: "center",
+                  justifyContent: {
+                    md: "flex-start",
+                    sm: "center",
+                    xs: "center",
+                  },
+                }}
               >
                 <CustomTypography>Matching Criteria :</CustomTypography>
                 <CustomTypography sx={{ color: "#1565C0" }}>
@@ -741,7 +758,7 @@ const AllApplicantsCard = ({
             </Box>
             <Box
               sx={{
-                width: "33%",
+                width: { md: "33%", sm: "100%", xs: "100%" },
                 // borderLeft: "1px solid gray",
                 // borderRight: "1px solid gray",
               }}
@@ -758,10 +775,17 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Stack>
             </Box>
-            <Box sx={{ width: "33%" }}>
+            <Box sx={{ width: { md: "33%", sm: "100%", xs: "100%" } }}>
               <Stack
                 direction={"row"}
-                sx={{ gap: "10px", justifyContent: "flex-end" }}
+                sx={{
+                  gap: "10px",
+                  justifyContent: {
+                    md: "flex-end",
+                    sm: "center",
+                    xs: "center",
+                  },
+                }}
               >
                 <CustomTypography sx={{ fontSize: "15px" }}>
                   Screening Questions :

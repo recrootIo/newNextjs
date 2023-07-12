@@ -784,7 +784,12 @@ const AllApplicants = () => {
         >
           <CardContent>
             <Box>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
+              <Stack
+                sx={{
+                  gap: "10px",
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
+                }}
+              >
                 <Card
                   sx={{
                     width: "100%",
@@ -874,6 +879,7 @@ const AllApplicants = () => {
                     </CustomTypography>
                   </CardContent>
                 </Card>
+
                 <Card
                   sx={{
                     width: "100%",
@@ -926,8 +932,8 @@ const AllApplicants = () => {
               />
 
               <Stack
-                direction={"row"}
                 sx={{
+                  flexDirection: { md: "row", sm: "column", xs: "column" },
                   justifyContent:
                     candidatesType === "candiDB" ? "center" : "space-between",
                   alignItems: "flex-end",
