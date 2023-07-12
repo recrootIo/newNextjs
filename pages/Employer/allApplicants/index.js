@@ -307,9 +307,10 @@ const AllApplicants = () => {
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
-
-      dispatch(candidatesIdreq(reqJob?.Candidates));
-      dispatch(candidatesForrequest(values));
+      if (reqJob?.stage === "completed") {
+        dispatch(candidatesIdreq(reqJob?.Candidates));
+        dispatch(candidatesForrequest(values));
+      }
       return;
     } else {
       if (page > 1) {
@@ -571,8 +572,10 @@ const AllApplicants = () => {
       undefined,
       { shallow: true } // This option prevents the page from rerendering
     );
-    dispatch(candidatesIdreq(reqJob?.Candidates));
-    dispatch(candidatesForrequest(value));
+    if (reqJob?.stage === "completed") {
+      dispatch(candidatesIdreq(reqJob?.Candidates));
+      dispatch(candidatesForrequest(value));
+    }
   };
 
   const getCandidateSalary = (candidate) => {
@@ -621,8 +624,10 @@ const AllApplicants = () => {
         page: 1,
         filter: allApplicantsFilters,
       };
-      dispatch(candidatesIdreq(reqJob?.Candidates));
-      dispatch(candidatesForrequest(value));
+      if (reqJob?.stage === "completed") {
+        dispatch(candidatesIdreq(reqJob?.Candidates));
+        dispatch(candidatesForrequest(value));
+      }
     }
     dispatch(getRecommended({ id: jid, page: 1 }));
     dispatch(
@@ -731,8 +736,10 @@ const AllApplicants = () => {
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
-      dispatch(candidatesIdreq(reqJob?.Candidates));
-      dispatch(candidatesForrequest(value));
+      if (reqJob?.stage === "completed") {
+        dispatch(candidatesIdreq(reqJob?.Candidates));
+        dispatch(candidatesForrequest(value));
+      }
       return;
     }
 
