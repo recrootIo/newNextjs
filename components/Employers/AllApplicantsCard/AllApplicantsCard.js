@@ -115,7 +115,7 @@ const AllApplicantsCard = ({
 
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `http://localhost:3000/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
 
@@ -249,7 +249,7 @@ const AllApplicantsCard = ({
   const handleReject = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        `http://localhost:3000/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -265,7 +265,7 @@ const AllApplicantsCard = ({
   const handleShort = (id) => {
     axios
       .put(
-        `https://api.arinnovate.io/api/updateStatus/${id}`,
+        `http://localhost:3000/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -415,6 +415,8 @@ const AllApplicantsCard = ({
       text = "State";
     }
 
+    if (item.item === 5 && desiredSkills.length < 1) return "";
+
     return (
       <Grid container spacing={1} sx={{ padding: "0 10px" }}>
         <Grid item md={6}>
@@ -422,7 +424,7 @@ const AllApplicantsCard = ({
             {text}
           </CustomTypography>
         </Grid>
-
+        {}
         <Grid item md={6}>
           {item.match ? (
             <CheckIcon color="success" />
@@ -472,7 +474,7 @@ const AllApplicantsCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+    `http://localhost:3000/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
@@ -481,14 +483,14 @@ const AllApplicantsCard = ({
     ? 0
     : countElementInArrays(
         users?._id,
-        matchingDetails.countryMatches,
-        matchingDetails.experMatches,
-        matchingDetails.skillMatches,
-        matchingDetails.typeMatches,
-        matchingDetails.cityMatches,
-        matchingDetails.desiredskillMatches,
-        matchingDetails.noticeMatches,
-        matchingDetails.statesMatches
+        matchingDetails?.countryMatches,
+        matchingDetails?.experMatches,
+        matchingDetails?.skillMatches,
+        matchingDetails?.typeMatches,
+        matchingDetails?.cityMatches,
+        matchingDetails?.desiredskillMatches,
+        matchingDetails?.noticeMatches,
+        matchingDetails?.statesMatches
       );
 
   const { matchingElements, displaySkills } = getCalculatedSkills();
