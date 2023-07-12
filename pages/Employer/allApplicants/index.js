@@ -178,7 +178,7 @@ const AllApplicants = () => {
   );
   const loadingCand = useSelector((state) => state.company.loading);
   const reqJob = useSelector((data) => data.company.taskbyjob);
-
+  const data = useSelector((data) => data.company.search);
   const newCompanyservice = new companyservice();
 
   var myHeaders = new Headers();
@@ -312,26 +312,25 @@ const AllApplicants = () => {
       dispatch(candidatesForrequest(values));
       return;
     } else {
-      if (page > 1) {
-        const { ...otherParams } = router.query;
-        const updatedQueryParams = {
-          ...otherParams,
-          page: value,
-        };
+      const { ...otherParams } = router.query;
+      const updatedQueryParams = {
+        ...otherParams,
+        page: value,
+      };
 
-        router.push(
-          {
-            pathname: router.pathname,
-            query: updatedQueryParams,
-          },
-          undefined,
-          { shallow: true } // This option prevents the page from rerendering
-        );
-      } else {
-        addAllToFilter(status);
-        const data = { status, name };
-        dispatch(getRecommended({ id: jid, page, data }));
-      }
+      router.push(
+        {
+          pathname: router.pathname,
+          query: updatedQueryParams,
+        },
+        undefined,
+        { shallow: true } // This option prevents the page from rerendering
+      );
+      // } else {
+      //   addAllToFilter(status);
+      //   const data = { status, name };
+      //   dispatch(getRecommended({ id: jid, page, data }));
+      // }
     }
 
     scrollToTop();
@@ -532,6 +531,7 @@ const AllApplicants = () => {
       })
     );
   };
+
   const addAllToFilterCanddb = (newStatus = "", customPage = null) => {
     const allApplicantsFilters = {
       workPrefence: names,
@@ -667,11 +667,11 @@ const AllApplicants = () => {
     }
     if (field === "notice") {
       newFilters.notice = "";
-      setSelectedNotice("")
+      setSelectedNotice("");
     }
     if (field === "exper") {
       newFilters.exper = "";
-      setSelectedExperience("")
+      setSelectedExperience("");
     }
 
     if (field === "salary") {
@@ -741,7 +741,6 @@ const AllApplicants = () => {
     // addAllToFilter(status);
   };
 
-  const data = useSelector((data) => data.company.search);
   const changeApplicantType = (type) => {
     handleChange(status, 1);
     setCandidatesType(type);
