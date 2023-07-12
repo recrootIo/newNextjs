@@ -317,9 +317,12 @@ const AllApplicants = () => {
       return;
     } else {
       const { ...otherParams } = router.query;
+
       const updatedQueryParams = {
         ...otherParams,
         page: value,
+        jid,
+        title,
       };
 
       router.push(
@@ -776,6 +779,7 @@ const AllApplicants = () => {
       : candidatesType === "candiDB"
       ? data?.candidates
       : recommendedApplicants;
+
   const handleFilter = () => {
     if (candidatesType === "candiDB") {
       addAllToFilterCanddb();
@@ -785,6 +789,7 @@ const AllApplicants = () => {
       setOpenFilter(!openFilter);
     }
   };
+
   return (
     <>
       <Header title={"Applicants"} />
