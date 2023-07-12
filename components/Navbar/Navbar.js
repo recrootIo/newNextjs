@@ -90,9 +90,9 @@ const Navbar = () => {
   const photoUrl =
     userType === "Candidate"
       ? photoss?.photo &&
-        `https://api.arinnovate.io/api/openProfpic?photo=${photoss.photo}`
+        `http://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}`
       : company?.companyLogo?.logo &&
-        `https://api.arinnovate.io/api/openProfpic?photo=${company?.companyLogo.logo}`;
+        `http://preprod.recroot.au/api/openProfpic?photo=${company?.companyLogo.logo}`;
   return (
     <nav>
       <div

@@ -38,7 +38,7 @@ function SuccessJobPay() {
   useEffect(() => {
     if (array.length > 0) {
       axios
-        .post(`${"https://api.arinnovate.io/api/"}updateJobPayment`, value, {
+        .post(`${"http://preprod.recroot.au/api/"}updateJobPayment`, value, {
           headers: { "x-access-token": `${token}` },
         })
         .then((res) => {
@@ -51,7 +51,7 @@ function SuccessJobPay() {
       const user = JSON.parse(localStorage.getItem("User"));
       axios
         .post(
-          `${"https://api.arinnovate.io/api/"}updateJobPaymentNew`,
+          `${"http://preprod.recroot.au/api/"}updateJobPaymentNew`,
           {
             clientSecret: payment_intent_client_secret,
             job: JSON.parse(localStorage.getItem("jobDetail")),

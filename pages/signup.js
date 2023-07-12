@@ -238,9 +238,9 @@ function Signup() {
 
   const handleClick = (val) => {
     if (val === "google") {
-      window.location.replace("https://api.arinnovate.io/auth/google");
+      window.location.replace("http://preprod.recroot.au/auth/google");
     } else {
-      window.location.replace("https://api.arinnovate.io/auth/linkedin");
+      window.location.replace("http://preprod.recroot.au/auth/linkedin");
     }
   };
 

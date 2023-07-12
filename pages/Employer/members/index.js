@@ -209,7 +209,7 @@ const Members = () => {
   const member = useSelector((state) => state.company.members);
   const getMember = () => {
     axios
-      .get(`https://api.arinnovate.io/api/getMember/${companyId}`, {
+      .get(`http://preprod.recroot.au/api/getMember/${companyId}`, {
         headers: { "x-access-token": `${user?.token}` },
       })
       .then((res) => setResult(res.data))
@@ -217,7 +217,7 @@ const Members = () => {
   };
   useEffect(() => {
     axios
-      .get(`https://api.arinnovate.io/api/getMember/${companyId}`, {
+      .get(`http://preprod.recroot.au/api/getMember/${companyId}`, {
         headers: { "x-access-token": `${user?.token}` },
       })
       .then((res) => setResult(res.data))
@@ -323,16 +323,16 @@ const Members = () => {
       }
       axios
         .post(
-          `https://api.arinnovate.io/api/updateMemberState/${obj.memberId}`,
+          `http://preprod.recroot.au/api/updateMemberState/${obj.memberId}`,
 
           {
             type: event.target.value,
           }
         )
-        //  .post(`https://api.arinnovate.io/api/updateMemberState/${obj.memberId}`, {
-        //  .post(`https://api.arinnovate.io/api/updateMemberState/${obj.memberId}`, {
+        //  .post(`http://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
+        //  .post(`http://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
 
-        //  .post(`https://api.arinnovate.io/api/updateMemberState/${obj.memberId}`, {
+        //  .post(`http://preprod.recroot.au/api/updateMemberState/${obj.memberId}`, {
 
         //   type: event.target.value,
         // })
@@ -357,7 +357,7 @@ const Members = () => {
     const memId = mems.find((d) => d.id === id).memberId;
     if (memId !== "") {
       axios
-        .post(`https://api.arinnovate.io/api/updateMemberState/${memId}`, {
+        .post(`http://preprod.recroot.au/api/updateMemberState/${memId}`, {
           type: "normal",
         })
         .then(function (response) {
