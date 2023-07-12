@@ -193,7 +193,7 @@ function Pricing() {
   const handleSubmitContact = (e) => {
     e.preventDefault();
     axios
-      .post(" http://localhost:3000/api/addContactus", contactus)
+      .post("https://api.arinnovate.io/api/addContactus", contactus)
       .then(function (response) {
         dispatch(
           openAlert({
