@@ -235,6 +235,7 @@ const AllApplicants = () => {
   const [tempSkills, setTempSkill] = useState(filtaration.skillSet);
   const [status, setStatus] = useState(filtaration.status);
   const [load, setLoad] = React.useState(false);
+  const [desiredSkills, setDesiredSkills] = React.useState([]);
 
   /**
    * get matching details
@@ -250,6 +251,7 @@ const AllApplicants = () => {
     await newCompanyservice
       .getMatchingSkills(jid)
       .then((res) => {
+        setDesiredSkills(() => res.data.desiredskills);
         setMatchingSkills(() => res.data.skills);
       })
       .catch((res) => console.log(res, "getMatchingSkills"));
@@ -293,6 +295,7 @@ const AllApplicants = () => {
         filter: filtaration,
         name: name,
       };
+
       const { ...otherParams } = router.query;
       const updatedQueryParams = {
         ...otherParams,
@@ -667,11 +670,11 @@ const AllApplicants = () => {
     }
     if (field === "notice") {
       newFilters.notice = "";
-      setSelectedNotice("")
+      setSelectedNotice("");
     }
     if (field === "exper") {
       newFilters.exper = "";
-      setSelectedExperience("")
+      setSelectedExperience("");
     }
 
     if (field === "salary") {
@@ -1600,6 +1603,7 @@ const AllApplicants = () => {
                           matchingDetails={matchingDetails}
                           matchingSkill={matchingSkill}
                           candidatesType={candidatesType}
+                          desiredSkills={desiredSkills}
                           order={index}
                         />
                       </div>
