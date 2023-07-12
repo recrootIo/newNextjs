@@ -1,0 +1,120 @@
+.comProfileLeaderTitle {
+  font-weight: 600;
+  font-size: 15px;
+  color: #01313f;
+  text-align: center;
+  font-style: italic;
+}
+
+.comProfileLeaderName {
+  font-weight: 600;
+  font-size: 15px;
+  color: #01313f;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.ComProfileSubtitleTypo {
+  font-weight: 600;
+  font-size: 17px;
+  color: #01313f;
+  margin-bottom: 24px;
+  margin-top: 40px;
+}
+
+.ComProfileCareerGrowthSubtitleTypo {
+  font-weight: 600;
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.comProfileMediaTypo {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.ComProfileReviewNameTypo {
+  font-weight: 600;
+  font-size: 15px;
+  color: #01313f;
+  margin-bottom: 15px;
+}
+
+.comBenefitsTypo {
+  text-align: center;
+  color: #01313f;
+  font-weight: 600;
+}
+
+.CompanyjobsCard {
+  width: 100%;
+  box-shadow: 4px 4px 10px rgba(3, 66, 117, 0.1) !important;
+  border-radius: 10px;
+  padding-top: 0;
+  background-image: url("/similar-jobs-card-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 365px;
+  transition: "box-shadow .3s";
+}
+.CompanyjobsCard:hover {
+  box-shadow: 10px 5px 11px rgba(33, 33, 33, 0.2) !important;
+  cursor: pointer;
+}
+
+.CompanyAvatar {
+  object-fit: contain;
+  border: 1px solid rgba(3, 66, 117, 0.15);
+}
+
+.CompanyiconImg {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.CompanyText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 25%;
+}
+
+.CompanyInputText {
+  color: rgba(1, 49, 63, 0.8);
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 300;
+  margin-left: 20px;
+  width: 75%;
+}
+
+.CompanyTypoBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  /* margin-bottom: 15px; */
+}
+
+.CompanyTypo {
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+@media only screen and (max-width: 600px) {
+  .CompanyjobsCard {
+    width: 100%;
+  }
+}
