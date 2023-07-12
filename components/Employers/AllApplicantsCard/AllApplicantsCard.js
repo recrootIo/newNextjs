@@ -115,7 +115,7 @@ const AllApplicantsCard = ({
 
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `http://localhost:3000/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
 
@@ -249,7 +249,7 @@ const AllApplicantsCard = ({
   const handleReject = (id) => {
     axios
       .put(
-        `http://localhost:3000/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -265,7 +265,7 @@ const AllApplicantsCard = ({
   const handleShort = (id) => {
     axios
       .put(
-        `http://localhost:3000/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -424,7 +424,6 @@ const AllApplicantsCard = ({
             {text}
           </CustomTypography>
         </Grid>
-        {}
         <Grid item md={6}>
           {item.match ? (
             <CheckIcon color="success" />
@@ -474,7 +473,7 @@ const AllApplicantsCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `http://localhost:3000/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
