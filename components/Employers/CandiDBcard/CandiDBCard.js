@@ -209,7 +209,7 @@ const CandiDBCard = ({
       //     );
       //   });
       window.open(
-        `http://localhost:3001/Employer/candiProfileFullView?canId=${id}`
+        `https://recroot.io/Employer/candiProfileFullView?canId=${id}`
       );
       // Navigate(`/employerhome/applicant/${id}?rc`);
     };
