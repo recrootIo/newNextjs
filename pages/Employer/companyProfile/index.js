@@ -45,6 +45,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   ControlPointDuplicateRounded,
   Visibility,
@@ -80,7 +81,17 @@ import Employer from "../../../components/pages/index";
 import { useTheme } from "@mui/material/styles";
 import { isEmpty } from "lodash";
 import companyservice from "@/redux/services/company.service";
+import ImagesUpload from "@/components/CompanyProfileView/ImagesUpload";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
+
+const useStyles = makeStyles((theme) => ({
+  squareAvatar: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "5px",
+    border: "3px dashed #4fa9ff",
+  },
+}));
 
 const style = {
   naminput: {
@@ -122,6 +133,7 @@ const selectstyle = {
 };
 
 const CompanyProfile = () => {
+  const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [isTourOpen, setTourOpen] = React.useState(false);
   const handleListItemClick = (event, index) => {
@@ -201,11 +213,18 @@ const CompanyProfile = () => {
   const [fullWidth, setFullWidth] = React.useState(true);
   const [maxWidth, setMaxWidth] = React.useState("sm");
   const [open, setOpen] = React.useState(false);
+  const [leaderOpen, setLeaderOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
     setFirst("");
     setFileNames("");
+  };
+
+  const handleLeaderPhotoClickOpen = () => {
+    setLeaderOpen(true);
+    // setFirst("");
+    // setFileNames("");
   };
 
   const handleClose = () => {
@@ -219,6 +238,10 @@ const CompanyProfile = () => {
       }
     });
     setOpen(false);
+  };
+
+  const handleLeaderClose = () => {
+    setLeaderOpen(false);
   };
 
   const handleCloseP = () => {
@@ -442,7 +465,7 @@ const CompanyProfile = () => {
                 );
                 return;
               }
-              push("/Employer/Members");
+              push("/Employer/WhyJoinUsContent");
             }}
           >
             <Box
@@ -453,9 +476,19 @@ const CompanyProfile = () => {
               }}
             >
               {isMobile ? (
-                <Image src="/members-img.png" alt="" width="42" height="50" />
+                <Image
+                  src="/why-joinusgym-card-img.png"
+                  alt=""
+                  width="42"
+                  height="50"
+                />
               ) : (
-                <Image src="/members-img.png" alt="" width="60" height="62" />
+                <Image
+                  src="/why-joinusgym-card-img.png"
+                  alt=""
+                  width="60"
+                  height="62"
+                />
               )}
             </Box>
             <CardContent>
@@ -855,11 +888,12 @@ const CompanyProfile = () => {
               />
               <Divider variant="middle" />
             </Stack>
-            <CustomTypography variant="body2" sx={styles.sectxt}>
-              Company Description
-            </CustomTypography>
-            <Box sx={styles.infofld}>
-              {/* <Box
+            <Box sx={{ mt: "20px" }}>
+              <CustomTypography variant="body2" sx={styles.sectxt}>
+                Company Description
+              </CustomTypography>
+              <Box sx={styles.infofld}>
+                {/* <Box
                 sx={{
                   width: "100%",
                   minHeight: "320px",
@@ -881,6 +915,7 @@ const CompanyProfile = () => {
                   />
                 )}
               </Box> */}
+              </Box>
             </Box>
             <Box>
               <CustomTypography
@@ -932,10 +967,18 @@ const CompanyProfile = () => {
               <CustomTypography
                 sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
               >
-                Highlight influential leaders in your company's profile Add
+                Highlight influential leaders in your company&apos;s profile Add
               </CustomTypography>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
+              <Grid container spacing={2} sx={{ mt: "10px" }}>
+                <Grid
+                  item
+                  xs={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Box
                     sx={{
                       height: "200px",
@@ -943,9 +986,71 @@ const CompanyProfile = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      border: "1px solid red",
                     }}
-                  ></Box>
+                  >
+                    <Avatar
+                      className={classes.squareAvatar}
+                      alt="Avatar"
+                      src=""
+                    />
+                    <IconButton
+                      onClick={handleLeaderPhotoClickOpen}
+                      sx={{
+                        position: "relative",
+                        top: "31px",
+                        left: "-14px",
+                        background: "white",
+                        border: "3px solid rgba(3, 66, 117, 0.6)",
+                        height: "30px",
+                        width: "30px",
+                      }}
+                    >
+                      <EditSharpIcon
+                        sx={{
+                          color: "rgba(3, 66, 117, 0.6)",
+                          fontSize: "0.8em",
+                        }}
+                      />
+                    </IconButton>
+                    <Dialog
+                      fullWidth={fullWidth}
+                      maxWidth={maxWidth}
+                      open={leaderOpen}
+                      onClose={() => {
+                        setLeaderOpen(false);
+                      }}
+                    >
+                      <Box sx={{ p: "40px" }}>
+                        <CustomTypography
+                          variant="h5"
+                          sx={{ textAlign: "center" }}
+                        >
+                          Edit Leader Photo
+                        </CustomTypography>
+                        <UploadPhoto />
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                          <Button
+                            variant="contained"
+                            sx={{ mt: "10px", backgroundColor: "#4fa9ff" }}
+                            onClick={() => {
+                              handleLeaderClose();
+                            }}
+                          >
+                            save
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            sx={{ mt: "10px", ml: "5px", color: "#4fa9ff" }}
+                            onClick={() => {
+                              handleLeaderClose();
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Dialog>
+                  </Box>
                 </Grid>
                 <Grid
                   item
@@ -1025,10 +1130,10 @@ const CompanyProfile = () => {
               <CustomTypography
                 sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
               >
-                Highlight your company's teamand culture through a profile
+                Highlight your company&apos;s teamand culture through a profile
                 gallery
               </CustomTypography>
-              <Box></Box>
+              <ImagesUpload />
             </Box>
             <Box display="block" sx={styles.infofld}>
               <CustomTypography variant="body2" sx={styles.sectxt}>
