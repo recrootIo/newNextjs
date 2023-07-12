@@ -107,7 +107,7 @@ const CandiDBCard = ({
   const { title } = router.query;
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
-      ? `http://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
 
@@ -196,7 +196,7 @@ const CandiDBCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `http://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;

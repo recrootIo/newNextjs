@@ -186,7 +186,7 @@ const InterviewCalendar = (props) => {
       Time.meetlink !== ""
     ) {
       axios
-        .post("http://preprod.recroot.au/api/updateInterview", Time, {
+        .post("https://preprod.recroot.au/api/updateInterview", Time, {
           headers: { "x-access-token": `${user.token}` },
         })
         .then((data) => {

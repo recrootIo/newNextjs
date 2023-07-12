@@ -91,7 +91,7 @@ function CompleteProfile() {
   const enableAction = phoneNumber && phoneNumber.length >= 10;
 
   const getUser = () => {
-    fetch("http://preprod.recroot.au/login/success", {
+    fetch("https://preprod.recroot.au/login/success", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -128,7 +128,7 @@ function CompleteProfile() {
   //       email: values.email,
   //       password: values.password,
   //     };
-  //     axios.post("http://preprod.recroot.au/register", userObject).then(
+  //     axios.post("https://preprod.recroot.au/register", userObject).then(
   //       (res) => {
   //         if (res.status == 200) {
   //           console.log("DFg");
@@ -195,7 +195,7 @@ function CompleteProfile() {
         phoneNumber: phoneNumber,
       };
       axios
-        .post("http://preprod.recroot.au/api/completeProfile", userObject)
+        .post("https://preprod.recroot.au/api/completeProfile", userObject)
         .then((res) => {
           if (res.status === 200) {
             console.log(res);

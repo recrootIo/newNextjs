@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     const response = await axios.get(
-      `http://preprod.recroot.au/reset-password/${id}/${token}`
+      `https://preprod.recroot.au/reset-password/${id}/${token}`
     );
 
     console.log(response, "response");

@@ -24,7 +24,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (email) => {
     axios
-      .post("http://preprod.recroot.au/forgot-password", { email })
+      .post("https://preprod.recroot.au/forgot-password", { email })
       .then(() => {
         dispatch(
           openAlert({

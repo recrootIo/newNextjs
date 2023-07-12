@@ -62,7 +62,7 @@ function RedirectUser() {
   // const redirect = null;
   const getUser = () => {
     axios
-      .get(`http://preprod.recroot.au/getUser/${id}`)
+      .get(`https://preprod.recroot.au/getUser/${id}`)
       .then((resObject) => {
         axios.get("https://ipapi.co/json/").then((response) => {
           Cookies.set("country", response.data?.country);

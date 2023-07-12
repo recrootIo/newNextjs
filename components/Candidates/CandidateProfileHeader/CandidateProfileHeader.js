@@ -100,7 +100,7 @@ const CandidateProfileHeader = (data) => {
     if (photoss === undefined) {
     } else {
       setSrcsjjj(
-        `http://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}`
+        `https://preprod.recroot.au/api/openProfpic?photo=${photoss.photo}`
       );
     }
 

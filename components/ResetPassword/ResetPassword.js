@@ -47,7 +47,7 @@ const ResetPassword = ({ id, token }) => {
 
   const handleSubmit = (e) => {
     axios
-      .post(`http://preprod.recroot.au/reset-password/${id}/${token}`, {
+      .post(`https://preprod.recroot.au/reset-password/${id}/${token}`, {
         password: e.password,
       })
       .then(function (response) {
