@@ -665,6 +665,14 @@ const AllApplicants = () => {
         city: "",
       });
     }
+    if (field === "notice") {
+      newFilters.notice = "";
+      setSelectedNotice("")
+    }
+    if (field === "exper") {
+      newFilters.exper = "";
+      setSelectedExperience("")
+    }
 
     if (field === "salary") {
       newFilters.salary = "";
@@ -920,7 +928,7 @@ const AllApplicants = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {reqJob?.Candidates?.length}
+                      {data?.totalCounts}
                     </CustomTypography>
                   </CardContent>
                 </Card>

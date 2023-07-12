@@ -44,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Blogs = () => {
-  const API_URL = "https://preprod.recroot.au/api";
+  const API_URL = "https://api.arinnovate.io/api";
 
   const [blogs, setBlogs] = useState([]);
   const [tags, setTags] = useState([]);

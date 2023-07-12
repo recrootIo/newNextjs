@@ -107,7 +107,7 @@ const CandiDBCard = ({
   const { title } = router.query;
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
-      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
 
@@ -168,7 +168,7 @@ const CandiDBCard = ({
    * @returns
    */
   const getCalculatedSkills = () => {
-    const skills = users.candidateId.resume.skills.map(
+    const skills = user.resume.skills.map(
       (skill) => skill.skillName
     );
     const matchingElements = skills.filter((skill) =>
@@ -196,7 +196,7 @@ const CandiDBCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
@@ -313,46 +313,25 @@ const CandiDBCard = ({
           sx={{ p: "12px 20px 16px 20px" }}
         />
         <CardContent sx={{ p: 0, pb: "0 !important" }}>
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            sx={{
-              gap: { xs: "10px", md: "59px" },
-              mb: { xs: 0, sm: "10px" },
-              mt: { xs: "30px", sm: 0 },
-              p: "0 20px",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <AssignmentIndIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "#1097CD",
-                }}
-              >
-                {title}
-              </CustomTypography>
-            </Box>
-
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                {users?.resume?.notice}
-              </CustomTypography>
-            </Box>
-
-            {address && (
+        <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
+            <Grid md={4}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <AddLocationIcon sx={{ color: "#1097CD" }} />
+                <AssignmentIndIcon sx={{ color: "#1097CD" }} />
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "#1097CD",
+                  }}
+                >
+                  {title}
+                </CustomTypography>
+              </Box>
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
                 <CustomTypography
                   sx={{
                     fontWeight: "400",
@@ -361,48 +340,59 @@ const CandiDBCard = ({
                     color: "rgba(1, 49, 63, 0.8)",
                   }}
                 >
-                  {address}
+                  {users?.resume?.notice}
                 </CustomTypography>
               </Box>
-            )}
-          </Stack>
-
-          <Stack
-            direction={"row"}
-            sx={{
-              gap: { xs: "10px", md: "59px" },
-              margin: "10px 0",
-              p: "0 20px",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <HourglassTopIcon sx={{ color: "#1097CD" }} />
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                Experience - {users?.resume?.totalWorkExperience}{" "}
-                Years
-              </CustomTypography>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <CurrencyExchangeIcon sx={{ color: "#1097CD" }} />{" "}
-              <CustomTypography
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "rgba(1, 49, 63, 0.8)",
-                }}
-              >
-                {getCandidateSalary(users?.resume)}
-              </CustomTypography>
-            </Box>
-          </Stack>
+            </Grid>
+            <Grid md={4}>
+              {address && (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <AddLocationIcon sx={{ color: "#1097CD" }} />
+                  <CustomTypography
+                    sx={{
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "rgba(1, 49, 63, 0.8)",
+                    }}
+                  >
+                    {address}
+                  </CustomTypography>
+                </Box>
+              )}
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <HourglassTopIcon sx={{ color: "#1097CD" }} />
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(1, 49, 63, 0.8)",
+                  }}
+                >
+                  Experience - {users?.resume?.totalWorkExperience}{" "}
+                  Years
+                </CustomTypography>
+              </Box>
+            </Grid>
+            <Grid md={4}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                <CurrencyExchangeIcon sx={{ color: "#1097CD" }} />{" "}
+                <CustomTypography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "24px",
+                    color: "rgba(1, 49, 63, 0.8)",
+                  }}
+                >
+                  {getCandidateSalary(users?.resume)}
+                </CustomTypography>
+              </Box>
+            </Grid>
+          </Grid>
 
           <Box
             color="rgba(1, 49, 63, 0.8)"

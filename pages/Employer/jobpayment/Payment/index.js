@@ -50,7 +50,7 @@ function Jobpaymentstatus() {
     } else {
       if (jobPay.payment !== "") {
         axios
-          .post(`https://preprod.recroot.au/api/addnewjobpayment`, jobPay, {
+          .post(`https://api.arinnovate.io/api/addnewjobpayment`, jobPay, {
             headers: { "x-access-token": `${token}` },
           })
           .then((res) => {
