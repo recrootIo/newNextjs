@@ -415,6 +415,8 @@ const AllApplicantsCard = ({
       text = "State";
     }
 
+    if (item.item === 5 && desiredSkills.length < 1) return "";
+
     return (
       <Grid container spacing={1} sx={{ padding: "0 10px" }}>
         <Grid item md={6}>
@@ -422,7 +424,6 @@ const AllApplicantsCard = ({
             {text}
           </CustomTypography>
         </Grid>
-
         <Grid item md={6}>
           {item.match ? (
             <CheckIcon color="success" />
@@ -481,14 +482,14 @@ const AllApplicantsCard = ({
     ? 0
     : countElementInArrays(
         users?._id,
-        matchingDetails.countryMatches,
-        matchingDetails.experMatches,
-        matchingDetails.skillMatches,
-        matchingDetails.typeMatches,
-        matchingDetails.cityMatches,
-        matchingDetails.desiredskillMatches,
-        matchingDetails.noticeMatches,
-        matchingDetails.statesMatches
+        matchingDetails?.countryMatches,
+        matchingDetails?.experMatches,
+        matchingDetails?.skillMatches,
+        matchingDetails?.typeMatches,
+        matchingDetails?.cityMatches,
+        matchingDetails?.desiredskillMatches,
+        matchingDetails?.noticeMatches,
+        matchingDetails?.statesMatches
       );
 
   const { matchingElements, displaySkills } = getCalculatedSkills();
