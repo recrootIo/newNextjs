@@ -393,9 +393,11 @@ const AllApplicantsCard = ({
   };
 
   const addEllipsis = (text, maxLength) => {
+    if (!text) return "";
+
     let modifiedText = text;
 
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       modifiedText = text.slice(0, maxLength) + "...";
     }
 
