@@ -87,6 +87,7 @@ import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
 import companyservice from "@/redux/services/company.service";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
 // import { C } from "@fullcalendar/core/internal-common";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
@@ -125,6 +126,7 @@ const CandiFullProfileView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getCompanyDetails())
     if (appId !== undefined) {
       setLoading(true);
       getCand();
