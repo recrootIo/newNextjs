@@ -101,7 +101,7 @@ const AllApplicantsCard = ({
 
   const getImageUrl = (candi) => {
     return candi?.candidateId?.profpicFileLocation?.photo
-      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
+      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.candidateId?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.candidateId?.headShot}`;
   };
 
@@ -189,14 +189,14 @@ const AllApplicantsCard = ({
         .then((res) => {
           if (res.status === 200) {
             window.open(
-              `https://arinnovate.au/Employer/candiProfileFullView?appId=${id}`
+              `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
             );
             // router.push(`/Employer/candiProfileFullView?appId=${id}`);
           }
         });
     } else {
       window.open(
-        `https://arinnovate.au/Employer/candiProfileFullView?appId=${id}`
+        `https://recroot.io/Employer/candiProfileFullView?appId=${id}`
       );
       // router.push(`/Employer/candiProfileFullView?appId=${id}`);
     }
@@ -205,7 +205,7 @@ const AllApplicantsCard = ({
   const handleReject = (id) => {
     axios
       .put(
-        `https://preprod.recroot.au/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "rejected" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -221,7 +221,7 @@ const AllApplicantsCard = ({
   const handleShort = (id) => {
     axios
       .put(
-        `https://preprod.recroot.au/api/updateStatus/${id}`,
+        `https://api.arinnovate.io/api/updateStatus/${id}`,
         { status: "shortlist" },
         { headers: { "x-access-token": `${user.token}` } }
       )
@@ -409,7 +409,7 @@ const AllApplicantsCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
