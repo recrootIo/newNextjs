@@ -87,6 +87,7 @@ import Cookies from "js-cookie";
 import { isEmpty } from "lodash";
 import { useRef } from "react";
 import companyservice from "@/redux/services/company.service";
+import { getCompanyDetails } from "@/redux/slices/companyslice";
 // import { C } from "@fullcalendar/core/internal-common";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
@@ -133,6 +134,7 @@ const CandiFullProfileView = () => {
       setLoading(true);
       getCanddet();
     }
+    dispatch(getCompanyDetails());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appId, canId]);
 
@@ -156,7 +158,13 @@ const CandiFullProfileView = () => {
       setNote(res.data?.notes);
       setstatus(res.data.status);
       setcandidate(res.data?.candidateId);
-      dispatch(getSinResume(isEmpty(res.data?.resumeId) ? res.data?.candidateId?.resume?.resumeFileLocation[0]?._id : res.data?.resumeId));
+      dispatch(
+        getSinResume(
+          isEmpty(res.data?.resumeId)
+            ? res.data?.candidateId?.resume?.resumeFileLocation[0]?._id
+            : res.data?.resumeId
+        )
+      );
       const ids = {
         cid: res.data?.candidateId?._id,
         jid: res.data?.jobId?._id,

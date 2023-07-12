@@ -28,7 +28,11 @@ const App = ({ Component, pageProps }) => {
       await axios.get(`https://ipapi.co/${userIp}/json`).then((res) => {
         const country = res?.data?.country;
 
-        if (country === "LK" && !router.asPath.startsWith("/lk/")) {
+        if (
+          country === "LK" &&
+          !router.asPath.startsWith("/lk/") &&
+          pathname !== "/Employer/candiProfileFullView"
+        ) {
           const targetUrl = { pathname, query, locale: "lk" };
           const currentUrl = router.asPath;
 
