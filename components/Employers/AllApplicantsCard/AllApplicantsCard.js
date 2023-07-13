@@ -135,7 +135,19 @@ const AllApplicantsCard = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
-
+  function findMatchingElements(arr1, arr2) {
+    const matchedElements = [];
+  
+    for (let i = 0; i < arr1.length; i++) {
+      const regex = new RegExp(arr1[i], 'i'); // 'i' flag for case-insensitive matching
+      const matchedItem = arr2.find(item => regex.test(item));
+      if (matchedItem) {
+        matchedElements.push(arr1[i]);
+      }
+    }
+  
+    return matchedElements;
+  }
   /**
    * Get points for matchings
    * @param {*} applicationId
@@ -195,9 +207,10 @@ const AllApplicantsCard = ({
     //job skill
     const loverCaseSkills = matchingSkill.map((s) => s.toLowerCase());
 
-    const matchingElements = skills.filter((skill) =>
-      loverCaseSkills.includes(skill)
-    );
+    const matchingElements = findMatchingElements(loverCaseSkills, skills);
+    // const matchingElements = skills.filter((skill) =>
+    //   loverCaseSkills.includes(skill)
+    // );
 
     displaySkills = loverCaseSkills.map((s) => {
       let newSkill = { skill: "", match: false };
