@@ -728,7 +728,9 @@ const EmpoyerDashboard = () => {
               </MenuItem>
               {premium === false ? (
                 ""
-              ) : isValuePresentInArray(requestJobs, jobid) === true ? "": (
+              ) : isValuePresentInArray(requestJobs, jobid) === true ? (
+                ""
+              ) : (
                 <MenuItem
                   onClick={() => {
                     handleRequest("addrequest");

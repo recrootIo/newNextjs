@@ -667,11 +667,11 @@ const AllApplicants = () => {
     }
     if (field === "notice") {
       newFilters.notice = "";
-      setSelectedNotice("")
+      setSelectedNotice("");
     }
     if (field === "exper") {
       newFilters.exper = "";
-      setSelectedExperience("")
+      setSelectedExperience("");
     }
 
     if (field === "salary") {
@@ -792,10 +792,14 @@ const AllApplicants = () => {
         >
           <CardContent>
             <Box>
-              <Stack direction={"row"} sx={{ gap: "10px" }}>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                sx={{ gap: "10px" }}
+              >
                 <Card
                   sx={{
                     width: "100%",
+                    minHeight: "120px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -841,6 +845,7 @@ const AllApplicants = () => {
                 <Card
                   sx={{
                     width: "100%",
+                    minHeight: "120px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -885,6 +890,7 @@ const AllApplicants = () => {
                 <Card
                   sx={{
                     width: "100%",
+                    minHeight: "120px",
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
@@ -934,7 +940,7 @@ const AllApplicants = () => {
               />
 
               <Stack
-                direction={"row"}
+                direction={{ xs: "column", sm: "row" }}
                 sx={{
                   justifyContent:
                     candidatesType === "candiDB" ? "center" : "space-between",
@@ -975,7 +981,7 @@ const AllApplicants = () => {
                   ""
                 ) : (
                   <FormControl
-                    sx={{ width: "40% !important" }}
+                    sx={{ width: { xs: "100%", sm: "40% !important" } }}
                     variant="outlined"
                   >
                     <InputLabel id="demo-simple-select-label">

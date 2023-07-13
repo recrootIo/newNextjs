@@ -28,6 +28,7 @@ import download from "downloadjs";
 import applyJobService from "@/redux/services/applyjobs.service";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Collapse from "@mui/material/Collapse";
 import {
   INTERVIEWING,
   REJECTED,
@@ -45,6 +46,64 @@ import { makeStyles } from "@mui/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+const StyledGreenSkillBox = styled(Box)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  backgroundColor: "#57FF57",
+  borderRadius: "5px",
+  padding: "5px",
+  width: "48%",
+  display: "flex",
+  justifyContent: "center",
+  backgroundImage: `url("/allApplicants-blue-card-bg.jpg")`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+});
+
+const StyledGraySkillBox = styled(Box)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  backgroundColor: "#DEDEDE",
+  borderRadius: "5px",
+  padding: "5px",
+  width: "48%",
+  display: "flex",
+  justifyContent: "center",
+  backgroundImage: `url("/allApplicants-garyCrd-bg.jpg")`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+});
+
+const StyledMissingSkillBox = styled(Box)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  backgroundColor: "#E1A1FF",
+  borderRadius: "5px",
+  padding: "5px",
+  width: "48%",
+  display: "flex",
+  justifyContent: "center",
+  backgroundImage: `url("/allapplicants-purpleCrd-bg.jpg")`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+});
+
+const StyledCollapseTopic = styled(CustomTypography)({
+  color: "#034275",
+  fontSize: "16px",
+  fontWeight: 600,
+});
+
+const StyledCollapseData = styled(CustomTypography)({
+  color: "#01313F",
+  fontSize: "14px",
+  fontWeight: 500,
+});
 
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
@@ -82,6 +141,17 @@ const useStyles = makeStyles({
   },
 });
 
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
 const AllApplicantsCard = ({
   users,
   matchingDetails = {},
@@ -94,6 +164,11 @@ const AllApplicantsCard = ({
   const dispatch = useDispatch();
   const [resume, setresume] = useState();
   const [open, setOpen] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   console.log(matchingSkill, "matchingSkill");
 
@@ -497,7 +572,7 @@ const AllApplicantsCard = ({
                 direction="row"
                 spacing={2}
                 sx={{
-                  display: "flex",
+                  display: { xs: "none", sm: "flex" },
                   justifyContent: "flex-end",
                   alignItems: "center",
                   mb: "10px",
@@ -660,6 +735,56 @@ const AllApplicantsCard = ({
             {addEllipsis(users?.candidateId?.about, 320)}
           </Box>
 
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              display: { xs: "flex", sm: "none" },
+              justifyContent: "center",
+              alignItems: "center",
+              mb: "10px",
+              mt: "10px",
+            }}
+          >
+            <Button
+              sx={{
+                minWidth: "10px !important",
+                minHeight: "10px !important",
+                padding: "5px !important",
+                color: "#02a9f7",
+                borderColor: "#02a9f7",
+                fontSize: "18px",
+                height: "45px",
+              }}
+              size="large"
+              variant="outlined"
+              bgcolor="#02A9F7 !important"
+              onClick={async () => {
+                const res = await fetch(recroot);
+                const blob = await res.blob();
+                download(blob, `${resume.resumeName}`);
+              }}
+            >
+              <DownloadIcon sx={{ fontSize: "35px" }} />
+            </Button>
+
+            <Button
+              className="viewDetails"
+              variant="contained"
+              size="medium"
+              sx={{
+                ml: "8px",
+                height: "45px",
+                width: "180px",
+                bgcolor: "#02A9F7 !important",
+                fontSize: "18px",
+              }}
+              onClick={() => navigate(users?._id, users?.status)}
+            >
+              View Details
+            </Button>
+          </Stack>
+
           <CustomTypography
             sx={{
               textAlign: "right",
@@ -674,10 +799,10 @@ const AllApplicantsCard = ({
           </CustomTypography>
 
           <Stack
-            direction={"row"}
+            direction={{ xs: "column", sm: "row" }}
             sx={{ backgroundColor: "#D4F0FC", width: "100%", p: "10px 20px" }}
           >
-            <Box sx={{ width: "33%" }}>
+            <Box sx={{ width: { xs: "100%", sm: "33%" } }}>
               <Stack
                 direction={"row"}
                 sx={{ gap: "10px", alignItems: "center" }}
@@ -743,14 +868,17 @@ const AllApplicantsCard = ({
             </Box>
             <Box
               sx={{
-                width: "33%",
+                width: { xs: "100%", sm: "33%" },
                 // borderLeft: "1px solid gray",
                 // borderRight: "1px solid gray",
               }}
             >
               <Stack
                 direction={"row"}
-                sx={{ gap: "10px", justifyContent: "center" }}
+                sx={{
+                  gap: "10px",
+                  justifyContent: { xs: "flex-start", sm: "center" },
+                }}
               >
                 <CustomTypography sx={{ fontSize: "15px" }}>
                   Matching Skills :
@@ -760,10 +888,13 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Stack>
             </Box>
-            <Box sx={{ width: "33%" }}>
+            <Box sx={{ width: { xs: "100%", sm: "33%" } }}>
               <Stack
                 direction={"row"}
-                sx={{ gap: "10px", justifyContent: "flex-end" }}
+                sx={{
+                  gap: "10px",
+                  justifyContent: { xs: "flex-start", sm: "flex-end" },
+                }}
               >
                 <CustomTypography sx={{ fontSize: "15px" }}>
                   Screening Questions :
@@ -775,8 +906,384 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Stack>
             </Box>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+              sx={{ p: 0 }}
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
           </Stack>
         </CardContent>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ mt: "20px" }}>
+                  <StyledCollapseTopic>Screening Question</StyledCollapseTopic>
+                  <Box
+                    sx={{
+                      mt: "8px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData>
+                        1. Are you hands on with all stated skills?
+                      </StyledCollapseData>
+                      <Box
+                        sx={{
+                          color: "#000",
+                          backgroundImage: `url("/allapplicants-blue-card-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          borderRadius: "5px",
+                          p: "5px",
+                          width: "50px",
+                          textAlign: "center",
+                        }}
+                      >
+                        Yes
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData>
+                        2.Do you have B Tech/BE inn Computer Science or IT?
+                      </StyledCollapseData>
+                      <Box
+                        sx={{
+                          color: "#000",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          bgcolor: "#FF5454",
+                          borderRadius: "5px",
+                          p: "5px",
+                          width: "50px",
+                          textAlign: "center",
+                          backgroundImage: `url("/all-applicants-red-crd-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      >
+                        No
+                      </Box>
+                    </Stack>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <StyledCollapseTopic>Experience</StyledCollapseTopic>
+                  <Box sx={{ mt: "8px" }}>
+                    <StyledCollapseData sx={{ lineHeight: "28px" }}>
+                      <ol>
+                        <li>
+                          1. Senior Production Associate - innodata Inc - 2
+                          Years
+                        </li>
+                        <li>
+                          2. Supplier Quality Specialist - Mount Lavinia Hotel -
+                          1 Year
+                        </li>
+                      </ol>
+                    </StyledCollapseData>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StyledCollapseTopic>Location</StyledCollapseTopic>
+                    <Box
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        bgcolor: "#57FF57",
+                        borderRadius: "5px",
+                        p: "5px",
+                        width: "auto !important",
+                        backgroundImage: `url("/allapplicants-blue-card-bg.jpg")`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                      }}
+                    >
+                      Mumbai, India
+                    </Box>
+                  </Stack>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StyledCollapseTopic>Work Preference</StyledCollapseTopic>
+                    <Box
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        borderRadius: "5px",
+                        p: "5px",
+                        backgroundImage: `url("/allapplicants-blue-card-bg.jpg")`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                      }}
+                    >
+                      Hybrid
+                    </Box>
+                  </Stack>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <StyledCollapseTopic>Salary</StyledCollapseTopic>
+                  <Box
+                    sx={{
+                      mt: "8px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                    }}
+                  >
+                    <StyledCollapseData>
+                      Current Salary - 4 Thousand
+                    </StyledCollapseData>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData>Expected Salary -</StyledCollapseData>
+                      <Box
+                        sx={{
+                          color: "#000",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          borderRadius: "5px",
+                          p: "5px",
+                          width: "auto !important",
+                          backgroundImage: `url("/all-applicants-red-crd-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      >
+                        6 Thousand
+                      </Box>
+                    </Stack>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ mt: "20px" }}>
+                  <StyledCollapseTopic>Skills</StyledCollapseTopic>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      mt: "8px",
+                    }}
+                  >
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGreenSkillBox>6 Thousand</StyledGreenSkillBox>
+                    <StyledGraySkillBox>6 Thousand</StyledGraySkillBox>
+                    <StyledGraySkillBox>6 Thousand</StyledGraySkillBox>
+                    <StyledGraySkillBox>6 Thousand</StyledGraySkillBox>
+                    <StyledGraySkillBox>6 Thousand</StyledGraySkillBox>
+                    <StyledGraySkillBox>6 Thousand</StyledGraySkillBox>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <StyledCollapseTopic>Missing Skills</StyledCollapseTopic>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      mt: "8px",
+                    }}
+                  >
+                    <StyledMissingSkillBox>6 Thousand</StyledMissingSkillBox>
+                    <StyledMissingSkillBox>6 Thousand</StyledMissingSkillBox>
+                    <StyledMissingSkillBox>6 Thousand</StyledMissingSkillBox>
+                    <StyledMissingSkillBox>6 Thousand</StyledMissingSkillBox>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <StyledCollapseTopic>Notice Period</StyledCollapseTopic>
+                    <Box
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        borderRadius: "5px",
+                        p: "5px",
+                        width: "auto !important",
+                        backgroundImage: `url("/allapplicants-blue-card-bg.jpg")`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                      }}
+                    >
+                      Immediate Joiner
+                    </Box>
+                  </Stack>
+                </Box>
+                <Box
+                  sx={{
+                    mt: "20px",
+                    height: "110px",
+                    display: "flex",
+                    justifyContent: { xs: "flex-start", sm: "flex-end" },
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <Stack spacing={1} sx={{ width: "220px" }}>
+                    <Stack
+                      spacing={1}
+                      direction="row"
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <Box
+                        sx={{
+                          width: "14px",
+                          height: "14px",
+                          backgroundImage: `url("/allapplicants-blue-card-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      ></Box>
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 500,
+                          color: "#000",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Exactly Match
+                      </CustomTypography>
+                    </Stack>
+                    <Stack
+                      spacing={1}
+                      direction="row"
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <Box
+                        sx={{
+                          width: "14px",
+                          height: "14px",
+                          backgroundImage: `url("/all-applicants-red-crd-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      ></Box>
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 500,
+                          color: "#000",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Not Exactly Match
+                      </CustomTypography>
+                    </Stack>
+                    <Stack
+                      spacing={1}
+                      direction="row"
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <Box
+                        sx={{
+                          width: "14px",
+                          height: "14px",
+                          backgroundImage: `url("/allApplicants-garyCrd-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      ></Box>
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 500,
+                          color: "#000",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Extra Skills
+                      </CustomTypography>
+                    </Stack>
+                    <Stack
+                      spacing={1}
+                      direction="row"
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <Box
+                        sx={{
+                          width: "14px",
+                          height: "14px",
+                          backgroundImage: `url("/allapplicants-purpleCrd-bg.jpg")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                        }}
+                      ></Box>
+                      <CustomTypography
+                        sx={{
+                          fontWeight: 500,
+                          color: "#000",
+                          fontSize: "13px",
+                        }}
+                      >
+                        Skills Missing From the JD
+                      </CustomTypography>
+                    </Stack>
+                  </Stack>
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Collapse>
       </Card>
     </Tooltip>
   );
