@@ -55,6 +55,8 @@ import Address from "@/components/Address";
 import styles from "../../../../components/Employers/styles.module.css";
 import companyservice from "@/redux/services/company.service";
 import { getCompanyDetails, updateTour } from "@/redux/slices/companyslice";
+import { openAlert } from "@/redux/slices/alert";
+import { ERROR } from "@/utils/constants";
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 uuidv4();
 
@@ -165,6 +167,13 @@ const JobDetails = () => {
   const addSkil = () => {
     if (role.skill === "") {
       return;
+    }
+    if(roles?.length >= 6){
+      dispatch(openAlert({
+        type:ERROR,
+        message:"Only Six Skills Are Required"
+      }))
+      return
     }
     setRoles([...roles, role]);
     dispatch(skillSet([...roles, role]));
