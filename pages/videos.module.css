@@ -1,0 +1,61 @@
+.singlePostArea {
+    position: relative;
+  }
+
+  .postThumb {
+    position: relative;
+    margin: 0 0 35px;
+  }
+
+  .articleTitle {
+    font-size: 30px;
+    line-height: 34px;
+    color: #2c234d;
+    margin: 15px 0 15px;
+  }
+
+  .bpMeta {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 15px;
+    gap: 20px;
+  }
+
+  .postTags {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .tagsActive {
+    display: inline-block;
+    height: 34px;
+    background: #2b70fa;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 13px;
+    color: #ffffff;
+    line-height: 34px;
+    padding: 0 15px;
+    font-weight: 600;
+    margin: 10px 6px 0 0;
+    cursor: pointer;
+  }
+
+  .postShare {
+    position: relative;
+    border-top: 1px solid #ebecf2;
+    padding: 16px 0 0;
+    margin: 7px 0 0;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .popularPost {
+    position: relative;
+    min-height: 70px;
+    padding-left: 90px;
+    margin: 9px 0 24px;
+  }
