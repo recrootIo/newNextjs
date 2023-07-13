@@ -23,7 +23,14 @@ const ImagesUpload = () => {
   const renderPhotos = (source) => {
     console.log("source: ", source);
     return source.map((photo) => {
-      return <img src={photo} alt="" key={photo} />;
+      return (
+        <img
+          style={{ width: "50px", height: "50px", objectFit: "contain" }}
+          src={photo}
+          alt=""
+          key={photo}
+        />
+      );
     });
   };
 

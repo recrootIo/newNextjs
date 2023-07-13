@@ -371,7 +371,7 @@ const Navbar = () => {
                       Sign In
                     </ListItemButton>
                   </ListItem>
-{/* 
+                  {/* 
                   <ListItem disablePadding>
                     <ListItemButton onClick={() => navigate("/signup")}>
                       Sign Up

@@ -14,6 +14,10 @@ export function UploadPhoto(props) {
   const handleDrop = (acceptedFiles) => {
     setFileNames(acceptedFiles.map((file) => file.name));
     setPdf(acceptedFiles[0], pdf, drag, fileNames);
+    if (props?.state === "leader") {
+      props?.handleLeaderLogo(acceptedFiles[0]);
+      return;
+    }
     props.handleChange(acceptedFiles[0]);
   };
 

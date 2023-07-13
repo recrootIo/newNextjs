@@ -126,7 +126,7 @@ const CandiFullProfileView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCompanyDetails())
+    dispatch(getCompanyDetails());
     if (appId !== undefined) {
       setLoading(true);
       getCand();

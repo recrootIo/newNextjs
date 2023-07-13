@@ -91,11 +91,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CandiDBCard = ({
-  users,
-  candidatesType,
-  order,
-}) => {
+const CandiDBCard = ({ users, candidatesType, order }) => {
   const classes = useStyles();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -117,9 +113,11 @@ const CandiDBCard = ({
 
   useEffect(() => {
     if (users) {
-      new applyJobService().getResume(users?.resume?.resumeFileLocation[0]?._id).then((res) => {
-        setresume(res.data?.resume?.resumeFileLocation[0]);
-      });
+      new applyJobService()
+        .getResume(users?.resume?.resumeFileLocation[0]?._id)
+        .then((res) => {
+          setresume(res.data?.resume?.resumeFileLocation[0]);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
@@ -168,16 +166,13 @@ const CandiDBCard = ({
    * @returns
    */
   const getCalculatedSkills = () => {
-    const skills = user.resume.skills.map(
-      (skill) => skill.skillName
-    );
+    const skills = user.resume.skills.map((skill) => skill.skillName);
     const matchingElements = skills.filter((skill) =>
       matchingSkill.includes(skill)
     );
 
     return matchingElements.length;
   };
-
 
   const getCandidateSalary = (candidate) => {
     const salaryDetails = `${currencyConvert(
@@ -187,7 +182,6 @@ const CandiDBCard = ({
 
     return salaryDetails;
   };
-
 
   /**
    * constants
@@ -200,19 +194,19 @@ const CandiDBCard = ({
       /\\/g,
       "/"
     )}`;
-    const handleProfile = (id) => {
-      // dispatch(getCandi(id))
-      //   .unwrap()
-      //   .then((originalPromiseResult) => {
-      //     dispatch(
-      //       getSinResumeLaid(originalPromiseResult?.resume?.resumeFileLocation[0])
-      //     );
-      //   });
-      window.open(
-        `http://localhost:3001/Employer/candiProfileFullView?canId=${id}`
-      );
-      // Navigate(`/employerhome/applicant/${id}?rc`);
-    };
+  const handleProfile = (id) => {
+    // dispatch(getCandi(id))
+    //   .unwrap()
+    //   .then((originalPromiseResult) => {
+    //     dispatch(
+    //       getSinResumeLaid(originalPromiseResult?.resume?.resumeFileLocation[0])
+    //     );
+    //   });
+    window.open(
+      `http://localhost:3001/Employer/candiProfileFullView?canId=${id}`
+    );
+    // Navigate(`/employerhome/applicant/${id}?rc`);
+  };
 
   return (
     <Tooltip
@@ -231,7 +225,7 @@ const CandiDBCard = ({
           boxShadow: "4px 4px 10px rgba(3, 66, 117, 0.25) !important",
           borderRadius: "10px",
           background: users?.status === "unview" ? "rgb(240, 242, 245)" : "",
-          padding:'20px'
+          padding: "20px",
         }}
       >
         <CardHeader
@@ -313,7 +307,7 @@ const CandiDBCard = ({
           sx={{ p: "12px 20px 16px 20px" }}
         />
         <CardContent sx={{ p: 0, pb: "0 !important" }}>
-        <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
+          <Grid container sx={{ p: "0 20px", rowGap: "5px" }}>
             <Grid md={4}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <AssignmentIndIcon sx={{ color: "#1097CD" }} />
@@ -372,8 +366,7 @@ const CandiDBCard = ({
                     color: "rgba(1, 49, 63, 0.8)",
                   }}
                 >
-                  Experience - {users?.resume?.totalWorkExperience}{" "}
-                  Years
+                  Experience - {users?.resume?.totalWorkExperience} Years
                 </CustomTypography>
               </Box>
             </Grid>
@@ -454,7 +447,6 @@ const CandiDBCard = ({
               View Details
             </Button>
           </Box>
-
         </CardContent>
       </Card>
     </Tooltip>

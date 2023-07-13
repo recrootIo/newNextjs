@@ -6,7 +6,16 @@ import company from "../services/company.service";
 const companyservice = new company();
 const initialState = {
   companylogo: { logo: "" },
-  basicinformation: { cmpemail: "", cmpname: "", cmpphone: "", cmpwebsite: "" },
+  basicinformation: {
+    cmpemail: "",
+    cmpname: "",
+    cmpphone: "",
+    cmpwebsite: "",
+    cmpceo: "",
+    foundedYear: "",
+    cmpvideoUrl: "",
+  },
+  companyVideo: {},
   cmpinformation: {},
   links: { fb: "", twitter: "", utube: "", linkin: "" },
   locate: [],
@@ -561,7 +570,8 @@ const cmpSlice = createSlice({
     [getRecommended.fulfilled]: (state, action) => {
       state.loadingRecommended = false;
       state.matchingAppl.recommendedApplicants = action.payload?.candidates;
-      state.matchingAppl.recommendedApplicantsCount = action.payload?.totalCounts;
+      state.matchingAppl.recommendedApplicantsCount =
+        action.payload?.totalCounts;
     },
     [getRecommended.pending]: (state, action) => {
       state.loadingRecommended = true;

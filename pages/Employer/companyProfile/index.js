@@ -35,6 +35,7 @@ import {
   useMediaQuery,
   Formhelpertext,
   styled,
+  Typography,
 } from "@mui/material";
 import { CustomTypography } from "@/ui-components/CustomTypography/CustomTypography";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
@@ -79,9 +80,14 @@ import { useRouter } from "next/navigation";
 import Location from "@/components/Location";
 import Employer from "../../../components/pages/index";
 import { useTheme } from "@mui/material/styles";
-import { isEmpty } from "lodash";
+import { isEmpty, uniqueId } from "lodash";
 import companyservice from "@/redux/services/company.service";
 import ImagesUpload from "@/components/CompanyProfileView/ImagesUpload";
+import Cookies from "js-cookie";
+import SaveIcon from "@mui/icons-material/Save";
+import { v4 as uuidv4 } from "uuid";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+uuidv4();
 const Tour = dynamic(() => import("reactour"), { ssr: false });
 
 const useStyles = makeStyles((theme) => ({
@@ -150,6 +156,9 @@ const CompanyProfile = () => {
     cmpphone: basicin && basicin.cmpphone,
     cmpemail: basicin && basicin.cmpemail,
     cmpwebsite: basicin && basicin.cmpwebsite,
+    cmpceo: basicin && basicin.cmpceo,
+    foundedYear: basicin && basicin.foundedYear,
+    cmpvideoUrl: basicin && basicin.cmpvideoUrl,
   });
   const [cpinfor, setCmpinfor] = useState({
     infosector: cmpin && cmpin.infosector,
@@ -166,6 +175,9 @@ const CompanyProfile = () => {
       cmpphone: basicin.cmpphone,
       cmpemail: basicin.cmpemail,
       cmpwebsite: basicin.cmpwebsite,
+      cmpceo: basicin && basicin.cmpceo,
+      foundedYear: basicin && basicin.foundedYear,
+      cmpvideoUrl: basicin && basicin.cmpvideoUrl,
     });
     setCmpinfor({
       infosector: cmpin && cmpin.infosector,
@@ -268,7 +280,6 @@ const CompanyProfile = () => {
       return;
     }
     dispatch(updateFinaldetails(final)).then((res) => {
-      console.log(res, "res");
       if (res?.meta?.requestStatus === "fulfilled") {
         dispatch(openAlert({ type: SUCCESS, message: msg }));
       }
@@ -386,7 +397,86 @@ const CompanyProfile = () => {
   useEffect(() => {
     setTourOpen(() => company?.tours?.profileIndex);
   }, [company?.tours?.profileIndex]);
+  const [isQuillLoaded, setIsQuillLoaded] = useState(false);
+  useEffect(() => {
+    setIsQuillLoaded(true);
+  }, []);
 
+  const [video, setvideo] = useState();
+  const compId = Cookies.get("companyId");
+  const handleAddVdo = () => {
+    new companyservice().compVideo(video, compId).then((res) => {
+      console.log(res, "object");
+      if (res.status === 200) {
+        dispatch(getCompanyDetails());
+        setvideo();
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Your Video Was Uploaded SuccessFully",
+          })
+        );
+      }
+    });
+  };
+  const [leaderDet, setleaderDet] = useState({
+    photo: "",
+    firstName: "",
+    lastName: "",
+    designation: "",
+  });
+  const [leaders, setleaders] = useState([
+    {
+      photoPath: "",
+      photoName: "",
+      firstName: "",
+      lastName: "",
+      designation: "",
+    },
+  ]);
+
+  const handleLeaderLogo = (file) => {
+    console.log(file, "ggg");
+    setleaderDet({ ...leaderDet, photo: file });
+  };
+  const handleLeaderdet = (e) => {
+    setleaderDet({ ...leaderDet, [e.target.name]: e.target.value });
+  };
+  const handleSaveLead = () => {
+    new companyservice().compLeaders(leaderDet, compId).then((res) => {
+      console.log(res, "object");
+      if (res.status === 200) {
+        dispatch(getCompanyDetails());
+        setleaderDet({
+          photo: "",
+          firstName: "",
+          lastName: "",
+          designation: "",
+        });
+        dispatch(
+          openAlert({
+            type: SUCCESS,
+            message: "Company Leader Was Updated SuccessFully",
+          })
+        );
+      }
+    });
+  };
+  const handleRemoveLead = (id) => {
+    new companyservice().removeleader(id).then((res) => {
+      console.log(res, "object");
+      if (res.status === 200) {
+        dispatch(getCompanyDetails());
+        dispatch(
+          openAlert({
+            type: ERROR,
+            message: "Leader Was Removed",
+          })
+        );
+      }
+    });
+  };
+  console.log(leaderDet, "leaderdet");
   return (
     <Box sx={{ p: "-100px" }}>
       <Employer>
@@ -633,7 +723,7 @@ const CompanyProfile = () => {
                   <StyledAvatar
                     src={
                       logo && logo.logo !== undefined
-                        ? `https://api.arinnovate.io/api/getCompanyPhotos?compPhotos=${logo.logo}`
+                        ? `https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${logo.logo}`
                         : URL.createObjectURL(logo)
                     }
                     sx={{
@@ -713,6 +803,7 @@ const CompanyProfile = () => {
                           ) : (
                             ""
                           )} */}
+                    {console.log(company, "compm")}
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                       <Button
                         variant="contained"
@@ -800,8 +891,12 @@ const CompanyProfile = () => {
                   sx={{ ...style.naminput, bgcolor: "white", width: "100%" }}
                   id="outlined-basic"
                   label="CEO"
+                  value={basicin?.cmpceo || ""}
                   placeholder="Enter the CEO's name in your company"
+                  onChange={(e) => basicadd(e)}
+                  onBlur={(e) => handleBlur(e, "Company CEO Was Updated")}
                   variant="outlined"
+                  name="cmpceo"
                 />
               </Stack>
               <Stack direction="row" spacing={2}>
@@ -845,6 +940,14 @@ const CompanyProfile = () => {
                   label="Founded (Year)"
                   placeholder="Select the year your company was found"
                   variant="outlined"
+                  name="foundedYear"
+                  value={basicin?.foundedYear || ""}
+                  onChange={(e) => basicadd(e)}
+                  inputProps={{ minLength: 4 }}
+                  onBlur={(e) =>
+                    handleBlur(e, "Company Founded Year Was Updated")
+                  }
+                  type="number"
                 />
               </Stack>
               <Stack direction="row" spacing={2}>
@@ -894,27 +997,27 @@ const CompanyProfile = () => {
               </CustomTypography>
               <Box sx={styles.infofld}>
                 {/* <Box
-                sx={{
-                  width: "100%",
-                  minHeight: "320px",
-                  backgroundColor: "white",
-                  border: "1px solid white",
-                }}
-              >
-                <EditorToolbar />
-                {typeof window !== "undefined" && (
-                  <ReactQuill
-                    placeholder="Add Description"
-                    value={cmpin.infodes}
-                    onChange={handleDesc}
-                    onBlur={handleBlurDes}
-                    modules={modules}
-                    formats={formats}
-                    className="textareaQuestion"
-                    style={{ height: "250px" }}
-                  />
-                )}
-              </Box> */}
+                  sx={{
+                    width: "100%",
+                    minHeight: "320px",
+                    backgroundColor: "white",
+                    border: "1px solid white",
+                  }}
+                >
+                  <EditorToolbar />
+                  {isQuillLoaded && (
+                    <ReactQuill
+                      placeholder="Add Description"
+                      value={cmpin.infodes}
+                      onChange={handleDesc}
+                      onBlur={handleBlurDes}
+                      modules={modules}
+                      formats={formats}
+                      className="textareaQuestion"
+                      style={{ height: "250px" }}
+                    />
+                  )}
+                </Box> */}
               </Box>
             </Box>
             <Box>
@@ -928,12 +1031,44 @@ const CompanyProfile = () => {
                 spacing={2}
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                <Button
-                  variant="contained"
-                  sx={{ borderRadius: "10px", textTransform: "capitalize" }}
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "20px" }}
                 >
-                  Select File
-                </Button>
+                  <Box sx={{ display: "flex", gap: "10px" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ borderRadius: "10px", textTransform: "capitalize" }}
+                    >
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => {
+                          setvideo(e.target.files[0]);
+                        }}
+                      />
+                      Select File
+                    </Button>
+                    {console.log(video, "video")}
+                    {video === undefined ? (
+                      ""
+                    ) : (
+                      // <IconButton
+                      //   sx={{ color: "#4fa9ff" }}
+                      //   onClick={handleAddVdo}
+                      // >
+                      // </IconButton>
+                      <Button variant="contained" onClick={handleAddVdo}>
+                        <SaveIcon />
+                        Save
+                      </Button>
+                    )}
+                  </Box>
+                  {!isEmpty(company?.companyVideo?.name) && (
+                    <Typography textAlign={"center"}>
+                      {company?.companyVideo?.name}
+                    </Typography>
+                  )}
+                </Box>
                 <CustomTypography
                   sx={{ fontSize: "15px", fontWeight: 500, mt: "10px" }}
                 >
@@ -943,9 +1078,13 @@ const CompanyProfile = () => {
                   InputLabelProps={{ style: { color: "black" } }}
                   sx={{ ...style.naminput, bgcolor: "white", flexGrow: 1 }}
                   id="outlined-basic"
-                  label="Vedio URL"
+                  label="Video URL"
                   placeholder="Enter OR the URL of the video"
                   variant="outlined"
+                  name="cmpvideoUrl"
+                  value={basicin?.cmpvideoUrl || ""}
+                  onChange={(e) => basicadd(e)}
+                  onBlur={(e) => handleBlur(e, "Company Video Url Was Updated")}
                 />
               </Stack>
             </Box>
@@ -969,6 +1108,79 @@ const CompanyProfile = () => {
               >
                 Highlight influential leaders in your company&apos;s profile Add
               </CustomTypography>
+              <Stack flexDirection={"column"} gap={"20px"}>
+                {isEmpty(company?.leaders)
+                  ? ""
+                  : company?.leaders?.map((lead, ind) => (
+                      <Box
+                        key={ind}
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          justifyContent: "center",
+                          gap: "23px",
+                        }}
+                      >
+                        <Card
+                          sx={{
+                            width: "100%",
+                            display: "flex",
+                            padding: "25px",
+                            justifyContent: "space-evenly",
+                            gap: "21px",
+                          }}
+                        >
+                          <Avatar
+                            src={`https://preprod.recroot.au/api/getCompanyPhotos?compPhotos=${lead.photoPath}`}
+                            sx={{ height: "100px", width: "100px" }}
+                          />
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              gap: "15px",
+                            }}
+                          >
+                            <Box sx={{ display: "flex", gap: "3px" }}>
+                              <Typography fontWeight={"600"}>
+                                First Name :
+                              </Typography>
+                              <Typography fontWeight={"600"}>
+                                {lead?.firstName}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", gap: "3px" }}>
+                              <Typography fontWeight={"600"}>
+                                Last Name :
+                              </Typography>
+                              <Typography fontWeight={"600"}>
+                                {lead?.lastName}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", gap: "3px" }}>
+                              <Typography fontWeight={"600"}>
+                                Designation :
+                              </Typography>
+                              <Typography fontWeight={"600"}>
+                                {lead?.designation}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <IconButton
+                            onClick={() => handleRemoveLead(lead?._id)}
+                          >
+                            <RemoveCircleIcon
+                              sx={{
+                                fontSize: { sm: "1.5rem", xs: "1.5rem" },
+                                color: "#FF543E",
+                              }}
+                            />
+                          </IconButton>
+                        </Card>
+                      </Box>
+                    ))}
+              </Stack>
               <Grid container spacing={2} sx={{ mt: "10px" }}>
                 <Grid
                   item
@@ -991,7 +1203,10 @@ const CompanyProfile = () => {
                     <Avatar
                       className={classes.squareAvatar}
                       alt="Avatar"
-                      src=""
+                      src={
+                        leaderDet?.photo &&
+                        URL.createObjectURL(leaderDet?.photo)
+                      }
                     />
                     <IconButton
                       onClick={handleLeaderPhotoClickOpen}
@@ -1027,7 +1242,10 @@ const CompanyProfile = () => {
                         >
                           Edit Leader Photo
                         </CustomTypography>
-                        <UploadPhoto />
+                        <UploadPhoto
+                          handleLeaderLogo={handleLeaderLogo}
+                          state={"leader"}
+                        />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                           <Button
                             variant="contained"
@@ -1042,6 +1260,7 @@ const CompanyProfile = () => {
                             variant="outlined"
                             sx={{ mt: "10px", ml: "5px", color: "#4fa9ff" }}
                             onClick={() => {
+                              setleaderDet({ ...leaderDet, photo: "" });
                               handleLeaderClose();
                             }}
                           >
@@ -1074,6 +1293,9 @@ const CompanyProfile = () => {
                         label="First Name"
                         placeholder="Enter the first name"
                         variant="outlined"
+                        name="firstName"
+                        value={leaderDet?.firstName}
+                        onChange={handleLeaderdet}
                       />
                       <TextField
                         InputLabelProps={{ style: { color: "black" } }}
@@ -1086,6 +1308,9 @@ const CompanyProfile = () => {
                         label="Last Name"
                         placeholder="Enter the last name"
                         variant="outlined"
+                        name="lastName"
+                        value={leaderDet?.lastName}
+                        onChange={handleLeaderdet}
                       />
                     </Stack>
                     <TextField
@@ -1099,6 +1324,9 @@ const CompanyProfile = () => {
                       label="Designation"
                       placeholder="Enter the designation"
                       variant="outlined"
+                      value={leaderDet?.designation}
+                      onChange={handleLeaderdet}
+                      name="designation"
                     />
                   </Stack>
                 </Grid>
@@ -1112,8 +1340,12 @@ const CompanyProfile = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <IconButton variant="contained" sx={styles.addbtn}>
-                    <ControlPointDuplicateRounded
+                  <IconButton
+                    variant="contained"
+                    onClick={handleSaveLead}
+                    sx={styles.addbtn}
+                  >
+                    <SaveIcon
                       sx={{
                         fontSize: { sm: "1.5rem", xs: "1.5rem" },
                         color: "#4fa9ff",

@@ -67,7 +67,15 @@ export const getSalary = (salary, defaults = true, font = 16, black = null) => {
         }}
         fontSize={font}
       >
-       {salary?.salaryCrrancy?.length > 2 ? `${currencyConvert(salary?.minSalary,salary?.salaryCrrancy,2)} ${salary?.salaryDenomination}` : `${salary?.salaryCrrancy} ${salary?.minSalary}`} - {salary?.salaryCrrancy?.length > 2 ? `${salary?.maxSalary} ${salary?.salaryDenomination}` : salary?.maxSalary}{" "}
+        {salary?.salaryCrrancy?.length > 2
+          ? `${currencyConvert(salary?.minSalary, salary?.salaryCrrancy, 2)} ${
+              salary?.salaryDenomination
+            }`
+          : `${salary?.salaryCrrancy} ${salary?.minSalary}`}{" "}
+        -{" "}
+        {salary?.salaryCrrancy?.length > 2
+          ? `${salary?.maxSalary} ${salary?.salaryDenomination}`
+          : salary?.maxSalary}{" "}
         {salary?.salaryType === "monthly" ? "Per Month" : ""}
         {salary?.salaryType === "hourly" ? "Per Hour" : ""}
         {salary?.salaryType === "yearly" ? "Yearly" : ""}

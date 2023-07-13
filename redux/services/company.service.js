@@ -25,6 +25,32 @@ class companyservice {
       },
     });
   }
+  compVideo(value, compId) {
+    const formData = new FormData();
+    const compLogos = value;
+    formData.append("video", compLogos);
+    return http.post(`addCompanyVideo/${compId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+  compLeaders(value, compId) {
+    const formData = new FormData();
+    const compLogos = value.photo;
+    const firstName = value.firstName;
+    const lastName = value.lastName;
+    const designation = value.designation;
+    formData.append("logo", compLogos);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("designation", designation);
+    return http.post(`addCompanyLeader/${compId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
   getBillings() {
     const rs = JSON.parse(localStorage.getItem("User"));
     return http.get(`/getSuscribeDetails/${rs.User.companyId}`);
@@ -32,6 +58,9 @@ class companyservice {
   addRestCandidates(id) {
     const rs = JSON.parse(localStorage.getItem("User"));
     return http.post(`/addReqstcandidates/${rs?.User?.companyId}/${id}`);
+  }
+  removeleader(id) {
+    return http.post(`/removeCompanyLeader/${id}`);
   }
   getRestCandidates() {
     const rs = JSON.parse(localStorage.getItem("User"));
