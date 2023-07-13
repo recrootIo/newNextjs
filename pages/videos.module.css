@@ -59,3 +59,11 @@
     padding-left: 90px;
     margin: 9px 0 24px;
   }
+
+  .bisylmsPagination {
+    position: relative;
+    z-index: 3;
+    margin: 10px 0 0;
+    padding: 10px;
+  }
+  

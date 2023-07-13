@@ -241,6 +241,144 @@ const Videos = () => {
                   </Stack>
                 </div>
               </div>
+              <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+                <Box sx={{ width: "100%" }}>
+                  {/* {blog?.displayType === "video" ? ( */}
+                  <ReactPlayer
+                    url="https://youtu.be/iBonBC-ySgo"
+                    width={"100%"}
+                  />
+                  {/* ) : (
+                    <img src={imageUrl} alt="" />
+                  )} */}
+                  <div className={styles.bpMeta}>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AccessTimeIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        73/437/2012
+                        {/* {moment(blog.updatedAt).format("DD-MM-YYYY")} */}
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AssistantIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        pillow case
+                        {/* {blog?.category?.category} */}
+                      </Box>
+                    </Stack>
+                  </div>
+                  <Stack direction={"row"} justifyContent="space-between">
+                    <h3 className={styles.articleTitle}>how to make pizza</h3>
+                    {/* <ShareButton
+                      url={blogUrl}
+                      roundedButtons
+                      title={blog?.title}
+                      description={blog?.description}
+                      tag={blog?.tags}
+                    /> */}
+                  </Stack>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  {/* {blog?.displayType === "video" ? ( */}
+                  <ReactPlayer
+                    url="https://youtu.be/iBonBC-ySgo"
+                    width={"100%"}
+                  />
+                  {/* ) : (
+                    <img src={imageUrl} alt="" />
+                  )} */}
+                  <div className={styles.bpMeta}>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AccessTimeIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        73/437/2012
+                        {/* {moment(blog.updatedAt).format("DD-MM-YYYY")} */}
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AssistantIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        pillow case
+                        {/* {blog?.category?.category} */}
+                      </Box>
+                    </Stack>
+                  </div>
+                  <Stack direction={"row"} justifyContent="space-between">
+                    <h3 className={styles.articleTitle}>how to make pizza</h3>
+                    {/* <ShareButton
+                      url={blogUrl}
+                      roundedButtons
+                      title={blog?.title}
+                      description={blog?.description}
+                      tag={blog?.tags}
+                    /> */}
+                  </Stack>
+                </Box>
+              </Box>
             </Grid>
             <Grid item xs={4}>
               <Box
@@ -249,8 +387,9 @@ const Videos = () => {
                   border: "",
                   strokeWidth: "1px",
                   stroke: "rgba(227, 227, 227, 0.12)",
-                  height: "200px",
+                  height: "auto",
                   bgcolor: "#EDFAFF",
+                  pb: "20px",
                 }}
               >
                 <Box
@@ -276,51 +415,120 @@ const Videos = () => {
                     Recent Posts
                   </CustomTypography>
                 </Box>
-                <Box>
-                  {/* {recentPost.map((rec) => ( */}
-                  <Link
-                    //   href={`/videos/${rec?.title}/${rec?._id}`}
-                    href="https://youtu.be/iBonBC-ySgo"
-                    passHref
+                <Stack spacing={2} sx={{ m: "20px 20px" }}>
+                  <Box
+                    sx={{
+                      border: "1px solid #CBEBF9",
+                      borderRadius: "8px",
+                      p: "10px",
+                    }}
                   >
-                    <div className="popularPost">
-                      <Image
-                        // src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
-                        src="/bag.png"
-                        width="120"
-                        height="200"
-                        style={{ width: "100%", height: "auto" }}
-                        alt="recent post image"
-                      />
-                      <Stack
-                        direction={"row"}
-                        gap={1}
-                        alignItems={"center"}
-                        sx={{ display: "flex", justifyContent: "flex-end" }}
-                      >
-                        <AccessTimeIcon
-                          color="primary"
-                          sx={{ fontSize: "22px" }}
+                    {/* {recentPost.map((rec) => ( */}
+                    <Link
+                      //   href={`/videos/${rec?.title}/${rec?._id}`}
+                      href="https://youtu.be/iBonBC-ySgo"
+                      passHref
+                    >
+                      <div className="popularPost">
+                        <Image
+                          // src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
+                          src="/bag.png"
+                          width="120"
+                          height="200"
+                          style={{ width: "100%", height: "auto" }}
+                          alt="recent post image"
                         />
-                        <span>
-                          62662/223/232
-                          {/* {moment(rec.updatedAt).format("DD-MM-YYYY")} */}
-                        </span>
-                      </Stack>
-                      <CustomTypography
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "16px",
-                          color: "#000",
-                        }}
-                        gutterBottom
-                      >
-                        Common questions asked in a Developer interview
-                      </CustomTypography>
-                    </div>
-                  </Link>
-                  {/* ))} */}
-                </Box>
+                        <Stack
+                          direction={"row"}
+                          gap={1}
+                          alignItems={"center"}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            mt: "5px",
+                          }}
+                        >
+                          <AccessTimeIcon
+                            color="primary"
+                            sx={{ fontSize: "22px" }}
+                          />
+                          <span style={{ color: "#01313F" }}>
+                            62662/223/232
+                            {/* {moment(rec.updatedAt).format("DD-MM-YYYY")} */}
+                          </span>
+                        </Stack>
+                        <CustomTypography
+                          sx={{
+                            fontWeight: 600,
+                            fontSize: "16px",
+                            color: "#000",
+                            mt: "5px",
+                          }}
+                          gutterBottom
+                        >
+                          Common questions asked in a Developer interview
+                        </CustomTypography>
+                      </div>
+                    </Link>
+                    {/* ))} */}
+                  </Box>
+                  <Box
+                    sx={{
+                      border: "1px solid #CBEBF9",
+                      borderRadius: "8px",
+                      p: "10px",
+                    }}
+                  >
+                    {/* {recentPost.map((rec) => ( */}
+                    <Link
+                      //   href={`/videos/${rec?.title}/${rec?._id}`}
+                      href="https://youtu.be/iBonBC-ySgo"
+                      passHref
+                    >
+                      <div className="popularPost">
+                        <Image
+                          // src={`${API_URL}/getCompanyPhotos?compPhotos=${rec.blogImage}`}
+                          src="/bag.png"
+                          width="120"
+                          height="200"
+                          style={{ width: "100%", height: "auto" }}
+                          alt="recent post image"
+                        />
+                        <Stack
+                          direction={"row"}
+                          gap={1}
+                          alignItems={"center"}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            mt: "5px",
+                          }}
+                        >
+                          <AccessTimeIcon
+                            color="primary"
+                            sx={{ fontSize: "22px" }}
+                          />
+                          <span style={{ color: "#01313F" }}>
+                            62662/223/232
+                            {/* {moment(rec.updatedAt).format("DD-MM-YYYY")} */}
+                          </span>
+                        </Stack>
+                        <CustomTypography
+                          sx={{
+                            fontWeight: 600,
+                            fontSize: "16px",
+                            color: "#000",
+                            mt: "5px",
+                          }}
+                          gutterBottom
+                        >
+                          Common questions asked in a Developer interview
+                        </CustomTypography>
+                      </div>
+                    </Link>
+                    {/* ))} */}
+                  </Box>
+                </Stack>
               </Box>
             </Grid>
           </Grid>
