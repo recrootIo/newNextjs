@@ -224,7 +224,7 @@ export default function EmployerSidebar() {
           placement="right"
           className="allApplicants"
         >
-          <Link href={"/Employer/AllApplicants?SeeAll=all"}>
+          <Link href={"/Employer/allApplicants?SeeAll=all"}>
             <HoverListItemButton
               sx={{
                 background:
