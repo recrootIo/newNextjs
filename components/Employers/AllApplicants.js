@@ -173,19 +173,7 @@ const AllApplicants = ({ jid, title }) => {
     headers: myHeaders,
   };
 
-  const {
-    //   details,
-    //   currentPage,
-    //   totalPage,
-    //   count,
-    loading,
-    //   unview,
-    //   rejectcount,
-    //   shortCount,
-    //   selectedId,
-    //   rejectedEmail,
-    //   selectedEmail,
-  } = useSelector((state) => state.apply);
+  const { loading } = useSelector((state) => state.apply);
 
   const [isTourOpen, setTourOpen] = React.useState(false);
   const [role, setRole] = useState({ skill: "", id: uuidv4() });
