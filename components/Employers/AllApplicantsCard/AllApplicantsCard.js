@@ -44,7 +44,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import { currencyConvert } from "@/utils/HelperFunctions";
-import { isEmpty } from "lodash";
+import { capitalize, isEmpty } from "lodash";
 import { updateStatus } from "@/redux/slices/companyslice";
 import { makeStyles } from "@mui/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
@@ -55,7 +55,27 @@ import Collapse from "@mui/material/Collapse";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
-
+import index from "@/pages/uploadResume";
+const greenBorder = {
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  padding: "5px",
+  width: "auto",
+  display: "flex",
+  justifyContent: "center",
+  borderColor: "#57FF57",
+}
+const redBorder = {
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  padding: "5px",
+  width: "auto",
+  display: "flex",
+  justifyContent: "center",
+  borderColor: "#FF0000",
+}
 const StyledGreenSkillChip = styled(Chip)({
   color: "#000",
   fontSize: "13px",
@@ -533,6 +553,9 @@ const AllApplicantsCard = ({
     return modifiedText;
   };
 
+  function isObjectPresent(arr, searchObj) {
+    return arr.some(obj => obj.item === searchObj.item && obj.match === searchObj.match);
+  }
   const getSkillText = (item) => {
     return (
       <Grid container sx={{ padding: "0 10px" }}>
@@ -1014,6 +1037,7 @@ const AllApplicantsCard = ({
                 </CustomTypography>
               </Stack>
             </Box>
+            {console.log(displaySkills,'skilllsss')}
           </Stack>
           <Box
             sx={{
@@ -1055,7 +1079,8 @@ const AllApplicantsCard = ({
                   borderRight: "2px solid #D4F0FC",
                 }}
               >
-                <Box sx={{ mt: "20px" }}>
+              {users?.jobId?.queshow === "true"
+               ?       <Box sx={{ mt: "20px" }}>
                   <Stack
                     direction="row"
                     spacing={2}
@@ -1076,6 +1101,7 @@ const AllApplicantsCard = ({
                       gap: "4px",
                     }}
                   >
+                     {users?.question?.map((qes,ind)=>(
                     <Stack
                       direction="row"
                       spacing={2}
@@ -1083,53 +1109,20 @@ const AllApplicantsCard = ({
                         display: "flex",
                         alignItems: "center",
                       }}
+                      key={index}
                     >
                       <StyledCollapseData sx={{ display: "flex", flexGrow: 1 }}>
-                        1. Are you hands on with all stated skills?
+                      {qes?.questions}
                       </StyledCollapseData>
                       <Chip
-                        label="Yes"
-                        variant="outlined"
-                        sx={{
-                          color: "#000",
-                          fontSize: "13px",
-                          fontWeight: 500,
-                          padding: "5px",
-                          width: "auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          borderColor: "#57FF57",
-                        }}
+                    label={capitalize(qes?.answer)}
+                    variant="outlined"
+                    sx={ qes?.answer === qes?.preferedAns ? greenBorder : redBorder}
                       />
                     </Stack>
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <StyledCollapseData>
-                        2.Do you have B Tech/BE inn Computer Science or IT?
-                      </StyledCollapseData>
-                      <Chip
-                        label="No"
-                        variant="outlined"
-                        sx={{
-                          color: "#000",
-                          fontSize: "13px",
-                          fontWeight: 500,
-                          padding: "5px",
-                          width: "auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          borderColor: "#FF0000",
-                        }}
-                      />
-                    </Stack>
+                     ))}
                   </Box>
-                </Box>
+                </Box> : ""}
                 <Box sx={{ mt: "20px" }}>
                   <Stack
                     direction="row"
@@ -1150,53 +1143,14 @@ const AllApplicantsCard = ({
                       mt: "8px",
                     }}
                   >
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
+                   {displaySkills?.map((skil,ind)=>(
+                    <Chip
+                      key={ind}
+                      sx={skil.match ? greenBorder : redBorder}
+                      label={skil.skill}
                       variant="outlined"
                     />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGreenSkillChip
-                      label="6 Thousand"
-                      variant="outlined"
-                    />
-                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
-                      6 Thousand
-                    </StyledGraySkillChip>
-                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
-                      6 Thousand
-                    </StyledGraySkillChip>
-                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
-                      6 Thousand
-                    </StyledGraySkillChip>
-                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
-                      6 Thousand
-                    </StyledGraySkillChip>
-                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
-                      6 Thousand
-                    </StyledGraySkillChip>
+                   )) }
                   </Box>
                 </Box>
                 {/* <Box sx={{ mt: "20px" }}>
@@ -1265,33 +1219,68 @@ const AllApplicantsCard = ({
                     <Chip
                       label="Yes"
                       variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
+                      sx={isObjectPresent(result || [],{item: 1, match: true}) ? greenBorder : redBorder}
                     />
                   </Stack>
                   <Box sx={{ mt: "8px" }}>
                     <StyledCollapseData sx={{ lineHeight: "28px" }}>
                       <ol>
                         <li>
-                          1. Senior Production Associate - innodata Inc - 2
-                          Years
-                        </li>
-                        <li>
-                          2. Supplier Quality Specialist - Mount Lavinia Hotel -
-                          1 Year
+                         Total Work Experience {users?.candidateId?.resume?.totalWorkExperience} years
                         </li>
                       </ol>
                     </StyledCollapseData>
                   </Box>
                 </Box>
+                
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <HomeWorkOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Work Preference
+                    </StyledCollapseTopic>
+                    {users?.candidateId?.resume?.workPrefence.map((pre,ind)=>(
+                  <Chip
+                  label={pre}
+                  key={ind}
+                  variant="outlined"
+                  sx={pre === users?.jobId?.jobType ? greenBorder : redBorder }
+                  />
+                ))   }
+                  </Stack>
+                </Box>
+                                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <DateRangeOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Notice Period
+                    </StyledCollapseTopic>
+                    <Chip
+                      label={users?.candidateId?.resume?.notice}
+                      variant="outlined"
+                      sx={isObjectPresent(result || [],{item: 6, match: true}) ? greenBorder : redBorder}
+                    />
+                  </Stack>
+                </Box>
+                {console.log(users,'userss')}
                 <Box sx={{ mt: "20px" }}>
                   <Stack
                     direction="row"
@@ -1309,108 +1298,23 @@ const AllApplicantsCard = ({
                       Location
                     </StyledCollapseTopic>
                     <Chip
-                      label=" Mumbai"
+                      label={users?.candidateId?.resume?.location?.city}
                       variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
+                      sx={isObjectPresent(result || [],{item: 4, match: true}) ? greenBorder : redBorder}
                     />
                     <Chip
-                      label=" Mumbai"
+                      label={users?.candidateId?.resume?.location?.state}
                       variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
+                      sx={isObjectPresent(result || [],{item: 7, match: true}) ? greenBorder : redBorder}
                     />
                     <Chip
-                      label=" Mumbai"
+                      label={users?.candidateId?.resume?.location?.country}
                       variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
+                      sx={isObjectPresent(result || [],{item: 0, match: true}) ? greenBorder : redBorder}
                     />
                   </Stack>
                 </Box>
-                <Box sx={{ mt: "20px" }}>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <HomeWorkOutlinedIcon
-                      sx={{ fontSize: "1.3rem", color: "#034275" }}
-                    />
-                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
-                      Work Preference
-                    </StyledCollapseTopic>
-                    <Chip
-                      label="Hybrid"
-                      variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
-                    />
-                    <Chip
-                      label="Hybrid"
-                      variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
-                    />
-                    <Chip
-                      label="Hybrid"
-                      variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
-                    />
-                  </Stack>
-                </Box>
+
                 <Box sx={{ mt: "20px" }}>
                   <Stack
                     direction="row"
@@ -1420,7 +1324,12 @@ const AllApplicantsCard = ({
                     <PriceChangeOutlinedIcon
                       sx={{ fontSize: "1.3rem", color: "#034275" }}
                     />
-                    <StyledCollapseTopic>Salary</StyledCollapseTopic>
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>Salary</StyledCollapseTopic>
+                      <Chip
+                      label="Yes"
+                      variant="outlined"
+                      sx={isObjectPresent(result || [],{item: 8, match: true}) ? greenBorder : redBorder}
+                    />
                   </Stack>
                   <Box
                     sx={{
@@ -1431,66 +1340,15 @@ const AllApplicantsCard = ({
                     }}
                   >
                     <StyledCollapseData>
-                      Current Salary - 4 Thousand
+                      Salary Currency- {users?.candidateId?.resume?.salaryCurrency}
                     </StyledCollapseData>
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
+                    <StyledCollapseData>
+                      Current Salary - {users?.candidateId?.resume?.currentSalary?.salary} {users?.candidateId?.resume?.currentSalary?.denomination}
+                    </StyledCollapseData>
                       <StyledCollapseData sx={{ display: "flex", flexGrow: 1 }}>
-                        Expected Salary -
+                        Expected Salary - {users?.candidateId?.resume?.expectedSalary?.salary} {users?.candidateId?.resume?.expectedSalary?.denomination}
                       </StyledCollapseData>
-                      <Chip
-                        label="6 Thousand"
-                        variant="outlined"
-                        sx={{
-                          color: "#000",
-                          fontSize: "13px",
-                          fontWeight: 500,
-                          padding: "5px",
-                          width: "auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          borderColor: "#FF0000",
-                        }}
-                      />
-                    </Stack>
                   </Box>
-                </Box>
-                <Box sx={{ mt: "20px" }}>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <DateRangeOutlinedIcon
-                      sx={{ fontSize: "1.3rem", color: "#034275" }}
-                    />
-                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
-                      Notice Period
-                    </StyledCollapseTopic>
-                    <Chip
-                      label="Immediate Joiner"
-                      variant="outlined"
-                      sx={{
-                        color: "#000",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        padding: "5px",
-                        width: "auto",
-                        display: "flex",
-                        justifyContent: "center",
-                        borderColor: "#57FF57",
-                      }}
-                    />
-                  </Stack>
                 </Box>
               </Grid>
             </Grid>
