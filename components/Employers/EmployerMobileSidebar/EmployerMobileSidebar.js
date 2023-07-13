@@ -213,7 +213,7 @@ const EmployerMobileSidebar = ({ setIsDrawerOpen }) => {
           </ListItemIcon>
           <ListItemText primary="Post New Job" sx={{ color: "white" }} />
         </ListItemButton>
-        <Link href={"/Employer/AllApplicants"}>
+        <Link href={"/Employer/allApplicants"}>
           <ListItemButton
             sx={{
               display: "flex",

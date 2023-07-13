@@ -126,7 +126,7 @@ const CandiFullProfileView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCompanyDetails())
+    dispatch(getCompanyDetails());
     if (appId !== undefined) {
       setLoading(true);
       getCand();
@@ -291,7 +291,7 @@ const CandiFullProfileView = () => {
       router.back();
     } else {
       router.back();
-      // router.push(`/Employer/AllApplicants?aid=${appdata?._id}`);
+      // router.push(`/Employer/allApplicants?aid=${appdata?._id}`);
     }
   };
 

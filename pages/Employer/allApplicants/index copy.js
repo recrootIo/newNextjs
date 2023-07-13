@@ -748,7 +748,7 @@ const AllApplicants = () => {
 
   //   // Scroll to the target element
   //   targetElement.scrollIntoView({ behavior: "smooth" });
-  //   router.push("/Employer/AllApplicants", undefined, { shallow: true });
+  //   router.push("/Employer/allApplicants", undefined, { shallow: true });
   // }
 
   const updateValue = async () => {
