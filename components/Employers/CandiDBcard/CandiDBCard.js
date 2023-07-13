@@ -107,7 +107,7 @@ const CandiDBCard = ({
   const { title } = router.query;
   const getImageUrl = (candi) => {
     return candi?.profpicFileLocation?.photo
-      ? `https://api.arinnovate.io/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
+      ? `https://preprod.recroot.au/api/openProfpic?photo=${candi?.profpicFileLocation?.photo}`
       : `data:image/jpeg;base64,${candi?.headShot}`;
   };
 
@@ -196,7 +196,7 @@ const CandiDBCard = ({
   const address = `${location?.city}, ${location?.state}, ${location?.country} `;
   const recroot =
     resume &&
-    `https://api.arinnovate.io/api/downloadResume?resume=${resume?.resume?.replace(
+    `https://preprod.recroot.au/api/downloadResume?resume=${resume?.resume?.replace(
       /\\/g,
       "/"
     )}`;
@@ -209,7 +209,7 @@ const CandiDBCard = ({
       //     );
       //   });
       window.open(
-        `https://recroot.io/Employer/candiProfileFullView?canId=${id}`
+        `http://extraordinary-melba-a931eb.netlify.app/Employer/candiProfileFullView?canId=${id}`
       );
       // Navigate(`/employerhome/applicant/${id}?rc`);
     };

@@ -60,7 +60,7 @@ const faqData = [
     question:
       "As a candidate, how can I schedule a meeting with a candidate manager for any inquiry?",
     answer:
-      "You can use the link 'https://Recroot.io/cm' to connect with one of our candidate managers by scheduling a meeting at your convenience.",
+      "You can use the link 'http://extraordinary-melba-a931eb.netlify.app/cm' to connect with one of our candidate managers by scheduling a meeting at your convenience.",
   },
   {
     question: "Can employers register with the Recroot platform free of cost?",

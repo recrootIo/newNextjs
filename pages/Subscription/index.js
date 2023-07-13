@@ -110,7 +110,7 @@ function SubscribePrice() {
 
     axios
       .put(
-        `https://api.arinnovate.io/api/${User?.companyId}/applyPromoCode`,
+        `https://preprod.recroot.au/api/${User?.companyId}/applyPromoCode`,
         data,
         {
           headers,
