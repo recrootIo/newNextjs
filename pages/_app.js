@@ -31,7 +31,11 @@ const App = ({ Component, pageProps }) => {
         if (
           country === "LK" &&
           !router.asPath.startsWith("/lk/") &&
-          pathname !== "/Employer/candiProfileFullView"
+          pathname !== "/Employer/candiProfileFullView" &&
+          !router.asPath.startsWith("/employer/") &&
+          !router.asPath.startsWith("/Employer/") &&
+          !router.asPath.startsWith("/lk/employer/") &&
+          !router.asPath.startsWith("/lk/Employer/")
         ) {
           const targetUrl = { pathname, query, locale: "lk" };
           const currentUrl = router.asPath;
