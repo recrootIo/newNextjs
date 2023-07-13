@@ -228,6 +228,9 @@ const AllApplicantsCard = ({
 
   const navigate = (id, status) => {
     if (status === "unview") {
+      dispatch(
+        updateStatus({ _id: id, status: VIEWED, candidatesType, order })
+      );
       new applyJobService()
         .updateAppStatus(id, { status: "viewed" })
         .then((res) => {
