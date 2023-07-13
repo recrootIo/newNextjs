@@ -26,6 +26,12 @@ import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { useDispatch, useSelector } from "react-redux";
 import download from "downloadjs";
 import applyJobService from "@/redux/services/applyjobs.service";
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
+import WorkHistoryOutlinedIcon from "@mui/icons-material/WorkHistoryOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
+import PriceChangeOutlinedIcon from "@mui/icons-material/PriceChangeOutlined";
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import { useRouter } from "next/router";
 import axios from "axios";
 import {
@@ -38,14 +44,62 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import { currencyConvert } from "@/utils/HelperFunctions";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { isEmpty } from "lodash";
 import { updateStatus } from "@/redux/slices/companyslice";
 import { makeStyles } from "@mui/styles";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined";
+import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 
+const StyledGreenSkillChip = styled(Chip)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  padding: "5px",
+  width: "auto",
+  display: "flex",
+  justifyContent: "center",
+  borderColor: "#57FF57",
+});
+
+const StyledGraySkillChip = styled(Chip)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  padding: "5px",
+  width: "auto",
+  display: "flex",
+  justifyContent: "center",
+  borderColor: "#DEDEDE",
+});
+
+const StyledMissingSkillChip = styled(Chip)({
+  color: "#000",
+  fontSize: "13px",
+  fontWeight: 500,
+  padding: "5px",
+  width: "auto",
+  display: "flex",
+  justifyContent: "center",
+  borderColor: "#E1A1FF",
+});
+
+const StyledCollapseTopic = styled(CustomTypography)({
+  color: "#034275",
+  fontSize: "16px",
+  fontWeight: 600,
+});
+
+const StyledCollapseData = styled(CustomTypography)({
+  color: "#01313F",
+  fontSize: "14px",
+  fontWeight: 500,
+});
 export const StyledAvatar = styled(Avatar)(({}) => ({
   "& .MuiAvatar-img": {
     width: "40px",
@@ -96,6 +150,17 @@ const useStyles = makeStyles({
   },
 });
 
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
 const AllApplicantsCard = ({
   users,
   matchingDetails = {},
@@ -110,6 +175,11 @@ const AllApplicantsCard = ({
   const [resume, setresume] = useState();
   const [open, setOpen] = React.useState(false);
   const [openSkill, setOpenSkill] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const user = Cookies.get();
 
@@ -137,15 +207,15 @@ const AllApplicantsCard = ({
   }, [users]);
   function findMatchingElements(arr1, arr2) {
     const matchedElements = [];
-  
+
     for (let i = 0; i < arr1.length; i++) {
-      const regex = new RegExp(arr1[i], 'i'); // 'i' flag for case-insensitive matching
-      const matchedItem = arr2.find(item => regex.test(item));
+      const regex = new RegExp(arr1[i], "i"); // 'i' flag for case-insensitive matching
+      const matchedItem = arr2.find((item) => regex.test(item));
       if (matchedItem) {
         matchedElements.push(arr1[i]);
       }
     }
-  
+
     return matchedElements;
   }
   /**
@@ -945,7 +1015,487 @@ const AllApplicantsCard = ({
               </Stack>
             </Box>
           </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              backgroundColor: "#D4F0FC",
+              pb: "10px",
+            }}
+          >
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+              sx={{
+                p: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </Box>
         </CardContent>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent sx={{ bgcolor: "#F1FBFF" }}>
+            <Grid container spacing={1} sx={{ mt: "10px" }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{
+                  position: "relative",
+                  paddingRight: "20px",
+                  borderRight: "2px solid #D4F0FC",
+                }}
+              >
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <QuizOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic>
+                      Screening Question
+                    </StyledCollapseTopic>
+                  </Stack>
+                  <Box
+                    sx={{
+                      mt: "8px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData sx={{ display: "flex", flexGrow: 1 }}>
+                        1. Are you hands on with all stated skills?
+                      </StyledCollapseData>
+                      <Chip
+                        label="Yes"
+                        variant="outlined"
+                        sx={{
+                          color: "#000",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          padding: "5px",
+                          width: "auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          borderColor: "#57FF57",
+                        }}
+                      />
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData>
+                        2.Do you have B Tech/BE inn Computer Science or IT?
+                      </StyledCollapseData>
+                      <Chip
+                        label="No"
+                        variant="outlined"
+                        sx={{
+                          color: "#000",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          padding: "5px",
+                          width: "auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          borderColor: "#FF0000",
+                        }}
+                      />
+                    </Stack>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <AssignmentIndOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic>Skills</StyledCollapseTopic>
+                  </Stack>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      mt: "8px",
+                    }}
+                  >
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGreenSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    />
+                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
+                      6 Thousand
+                    </StyledGraySkillChip>
+                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
+                      6 Thousand
+                    </StyledGraySkillChip>
+                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
+                      6 Thousand
+                    </StyledGraySkillChip>
+                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
+                      6 Thousand
+                    </StyledGraySkillChip>
+                    <StyledGraySkillChip label="6 Thousand" variant="outlined">
+                      6 Thousand
+                    </StyledGraySkillChip>
+                  </Box>
+                </Box>
+                {/* <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <DoNotDisturbOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic>Missing Skills</StyledCollapseTopic>
+                  </Stack>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                      mt: "8px",
+                    }}
+                  >
+                    <StyledMissingSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    >
+                      6 Thousand
+                    </StyledMissingSkillChip>
+                    <StyledMissingSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    >
+                      6 Thousand
+                    </StyledMissingSkillChip>
+                    <StyledMissingSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    >
+                      6 Thousand
+                    </StyledMissingSkillChip>
+                    <StyledMissingSkillChip
+                      label="6 Thousand"
+                      variant="outlined"
+                    >
+                      6 Thousand
+                    </StyledMissingSkillChip>
+                  </Box>
+                </Box> */}
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{ paddingLeft: "20px !important" }}>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <WorkHistoryOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Experience
+                    </StyledCollapseTopic>
+                    <Chip
+                      label="Yes"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                  </Stack>
+                  <Box sx={{ mt: "8px" }}>
+                    <StyledCollapseData sx={{ lineHeight: "28px" }}>
+                      <ol>
+                        <li>
+                          1. Senior Production Associate - innodata Inc - 2
+                          Years
+                        </li>
+                        <li>
+                          2. Supplier Quality Specialist - Mount Lavinia Hotel -
+                          1 Year
+                        </li>
+                      </ol>
+                    </StyledCollapseData>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <LocationOnOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Location
+                    </StyledCollapseTopic>
+                    <Chip
+                      label=" Mumbai"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                    <Chip
+                      label=" Mumbai"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                    <Chip
+                      label=" Mumbai"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                  </Stack>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <HomeWorkOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Work Preference
+                    </StyledCollapseTopic>
+                    <Chip
+                      label="Hybrid"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                    <Chip
+                      label="Hybrid"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                    <Chip
+                      label="Hybrid"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                  </Stack>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <PriceChangeOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic>Salary</StyledCollapseTopic>
+                  </Stack>
+                  <Box
+                    sx={{
+                      mt: "8px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                    }}
+                  >
+                    <StyledCollapseData>
+                      Current Salary - 4 Thousand
+                    </StyledCollapseData>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <StyledCollapseData sx={{ display: "flex", flexGrow: 1 }}>
+                        Expected Salary -
+                      </StyledCollapseData>
+                      <Chip
+                        label="6 Thousand"
+                        variant="outlined"
+                        sx={{
+                          color: "#000",
+                          fontSize: "13px",
+                          fontWeight: 500,
+                          padding: "5px",
+                          width: "auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          borderColor: "#FF0000",
+                        }}
+                      />
+                    </Stack>
+                  </Box>
+                </Box>
+                <Box sx={{ mt: "20px" }}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <DateRangeOutlinedIcon
+                      sx={{ fontSize: "1.3rem", color: "#034275" }}
+                    />
+                    <StyledCollapseTopic sx={{ display: "flex", flexGrow: 1 }}>
+                      Notice Period
+                    </StyledCollapseTopic>
+                    <Chip
+                      label="Immediate Joiner"
+                      variant="outlined"
+                      sx={{
+                        color: "#000",
+                        fontSize: "13px",
+                        fontWeight: 500,
+                        padding: "5px",
+                        width: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        borderColor: "#57FF57",
+                      }}
+                    />
+                  </Stack>
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Collapse>
       </Card>
     </Tooltip>
   );
