@@ -11,6 +11,7 @@ import {
   InputBase,
   IconButton,
   Grid,
+  Pagination,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
@@ -36,7 +37,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Videos = () => {
+const VideosMain = () => {
   return (
     <div>
       <Navbar />
@@ -127,14 +128,77 @@ const Videos = () => {
             <Grid item xs={8}>
               <div className={styles.singlePostArea}>
                 <div className={styles.postThumb}>
-                  {/* {blog?.displayType === "video" ? ( */}
-                  <ReactPlayer
-                    url="https://youtu.be/iBonBC-ySgo"
-                    width={"100%"}
+                  <img
+                    // src={`${API_URL}/getCompanyPhotos?compPhotos=${blog.blogImage}`}
+                    src="/blogs-card-img.png"
+                    width="100%"
+                    height="auto"
+                    alt=""
+                    style={{ borderRadius: "10px" }}
                   />
-                  {/* ) : (
-                    <img src={imageUrl} alt="" />
-                  )} */}
+                  <div className={styles.bpMeta}>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AccessTimeIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        73/437/2012
+                        {/* {moment(blog.updatedAt).format("DD-MM-YYYY")} */}
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AssistantIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        pillow case
+                        {/* {blog?.category?.category} */}
+                      </Box>
+                    </Stack>
+                  </div>
+                  <Stack direction={"row"} justifyContent="space-between">
+                    <h3 className={styles.articleTitle}>how to make pizza</h3>
+                  </Stack>
+                </div>
+              </div>
+              <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+                <Box sx={{ width: "100%" }}>
+                  <img
+                    // src={`${API_URL}/getCompanyPhotos?compPhotos=${blog.blogImage}`}
+                    src="/blogs-card-img.png"
+                    width="100%"
+                    height="auto"
+                    alt=""
+                    style={{ borderRadius: "10px" }}
+                  />
                   <div className={styles.bpMeta}>
                     <Stack
                       direction={"row"}
@@ -193,8 +257,81 @@ const Videos = () => {
                       tag={blog?.tags}
                     /> */}
                   </Stack>
-                </div>
-              </div>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <img
+                    // src={`${API_URL}/getCompanyPhotos?compPhotos=${blog.blogImage}`}
+                    src="/blogs-card-img.png"
+                    width="100%"
+                    height="auto"
+                    alt=""
+                    style={{ borderRadius: "10px" }}
+                  />
+                  <div className={styles.bpMeta}>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AccessTimeIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        73/437/2012
+                        {/* {moment(blog.updatedAt).format("DD-MM-YYYY")} */}
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
+                      gap={1}
+                      alignItems={"center"}
+                    >
+                      <AssistantIcon
+                        color="primary"
+                        sx={{ fontSize: "22px" }}
+                      />
+                      <Box
+                        sx={{
+                          display: "inline-block",
+                          fontSize: "14px",
+                          lineHeight: "0.8",
+                          color: "#505056",
+                          fontWeight: 600,
+                        }}
+                      >
+                        pillow case
+                        {/* {blog?.category?.category} */}
+                      </Box>
+                    </Stack>
+                  </div>
+                  <Stack direction={"row"} justifyContent="space-between">
+                    <h3 className={styles.articleTitle}>how to make pizza</h3>
+                    {/* <ShareButton
+                      url={blogUrl}
+                      roundedButtons
+                      title={blog?.title}
+                      description={blog?.description}
+                      tag={blog?.tags}
+                    /> */}
+                  </Stack>
+                </Box>
+              </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", mt: "20px" }}
+              >
+                <Pagination count={10} color="primary" />
+              </Box>
             </Grid>
             <Grid item xs={4}>
               <Box
@@ -355,4 +492,4 @@ const Videos = () => {
   );
 };
 
-export default Videos;
+export default VideosMain;
