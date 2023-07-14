@@ -55,6 +55,8 @@ import Collapse from "@mui/material/Collapse";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import index from "@/pages/uploadResume";
 const greenBorder = {
   color: "#000",
@@ -199,6 +201,16 @@ const AllApplicantsCard = ({
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    if (users?.status === 'unview') {  
+      dispatch(
+        updateStatus({ _id: users?._id, status: VIEWED, candidatesType, order })
+      );    
+      new applyJobService()
+      .updateAppStatus(users?._id, { status: "viewed" })
+      .then((res) => {
+        console.warn(res)
+      })
+    }
   };
 
   const user = Cookies.get();
@@ -720,7 +732,7 @@ const AllApplicantsCard = ({
             {users?.candidateId?.resume?.notice && (
               <Grid md={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <CurrencyRupeeIcon sx={{ color: "#1097CD" }} />
+                  <DateRangeOutlinedIcon sx={{ color: "#1097CD" }} />
                   <CustomTypography
                     sx={{
                       fontWeight: "400",
@@ -860,10 +872,10 @@ const AllApplicantsCard = ({
             >
               {getStatusSpan(users?.status)}
               <IconButton onClick={() => handleShort(users?._id)}>
-                <ThumbUpOffAltIcon sx={{ cursor: "pointer" }} />
+              {users?.status === "shortlist" ? <ThumbUpIcon sx={{color:'#4fa9ff'}} /> : <ThumbUpOffAltIcon sx={{ cursor: "pointer" }} /> }  
               </IconButton>
               <IconButton onClick={() => handleReject(users?._id)}>
-                <ThumbDownOffAltIcon sx={{ cursor: "pointer" }} />
+               {users?.status === "rejected" ?<ThumbDownIcon sx={{color:'#f78b7d'}} /> :<ThumbDownOffAltIcon sx={{ cursor: "pointer" }} /> }
               </IconButton>
             </Stack>
           </Stack>
@@ -1280,7 +1292,6 @@ const AllApplicantsCard = ({
                     />
                   </Stack>
                 </Box>
-                {console.log(users,'userss')}
                 <Box sx={{ mt: "20px" }}>
                   <Stack
                     direction="row"
