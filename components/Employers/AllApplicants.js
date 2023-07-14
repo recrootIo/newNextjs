@@ -67,6 +67,7 @@ import {
   getMatchApplicantsFilter,
   getRecommended,
   jobCandidatesRequest,
+  updateApplicantFilters,
 } from "@/redux/slices/companyslice";
 
 import { useRef } from "react";
@@ -306,6 +307,9 @@ const AllApplicants = ({ jid, title }) => {
         undefined,
         { shallow: true } // This option prevents the page from rerendering
       );
+    }
+    if (candidatesType === 'allApplicants') {
+      addAllToFilter()
     }
 
     scrollToTop();
@@ -928,7 +932,7 @@ const AllApplicants = ({ jid, title }) => {
                     placeholder="Search Applicant Name"
                     inputProps={{ "aria-label": "Location" }}
                     onChange={(e) => {
-                      // dispatch(updateApplicantFilters("name", e.target.value));
+                      dispatch(updateApplicantFilters("name", e.target.value));
                       setName(e.target.value);
                     }}
                     value={name}
